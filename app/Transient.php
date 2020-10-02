@@ -11,6 +11,7 @@ static private $obj;
 private $name;
 private $value; 
 private $newValue;
+private $setValue;
 ///turi pereiti per konstruktoriu, tada kitais metodais kreipsimes i objekta.
 //delete metodas, kuris automatiskai issikviecia. Pasidaro kopija reiksmiu(objekto savybe) ir tada istrin, kad jo nebebutu transiente, o butu sesijos metu kopijoje, kuria gauna sesijos klase.  
 //public static function getTransient($name(cookie uuid), $value)
@@ -28,8 +29,7 @@ private $newValue;
         // _dc('1111111111');
         // _dc($this->value);
         // _dc('1111111111');
-   
-        // _dc('dddddd');
+
         $this->newValue = $this->value;
         foreach($this->newValue as $index => $string) {
             if (strpos($string, 'autodelete') !== FALSE)
@@ -42,57 +42,26 @@ private $newValue;
                 unset($this->newValue[$index]);
             }
         }
-        // _dc('000000000');
-        // _dc($this->newValue);
-        // _dc('000000000');
-        // _dc($this->value);
-        // set_transient($this->name, $value);
-    }
-
-    public function setTransient(){
-        $this->newValue = Session::$array;
-        // $this->newValue = $session->array;
-        // _dc('bbbbbbbb');
-        // _dc($this->newValue);
-        // _dc('bbbbbbbb');
-    }
-
-    public function getTransient(){
-        
-    }
-
-    public function __destruct(){
-        set_transient($this->name,$this->newValue);
     }
 
     public function deleteTransient($name){
         delete_transient($name);
     }
 
-// getTransient()
-
-// gaunam
-
-// setTransient()
-
-// tik cia settinam transientus
-
-    // public function getTransient(){
-    //     // $this->name = $name;
-    //     // $this->value = get_transient($this->name);
-    //     // _dc($this->value);
-    //     // $value = $this->value;
-    //     //turi atsirasti transiente;
-    //     //  _dc($value);
-    //     // _dc($this->value);
-    //     // _dc($value);
-    //     return $this->value;
-    // }
-        
     public function __get($dir)
     {
         return $this->$dir;
     }
+
+    public function __destruct(){
+        $setValue = Session::$array;
+        _dc('000000000');
+        _dc($setValue);
+        _dc('000000000');
+        set_transient($this->name,$setValue);
+    }
+
+    
 
 }
 
