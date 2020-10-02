@@ -1,0 +1,450 @@
+body {
+  background-color: white;
+}
+
+h2 {
+  text-transform: uppercase;
+  font-size: 20px;
+}
+
+.name {
+  margin-right: 1200px;
+  margin-top: 0px;
+  color: greenyellow;
+  font-style: italic;
+  background-color: black;
+}
+
+.form-group {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.form-admin {
+  display: block;
+  width: 50%;
+}
+
+.admin-input {
+  width: 50%;
+  height: 40px;
+  font-size: 15px;
+  margin: 10px 0;
+}
+
+.admin-label {
+  width: 100%;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.lenteles {
+  display: block;
+  width: 100%;
+}
+
+.forma {
+  justify-content: center;
+  width: 500px;
+  border-radius: 20px;
+  margin: auto;
+  background-color: #d8d4d4;
+}
+
+.mygtukai {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.admin-button {
+  height: 40px;
+  width: 100px;
+  background-color: #c58181;
+  border-radius: 20px;
+  border: solid 1px #645b5b;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin: 0 10px;
+}
+
+.admin-button:hover {
+  transition: 1s;
+  background-color: #645b5b;
+  color: white;
+}
+
+.admin-event-form-group {
+  width: 50%;
+}
+
+.form-admin {
+  display: block;
+  width: 50%;
+}
+
+input[type=text].admin-input,
+input[type=datetime-local].admin-input,
+textarea.admin-input {
+  width: 70%;
+  height: 40px;
+  font-size: 12px;
+  margin: 10px 0;
+  color: #585858;
+  border-color: #bdbdbd;
+  border-radius: 4px;
+}
+
+input[type=text].admin-input:focus,
+input[type=datetime-local].admin-input:focus,
+textarea.admin-input:focus {
+  outline: none !important;
+}
+
+textarea.admin-input {
+  padding-top: 10px;
+  height: 70px;
+}
+
+.admin-label {
+  width: 100%;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding-left: 10px;
+  cursor: auto;
+}
+
+.admin-event-div {
+  display: block;
+  background-color: #fff;
+  padding: 20px;
+}
+
+.admin-event-forms {
+  justify-content: left;
+  width: 100%;
+}
+
+.admin-event-buttons {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 20px 0 0 0;
+}
+
+.admin-event-button {
+  width: 100px;
+  height: 35px;
+  border-radius: 4px;
+  border: 1px solid #9c9c9c;
+  background-color: #ebebeb;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.admin-event-button:hover {
+  transition: 0.5s;
+  background-color: #d4d4d4;
+}
+
+/*-----------idejos-----------------*/
+
+.container {
+  width: calc(100% - 600px);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1600px;
+}
+
+.container .idea {
+  display: inline-block;
+  padding: 20px 0;
+  width: 100%;
+}
+
+.container .ideaBtn-send {
+  width: 110px;
+  margin: 20px 0 20px 0;
+  padding: 10px 0px 10px 0;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  background-color: #585858;
+  font: 16px "Opens Sans", sans-serif;
+  letter-spacing: 1px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  cursor: pointer;
+}
+
+.wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+}
+
+.box {
+  padding: 10px;
+  height: 300px;
+  width: 100%;
+  position: relative;
+}
+
+.box .ideaContent {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-size: 22px;
+  line-height: 30px;
+}
+
+.box .text {
+  display: inline-block;
+  width: 100%;
+  font-size: 20px;
+  line-height: 20px;
+  color: #585858;
+}
+
+.box .text .data {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: bold;
+  color: black;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.cont,
+.backdrop,
+.writeIdeaText {
+  text-align: center;
+  width: 100%;
+  height: 40px;
+}
+
+.highlights,
+textarea {
+  padding: 10px;
+  font: 20px/28px "Open Sans", sans-serif;
+  letter-spacing: 1px;
+}
+
+.cont {
+  display: block;
+  margin: 0 auto;
+  transform: translateZ(0);
+  -webkit-text-size-adjust: none;
+}
+
+.backdrop {
+  position: absolute;
+  z-index: 1;
+  border: 2px solid #685972;
+  background-color: #fff;
+  overflow: auto;
+  pointer-events: none;
+  transition: transform 1s;
+}
+
+.highlights {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: transparent;
+}
+
+.ideaContent {
+  width: 100%;
+  height: 100%;
+}
+
+.ideaContent .ideaTextEdit {
+  width: 50%;
+  height: 100%;
+  float: left;
+}
+
+.ideaContent .ideaTextEdit .ideaText {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 2px solid #74637f;
+  border-radius: 0;
+  color: #0a0a0a;
+  background-color: transparent;
+  overflow: auto;
+  resize: none;
+  transition: transform 1s;
+  font-size: 18px;
+  line-height: 20px;
+  height: 70%;
+}
+
+.ideaContent .ideaSoliution {
+  width: 50%;
+  height: 100%;
+  float: right;
+}
+
+.ideaContent .ideaSoliution .ideaTextSoliution {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  border: 2px solid #74637f;
+  border-radius: 0;
+  color: #0a0a0a;
+  background-color: transparent;
+  overflow: auto;
+  resize: none;
+  transition: transform 1s;
+  font-size: 18px;
+  line-height: 20px;
+  height: 70%;
+}
+
+mark {
+  border-radius: 3px;
+  color: transparent;
+  background-color: #b1d5e5;
+}
+
+.textCount {
+  height: 20px;
+  float: right;
+}
+
+.ideaBtns {
+  display: inline-block;
+}
+
+.ideaBtn {
+  width: 110px;
+  margin: 220px 0 0px 0;
+  padding: 10px 0px 10px 0;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  background-color: #585858;
+  font: 16px "Opens Sans", sans-serif;
+  letter-spacing: 1px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  cursor: pointer;
+}
+
+.perspective .backdrop {
+  transform: perspective(1500px) translateX(-125px) rotateY(45deg) scale(0.9);
+}
+
+.perspective textarea {
+  transform: perspective(1500px) translateX(155px) rotateY(45deg) scale(1.1);
+}
+
+textarea:focus,
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #c6aada;
+}
+
+/*------like button-----------------*/
+
+.like__btn {
+  border: none;
+  color: #4b4a4a;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 50px;
+  max-width: 100px;
+  transition: all ease 0.3s;
+  margin: 10px 0 10px 0;
+}
+
+.like__btn:hover {
+  background-color: rgba(231, 76, 60, 0.8);
+}
+
+.like__btn:disabled {
+  background-color: #d4cfcf;
+  cursor: pointer;
+}
+
+.like__icon {
+  font-size: 1.2rem;
+  margin-right: 0.3rem;
+}
+
+.like__number {
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.like {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 90%;
+  top: 7%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 600px) {
+  textarea,
+  .container {
+    width: 260px;
+  }
+
+  .like__number {
+    margin: 10px 0 0 0;
+  }
+
+  .like__btn {
+    margin: 20px 0 10px 0;
+  }
+}
+
+.likeBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.likeBox .number {
+  line-height: 20px;
+  font-size: 16px;
+  margin: 0 0 0 20px;
+}
+
+output > div {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px 1fr));
+}
+
+output > div img {
+  height: 200px;
+}
+
