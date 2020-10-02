@@ -1,0 +1,20 @@
+{
+  "name": "bit/first",
+  "description": "",
+  "require": {
+    "symfony/http-foundation": "^4.4",
+    "symfony/finder": "^4.4",
+    "symfony/dependency-injection": "^4.4",
+    "symfony/config": "^4.4",
+    "symfony/yaml": "^4.4",
+    "ramsey/uuid": "^3.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "BIT\\app\\": "app/",
+      "BIT\\models\\": "models/",
+      "BIT\\controllers\\": "controllers/"
+    }
+  },
+  "license": "MIT"
+}
