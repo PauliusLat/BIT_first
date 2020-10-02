@@ -12,68 +12,46 @@ class Session{
     {
         return self::$obj ?? self::$obj = new self;
     }
-//sito nereikia nes settinsim transiente
-    public function  __construct(){
-        // $this->name = Cookie::getUuid();    
-        // $transient = Transient::start();
-        // $this->array;
-    }
 
     public function set($a, $b){
             $transient = Transient::start();
             self::$array = $transient->newValue; 
-            // $this->array = get_transient($this->name);//jeigu pakeiciu sita eilute, dingsta is sesijos
-            // _dc('ddddddddd');
-            // _dc(self::$array);
-            // // _dc($this->name);
-            // _dc('ddddddddd');
-            // // $this->array = $transient->newValue;
-            // _dc('kkkkkkkkkk');
+            _dc('ddddddddd');
+            _dc(self::$array);
+            _dc('ddddddddd');
+            _dc('kkkkkkkkkk');
             self::$array[$a] = $b;
             // _dc(self::$array);
             // _dc('kkkkkkkkkk');
             return self::$array;
-           
-           
-            // _dc('______________');
-            // // _dc('tralialialia');
-            // set_transient($this->name,$this->array);
-            // $array = get_transient($this->name);
-            // _dc($array);
     }
 
     public function flash($a, $b){
         $transient = Transient::start();
         // $this->array = get_transient($this->name);
-        $this->array = $transient->newValue;
-        $this->array[$a] = $b;
-        array_push($this->array, 'autodelete_'.$a);
-        // _dc($this->array);
-        // _dc('kukuk');
-        return $this->array;
-        // set_transient($this->name,$this->array);
-        // $array = get_transient($this->name);
-        //  _dc($array);
-        //  _dc('kukukulululul');
+        self::$array = $transient->newValue;
+        self::$array[$a] = $b;
+        array_push( self::$array, 'autodelete_'.$a);
+        // _dc(self::$array);
+        // _dc('kukukulululul');
+        return self::$array;  
     }
 
-    public function get($name, $index){
+    public function get($index){
         $transient = Transient::start();
-        $this->name = $name;
-        $value = $transient->value;
-        $indexValue = $value[$index];
+        self::$array = $transient->value;
+        _dc('aaaaaaaaaa');
+        _dc(self::$array);
+        _dc('aaaaaaaaaa');
+        $indexValue =  self::$array[$index];
         return $indexValue;
     }
 
-    public function delete($name, $index){
+    public function delete($index){
         $transient = Transient::start();
-        $this->name = $name;
-        $value = $transient->value;
-        unset($value[$index]); 
-        return $value;
-        ///itas turi buti tranwiente
-        // $transient = set_transient($name, $value);
-        // return $transient;
+        self::$array = $transient->value;
+        unset(self::$array[$index]); 
+        return self::$array;
     }
 
     //delete session - ir cookio ir transiento istrynimas;
