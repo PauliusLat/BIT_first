@@ -12,8 +12,9 @@ class Attachment extends Post{
     protected static $type = 'attachment';
 
 
-    public function save(Request $request = null, $parentId = 0){
+    public function save($parentId = 0){
 
+        $request = app::start()->getService('request');
         $wordpress_upload_dir = wp_upload_dir();
         $fileNamePrefix = 1; 
         foreach ($request->files->all() as $file) {
