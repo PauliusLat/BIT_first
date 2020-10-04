@@ -2,13 +2,10 @@
 
 // getCurrentRequest();
 require ('list.php');
-
-
-    // var_dump($post->news_content); content 16, 
-
-
 ?>
-<form action="http://localhost:8080/wordpress/wp-content/plugins/BIT-first/api/?route=news_store" method="post" enctype="multipart/form-data">
+
+
+<form action="http://localhost:8080/wordpress/wp-content/plugins/BIT_first/api/?route=news_store" method="post" enctype="multipart/form-data">
 	Your Photo: <input type="file" name="profilepicture" size="25" />
 	<input type="submit" name="submit" value="Submit" />
 </form>
