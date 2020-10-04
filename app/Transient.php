@@ -26,9 +26,9 @@ private $setValue;
     public function __construct(){
         $this->name = Cookie::getUuid();
         $this->value = get_transient($this->name);
-        // _dc('1111111111');
-        // _dc($this->value);
-        // _dc('1111111111');
+        _dc('1111111111');
+        _dc($this->value);
+        _dc('1111111111');
 
         $this->newValue = $this->value;
         foreach($this->newValue as $index => $string) {
@@ -44,15 +44,17 @@ private $setValue;
         }
     }
 
-    public function deleteTransient($name){
-        delete_transient($name);
+    public function deleteTransient(){
+    //    _dc('delete transient');
+    //    _dc($this->name);
+        delete_transient($this->name);
     }
 
     public function __get($dir)
     {
         return $this->$dir;
     }
-
+    
     public function __destruct(){
         $setValue = Session::$array;
         _dc('000000000');
@@ -60,8 +62,6 @@ private $setValue;
         _dc('000000000');
         set_transient($this->name,$setValue);
     }
-
-    
 
 }
 

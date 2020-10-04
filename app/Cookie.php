@@ -15,8 +15,8 @@ class Cookie {
         return self::$uuid;
     }
 
-    public static function deleteCookie($name){
-        unset($_COOKIE[$name]);
+    public static function deleteCookie(){
+        unset($_COOKIE[self::$uuid]);
     }
 
     public static function ideaCookie($like){

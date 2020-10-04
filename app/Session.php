@@ -1,6 +1,7 @@
 <?php
 namespace BIT\app;
 use BIT\app\Transient;
+use BIT\app\Cookie;
 
 class Session{
 
@@ -16,10 +17,10 @@ class Session{
     public function set($a, $b){
             $transient = Transient::start();
             self::$array = $transient->newValue; 
-            _dc('ddddddddd');
-            _dc(self::$array);
-            _dc('ddddddddd');
-            _dc('kkkkkkkkkk');
+            // _dc('ddddddddd');
+            // _dc(self::$array);
+            // _dc('ddddddddd');
+            // _dc('kkkkkkkkkk');
             self::$array[$a] = $b;
             // _dc(self::$array);
             // _dc('kkkkkkkkkk');
@@ -40,10 +41,11 @@ class Session{
     public function get($index){
         $transient = Transient::start();
         self::$array = $transient->value;
-        _dc('aaaaaaaaaa');
-        _dc(self::$array);
-        _dc('aaaaaaaaaa');
+        // _dc('aaaaaaaaaa');
+        // _dc(self::$array);
+        // _dc('aaaaaaaaaa');
         $indexValue =  self::$array[$index];
+        self::$array = $transient->newValue; 
         return $indexValue;
     }
 
@@ -54,10 +56,13 @@ class Session{
         return self::$array;
     }
 
-    //delete session - ir cookio ir transiento istrynimas;
-    //turi buti istrintas po vieno kreipimosi. Isiraso i transiento masyva. kitus pasizymeti, kitu raktu. Kai kita karta kreipiames i sesija 
-    
+    public function deleteSession(){
+        $transient = Transient::start();
+        $transient->deleteTransient();
+        Cookie::deleteCookie();
+    }
 
+    //delete session - ir cookio ir transiento istrynimas;
     public function __get($dir)
     {
         return $this->$dir;
