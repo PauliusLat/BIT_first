@@ -37,7 +37,7 @@ $session = Session::start();
 
 // _dc($session );
 //  _dc($_COOKIE);
-// $session->set(4,9); 
+$session->set(4,9); 
 //  
 // _dc($_COOKIE);
 // $session->set('od',2);
