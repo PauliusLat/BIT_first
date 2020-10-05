@@ -7,6 +7,7 @@ use BIT\models\EventPost;
 use BIT\models\AlbumPost;
 use BIT\app\RequestId;
 use BIT\app\Cookie;
+use BIT\app\Session;
 
 return function(ContainerConfigurator $configurator) {
 
@@ -39,5 +40,9 @@ return function(ContainerConfigurator $configurator) {
     $services->set('uuid', Cookie::class)
     ->factory([Cookie::class, 'getUuid']);
     $services->alias(Cookie::class, 'uuid');
+
+    $services->set('session', Session::class)
+    ->factory([Session::class, 'start']);
+    $services->alias(Session::class, 'session');
 
 };

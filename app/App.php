@@ -51,6 +51,8 @@ class App
         add_shortcode('front_shortcode', [FrontRoute::class, 'frontRoute']);
         AdminRoute::start();
         Session::start();
+        // $transient = Transient::start();
+        // add_action('shutdown', [$transient, '__destruct']);
     }
 
     public function getService($service){
