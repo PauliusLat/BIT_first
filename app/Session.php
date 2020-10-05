@@ -17,36 +17,29 @@ class Session{
     public function set($a, $b){
             $transient = Transient::start();
             self::$array = $transient->newValue; 
-            // _dc('ddddddddd');
-            // _dc(self::$array);
-            // _dc('ddddddddd');
-            // _dc('kkkkkkkkkk');
             self::$array[$a] = $b;
-            // _dc(self::$array);
-            // _dc('kkkkkkkkkk');
             return self::$array;
     }
 
     public function flash($a, $b){
         $transient = Transient::start();
-        // $this->array = get_transient($this->name);
         self::$array = $transient->newValue;
         self::$array[$a] = $b;
         array_push( self::$array, 'autodelete_'.$a);
-        // _dc(self::$array);
-        // _dc('kukukulululul');
         return self::$array;  
     }
 
     public function get($index){
         $transient = Transient::start();
         self::$array = $transient->value;
-        // _dc('aaaaaaaaaa');
-        // _dc(self::$array);
-        // _dc('aaaaaaaaaa');
-        $indexValue =  self::$array[$index];
-        self::$array = $transient->newValue; 
-        return $indexValue;
+        if(array_key_exists ($index , self::$array)){
+            $indexValue =  self::$array[$index];
+            self::$array = $transient->newValue; 
+            return $indexValue;
+        }else{
+            self::$array = $transient->newValue; 
+            return null;
+        }
     }
 
     public function delete($index){
@@ -62,7 +55,6 @@ class Session{
         Cookie::deleteCookie();
     }
 
-    //delete session - ir cookio ir transiento istrynimas;
     public function __get($dir)
     {
         return $this->$dir;

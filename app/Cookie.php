@@ -11,7 +11,6 @@ class Cookie {
             setcookie("Bit", self::$uuid); 
         }
         self::$uuid = $_COOKIE['Bit'];
-       
         return self::$uuid;
     }
 

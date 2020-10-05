@@ -31,41 +31,6 @@ define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 
-// $app = App::start();
+App::start();
 
-//$session = Session::start();
-$session = App::start()->getService('session');
-_dc($session);
-
-// _dc($session );
-//  _dc($_COOKIE);
-$session->set(4,9); 
-//  
-// _dc($_COOKIE);
-$session->set('od',2);
-$session->set('obd',2);
-// $session->set('aaaaaaaaa',2);
-// //$session->set('kkkkkk',2);
-
-// $session->set('la','bu');
-// $session->set('aaaaaaaaa',2);
-// // $session->set('bbbbbbbbbb',2);
-// $session->flash('flash',7);
-// _dc($session->get('flash'));
-
-// $session->set('b',7);
-// $session->deleteSession();
-
-
-// _dc(Session::$array);
-
-// $session->delete('bbbbbbbbbb');
-// // $session->flash('llllll',7);
-
-// // $session->flash('ppppp',7);
-
-// $transient = Transient::start();
-// $transient->deleteTransient();
-// delete_transient('1223');
-// // _dc($session);
-// delete_transient('1069');
+// $session = App::start()->getService('session');
