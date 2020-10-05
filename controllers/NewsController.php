@@ -35,12 +35,12 @@ class NewsController {
         
         // $new_news->news_content = $request->request->get('news-content');
         // $new_news->news_content = $request->content->get('content');        
-        $newsPost->news_content = $request->query->get('content');
+        // $newsPost->news_content = $request->query->get('content');
         // $new_news->news_content = $request->query->get('content');
         
-        $newsPost->save();
+        // $newsPost->save();
        
-        var_dump($request);
+        _dc($request);
 
         // $new_news->attachments = [u, i, j];
         
@@ -63,13 +63,13 @@ class NewsController {
         //atsiskirti attachment, kintamajame, wordpress irasytu attachment - 3 failai
 
         // var_dump($request);
-        // $new_news->news_content = 'hey';
-        $new_news->save();
+        // // $new_news->news_content = 'hey';
+        // $new_news->save();
 
-        $response = new Response;
-        $response->prepare($request);
-        $response->setContent(json_encode(['html' => $this->index()]));
-        return $response;
+        // $response = new Response;
+        // $response->prepare($request);
+        // $response->setContent(json_encode(['html' => $this->index()]));
+        // return $response;
 
         // print_r($news_content.value);
 

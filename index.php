@@ -33,4 +33,4 @@ define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 App::start();
 
-// $session = App::start()->getService('session');
+
