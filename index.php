@@ -31,17 +31,19 @@ define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 
-App::start();
+// $app = App::start();
 
-$session = Session::start();
+//$session = Session::start();
+$session = App::start()->getService('session');
+_dc($session);
 
 // _dc($session );
 //  _dc($_COOKIE);
 $session->set(4,9); 
 //  
 // _dc($_COOKIE);
-// $session->set('od',2);
-// $session->set('obd',2);
+$session->set('od',2);
+$session->set('obd',2);
 // $session->set('aaaaaaaaa',2);
 // //$session->set('kkkkkk',2);
 
