@@ -3,26 +3,26 @@
 namespace BIT\app;
 use BIT\app\Post;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use BIT\app\coreExeptions\wrongArgsTypeExeption;
 require PLUGIN_DIR_PATH . '/../../../wp-load.php';
 require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
 class Attachment extends Post{
 
+    public $_wp_attachment_image_alt = '';
     protected static $type = 'attachment';
 
 
-    public function save($parentId = 0){
+    public function save(UploadedFile $file = null, $parentId = 0){
 
-        $request = app::start()->getService('request');
+        // $request = app::start()->getService('request');
         $wordpress_upload_dir = wp_upload_dir();
-        $fileNamePrefix = 1; 
-        foreach ($request->files->all() as $file) {
+        if($file){
+            $fileNamePrefix = 1; 
             $new_file_path = $wordpress_upload_dir['path'] . '/' . $file->getClientOriginalName();
             $new_file_mime = $file->getClientMimeType();
             //validation
-            if( empty( $file ) )
-            die( 'File is not selected.' );
             
             if( is_null($file->getError()) )
             die( $file->getError() );
@@ -38,30 +38,70 @@ class Attachment extends Post{
                 $new_file_path = $wordpress_upload_dir['path'] . '/' . $fileNamePrefix . '_' . $file->getClientOriginalName();
             }
             //save to DB
-   
             if( move_uploaded_file( $file->getPathname(), $new_file_path ) ) {
-                $upload_id = wp_insert_attachment( array(
+                $upload_id = wp_insert_attachment( [
                     'ID'             => $this->ID,
                     'guid'           => $new_file_path, 
                     'post_mime_type' => $new_file_mime,
                     'post_title'     => preg_replace( '/\.[^.]+$/', '', $file->getClientOriginalName() ),
-                    'post_status'    => 'inherit'
-                ), $new_file_path, $parentId );
-                $this->ID = $upload_id;
-                wp_update_post(['ID'=>$this->ID, 'guid'=>$new_file_path]);
-                
+                    'post_status'    => 'inherit',
+                ], $new_file_path, $parentId );
+                $this->ID = $upload_id;      
                 // Generate and save the attachment metas into the database
                 wp_update_attachment_metadata( $upload_id, wp_generate_attachment_metadata( $upload_id, $new_file_path ) );
+                $this->savePostData();
             }
-        }
+        }else{
+            $this->savePostData();
+        }   
     }
 
+    private function savePostData(){
+        wp_update_post([ 'ID' => $this->ID, 'post_content' => $this->post_content, 'post_excerpt' => $this->post_excerpt]);
+        if($this->_wp_attachment_image_alt){
+            update_post_meta($this->ID, '_wp_attachment_image_alt', $this->_wp_attachment_image_alt );
+        }  
+    }
+        
     public function delete($force_delete = false){
         if($this->ID > 0){
             wp_delete_attachment($this->ID, $force_delete);
         }
-        else throw new wrongArgsTypeExeption('Klaida: trinamas objektas neturi ID');
+    else throw new wrongArgsTypeExeption('Klaida: trinamas objektas neturi ID');
     }
+
+    public function getAlt(){
+        return $this->_wp_attachment_image_alt;
+    }
+
+    public function setAlt($alt){
+        $this->_wp_attachment_image_alt = $alt;
+    }
+
+    public function getCaption(){
+        return $this->post_excerpt;
+    }
+
+    public function setCaption(String $caption){
+        $this->post_excerpt = $caption;
+    }
+
+    public function getDescription(){
+        return $this->post_content;
+    }
+
+    public function setDescription(String $description){
+        $this->post_content = $description;
+    }
+
+    // public function getTitle(String $title){
+    //     return $this->post_title;
+    // }
+
+    // public function setTitle(String $title){
+    //     $this->post_title = $title;
+    // }
+
 
     public function getURL(){
         if(($this->ID) > 0){
@@ -75,17 +115,6 @@ class Attachment extends Post{
         }
     }
 
-    
-    // public function getCaption(){
-        //     if(($this->ID) > 0){
-            //         return wp_get_attachment_caption($this->ID);
-            //     }
-            // }
-            
-    // public function getThumb(){
-    //     if(($this->ID) > 0){
-    //         return wp_get_attachment_thumb_file($this->ID);
-    //     }
-    // }
+
 
 }

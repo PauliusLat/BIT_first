@@ -16,10 +16,10 @@ class Session{
     public function set($a, $b){
             $transient = Transient::start();
             self::$array = $transient->newValue; 
-            _dc('ddddddddd');
-            _dc(self::$array);
-            _dc('ddddddddd');
-            _dc('kkkkkkkkkk');
+            // _dc('ddddddddd');
+            // _dc(self::$array);
+            // _dc('ddddddddd');
+            // _dc('kkkkkkkkkk');
             self::$array[$a] = $b;
             // _dc(self::$array);
             // _dc('kkkkkkkkkk');

@@ -55,9 +55,9 @@ private $setValue;
 
     public function __destruct(){
         $setValue = Session::$array;
-        _dc('000000000');
-        _dc($setValue);
-        _dc('000000000');
+        // _dc('000000000');
+        // _dc($setValue);
+        // _dc('000000000');
         set_transient($this->name,$setValue);
     }
 
