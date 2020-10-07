@@ -8,7 +8,7 @@ class ApiRoute
 {
     public static function apiRoute() {
         /**$get_param = $_GET['route'] - /bebras/api/?route=labas*/
-        $app = App::start();
+        $app = App::start();  
         $get_param = $app->getService('request')->query->get('route', '');
         $routes = require $app->routeDir.'apiRoutes.php';
         if (file_exists(get_stylesheet_directory() . '/frontRoutes.php')) {
