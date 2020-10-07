@@ -99,6 +99,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "solutionText", function() { return solutionText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteIdea", function() { return deleteIdea; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderColons", function() { return renderColons; });
+/** @format */
 
 
 var uri = document.location.origin;
@@ -109,7 +110,7 @@ function editText(editId) {
 
   if (txt != undefined || txt != null || txt.length >= 0 || txt != "" || txt != NaN) {
     var text = txt.split(/\s+/);
-    axios.post(uri + '/wordpress/wp-content/plugins/BIT-first/api/?route=idea-edit-admin', {
+    axios.post(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-edit-admin", {
       idea: text,
       editId: editId
     })["catch"](function (err) {
@@ -126,7 +127,7 @@ function solutionText(sId, i) {
 
   if (txt1 != undefined || txt1 != null || txt1.length >= 0 || txt1 != "" || txt1 != NaN) {
     var text1 = txt1.split(/\s+/);
-    axios.post(uri + '/wordpress/wp-content/plugins/BIT-first/api/?route=idea-create-admin', {
+    axios.post(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-create-admin", {
       soliution: text1,
       solutionId: sId
     })["catch"](function (err) {
@@ -139,21 +140,21 @@ function solutionText(sId, i) {
 
 
 function deleteIdea(delId) {
-  axios.post(uri + '/wordpress/wp-content/plugins/BIT-first/api/?route=idea-delete-admin', {
+  axios.post(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-delete-admin", {
     deleteId: delId
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
-    console.log('Problemos su Delete api');
+    console.log("Problemos su Delete api");
   });
   setTimeout(renderColons, 500);
 } //  /*------------------------------render data  axios-----------------------------------------*/
 
 
-window.addEventListener('load', renderColons);
+window.addEventListener("load", renderColons);
 
 function renderColons() {
-  axios.get(uri + '/wordpress/wp-content/plugins/BIT-first/api/?route=idea-render-admin', {}).then(function (response) {
-    if (response.status == 200 && response.statusText == 'OK') {
+  axios.get(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-render-admin", {}).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
       var data = response.data.allData;
       var keys = [];
 
@@ -161,8 +162,8 @@ function renderColons() {
         keys.push(key);
       }
 
-      var rende = document.getElementById('box');
-      var HTMLString = '';
+      var rende = document.getElementById("box");
+      var HTMLString = "";
       var counter = 0;
 
       for (var i = keys.length - 1; i >= 0; i--) {
@@ -179,7 +180,7 @@ function renderColons() {
       var _loop = function _loop(_i) {
         var sId = postBtn[_i].id;
 
-        postBtn[_i].addEventListener('click', function () {
+        postBtn[_i].addEventListener("click", function () {
           solutionText(sId, _i + 1);
         }, false);
       };
@@ -191,7 +192,7 @@ function renderColons() {
       var _loop2 = function _loop2(_i2) {
         var editId = editBtn[_i2].id;
 
-        editBtn[_i2].addEventListener('click', function () {
+        editBtn[_i2].addEventListener("click", function () {
           editText(editId);
         }, false);
       };
@@ -203,7 +204,7 @@ function renderColons() {
       var _loop3 = function _loop3(_i3) {
         var delId = deletetBtn[_i3].id;
 
-        deletetBtn[_i3].addEventListener('click', function () {
+        deletetBtn[_i3].addEventListener("click", function () {
           deleteIdea(delId);
         }, false);
       };
@@ -222,7 +223,7 @@ function renderColons() {
     } else if (error.request) {
       console.log(error.request);
     } else {
-      console.log('Error', error.message);
+      console.log("Error", error.message);
     }
 
     console.log(error);
@@ -265,8 +266,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

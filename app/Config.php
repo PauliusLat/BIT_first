@@ -11,11 +11,10 @@ class Config{
                     register_post_type($type, $args);
                 }   
             });   
-        }
-       
-        
+        } 
     }
 
+    //cia reikia uzregistruoti visus?
     public static function customTaxonomyRegister(){
         $taxonomies = require PLUGIN_DIR_PATH . 'configs/taxonomyConfigs.php';
             if ($taxonomies) {

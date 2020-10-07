@@ -3,18 +3,10 @@
 namespace BIT\controllers;
 
 use BIT\app\App;
-
 use BIT\app\View;
 use BIT\app\Attachment;
-
-
-
 use BIT\models\NewsPost;
-
-
-
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class NewsController {
@@ -72,13 +64,10 @@ class NewsController {
         // return $response;
 
         // print_r($news_content.value);
-
     }
 
 
     public function show (){}
-
-
 
     public function edit (){}
 
@@ -102,9 +91,7 @@ class NewsController {
     public function destroy(Request $request, NewsPost $newsPost)
     {   
         // $newsPost->delete();
-
         // $news = NewsPost::all();
-
         $response = new Response;
         $response->prepare($request);
         $response->setContent(json_encode(['list' => 'hello']));

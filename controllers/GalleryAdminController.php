@@ -33,6 +33,8 @@ class GalleryAdminController {
 		
 	//	$image->save($request, $album->ID);
 
+	// _dc($requestJson->files);
+
 		return $response = new Response;
 	}
 

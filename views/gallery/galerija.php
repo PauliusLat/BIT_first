@@ -119,7 +119,7 @@
           formData.append('images[' + i + ']', file);
           console.log('files[' + i + ']', file)
 
-          axios.post(uri + '/wordpress/wp-content/plugins/BIT-first/api/?route=gallery-create-admin', formData, {
+          axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=gallery-create-admin', formData, {
               headers: {
                   'Content-Type': 'multipart/form-data'
               },

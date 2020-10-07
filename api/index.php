@@ -24,7 +24,7 @@ use BIT\app\ApiRoute;
 
 $response = ApiRoute::apiRoute(/*$app*/);
 
- $response->send();
+$response->send();
 // Cia neturi buti jokiu try cach visi nusitrinkite
 //WP pats gaudo is isveda i debug.log !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
