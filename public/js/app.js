@@ -109,7 +109,7 @@ function editText(editId) {
 
   if (txt != undefined || txt != null || txt.length >= 0 || txt != "" || txt != NaN) {
     var text = txt.split(/\s+/);
-    axios.post(uri + '/wordpress/wp-content/plugins/BIT-first/api/?route=idea-edit-admin', {
+    axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-edit-admin', {
       idea: text,
       editId: editId
     })["catch"](function (err) {
@@ -126,7 +126,7 @@ function solutionText(sId, i) {
 
   if (txt1 != undefined || txt1 != null || txt1.length >= 0 || txt1 != "" || txt1 != NaN) {
     var text1 = txt1.split(/\s+/);
-    axios.post(uri + '/wordpress/wp-content/plugins/BIT-first/api/?route=idea-create-admin', {
+    axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-create-admin', {
       soliution: text1,
       solutionId: sId
     })["catch"](function (err) {
@@ -139,7 +139,7 @@ function solutionText(sId, i) {
 
 
 function deleteIdea(delId) {
-  axios.post(uri + '/wordpress/wp-content/plugins/BIT-first/api/?route=idea-delete-admin', {
+  axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-delete-admin', {
     deleteId: delId
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
@@ -152,7 +152,7 @@ function deleteIdea(delId) {
 window.addEventListener('load', renderColons);
 
 function renderColons() {
-  axios.get(uri + '/wordpress/wp-content/plugins/BIT-first/api/?route=idea-render-admin', {}).then(function (response) {
+  axios.get(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-render-admin', {}).then(function (response) {
     if (response.status == 200 && response.statusText == 'OK') {
       var data = response.data.allData;
       var keys = [];
