@@ -23,6 +23,21 @@ class NewsController {
     
     public function store(Request $request, NewsPost $newsPost) 
     {   
+        // foreach ($request->files->all() as $file) {
+            $post = Attachment::get(783);
+            $post->setDescription('NNNNNNNNNNN');
+            $post->setAlt('BBBBBBBB');
+            $post->save(null, 760);        
+            _dc($file);
+
+        // }
+       
+        // $new = new Attachment();
+        // $new->setCaption('antrasA');
+        // $new->setDescription('treciasA');
+        // $new->setAlt('treciasA');
+        // $new->save();
+
         // $new_news = new NewsPost();
         
         // $new_news->news_content = $request->request->get('news-content');
