@@ -27,7 +27,8 @@ class GalleryAdminController {
 		$request = $this->decodeRequest($requestJson);
 		// $album = AlbumPost::get($post_id);
 		$image = new Attachment();
-		// var_dump($request->files);
+
+		_dc($request);
 		// $image ->save($request);
 		//  = $request->request->get('formData');
 		
@@ -36,7 +37,7 @@ class GalleryAdminController {
 		return $response = new Response;
 	}
 
-	public function decodeRequest($request){
+	private function decodeRequest($request){
 
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);
