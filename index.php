@@ -30,26 +30,7 @@ require_once __DIR__.'/vendor/autoload.php';
 define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
+
 App::start();
 
-$session = Session::start();
 
-$session->set(4,9); 
-$session->set('od',2);
-$session->set('obd',2);
-$session->set('aaaaaaaaa',2);
-//$session->set('kkkkkk',2);
-
-$session->set('la','bu');
-$session->set('aaaaaaaaa',2);
-// $session->set('bbbbbbbbbb',2);
-// $session->flash('flash',7);
-// $session->flash('llllll',7);
-// $session->flash('bbbbbbbb',7);
-
-// _dc(Session::$array);
-// $session->get('bbbbbbbbbb');
-// // $session->delete('flash');
-$transient = Transient::start();
-// _dc($transient->__destruct());
-// // _dc($session);
