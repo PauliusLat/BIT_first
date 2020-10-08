@@ -86,15 +86,157 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/gallery.js":
+/*!*********************************!*\
+  !*** ./resources/js/gallery.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+var uri = document.location.origin;
+
+function startGallery() {
+  window.addEventListener("load", renderGallery, false);
+}
+
+window.addEventListener('load', renderGallery); // document.addEventListener("DOMContentLoaded",  renderGallery, false);
+
+function renderGallery() {
+  //Check File API support
+  if (window.File && window.FileList && window.FileReader) {
+    var filesInput = document.getElementById("files");
+    var filesAll = [];
+    filesInput.addEventListener("change", function (event) {
+      var files = event.target.files;
+      var output = document.getElementById("result");
+      console.log(filesAll.length);
+
+      var _loop = function _loop(i) {
+        filesAll.push(files);
+        var file = files[i];
+
+        if (files[i].size < 1048576) {
+          if (files[i].type.match('image')) {
+            var picReader = new FileReader();
+            picReader.addEventListener("load", function (event) {
+              var picFile = event.target;
+              var div = document.createElement("div");
+              div.className = "galleryDiv";
+              div.innerHTML = "<img class=\"uploadeGallery\" src=\" ".concat(picFile.result, " \"\n                              alt=\" \"/>\n                              <input type=\"text\" id=\"").concat(files[i].name, "+alt\" name=\"altImage\">\n                              <div class=\"deleteImd\" id=\"").concat(files[i].name, "\" >Pasalinti<div/>");
+              output.insertBefore(div, null);
+              var altText = document.getElementById(files[i].name + '+alt');
+              var imgDeleteBtn = document.getElementById(files[i].name);
+
+              imgDeleteBtn.onclick = function () {
+                div.innerHTML = "<div></div>";
+                return file;
+              };
+
+              var uploadeImg = document.getElementById("submitImg");
+              uploadeImg.addEventListener('click', function () {
+                var altTextExport = [];
+                var altTextValue = altText.value; //   altTextExport.push(altTextValue);
+                // sendImageData(file, i, altTextValue);
+
+                filesInput.value = null;
+                altText.value = ""; // window.location.reload();
+              });
+            });
+            picReader.readAsDataURL(file);
+          } else {
+            var currentDiv = document.getElementById("message");
+            var newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
+            currentDiv.appendChild(newContent);
+          }
+        } else {
+          var _currentDiv = document.getElementById("message");
+
+          var _newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+
+          _currentDiv.appendChild(_newContent);
+        }
+      };
+
+      for (var i = 0; i < files.length; i++) {
+        _loop(i);
+      }
+    });
+  } else {
+    console.log("Your browser does not support File API");
+  }
+} // function newFile(file) {
+// console.log(file)
+//   for (let i = 0; i < files.length; i++) {
+//         let file = files[i];
+//  
+//  console.log(imgDeleteBtn)
+//   deleteCall = imgDeleteBtn.onclick = () => {
+//       div.innerHTML = `<div></div>`;
+//      console.log(file)
+//       return file;
+//   }
+//   imgDeleteBtn.addEventListener('click', deleteCall);
+//   const imdToDelete = document.querySelectorAll(".galleryDiv");
+//   const imgDeleteBtn = document.getElementById(file.name);
+//   let b = imgDeleteBtn.onclick = (function() {
+//      // console.log( file)
+//       imdToDelete.innerHTML = `<div></div>`;
+//    return file;
+//   })();
+//   return b;
+//   }
+// }
+
+
+function sendImageData(file, i, altTextValue) {
+  var formData = new FormData();
+  formData.append('images[' + i + ']', file);
+  console.log('files[' + i + ']', file);
+  axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=gallery-create-admin', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }).then(function (response) {})["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+
+    console.log(error);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startGallery());
+
+/***/ }),
+
 /***/ "./resources/js/main.js":
 /*!******************************!*\
   !*** ./resources/js/main.js ***!
   \******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// import {editText, solutionText, deleteIdea, renderColons} from './idea.js';
-// import {updateSize} from './gallery.js';
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gallery.js */ "./resources/js/gallery.js");
+// import startIdea from './idea.js';
+ // import Header from "./test.js"
+// (async () => {
+//     if (startI) {
+//       // import module for side effects
+//       await import('./idea.js');
+//     }
+//   })();
 
 /***/ }),
 
