@@ -111,9 +111,8 @@
 
         let formData = new FormData();
 
-        formData.append('images[' + i + ']', file,
-            'alttext[' + i + ']', altTextValue);
-        // console.log('files[' + i + ']', file,
+        formData.append('images[' + i + ']', file);        
+        console.log('files[' + i + ']', file);
         //     'alttext[' + i + ']', altTextValue)
 
         axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=gallery-create-admin', formData, {
