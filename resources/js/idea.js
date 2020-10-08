@@ -2,6 +2,9 @@
 
 const uri = document.location.origin;
 
+function startIdea(){
+    window.addEventListener("load", renderColons, false);
+}
 /*----------------------- edit content axios----------------------------*/
 
 function editText(editId) {
@@ -52,9 +55,7 @@ function deleteIdea(delId) {
 
 //  /*------------------------------render data  axios-----------------------------------------*/
 
-window.addEventListener('load', renderColons);
-
-function renderColons() {
+function renderColons(e) {
 
     axios.get(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-render-admin', {
 
@@ -148,4 +149,4 @@ function renderColons() {
         });
 }
 
-export {editText, solutionText, deleteIdea, renderColons};
+export default startIdea();

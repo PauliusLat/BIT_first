@@ -23,17 +23,21 @@ class GalleryAdminController {
 		return View::adminRender('gallery.galerija');
 	}
 
-	public function create(Request $requestJson, AlbumPost $album) {
-		$request = $this->decodeRequest($requestJson);
-		// $album = AlbumPost::get($post_id);
-		$image = new Attachment();
-		// var_dump($request->files);
-		// $image ->save($request);
-		//  = $request->request->get('formData');
-		
-	//	$image->save($request, $album->ID);
+	public function create(Request $request, AlbumPost $album) {
 
-		return $response = new Response;
+		foreach($request->files->all() as $filesArr) {
+			if($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile){
+				$image = new Attachment();
+				$image->save($filesArr);
+			}elseif(is_array($filesArr)){
+				foreach ($filesArr as $file) {
+					$image = new Attachment();
+					$image->save($file);
+				}
+			}
+		}
+		return new Response();
+	
 	}
 
 	public function decodeRequest($request){
