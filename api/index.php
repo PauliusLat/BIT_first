@@ -23,7 +23,9 @@ use BIT\app\ApiRoute;
 // $app = App::start();
 
 $response = ApiRoute::apiRoute(/*$app*/);
-$response->send();
+if($response){
+    $response->send();
+}
 
 
 // Cia neturi buti jokiu try cach visi nusitrinkite

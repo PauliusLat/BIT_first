@@ -23,19 +23,43 @@ class GalleryAdminController {
 		return View::adminRender('gallery.galerija');
 	}
 
-	public function create(Request $requestJson, AlbumPost $album) {
-		$request = $this->decodeRequest($requestJson);
-		// $album = AlbumPost::get($post_id);
-		$image = new Attachment();
+	public function create(Request $request, AlbumPost $album) {
 
-		_dc($request);
+		foreach($request->files->all() as $filesArr) {
+			if($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile){
+				$image = new Attachment();
+				$image->save($filesArr);
+			}elseif(is_array($filesArr)){
+				foreach ($filesArr as $file) {
+					$image = new Attachment();
+					$image->save($file);
+				}
+			}
+		}
+		
+		// $request = $this->decodeRequest($requestJson);
+	
+
 		// $image ->save($request);
 		//  = $request->request->get('formData');
 		
 	//	$image->save($request, $album->ID);
 
-		return $response = new Response;
+		// return $response = new Response;
 	}
+	// private function getFilesFromRequest(Request $request){
+	// 	foreach($request->files->all() as $filesArr) {
+	// 		if($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile){
+	// 			$image = new Attachment();
+	// 			$image->save($filesArr);
+	// 		}elseif(is_array($filesArr)){
+	// 			foreach ($filesArr as $file) {
+	// 				$image = new Attachment();
+	// 				$image->save($file);
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	private function decodeRequest($request){
 
