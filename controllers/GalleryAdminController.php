@@ -36,16 +36,8 @@ class GalleryAdminController {
 				}
 			}
 		}
-		
-		// $request = $this->decodeRequest($requestJson);
+		return new Response();
 	
-
-		// $image ->save($request);
-		//  = $request->request->get('formData');
-		
-	//	$image->save($request, $album->ID);
-
-		// return $response = new Response;
 	}
 	// private function getFilesFromRequest(Request $request){
 	// 	foreach($request->files->all() as $filesArr) {
