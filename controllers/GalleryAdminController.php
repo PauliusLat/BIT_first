@@ -32,13 +32,20 @@ class GalleryAdminController {
 			}elseif(is_array($filesArr)){
 				foreach ($filesArr as $file) {
 					$image = new Attachment();
-					$image->save($file);
+				//	$image->save($file);
 				}
 			}
 		}
 		return new Response();
 	
 	}
+
+	// 	$data = (Atachment::all())->all();
+// foreach($data as $img){
+// 	$a = $img->getUrl();
+// }
+
+
 	// private function getFilesFromRequest(Request $request){
 	// 	foreach($request->files->all() as $filesArr) {
 	// 		if($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile){
