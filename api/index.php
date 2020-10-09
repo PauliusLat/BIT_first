@@ -27,5 +27,5 @@ $response = ApiRoute::apiRoute(/*$app*/);
 $response->send();
 
 
-$response->send();
+
 

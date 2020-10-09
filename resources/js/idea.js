@@ -2,8 +2,12 @@
 
 const uri = document.location.origin;
 
-function startIdea(){
-    window.addEventListener("load", renderColons, false);
+const ideaStrt = document.getElementById("startIdeaAdmin");
+
+function startIdea() {
+    if (ideaStrt) {
+        window.addEventListener("load", renderColons, false);
+    }
 }
 /*----------------------- edit content axios----------------------------*/
 
@@ -80,7 +84,7 @@ function renderColons(e) {
                     let value = data[keys[i]];
 
                     HTMLString +=
-                `<div class="box"> 
+                        `<div class="box"> 
                     <div class="text"><div class="data" >${value.post_date}</div>                 
                     </div>
                     <div class="ideaContent">
