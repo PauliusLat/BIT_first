@@ -4,6 +4,13 @@
 
 const uri = document.location.origin;
 
+const ideaStrt = document.getElementById("startIdeaAdmin");
+
+function startIdea() {
+  if (ideaStrt) {
+    window.addEventListener("load", renderColons, false);
+  }
+}
 /*----------------------- edit content axios----------------------------*/
 
 function editText(editId) {
@@ -82,9 +89,7 @@ function deleteIdea(delId) {
 
 //  /*------------------------------render data  axios-----------------------------------------*/
 
-window.addEventListener("load", renderColons);
-
-function renderColons() {
+function renderColons(e) {
   axios
     .get(
       uri +
@@ -194,4 +199,4 @@ function renderColons() {
     });
 }
 
-export { editText, solutionText, deleteIdea, renderColons };
+export default startIdea();
