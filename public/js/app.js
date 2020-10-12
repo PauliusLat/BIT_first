@@ -97,6 +97,7 @@
 __webpack_require__.r(__webpack_exports__);
 
 
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
 var gallery = document.getElementById("loadeGallery");
 
@@ -104,9 +105,7 @@ function startGallery() {
   if (gallery) {
     window.addEventListener("load", renderGallery, false);
   }
-} // window.addEventListener('load', renderGallery);
-// document.addEventListener("DOMContentLoaded",  renderGallery, false);
-
+}
 
 function renderGallery() {
   //Check File API support
@@ -121,7 +120,7 @@ function renderGallery() {
         filesAll = imgArray[i];
       }
 
-      renderImages(filesAll); // console.log(filesAll);
+      renderImages(filesAll);
     });
   } else {
     console.log("Your browser does not support File API");
@@ -129,40 +128,40 @@ function renderGallery() {
 }
 
 function renderImages(filesAll) {
-  var arraySend = []; // filesAll.forEach(element => console.log(element));
+  var arraySend = [];
+  var currentDiv = document.getElementById("message");
 
   var _loop = function _loop(i) {
-    // console.log(filesAll[i]);
     if (filesAll[i].size < 1048576) {
       if (filesAll[i].type.match('image')) {
         var picReader = new FileReader();
         picReader.addEventListener("load", function (event) {
           var picFile = event.target;
+          var altId = getID();
+          var deleteId = getID();
+          var deleteBtn = getID();
           var output = document.getElementById("result");
           var div = document.createElement("div");
-          div.className = "galleryDiv"; //console.log(picFile);
-
-          div.innerHTML = "<img class=\"uploadeGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <input type=\"text\" id=\"").concat(filesAll[i].name, "+alt\" name=\"altImage\">\n                      <div class=\"deleteImd\" id=\"").concat(filesAll[i].name, "\" >Pasalinti<div/>");
-          output.insertBefore(div, null);
-          var altText = document.getElementById(filesAll[i].name + '+alt');
-          var imgDeleteBtn = document.getElementById(filesAll[i].name);
+          div.className = "galleryDiv";
+          div.id = deleteId;
+          div.innerHTML = "<img class=\"uploadeImageGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <label for=\"").concat(deleteBtn, "\">Tag: </label>\n                      <input type=\"text\" id=\"").concat(altId, "\" name=\"altImage\">\n                      <div class=\"deleteImd\" id=\"").concat(deleteBtn, "\">Trinti<div/>");
+          output.insertBefore(div, currentDiv);
+          var altText = document.getElementById(altId.name);
+          var imgDeleteBtn = document.getElementById(deleteBtn);
+          var deleteDiv = document.getElementById(deleteId);
           imgDeleteBtn.addEventListener("click", function () {
             filesAll.splice(i, 1);
-            div.innerHTML = "<div></div>";
+            deleteDiv.remove();
           });
         });
         picReader.readAsDataURL(filesAll[i]);
       } else {
-        var currentDiv = document.getElementById("message");
-        var newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
-        currentDiv.appendChild(newContent);
+        //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
+        alert("Tai nera paveikslelio tipo formatas"); //  currentDiv.appendChild(newContent);
       }
     } else {
-      var _currentDiv = document.getElementById("message");
-
-      var _newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-
-      _currentDiv.appendChild(_newContent);
+      //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+      alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //   currentDiv.appendChild(newContent);
     }
   };
 
@@ -183,13 +182,15 @@ function sendImageData(filesAll) {
   var file = [];
 
   for (var i = 0; i < filesAll.length; i++) {
-    file = filesAll[i];
-    console.log('files[' + i + ']', file);
-    formData.append('files[' + i + ']', file);
-  } // formData.append('text', allText);
+    for (var j = 0; j < filesAll[i].length; j++) {
+      file = filesAll[i][j];
+    }
+  }
 
+  console.log('images', file);
+  formData.append('images', file); // formData.append('text', allText);
 
-  axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=gallery-create-admin', formData, {
+  axios.post(uri + path + 'gallery-create-admin', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -206,27 +207,11 @@ function sendImageData(filesAll) {
 
     console.log(error);
   });
-} // function getNewArray(array, filesAll) {
-//     for (var i = 0; i < array.length; i++) {
-//         for (let j = 0; j < filesAll.length; j++) {
-//             if (array[i].name == filesAll[j].name) {
-//                 delete filesAll[j];
-//             }
-//         }
-//         filesAll.push(array[i]);
-//     }
-//     filesAll = filesAll.filter(function () {
-//         return true;
-//     });
-//     let newArray = [];
-//     for (let i = 0; i < filesAll.length; i++) {
-//         newArray.push(filesAll[i]);
-//     }
-//     //  filesAll =null;
-//     // console.log(newArray);
-//     return newArray;
-// }
+}
 
+function getID() {
+  return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (startGallery());
 
