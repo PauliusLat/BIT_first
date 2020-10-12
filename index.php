@@ -26,21 +26,39 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use BIT\app\coreExeptions\wrongArgsTypeExeption;
 
 require_once __DIR__.'/vendor/autoload.php';
-App::start();
+
 
 define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
+App::start();
+
+
+// add_action('init', function() {
+//     $album = new AlbumPost;
+//     $album->save();
+//      _dc( $album);
+//     $album->addTag(['newtag', 'anothertag']);
+//     // echo '<pre>';    
+   
+//     // _dc( $album);
+//     // wp_remove_object_terms( '953', '27', 'hashtag');
+//     $album->removeTag('anothertag', 'hashtag');
+//     // // _dc($album->getAllTags());
+//     _dc($album->getTags()->sortBy('count', 'desc'));
+//     //  $idea = new IdeaPost;
+//     //  $idea->save();
+//     //  _dc( $idea);
+//     //  $idea->addTag('');
+// });
 
 
 
-add_action('init', function() {
-    $album = new AlbumPost;
-    $album->save();
-    $album->addTag('tag1, tag2');
-    echo '<pre>';    
-    // _dc($album->getAllTags()->sortBy('count', 'desc'));
-});
+// $request = App::start()->getService('request');
+// $request->attributes->set('mykey', 'myvalue');
+// $parameters = $request->attributes->get('mykey', 'myvalue');
+
+// _dc($parameters);
 
 
 

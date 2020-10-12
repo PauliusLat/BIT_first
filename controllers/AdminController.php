@@ -1,22 +1,18 @@
 <?php
-
 namespace BIT\controllers;
-
+use Symfony\Component\HttpFoundation\Response;
 use BIT\app\App;
-
 class AdminController {
     // public function __construct()
     // {
     //     echo "Create HomeController";
     // }
-
     public function index() {
         echo PLUGIN_DIR_URL . '<br>';
         echo '
             <br>
             <button id="editButton"> Click </button>
         ';
-
         echo "<script language='javascript'>
             const editButton = document.querySelector('#editButton');
             // console.log(editButton);
@@ -42,5 +38,6 @@ class AdminController {
                 });
             }
         </script>";
+        return $response = new Response;
     }
 }

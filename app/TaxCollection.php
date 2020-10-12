@@ -1,7 +1,7 @@
 <?php
 namespace BIT\app;
 
-use BIT\app\modelTraits\Talbum;
+use BIT\app\modelTraits\Ttaxonomy;
 use BIT\app\coreExeptions\InvalidOrderArgException;
 
 class TaxCollection implements \IteratorAggregate
