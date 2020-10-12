@@ -9,7 +9,7 @@ use BIT\app\Post;
 
 class IdeaPost extends Post{
     use Ttaxonomy;
-    use Tcategory;
+    // use Tcategory;
     use Tidea;
     protected static $type = 'idea';
 }
