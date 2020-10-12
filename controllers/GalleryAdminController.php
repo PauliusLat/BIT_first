@@ -24,7 +24,7 @@ class GalleryAdminController {
 	}
 
 	public function create(Request $request, AlbumPost $album) {
-
+		
 		foreach($request->files->all() as $filesArr) {
 			if($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile){
 				$image = new Attachment();
