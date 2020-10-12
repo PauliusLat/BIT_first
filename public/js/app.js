@@ -110,11 +110,12 @@ function startGallery() {
 function renderGallery() {
   //Check File API support
   if (window.File && window.FileList && window.FileReader) {
-    var filesInput = document.getElementById("files");
+    var filesInput = document.getElementById("files"); // let rates = document.getElementsByName('img').files;
+    // console.log(rates);
+
     var filesAll = [];
     filesInput.addEventListener("change", function (event) {
       var array = Array.from(event.target.files);
-      console.log(array);
       var imgArray = new Array(array);
 
       for (var i = 0; i < imgArray.length; i++) {
@@ -231,6 +232,7 @@ __webpack_require__.r(__webpack_exports__);
 /** @format */
 
 
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
 var ideaStrt = document.getElementById("startIdeaAdmin");
 
@@ -247,7 +249,7 @@ function editText(editId) {
 
   if (txt != undefined || txt != null || txt.length >= 0 || txt != "" || txt != NaN) {
     var text = txt.split(/\s+/);
-    axios.post(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-edit-admin", {
+    axios.post(uri + path + "idea-edit-admin", {
       idea: text,
       editId: editId
     })["catch"](function (err) {
@@ -264,7 +266,7 @@ function solutionText(sId, i) {
 
   if (txt1 != undefined || txt1 != null || txt1.length >= 0 || txt1 != "" || txt1 != NaN) {
     var text1 = txt1.split(/\s+/);
-    axios.post(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-create-admin", {
+    axios.post(uri + path + "idea-create-admin", {
       soliution: text1,
       solutionId: sId
     })["catch"](function (err) {
@@ -277,7 +279,7 @@ function solutionText(sId, i) {
 
 
 function deleteIdea(delId) {
-  axios.post(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-delete-admin", {
+  axios.post(uri + path + "idea-delete-admin", {
     deleteId: delId
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
@@ -288,7 +290,7 @@ function deleteIdea(delId) {
 
 
 function renderColons(e) {
-  axios.get(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-render-admin", {}).then(function (response) {
+  axios.get(uri + path + "idea-render-admin", {}).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {
       var data = response.data.allData;
       var keys = [];

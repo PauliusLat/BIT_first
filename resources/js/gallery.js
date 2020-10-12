@@ -6,7 +6,7 @@ const uri = document.location.origin;
 const gallery = document.getElementById("loadeGallery");
 
 function startGallery() {
-    if (gallery) {
+    if (gallery) {        
         window.addEventListener("load", renderGallery, false);
     }
 }
@@ -16,13 +16,14 @@ function renderGallery() {
     if (window.File && window.FileList && window.FileReader) {
 
         let filesInput = document.getElementById("files");
-        
+        // let rates = document.getElementsByName('img').files;
+        // console.log(rates);
         let filesAll = [];
 
         filesInput.addEventListener("change", function (event) {
 
             let array = Array.from(event.target.files);
-            console.log(array);
+
             let imgArray = new Array(array);
 
             for (let i = 0; i < imgArray.length; i++) {
