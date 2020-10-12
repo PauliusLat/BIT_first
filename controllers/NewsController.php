@@ -73,10 +73,10 @@ class NewsController {
         // // $new_news->news_content = 'hey';
         // $new_news->save();
 
-        // $response = new Response;
-        // $response->prepare($request);
-        // $response->setContent(json_encode(['html' => $this->index()]));
-        // return $response;
+        $response = new Response;
+        $response->prepare($request);
+        $response->setContent(json_encode(['html' => $this->index()]));
+        return $response;
 
         // print_r($news_content.value);
     }

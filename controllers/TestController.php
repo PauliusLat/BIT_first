@@ -38,5 +38,6 @@ class TestController {
     function front() {
         // put JS here and load view through API
         echo 'Paulione';
+  
     }
 }

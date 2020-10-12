@@ -1,7 +1,7 @@
 <?php
 
 namespace BIT\controllers;
-
+use Symfony\Component\HttpFoundation\Response;
 use BIT\app\App;
 
 class AdminController {
@@ -42,5 +42,6 @@ class AdminController {
                 });
             }
         </script>";
+        return $response = new Response;
     }
 }

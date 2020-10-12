@@ -4,6 +4,13 @@
 
 const uri = document.location.origin;
 
+const ideaStrt = document.getElementById("startIdeaAdmin");
+
+function startIdea() {
+    if (ideaStrt) {
+        window.addEventListener("load", renderColons, false);
+    }
+}
 /*----------------------- edit content axios----------------------------*/
 
 function editText(editId) {
@@ -82,34 +89,33 @@ function deleteIdea(delId) {
 
 //  /*------------------------------render data  axios-----------------------------------------*/
 
-window.addEventListener("load", renderColons);
+function renderColons(e) {
 
-function renderColons() {
-  axios
-    .get(
-      uri +
-        "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-render-admin",
-      {}
-    )
-    .then(function(response) {
-      if (response.status == 200 && response.statusText == "OK") {
-        const data = response.data.allData;
+    axios.get(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-render-admin', {
 
-        let keys = [];
+    })
+        .then(function (response) {
 
-        for (let key in data) {
-          keys.push(key);
-        }
+            if (response.status == 200 && response.statusText == 'OK') {
+                const data = response.data.allData;
 
-        const rende = document.getElementById("box");
-        let HTMLString = "";
-        let counter = 0;
+                let keys = [];
 
-        for (let i = keys.length - 1; i >= 0; i--) {
-          counter++;
-          let value = data[keys[i]];
+                for (let key in data) {
+                    keys.push(key);
+                }
 
-          HTMLString += `<div class="box"> 
+                const rende = document.getElementById('box');
+                let HTMLString = '';
+                let counter = 0;
+
+                for (let i = keys.length - 1; i >= 0; i--) {
+                    counter++;
+                    let value = data[keys[i]];
+
+                    HTMLString +=
+                        `<div class="box"> 
+
                     <div class="text"><div class="data" >${value.post_date}</div>                 
                     </div>
                     <div class="ideaContent">
@@ -194,4 +200,6 @@ function renderColons() {
     });
 }
 
-export { editText, solutionText, deleteIdea, renderColons };
+
+export default startIdea();
+
