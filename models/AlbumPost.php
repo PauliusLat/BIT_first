@@ -9,7 +9,7 @@ use BIT\app\Post;
 class AlbumPost extends Post{
 
     use Ttaxonomy;
-    use Tcategory;
+    // use Tcategory;
     use Talbum;
 
     protected static $type = 'album';

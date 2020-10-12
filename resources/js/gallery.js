@@ -109,7 +109,7 @@ function sendImageData(filesAll) {
         file = filesAll[i];
 
         console.log('files[' + i + ']', file)
-        formData.append('images[' + i + ']', file);
+        formData.append('files[' + i + ']', file);
 
     }
     // formData.append('text', allText);
