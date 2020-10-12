@@ -16,11 +16,13 @@ function renderGallery() {
     if (window.File && window.FileList && window.FileReader) {
 
         let filesInput = document.getElementById("files");
+        
         let filesAll = [];
 
         filesInput.addEventListener("change", function (event) {
 
             let array = Array.from(event.target.files);
+            console.log(array);
             let imgArray = new Array(array);
 
             for (let i = 0; i < imgArray.length; i++) {
@@ -65,7 +67,7 @@ function renderImages(filesAll) {
 
                     output.insertBefore(div, currentDiv);
 
-                    const altText = document.getElementById(altId.name);
+                    // const altText = document.getElementById(altId.name);
                     const imgDeleteBtn = document.getElementById(deleteBtn);
                     const deleteDiv = document.getElementById(deleteId);
 
@@ -95,6 +97,7 @@ function renderImages(filesAll) {
     const uploadeImg = document.getElementById("submitImg");
 
     uploadeImg.addEventListener('click', function () {
+        // console.log(arraySend);
         sendImageData(arraySend);
     });
 }
@@ -111,7 +114,7 @@ function sendImageData(filesAll) {
             file = (filesAll[i][j]);
         }
     }
-    console.log('images', file)
+    // console.log('images', file)
     formData.append('images', file);
 
     // formData.append('text', allText);
