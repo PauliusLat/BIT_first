@@ -11,20 +11,19 @@ class Config{
                     register_post_type($type, $args);
                 }   
             });   
-        }
-       
-        
+        } 
     }
 
+    //cia reikia uzregistruoti visus?
     public static function customTaxonomyRegister(){
         $taxonomies = require PLUGIN_DIR_PATH . 'configs/taxonomyConfigs.php';
             if ($taxonomies) {
                 add_action('init', function() use($taxonomies){
-                foreach ($taxonomies as $taxonomy => $args) {
-                        register_taxonomy($taxonomy, ['album'], $args);
-                    }   
+                    foreach ($taxonomies as $taxonomy => $args) {
+                            register_taxonomy($taxonomy, ['album'], $args);
+                        }   
                 });   
             }          
       }
-
+  
 }
