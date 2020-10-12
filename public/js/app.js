@@ -241,6 +241,7 @@ function sendImageData(filesAll) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/** @format */
 
 
 var uri = document.location.origin;
@@ -259,7 +260,7 @@ function editText(editId) {
 
   if (txt != undefined || txt != null || txt.length >= 0 || txt != "" || txt != NaN) {
     var text = txt.split(/\s+/);
-    axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-edit-admin', {
+    axios.post(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-edit-admin", {
       idea: text,
       editId: editId
     })["catch"](function (err) {
@@ -276,7 +277,7 @@ function solutionText(sId, i) {
 
   if (txt1 != undefined || txt1 != null || txt1.length >= 0 || txt1 != "" || txt1 != NaN) {
     var text1 = txt1.split(/\s+/);
-    axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-create-admin', {
+    axios.post(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-create-admin", {
       soliution: text1,
       solutionId: sId
     })["catch"](function (err) {
@@ -289,19 +290,19 @@ function solutionText(sId, i) {
 
 
 function deleteIdea(delId) {
-  axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-delete-admin', {
+  axios.post(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-delete-admin", {
     deleteId: delId
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
-    console.log('Problemos su Delete api');
+    console.log("Problemos su Delete api");
   });
   setTimeout(renderColons, 500);
 } //  /*------------------------------render data  axios-----------------------------------------*/
 
 
 function renderColons(e) {
-  axios.get(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-render-admin', {}).then(function (response) {
-    if (response.status == 200 && response.statusText == 'OK') {
+  axios.get(uri + "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-render-admin", {}).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
       var data = response.data.allData;
       var keys = [];
 
@@ -309,14 +310,14 @@ function renderColons(e) {
         keys.push(key);
       }
 
-      var rende = document.getElementById('box');
-      var HTMLString = '';
+      var rende = document.getElementById("box");
+      var HTMLString = "";
       var counter = 0;
 
       for (var i = keys.length - 1; i >= 0; i--) {
         counter++;
         var value = data[keys[i]];
-        HTMLString += "<div class=\"box\"> \n                    <div class=\"text\"><div class=\"data\" >".concat(value.post_date, "</div>                 \n                    </div>\n                    <div class=\"ideaContent\">\n                    <div class=\"ideaTextEdit\">\n                        <textarea class=\"ideaText\" maxlength=\"200\" name=\"idea\" id=\"").concat(value.ID, "\" data-attribute_name=\"\">\n                                ").concat(value.idea_content, "\n                        </textarea>  \n                        <button  class=\"ideaBtn delIdea\" id=\"").concat(value.ID, "\">\n                            Trinti\n                        </button> \n                        <button class=\"ideaBtn edit editButtonIdea\" id=\"").concat(value.ID, "\">\n                            Saugoti\n                        </button>\n                    </div>\n                    <div class=\"ideaSoliution\">\n                        <textarea class=\"ideaTextSoliution\" maxlength=\"200\" name=\"idea\" id=\"").concat(counter, "\" > \n                            ").concat(value.idea_solution, "                     \n                        </textarea>\n                        <button  class=\"ideaBtn addButtonIdea\" id=\"").concat(value.ID, "\">\n                            Sprendimas\n                        </button> \n                    </div> \n                    <span class=\"textCount\" id=\"count\"></span>\n                    </div>  \n                        <div class=\"like\" data-custom-id=\"").concat(value.ID, "\">\n                            <span class=\"like__number\">Like: ").concat(value.idea_like, "</span>             \n                        </div>            \n                    </div>\n                </div>");
+        HTMLString += "<div class=\"box\"> \n\n                    <div class=\"text\"><div class=\"data\" >".concat(value.post_date, "</div>                 \n                    </div>\n                    <div class=\"ideaContent\">\n                    <div class=\"ideaTextEdit\">\n                        <textarea class=\"ideaText\" maxlength=\"200\" name=\"idea\" id=\"").concat(value.ID, "\" data-attribute_name=\"\">\n                                ").concat(value.idea_content, "\n                        </textarea>  \n                        <button  class=\"ideaBtn delIdea\" id=\"").concat(value.ID, "\">\n                            Trinti\n                        </button> \n                        <button class=\"ideaBtn edit editButtonIdea\" id=\"").concat(value.ID, "\">\n                            Saugoti\n                        </button>\n                    </div>\n                    <div class=\"ideaSoliution\">\n                        <textarea class=\"ideaTextSoliution\" maxlength=\"200\" name=\"idea\" id=\"").concat(counter, "\" > \n                            ").concat(value.idea_solution, "                     \n                        </textarea>\n                        <button  class=\"ideaBtn addButtonIdea\" id=\"").concat(value.ID, "\">\n                            Sprendimas\n                        </button> \n                    </div> \n                    <span class=\"textCount\" id=\"count\"></span>\n                    </div>  \n                        <div class=\"like\" data-custom-id=\"").concat(value.ID, "\">\n                            <span class=\"like__number\">Like: ").concat(value.idea_like, "</span>             \n                        </div>            \n                    </div>\n                </div>");
       }
 
       rende.innerHTML = HTMLString;
@@ -327,7 +328,7 @@ function renderColons(e) {
       var _loop = function _loop(_i) {
         var sId = postBtn[_i].id;
 
-        postBtn[_i].addEventListener('click', function () {
+        postBtn[_i].addEventListener("click", function () {
           solutionText(sId, _i + 1);
         }, false);
       };
@@ -339,7 +340,7 @@ function renderColons(e) {
       var _loop2 = function _loop2(_i2) {
         var editId = editBtn[_i2].id;
 
-        editBtn[_i2].addEventListener('click', function () {
+        editBtn[_i2].addEventListener("click", function () {
           editText(editId);
         }, false);
       };
@@ -351,7 +352,7 @@ function renderColons(e) {
       var _loop3 = function _loop3(_i3) {
         var delId = deletetBtn[_i3].id;
 
-        deletetBtn[_i3].addEventListener('click', function () {
+        deletetBtn[_i3].addEventListener("click", function () {
           deleteIdea(delId);
         }, false);
       };
@@ -370,7 +371,7 @@ function renderColons(e) {
     } else if (error.request) {
       console.log(error.request);
     } else {
-      console.log('Error', error.message);
+      console.log("Error", error.message);
     }
 
     console.log(error);
