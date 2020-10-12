@@ -187,7 +187,7 @@ textarea.admin-input {
   margin: 0 auto;
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
 }
 
 .box {
@@ -329,7 +329,7 @@ mark {
 }
 
 .ideaBtn {
-  width: 110px;
+  width: 105px;
   margin: 220px 0 0px 0;
   padding: 10px 0px 10px 0;
   border: none;

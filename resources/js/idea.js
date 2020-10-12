@@ -115,6 +115,7 @@ function renderColons(e) {
           let value = data[keys[i]];
 
           HTMLString += `<div class="box"> 
+
                     <div class="text"><div class="data" >${value.post_date}</div>                 
                     </div>
                     <div class="ideaContent">

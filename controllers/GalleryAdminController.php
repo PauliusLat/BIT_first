@@ -37,7 +37,6 @@ class GalleryAdminController {
 			}
 		}
 		return new Response();
-	
 	}
 
 	// 	$data = (Atachment::all())->all();

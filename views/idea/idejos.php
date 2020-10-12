@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="startIdeaAdmin">
     <div class="idea">
         <h1>
             IDĖJOS

@@ -1,4 +1,7 @@
 
-// import {editText, solutionText, deleteIdea, renderColons} from './idea.js';
-// import {updateSize} from './gallery.js';
+import startIdea from './idea.js';
+import startGallery from './gallery.js';
+// import Header from "./test.js"
+
+
 
