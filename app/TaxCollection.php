@@ -59,7 +59,6 @@ class TaxCollection implements \IteratorAggregate
     }
 
     /** returns a collection of hashtags sorted by $prop */
-
     /** Example usage:
     * $album = new AlbumPost;
     * $album->getAllTags()->sortBy('count', 'desc') */
@@ -112,15 +111,12 @@ class TaxCollection implements \IteratorAggregate
                                 $pluckedTags[$itemKey] = $itemValue; 
                             }
                         }
-
                     }
                 } else {
                     throw new InvalidOrderArgException('Error: argument of pluck() is invalid.');
                 }
             }
         }
-        return new self($pluckedTags);
-        
+        return new self($pluckedTags); 
     }
-
 }
