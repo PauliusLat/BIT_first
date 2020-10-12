@@ -114,6 +114,7 @@ function renderGallery() {
     var filesAll = [];
     filesInput.addEventListener("change", function (event) {
       var array = Array.from(event.target.files);
+      console.log(array);
       var imgArray = new Array(array);
 
       for (var i = 0; i < imgArray.length; i++) {
@@ -145,8 +146,8 @@ function renderImages(filesAll) {
           div.className = "galleryDiv";
           div.id = deleteId;
           div.innerHTML = "<img class=\"uploadeImageGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <label for=\"").concat(deleteBtn, "\">Tag: </label>\n                      <input type=\"text\" id=\"").concat(altId, "\" name=\"altImage\">\n                      <div class=\"deleteImd\" id=\"").concat(deleteBtn, "\">Trinti<div/>");
-          output.insertBefore(div, currentDiv);
-          var altText = document.getElementById(altId.name);
+          output.insertBefore(div, currentDiv); // const altText = document.getElementById(altId.name);
+
           var imgDeleteBtn = document.getElementById(deleteBtn);
           var deleteDiv = document.getElementById(deleteId);
           imgDeleteBtn.addEventListener("click", function () {
@@ -172,6 +173,7 @@ function renderImages(filesAll) {
   arraySend.push(filesAll);
   var uploadeImg = document.getElementById("submitImg");
   uploadeImg.addEventListener('click', function () {
+    // console.log(arraySend);
     sendImageData(arraySend);
   });
 }
@@ -185,9 +187,9 @@ function sendImageData(filesAll) {
     for (var j = 0; j < filesAll[i].length; j++) {
       file = filesAll[i][j];
     }
-  }
+  } // console.log('images', file)
 
-  console.log('images', file);
+
   formData.append('images', file); // formData.append('text', allText);
 
   axios.post(uri + path + 'gallery-create-admin', formData, {
