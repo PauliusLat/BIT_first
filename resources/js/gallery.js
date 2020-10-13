@@ -24,7 +24,7 @@ function renderGallery() {
         filesInput.addEventListener("change", function (event) {
 
             let array = Array.from(event.target.files);
- 
+
             renderImages(array);
         });
     } else {
@@ -95,29 +95,24 @@ function renderImages(filesAll) {
     if (isListener) {
         uploadeImg.addEventListener('click', function () {
             // console.log(arraySend);
-            sendImageData(arraySend);
+            filter(arraySend);
         });
         isListener = false;
     }
 }
 
 function sendImageData(filesAll) {
-    filesAll.filter((a, b) => filesAll.indexOf(a) === b);
-    console.log(filesAll);
-    let formData = new FormData();
 
-    let file = [];
-    var dataTrans = new DataTransfer()
+    let formData = new FormData();
+    const dataTrans = new DataTransfer()
     let itemList = dataTrans.items;
- 
-    for (let i = 0; i < filesAll.length; i++) {
-        for (let j = 0; j < filesAll[i].length; j++) {
-            itemList.add(filesAll[i][j]) ;
-        }
+
+    for (let i = 0; i < filesAll.length; i++) {       
+            itemList.add(filesAll[i]);   
     }
     console.log(itemList);
     formData.append('images', itemList);
-    
+
     // formData.append('text', allText);
     axios.post(uri + path + 'gallery-create-admin', formData, {
         headers: {
@@ -142,6 +137,19 @@ function sendImageData(filesAll) {
 
 function getID() {
     return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+}
+
+function filter(filesAll) {
+    let file = [];
+    for (let i = 0; i < filesAll.length; i++) {
+        for (let j = 0; j < filesAll[i].length; j++) {
+            file.push(filesAll[i][j]);
+        }
+    }
+    file = file.filter((power, toThe, yellowVests) => yellowVests.map(updateDemocracy => updateDemocracy['name']).indexOf(power['name']) === toThe)
+
+    sendImageData(file);
+
 }
 
 export default startGallery();
