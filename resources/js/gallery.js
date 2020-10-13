@@ -22,8 +22,11 @@ function renderGallery() {
         let filesInput = document.getElementById("files");
 
         filesInput.addEventListener("change", function (event) {
-
+            // console.log(event.target.files);
             let array = Array.from(event.target.files);
+            // console.log(array);
+            // let imgArray = new Array(array);
+            // console.log(imgArray);
 
             renderImages(array);
         });
@@ -91,6 +94,7 @@ function renderImages(filesAll) {
     arraySend.push(filesAll);
 
     const uploadeImg = document.getElementById("submitImg");
+    // console.log(isListener);
 
     if (isListener) {
         uploadeImg.addEventListener('click', function () {
@@ -104,16 +108,11 @@ function renderImages(filesAll) {
 function sendImageData(filesAll) {
 
     let formData = new FormData();
-    const dataTrans = new DataTransfer()
-    let itemList = dataTrans.items;
 
-    for (let i = 0; i < filesAll.length; i++) {       
-            itemList.add(filesAll[i]);   
+    for (let i = 0; i < filesAll.length; i++) {
+        formData.append('files'+i, filesAll[i]);
     }
-    console.log(itemList);
-    formData.append('images', itemList);
-
-    // formData.append('text', allText);
+ 
     axios.post(uri + path + 'gallery-create-admin', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'

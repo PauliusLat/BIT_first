@@ -114,7 +114,11 @@ function renderGallery() {
   if (window.File && window.FileList && window.FileReader) {
     var filesInput = document.getElementById("files");
     filesInput.addEventListener("change", function (event) {
-      var array = Array.from(event.target.files);
+      // console.log(event.target.files);
+      var array = Array.from(event.target.files); // console.log(array);
+      // let imgArray = new Array(array);
+      // console.log(imgArray);
+
       renderImages(array);
     });
   } else {
@@ -164,7 +168,7 @@ function renderImages(filesAll) {
   }
 
   arraySend.push(filesAll);
-  var uploadeImg = document.getElementById("submitImg");
+  var uploadeImg = document.getElementById("submitImg"); // console.log(isListener);
 
   if (isListener) {
     uploadeImg.addEventListener('click', function () {
@@ -177,15 +181,11 @@ function renderImages(filesAll) {
 
 function sendImageData(filesAll) {
   var formData = new FormData();
-  var dataTrans = new DataTransfer();
-  var itemList = dataTrans.items;
 
   for (var i = 0; i < filesAll.length; i++) {
-    itemList.add(filesAll[i]);
+    formData.append('files' + i, filesAll[i]);
+    console.log(filesAll[i]);
   }
-
-  console.log(itemList);
-  formData.append('images', itemList); // formData.append('text', allText);
 
   axios.post(uri + path + 'gallery-create-admin', formData, {
     headers: {
