@@ -10,7 +10,7 @@ let isListener = true;
 
 
 function startGallery() {
-    if (gallery) {        
+    if (gallery) {
         window.addEventListener("load", renderGallery, false);
     }
 }
@@ -20,7 +20,6 @@ function renderGallery() {
     if (window.File && window.FileList && window.FileReader) {
 
         let filesInput = document.getElementById("files");
-        
 
         filesInput.addEventListener("change", function (event) {
             // console.log(event.target.files);
@@ -29,9 +28,6 @@ function renderGallery() {
             // let imgArray = new Array(array);
             // console.log(imgArray);
 
-            // for (let i = 0; i < imgArray.length; i++) {
-            //     filesAll = imgArray[i];
-            // }
             renderImages(array);
         });
     } else {
@@ -84,14 +80,14 @@ function renderImages(filesAll) {
                 picReader.readAsDataURL(filesAll[i]);
 
             } else {
-             //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
+                //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
                 alert("Tai nera paveikslelio tipo formatas");
-              //  currentDiv.appendChild(newContent);
+                //  currentDiv.appendChild(newContent);
             }
         } else {
-          //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+            //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
             alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-         //   currentDiv.appendChild(newContent);
+            //   currentDiv.appendChild(newContent);
         }
     }
 
@@ -100,10 +96,10 @@ function renderImages(filesAll) {
     const uploadeImg = document.getElementById("submitImg");
     // console.log(isListener);
 
-    if (isListener){
+    if (isListener) {
         uploadeImg.addEventListener('click', function () {
-            console.log(arraySend);
-            sendImageData(arraySend);
+            // console.log(arraySend);
+            filter(arraySend);
         });
         isListener = false;
     }
@@ -112,7 +108,9 @@ function renderImages(filesAll) {
 function sendImageData(filesAll) {
     let formData = new FormData();
 
-    let file = [];
+    let formData = new FormData();
+    const dataTrans = new DataTransfer()
+    let itemList = dataTrans.items;
 
     for (let i = 0; i < filesAll.length; i++) {
         for (let j = 0; j < filesAll[i].length; j++) {
@@ -143,6 +141,19 @@ function sendImageData(filesAll) {
 
 function getID() {
     return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+}
+
+function filter(filesAll) {
+    let file = [];
+    for (let i = 0; i < filesAll.length; i++) {
+        for (let j = 0; j < filesAll[i].length; j++) {
+            file.push(filesAll[i][j]);
+        }
+    }
+    file = file.filter((power, toThe, yellowVests) => yellowVests.map(updateDemocracy => updateDemocracy['name']).indexOf(power['name']) === toThe)
+
+    sendImageData(file);
+
 }
 
 export default startGallery();
