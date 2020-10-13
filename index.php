@@ -34,23 +34,31 @@ define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 App::start();
 
 
-// add_action('init', function() {
-//     $album = new AlbumPost;
-//     $album->save();
+add_action('init', function() {
+    $album = new AlbumPost;
+    $album->save();
 //      _dc( $album);
-//     $album->addTag(['newtag', 'anothertag']);
+// $album->addTag('spppppsss');
+$album->addCat(['lekstes', 'puodukai'], 'maincat', 45); //gl padaryti, kad ne is butu o stringas kaip kat
+
+// ($album->getCats());
+_dc($album->getChildCats([0]));
+
+// $album->addTag('ooorrr');
 //     // echo '<pre>';    
    
-//     // _dc( $album);
+    // _dc( $album);
 //     // wp_remove_object_terms( '953', '27', 'hashtag');
-//     $album->removeTag('anothertag', 'hashtag');
-//     // // _dc($album->getAllTags());
-//     _dc($album->getTags()->sortBy('count', 'desc'));
+// $album->removeTag(['spppppsss', 'tralialiali', 'vavavavav']);
+//  _dc($album->getAllTags());
+//
+
+// _dc($album->getTags()->sortBy('count', 'desc'));
 //     //  $idea = new IdeaPost;
 //     //  $idea->save();
 //     //  _dc( $idea);
 //     //  $idea->addTag('');
-// });
+ });
 
 
 
