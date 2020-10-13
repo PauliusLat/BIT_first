@@ -114,9 +114,9 @@ function renderGallery() {
   if (window.File && window.FileList && window.FileReader) {
     var filesInput = document.getElementById("files");
     filesInput.addEventListener("change", function (event) {
-      console.log(event.target.files);
-      var array = Array.from(event.target.files);
-      console.log(array); // let imgArray = new Array(array);
+      // console.log(event.target.files);
+      var array = Array.from(event.target.files); // console.log(array);
+      // let imgArray = new Array(array);
       // console.log(imgArray);
       // for (let i = 0; i < imgArray.length; i++) {
       //     filesAll = imgArray[i];
@@ -171,8 +171,7 @@ function renderImages(filesAll) {
   }
 
   arraySend.push(filesAll);
-  var uploadeImg = document.getElementById("submitImg");
-  console.log(isListener);
+  var uploadeImg = document.getElementById("submitImg"); // console.log(isListener);
 
   if (isListener) {
     uploadeImg.addEventListener('click', function () {
@@ -190,12 +189,12 @@ function sendImageData(filesAll) {
 
   for (var i = 0; i < filesAll.length; i++) {
     for (var j = 0; j < filesAll[i].length; j++) {
-      file.push(filesAll[i][j]);
+      formData.append('files' + i + j, filesAll[i][j]);
     }
-  }
+  } // console.log(file);
+  // formData.append('files', file);
+  // formData.append('text', allText);
 
-  console.log(file);
-  formData.append('images', file); // formData.append('text', allText);
 
   axios.post(uri + path + 'gallery-create-admin', formData, {
     headers: {
