@@ -114,14 +114,7 @@ function renderGallery() {
   if (window.File && window.FileList && window.FileReader) {
     var filesInput = document.getElementById("files");
     filesInput.addEventListener("change", function (event) {
-      console.log(event.target.files);
       var array = Array.from(event.target.files);
-      console.log(array); // let imgArray = new Array(array);
-      // console.log(imgArray);
-      // for (let i = 0; i < imgArray.length; i++) {
-      //     filesAll = imgArray[i];
-      // }
-
       renderImages(array);
     });
   } else {
@@ -172,11 +165,10 @@ function renderImages(filesAll) {
 
   arraySend.push(filesAll);
   var uploadeImg = document.getElementById("submitImg");
-  console.log(isListener);
 
   if (isListener) {
     uploadeImg.addEventListener('click', function () {
-      console.log(arraySend);
+      // console.log(arraySend);
       sendImageData(arraySend);
     });
     isListener = false;
@@ -184,18 +176,23 @@ function renderImages(filesAll) {
 }
 
 function sendImageData(filesAll) {
-  // filesAll.filter((a, b) => filesAll.indexOf(a) === b)
+  filesAll.filter(function (a, b) {
+    return filesAll.indexOf(a) === b;
+  });
+  console.log(filesAll);
   var formData = new FormData();
   var file = [];
+  var dataTrans = new DataTransfer();
+  var itemList = dataTrans.items;
 
   for (var i = 0; i < filesAll.length; i++) {
     for (var j = 0; j < filesAll[i].length; j++) {
-      file.push(filesAll[i][j]);
+      itemList.add(filesAll[i][j]);
     }
   }
 
-  console.log(file);
-  formData.append('images', file); // formData.append('text', allText);
+  console.log(itemList);
+  formData.append('images', itemList); // formData.append('text', allText);
 
   axios.post(uri + path + 'gallery-create-admin', formData, {
     headers: {
@@ -409,8 +406,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
