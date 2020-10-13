@@ -183,7 +183,6 @@ function renderImages(filesAll) {
 }
 
 function sendImageData(filesAll) {
-  // filesAll.filter((a, b) => filesAll.indexOf(a) === b)
   var formData = new FormData();
   var file = [];
 
@@ -191,10 +190,7 @@ function sendImageData(filesAll) {
     for (var j = 0; j < filesAll[i].length; j++) {
       formData.append('files' + i + j, filesAll[i][j]);
     }
-  } // console.log(file);
-  // formData.append('files', file);
-  // formData.append('text', allText);
-
+  }
 
   axios.post(uri + path + 'gallery-create-admin', formData, {
     headers: {
