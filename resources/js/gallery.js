@@ -107,23 +107,17 @@ function renderImages(filesAll) {
 
 function sendImageData(filesAll) {
     let formData = new FormData();
-
-    let formData = new FormData();
-    const dataTrans = new DataTransfer()
-    let itemList = dataTrans.items;
-
+    let file = [];
     for (let i = 0; i < filesAll.length; i++) {
         for (let j = 0; j < filesAll[i].length; j++) {
             formData.append('files'+i+j, filesAll[i][j]);
         }
     }
- 
     axios.post(uri + path + 'gallery-create-admin', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         },
     }).then(function (response) {
-
     }).catch(function (error) {
         if (error.response) {
             console.log(error.response.data);
@@ -136,7 +130,6 @@ function sendImageData(filesAll) {
         }
         console.log(error);
     });
-
 }
 
 function getID() {
