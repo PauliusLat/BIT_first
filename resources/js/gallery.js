@@ -4,6 +4,10 @@ const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
 
 const gallery = document.getElementById("loadeGallery");
+let arraySend = [];
+let isListener = true;
+
+
 
 function startGallery() {
     if (gallery) {        
@@ -16,20 +20,19 @@ function renderGallery() {
     if (window.File && window.FileList && window.FileReader) {
 
         let filesInput = document.getElementById("files");
-        // let rates = document.getElementsByName('img').files;
-        // console.log(rates);
-        let filesAll = [];
+        
 
         filesInput.addEventListener("change", function (event) {
-
+            console.log(event.target.files);
             let array = Array.from(event.target.files);
+            console.log(array);
+            // let imgArray = new Array(array);
+            // console.log(imgArray);
 
-            let imgArray = new Array(array);
-
-            for (let i = 0; i < imgArray.length; i++) {
-                filesAll = imgArray[i];
-            }
-            renderImages(filesAll);
+            // for (let i = 0; i < imgArray.length; i++) {
+            //     filesAll = imgArray[i];
+            // }
+            renderImages(array);
         });
     } else {
         console.log("Your browser does not support File API");
@@ -38,7 +41,6 @@ function renderGallery() {
 
 function renderImages(filesAll) {
 
-    let arraySend = [];
     const currentDiv = document.getElementById("message");
 
     for (let i = 0; i < filesAll.length; i++) {
@@ -96,26 +98,29 @@ function renderImages(filesAll) {
     arraySend.push(filesAll);
 
     const uploadeImg = document.getElementById("submitImg");
+    console.log(isListener);
 
-    uploadeImg.addEventListener('click', function () {
-        // console.log(arraySend);
-        sendImageData(arraySend);
-    });
+    if (isListener){
+        uploadeImg.addEventListener('click', function () {
+            console.log(arraySend);
+            sendImageData(arraySend);
+        });
+        isListener = false;
+    }
 }
 
 function sendImageData(filesAll) {
     // filesAll.filter((a, b) => filesAll.indexOf(a) === b)
-
     let formData = new FormData();
 
     let file = [];
 
     for (let i = 0; i < filesAll.length; i++) {
         for (let j = 0; j < filesAll[i].length; j++) {
-            file = (filesAll[i][j]);
+            file.push(filesAll[i][j]);
         }
     }
-    // console.log('images', file)
+    console.log(file);
     formData.append('images', file);
 
     // formData.append('text', allText);
