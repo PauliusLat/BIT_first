@@ -1,9 +1,13 @@
 "use strict";
 
-
+const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
 
 const gallery = document.getElementById("loadeGallery");
+let arraySend = [];
+let isListener = true;
+
+
 
 function startGallery() {
     if (gallery) {
@@ -11,27 +15,17 @@ function startGallery() {
     }
 }
 
-// window.addEventListener('load', renderGallery);
-// document.addEventListener("DOMContentLoaded",  renderGallery, false);
 function renderGallery() {
     //Check File API support
     if (window.File && window.FileList && window.FileReader) {
 
         let filesInput = document.getElementById("files");
-        let filesAll = [];
 
         filesInput.addEventListener("change", function (event) {
 
             let array = Array.from(event.target.files);
-            let imgArray = new Array(array);
 
-            for (let i = 0; i < imgArray.length; i++) {
-                filesAll = imgArray[i];
-            }
-
-            renderImages(filesAll);
-            // console.log(filesAll);
-
+            renderImages(array);
         });
     } else {
         console.log("Your browser does not support File API");
@@ -39,10 +33,11 @@ function renderGallery() {
 }
 
 function renderImages(filesAll) {
-    let arraySend = [];
-    // filesAll.forEach(element => console.log(element));
+
+    const currentDiv = document.getElementById("message");
+
     for (let i = 0; i < filesAll.length; i++) {
-        // console.log(filesAll[i]);
+
         if (filesAll[i].size < 1048576) {
 
             if (filesAll[i].type.match('image')) {
@@ -52,25 +47,29 @@ function renderImages(filesAll) {
                 picReader.addEventListener("load", function (event) {
 
                     const picFile = event.target;
+                    let altId = getID();
+                    let deleteId = getID();
+                    let deleteBtn = getID();
                     const output = document.getElementById("result");
                     const div = document.createElement("div");
                     div.className = "galleryDiv";
+                    div.id = deleteId;
 
-                    //console.log(picFile);
-
-                    div.innerHTML = `<img class="uploadeGallery" src=" ${picFile.result} "
+                    div.innerHTML = `<img class="uploadeImageGallery" src=" ${picFile.result} "
                       alt=" "/>
-                      <input type="text" id="${filesAll[i].name}+alt" name="altImage">
-                      <div class="deleteImd" id="${filesAll[i].name}" >Pasalinti<div/>`;
+                      <label for="${deleteBtn}">Tag: </label>
+                      <input type="text" id="${altId}" name="altImage">
+                      <div class="deleteImd" id="${deleteBtn}">Trinti<div/>`;
 
-                    output.insertBefore(div, null);
+                    output.insertBefore(div, currentDiv);
 
-                    const altText = document.getElementById(filesAll[i].name + '+alt');
-                    const imgDeleteBtn = document.getElementById(filesAll[i].name);
+                    // const altText = document.getElementById(altId.name);
+                    const imgDeleteBtn = document.getElementById(deleteBtn);
+                    const deleteDiv = document.getElementById(deleteId);
 
                     imgDeleteBtn.addEventListener("click", () => {
                         filesAll.splice(i, 1);
-                        div.innerHTML = `<div></div>`;
+                        deleteDiv.remove();
                     });
 
                 });
@@ -78,14 +77,14 @@ function renderImages(filesAll) {
                 picReader.readAsDataURL(filesAll[i]);
 
             } else {
-                const currentDiv = document.getElementById("message");
-                const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
-                currentDiv.appendChild(newContent);
+                //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
+                alert("Tai nera paveikslelio tipo formatas");
+                //  currentDiv.appendChild(newContent);
             }
         } else {
-            const currentDiv = document.getElementById("message");
-            const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-            currentDiv.appendChild(newContent);
+            //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+            alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+            //   currentDiv.appendChild(newContent);
         }
     }
 
@@ -93,27 +92,29 @@ function renderImages(filesAll) {
 
     const uploadeImg = document.getElementById("submitImg");
 
-    uploadeImg.addEventListener('click', function () {
-        sendImageData(arraySend);
-    });
+    if (isListener) {
+        uploadeImg.addEventListener('click', function () {
+            // console.log(arraySend);
+            filter(arraySend);
+        });
+        isListener = false;
+    }
 }
 
 function sendImageData(filesAll) {
-    // filesAll.filter((a, b) => filesAll.indexOf(a) === b)
 
     let formData = new FormData();
+    const dataTrans = new DataTransfer()
+    let itemList = dataTrans.items;
 
-    let file = [];
-
-    for (let i = 0; i < filesAll.length; i++) {
-        file = filesAll[i];
-
-        console.log('files[' + i + ']', file)
-        formData.append('images[' + i + ']', file);
-
+    for (let i = 0; i < filesAll.length; i++) {       
+            itemList.add(filesAll[i]);   
     }
+    console.log(itemList);
+    formData.append('images', itemList);
+
     // formData.append('text', allText);
-    axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=gallery-create-admin', formData, {
+    axios.post(uri + path + 'gallery-create-admin', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         },
@@ -134,27 +135,21 @@ function sendImageData(filesAll) {
 
 }
 
-// function getNewArray(array, filesAll) {
+function getID() {
+    return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+}
 
-//     for (var i = 0; i < array.length; i++) {
-//         for (let j = 0; j < filesAll.length; j++) {
-//             if (array[i].name == filesAll[j].name) {
-//                 delete filesAll[j];
-//             }
-//         }
-//         filesAll.push(array[i]);
-//     }
+function filter(filesAll) {
+    let file = [];
+    for (let i = 0; i < filesAll.length; i++) {
+        for (let j = 0; j < filesAll[i].length; j++) {
+            file.push(filesAll[i][j]);
+        }
+    }
+    file = file.filter((power, toThe, yellowVests) => yellowVests.map(updateDemocracy => updateDemocracy['name']).indexOf(power['name']) === toThe)
 
-//     filesAll = filesAll.filter(function () {
-//         return true;
-//     });
-//     let newArray = [];
-//     for (let i = 0; i < filesAll.length; i++) {
-//         newArray.push(filesAll[i]);
-//     }
-//     //  filesAll =null;
-//     // console.log(newArray);
-//     return newArray;
-// }
+    sendImageData(file);
+
+}
 
 export default startGallery();

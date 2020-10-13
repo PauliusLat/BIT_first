@@ -2,6 +2,7 @@
 
 "use strict";
 
+const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
 
 const ideaStrt = document.getElementById("startIdeaAdmin");
@@ -26,8 +27,8 @@ function editText(editId) {
     let text = txt.split(/\s+/);
     axios
       .post(
-        uri +
-          "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-edit-admin",
+        uri + path +
+          "idea-edit-admin",
         {
           idea: text,
           editId: editId,
@@ -55,8 +56,8 @@ function solutionText(sId, i) {
     let text1 = txt1.split(/\s+/);
     axios
       .post(
-        uri +
-          "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-create-admin",
+        uri + path +
+          "idea-create-admin",
         {
           soliution: text1,
           solutionId: sId,
@@ -74,8 +75,8 @@ function solutionText(sId, i) {
 function deleteIdea(delId) {
   axios
     .post(
-      uri +
-        "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-delete-admin",
+      uri + path +
+        "idea-delete-admin",
       {
         deleteId: delId,
       }
@@ -92,8 +93,8 @@ function deleteIdea(delId) {
 function renderColons(e) {
   axios
     .get(
-      uri +
-        "/wordpress/wp-content/plugins/BIT_first/api/?route=idea-render-admin",
+      uri + path +
+        "idea-render-admin",
       {}
     )
     .then(function(response) {

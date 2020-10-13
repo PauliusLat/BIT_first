@@ -97,31 +97,25 @@
 __webpack_require__.r(__webpack_exports__);
 
 
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
 var gallery = document.getElementById("loadeGallery");
+var arraySend = [];
+var isListener = true;
 
 function startGallery() {
   if (gallery) {
     window.addEventListener("load", renderGallery, false);
   }
-} // window.addEventListener('load', renderGallery);
-// document.addEventListener("DOMContentLoaded",  renderGallery, false);
-
+}
 
 function renderGallery() {
   //Check File API support
   if (window.File && window.FileList && window.FileReader) {
     var filesInput = document.getElementById("files");
-    var filesAll = [];
     filesInput.addEventListener("change", function (event) {
       var array = Array.from(event.target.files);
-      var imgArray = new Array(array);
-
-      for (var i = 0; i < imgArray.length; i++) {
-        filesAll = imgArray[i];
-      }
-
-      renderImages(filesAll); // console.log(filesAll);
+      renderImages(array);
     });
   } else {
     console.log("Your browser does not support File API");
@@ -129,40 +123,39 @@ function renderGallery() {
 }
 
 function renderImages(filesAll) {
-  var arraySend = []; // filesAll.forEach(element => console.log(element));
+  var currentDiv = document.getElementById("message");
 
   var _loop = function _loop(i) {
-    // console.log(filesAll[i]);
     if (filesAll[i].size < 1048576) {
       if (filesAll[i].type.match('image')) {
         var picReader = new FileReader();
         picReader.addEventListener("load", function (event) {
           var picFile = event.target;
+          var altId = getID();
+          var deleteId = getID();
+          var deleteBtn = getID();
           var output = document.getElementById("result");
           var div = document.createElement("div");
-          div.className = "galleryDiv"; //console.log(picFile);
+          div.className = "galleryDiv";
+          div.id = deleteId;
+          div.innerHTML = "<img class=\"uploadeImageGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <label for=\"").concat(deleteBtn, "\">Tag: </label>\n                      <input type=\"text\" id=\"").concat(altId, "\" name=\"altImage\">\n                      <div class=\"deleteImd\" id=\"").concat(deleteBtn, "\">Trinti<div/>");
+          output.insertBefore(div, currentDiv); // const altText = document.getElementById(altId.name);
 
-          div.innerHTML = "<img class=\"uploadeGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <input type=\"text\" id=\"").concat(filesAll[i].name, "+alt\" name=\"altImage\">\n                      <div class=\"deleteImd\" id=\"").concat(filesAll[i].name, "\" >Pasalinti<div/>");
-          output.insertBefore(div, null);
-          var altText = document.getElementById(filesAll[i].name + '+alt');
-          var imgDeleteBtn = document.getElementById(filesAll[i].name);
+          var imgDeleteBtn = document.getElementById(deleteBtn);
+          var deleteDiv = document.getElementById(deleteId);
           imgDeleteBtn.addEventListener("click", function () {
             filesAll.splice(i, 1);
-            div.innerHTML = "<div></div>";
+            deleteDiv.remove();
           });
         });
         picReader.readAsDataURL(filesAll[i]);
       } else {
-        var currentDiv = document.getElementById("message");
-        var newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
-        currentDiv.appendChild(newContent);
+        //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
+        alert("Tai nera paveikslelio tipo formatas"); //  currentDiv.appendChild(newContent);
       }
     } else {
-      var _currentDiv = document.getElementById("message");
-
-      var _newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-
-      _currentDiv.appendChild(_newContent);
+      //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+      alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //   currentDiv.appendChild(newContent);
     }
   };
 
@@ -172,24 +165,29 @@ function renderImages(filesAll) {
 
   arraySend.push(filesAll);
   var uploadeImg = document.getElementById("submitImg");
-  uploadeImg.addEventListener('click', function () {
-    sendImageData(arraySend);
-  });
+
+  if (isListener) {
+    uploadeImg.addEventListener('click', function () {
+      // console.log(arraySend);
+      filter(arraySend);
+    });
+    isListener = false;
+  }
 }
 
 function sendImageData(filesAll) {
-  // filesAll.filter((a, b) => filesAll.indexOf(a) === b)
   var formData = new FormData();
-  var file = [];
+  var dataTrans = new DataTransfer();
+  var itemList = dataTrans.items;
 
   for (var i = 0; i < filesAll.length; i++) {
-    file = filesAll[i];
-    console.log('files[' + i + ']', file);
-    formData.append('images[' + i + ']', file);
-  } // formData.append('text', allText);
+    itemList.add(filesAll[i]);
+  }
 
+  console.log(itemList);
+  formData.append('images', itemList); // formData.append('text', allText);
 
-  axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=gallery-create-admin', formData, {
+  axios.post(uri + path + 'gallery-create-admin', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -206,27 +204,28 @@ function sendImageData(filesAll) {
 
     console.log(error);
   });
-} // function getNewArray(array, filesAll) {
-//     for (var i = 0; i < array.length; i++) {
-//         for (let j = 0; j < filesAll.length; j++) {
-//             if (array[i].name == filesAll[j].name) {
-//                 delete filesAll[j];
-//             }
-//         }
-//         filesAll.push(array[i]);
-//     }
-//     filesAll = filesAll.filter(function () {
-//         return true;
-//     });
-//     let newArray = [];
-//     for (let i = 0; i < filesAll.length; i++) {
-//         newArray.push(filesAll[i]);
-//     }
-//     //  filesAll =null;
-//     // console.log(newArray);
-//     return newArray;
-// }
+}
 
+function getID() {
+  return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+}
+
+function filter(filesAll) {
+  var file = [];
+
+  for (var i = 0; i < filesAll.length; i++) {
+    for (var j = 0; j < filesAll[i].length; j++) {
+      file.push(filesAll[i][j]);
+    }
+  }
+
+  file = file.filter(function (power, toThe, yellowVests) {
+    return yellowVests.map(function (updateDemocracy) {
+      return updateDemocracy['name'];
+    }).indexOf(power['name']) === toThe;
+  });
+  sendImageData(file);
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (startGallery());
 
@@ -241,8 +240,10 @@ function sendImageData(filesAll) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/** @format */
 
 
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
 var ideaStrt = document.getElementById("startIdeaAdmin");
 
@@ -259,7 +260,7 @@ function editText(editId) {
 
   if (txt != undefined || txt != null || txt.length >= 0 || txt != "" || txt != NaN) {
     var text = txt.split(/\s+/);
-    axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-edit-admin', {
+    axios.post(uri + path + "idea-edit-admin", {
       idea: text,
       editId: editId
     })["catch"](function (err) {
@@ -276,7 +277,7 @@ function solutionText(sId, i) {
 
   if (txt1 != undefined || txt1 != null || txt1.length >= 0 || txt1 != "" || txt1 != NaN) {
     var text1 = txt1.split(/\s+/);
-    axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-create-admin', {
+    axios.post(uri + path + "idea-create-admin", {
       soliution: text1,
       solutionId: sId
     })["catch"](function (err) {
@@ -289,19 +290,19 @@ function solutionText(sId, i) {
 
 
 function deleteIdea(delId) {
-  axios.post(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-delete-admin', {
+  axios.post(uri + path + "idea-delete-admin", {
     deleteId: delId
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
-    console.log('Problemos su Delete api');
+    console.log("Problemos su Delete api");
   });
   setTimeout(renderColons, 500);
 } //  /*------------------------------render data  axios-----------------------------------------*/
 
 
 function renderColons(e) {
-  axios.get(uri + '/wordpress/wp-content/plugins/BIT_first/api/?route=idea-render-admin', {}).then(function (response) {
-    if (response.status == 200 && response.statusText == 'OK') {
+  axios.get(uri + path + "idea-render-admin", {}).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
       var data = response.data.allData;
       var keys = [];
 
@@ -309,14 +310,14 @@ function renderColons(e) {
         keys.push(key);
       }
 
-      var rende = document.getElementById('box');
-      var HTMLString = '';
+      var rende = document.getElementById("box");
+      var HTMLString = "";
       var counter = 0;
 
       for (var i = keys.length - 1; i >= 0; i--) {
         counter++;
         var value = data[keys[i]];
-        HTMLString += "<div class=\"box\"> \n                    <div class=\"text\"><div class=\"data\" >".concat(value.post_date, "</div>                 \n                    </div>\n                    <div class=\"ideaContent\">\n                    <div class=\"ideaTextEdit\">\n                        <textarea class=\"ideaText\" maxlength=\"200\" name=\"idea\" id=\"").concat(value.ID, "\" data-attribute_name=\"\">\n                                ").concat(value.idea_content, "\n                        </textarea>  \n                        <button  class=\"ideaBtn delIdea\" id=\"").concat(value.ID, "\">\n                            Trinti\n                        </button> \n                        <button class=\"ideaBtn edit editButtonIdea\" id=\"").concat(value.ID, "\">\n                            Saugoti\n                        </button>\n                    </div>\n                    <div class=\"ideaSoliution\">\n                        <textarea class=\"ideaTextSoliution\" maxlength=\"200\" name=\"idea\" id=\"").concat(counter, "\" > \n                            ").concat(value.idea_solution, "                     \n                        </textarea>\n                        <button  class=\"ideaBtn addButtonIdea\" id=\"").concat(value.ID, "\">\n                            Sprendimas\n                        </button> \n                    </div> \n                    <span class=\"textCount\" id=\"count\"></span>\n                    </div>  \n                        <div class=\"like\" data-custom-id=\"").concat(value.ID, "\">\n                            <span class=\"like__number\">Like: ").concat(value.idea_like, "</span>             \n                        </div>            \n                    </div>\n                </div>");
+        HTMLString += "<div class=\"box\"> \n\n                    <div class=\"text\"><div class=\"data\" >".concat(value.post_date, "</div>                 \n                    </div>\n                    <div class=\"ideaContent\">\n                    <div class=\"ideaTextEdit\">\n                        <textarea class=\"ideaText\" maxlength=\"200\" name=\"idea\" id=\"").concat(value.ID, "\" data-attribute_name=\"\">\n                                ").concat(value.idea_content, "\n                        </textarea>  \n                        <button  class=\"ideaBtn delIdea\" id=\"").concat(value.ID, "\">\n                            Trinti\n                        </button> \n                        <button class=\"ideaBtn edit editButtonIdea\" id=\"").concat(value.ID, "\">\n                            Saugoti\n                        </button>\n                    </div>\n                    <div class=\"ideaSoliution\">\n                        <textarea class=\"ideaTextSoliution\" maxlength=\"200\" name=\"idea\" id=\"").concat(counter, "\" > \n                            ").concat(value.idea_solution, "                     \n                        </textarea>\n                        <button  class=\"ideaBtn addButtonIdea\" id=\"").concat(value.ID, "\">\n                            Sprendimas\n                        </button> \n                    </div> \n                    <span class=\"textCount\" id=\"count\"></span>\n                    </div>  \n                        <div class=\"like\" data-custom-id=\"").concat(value.ID, "\">\n                            <span class=\"like__number\">Like: ").concat(value.idea_like, "</span>             \n                        </div>            \n                    </div>\n                </div>");
       }
 
       rende.innerHTML = HTMLString;
@@ -327,7 +328,7 @@ function renderColons(e) {
       var _loop = function _loop(_i) {
         var sId = postBtn[_i].id;
 
-        postBtn[_i].addEventListener('click', function () {
+        postBtn[_i].addEventListener("click", function () {
           solutionText(sId, _i + 1);
         }, false);
       };
@@ -339,7 +340,7 @@ function renderColons(e) {
       var _loop2 = function _loop2(_i2) {
         var editId = editBtn[_i2].id;
 
-        editBtn[_i2].addEventListener('click', function () {
+        editBtn[_i2].addEventListener("click", function () {
           editText(editId);
         }, false);
       };
@@ -351,7 +352,7 @@ function renderColons(e) {
       var _loop3 = function _loop3(_i3) {
         var delId = deletetBtn[_i3].id;
 
-        deletetBtn[_i3].addEventListener('click', function () {
+        deletetBtn[_i3].addEventListener("click", function () {
           deleteIdea(delId);
         }, false);
       };
@@ -370,7 +371,7 @@ function renderColons(e) {
     } else if (error.request) {
       console.log(error.request);
     } else {
-      console.log('Error', error.message);
+      console.log("Error", error.message);
     }
 
     console.log(error);
@@ -415,8 +416,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
