@@ -8,7 +8,7 @@ use BIT\models\AlbumPost;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GalleryAdminController {
+class CalendarFrontController {
 	public function __construct() {
 
 // 		$attachment = new Attachment();
@@ -18,14 +18,12 @@ class GalleryAdminController {
 		// $attachment->geAttachmentDetails();
 	}
 
-	public function adminIndex() {
-		return View::adminRender('gallery.galerija');
+	public function index() {
+		return View::render('calendar.kalendorius');
 	}
 
 	public function create(Request $request, AlbumPost $album) {
-echo '<pre>';
-var_dump($request);
-// _dc($request);
+
 		foreach ($request->files->all() as $filesArr) {
 			if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
 				$image = new Attachment();

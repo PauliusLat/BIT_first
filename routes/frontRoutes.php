@@ -4,7 +4,10 @@
 // 'event' (key) is provided for the shortcode as attribute
 return [
     'event' => 'EventController@index',
-    'gallery' => 'GalleryController@index',
+
+    'gallery' => 'GalleryAdminController@adminIndex',
+
+    'kalendorius' => 'CalendarFrontController@index',
 
     'ideja' => 'IdeaController@frontIndex',
     'idejos' => 'IdeasController@index',

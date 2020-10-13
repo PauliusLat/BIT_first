@@ -5,6 +5,8 @@
 return [
 	'event' => 'EventController@index',
 
+	'calendar' => 'calendarFrontController@index',
+
 	'ideas-render-front' => 'IdeasController@render',
 
 	'idea-create-front' => 'IdeaController@create',
@@ -20,6 +22,7 @@ return [
 	'gallery-create-admin' => 'GalleryAdminController@create',
 	'gallery-delete-admin' => 'GalleryAdminController@delete',
 
+	'gallery-create-front' => 'GalleryAdminController@create',
 
 	'news_store' => 'NewsController@store',
 	'news_update' => 'NewsController@update',
