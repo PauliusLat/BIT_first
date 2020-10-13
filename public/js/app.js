@@ -169,26 +169,19 @@ function renderImages(filesAll) {
   if (isListener) {
     uploadeImg.addEventListener('click', function () {
       // console.log(arraySend);
-      sendImageData(arraySend);
+      filter(arraySend);
     });
     isListener = false;
   }
 }
 
 function sendImageData(filesAll) {
-  filesAll.filter(function (a, b) {
-    return filesAll.indexOf(a) === b;
-  });
-  console.log(filesAll);
   var formData = new FormData();
-  var file = [];
   var dataTrans = new DataTransfer();
   var itemList = dataTrans.items;
 
   for (var i = 0; i < filesAll.length; i++) {
-    for (var j = 0; j < filesAll[i].length; j++) {
-      itemList.add(filesAll[i][j]);
-    }
+    itemList.add(filesAll[i]);
   }
 
   console.log(itemList);
@@ -215,6 +208,23 @@ function sendImageData(filesAll) {
 
 function getID() {
   return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+}
+
+function filter(filesAll) {
+  var file = [];
+
+  for (var i = 0; i < filesAll.length; i++) {
+    for (var j = 0; j < filesAll[i].length; j++) {
+      file.push(filesAll[i][j]);
+    }
+  }
+
+  file = file.filter(function (power, toThe, yellowVests) {
+    return yellowVests.map(function (updateDemocracy) {
+      return updateDemocracy['name'];
+    }).indexOf(power['name']) === toThe;
+  });
+  sendImageData(file);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (startGallery());
