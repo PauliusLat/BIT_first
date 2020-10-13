@@ -10,7 +10,7 @@ let isListener = true;
 
 
 function startGallery() {
-    if (gallery) {
+    if (gallery) {        
         window.addEventListener("load", renderGallery, false);
     }
 }
