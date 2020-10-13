@@ -5,7 +5,7 @@
         <div class="wrapper">
             <div class="file-upload">
                 <label for="files"><span>&#8593;</span></label>
-                <input class="galleryImage" type="file" id='files' name="img[]"  accept="image/*">
+                <input class="galleryImage" type="file" id='files' name="img[]" multiple accept="image/*">
             </div>
         </div>
         <div class="galleryUploade">

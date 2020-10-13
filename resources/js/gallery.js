@@ -10,7 +10,7 @@ let isListener = true;
 
 
 function startGallery() {
-    if (gallery) {        
+    if (gallery) {
         window.addEventListener("load", renderGallery, false);
     }
 }
@@ -20,18 +20,11 @@ function renderGallery() {
     if (window.File && window.FileList && window.FileReader) {
 
         let filesInput = document.getElementById("files");
-        
 
         filesInput.addEventListener("change", function (event) {
-            console.log(event.target.files);
-            let array = Array.from(event.target.files);
-            console.log(array);
-            // let imgArray = new Array(array);
-            // console.log(imgArray);
 
-            // for (let i = 0; i < imgArray.length; i++) {
-            //     filesAll = imgArray[i];
-            // }
+            let array = Array.from(event.target.files);
+ 
             renderImages(array);
         });
     } else {
@@ -84,25 +77,24 @@ function renderImages(filesAll) {
                 picReader.readAsDataURL(filesAll[i]);
 
             } else {
-             //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
+                //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
                 alert("Tai nera paveikslelio tipo formatas");
-              //  currentDiv.appendChild(newContent);
+                //  currentDiv.appendChild(newContent);
             }
         } else {
-          //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+            //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
             alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-         //   currentDiv.appendChild(newContent);
+            //   currentDiv.appendChild(newContent);
         }
     }
 
     arraySend.push(filesAll);
 
     const uploadeImg = document.getElementById("submitImg");
-    console.log(isListener);
 
-    if (isListener){
+    if (isListener) {
         uploadeImg.addEventListener('click', function () {
-            console.log(arraySend);
+            // console.log(arraySend);
             sendImageData(arraySend);
         });
         isListener = false;
@@ -110,19 +102,22 @@ function renderImages(filesAll) {
 }
 
 function sendImageData(filesAll) {
-    // filesAll.filter((a, b) => filesAll.indexOf(a) === b)
+    filesAll.filter((a, b) => filesAll.indexOf(a) === b);
+    console.log(filesAll);
     let formData = new FormData();
 
     let file = [];
-
+    var dataTrans = new DataTransfer()
+    let itemList = dataTrans.items;
+ 
     for (let i = 0; i < filesAll.length; i++) {
         for (let j = 0; j < filesAll[i].length; j++) {
-            file.push(filesAll[i][j]);
+            itemList.add(filesAll[i][j]) ;
         }
     }
-    console.log(file);
-    formData.append('images', file);
-
+    console.log(itemList);
+    formData.append('images', itemList);
+    
     // formData.append('text', allText);
     axios.post(uri + path + 'gallery-create-admin', formData, {
         headers: {
