@@ -100,6 +100,8 @@ __webpack_require__.r(__webpack_exports__);
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
 var gallery = document.getElementById("loadeGallery");
+var arraySend = [];
+var isListener = true;
 
 function startGallery() {
   if (gallery) {
@@ -111,17 +113,16 @@ function renderGallery() {
   //Check File API support
   if (window.File && window.FileList && window.FileReader) {
     var filesInput = document.getElementById("files");
-    var filesAll = [];
     filesInput.addEventListener("change", function (event) {
+      console.log(event.target.files);
       var array = Array.from(event.target.files);
-      console.log(array);
-      var imgArray = new Array(array);
+      console.log(array); // let imgArray = new Array(array);
+      // console.log(imgArray);
+      // for (let i = 0; i < imgArray.length; i++) {
+      //     filesAll = imgArray[i];
+      // }
 
-      for (var i = 0; i < imgArray.length; i++) {
-        filesAll = imgArray[i];
-      }
-
-      renderImages(filesAll);
+      renderImages(array);
     });
   } else {
     console.log("Your browser does not support File API");
@@ -129,7 +130,6 @@ function renderGallery() {
 }
 
 function renderImages(filesAll) {
-  var arraySend = [];
   var currentDiv = document.getElementById("message");
 
   var _loop = function _loop(i) {
@@ -172,10 +172,15 @@ function renderImages(filesAll) {
 
   arraySend.push(filesAll);
   var uploadeImg = document.getElementById("submitImg");
-  uploadeImg.addEventListener('click', function () {
-    // console.log(arraySend);
-    sendImageData(arraySend);
-  });
+  console.log(isListener);
+
+  if (isListener) {
+    uploadeImg.addEventListener('click', function () {
+      console.log(arraySend);
+      sendImageData(arraySend);
+    });
+    isListener = false;
+  }
 }
 
 function sendImageData(filesAll) {
@@ -185,11 +190,11 @@ function sendImageData(filesAll) {
 
   for (var i = 0; i < filesAll.length; i++) {
     for (var j = 0; j < filesAll[i].length; j++) {
-      file = filesAll[i][j];
+      file.push(filesAll[i][j]);
     }
-  } // console.log('images', file)
+  }
 
-
+  console.log(file);
   formData.append('images', file); // formData.append('text', allText);
 
   axios.post(uri + path + 'gallery-create-admin', formData, {
