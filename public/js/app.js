@@ -181,12 +181,9 @@ function renderImages(filesAll) {
 
 function sendImageData(filesAll) {
   var formData = new FormData();
-  var file = [];
 
   for (var i = 0; i < filesAll.length; i++) {
-    for (var j = 0; j < filesAll[i].length; j++) {
-      formData.append('files' + i + j, filesAll[i][j]);
-    }
+    formData.append('files' + i, filesAll[i]);
   }
 
   axios.post(uri + path + 'gallery-create-admin', formData, {
