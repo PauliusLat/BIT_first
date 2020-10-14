@@ -100,19 +100,16 @@ function sendImageData(filesAll) {
 
     let tagInput;
     let formData = new FormData();
-
     for (let i = 0; i < filesAll.length; i++) {
         tagInput = document.getElementById(filesAll[i].name);
         formData.append('files' + i, filesAll[i]);
         formData.append('tag' + i, tagInput.value + ' ');
     }
-
     axios.post(uri + path + 'gallery-create-admin', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         },
     }).then(function (response) {
-
     }).catch(function (error) {
         if (error.response) {
             console.log(error.response.data);
@@ -125,7 +122,6 @@ function sendImageData(filesAll) {
         }
         console.log(error);
     });
-
 }
 
 function getID() {

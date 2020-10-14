@@ -14,11 +14,13 @@ class NewsController {
     public function index() 
     {   
         $news = NewsPost::all();
-
         return View::adminRender('news.index', ['url' => PLUGIN_DIR_URL, 'news' => $news]);
     }
 
-    public function create(Request $request){}
+    public function create(){
+
+
+    }
     
     
     public function store(Request $request, NewsPost $newsPost) 
