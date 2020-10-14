@@ -114,11 +114,7 @@ function renderGallery() {
   if (window.File && window.FileList && window.FileReader) {
     var filesInput = document.getElementById("files");
     filesInput.addEventListener("change", function (event) {
-      // console.log(event.target.files);
-      var array = Array.from(event.target.files); // console.log(array);
-      // let imgArray = new Array(array);
-      // console.log(imgArray);
-
+      var array = Array.from(event.target.files);
       renderImages(array);
     });
   } else {
@@ -135,16 +131,14 @@ function renderImages(filesAll) {
         var picReader = new FileReader();
         picReader.addEventListener("load", function (event) {
           var picFile = event.target;
-          var altId = getID();
           var deleteId = getID();
           var deleteBtn = getID();
           var output = document.getElementById("result");
           var div = document.createElement("div");
           div.className = "galleryDiv";
           div.id = deleteId;
-          div.innerHTML = "<img class=\"uploadeImageGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <label for=\"").concat(deleteBtn, "\">Tag: </label>\n                      <input type=\"text\" id=\"").concat(altId, "\" name=\"altImage\">\n                      <div class=\"deleteImd\" id=\"").concat(deleteBtn, "\">Trinti<div/>");
-          output.insertBefore(div, currentDiv); // const altText = document.getElementById(altId.name);
-
+          div.innerHTML = "<img class=\"uploadeImageGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <label for=\"").concat(deleteBtn, "\">Tag: </label>\n                      <input type=\"text\" id=\"").concat(filesAll[i].name, "\" class=\"altInput\" name=\"altImage\" value=\"\">\n                      <div class=\"deleteImd\" id=\"").concat(deleteBtn, "\">Trinti<div/>");
+          output.insertBefore(div, currentDiv);
           var imgDeleteBtn = document.getElementById(deleteBtn);
           var deleteDiv = document.getElementById(deleteId);
           imgDeleteBtn.addEventListener("click", function () {
@@ -154,12 +148,11 @@ function renderImages(filesAll) {
         });
         picReader.readAsDataURL(filesAll[i]);
       } else {
-        //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
-        alert("Tai nera paveikslelio tipo formatas"); //  currentDiv.appendChild(newContent);
+        alert("Tai nera paveikslelio tipo formatas");
       }
     } else {
-      //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-      alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //   currentDiv.appendChild(newContent);
+      alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+      //   currentDiv.appendChild(newContent);
     }
   };
 
@@ -168,22 +161,25 @@ function renderImages(filesAll) {
   }
 
   arraySend.push(filesAll);
-  var uploadeImg = document.getElementById("submitImg"); // console.log(isListener);
+  var uploadeImg = document.getElementById("submitImg");
 
   if (isListener) {
     uploadeImg.addEventListener('click', function () {
-      // console.log(arraySend);
-      filter(arraySend);
+      arraySend = filter(arraySend);
+      sendImageData(arraySend); // location.reload();
     });
     isListener = false;
   }
 }
 
 function sendImageData(filesAll) {
+  var tagInput;
   var formData = new FormData();
 
   for (var i = 0; i < filesAll.length; i++) {
+    tagInput = document.getElementById(filesAll[i].name);
     formData.append('files' + i, filesAll[i]);
+    formData.append('tag' + i, tagInput.value + ' ');
   }
 
   axios.post(uri + path + 'gallery-create-admin', formData, {
@@ -214,7 +210,9 @@ function filter(filesAll) {
 
   for (var i = 0; i < filesAll.length; i++) {
     for (var j = 0; j < filesAll[i].length; j++) {
-      file.push(filesAll[i][j]);
+      if (filesAll[i][j] != undefined && filesAll[i][j] != null && filesAll[i][j] != "" && filesAll[i][j] != NaN && filesAll[i][j].size < 1048576) {
+        file.push(filesAll[i][j]);
+      }
     }
   }
 
@@ -223,7 +221,7 @@ function filter(filesAll) {
       return updateDemocracy['name'];
     }).indexOf(power['name']) === toThe;
   });
-  sendImageData(file);
+  return file;
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (startGallery());
@@ -257,7 +255,7 @@ function startIdea() {
 function editText(editId) {
   var txt = document.getElementById(editId).value;
 
-  if (txt != undefined || txt != null || txt.length >= 0 || txt != "" || txt != NaN) {
+  if (txt != undefined && txt != null && txt.length >= 0 && txt != "" && txt != NaN) {
     var text = txt.split(/\s+/);
     axios.post(uri + path + "idea-edit-admin", {
       idea: text,
@@ -274,7 +272,7 @@ function editText(editId) {
 function solutionText(sId, i) {
   var txt1 = document.getElementById(i).value;
 
-  if (txt1 != undefined || txt1 != null || txt1.length >= 0 || txt1 != "" || txt1 != NaN) {
+  if (txt1 != undefined && txt1 != null && txt1.length >= 0 && txt1 != "" && txt1 != NaN) {
     var text1 = txt1.split(/\s+/);
     axios.post(uri + path + "idea-create-admin", {
       soliution: text1,

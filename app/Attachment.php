@@ -4,11 +4,19 @@ namespace BIT\app;
 use BIT\app\Post;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use BIT\app\modelTraits\Ttaxonomy;
+use BIT\app\modelTraits\Tcategory;
+use BIT\app\modelTraits\Tattachment;
 use BIT\app\coreExeptions\wrongArgsTypeExeption;
+
 require PLUGIN_DIR_PATH . '/../../../wp-load.php';
 require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
 class Attachment extends Post{
+
+    use Ttaxonomy;
+	use Tcategory;
+	use Tattachment;
 
     public $_wp_attachment_image_alt = '';
     protected static $type = 'attachment';

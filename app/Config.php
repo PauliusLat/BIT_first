@@ -20,7 +20,7 @@ class Config{
             if ($taxonomies) {
                 add_action('init', function() use($taxonomies){
                     foreach ($taxonomies as $taxonomy => $args) {
-                            register_taxonomy($taxonomy, ['album'], $args);
+                            register_taxonomy($taxonomy, ['attachment'], $args);
                         }   
                 });   
             }          
