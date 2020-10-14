@@ -496,7 +496,7 @@ h1 {
 }
 
 .galleryContainer .galleryUploade #text {
-  margin-top: -47px;
+  margin-top: -39px;
   text-align: center;
 }
 
@@ -504,7 +504,7 @@ h1 {
   stroke-dasharray: 50 0;
   stroke-width: 3px;
   stroke-dashoffset: 0;
-  stroke: #06D6A0;
+  stroke: #6302be;
 }
 
 .galleryContainer .wrapper {

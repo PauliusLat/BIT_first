@@ -91,7 +91,6 @@
   !*** ./resources/js/gallery.js ***!
   \*********************************/
 /*! exports provided: default */
-
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -115,11 +114,7 @@ function renderGallery() {
   if (window.File && window.FileList && window.FileReader) {
     var filesInput = document.getElementById("files");
     filesInput.addEventListener("change", function (event) {
-      // console.log(event.target.files);
-      var array = Array.from(event.target.files); // console.log(array);
-      // let imgArray = new Array(array);
-      // console.log(imgArray);
-
+      var array = Array.from(event.target.files);
       renderImages(array);
     });
   } else {
@@ -136,16 +131,14 @@ function renderImages(filesAll) {
         var picReader = new FileReader();
         picReader.addEventListener("load", function (event) {
           var picFile = event.target;
-          var altId = getID();
           var deleteId = getID();
           var deleteBtn = getID();
           var output = document.getElementById("result");
           var div = document.createElement("div");
           div.className = "galleryDiv";
           div.id = deleteId;
-          div.innerHTML = "<img class=\"uploadeImageGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <label for=\"").concat(deleteBtn, "\">Tag: </label>\n                      <input type=\"text\" id=\"").concat(altId, "\" name=\"altImage\">\n                      <div class=\"deleteImd\" id=\"").concat(deleteBtn, "\">Trinti<div/>");
-          output.insertBefore(div, currentDiv); // const altText = document.getElementById(altId.name);
-
+          div.innerHTML = "<img class=\"uploadeImageGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <label for=\"").concat(deleteBtn, "\">Tag: </label>\n                      <input type=\"text\" id=\"").concat(filesAll[i].name, "\" class=\"altInput\" name=\"altImage\" value=\"\">\n                      <div class=\"deleteImd\" id=\"").concat(deleteBtn, "\">Trinti<div/>");
+          output.insertBefore(div, currentDiv);
           var imgDeleteBtn = document.getElementById(deleteBtn);
           var deleteDiv = document.getElementById(deleteId);
           imgDeleteBtn.addEventListener("click", function () {
@@ -155,12 +148,11 @@ function renderImages(filesAll) {
         });
         picReader.readAsDataURL(filesAll[i]);
       } else {
-        //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
-        alert("Tai nera paveikslelio tipo formatas"); //  currentDiv.appendChild(newContent);
+        alert("Tai nera paveikslelio tipo formatas");
       }
     } else {
-      //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-      alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //   currentDiv.appendChild(newContent);
+      alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+      //   currentDiv.appendChild(newContent);
     }
   };
 
@@ -169,23 +161,25 @@ function renderImages(filesAll) {
   }
 
   arraySend.push(filesAll);
-  var uploadeImg = document.getElementById("submitImg"); // console.log(isListener);
+  var uploadeImg = document.getElementById("submitImg");
 
   if (isListener) {
     uploadeImg.addEventListener('click', function () {
-      // console.log(arraySend);
-      filter(arraySend);
+      arraySend = filter(arraySend);
+      sendImageData(arraySend); // location.reload();
     });
     isListener = false;
   }
 }
 
 function sendImageData(filesAll) {
+  var tagInput;
   var formData = new FormData();
 
   for (var i = 0; i < filesAll.length; i++) {
+    tagInput = document.getElementById(filesAll[i].name);
     formData.append('files' + i, filesAll[i]);
-    console.log(filesAll[i]);
+    formData.append('tag' + i, tagInput.value + ' ');
   }
 
   axios.post(uri + path + 'gallery-create-admin', formData, {
@@ -216,7 +210,9 @@ function filter(filesAll) {
 
   for (var i = 0; i < filesAll.length; i++) {
     for (var j = 0; j < filesAll[i].length; j++) {
-      file.push(filesAll[i][j]);
+      if (filesAll[i][j] != undefined && filesAll[i][j] != null && filesAll[i][j] != "" && filesAll[i][j] != NaN && filesAll[i][j].size < 1048576) {
+        file.push(filesAll[i][j]);
+      }
     }
   }
 
@@ -225,11 +221,10 @@ function filter(filesAll) {
       return updateDemocracy['name'];
     }).indexOf(power['name']) === toThe;
   });
-  sendImageData(file);
+  return file;
 }
 
-
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/gallery.js: Identifier 'formData' has already been declared (111:8)\n\n\u001b[0m \u001b[90m 109 | \u001b[39m    let formData \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mFormData\u001b[39m()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 110 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 111 | \u001b[39m    let formData \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mFormData\u001b[39m()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 112 | \u001b[39m    \u001b[36mconst\u001b[39m dataTrans \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mDataTransfer\u001b[39m()\u001b[0m\n\u001b[0m \u001b[90m 113 | \u001b[39m    let itemList \u001b[33m=\u001b[39m dataTrans\u001b[33m.\u001b[39mitems\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 114 | \u001b[39m\u001b[0m\n    at Parser._raise (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:766:17)\n    at Parser.raiseWithData (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:759:17)\n    at Parser.raise (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:753:17)\n    at ScopeHandler.checkRedeclarationInScope (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:4873:12)\n    at ScopeHandler.declareName (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:4839:12)\n    at Parser.checkLVal (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:9422:22)\n    at Parser.parseVarId (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12118:10)\n    at Parser.parseVar (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12093:12)\n    at Parser.parseVarStatement (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11905:10)\n    at Parser.parseStatementContent (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11497:21)\n    at Parser.parseStatement (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11430:17)\n    at Parser.parseBlockOrModuleBlockBody (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12012:25)\n    at Parser.parseBlockBody (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11998:10)\n    at Parser.parseBlock (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11982:10)\n    at Parser.parseFunctionBody (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:10962:24)\n    at Parser.parseFunctionBodyAndFinish (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:10945:10)\n    at /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12152:12\n    at Parser.withTopicForbiddingContext (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11271:14)\n    at Parser.parseFunction (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12151:10)\n    at Parser.parseFunctionStatement (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11778:17)\n    at Parser.parseStatementContent (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11468:21)\n    at Parser.parseStatement (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11430:17)\n    at Parser.parseBlockOrModuleBlockBody (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12012:25)\n    at Parser.parseBlockBody (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11998:10)\n    at Parser.parseTopLevel (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11361:10)\n    at Parser.parse (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:13044:10)\n    at parse (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:13097:38)\n    at parser (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/core/lib/parser/index.js:54:34)\n    at parser.next (<anonymous>)\n    at normalizeFile (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/core/lib/transformation/normalize-file.js:99:38)\n    at normalizeFile.next (<anonymous>)\n    at run (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/core/lib/transformation/index.js:31:50)\n    at run.next (<anonymous>)\n    at Function.transform (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/core/lib/transform.js:27:41)\n    at transform.next (<anonymous>)\n    at step (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/gensync/index.js:254:32)");
+/* harmony default export */ __webpack_exports__["default"] = (startGallery());
 
 /***/ }),
 
@@ -260,7 +255,7 @@ function startIdea() {
 function editText(editId) {
   var txt = document.getElementById(editId).value;
 
-  if (txt != undefined || txt != null || txt.length >= 0 || txt != "" || txt != NaN) {
+  if (txt != undefined && txt != null && txt.length >= 0 && txt != "" && txt != NaN) {
     var text = txt.split(/\s+/);
     axios.post(uri + path + "idea-edit-admin", {
       idea: text,
@@ -277,7 +272,7 @@ function editText(editId) {
 function solutionText(sId, i) {
   var txt1 = document.getElementById(i).value;
 
-  if (txt1 != undefined || txt1 != null || txt1.length >= 0 || txt1 != "" || txt1 != NaN) {
+  if (txt1 != undefined && txt1 != null && txt1.length >= 0 && txt1 != "" && txt1 != NaN) {
     var text1 = txt1.split(/\s+/);
     axios.post(uri + path + "idea-create-admin", {
       soliution: text1,
@@ -418,8 +413,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

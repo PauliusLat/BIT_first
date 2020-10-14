@@ -18,10 +18,10 @@ function editText(editId) {
   const txt = document.getElementById(editId).value;
 
   if (
-    txt != undefined ||
-    txt != null ||
-    txt.length >= 0 ||
-    txt != "" ||
+    txt != undefined &&
+    txt != null &&
+    txt.length >= 0 &&
+    txt != "" &&
     txt != NaN
   ) {
     let text = txt.split(/\s+/);
@@ -47,10 +47,10 @@ function solutionText(sId, i) {
   const txt1 = document.getElementById(i).value;
 
   if (
-    txt1 != undefined ||
-    txt1 != null ||
-    txt1.length >= 0 ||
-    txt1 != "" ||
+    txt1 != undefined &&
+    txt1 != null &&
+    txt1.length >= 0 &&
+    txt1 != "" &&
     txt1 != NaN
   ) {
     let text1 = txt1.split(/\s+/);
