@@ -39,6 +39,7 @@ class GalleryAdminController
 		foreach ($request->files->all() as $key => $filesArr) {
 			if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
 				$image = new Attachment();
+
 				foreach ($tags as $key1 => $tag) {
 					if ($key == $key) {
 						$image->save($request->files->all()[$key]);
@@ -47,6 +48,7 @@ class GalleryAdminController
 					}
 				}
 				//	$image->save($filesArr);
+
 			} elseif (is_array($filesArr)) {
 				foreach ($filesArr as $file) {
 					$image = new Attachment();
