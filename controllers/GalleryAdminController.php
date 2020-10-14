@@ -31,6 +31,7 @@ var_dump($request->files);
 				$image = new Attachment();
 
 				$image->save($filesArr);
+
 			} elseif (is_array($filesArr)) {
 				foreach ($filesArr as $file) {
 					$image = new Attachment();
