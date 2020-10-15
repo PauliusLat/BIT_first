@@ -7,8 +7,6 @@ const gallery = document.getElementById("loadeGallery");
 let arraySend = [];
 let isListener = true;
 
-
-
 function startGallery() {
     if (gallery) {
         window.addEventListener("load", renderGallery, false);
@@ -22,11 +20,8 @@ function renderGallery() {
         let filesInput = document.getElementById("files");
 
         filesInput.addEventListener("change", function (event) {
-            // console.log(event.target.files);
+
             let array = Array.from(event.target.files);
-            // console.log(array);
-            // let imgArray = new Array(array);
-            // console.log(imgArray);
 
             renderImages(array);
         });
@@ -50,7 +45,6 @@ function renderImages(filesAll) {
                 picReader.addEventListener("load", function (event) {
 
                     const picFile = event.target;
-                    let altId = getID();
                     let deleteId = getID();
                     let deleteBtn = getID();
                     const output = document.getElementById("result");
@@ -61,12 +55,11 @@ function renderImages(filesAll) {
                     div.innerHTML = `<img class="uploadeImageGallery" src=" ${picFile.result} "
                       alt=" "/>
                       <label for="${deleteBtn}">Tag: </label>
-                      <input type="text" id="${altId}" name="altImage">
+                      <input type="text" id="${filesAll[i].name}" class="altInput" name="altImage" value="">
                       <div class="deleteImd" id="${deleteBtn}">Trinti<div/>`;
 
                     output.insertBefore(div, currentDiv);
 
-                    // const altText = document.getElementById(altId.name);
                     const imgDeleteBtn = document.getElementById(deleteBtn);
                     const deleteDiv = document.getElementById(deleteId);
 
@@ -74,19 +67,16 @@ function renderImages(filesAll) {
                         filesAll.splice(i, 1);
                         deleteDiv.remove();
                     });
-
                 });
 
                 picReader.readAsDataURL(filesAll[i]);
 
             } else {
-                //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
                 alert("Tai nera paveikslelio tipo formatas");
-                //  currentDiv.appendChild(newContent);
             }
         } else {
-            //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
             alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+            //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
             //   currentDiv.appendChild(newContent);
         }
     }
@@ -94,33 +84,32 @@ function renderImages(filesAll) {
     arraySend.push(filesAll);
 
     const uploadeImg = document.getElementById("submitImg");
-    // console.log(isListener);
 
     if (isListener) {
         uploadeImg.addEventListener('click', function () {
-            // console.log(arraySend);
-            filter(arraySend);
+
+            arraySend = filter(arraySend);
+            sendImageData(arraySend);
+            // location.reload();
         });
         isListener = false;
     }
 }
 
 function sendImageData(filesAll) {
-  
+
+    let tagInput;
     let formData = new FormData();
-
     for (let i = 0; i < filesAll.length; i++) {
-      
-        formData.append('files'+i, filesAll[i]);
-
+        tagInput = document.getElementById(filesAll[i].name);
+        formData.append('files' + i, filesAll[i]);
+        formData.append('tag' + i, tagInput.value + ' ');
     }
- 
     axios.post(uri + path + 'gallery-create-admin', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         },
     }).then(function (response) {
-
     }).catch(function (error) {
         if (error.response) {
             console.log(error.response.data);
@@ -133,7 +122,6 @@ function sendImageData(filesAll) {
         }
         console.log(error);
     });
-
 }
 
 function getID() {
@@ -141,15 +129,23 @@ function getID() {
 }
 
 function filter(filesAll) {
+
     let file = [];
     for (let i = 0; i < filesAll.length; i++) {
         for (let j = 0; j < filesAll[i].length; j++) {
-            file.push(filesAll[i][j]);
+            if (filesAll[i][j] != undefined && 
+                filesAll[i][j] != null && 
+                filesAll[i][j] != "" && 
+                filesAll[i][j] != NaN && 
+                filesAll[i][j].size < 1048576) {
+
+                file.push(filesAll[i][j]);
+            }
         }
     }
     file = file.filter((power, toThe, yellowVests) => yellowVests.map(updateDemocracy => updateDemocracy['name']).indexOf(power['name']) === toThe)
 
-    sendImageData(file);
+    return file;
 
 }
 
