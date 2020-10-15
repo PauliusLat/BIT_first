@@ -1,424 +1,566 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ({
+/**
+ * **
+ *
+ * @format
+ */
 
-/***/ "./resources/js/gallery.js":
-/*!*********************************!*\
+(function(modules) {
+  // webpackBootstrap
+  /******/ // The module cache
+  /******/ var installedModules = {}; // The require function
+  /******/
+  /******/ /******/ function __webpack_require__(moduleId) {
+    /******/
+    /******/ // Check if module is in cache
+    /******/ if (installedModules[moduleId]) {
+      /******/ return installedModules[moduleId].exports;
+      /******/
+    } // Create a new module (and put it into the cache)
+    /******/ /******/ var module = (installedModules[moduleId] = {
+      /******/ i: moduleId,
+      /******/ l: false,
+      /******/ exports: {},
+      /******/
+    }); // Execute the module function
+    /******/
+    /******/ /******/ modules[moduleId].call(
+      module.exports,
+      module,
+      module.exports,
+      __webpack_require__
+    ); // Flag the module as loaded
+    /******/
+    /******/ /******/ module.l = true; // Return the exports of the module
+    /******/
+    /******/ /******/ return module.exports;
+    /******/
+  } // expose the modules object (__webpack_modules__)
+  /******/
+  /******/
+  /******/ /******/ __webpack_require__.m = modules; // expose the module cache
+  /******/
+  /******/ /******/ __webpack_require__.c = installedModules; // define getter function for harmony exports
+  /******/
+  /******/ /******/ __webpack_require__.d = function(exports, name, getter) {
+    /******/ if (!__webpack_require__.o(exports, name)) {
+      /******/ Object.defineProperty(exports, name, {
+        enumerable: true,
+        get: getter,
+      });
+      /******/
+    }
+    /******/
+  }; // define __esModule on exports
+  /******/
+  /******/ /******/ __webpack_require__.r = function(exports) {
+    /******/ if (typeof Symbol !== "undefined" && Symbol.toStringTag) {
+      /******/ Object.defineProperty(exports, Symbol.toStringTag, {
+        value: "Module",
+      });
+      /******/
+    }
+    /******/ Object.defineProperty(exports, "__esModule", { value: true });
+    /******/
+  }; // create a fake namespace object // mode & 1: value is a module id, require it // mode & 2: merge all properties of value into the ns // mode & 4: return value when already ns object // mode & 8|1: behave like require
+  /******/
+  /******/ /******/ /******/ /******/ /******/ /******/ __webpack_require__.t = function(
+    value,
+    mode
+  ) {
+    /******/ if (mode & 1) value = __webpack_require__(value);
+    /******/ if (mode & 8) return value;
+    /******/ if (
+      mode & 4 &&
+      typeof value === "object" &&
+      value &&
+      value.__esModule
+    )
+      return value;
+    /******/ var ns = Object.create(null);
+    /******/ __webpack_require__.r(ns);
+    /******/ Object.defineProperty(ns, "default", {
+      enumerable: true,
+      value: value,
+    });
+    /******/ if (mode & 2 && typeof value != "string")
+      for (var key in value)
+        __webpack_require__.d(
+          ns,
+          key,
+          function(key) {
+            return value[key];
+          }.bind(null, key)
+        );
+    /******/ return ns;
+    /******/
+  }; // getDefaultExport function for compatibility with non-harmony modules
+  /******/
+  /******/ /******/ __webpack_require__.n = function(module) {
+    /******/ var getter =
+      module && module.__esModule
+        ? /******/ function getDefault() {
+            return module["default"];
+          }
+        : /******/ function getModuleExports() {
+            return module;
+          };
+    /******/ __webpack_require__.d(getter, "a", getter);
+    /******/ return getter;
+    /******/
+  }; // Object.prototype.hasOwnProperty.call
+  /******/
+  /******/ /******/ __webpack_require__.o = function(object, property) {
+    return Object.prototype.hasOwnProperty.call(object, property);
+  }; // __webpack_public_path__
+  /******/
+  /******/ /******/ __webpack_require__.p = "/"; // Load entry module and return exports
+  /******/
+  /******/
+  /******/ /******/ return __webpack_require__((__webpack_require__.s = 0));
+  /******/
+})(
+  /************************************************************************/
+  /******/ {
+    /***/ "./resources/js/gallery.js":
+      /*!*********************************!*\
   !*** ./resources/js/gallery.js ***!
   \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+      /*! exports provided: default */
+      /***/ function(module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        __webpack_require__.r(__webpack_exports__);
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
+        var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+        var uri = document.location.origin;
+        var gallery = document.getElementById("loadeGallery");
+        var arraySend = [];
+        var isListener = true;
 
+        function startGallery() {
+          if (gallery) {
+            window.addEventListener("load", renderGallery, false);
+          }
+        }
 
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var gallery = document.getElementById("loadeGallery");
-var arraySend = [];
-var isListener = true;
+        function renderGallery() {
+          //Check File API support
+          if (window.File && window.FileList && window.FileReader) {
+            var filesInput = document.getElementById("files");
+            filesInput.addEventListener("change", function(event) {
+              var array = Array.from(event.target.files);
+              renderImages(array);
+            });
+          } else {
+            console.log("Your browser does not support File API");
+          }
+        }
 
-function startGallery() {
-  if (gallery) {
-    window.addEventListener("load", renderGallery, false);
-  }
-}
+        function renderImages(filesAll) {
+          var currentDiv = document.getElementById("message");
 
-function renderGallery() {
-  //Check File API support
-  if (window.File && window.FileList && window.FileReader) {
-    var filesInput = document.getElementById("files");
-    filesInput.addEventListener("change", function (event) {
-      // console.log(event.target.files);
-      var array = Array.from(event.target.files); // console.log(array);
-      // let imgArray = new Array(array);
-      // console.log(imgArray);
+          var _loop = function _loop(i) {
+            if (filesAll[i].size < 1048576) {
+              if (filesAll[i].type.match("image")) {
+                var picReader = new FileReader();
+                picReader.addEventListener("load", function(event) {
+                  var picFile = event.target;
+                  var deleteId = getID();
+                  var deleteBtn = getID();
+                  var output = document.getElementById("result");
+                  var div = document.createElement("div");
+                  div.className = "galleryDiv";
+                  div.id = deleteId;
+                  div.innerHTML = '<img class="uploadeImageGallery" src=" '
+                    .concat(
+                      picFile.result,
+                      ' "\n                      alt=" "/>\n                      <label for="'
+                    )
+                    .concat(
+                      deleteBtn,
+                      '">Tag: </label>\n                      <input type="text" id="'
+                    )
+                    .concat(
+                      filesAll[i].name,
+                      '" class="altInput" name="altImage" value="">\n                      <div class="deleteImd" id="'
+                    )
+                    .concat(deleteBtn, '">Trinti<div/>');
+                  output.insertBefore(div, currentDiv);
+                  var imgDeleteBtn = document.getElementById(deleteBtn);
+                  var deleteDiv = document.getElementById(deleteId);
+                  imgDeleteBtn.addEventListener("click", function() {
+                    filesAll.splice(i, 1);
+                    deleteDiv.remove();
+                  });
+                });
+                picReader.readAsDataURL(filesAll[i]);
+              } else {
+                alert("Tai nera paveikslelio tipo formatas");
+              }
+            } else {
+              alert(
+                "Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"
+              ); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+              //   currentDiv.appendChild(newContent);
+            }
+          };
 
-      renderImages(array);
-    });
-  } else {
-    console.log("Your browser does not support File API");
-  }
-}
+          for (var i = 0; i < filesAll.length; i++) {
+            _loop(i);
+          }
 
-function renderImages(filesAll) {
-  var currentDiv = document.getElementById("message");
+          arraySend.push(filesAll);
+          var uploadeImg = document.getElementById("submitImg");
 
-  var _loop = function _loop(i) {
-    if (filesAll[i].size < 1048576) {
-      if (filesAll[i].type.match('image')) {
-        var picReader = new FileReader();
-        picReader.addEventListener("load", function (event) {
-          var picFile = event.target;
-          var altId = getID();
-          var deleteId = getID();
-          var deleteBtn = getID();
-          var output = document.getElementById("result");
-          var div = document.createElement("div");
-          div.className = "galleryDiv";
-          div.id = deleteId;
-          div.innerHTML = "<img class=\"uploadeImageGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <label for=\"").concat(deleteBtn, "\">Tag: </label>\n                      <input type=\"text\" id=\"").concat(altId, "\" name=\"altImage\">\n                      <div class=\"deleteImd\" id=\"").concat(deleteBtn, "\">Trinti<div/>");
-          output.insertBefore(div, currentDiv); // const altText = document.getElementById(altId.name);
+          if (isListener) {
+            uploadeImg.addEventListener("click", function() {
+              arraySend = filter(arraySend);
+              sendImageData(arraySend); // location.reload();
+            });
+            isListener = false;
+          }
+        }
 
-          var imgDeleteBtn = document.getElementById(deleteBtn);
-          var deleteDiv = document.getElementById(deleteId);
-          imgDeleteBtn.addEventListener("click", function () {
-            filesAll.splice(i, 1);
-            deleteDiv.remove();
+        function sendImageData(filesAll) {
+          var tagInput;
+          var formData = new FormData();
+
+          for (var i = 0; i < filesAll.length; i++) {
+            tagInput = document.getElementById(filesAll[i].name);
+            formData.append("files" + i, filesAll[i]);
+            formData.append("tag" + i, tagInput.value + " ");
+          }
+
+          axios
+            .post(uri + path + "gallery-create-admin", formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            })
+            .then(function(response) {})
+            ["catch"](function(error) {
+              if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+              } else if (error.request) {
+                console.log(error.request);
+              } else {
+                console.log("Error", error.message);
+              }
+
+              console.log(error);
+            });
+        }
+
+        function getID() {
+          return (
+            Date.now().toString(36) +
+            Math.random()
+              .toString(36)
+              .substr(2, 5)
+          ).toUpperCase();
+        }
+
+        function filter(filesAll) {
+          var file = [];
+
+          for (var i = 0; i < filesAll.length; i++) {
+            for (var j = 0; j < filesAll[i].length; j++) {
+              if (
+                filesAll[i][j] != undefined &&
+                filesAll[i][j] != null &&
+                filesAll[i][j] != "" &&
+                filesAll[i][j] != NaN &&
+                filesAll[i][j].size < 1048576
+              ) {
+                file.push(filesAll[i][j]);
+              }
+            }
+          }
+
+          file = file.filter(function(power, toThe, yellowVests) {
+            return (
+              yellowVests
+                .map(function(updateDemocracy) {
+                  return updateDemocracy["name"];
+                })
+                .indexOf(power["name"]) === toThe
+            );
           });
-        });
-        picReader.readAsDataURL(filesAll[i]);
-      } else {
-        //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
-        alert("Tai nera paveikslelio tipo formatas"); //  currentDiv.appendChild(newContent);
-      }
-    } else {
-      //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-      alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //   currentDiv.appendChild(newContent);
-    }
-  };
+          return file;
+        }
 
-  for (var i = 0; i < filesAll.length; i++) {
-    _loop(i);
-  }
+        /* harmony default export */ __webpack_exports__[
+          "default"
+        ] = startGallery();
 
-  arraySend.push(filesAll);
-  var uploadeImg = document.getElementById("submitImg"); // console.log(isListener);
+        /***/
+      },
 
-  if (isListener) {
-    uploadeImg.addEventListener('click', function () {
-      // console.log(arraySend);
-      filter(arraySend);
-    });
-    isListener = false;
-  }
-}
-
-function sendImageData(filesAll) {
-  var formData = new FormData();
-
-  for (var i = 0; i < filesAll.length; i++) {
-    formData.append('files' + i, filesAll[i]);
-  }
-
-  axios.post(uri + path + 'gallery-create-admin', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  }).then(function (response) {})["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log('Error', error.message);
-    }
-
-    console.log(error);
-  });
-}
-
-function getID() {
-  return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
-}
-
-function filter(filesAll) {
-  var file = [];
-
-  for (var i = 0; i < filesAll.length; i++) {
-    for (var j = 0; j < filesAll[i].length; j++) {
-      file.push(filesAll[i][j]);
-    }
-  }
-
-  file = file.filter(function (power, toThe, yellowVests) {
-    return yellowVests.map(function (updateDemocracy) {
-      return updateDemocracy['name'];
-    }).indexOf(power['name']) === toThe;
-  });
-  sendImageData(file);
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startGallery());
-
-/***/ }),
-
-/***/ "./resources/js/idea.js":
-/*!******************************!*\
+    /***/ "./resources/js/idea.js":
+      /*!******************************!*\
   !*** ./resources/js/idea.js ***!
   \******************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+      /*! exports provided: default */
+      /***/ function(module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        __webpack_require__.r(__webpack_exports__);
+        /** @format */
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/** @format */
+        var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+        var uri = document.location.origin;
+        var ideaStrt = document.getElementById("startIdeaAdmin");
 
+        function startIdea() {
+          if (ideaStrt) {
+            window.addEventListener("load", renderColons, false);
+          }
+        }
+        /*----------------------- edit content axios----------------------------*/
 
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var ideaStrt = document.getElementById("startIdeaAdmin");
+        function editText(editId) {
+          var txt = document.getElementById(editId).value;
 
-function startIdea() {
-  if (ideaStrt) {
-    window.addEventListener("load", renderColons, false);
-  }
-}
-/*----------------------- edit content axios----------------------------*/
+          if (
+            txt != undefined &&
+            txt != null &&
+            txt.length >= 0 &&
+            txt != "" &&
+            txt != NaN
+          ) {
+            var text = txt.split(/\s+/);
+            axios
+              .post(uri + path + "idea-edit-admin", {
+                idea: text,
+                editId: editId,
+              })
+              ["catch"](function(err) {
+                console.log(err instanceof TypeError);
+              });
+            setTimeout(renderColons, 500);
+          }
+        }
+        /*----------------------- save content axios----------------------------*/
 
+        function solutionText(sId, i) {
+          var txt1 = document.getElementById(i).value;
 
-function editText(editId) {
-  var txt = document.getElementById(editId).value;
+          if (
+            txt1 != undefined &&
+            txt1 != null &&
+            txt1.length >= 0 &&
+            txt1 != "" &&
+            txt1 != NaN
+          ) {
+            var text1 = txt1.split(/\s+/);
+            axios
+              .post(uri + path + "idea-create-admin", {
+                soliution: text1,
+                solutionId: sId,
+              })
+              ["catch"](function(err) {
+                console.log(err instanceof TypeError);
+              });
+            return setTimeout(renderColons, 500);
+          }
+        }
+        /*----------------------- delete content axios----------------------------*/
 
-  if (txt != undefined || txt != null || txt.length >= 0 || txt != "" || txt != NaN) {
-    var text = txt.split(/\s+/);
-    axios.post(uri + path + "idea-edit-admin", {
-      idea: text,
-      editId: editId
-    })["catch"](function (err) {
-      console.log(err instanceof TypeError);
-    });
-    setTimeout(renderColons, 500);
-  }
-}
-/*----------------------- save content axios----------------------------*/
+        function deleteIdea(delId) {
+          axios
+            .post(uri + path + "idea-delete-admin", {
+              deleteId: delId,
+            })
+            ["catch"](function(err) {
+              console.log(err instanceof TypeError);
+              console.log("Problemos su Delete api");
+            });
+          setTimeout(renderColons, 500);
+        } //  /*------------------------------render data  axios-----------------------------------------*/
 
+        function renderColons(e) {
+          axios
+            .get(uri + path + "idea-render-admin", {})
+            .then(function(response) {
+              if (response.status == 200 && response.statusText == "OK") {
+                var data = response.data.allData;
+                var keys = [];
 
-function solutionText(sId, i) {
-  var txt1 = document.getElementById(i).value;
+                for (var key in data) {
+                  keys.push(key);
+                }
 
-  if (txt1 != undefined || txt1 != null || txt1.length >= 0 || txt1 != "" || txt1 != NaN) {
-    var text1 = txt1.split(/\s+/);
-    axios.post(uri + path + "idea-create-admin", {
-      soliution: text1,
-      solutionId: sId
-    })["catch"](function (err) {
-      console.log(err instanceof TypeError);
-    });
-    return setTimeout(renderColons, 500);
-  }
-}
-/*----------------------- delete content axios----------------------------*/
+                var rende = document.getElementById("box");
+                var HTMLString = "";
+                var counter = 0;
 
+                for (var i = keys.length - 1; i >= 0; i--) {
+                  counter++;
+                  var value = data[keys[i]];
+                  HTMLString += '<div class="box"> \n\n                    <div class="text"><div class="data" >'
+                    .concat(
+                      value.post_date,
+                      '</div>                 \n                    </div>\n                    <div class="ideaContent">\n                    <div class="ideaTextEdit">\n                        <textarea class="ideaText" maxlength="200" name="idea" id="'
+                    )
+                    .concat(
+                      value.ID,
+                      '" data-attribute_name="">\n                                '
+                    )
+                    .concat(
+                      value.idea_content,
+                      '\n                        </textarea>  \n                        <button  class="ideaBtn delIdea" id="'
+                    )
+                    .concat(
+                      value.ID,
+                      '">\n                            Trinti\n                        </button> \n                        <button class="ideaBtn edit editButtonIdea" id="'
+                    )
+                    .concat(
+                      value.ID,
+                      '">\n                            Saugoti\n                        </button>\n                    </div>\n                    <div class="ideaSoliution">\n                        <textarea class="ideaTextSoliution" maxlength="200" name="idea" id="'
+                    )
+                    .concat(counter, '" > \n                            ')
+                    .concat(
+                      value.idea_solution,
+                      '                     \n                        </textarea>\n                        <button  class="ideaBtn addButtonIdea" id="'
+                    )
+                    .concat(
+                      value.ID,
+                      '">\n                            Sprendimas\n                        </button> \n                    </div> \n                    <span class="textCount" id="count"></span>\n                    </div>  \n                        <div class="like" data-custom-id="'
+                    )
+                    .concat(
+                      value.ID,
+                      '">\n                            <span class="like__number">Like: '
+                    )
+                    .concat(
+                      value.idea_like,
+                      "</span>             \n                        </div>            \n                    </div>\n                </div>"
+                    );
+                }
 
-function deleteIdea(delId) {
-  axios.post(uri + path + "idea-delete-admin", {
-    deleteId: delId
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-    console.log("Problemos su Delete api");
-  });
-  setTimeout(renderColons, 500);
-} //  /*------------------------------render data  axios-----------------------------------------*/
+                rende.innerHTML = HTMLString;
+                var editBtn = document.querySelectorAll(".editButtonIdea");
+                var postBtn = document.querySelectorAll(".addButtonIdea");
+                var deletetBtn = document.querySelectorAll(".delIdea");
 
+                var _loop = function _loop(_i) {
+                  var sId = postBtn[_i].id;
 
-function renderColons(e) {
-  axios.get(uri + path + "idea-render-admin", {}).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      var data = response.data.allData;
-      var keys = [];
+                  postBtn[_i].addEventListener(
+                    "click",
+                    function() {
+                      solutionText(sId, _i + 1);
+                    },
+                    false
+                  );
+                };
 
-      for (var key in data) {
-        keys.push(key);
-      }
+                for (var _i = 0; _i < postBtn.length; _i++) {
+                  _loop(_i);
+                }
 
-      var rende = document.getElementById("box");
-      var HTMLString = "";
-      var counter = 0;
+                var _loop2 = function _loop2(_i2) {
+                  var editId = editBtn[_i2].id;
 
-      for (var i = keys.length - 1; i >= 0; i--) {
-        counter++;
-        var value = data[keys[i]];
-        HTMLString += "<div class=\"box\"> \n\n                    <div class=\"text\"><div class=\"data\" >".concat(value.post_date, "</div>                 \n                    </div>\n                    <div class=\"ideaContent\">\n                    <div class=\"ideaTextEdit\">\n                        <textarea class=\"ideaText\" maxlength=\"200\" name=\"idea\" id=\"").concat(value.ID, "\" data-attribute_name=\"\">\n                                ").concat(value.idea_content, "\n                        </textarea>  \n                        <button  class=\"ideaBtn delIdea\" id=\"").concat(value.ID, "\">\n                            Trinti\n                        </button> \n                        <button class=\"ideaBtn edit editButtonIdea\" id=\"").concat(value.ID, "\">\n                            Saugoti\n                        </button>\n                    </div>\n                    <div class=\"ideaSoliution\">\n                        <textarea class=\"ideaTextSoliution\" maxlength=\"200\" name=\"idea\" id=\"").concat(counter, "\" > \n                            ").concat(value.idea_solution, "                     \n                        </textarea>\n                        <button  class=\"ideaBtn addButtonIdea\" id=\"").concat(value.ID, "\">\n                            Sprendimas\n                        </button> \n                    </div> \n                    <span class=\"textCount\" id=\"count\"></span>\n                    </div>  \n                        <div class=\"like\" data-custom-id=\"").concat(value.ID, "\">\n                            <span class=\"like__number\">Like: ").concat(value.idea_like, "</span>             \n                        </div>            \n                    </div>\n                </div>");
-      }
+                  editBtn[_i2].addEventListener(
+                    "click",
+                    function() {
+                      editText(editId);
+                    },
+                    false
+                  );
+                };
 
-      rende.innerHTML = HTMLString;
-      var editBtn = document.querySelectorAll(".editButtonIdea");
-      var postBtn = document.querySelectorAll(".addButtonIdea");
-      var deletetBtn = document.querySelectorAll(".delIdea");
+                for (var _i2 = 0; _i2 < editBtn.length; _i2++) {
+                  _loop2(_i2);
+                }
 
-      var _loop = function _loop(_i) {
-        var sId = postBtn[_i].id;
+                var _loop3 = function _loop3(_i3) {
+                  var delId = deletetBtn[_i3].id;
 
-        postBtn[_i].addEventListener("click", function () {
-          solutionText(sId, _i + 1);
-        }, false);
-      };
+                  deletetBtn[_i3].addEventListener(
+                    "click",
+                    function() {
+                      deleteIdea(delId);
+                    },
+                    false
+                  );
+                };
 
-      for (var _i = 0; _i < postBtn.length; _i++) {
-        _loop(_i);
-      }
+                for (var _i3 = 0; _i3 < deletetBtn.length; _i3++) {
+                  _loop3(_i3);
+                }
+              }
 
-      var _loop2 = function _loop2(_i2) {
-        var editId = editBtn[_i2].id;
+              return response;
+            })
+            ["catch"](function(error) {
+              if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+              } else if (error.request) {
+                console.log(error.request);
+              } else {
+                console.log("Error", error.message);
+              }
 
-        editBtn[_i2].addEventListener("click", function () {
-          editText(editId);
-        }, false);
-      };
+              console.log(error);
+            });
+        }
 
-      for (var _i2 = 0; _i2 < editBtn.length; _i2++) {
-        _loop2(_i2);
-      }
+        /* harmony default export */ __webpack_exports__[
+          "default"
+        ] = startIdea();
 
-      var _loop3 = function _loop3(_i3) {
-        var delId = deletetBtn[_i3].id;
+        /***/
+      },
 
-        deletetBtn[_i3].addEventListener("click", function () {
-          deleteIdea(delId);
-        }, false);
-      };
-
-      for (var _i3 = 0; _i3 < deletetBtn.length; _i3++) {
-        _loop3(_i3);
-      }
-    }
-
-    return response;
-  })["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error.message);
-    }
-
-    console.log(error);
-  });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startIdea());
-
-/***/ }),
-
-/***/ "./resources/js/main.js":
-/*!******************************!*\
+    /***/ "./resources/js/main.js":
+      /*!******************************!*\
   !*** ./resources/js/main.js ***!
   \******************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+      /*! no exports provided */
+      /***/ function(module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+          /*! ./idea.js */ "./resources/js/idea.js"
+        );
+        /* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+          /*! ./gallery.js */ "./resources/js/gallery.js"
+        );
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
-/* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gallery.js */ "./resources/js/gallery.js");
+        // import Header from "./test.js"
 
- // import Header from "./test.js"
+        /***/
+      },
 
-/***/ }),
-
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
+    /***/ "./resources/sass/app.scss":
+      /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
   \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+      /*! no static exports found */
+      /***/ function(module, exports) {
+        // removed by extract-text-webpack-plugin
+        /***/
+      },
 
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!**************************************************************!*\
+    /***/ 0:
+      /*!**************************************************************!*\
   !*** multi ./resources/js/main.js ./resources/sass/app.scss ***!
   \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+      /*! no static exports found */
+      /***/ function(module, exports, __webpack_require__) {
+        __webpack_require__(
+          /*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */ "./resources/js/main.js"
+        );
+        module.exports = __webpack_require__(
+          /*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */ "./resources/sass/app.scss"
+        );
 
-__webpack_require__(/*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+        /***/
+      },
 
-
-/***/ })
-
-/******/ });
+    /******/
+  }
+);
