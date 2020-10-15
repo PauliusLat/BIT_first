@@ -35,14 +35,15 @@ App::start();
 
 
 // add_action('init', function() {
-// //     $album = new AlbumPost;
-// //     $album->save();
+// $album = new AlbumPost;
+// $album->save();
 // // //      _dc( $album);
 // // // $album->addTag(['atostogos', 'namai']);
 // // // $album->addTag(['tttt']);
-// // // $album->addCat('indai', 'maincat');
-// // $album->addCat(['lekstutes', 'sauksteliai'], 'maincat', 45); //gl padaryti, kad ne is butu o stringas kaip kat
-
+// $album->addCat('indai', 'maincat');
+// $album->addCat('baldai', 'maincat');
+// $album->addCat(['lekstutes', 'sauksteliai'], 'maincat', 45); //gl padaryti, kad ne is butu o stringas kaip kat
+// $album->addCat([' mazo lekstutes', 'dideles lekstutes'], 'maincat', 53);
 // // ($album->getCats());
 // //  _dc($album->getChildCats([45, 0]));
 
@@ -56,8 +57,10 @@ App::start();
 // // 
 // // $album->removeCat('Indai');
 
-// // _dc($album->getChildCats([45, 0]));
-// // _dc($album->getAllCats());
+// // _dc($album->getChildCats([45]));
+//  _dc($album->get_taxonomy_hierarchy('maincat', 45));
+// // $album->get_taxonomy_hierarchy(['maincat', 45]);
+// //  _dc($album->getCats());
 // //
 
 // // _dc($album->getTags()->sortBy('count', 'desc'));

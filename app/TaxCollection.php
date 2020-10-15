@@ -2,6 +2,7 @@
 namespace BIT\app;
 
 use BIT\app\modelTraits\Ttaxonomy;
+use BIT\app\modelTraits\Tcategory;
 use BIT\app\coreExeptions\InvalidOrderArgException;
 
 class TaxCollection implements \IteratorAggregate

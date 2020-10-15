@@ -102,11 +102,11 @@ trait Tcategory {
             }
     }
 
-    private function checkChildren($cat, $taxonomy_type = 'maincat'){
-        $array = get_term_children($cat, $taxonomy_type);
-        return $array;
+    // private function checkChildren($cat, $taxonomy_type = 'maincat'){
+    //     $array = get_term_children($cat, $taxonomy_type);
+    //     return $array;
 
-    }
+    // }
 
 
     /** returns all post cats as Collection */
@@ -129,7 +129,7 @@ trait Tcategory {
         }
     }
 
-    public function getChildCats($parent_id, $taxonomy_type = 'maincat') 
+    private function getChildCats($parent_id, $taxonomy_type = 'maincat') 
     {
         $parent_id = (array)$parent_id;
         foreach ($this->cattax as $value){
@@ -149,6 +149,93 @@ trait Tcategory {
             }
         }
     }
+
+    public function get_taxonomy_hierarchy( $taxonomy, $parent=0) {
+        // only 1 taxonomy
+        $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
+        // _dc($taxonomy);
+        // get all direct decendants of the $parent
+        // $terms=get_terms( ['taxonomy'=> $taxonomy, 'parent'=> $parent, 'object_ids'=>$this->ID, 'hide_empty'=> 0]);
+        _dc($parent);
+        $terms=$this->getChildCats($parent, $taxonomy);
+        _dc($terms);
+
+        if (did_action('init')) {
+            $taxCollection = new TaxCollection();
+            foreach ( $terms as $term) {
+                // recurse to get the direct decendants of "this" term
+                $term->children = $this->get_taxonomy_hierarchy( $taxonomy, $term->term_id);
+                $taxCollection->addTerm($term);
+            }
+            return $taxCollection;
+        } else {
+            throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+        }
+    }
+
+    // public function get_taxonomy_hierarchy( $taxonomy, $parent=0) {
+    //     // only 1 taxonomy
+    //     $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
+    //     // get all direct decendants of the $parent
+    //     $terms=get_terms( ['taxonomy'=> $taxonomy, 'parent'=> $parent, 'object_ids'=>$this->ID, 'hide_empty'=> 0]);
+
+    //     // _dc($terms);
+    //     // prepare a new array.  these are the children of $parent
+    //     // we'll ultimately copy all the $terms into this new array, but only after they
+    //     // find their own children
+    //     $children=array();
+    //     // _dc($children);
+    //     // go through all the direct decendants of $parent, and gather their children
+    //     foreach ( $terms as $term) {
+    //         _dc($term);
+    //         // recurse to get the direct decendants of "this" term
+    //         $term->children = $this->get_taxonomy_hierarchy( $taxonomy, $term->term_id);
+    //         // add the term to our new array
+    //         $children[ $term->term_id]=$term;
+    //     }
+    //     // send the results back to the caller
+    //     return $children;
+    // }
+
+
+    // public function get_taxonomy_hierarchy( $taxonomy, $parent=0) {
+    //     // only 1 taxonomy
+    //     $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
+    //     // get all direct decendants of the $parent
+    //     $terms=$this->getChildCats($parent, $taxonomy);
+    //     _dc($terms);
+    //     // prepare a new array.  these are the children of $parent
+    //     // we'll ultimately copy all the $terms into this new array, but only after they
+    //     // find their own children
+    //     $children=array();
+    //     // _dc($children);
+    //     // go through all the direct decendants of $parent, and gather their children
+    //     foreach ( $terms as $term) {
+    //         // _dc($term);
+    //         // recurse to get the direct decendants of "this" term
+    //         $term->children = $this->get_taxonomy_hierarchy( $taxonomy, $term->term_id);
+    //         // add the term to our new array
+    //         $children[ $term->term_id]=$term;
+    //     }
+    //     // send the results back to the caller
+    //     return $children;
+    // }
+
+
+    // public function get_taxonomy_hierarchy_multiple( $taxonomies, $parent = 0 ) {
+    //     if ( ! is_array( $taxonomies )  ) {
+    //         $taxonomies = array( $taxonomies );
+    //     }
+    //     $results = array();
+    //     foreach( $taxonomies as $taxonomy ){
+    //         $terms = $this->getChildCats($taxonomy, $parent) ;
+    //         if ( $terms ) {
+    //             $results[ $taxonomy ] = $terms;
+    //         }
+    //     }
+    //     return $results;
+    // }
+
 
     /** returns all cats as Collection */
     public function getAllCats($taxonomy_type = 'maincat') 
