@@ -8,34 +8,78 @@ use BIT\models\AlbumPost;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GalleryFrontController {
-	public function __construct() {
+class GalleryFrontController
+{
+	public function __construct()
+	{
 
-// 		$attachment = new Attachment();
+		// 		$attachment = new Attachment();
 		// $attachment->save($request, $post_parent_id(optional)); -sukuria nauja, arba update’ina esanti.
 		// $attachment->delete();
 		// $attachment->getURL();
 		// $attachment->geAttachmentDetails();
 	}
 
-	public function index() {
-		return View::render('gallery.galerija');
+	public function uploadeIndex()
+	{
+		return View::render('gallery.uploade-images');
+	}
+	public function albumIndex()
+	{
+		return View::render('gallery.all-album');
 	}
 
-	public function create(Request $request, AlbumPost $album) {
+	public function store(Request $request, AlbumPost $album)
+	{
+		foreach ($request->request as $key => $a) {
+			if ($key == "album") {
+				$album->album_title = $a;
+				$album->save();
+			}
+		}
 
-		foreach ($request->files->all() as $filesArr) {
+		$count = 0;
+		$tags = [];
+		foreach ($request->request as $value) {
+			$tags[] = trim($value);
+		}
+
+		foreach ($request->files->all() as $key => $filesArr) {
 			if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+				$count++;
 				$image = new Attachment();
-
-				$image->save($filesArr);
-			} elseif (is_array($filesArr)) {
-				foreach ($filesArr as $file) {
-					$image = new Attachment();
-					$image->save($file);
+				foreach ($tags as $key1 => $tag) {
+					if ($key1 + 1 == $count) {
+						// $image->save($request->files->all()[$key], $album->ID);
+						// $image->addTag($tags[$key1]);
+						// $image->save();
+					}
 				}
 			}
 		}
+		// } elseif (is_array($filesArr)) {
+		// 	foreach ($filesArr as $file) {
+		// 		$image = new Attachment();
+		//$image->save($file);
+		// $image->addTag('pridedamas tag');
+		// $image->save();
+		// }
+		//$image->save($file, $post_id);
+
+		//AlbumPost::get($post_id)->attachments; grazina albuma
+
+		// 	}
+		// }
+		// $data = (Attachment::all())->all();
+		// $new = new Attachment();
+		// $tg = $new->getAllTags();
+		// var_dump($tg);
+		// post_name
+
+		/** Example usage:
+		 * $album = new AlbumPost;
+		 * $album->save();
+		 * $album->addCat('cat1', 'maincat'); or $album->addCat(['cat1', 'cat2', '........'], 'maincat', ID tevines kategorijos));*/
 
 		// $album->save();
 		// $album->addTag('pridedamas tag');
@@ -43,15 +87,18 @@ class GalleryFrontController {
 		// $album->getTags('maincat')->sortBy('count', 'desc');
 
 		return new Response();
-
 	}
 
-	public function render() {
-
-		// $data = (Atachment::all())->all();
-		// foreach ($data as $img) {
-		// 	$allImages = $img->getUrl();
-		// }
+	public function create()
+	{
+		$albumData  = (AlbumPost::all())->all();
+		$data = (Attachment::all())->all();
+		echo '<pre>';
+		var_dump($albumData);
+		$data = (Atachment::all())->all();
+		foreach ($data as $img) {
+			$allImages = $img->getUrl();
+		}
 	}
 
 	// private function getFilesFromRequest(Request $request){
@@ -68,7 +115,8 @@ class GalleryFrontController {
 	// 	}
 	// }
 
-	private function decodeRequest($request) {
+	private function decodeRequest($request)
+	{
 
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);
@@ -77,5 +125,4 @@ class GalleryFrontController {
 
 		return $request;
 	}
-
 }

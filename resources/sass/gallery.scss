@@ -1,6 +1,7 @@
-h1{
+h1 {
     text-align: center;
 }
+
 .galleryContainer {
     width       : calc(100% - 600px);
     margin-left : auto;
@@ -25,15 +26,15 @@ h1{
         text-align      : center;
 
         .uplodeBtn {
-            height          : 50px;
-            width           : 95%;
-            color           : rgb(29, 29, 29);
-            font-weight     : 100;
-            border          : none;
-            font-size       : 20px;
-            line-height     : 25px;
-            margin-top      : -100px;
-            cursor          : pointer;
+            height     : 50px;
+            width      : 95%;
+            color      : rgb(29, 29, 29);
+            font-weight: 100;
+            border     : none;
+            font-size  : 20px;
+            line-height: 25px;
+            margin-top : -100px;
+            cursor     : pointer;
         }
 
         .svg-wrapper {
@@ -60,7 +61,7 @@ h1{
             text-align: center;
         }
 
-          .svg-wrapper:hover #shape {
+        .svg-wrapper:hover #shape {
             stroke-dasharray : 50 0;
             stroke-width     : 3px;
             stroke-dashoffset: 0;
@@ -147,7 +148,7 @@ h1{
             padding         : 6px 24px;
             text-decoration : none;
             text-shadow     : 0px 1px 0px #810e05;
-            float: right;
+            float           : right;
         }
 
         .deleteImd:hover {
@@ -166,22 +167,58 @@ h1{
         height    : 300px;
         object-fit: cover;
     }
+
     input[type=text] {
-        border: none;
-        border-bottom: 2px solid hsl(216, 37%, 22%);  
-        line-height: 20px;
-     }
-}
-@media (max-width: 600px) {
-   .galleryContainer{
-      width: 260px;
-      .deleteImd{
-          margin: 10px 0 0 0 ;
-          text-align: center;
-      }
-      input[type=text] {
-        margin: 10px 0 0 0 ;
-        width: 50%;
-      }
+        border       : none;
+        border-bottom: 2px solid hsl(216, 37%, 22%);
+        line-height  : 20px;
     }
+}
+
+@media (max-width: 600px) {
+    .galleryContainer {
+        width: 260px;
+
+        .deleteImd {
+            margin    : 10px 0 0 0;
+            text-align: center;
+        }
+
+        input[type=text] {
+            margin: 10px 0 0 0;
+            width : 50%;
+        }
+    }
+}
+
+.form__input:placeholder-shown+.form__label {
+    opacity          : 0;
+    visibility       : hidden;
+    -webkit-transform: translateY(-4rem);
+    transform        : translateY(-4rem);
+}
+
+.form__label {
+    font-family: 'Roboto', sans-serif;
+    font-size  : 1.2rem;
+    margin-left: 2rem;
+    margin-top : 0.7rem;
+    display    : block;
+    transition : all 0.3s;
+    transform  : translateY(0rem);
+}
+
+.form__input {
+    font-family     : 'Roboto', sans-serif;
+    color           : #333;
+    font-size       : 1.2rem;
+    margin          : 0 auto;
+    padding         : 1.5rem 2rem;
+    border-radius   : 0.2rem;
+    background-color: rgb(255, 255, 255);
+    border          : none;
+    width           : 25%;
+    display         : block;
+    border-bottom   : 0.3rem solid transparent;
+    transition      : all 0.3s;
 }
