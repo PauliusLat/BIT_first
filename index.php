@@ -16,8 +16,10 @@ use BIT\app\RequestId;
 use BIT\app\Cookie;
 use BIT\app\Transient;
 use BIT\app\Session;
+use BIT\app\Category;
 use BIT\controllers\NewsController;
 use BIT\models\IdeaPost;
+use BIT\app\modelTraits\Tcategory;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Config\FileLocator;
@@ -34,7 +36,7 @@ define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 App::start();
 
 
-// add_action('init', function() {
+add_action('init', function() {
 // $album = new AlbumPost;
 // $album->save();
 // // //      _dc( $album);
@@ -45,8 +47,10 @@ App::start();
 // $album->addCat(['lekstutes', 'sauksteliai'], 'maincat', 45); //gl padaryti, kad ne is butu o stringas kaip kat
 // $album->addCat([' mazo lekstutes', 'dideles lekstutes'], 'maincat', 53);
 // // ($album->getCats());
-// //  _dc($album->getChildCats([45, 0]));
-
+// //  _dc($album->getChildCats([45, 0]
+$category = new Category;
+// _dc(get_term_by('name', 'stalai', 'maincat'));
+// $category->addCat('stalai', 'maincat');
 // // $album->addTag('ooorrr');
 // //     // echo '<pre>';    
    
@@ -68,7 +72,7 @@ App::start();
 // //     //  $idea->save();
 // //     //  _dc( $idea);
 // //     //  $idea->addTag('');
-//  });
+});
 
 
 

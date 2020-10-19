@@ -27,4 +27,9 @@ return [
 	'news_store' => 'NewsController@store',
 	'news_update' => 'NewsController@update',
 	'news_destroy' => 'NewsController@destroy',
+
+
+	'category_store' => 'CategoryAdminController@store',
+	'category_update' => 'CategoryAdminController@update',
+	'category_destroy' => 'CategoryAdminController@destroy',
 ];

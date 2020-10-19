@@ -10,4 +10,7 @@ return [
 	'galerija' => 'GalleryAdminController@adminIndex',
 
 	'philosophy' => 'PhilosophyController@index',
+
+	'category' => 'CategoryAdminController@create',
+	
 ];

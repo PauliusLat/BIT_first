@@ -19,7 +19,6 @@ class NewsController {
 
     public function create(){
 
-
     }
     
     

@@ -31,7 +31,28 @@ trait Tcategory {
      * $album->save();
      * $album->addCat('cat1', 'maincat'); or $album->addCat(['cat1', 'cat2'], 'maincat', 45));*/
 
-    public function addCat($cat, $taxonomy_type, int $parent_id = 0)    // ar gali buti dvi default reiksmes
+    public function addCat($cat, $description, $taxonomy_type, int $parent_id = 0){
+
+        $cat = (array)$cat;
+        foreach ($this->cattax as $value){
+            if($value == $taxonomy_type){
+                if (did_action('init')) {    
+                    // if ($this->ID == null) {
+                    //     throw new PostIdNotSetException('Error: Call to addTag() function before save()');
+                    // } else {
+                        $args = ['parent'=>$parent_id, 'description'=>$description];
+                        foreach ($cat as $key){
+                            wp_insert_term($key, $value, $args);
+                        }
+                    // }
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+    
+    public function addCatt($cat, $taxonomy_type, int $parent_id = 0)    // ar gali buti dvi default reiksmes
 
     {   
         $cat = (array)$cat;
@@ -52,7 +73,6 @@ trait Tcategory {
                             wp_set_post_terms($this->ID, $term->term_id, $value, $append = true);
 
                         }
-                        // wp_set_post_terms($this->ID, $tag, $value, $append = true);
                         /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
                          * so that children with the same names but different parents aren't confused.*/
                     }
@@ -156,9 +176,9 @@ trait Tcategory {
         // _dc($taxonomy);
         // get all direct decendants of the $parent
         // $terms=get_terms( ['taxonomy'=> $taxonomy, 'parent'=> $parent, 'object_ids'=>$this->ID, 'hide_empty'=> 0]);
-        _dc($parent);
+        // _dc($parent);
         $terms=$this->getChildCats($parent, $taxonomy);
-        _dc($terms);
+        // _dc($terms);
 
         if (did_action('init')) {
             $taxCollection = new TaxCollection();
