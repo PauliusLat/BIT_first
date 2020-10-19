@@ -166,7 +166,7 @@ function renderImages(filesAll) {
   if (isListener) {
     uploadeImg.addEventListener('click', function () {
       arraySend = filter(arraySend);
-      sendImageData(arraySend); // location.reload();
+      sendImageData(arraySend);
     });
     isListener = false;
   }
@@ -175,6 +175,7 @@ function renderImages(filesAll) {
 function sendImageData(filesAll) {
   var tagInput;
   var formData = new FormData();
+  var album = document.getElementById('albumName');
 
   for (var i = 0; i < filesAll.length; i++) {
     tagInput = document.getElementById(filesAll[i].name);
@@ -182,7 +183,8 @@ function sendImageData(filesAll) {
     formData.append('tag' + i, tagInput.value + ' ');
   }
 
-  axios.post(uri + path + 'gallery-create-admin', formData, {
+  formData.append('album', album.value);
+  axios.post(uri + path + 'gallery-store-admin', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -198,7 +200,7 @@ function sendImageData(filesAll) {
     }
 
     console.log(error);
-  });
+  }); // location.reload();
 }
 
 function getID() {

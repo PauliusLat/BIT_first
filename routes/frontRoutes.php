@@ -5,12 +5,15 @@
 return [
     'event' => 'EventController@index',
 
-    'gallery' => 'GalleryAdminController@adminIndex',
+    'uploade-images' => 'GalleryFrontController@uploadeIndex',
+    'all-album' => 'GalleryFrontController@albumIndex',
 
     'kalendorius' => 'CalendarFrontController@index',
 
     'ideja' => 'IdeaController@frontIndex',
     'idejos' => 'IdeasController@index',
+
+
     
     'test' => 'TestController@front',
 ];

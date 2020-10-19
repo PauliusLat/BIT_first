@@ -90,7 +90,7 @@ function renderImages(filesAll) {
 
             arraySend = filter(arraySend);
             sendImageData(arraySend);
-            // location.reload();
+
         });
         isListener = false;
     }
@@ -100,12 +100,19 @@ function sendImageData(filesAll) {
 
     let tagInput;
     let formData = new FormData();
+
+    const album = document.getElementById('albumName');
+
     for (let i = 0; i < filesAll.length; i++) {
         tagInput = document.getElementById(filesAll[i].name);
         formData.append('files' + i, filesAll[i]);
         formData.append('tag' + i, tagInput.value + ' ');
     }
-    axios.post(uri + path + 'gallery-create-admin', formData, {
+
+    formData.append('album', album.value);
+
+    axios.post(uri + path + 'gallery-store-admin', formData, {
+
         headers: {
             'Content-Type': 'multipart/form-data'
         },
@@ -122,6 +129,8 @@ function sendImageData(filesAll) {
         }
         console.log(error);
     });
+     location.reload();
+
 }
 
 function getID() {
@@ -133,10 +142,10 @@ function filter(filesAll) {
     let file = [];
     for (let i = 0; i < filesAll.length; i++) {
         for (let j = 0; j < filesAll[i].length; j++) {
-            if (filesAll[i][j] != undefined && 
-                filesAll[i][j] != null && 
-                filesAll[i][j] != "" && 
-                filesAll[i][j] != NaN && 
+            if (filesAll[i][j] != undefined &&
+                filesAll[i][j] != null &&
+                filesAll[i][j] != "" &&
+                filesAll[i][j] != NaN &&
                 filesAll[i][j].size < 1048576) {
 
                 file.push(filesAll[i][j]);
@@ -146,7 +155,6 @@ function filter(filesAll) {
     file = file.filter((power, toThe, yellowVests) => yellowVests.map(updateDemocracy => updateDemocracy['name']).indexOf(power['name']) === toThe)
 
     return file;
-
 }
 
 export default startGallery();
