@@ -461,9 +461,7 @@ function sendImageData(filesAll) {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
-  }).then(function (response) {
-    console.log(response);
-  })["catch"](function (error) {
+  }).then(function (response) {})["catch"](function (error) {
     if (error.response) {
       console.log(error.response.data);
       console.log(error.response.status);
@@ -475,7 +473,8 @@ function sendImageData(filesAll) {
     }
 
     console.log(error);
-  }); // location.reload();
+  });
+  location.reload();
 }
 
 function getID() {

@@ -100,6 +100,7 @@ function sendImageData(filesAll) {
 
     let tagInput;
     let formData = new FormData();
+
     const album = document.getElementById('albumName');
 
     for (let i = 0; i < filesAll.length; i++) {
@@ -111,13 +112,12 @@ function sendImageData(filesAll) {
     formData.append('album', album.value);
 
     axios.post(uri + path + 'gallery-store-admin', formData, {
+
         headers: {
             'Content-Type': 'multipart/form-data'
         },
-    }).then(function(response) {
-        console.log(response)
-
-    }).catch(function(error) {
+    }).then(function (response) {
+    }).catch(function (error) {
         if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
@@ -129,7 +129,8 @@ function sendImageData(filesAll) {
         }
         console.log(error);
     });
-    // location.reload();
+     location.reload();
+
 }
 
 function getID() {
