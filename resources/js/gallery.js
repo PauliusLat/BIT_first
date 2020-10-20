@@ -19,7 +19,7 @@ function renderGallery() {
 
         let filesInput = document.getElementById("files");
 
-        filesInput.addEventListener("change", function (event) {
+        filesInput.addEventListener("change", function(event) {
 
             let array = Array.from(event.target.files);
 
@@ -42,7 +42,7 @@ function renderImages(filesAll) {
 
                 const picReader = new FileReader();
 
-                picReader.addEventListener("load", function (event) {
+                picReader.addEventListener("load", function(event) {
 
                     const picFile = event.target;
                     let deleteId = getID();
@@ -86,7 +86,7 @@ function renderImages(filesAll) {
     const uploadeImg = document.getElementById("submitImg");
 
     if (isListener) {
-        uploadeImg.addEventListener('click', function () {
+        uploadeImg.addEventListener('click', function() {
 
             arraySend = filter(arraySend);
             sendImageData(arraySend);
@@ -114,9 +114,10 @@ function sendImageData(filesAll) {
         headers: {
             'Content-Type': 'multipart/form-data'
         },
-    }).then(function (response) {
+    }).then(function(response) {
+        console.log(response)
 
-    }).catch(function (error) {
+    }).catch(function(error) {
         if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
