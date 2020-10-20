@@ -1,5 +1,3 @@
-/** @format */
-
 "use strict";
 
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
@@ -98,6 +96,7 @@ function renderColons(e) {
       {}
     )
     .then(function(response) {
+      consloe.log(response)
       if (response.status == 200 && response.statusText == "OK") {
         const data = response.data.allData;
 

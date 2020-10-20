@@ -5,7 +5,7 @@
 return [
 	'event' => 'EventController@index',
 
-	'calendar' => 'calendarFrontController@index',
+	'calendar-create-admin' => 'calendarFrontController@create',
 
 	'ideas-render-front' => 'IdeasController@render',
 
