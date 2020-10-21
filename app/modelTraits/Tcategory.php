@@ -67,9 +67,7 @@ trait Tcategory {
                             wp_insert_term($key, $value, $args);
                         }
                         $terms = get_terms(['name'=>$cat, 'taxonomy'=> $value, 'hide_empty'=>false]);
-                       
                         foreach($terms as $term){
-
                             wp_set_post_terms($this->ID, $term->term_id, $value, $append = true);
 
                         }

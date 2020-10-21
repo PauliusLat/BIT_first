@@ -1,3 +1,7 @@
+<?php
+// use BIT\app\App;
+?>
+
 <style>
 .category-container{
     width: 100%;
@@ -85,17 +89,20 @@ table th {
         <?php
         // _dc($image);
         foreach ($categories as $category) {
-            $image = get_term_meta(78, "my_term_key");
-        //  _dc($image);
-            echo 'tttttt';
+            $category->image = get_term_meta(78, "my_term_key");
+            _dc($category);
+            _dc($category->image);
+            // _dc($app);
+            // $app = App::start();
+            $url = $app->apiUrl.'/resources/img/';
             ?>
                 <tr>
                     <td><?=$category->name?></td>
                     <td><?=$category->description?></td>
                     <td><?=$category->slug?></td>
                     <td><?=$category->count?></td>
-                    <?php foreach($image as $key=>$value){
-                        echo '<td><img style = "width: 200px; height: 200px; object-fit: cover;" src="'.$value.'">';
+                    <?php foreach($category->image as $key=>$value){
+                        echo '<td><img style = "width: 200px; height: 200px; object-fit: cover;" src="'.$url.$value.'">';
                         echo wp_get_attachment_image ($value);
                     }
                     ?>

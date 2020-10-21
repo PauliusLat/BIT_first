@@ -41,21 +41,18 @@ class CategoryAdminController {
         move_uploaded_file($_FILES["picture"]["tmp_name"], "$uploads_dir/$target_file");//nuotrauka
         // _dc($request);
         $picture = $request->files->get('picture')->getClientOriginalName();
+        $url = $app->apiUrl.'/resources/img/';
         // $picture = new Attachment;
         // $picture->save($request->files->get('picture'));
         echo '<pre>';
         // _dc($picture);
         // var_dump($picture);
-        
         _dc($category); 
-        $category->image = $picture;  
+        // $category->image = $picture;  
         // _dc($category->image);  
         add_term_meta( 78, "my_term_key" , $picture );
-        $image = get_term_meta(78, "my_term_key");
+        $category->image = get_term_meta(78, "my_term_key");
         // _dc( $image);
-    
-
-        
         // add_term_meta( 78, "my_term_key" , $picture );
         // $file = "$uploads_dir/$target_file";
         // $response = new BinaryFileResponse($file);
