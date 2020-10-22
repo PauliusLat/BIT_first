@@ -8,13 +8,11 @@
   .popup {
     height          : 100%;
     width           : 100%;
-    background-color: grey;
-
     .content {
       height: 60px;
 
       .eventBox {
-        margin : 20px 0 0 20px;
+        background-color: grey;
         display: inline-block;
         width  : 100%;
 
@@ -30,7 +28,7 @@
           padding         : 3px 15px;
           text-decoration : none;
           text-shadow     : 0px 1px 0px #b23e35;
-          margin          : 2px;
+          margin          : 2px 0 0px 16px;
         }
 
         .myEventBtn:hover {
@@ -44,11 +42,13 @@
 
         .oneEventBtn {
           display: flex;
-
+          color: rgb(22, 21, 21);
+          padding: 10px;
           .oneEvent {
             line-height: 25px;
             font-size  : 16px;
             width      : 73%;
+
           }
         }
 
@@ -61,16 +61,18 @@
   }
 
   .eventH2 {
-    margin     : 25px 0 0 0;
     text-align : center;
     line-height: 20px;
     font-size  : 1.2rem;
+    background-color: grey;
+    color: black;
+    padding: 10px;
   }
 }
 
 .event {
   padding: 10px;
-
+  background-color: grey;
   .subscribe {
     width: 350px;
   }

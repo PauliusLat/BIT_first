@@ -2,11 +2,11 @@
 
 namespace BIT\controllers;
 
-use BIT\app\Attachment;
 use BIT\app\View;
-use BIT\models\AlbumPost;
+use BIT\models\EventPost;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CalendarFrontController {
 	public function __construct() {
@@ -22,28 +22,11 @@ class CalendarFrontController {
 		return View::render('calendar.kalendorius');
 	}
 
-	public function create(Request $request, AlbumPost $album) {
-
-		// foreach ($request->files->all() as $filesArr) {
-		// 	if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
-		// 		$image = new Attachment();
-
-		// 		$image->save($filesArr);
-		// 	} elseif (is_array($filesArr)) {
-		// 		foreach ($filesArr as $file) {
-		// 			$image = new Attachment();
-		// 			$image->save($file);
-		// 		}
-		// 	}
-		// }
-
-		// $album->save();
-		// $album->addTag('pridedamas tag');
-		// $album->getAllTags();
-		// $album->getTags('maincat')->sortBy('count', 'desc');
-
-		return new Response();
-
+	public function create()
+	{
+			$data = (EventPost::all())->pluck('event_description', 'event_date', 'event_time', 'ID')->all();
+			$response = new JsonResponse(['allData' => $data]);
+			return $response;
 	}
 
 	public function render() {

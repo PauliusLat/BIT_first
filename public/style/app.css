@@ -712,6 +712,10 @@ h1 {
   color: #fff;
 }
 
+.calendarContainer .calendar .calendar--view .daysEvent {
+  color: black;
+}
+
 .calendarContainer .calendar .calendar--view .cview--date {
   font-size: 16px;
   font-weight: 400;
@@ -784,7 +788,6 @@ h1 {
 .eventContainer .popup {
   height: 100%;
   width: 100%;
-  background-color: grey;
 }
 
 .eventContainer .popup .content {
@@ -792,7 +795,7 @@ h1 {
 }
 
 .eventContainer .popup .content .eventBox {
-  margin: 20px 0 0 20px;
+  background-color: grey;
   display: inline-block;
   width: 100%;
 }
@@ -809,7 +812,7 @@ h1 {
   padding: 3px 15px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #b23e35;
-  margin: 2px;
+  margin: 2px 0 0px 16px;
 }
 
 .eventContainer .popup .content .eventBox .myEventBtn:hover {
@@ -823,6 +826,8 @@ h1 {
 
 .eventContainer .popup .content .eventBox .oneEventBtn {
   display: flex;
+  color: #161515;
+  padding: 10px;
 }
 
 .eventContainer .popup .content .eventBox .oneEventBtn .oneEvent {
@@ -836,14 +841,17 @@ h1 {
 }
 
 .eventContainer .eventH2 {
-  margin: 25px 0 0 0;
   text-align: center;
   line-height: 20px;
   font-size: 1.2rem;
+  background-color: grey;
+  color: black;
+  padding: 10px;
 }
 
 .event {
   padding: 10px;
+  background-color: grey;
 }
 
 .event .subscribe {
