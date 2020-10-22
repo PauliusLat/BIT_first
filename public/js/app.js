@@ -97,8 +97,6 @@
 __webpack_require__.r(__webpack_exports__);
 
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -248,6 +246,8 @@ var Calendar = /*#__PURE__*/function () {
       for (var _i2 = 0; _i2 < event.length; _i2++) {
         _loop(_i2);
       }
+
+      this.getData();
     }
   }, {
     key: "month",
@@ -329,6 +329,7 @@ var Calendar = /*#__PURE__*/function () {
       var table = document.querySelector(".eventContainer");
       var HTML = "<div class=\"popup\">\n                <div class=\"content\">\n                  <div class=\"event\">     \n                    <span class=\"closebtn\">&#9932;</span>      \n                    <div class=\"eventTitle\">\n                       <h1>Ivesti nauja \u012Fvyki</h1>\n                    </div>\n                    <div class=\"subscribe\">\n                        <input class=\"newEvent\" type=\"text\" id=\"sendText\" placeholder=\"Naujas \u012Fvykis\">\n                        <input type=\"time\" id=\"appt\" name=\"appt\" value=\"00:00\">\n                      <div class=\"eventBtn\">\n                        Si\u0173sti\n                      </div>\n                    </div>\n                  </div>\n                    <div class=\"eventH2\">\n                        \u012Evykiai - ".concat(month, " ").concat(day, "\n                    </div>\n                    <div id=\"daysEvens\" class=\"eventBox\">\n                    </div>\n                </div>\n              </div>");
       table.innerHTML = HTML;
+      this.renderEvents(action);
       var close = document.querySelector(".closebtn");
       var send = document.querySelector(".eventBtn");
       HTML = "";
@@ -347,17 +348,23 @@ var Calendar = /*#__PURE__*/function () {
           })["catch"](function (err) {
             console.log(err instanceof TypeError);
           });
-          return setTimeout(_this3.renderEvents(action), 500);
+          setTimeout(function () {
+            _this3.getData(action);
+          }, 300);
+          setTimeout(function () {
+            _this3.renderEvents(action);
+          }, 500);
         }
+
+        document.getElementById("sendText").value = "";
       });
-      this.renderEvents(action);
     }
   }, {
     key: "renderEvents",
     value: function renderEvents(action) {
-      axios.get(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
+      axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
         if (response.status == 200 && response.statusText == 'OK') {
-          var _ret = function () {
+          (function () {
             var data = response.data.allData;
             var allEvens = document.getElementById('daysEvens');
             var HTML = "";
@@ -372,24 +379,20 @@ var Calendar = /*#__PURE__*/function () {
               value = data[keys[i]];
 
               if (action == value.event_date) {
-                HTML += "<div class=\"oneEventBtn\">\n                                <div class=\"oneEvent\">\n                                    ".concat(value.event_time, "   ").concat(value.event_description, "\n                                </div>\n                                <div class=\"myEventBtn\" id=\" ").concat(value.ID, "\">\n                                    trinti\n                                </div>\n                            </div>");
+                HTML += "<div class=\"oneEventBtn\">\n                                <div class=\"oneEvent\">\n                                    ".concat(value.event_time, "   ").concat(value.event_description, "\n                                </div>\n                                <div class=\"myEventBtn\" id=\"").concat(value.ID, "\" data-date=\"").concat(action, "\">\n                                    Trinti\n                                </div>\n                            </div>");
               }
 
               allEvens.innerHTML = HTML;
             }
 
             var deleteBtn = document.querySelectorAll(".myEventBtn");
-            var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-            var uri = document.location.origin;
 
             var _loop2 = function _loop2(j) {
               deleteBtn[j].addEventListener("click", function (e) {
+                var action = deleteBtn[j].dataset.date;
                 var id = deleteBtn[j].id;
-                axios.post(uri + path + "calendar-delete-admin", {
-                  eventID: id
-                })["catch"](function (err) {
-                  console.log(err instanceof TypeError);
-                }); //  return setTimeout(this.renderEvents(action), 500);
+                var call = new Calendar();
+                call.deleteEvent(id, action, value);
               });
             };
 
@@ -398,12 +401,7 @@ var Calendar = /*#__PURE__*/function () {
             }
 
             ;
-            return {
-              v: response
-            };
-          }();
-
-          if (_typeof(_ret) === "object") return _ret.v;
+          })();
         }
       })["catch"](function (error) {
         if (error.response) {
@@ -429,12 +427,65 @@ var Calendar = /*#__PURE__*/function () {
         console.log(error);
       });
     }
+  }, {
+    key: "deleteEvent",
+    value: function deleteEvent(id, action, value) {
+      var _this4 = this;
+
+      console.log(value);
+      console.log(action);
+      axios.post(this.uri + this.path + "calendar-delete-admin", {
+        eventID: id
+      })["catch"](function (err) {
+        console.log(err instanceof TypeError);
+      });
+      setTimeout(function () {
+        _this4.renderEvents(action);
+      }, 500);
+    }
+  }, {
+    key: "getData",
+    value: function getData() {
+      axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
+        var call = new Calendar();
+
+        if (response.status == 200 && response.statusText == 'OK') {
+          var data = response.data.allData;
+          var dayEvents = document.querySelectorAll(".cview--date");
+          var keys = [];
+
+          for (var key in data) {
+            keys.push(key);
+          }
+
+          for (var i = 0; i < dayEvents.length; i++) {
+            for (var j = 0; j < keys.length; j++) {
+              if (data[keys[j]].event_date == dayEvents[i].dataset.date && "cview--date today" != dayEvents[i].className) {
+                dayEvents[i].classList.add("daysEvent");
+              }
+            }
+          }
+        }
+      })["catch"](function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+
+        console.log(error);
+      });
+    }
   }]);
 
   return Calendar;
 }();
 
-/* harmony default export */ __webpack_exports__["default"] = (Calendar); //20, 21:00
+/* harmony default export */ __webpack_exports__["default"] = (Calendar);
 
 /***/ }),
 

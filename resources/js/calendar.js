@@ -129,6 +129,7 @@ class Calendar {
                 false
             );
         }
+        this.getData();
     }
 
     month(a) {
@@ -223,6 +224,8 @@ class Calendar {
               </div>`
         table.innerHTML = HTML;
 
+        this.renderEvents(action);
+
         let close = document.querySelector(".closebtn");
         const send = document.querySelector(".eventBtn");
 
@@ -249,19 +252,21 @@ class Calendar {
                         .catch((err) => {
                             console.log(err instanceof TypeError);
                         });
-                    return setTimeout(this.renderEvents(action), 500);
+                    setTimeout(() => { this.getData(action); }, 300);
+                    setTimeout(() => { this.renderEvents(action); }, 500);
                 }
+                document.getElementById("sendText").value = "";
             });
-        this.renderEvents(action);
     }
 
     renderEvents(action) {
 
-        axios.get(
+        axios.post(
             this.uri + this.path +
             'calendar-create-admin', {}
         )
             .then(function (response) {
+
                 if (response.status == 200 && response.statusText == 'OK') {
 
                     const data = response.data.allData;
@@ -281,37 +286,27 @@ class Calendar {
                                 <div class="oneEvent">
                                     ${value.event_time}   ${value.event_description}
                                 </div>
-                                <div class="myEventBtn" id=" ${value.ID}">
-                                    trinti
+                                <div class="myEventBtn" id="${value.ID}" data-date="${action}">
+                                    Trinti
                                 </div>
                             </div>`
                         }
                         allEvens.innerHTML = HTML;
                     }
-
                     let deleteBtn = document.querySelectorAll(".myEventBtn");
-                    const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-                    const uri = document.location.origin;
 
                     for (let j = 0; j < deleteBtn.length; j++) {
+
                         deleteBtn[j].addEventListener(
                             "click",
                             e => {
+                                let action = deleteBtn[j].dataset.date;
                                 let id = deleteBtn[j].id;
-                                axios
-                                    .post(
-                                        uri + path +
-                                        "calendar-delete-admin", {
-                                        eventID: id,
-                                    })
-                                    .catch((err) => {
-                                        console.log(err instanceof TypeError);
-                                    });
-                                //  return setTimeout(this.renderEvents(action), 500);
+                                let call = new Calendar();
+                                call.deleteEvent(id, action, value);
                             }
                         )
                     };
-                    return response;
                 }
             }).catch(function (error) {
                 if (error.response) {
@@ -337,8 +332,63 @@ class Calendar {
             });
     }
 
+    deleteEvent(id, action, value) {
+        console.log(value);
+        console.log(action);
+        axios
+            .post(
+                this.uri + this.path +
+                "calendar-delete-admin", {
+                eventID: id,
+            })
+            .catch((err) => {
+                console.log(err instanceof TypeError);
+            });
+
+          setTimeout(() => { this.renderEvents(action); }, 500);
+    }
+
+    getData() {
+        axios.post(
+            this.uri + this.path +
+            'calendar-create-admin', {}
+        )
+            .then(function (response) {
+
+                let call = new Calendar();
+
+                if (response.status == 200 && response.statusText == 'OK') {
+                    const data = response.data.allData;
+                    let dayEvents = document.querySelectorAll(".cview--date");
+                    let keys = [];
+
+                    for (let key in data) {
+                        keys.push(key);
+                    }
+
+                    for (let i = 0; i < dayEvents.length; i++) {
+                        for (let j = 0; j < keys.length; j++) {
+                            if (data[keys[j]].event_date == dayEvents[i].dataset.date &&
+                                "cview--date today" != dayEvents[i].className) {
+                                dayEvents[i].classList.add("daysEvent");
+                            }
+                        }
+                    }
+                }
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error);
+            });
+    }
 }
 
 export default Calendar;
 
-//20, 21:00
