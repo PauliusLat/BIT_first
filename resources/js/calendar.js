@@ -12,12 +12,15 @@ class Calendar {
         this.curentM = new Date(this.y, this.m + 1, 0).getMonth();
         this.curentDay = new Date(this.y, this.curentM, 1).getDay();
         let startDay = this.curentDay;
-
+        this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+        this.uri = document.location.origin;
         this.init(days, startDay);
     }
 
     init(lastDayM, startDay) {
+
         const DOM = document.querySelector(this.target);
+
         if (DOM) {
             let a = 1;
             const lastMth = document.getElementById("calendar-month-last");
@@ -117,7 +120,6 @@ class Calendar {
             event[i].addEventListener(
                 "click",
                 e => {
-
                     let day = event[i].innerText;
                     let action = event[i].dataset.date;
                     let curentM = action.toString().slice(4, -55);
@@ -130,6 +132,7 @@ class Calendar {
     }
 
     month(a) {
+
         const curentMth = document.getElementById("calendar-month");
 
         let dataDate = new Date(this.y, this.m + a - 1);
@@ -150,6 +153,7 @@ class Calendar {
     }
 
     translate(curentM) {
+
         switch (curentM) {
             case 'Jan':
                 return curentM = 'Sausis';
@@ -191,9 +195,8 @@ class Calendar {
     }
 
     event(action, month, day) {
-
-        const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-        const uri = document.location.origin;
+        this.path;
+        this.uri;
         let table = document.querySelector(".eventContainer");
 
         let HTML = `<div class="popup">
@@ -214,14 +217,14 @@ class Calendar {
                     <div class="eventH2">
                         Įvykiai - ${month} ${day}
                     </div>
+                    <div id="daysEvens" class="eventBox">
+                    </div>
                 </div>
               </div>`
         table.innerHTML = HTML;
 
         let close = document.querySelector(".closebtn");
         const send = document.querySelector(".eventBtn");
-
-
 
         HTML = "";
         close.addEventListener(
@@ -234,30 +237,108 @@ class Calendar {
             e => {
                 const sendE = document.getElementById('sendText').value;
                 const time = document.getElementById('appt').value;
-                console.log(sendE)
-                console.log(time )
-                console.log(action)
-                axios
-                    .post(
-                        uri + path +
-                        "calendar-store-admin", {
+                if (sendE.length != 0) {
+                    axios
+                        .post(
+                            this.uri + this.path +
+                            "calendar-store-admin", {
                             date: action,
                             event: sendE,
                             time: time,
-                        }
-                    )
-                    .catch((err) => {
-                        console.log(err instanceof TypeError);
-                    });
-                return setTimeout(this.renderEvents, 500);
+                        })
+                        .catch((err) => {
+                            console.log(err instanceof TypeError);
+                        });
+                    return setTimeout(this.renderEvents(action), 500);
+                }
             });
+        this.renderEvents(action);
     }
 
-    renderEvents() {
+    renderEvents(action) {
 
+        axios.get(
+            this.uri + this.path +
+            'calendar-create-admin', {}
+        )
+            .then(function (response) {
+                if (response.status == 200 && response.statusText == 'OK') {
 
+                    const data = response.data.allData;
+                    const allEvens = document.getElementById('daysEvens');
+                    let HTML = "";
+                    let keys = [];
+                    let value = "";
+
+                    for (let key in data) {
+                        keys.push(key);
+                    }
+
+                    for (let i = 0; i < keys.length; i++) {
+                        value = data[keys[i]];
+                        if (action == value.event_date) {
+                            HTML += `<div class="oneEventBtn">
+                                <div class="oneEvent">
+                                    ${value.event_time}   ${value.event_description}
+                                </div>
+                                <div class="myEventBtn" id=" ${value.ID}">
+                                    trinti
+                                </div>
+                            </div>`
+                        }
+                        allEvens.innerHTML = HTML;
+                    }
+
+                    let deleteBtn = document.querySelectorAll(".myEventBtn");
+                    const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+                    const uri = document.location.origin;
+
+                    for (let j = 0; j < deleteBtn.length; j++) {
+                        deleteBtn[j].addEventListener(
+                            "click",
+                            e => {
+                                let id = deleteBtn[j].id;
+                                axios
+                                    .post(
+                                        uri + path +
+                                        "calendar-delete-admin", {
+                                        eventID: id,
+                                    })
+                                    .catch((err) => {
+                                        console.log(err instanceof TypeError);
+                                    });
+                                //  return setTimeout(this.renderEvents(action), 500);
+                            }
+                        )
+                    };
+                    return response;
+                }
+            }).catch(function (error) {
+                if (error.response) {
+                    /*
+                     * The request was made and the server responded with a
+                     * status code that falls out of the range of 2xx
+                     */
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    /*
+                     * The request was made but no response was received, `error.request`
+                     * is an instance of XMLHttpRequest in the browser and an instance
+                     * of http.ClientRequest in Node.js
+                     */
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request and triggered an Error
+                    console.log('Error', error.message);
+                }
+                console.log(error);
+            });
     }
 
 }
 
 export default Calendar;
+
+//20, 21:00

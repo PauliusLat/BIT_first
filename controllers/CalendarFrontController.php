@@ -24,18 +24,18 @@ class CalendarFrontController {
 
 	public function create(Request $request, AlbumPost $album) {
 
-		foreach ($request->files->all() as $filesArr) {
-			if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
-				$image = new Attachment();
+		// foreach ($request->files->all() as $filesArr) {
+		// 	if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+		// 		$image = new Attachment();
 
-				$image->save($filesArr);
-			} elseif (is_array($filesArr)) {
-				foreach ($filesArr as $file) {
-					$image = new Attachment();
-					$image->save($file);
-				}
-			}
-		}
+		// 		$image->save($filesArr);
+		// 	} elseif (is_array($filesArr)) {
+		// 		foreach ($filesArr as $file) {
+		// 			$image = new Attachment();
+		// 			$image->save($file);
+		// 		}
+		// 	}
+		// }
 
 		// $album->save();
 		// $album->addTag('pridedamas tag');

@@ -89,6 +89,7 @@ function deleteIdea(delId) {
 //  /*------------------------------render data  axios-----------------------------------------*/
 
 function renderColons(e) {
+
   axios
     .get(
       uri + path +
@@ -96,7 +97,6 @@ function renderColons(e) {
       {}
     )
     .then(function(response) {
-      consloe.log(response)
       if (response.status == 200 && response.statusText == "OK") {
         const data = response.data.allData;
 

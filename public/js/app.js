@@ -97,6 +97,8 @@
 __webpack_require__.r(__webpack_exports__);
 
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -116,6 +118,8 @@ var Calendar = /*#__PURE__*/function () {
     this.curentM = new Date(this.y, this.m + 1, 0).getMonth();
     this.curentDay = new Date(this.y, this.curentM, 1).getDay();
     var startDay = this.curentDay;
+    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+    this.uri = document.location.origin;
     this.init(days, startDay);
   }
 
@@ -320,10 +324,10 @@ var Calendar = /*#__PURE__*/function () {
     value: function event(action, month, day) {
       var _this3 = this;
 
-      var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-      var uri = document.location.origin;
+      this.path;
+      this.uri;
       var table = document.querySelector(".eventContainer");
-      var HTML = "<div class=\"popup\">\n                <div class=\"content\">\n                  <div class=\"event\">     \n                    <span class=\"closebtn\">&#9932;</span>      \n                    <div class=\"eventTitle\">\n                       <h1>Ivesti nauja \u012Fvyki</h1>\n                    </div>\n                    <div class=\"subscribe\">\n                        <input class=\"newEvent\" type=\"text\" id=\"sendText\" placeholder=\"Naujas \u012Fvykis\">\n                        <input type=\"time\" id=\"appt\" name=\"appt\" value=\"00:00\">\n                      <div class=\"eventBtn\">\n                        Si\u0173sti\n                      </div>\n                    </div>\n                  </div>\n                    <div class=\"eventH2\">\n                        \u012Evykiai - ".concat(month, " ").concat(day, "\n                    </div>\n                </div>\n              </div>");
+      var HTML = "<div class=\"popup\">\n                <div class=\"content\">\n                  <div class=\"event\">     \n                    <span class=\"closebtn\">&#9932;</span>      \n                    <div class=\"eventTitle\">\n                       <h1>Ivesti nauja \u012Fvyki</h1>\n                    </div>\n                    <div class=\"subscribe\">\n                        <input class=\"newEvent\" type=\"text\" id=\"sendText\" placeholder=\"Naujas \u012Fvykis\">\n                        <input type=\"time\" id=\"appt\" name=\"appt\" value=\"00:00\">\n                      <div class=\"eventBtn\">\n                        Si\u0173sti\n                      </div>\n                    </div>\n                  </div>\n                    <div class=\"eventH2\">\n                        \u012Evykiai - ".concat(month, " ").concat(day, "\n                    </div>\n                    <div id=\"daysEvens\" class=\"eventBox\">\n                    </div>\n                </div>\n              </div>");
       table.innerHTML = HTML;
       var close = document.querySelector(".closebtn");
       var send = document.querySelector(".eventBtn");
@@ -334,28 +338,103 @@ var Calendar = /*#__PURE__*/function () {
       send.addEventListener("click", function (e) {
         var sendE = document.getElementById('sendText').value;
         var time = document.getElementById('appt').value;
-        console.log(sendE);
-        console.log(time);
-        console.log(action);
-        axios.post(uri + path + "calendar-store-admin", {
-          date: action,
-          event: sendE,
-          time: time
-        })["catch"](function (err) {
-          console.log(err instanceof TypeError);
-        });
-        return setTimeout(_this3.renderEvents, 500);
+
+        if (sendE.length != 0) {
+          axios.post(_this3.uri + _this3.path + "calendar-store-admin", {
+            date: action,
+            event: sendE,
+            time: time
+          })["catch"](function (err) {
+            console.log(err instanceof TypeError);
+          });
+          return setTimeout(_this3.renderEvents(action), 500);
+        }
       });
+      this.renderEvents(action);
     }
   }, {
     key: "renderEvents",
-    value: function renderEvents() {}
+    value: function renderEvents(action) {
+      axios.get(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
+        if (response.status == 200 && response.statusText == 'OK') {
+          var _ret = function () {
+            var data = response.data.allData;
+            var allEvens = document.getElementById('daysEvens');
+            var HTML = "";
+            var keys = [];
+            var value = "";
+
+            for (var key in data) {
+              keys.push(key);
+            }
+
+            for (var i = 0; i < keys.length; i++) {
+              value = data[keys[i]];
+
+              if (action == value.event_date) {
+                HTML += "<div class=\"oneEventBtn\">\n                                <div class=\"oneEvent\">\n                                    ".concat(value.event_time, "   ").concat(value.event_description, "\n                                </div>\n                                <div class=\"myEventBtn\" id=\" ").concat(value.ID, "\">\n                                    trinti\n                                </div>\n                            </div>");
+              }
+
+              allEvens.innerHTML = HTML;
+            }
+
+            var deleteBtn = document.querySelectorAll(".myEventBtn");
+            var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+            var uri = document.location.origin;
+
+            var _loop2 = function _loop2(j) {
+              deleteBtn[j].addEventListener("click", function (e) {
+                var id = deleteBtn[j].id;
+                axios.post(uri + path + "calendar-delete-admin", {
+                  eventID: id
+                })["catch"](function (err) {
+                  console.log(err instanceof TypeError);
+                }); //  return setTimeout(this.renderEvents(action), 500);
+              });
+            };
+
+            for (var j = 0; j < deleteBtn.length; j++) {
+              _loop2(j);
+            }
+
+            ;
+            return {
+              v: response
+            };
+          }();
+
+          if (_typeof(_ret) === "object") return _ret.v;
+        }
+      })["catch"](function (error) {
+        if (error.response) {
+          /*
+           * The request was made and the server responded with a
+           * status code that falls out of the range of 2xx
+           */
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          /*
+           * The request was made but no response was received, `error.request`
+           * is an instance of XMLHttpRequest in the browser and an instance
+           * of http.ClientRequest in Node.js
+           */
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request and triggered an Error
+          console.log('Error', error.message);
+        }
+
+        console.log(error);
+      });
+    }
   }]);
 
   return Calendar;
 }();
 
-/* harmony default export */ __webpack_exports__["default"] = (Calendar);
+/* harmony default export */ __webpack_exports__["default"] = (Calendar); //20, 21:00
 
 /***/ }),
 
@@ -574,8 +653,6 @@ function deleteIdea(delId) {
 
 function renderColons(e) {
   axios.get(uri + path + "idea-render-admin", {}).then(function (response) {
-    consloe.log(response);
-
     if (response.status == 200 && response.statusText == "OK") {
       var data = response.data.allData;
       var keys = [];
