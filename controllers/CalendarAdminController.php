@@ -2,73 +2,60 @@
 
 namespace BIT\controllers;
 
-use BIT\app\Attachment;
 use BIT\app\View;
-use BIT\models\AlbumPost;
+use BIT\models\EventPost;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-class CalendarAdminController {
-	public function __construct() {
-
-// 		$attachment = new Attachment();
-		// $attachment->save($request, $post_parent_id(optional)); -sukuria nauja, arba update’ina esanti.
-		// $attachment->delete();
-		// $attachment->getURL();
-		// $attachment->geAttachmentDetails();
+class CalendarAdminController
+{
+	public function __construct()
+	{
 	}
 
-	public function adminIndex() {
+	public function adminIndex()
+	{
 		return View::adminRender('calendar.kalendorius');
 	}
 
-	public function create(Request $request, AlbumPost $album) {
+	public function create()
+	{
+			$data = (EventPost::all())->pluck('event_description', 'event_date', 'event_time', 'ID')->all();
+			$response = new JsonResponse(['allData' => $data]);
+			return $response;
+	}
 
-		foreach ($request->files->all() as $filesArr) {
-			if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
-				$image = new Attachment();
+	public function store(request $requestJson, EventPost $event)
+	{
 
-				$image->save($filesArr);
-			} elseif (is_array($filesArr)) {
-				foreach ($filesArr as $file) {
-					$image = new Attachment();
-					$image->save($file);
-				}
-			}
+		$request = $this->decodeRequest($requestJson);
+
+		$event->event_description = $request->request->get('event');
+		$event->event_time = $request->request->get('time');
+		$event->event_date = $request->request->get('date');
+
+		$event->save();
+
+		return $response = new Response;
+	}
+
+	public function delete(Request $requestJson, EventPost $event)
+	{
+
+		$request = $this->decodeRequest($requestJson);
+
+		$deleteId = $event->ID = $request->request->get('eventID');
+
+		if ($deleteId) {
+			$deletePost = EventPost::get($deleteId);
+			$deletePost->delete();
 		}
-
-		// $album->save();
-		// $album->addTag('pridedamas tag');
-		// $album->getAllTags();
-		// $album->getTags('maincat')->sortBy('count', 'desc');
-
-		return new Response();
-
+		return $response = new Response;
 	}
 
-	public function render() {
-
-		// $data = (Atachment::all())->all();
-		// foreach ($data as $img) {
-		// 	$allImages = $img->getUrl();
-		// }
-	}
-
-	// private function getFilesFromRequest(Request $request){
-	// 	foreach($request->files->all() as $filesArr) {
-	// 		if($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile){
-	// 			$image = new Attachment();
-	// 			$image->save($filesArr);
-	// 		}elseif(is_array($filesArr)){
-	// 			foreach ($filesArr as $file) {
-	// 				$image = new Attachment();
-	// 				$image->save($file);
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	private function decodeRequest($request) {
+	private function decodeRequest($request)
+	{
 
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);
@@ -77,5 +64,4 @@ class CalendarAdminController {
 
 		return $request;
 	}
-
 }

@@ -42,7 +42,7 @@ class IdeaController {
 			$txt = '';
 
 			foreach ($array as $text) {
-				;
+
 				$txt .= $text . ' ';
 			}
 

@@ -785,12 +785,50 @@ h1 {
   height: 100%;
   width: 100%;
   background-color: grey;
-  cursor: -webkit-grab;
-  cursor: grab;
 }
 
 .eventContainer .popup .content {
   height: 60px;
+}
+
+.eventContainer .popup .content .eventBox {
+  margin: 20px 0 0 20px;
+  display: inline-block;
+  width: 100%;
+}
+
+.eventContainer .popup .content .eventBox .myEventBtn {
+  box-shadow: inset 0px 39px 0px -24px #e67a73;
+  background-color: #e4685d;
+  border-radius: 6px;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  padding: 3px 15px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #b23e35;
+  margin: 2px;
+}
+
+.eventContainer .popup .content .eventBox .myEventBtn:hover {
+  background-color: #eb675e;
+}
+
+.eventContainer .popup .content .eventBox .myEventBtn:active {
+  position: relative;
+  top: 1px;
+}
+
+.eventContainer .popup .content .eventBox .oneEventBtn {
+  display: flex;
+}
+
+.eventContainer .popup .content .eventBox .oneEventBtn .oneEvent {
+  line-height: 25px;
+  font-size: 16px;
+  width: 73%;
 }
 
 .eventContainer .eventTitle {
@@ -831,38 +869,26 @@ h1 {
 }
 
 .event .subscribe .eventBtn {
-  font-size: 1rem;
-  text-decoration: none;
-  border: 1px solid #9294f8;
-  position: relative;
-  overflow: hidden;
-  background-color: #B3B9D5;
+  background-color: #5cd67d;
+  border-radius: 6px;
+  border: 1px solid #18ab29;
   cursor: pointer;
-  width: 80px;
-  border-radius: 5px;
-  margin: 10px 6px 0 0;
-  text-align: center;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  padding: 3px 15px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
   float: right;
-  height: 25px;
+  margin: 5px 10px 10px 5px;
 }
 
 .event .subscribe .eventBtn:hover {
-  background-color: #687FEE;
-  box-shadow: 1px 1px 25px 10px rgba(146, 148, 248, 0.4);
+  background-color: #42871d;
 }
 
-.event .subscribe .eventBtn:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(146, 148, 248, 0.4), transparent);
-  transition: all 650ms;
-}
-
-.event .subscribe .eventBtn:hover:before {
-  left: 100%;
+.event .subscribe .eventBtn::active {
+  position: relative;
+  top: 1px;
 }
 
