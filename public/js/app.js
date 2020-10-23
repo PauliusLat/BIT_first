@@ -365,9 +365,7 @@ var Calendar = /*#__PURE__*/function () {
       axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
         if (response.status == 200 && response.statusText == 'OK') {
           (function () {
-            // let call = new Calendar();
-            // let dataDate = new Date(call.y, call.m + call.d);
-            // let lastD = call.lastDayM, curentDay = call.curentDay;
+            var call = new Calendar();
             var data = response.data.allData;
             var allEvens = document.getElementById('daysEvens');
             var HTML = "";
@@ -409,7 +407,7 @@ var Calendar = /*#__PURE__*/function () {
               }
             } else {
               HTML = "";
-              allEvens.innerHTML = HTML; // setTimeout(() => { call.render(lastD, curentDay, dataDate); }, 500);
+              allEvens.innerHTML = HTML;
             }
 
             var deleteBtn = document.querySelectorAll(".myEventBtn");
@@ -418,7 +416,7 @@ var Calendar = /*#__PURE__*/function () {
               deleteBtn[_j].addEventListener("click", function (e) {
                 var action = deleteBtn[_j].dataset.date;
                 var id = deleteBtn[_j].id;
-                return call.deleteEvent(id, action);
+                call.deleteEvent(id, action);
               });
             };
 
@@ -450,6 +448,23 @@ var Calendar = /*#__PURE__*/function () {
 
       axios.post(this.uri + this.path + "calendar-delete-admin", {
         eventID: id
+      }).then(function (response) {
+        if (response.status == 200 && response.statusText == 'OK') {
+          var data = response.data.allData;
+          var dayEvents = document.querySelectorAll(".daysEvent");
+          var keys = [];
+
+          for (var key in data) {
+            keys.push(key);
+          }
+
+          if (keys.length == 0) {
+            for (var i = 0; i < dayEvents.length; i++) {
+              console.log(dayEvents[i]);
+              dayEvents[i].classList.add("removeDay");
+            }
+          }
+        }
       })["catch"](function (err) {
         console.log(err instanceof TypeError);
       });
