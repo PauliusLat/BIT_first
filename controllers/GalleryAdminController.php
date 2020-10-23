@@ -5,15 +5,12 @@ namespace BIT\controllers;
 use BIT\app\Attachment;
 use BIT\app\View;
 use BIT\models\AlbumPost;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
-
-class GalleryAdminController
-{
-	public function __construct()
-	{
+class GalleryAdminController {
+	public function __construct() {
 
 		// 		$attachment = new Attachment();
 		// $attachment->save($request, $post_parent_id(optional)); -sukuria nauja, arba update’ina esanti.
@@ -22,13 +19,11 @@ class GalleryAdminController
 		// $attachment->geAttachmentDetails();
 	}
 
-	public function adminIndex()
-	{
+	public function adminIndex() {
 		return View::adminRender('gallery.galerija');
 	}
 
-	public function store(Request $request, AlbumPost $album)
-	{
+	public function store(Request $request, AlbumPost $album) {
 		foreach ($request->request as $key => $a) {
 			if ($key == "album") {
 				$album->album_title = $a;
@@ -41,7 +36,7 @@ class GalleryAdminController
 		foreach ($request->request as $value) {
 			$tags[] = trim($value);
 		}
-
+		var_dump($request->files);
 		foreach ($request->files->all() as $key => $filesArr) {
 			if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
 				$count++;
@@ -87,8 +82,7 @@ class GalleryAdminController
 		return new Response();
 	}
 
-	public function create(Request $request, AlbumPost $album)
-	{
+	public function create(Request $request, AlbumPost $album) {
 		$data = (AlbumPost::all())->all();
 		//AlbumPost::get($post_id)->attachments; grazina albuma
 		// $allImages = [];
@@ -104,13 +98,7 @@ class GalleryAdminController
 		return $response;
 	}
 
-	// nuo cia istrinti, testas
-
-
-	// iki cia istrinti, testas
-
-	private function decodeRequest($request)
-	{
+	private function decodeRequest($request) {
 
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);

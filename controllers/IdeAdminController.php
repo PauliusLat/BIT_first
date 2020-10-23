@@ -8,15 +8,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class IdeAdminController {
-	public function __construct() {
+class IdeAdminController
+{
+	public function __construct()
+	{
 	}
 
-	public function adminIndex() {
+	public function adminIndex()
+	{
 		return View::adminRender('idea.idejos');
 	}
 
-	public function render(Request $request, IdeaPost $idea) {
+	public function render(Request $request, IdeaPost $idea)
+	{
 
 		$data = (IdeaPost::all())->pluck('idea_content', 'idea_like', 'post_date', 'idea_solution', 'ID')->all();
 
@@ -28,7 +32,8 @@ class IdeAdminController {
 		return $response;
 	}
 
-	public function edit(Request $requestJson, IdeaPost $idea) {
+	public function edit(Request $requestJson, IdeaPost $idea)
+	{
 
 		$request = $this->decodeRequest($requestJson);
 
@@ -51,7 +56,8 @@ class IdeAdminController {
 		return $response = new Response;
 	}
 
-	public function create(Request $requestJson, IdeaPost $idea) {
+	public function create(Request $requestJson, IdeaPost $idea)
+	{
 
 		$request = $this->decodeRequest($requestJson);
 
@@ -60,7 +66,7 @@ class IdeAdminController {
 
 		$soliutionPost = IdeaPost::get($soliutionId);
 
-		if (is_array($soliution) ) {
+		if (is_array($soliution)) {
 			$array = $soliution;
 
 			$txt = '';
@@ -75,7 +81,8 @@ class IdeAdminController {
 		return $response = new Response;
 	}
 	//	public function delete($force_delete = false)
-	public function delete(Request $requestJson, IdeaPost $idea) {		
+	public function delete(Request $requestJson, IdeaPost $idea)
+	{
 
 		$request = $this->decodeRequest($requestJson);
 
@@ -88,13 +95,14 @@ class IdeAdminController {
 		return $response = new Response;
 	}
 
-	public function decodeRequest($request){
+	public function decodeRequest($request)
+	{
 
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);
 			$request->request->replace(is_array($data) ? $data : array());
 		}
 
-        return $request;
+		return $request;
 	}
 }

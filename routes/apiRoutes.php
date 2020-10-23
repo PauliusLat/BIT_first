@@ -5,10 +5,13 @@
 return [
 	'event' => 'EventController@index',
 
-	'calendar' => 'calendarFrontController@index',
+	'calendar-create-front' => 'CalendarFrontController@create',
+
+	'calendar-create-admin' => 'CalendarAdminController@create',
+	'calendar-store-admin' => 'CalendarAdminController@store',
+	'calendar-delete-admin' => 'CalendarAdminController@delete',
 
 	'ideas-render-front' => 'IdeasController@render',
-
 	'idea-create-front' => 'IdeaController@create',
 	'idea-render-front' => 'IdeaController@render',
 

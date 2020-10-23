@@ -1,448 +1,496 @@
-/**
- * **
- *
- * @format
- */
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ({
 
-(function(modules) {
-  // webpackBootstrap
-  /******/ // The module cache
-  /******/ var installedModules = {}; // The require function
-  /******/
-  /******/ /******/ function __webpack_require__(moduleId) {
-    /******/
-    /******/ // Check if module is in cache
-    /******/ if (installedModules[moduleId]) {
-      /******/ return installedModules[moduleId].exports;
-      /******/
-    } // Create a new module (and put it into the cache)
-    /******/ /******/ var module = (installedModules[moduleId] = {
-      /******/ i: moduleId,
-      /******/ l: false,
-      /******/ exports: {},
-      /******/
-    }); // Execute the module function
-    /******/
-    /******/ /******/ modules[moduleId].call(
-      module.exports,
-      module,
-      module.exports,
-      __webpack_require__
-    ); // Flag the module as loaded
-    /******/
-    /******/ /******/ module.l = true; // Return the exports of the module
-    /******/
-    /******/ /******/ return module.exports;
-    /******/
-  } // expose the modules object (__webpack_modules__)
-  /******/
-  /******/
-  /******/ /******/ __webpack_require__.m = modules; // expose the module cache
-  /******/
-  /******/ /******/ __webpack_require__.c = installedModules; // define getter function for harmony exports
-  /******/
-  /******/ /******/ __webpack_require__.d = function(exports, name, getter) {
-    /******/ if (!__webpack_require__.o(exports, name)) {
-      /******/ Object.defineProperty(exports, name, {
-        enumerable: true,
-        get: getter,
-      });
-      /******/
-    }
-    /******/
-  }; // define __esModule on exports
-  /******/
-  /******/ /******/ __webpack_require__.r = function(exports) {
-    /******/ if (typeof Symbol !== "undefined" && Symbol.toStringTag) {
-      /******/ Object.defineProperty(exports, Symbol.toStringTag, {
-        value: "Module",
-      });
-      /******/
-    }
-    /******/ Object.defineProperty(exports, "__esModule", { value: true });
-    /******/
-  }; // create a fake namespace object // mode & 1: value is a module id, require it // mode & 2: merge all properties of value into the ns // mode & 4: return value when already ns object // mode & 8|1: behave like require
-  /******/
-  /******/ /******/ /******/ /******/ /******/ /******/ __webpack_require__.t = function(
-    value,
-    mode
-  ) {
-    /******/ if (mode & 1) value = __webpack_require__(value);
-    /******/ if (mode & 8) return value;
-    /******/ if (
-      mode & 4 &&
-      typeof value === "object" &&
-      value &&
-      value.__esModule
-    )
-      return value;
-    /******/ var ns = Object.create(null);
-    /******/ __webpack_require__.r(ns);
-    /******/ Object.defineProperty(ns, "default", {
-      enumerable: true,
-      value: value,
-    });
-    /******/ if (mode & 2 && typeof value != "string")
-      for (var key in value)
-        __webpack_require__.d(
-          ns,
-          key,
-          function(key) {
-            return value[key];
-          }.bind(null, key)
-        );
-    /******/ return ns;
-    /******/
-  }; // getDefaultExport function for compatibility with non-harmony modules
-  /******/
-  /******/ /******/ __webpack_require__.n = function(module) {
-    /******/ var getter =
-      module && module.__esModule
-        ? /******/ function getDefault() {
-            return module["default"];
-          }
-        : /******/ function getModuleExports() {
-            return module;
-          };
-    /******/ __webpack_require__.d(getter, "a", getter);
-    /******/ return getter;
-    /******/
-  }; // Object.prototype.hasOwnProperty.call
-  /******/
-  /******/ /******/ __webpack_require__.o = function(object, property) {
-    return Object.prototype.hasOwnProperty.call(object, property);
-  }; // __webpack_public_path__
-  /******/
-  /******/ /******/ __webpack_require__.p = "/"; // Load entry module and return exports
-  /******/
-  /******/
-  /******/ /******/ return __webpack_require__((__webpack_require__.s = 0));
-  /******/
-})(
-  /************************************************************************/
-  /******/ {
-    /***/ "./resources/js/calendar.js":
-      /*!**********************************!*\
+/***/ "./resources/js/calendar.js":
+/*!**********************************!*\
   !*** ./resources/js/calendar.js ***!
   \**********************************/
-      /*! exports provided: default */
-      /***/ function(module, __webpack_exports__, __webpack_require__) {
-        "use strict";
-        __webpack_require__.r(__webpack_exports__);
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-        function _classCallCheck(instance, Constructor) {
-          if (!(instance instanceof Constructor)) {
-            throw new TypeError("Cannot call a class as a function");
-          }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Calendar = /*#__PURE__*/function () {
+  function Calendar(target) {
+    _classCallCheck(this, Calendar);
+
+    this.target = target;
+    this.DOM = null;
+    this.date = new Date();
+    this.y = this.date.getFullYear(), this.m = this.date.getMonth(), this.d = this.date.getDay();
+    this.lastDayM = new Date(this.y, this.m + 1, 0).getDate();
+    var days = this.lastDayM;
+    this.curentM = new Date(this.y, this.m + 1, 0).getMonth();
+    this.curentDay = new Date(this.y, this.curentM, 1).getDay();
+    var startDay = this.curentDay;
+    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+    this.uri = document.location.origin;
+    this.init(days, startDay);
+  }
+
+  _createClass(Calendar, [{
+    key: "init",
+    value: function init(lastDayM, startDay) {
+      var _this = this;
+
+      var DOM = document.querySelector(this.target);
+
+      if (DOM) {
+        var a = 1;
+        var lastMth = document.getElementById("calendar-month-last");
+        var nextMth = document.getElementById("calendar-month-next");
+        lastMth.addEventListener("click", function () {
+          a = a - 1;
+
+          _this.month(a);
+        });
+        nextMth.addEventListener("click", function () {
+          a = a + 1;
+
+          _this.month(a);
+        });
+        this.render(lastDayM, startDay);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render(lastDayM, curentDay, dataDate) {
+      var _this2 = this;
+
+      var today = this.date;
+
+      if (curentDay == 0) {
+        curentDay = 7;
+      }
+
+      var calendarDays = document.getElementById("dates");
+      var exisitClassMonth = document.querySelector(".cview__month-current").textContent;
+
+      if (exisitClassMonth == 1) {
+        var nowM = new Date(this.y, this.date.getMonth());
+        var nowY = nowM.toString().slice(11, -47);
+        nowM = nowM.toString().slice(4, -55);
+        nowM = this.translate(nowM);
+        document.getElementById("calendar-month").innerHTML = nowY + ' ' + nowM;
+      }
+
+      var check = document.querySelectorAll(".cview--spacer");
+      var check1 = document.querySelectorAll(".cview--date");
+
+      if (check.length == 0 && check1.length == 0) {
+        for (var i = 0; i < curentDay - 1; i++) {
+          var spacer = document.createElement("div");
+          spacer.className = "cview--spacer";
+          calendarDays.appendChild(spacer);
         }
 
-        function _defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
+        for (var d = 1; d <= lastDayM; d++) {
+          var _date = new Date(this.y, this.m, d);
 
-        function _createClass(Constructor, protoProps, staticProps) {
-          if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) _defineProperties(Constructor, staticProps);
-          return Constructor;
-        }
+          var day = document.createElement("div");
+          day.className = "cview--date";
+          day.textContent = d;
+          day.setAttribute("data-date", _date);
 
-        var Calendar = /*#__PURE__*/ (function() {
-          function Calendar(target) {
-            _classCallCheck(this, Calendar);
-
-            this.target = target;
-            this.DOM = null;
-            this.date = new Date();
-            (this.y = this.date.getFullYear()),
-              (this.m = this.date.getMonth()),
-              (this.d = this.date.getDay());
-            this.lastDayM = new Date(this.y, this.m + 1, 0).getDate();
-            var days = this.lastDayM;
-            this.curentM = new Date(this.y, this.m + 1, 0).getMonth();
-            this.curentDay = new Date(this.y, this.curentM, 1).getDay();
-            var startDay = this.curentDay;
-            this.init(days, startDay);
+          if (d == today.getDate() && this.y == today.getFullYear() && this.m == today.getMonth()) {
+            day.classList.add("today");
           }
 
-          _createClass(Calendar, [
-            {
-              key: "init",
-              value: function init(lastDayM, startDay) {
-                var _this = this;
+          calendarDays.appendChild(day);
+        }
+      } else {
+        Array.from(document.querySelectorAll('.cview--spacer')).forEach(function (el) {
+          return el.remove();
+        });
+        Array.from(document.querySelectorAll('.cview--date')).forEach(function (el) {
+          return el.remove();
+        });
 
-                var DOM = document.querySelector(this.target);
+        for (var x = 0; x < curentDay - 1; x++) {
+          var _spacer = document.createElement("div");
 
-                if (DOM) {
-                  var a = 1;
-                  var lastMth = document.getElementById("calendar-month-last");
-                  var nextMth = document.getElementById("calendar-month-next");
-                  lastMth.addEventListener("click", function() {
-                    a = a - 1;
+          _spacer.className = "cview--spacer";
+          calendarDays.appendChild(_spacer);
+        }
 
-                    _this.month(a);
-                  });
-                  nextMth.addEventListener("click", function() {
-                    a = a + 1;
+        for (var _d = 1; _d <= lastDayM; _d++) {
+          dataDate.setDate(_d);
 
-                    _this.month(a);
-                  });
-                  this.render(lastDayM, startDay);
-                }
-              },
-            },
-            {
-              key: "render",
-              value: function render(lastDayM, curentDay, dataDate) {
-                var _this2 = this;
+          var _day = document.createElement("div");
 
-                var today = this.date;
+          _day.className = "cview--date";
+          _day.textContent = _d;
 
-                if (curentDay == 0) {
-                  curentDay = 7;
-                }
+          _day.setAttribute("data-date", dataDate);
 
-                var calendarDays = document.getElementById("dates");
-                var exisitClassMonth = document.querySelector(
-                  ".cview__month-current"
-                ).textContent;
+          calendarDays.appendChild(_day);
+        }
 
-                if (exisitClassMonth == 1) {
-                  var nowM = new Date(this.y, this.date.getMonth());
-                  var nowY = nowM.toString().slice(11, -47);
-                  nowM = nowM.toString().slice(4, -55);
-                  nowM = this.translate(nowM);
-                  document.getElementById("calendar-month").innerHTML =
-                    nowY + " " + nowM;
-                }
+        var aadToday = new Date(this.y, this.m, this.date.getDate());
+        var isToday = document.querySelectorAll(".cview--date");
 
-                var check = document.querySelectorAll(".cview--spacer");
-                var check1 = document.querySelectorAll(".cview--date");
+        for (var _i = 0; _i < isToday.length; _i++) {
+          if (isToday[_i].dataset.date == aadToday) {
+            isToday[_i].classList.add("today");
+          }
+        }
+      }
 
-                if (check.length == 0 && check1.length == 0) {
-                  for (var i = 0; i < curentDay - 1; i++) {
-                    var spacer = document.createElement("div");
-                    spacer.className = "cview--spacer";
-                    calendarDays.appendChild(spacer);
-                  }
+      var event = document.querySelectorAll(".cview--date");
 
-                  for (var d = 1; d <= lastDayM; d++) {
-                    var _date = new Date(this.y, this.m, d);
+      var _loop = function _loop(_i2) {
+        event[_i2].addEventListener("click", function (e) {
+          var day = event[_i2].innerText;
+          var action = event[_i2].dataset.date;
+          var curentM = action.toString().slice(4, -55);
 
-                    var day = document.createElement("div");
-                    day.className = "cview--date";
-                    day.textContent = d;
-                    day.setAttribute("data-date", _date);
+          var month = _this2.translate(curentM);
 
-                    if (
-                      d == today.getDate() &&
-                      this.y == today.getFullYear() &&
-                      this.m == today.getMonth()
-                    ) {
-                      day.classList.add("today");
-                    }
+          _this2.event(action, month, day);
+        }, false);
+      };
 
-                    calendarDays.appendChild(day);
-                  }
-                } else {
-                  Array.from(
-                    document.querySelectorAll(".cview--spacer")
-                  ).forEach(function(el) {
-                    return el.remove();
-                  });
-                  Array.from(document.querySelectorAll(".cview--date")).forEach(
-                    function(el) {
-                      return el.remove();
-                    }
-                  );
+      for (var _i2 = 0; _i2 < event.length; _i2++) {
+        _loop(_i2);
+      }
 
-                  for (var x = 0; x < curentDay - 1; x++) {
-                    var _spacer = document.createElement("div");
+      this.getData();
+    }
+  }, {
+    key: "month",
+    value: function month(a) {
+      var curentMth = document.getElementById("calendar-month");
+      var dataDate = new Date(this.y, this.m + a - 1);
+      var y = this.date.getFullYear(),
+          m = this.date.getMonth();
+      var curentM = new Date(y, this.date.getMonth() + a, 0);
+      var curentY = curentM.toString().slice(11, -47);
+      curentM = curentM.toString().slice(4, -55);
+      var curM = this.translate(curentM);
+      curentMth.innerHTML = curentY + ' ' + curM;
+      var lastDayM = new Date(y, m + a, 0).getDate();
+      var newM = new Date(y, m + a, 0).getMonth();
+      var startDay = new Date(curentY, newM, 1).getDay();
+      this.render(lastDayM, startDay, dataDate);
+    }
+  }, {
+    key: "translate",
+    value: function translate(curentM) {
+      switch (curentM) {
+        case 'Jan':
+          return curentM = 'Sausis';
+          break;
 
-                    _spacer.className = "cview--spacer";
-                    calendarDays.appendChild(_spacer);
-                  }
+        case 'Feb':
+          return curentM = 'Vasaris';
+          break;
 
-                  for (var _d = 1; _d <= lastDayM; _d++) {
-                    dataDate.setDate(_d);
+        case 'Mar':
+          return curentM = 'Kovas';
+          break;
 
-                    var _day = document.createElement("div");
+        case 'Apr':
+          return curentM = 'Balandis';
+          break;
 
-                    _day.className = "cview--date";
-                    _day.textContent = _d;
+        case 'May':
+          return curentM = 'Gegužė';
+          break;
 
-                    _day.setAttribute("data-date", dataDate);
+        case 'Jun':
+          return curentM = 'Birželis';
+          break;
 
-                    calendarDays.appendChild(_day);
-                  }
+        case 'Jul':
+          return curentM = 'Liepa';
+          break;
 
-                  var aadToday = new Date(this.y, this.m, this.date.getDate());
-                  var isToday = document.querySelectorAll(".cview--date");
+        case 'Aug':
+          return curentM = 'Rugpjūtis';
+          break;
 
-                  for (var _i = 0; _i < isToday.length; _i++) {
-                    if (isToday[_i].dataset.date == aadToday) {
-                      isToday[_i].classList.add("today");
-                    }
-                  }
-                }
+        case 'Sep':
+          return curentM = 'Rugsėjis';
+          break;
 
-                var event = document.querySelectorAll(".cview--date");
+        case 'Oct':
+          return curentM = 'Spalis';
+          break;
 
-                var _loop = function _loop(_i2) {
-                  event[_i2].addEventListener(
-                    "click",
-                    function(e) {
-                      var day = event[_i2].innerText;
-                      var action = event[_i2].dataset.date;
-                      var curentM = action.toString().slice(4, -55);
+        case 'Nov':
+          return curentM = 'Lapkritis';
+          break;
 
-                      var month = _this2.translate(curentM);
+        case 'Dec':
+          return curentM = 'Gruodis';
+          break;
+      }
+    }
+  }, {
+    key: "event",
+    value: function event(action, month, day) {
+      var _this3 = this;
 
-                      _this2.event(action, month, day);
-                    },
-                    false
-                  );
-                };
+      this.path;
+      this.uri;
+      var table = document.querySelector(".eventContainer");
+      var HTML = "<div class=\"popup\">\n                <div class=\"content\">\n                  <div class=\"event\">     \n                    <span class=\"closebtn\">&#9932;</span>      \n                    <div class=\"eventTitle\">\n                       <h1>Ivesti nauja \u012Fvyki</h1>\n                    </div>\n                    <div class=\"subscribe\">\n                        <input class=\"newEvent\" type=\"text\" id=\"sendText\" placeholder=\"Naujas \u012Fvykis\">\n                        <input type=\"time\" id=\"appt\" name=\"appt\" value=\"00:00\">\n                      <div class=\"eventBtn\">\n                        Si\u0173sti\n                      </div>\n                    </div>\n                  </div>\n                    <div class=\"eventH2\">\n                        \u012Evykiai - ".concat(month, " ").concat(day, "\n                    </div>\n                    <div id=\"daysEvens\" class=\"eventBox\">\n                    </div>\n                </div>\n              </div>");
+      table.innerHTML = HTML;
+      this.renderEvents(action);
+      var close = document.querySelector(".closebtn");
+      var send = document.querySelector(".eventBtn");
+      HTML = "";
+      close.addEventListener("click", function (e) {
+        table.innerHTML = HTML;
+      });
+      send.addEventListener("click", function (e) {
+        var sendE = document.getElementById('sendText').value;
+        var time = document.getElementById('appt').value;
 
-                for (var _i2 = 0; _i2 < event.length; _i2++) {
-                  _loop(_i2);
-                }
-              },
-            },
-            {
-              key: "month",
-              value: function month(a) {
-                var curentMth = document.getElementById("calendar-month");
-                var dataDate = new Date(this.y, this.m + a - 1);
-                var y = this.date.getFullYear(),
-                  m = this.date.getMonth();
-                var curentM = new Date(y, this.date.getMonth() + a, 0);
-                var curentY = curentM.toString().slice(11, -47);
-                curentM = curentM.toString().slice(4, -55);
-                var curM = this.translate(curentM);
-                curentMth.innerHTML = curentY + " " + curM;
-                var lastDayM = new Date(y, m + a, 0).getDate();
-                var newM = new Date(y, m + a, 0).getMonth();
-                var startDay = new Date(curentY, newM, 1).getDay();
-                this.render(lastDayM, startDay, dataDate);
-              },
-            },
-            {
-              key: "translate",
-              value: function translate(curentM) {
-                switch (curentM) {
-                  case "Jan":
-                    return (curentM = "Sausis");
-                    break;
+        if (sendE.length != 0) {
+          axios.post(_this3.uri + _this3.path + "calendar-store-admin", {
+            date: action,
+            event: sendE,
+            time: time
+          })["catch"](function (err) {
+            console.log(err instanceof TypeError);
+          });
+          setTimeout(function () {
+            _this3.getData(action);
+          }, 300);
+          setTimeout(function () {
+            _this3.renderEvents(action);
+          }, 500);
+        }
 
-                  case "Feb":
-                    return (curentM = "Vasaris");
-                    break;
+        document.getElementById("sendText").value = "";
+      });
+    }
+  }, {
+    key: "renderEvents",
+    value: function renderEvents(action) {
+      axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
+        if (response.status == 200 && response.statusText == 'OK') {
+          (function () {
+            var data = response.data.allData;
+            var allEvens = document.getElementById('daysEvens');
+            var HTML = "";
+            var keys = [];
+            var value = "";
 
-                  case "Mar":
-                    return (curentM = "Kovas");
-                    break;
+            for (var key in data) {
+              keys.push(key);
+            }
 
-                  case "Apr":
-                    return (curentM = "Balandis");
-                    break;
+            for (var i = 0; i < keys.length; i++) {
+              value = data[keys[i]];
 
-                  case "May":
-                    return (curentM = "Gegužė");
-                    break;
+              if (action == value.event_date) {
+                HTML += "<div class=\"oneEventBtn\">\n                                <div class=\"oneEvent\">\n                                    ".concat(value.event_time, "   ").concat(value.event_description, "\n                                </div>\n                                <div class=\"myEventBtn\" id=\"").concat(value.ID, "\" data-date=\"").concat(action, "\">\n                                    Trinti\n                                </div>\n                            </div>");
+              }
 
-                  case "Jun":
-                    return (curentM = "Birželis");
-                    break;
+              allEvens.innerHTML = HTML;
+            }
 
-                  case "Jul":
-                    return (curentM = "Liepa");
-                    break;
+            var deleteBtn = document.querySelectorAll(".myEventBtn");
 
-                  case "Aug":
-                    return (curentM = "Rugpjūtis");
-                    break;
+            var _loop2 = function _loop2(j) {
+              deleteBtn[j].addEventListener("click", function (e) {
+                var action = deleteBtn[j].dataset.date;
+                var id = deleteBtn[j].id;
+                var call = new Calendar();
+                call.deleteEvent(id, action, value);
+              });
+            };
 
-                  case "Sep":
-                    return (curentM = "Rugsėjis");
-                    break;
+            for (var j = 0; j < deleteBtn.length; j++) {
+              _loop2(j);
+            }
 
-                  case "Oct":
-                    return (curentM = "Spalis");
-                    break;
+            ;
+          })();
+        }
+      })["catch"](function (error) {
+        if (error.response) {
+          /*
+           * The request was made and the server responded with a
+           * status code that falls out of the range of 2xx
+           */
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          /*
+           * The request was made but no response was received, `error.request`
+           * is an instance of XMLHttpRequest in the browser and an instance
+           * of http.ClientRequest in Node.js
+           */
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request and triggered an Error
+          console.log('Error', error.message);
+        }
 
-                  case "Nov":
-                    return (curentM = "Lapkritis");
-                    break;
+        console.log(error);
+      });
+    }
+  }, {
+    key: "deleteEvent",
+    value: function deleteEvent(id, action, value) {
+      var _this4 = this;
 
-                  case "Dec":
-                    return (curentM = "Gruodis");
-                    break;
-                }
-              },
-            },
-            {
-              key: "event",
-              value: function event(action, month, day) {
-                var _this3 = this;
+      console.log(value);
+      console.log(action);
+      axios.post(this.uri + this.path + "calendar-delete-admin", {
+        eventID: id
+      })["catch"](function (err) {
+        console.log(err instanceof TypeError);
+      });
+      setTimeout(function () {
+        _this4.renderEvents(action);
+      }, 500);
+    }
+  }, {
+    key: "getData",
+    value: function getData() {
+      axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
+        var call = new Calendar();
 
-                var path =
-                  "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-                var uri = document.location.origin;
-                var table = document.querySelector(".eventContainer");
-                var HTML = '<div class="popup">\n                <div class="content">\n                  <div class="event">     \n                    <span class="closebtn">&#9932;</span>      \n                    <div class="eventTitle">\n                       <h1>Ivesti nauja \u012Fvyki</h1>\n                    </div>\n                    <div class="subscribe">\n                        <input class="newEvent" type="text" id="sendText" placeholder="Naujas \u012Fvykis">\n                        <input type="time" id="appt" name="appt" value="00:00">\n                      <div class="eventBtn">\n                        Si\u0173sti\n                      </div>\n                    </div>\n                  </div>\n                    <div class="eventH2">\n                        \u012Evykiai - '
-                  .concat(month, " ")
-                  .concat(
-                    day,
-                    "\n                    </div>\n                </div>\n              </div>"
-                  );
-                table.innerHTML = HTML;
-                var close = document.querySelector(".closebtn");
-                var send = document.querySelector(".eventBtn");
-                HTML = "";
-                close.addEventListener("click", function(e) {
-                  table.innerHTML = HTML;
-                });
-                send.addEventListener("click", function(e) {
-                  var sendE = document.getElementById("sendText").value;
-                  var time = document.getElementById("appt").value;
-                  console.log(sendE);
-                  console.log(time);
-                  console.log(action);
-                  axios
-                    .post(uri + path + "calendar-store-admin", {
-                      date: action,
-                      event: sendE,
-                      time: time,
-                    })
-                    ["catch"](function(err) {
-                      console.log(err instanceof TypeError);
-                    });
-                  return setTimeout(_this3.renderEvents, 500);
-                });
-              },
-            },
-            {
-              key: "renderEvents",
-              value: function renderEvents() {},
-            },
-          ]);
+        if (response.status == 200 && response.statusText == 'OK') {
+          var data = response.data.allData;
+          var dayEvents = document.querySelectorAll(".cview--date");
+          var keys = [];
 
-          return Calendar;
-        })();
+          for (var key in data) {
+            keys.push(key);
+          }
 
-        /* harmony default export */ __webpack_exports__["default"] = Calendar;
+          for (var i = 0; i < dayEvents.length; i++) {
+            for (var j = 0; j < keys.length; j++) {
+              if (data[keys[j]].event_date == dayEvents[i].dataset.date && "cview--date today" != dayEvents[i].className) {
+                dayEvents[i].classList.add("daysEvent");
+              }
+            }
+          }
+        }
+      })["catch"](function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
 
-        /***/
-      },
+        console.log(error);
+      });
+    }
+  }]);
 
-    /***/ "./resources/js/gallery.js":
-      /*!*********************************!*\
+  return Calendar;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Calendar);
+
+/***/ }),
+
+/***/ "./resources/js/gallery.js":
+/*!*********************************!*\
   !*** ./resources/js/gallery.js ***!
   \*********************************/
       /*! exports provided: default */
@@ -610,8 +658,64 @@
                 .indexOf(power["name"]) === toThe
             );
           });
-          return file;
-        }
+        });
+        picReader.readAsDataURL(filesAll[i]);
+      } else {
+        alert("Tai nera paveikslelio tipo formatas");
+      }
+    } else {
+      alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+      //   currentDiv.appendChild(newContent);
+    }
+  };
+
+  for (var i = 0; i < filesAll.length; i++) {
+    _loop(i);
+  }
+
+  arraySend.push(filesAll);
+  var uploadeImg = document.getElementById("submitImg");
+
+  if (isListener) {
+    uploadeImg.addEventListener('click', function () {
+      arraySend = filter(arraySend);
+      sendImageData(arraySend);
+    });
+    isListener = false;
+  }
+}
+
+function sendImageData(filesAll) {
+  var tagInput;
+  var formData = new FormData();
+  var album = document.getElementById('albumName');
+
+  for (var i = 0; i < filesAll.length; i++) {
+    tagInput = document.getElementById(filesAll[i].name);
+    formData.append('files' + i, filesAll[i]);
+    formData.append('tag' + i, tagInput.value + ' ');
+  }
+
+  formData.append('album', album.value);
+  axios.post(uri + path + 'gallery-store-admin', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }).then(function (response) {})["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+
+    console.log(error);
+  });
+  location.reload();
+}
 
         /* harmony default export */ __webpack_exports__[
           "default"
@@ -624,246 +728,173 @@
       /*!******************************!*\
   !*** ./resources/js/idea.js ***!
   \******************************/
-      /*! exports provided: default */
-      /***/ function(module, __webpack_exports__, __webpack_require__) {
-        "use strict";
-        __webpack_require__.r(__webpack_exports__);
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-        var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-        var uri = document.location.origin;
-        var ideaStrt = document.getElementById("startIdeaAdmin");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 
-        function startIdea() {
-          if (ideaStrt) {
-            window.addEventListener("load", renderColons, false);
-          }
-        }
-        /*----------------------- edit content axios----------------------------*/
 
-        function editText(editId) {
-          var txt = document.getElementById(editId).value;
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var ideaStrt = document.getElementById("startIdeaAdmin");
 
-          if (
-            txt != undefined &&
-            txt != null &&
-            txt.length >= 0 &&
-            txt != "" &&
-            txt != NaN
-          ) {
-            var text = txt.split(/\s+/);
-            axios
-              .post(uri + path + "idea-edit-admin", {
-                idea: text,
-                editId: editId,
-              })
-              ["catch"](function(err) {
-                console.log(err instanceof TypeError);
-              });
-            setTimeout(renderColons, 500);
-          }
-        }
-        /*----------------------- save content axios----------------------------*/
+function startIdea() {
+  if (ideaStrt) {
+    window.addEventListener("load", renderColons, false);
+  }
+}
+/*----------------------- edit content axios----------------------------*/
 
-        function solutionText(sId, i) {
-          var txt1 = document.getElementById(i).value;
 
-          if (
-            txt1 != undefined &&
-            txt1 != null &&
-            txt1.length >= 0 &&
-            txt1 != "" &&
-            txt1 != NaN
-          ) {
-            var text1 = txt1.split(/\s+/);
-            axios
-              .post(uri + path + "idea-create-admin", {
-                soliution: text1,
-                solutionId: sId,
-              })
-              ["catch"](function(err) {
-                console.log(err instanceof TypeError);
-              });
-            return setTimeout(renderColons, 500);
-          }
-        }
-        /*----------------------- delete content axios----------------------------*/
+function editText(editId) {
+  var txt = document.getElementById(editId).value;
 
-        function deleteIdea(delId) {
-          axios
-            .post(uri + path + "idea-delete-admin", {
-              deleteId: delId,
-            })
-            ["catch"](function(err) {
-              console.log(err instanceof TypeError);
-              console.log("Problemos su Delete api");
-            });
-          setTimeout(renderColons, 500);
-        } //  /*------------------------------render data  axios-----------------------------------------*/
+  if (txt != undefined && txt != null && txt.length >= 0 && txt != "" && txt != NaN) {
+    var text = txt.split(/\s+/);
+    axios.post(uri + path + "idea-edit-admin", {
+      idea: text,
+      editId: editId
+    })["catch"](function (err) {
+      console.log(err instanceof TypeError);
+    });
+    setTimeout(renderColons, 500);
+  }
+}
+/*----------------------- save content axios----------------------------*/
 
-        function renderColons(e) {
-          axios
-            .get(uri + path + "idea-render-admin", {})
-            .then(function(response) {
-              consloe.log(response);
 
-              if (response.status == 200 && response.statusText == "OK") {
-                var data = response.data.allData;
-                var keys = [];
+function solutionText(sId, i) {
+  var txt1 = document.getElementById(i).value;
 
-                for (var key in data) {
-                  keys.push(key);
-                }
+  if (txt1 != undefined && txt1 != null && txt1.length >= 0 && txt1 != "" && txt1 != NaN) {
+    var text1 = txt1.split(/\s+/);
+    axios.post(uri + path + "idea-create-admin", {
+      soliution: text1,
+      solutionId: sId
+    })["catch"](function (err) {
+      console.log(err instanceof TypeError);
+    });
+    return setTimeout(renderColons, 500);
+  }
+}
+/*----------------------- delete content axios----------------------------*/
 
-                var rende = document.getElementById("box");
-                var HTMLString = "";
-                var counter = 0;
 
-                for (var i = keys.length - 1; i >= 0; i--) {
-                  counter++;
-                  var value = data[keys[i]];
-                  HTMLString += '<div class="box"> \n\n                    <div class="text"><div class="data" >'
-                    .concat(
-                      value.post_date,
-                      '</div>                 \n                    </div>\n                    <div class="ideaContent">\n                    <div class="ideaTextEdit">\n                        <textarea class="ideaText" maxlength="200" name="idea" id="'
-                    )
-                    .concat(
-                      value.ID,
-                      '" data-attribute_name="">\n                                '
-                    )
-                    .concat(
-                      value.idea_content,
-                      '\n                        </textarea>  \n                        <button  class="ideaBtn delIdea" id="'
-                    )
-                    .concat(
-                      value.ID,
-                      '">\n                            Trinti\n                        </button> \n                        <button class="ideaBtn edit editButtonIdea" id="'
-                    )
-                    .concat(
-                      value.ID,
-                      '">\n                            Saugoti\n                        </button>\n                    </div>\n                    <div class="ideaSoliution">\n                        <textarea class="ideaTextSoliution" maxlength="200" name="idea" id="'
-                    )
-                    .concat(counter, '" > \n                            ')
-                    .concat(
-                      value.idea_solution,
-                      '                     \n                        </textarea>\n                        <button  class="ideaBtn addButtonIdea" id="'
-                    )
-                    .concat(
-                      value.ID,
-                      '">\n                            Sprendimas\n                        </button> \n                    </div> \n                    <span class="textCount" id="count"></span>\n                    </div>  \n                        <div class="like" data-custom-id="'
-                    )
-                    .concat(
-                      value.ID,
-                      '">\n                            <span class="like__number">Like: '
-                    )
-                    .concat(
-                      value.idea_like,
-                      "</span>             \n                        </div>            \n                    </div>\n                </div>"
-                    );
-                }
+function deleteIdea(delId) {
+  axios.post(uri + path + "idea-delete-admin", {
+    deleteId: delId
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+    console.log("Problemos su Delete api");
+  });
+  setTimeout(renderColons, 500);
+} //  /*------------------------------render data  axios-----------------------------------------*/
 
-                rende.innerHTML = HTMLString;
-                var editBtn = document.querySelectorAll(".editButtonIdea");
-                var postBtn = document.querySelectorAll(".addButtonIdea");
-                var deletetBtn = document.querySelectorAll(".delIdea");
 
-                var _loop = function _loop(_i) {
-                  var sId = postBtn[_i].id;
+function renderColons(e) {
+  axios.get(uri + path + "idea-render-admin", {}).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      var data = response.data.allData;
+      var keys = [];
 
-                  postBtn[_i].addEventListener(
-                    "click",
-                    function() {
-                      solutionText(sId, _i + 1);
-                    },
-                    false
-                  );
-                };
+      for (var key in data) {
+        keys.push(key);
+      }
 
-                for (var _i = 0; _i < postBtn.length; _i++) {
-                  _loop(_i);
-                }
+      var rende = document.getElementById("box");
+      var HTMLString = "";
+      var counter = 0;
 
-                var _loop2 = function _loop2(_i2) {
-                  var editId = editBtn[_i2].id;
+      for (var i = keys.length - 1; i >= 0; i--) {
+        counter++;
+        var value = data[keys[i]];
+        HTMLString += "<div class=\"box\"> \n\n                    <div class=\"text\"><div class=\"data\" >".concat(value.post_date, "</div>                 \n                    </div>\n                    <div class=\"ideaContent\">\n                    <div class=\"ideaTextEdit\">\n                        <textarea class=\"ideaText\" maxlength=\"200\" name=\"idea\" id=\"").concat(value.ID, "\" data-attribute_name=\"\">\n                                ").concat(value.idea_content, "\n                        </textarea>  \n                        <button  class=\"ideaBtn delIdea\" id=\"").concat(value.ID, "\">\n                            Trinti\n                        </button> \n                        <button class=\"ideaBtn edit editButtonIdea\" id=\"").concat(value.ID, "\">\n                            Saugoti\n                        </button>\n                    </div>\n                    <div class=\"ideaSoliution\">\n                        <textarea class=\"ideaTextSoliution\" maxlength=\"200\" name=\"idea\" id=\"").concat(counter, "\" > \n                            ").concat(value.idea_solution, "                     \n                        </textarea>\n                        <button  class=\"ideaBtn addButtonIdea\" id=\"").concat(value.ID, "\">\n                            Sprendimas\n                        </button> \n                    </div> \n                    <span class=\"textCount\" id=\"count\"></span>\n                    </div>  \n                        <div class=\"like\" data-custom-id=\"").concat(value.ID, "\">\n                            <span class=\"like__number\">Like: ").concat(value.idea_like, "</span>             \n                        </div>            \n                    </div>\n                </div>");
+      }
 
-                  editBtn[_i2].addEventListener(
-                    "click",
-                    function() {
-                      editText(editId);
-                    },
-                    false
-                  );
-                };
+      rende.innerHTML = HTMLString;
+      var editBtn = document.querySelectorAll(".editButtonIdea");
+      var postBtn = document.querySelectorAll(".addButtonIdea");
+      var deletetBtn = document.querySelectorAll(".delIdea");
 
-                for (var _i2 = 0; _i2 < editBtn.length; _i2++) {
-                  _loop2(_i2);
-                }
+      var _loop = function _loop(_i) {
+        var sId = postBtn[_i].id;
 
-                var _loop3 = function _loop3(_i3) {
-                  var delId = deletetBtn[_i3].id;
+        postBtn[_i].addEventListener("click", function () {
+          solutionText(sId, _i + 1);
+        }, false);
+      };
 
-                  deletetBtn[_i3].addEventListener(
-                    "click",
-                    function() {
-                      deleteIdea(delId);
-                    },
-                    false
-                  );
-                };
+      for (var _i = 0; _i < postBtn.length; _i++) {
+        _loop(_i);
+      }
 
-                for (var _i3 = 0; _i3 < deletetBtn.length; _i3++) {
-                  _loop3(_i3);
-                }
-              }
+      var _loop2 = function _loop2(_i2) {
+        var editId = editBtn[_i2].id;
 
-              return response;
-            })
-            ["catch"](function(error) {
-              if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-              } else if (error.request) {
-                console.log(error.request);
-              } else {
-                console.log("Error", error.message);
-              }
+        editBtn[_i2].addEventListener("click", function () {
+          editText(editId);
+        }, false);
+      };
 
-              console.log(error);
-            });
-        }
+      for (var _i2 = 0; _i2 < editBtn.length; _i2++) {
+        _loop2(_i2);
+      }
 
-        /* harmony default export */ __webpack_exports__[
-          "default"
-        ] = startIdea();
+      var _loop3 = function _loop3(_i3) {
+        var delId = deletetBtn[_i3].id;
 
-        /***/
-      },
+        deletetBtn[_i3].addEventListener("click", function () {
+          deleteIdea(delId);
+        }, false);
+      };
 
-    /***/ "./resources/js/main.js":
-      /*!******************************!*\
+      for (var _i3 = 0; _i3 < deletetBtn.length; _i3++) {
+        _loop3(_i3);
+      }
+    }
+
+    return response;
+  })["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
+    }
+
+    console.log(error);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startIdea());
+
+/***/ }),
+
+/***/ "./resources/js/main.js":
+/*!******************************!*\
   !*** ./resources/js/main.js ***!
   \******************************/
-      /*! no exports provided */
-      /***/ function(module, __webpack_exports__, __webpack_require__) {
-        "use strict";
-        __webpack_require__.r(__webpack_exports__);
-        /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-          /*! ./idea.js */ "./resources/js/idea.js"
-        );
-        /* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-          /*! ./gallery.js */ "./resources/js/gallery.js"
-        );
-        /* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-          /*! ./calendar.js */ "./resources/js/calendar.js"
-        );
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-        new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"](".calendar");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
+/* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gallery.js */ "./resources/js/gallery.js");
+/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
 
-        /***/
-      },
 
-    /***/ "./resources/sass/app.scss":
-      /*!*********************************!*\
+
+new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.calendar');
+
+/***/ }),
+
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
   \*********************************/
       /*! no static exports found */
@@ -876,18 +907,13 @@
       /*!**************************************************************!*\
   !*** multi ./resources/js/main.js ./resources/sass/app.scss ***!
   \**************************************************************/
-      /*! no static exports found */
-      /***/ function(module, exports, __webpack_require__) {
-        __webpack_require__(
-          /*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */ "./resources/js/main.js"
-        );
-        module.exports = __webpack_require__(
-          /*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */ "./resources/sass/app.scss"
-        );
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-        /***/
-      },
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
-    /******/
-  }
-);
+
+/***/ })
+
+/******/ });

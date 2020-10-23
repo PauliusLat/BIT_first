@@ -6,8 +6,8 @@ return [
 	'news@' => ['list' => 'NewsController@create', 'news_edit' => 'NewsController@edit'],
 
 	'idejos' => 'IdeAdminController@adminIndex',
-
 	'galerija' => 'GalleryAdminController@adminIndex',
+	'kalendorius' => 'CalendarAdminController@adminIndex',
 
 	'philosophy' => 'PhilosophyController@index',
 

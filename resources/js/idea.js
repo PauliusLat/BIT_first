@@ -1,5 +1,3 @@
-/** @format */
-
 "use strict";
 
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
@@ -28,7 +26,7 @@ function editText(editId) {
     axios
       .post(
         uri + path +
-          "idea-edit-admin",
+        "idea-edit-admin",
         {
           idea: text,
           editId: editId,
@@ -57,7 +55,7 @@ function solutionText(sId, i) {
     axios
       .post(
         uri + path +
-          "idea-create-admin",
+        "idea-create-admin",
         {
           soliution: text1,
           solutionId: sId,
@@ -76,7 +74,7 @@ function deleteIdea(delId) {
   axios
     .post(
       uri + path +
-        "idea-delete-admin",
+      "idea-delete-admin",
       {
         deleteId: delId,
       }
@@ -91,13 +89,14 @@ function deleteIdea(delId) {
 //  /*------------------------------render data  axios-----------------------------------------*/
 
 function renderColons(e) {
+
   axios
     .get(
       uri + path +
-        "idea-render-admin",
+      "idea-render-admin",
       {}
     )
-    .then(function(response) {
+    .then(function (response) {
       if (response.status == 200 && response.statusText == "OK") {
         const data = response.data.allData;
 
@@ -157,7 +156,7 @@ function renderColons(e) {
           let sId = postBtn[i].id;
           postBtn[i].addEventListener(
             "click",
-            function() {
+            function () {
               solutionText(sId, i + 1);
             },
             false
@@ -167,7 +166,7 @@ function renderColons(e) {
           let editId = editBtn[i].id;
           editBtn[i].addEventListener(
             "click",
-            function() {
+            function () {
               editText(editId);
             },
             false
@@ -177,7 +176,7 @@ function renderColons(e) {
           let delId = deletetBtn[i].id;
           deletetBtn[i].addEventListener(
             "click",
-            function() {
+            function () {
               deleteIdea(delId);
             },
             false
@@ -187,7 +186,7 @@ function renderColons(e) {
 
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       if (error.response) {
         console.log(error.response.data);
         console.log(error.response.status);

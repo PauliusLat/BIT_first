@@ -1,0 +1,111 @@
+.calendarContainer {
+  margin     : 0;
+  padding    : 0;
+  font-family: 'HelveticaNeue-Light', Helvetica Neue, Helvetica;
+
+  .calendar {
+    color        : #fff;
+    margin       : 60px auto;
+    background   : #04b6e2;
+    padding      : 20px 40px 80px 40px;
+    width        : 95%;
+    max-width    : 600px;
+    height       : 350px;
+    border-radius: 5px;
+    box-shadow   : 0px 2px 6px rgba(2, 2, 2, 0.2);
+    position     : relative;
+
+    .calendar--view {
+      display        : flex;
+      flex-wrap      : wrap;
+      align-content  : center;
+      justify-content: flex-start;
+      width          : 100%;
+
+      .cview__month {
+        width          : 100%;
+        text-align     : center;
+        font-weight    : 800;
+        font-size      : 22px;
+        font-family    : 'Avenir', sans-serif;
+        padding-bottom : 20px;
+        color          : #222;
+        text-transform : uppercase;
+        display        : flex;
+        flex-wrap      : nowrap;
+        align-items    : baseline;
+        justify-content: space-around;
+
+        .cview__month-last,
+        .cview__month-next,
+        .cview__month-current {
+          width     : 33.33333%;
+          text-align: center;
+          font-size : 16px;
+          cursor    : pointer;
+          color     : #222;
+        }
+
+        .cview__month-last:hover,
+        .cview__month-next:hover {
+          color: #fff;
+        }
+      }
+      .daysEvent{
+        color: black;
+      }
+      .cview--date {
+        font-size  : 16px;
+        font-weight: 400;
+        cursor     : pointer;
+      }
+
+      .cview--date:hover::before {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .cview--date.today {
+        color: #111;
+      }
+
+      .cview--date.today::before {
+        animation : popIn 200ms 1 forwards;
+        background: rgba(255, 255, 255, 0.2);
+        transform : scale(0);
+      }
+
+      @keyframes popIn {
+
+        100% {
+          transform: scale(1);
+          opacity  : 1;
+        }
+      }
+      .cview--date::before {
+        width    : 100%;
+        height   : 100%;
+        position : absolute;
+        top      : 0;
+        left     : 0;
+        content  : '';
+        transform: scale(0.8);
+        z-index  : 0;
+      }
+    }
+
+  }
+}
+.cview--spacer,
+.cview__header,
+.cview--date {
+  width        : 14.28571428571429%;
+  max-width    : 14.28571428571429%;
+  padding      : 10px;
+  box-sizing   : border-box;
+  position     : relative;
+  text-align   : center;
+  overflow     : hidden;
+  text-overflow: clip;
+  font-size    : 14px;
+  font-weight  : 900;
+}
