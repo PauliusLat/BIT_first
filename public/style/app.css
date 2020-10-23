@@ -716,6 +716,10 @@ h1 {
   color: black;
 }
 
+.calendarContainer .calendar .calendar--view .removeDay {
+  color: white;
+}
+
 .calendarContainer .calendar .calendar--view .cview--date {
   font-size: 16px;
   font-weight: 400;

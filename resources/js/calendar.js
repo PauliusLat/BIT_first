@@ -124,7 +124,7 @@ class Calendar {
                     this.event(action, month, day);
                 });
         }
-        this.getData(); 
+        this.getData();
     }
 
     month(a) {
@@ -260,9 +260,7 @@ class Calendar {
 
                 if (response.status == 200 && response.statusText == 'OK') {
 
-                    // let call = new Calendar();
-                    // let dataDate = new Date(call.y, call.m + call.d);
-                    // let lastD = call.lastDayM, curentDay = call.curentDay;
+                    let call = new Calendar();
                     const data = response.data.allData;
                     const allEvens = document.getElementById('daysEvens');
                     let HTML = "";
@@ -307,7 +305,6 @@ class Calendar {
                     } else {
                         HTML = "";
                         allEvens.innerHTML = HTML;
-                        // setTimeout(() => { call.render(lastD, curentDay, dataDate); }, 500);
                     }
 
                     let deleteBtn = document.querySelectorAll(".myEventBtn");
@@ -319,7 +316,7 @@ class Calendar {
                             e => {
                                 let action = deleteBtn[j].dataset.date;
                                 let id = deleteBtn[j].id;
-                                return call.deleteEvent(id, action);
+                                call.deleteEvent(id, action);
                             }
                         )
                     };
@@ -344,6 +341,26 @@ class Calendar {
                 this.uri + this.path +
                 "calendar-delete-admin", {
                 eventID: id,
+            }).then(function (response) {
+                if (response.status == 200 && response.statusText == 'OK') {
+                    const data = response.data.allData;
+                    let dayEvents = document.querySelectorAll(".daysEvent");
+
+                    let keys = [];
+
+                    for (let key in data) {
+                        keys.push(key);
+                    }
+                    
+                    if (keys.length == 0){
+ 
+                        for (let i = 0; i < dayEvents.length; i++) {
+                            console.log(dayEvents[i]);
+                            dayEvents[i].classList.add("removeDay");
+                        }
+                    }
+
+                }
             })
             .catch((err) => {
                 console.log(err instanceof TypeError);
