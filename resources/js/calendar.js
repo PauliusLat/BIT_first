@@ -35,7 +35,6 @@ class Calendar {
                 a = a + 1;
                 this.month(a);
             });
-
             this.render(lastDayM, startDay);
         }
     }
@@ -100,9 +99,7 @@ class Calendar {
                 day.className = "cview--date";
                 day.textContent = d;
                 day.setAttribute("data-date", dataDate);
-
                 calendarDays.appendChild(day);
-
             }
             const aadToday = new Date(this.y, this.m, this.date.getDate());
             const isToday = document.querySelectorAll(".cview--date");
@@ -125,17 +122,14 @@ class Calendar {
                     let curentM = action.toString().slice(4, -55);
                     let month = this.translate(curentM);
                     this.event(action, month, day);
-                },
-                false
-            );
+                });
         }
-        this.getData();
+        this.getData(); 
     }
 
     month(a) {
 
         const curentMth = document.getElementById("calendar-month");
-
         let dataDate = new Date(this.y, this.m + a - 1);
         let y = this.date.getFullYear(),
             m = this.date.getMonth();
@@ -144,13 +138,11 @@ class Calendar {
         curentM = curentM.toString().slice(4, -55);
         let curM = this.translate(curentM);
         curentMth.innerHTML = curentY + ' ' + curM;
-
         let lastDayM = new Date(y, m + a, 0).getDate();
-
         let newM = new Date(y, m + a, 0).getMonth();
         let startDay = new Date(curentY, newM, 1).getDay();
 
-        this.render(lastDayM, startDay, dataDate);
+        return this.render(lastDayM, startDay, dataDate);
     }
 
     translate(curentM) {
@@ -252,7 +244,7 @@ class Calendar {
                         .catch((err) => {
                             console.log(err instanceof TypeError);
                         });
-                    setTimeout(() => { this.getData(action); }, 300);
+                    setTimeout(() => { this.getData(action); }, 400);
                     setTimeout(() => { this.renderEvents(action); }, 500);
                 }
                 document.getElementById("sendText").value = "";
@@ -260,7 +252,6 @@ class Calendar {
     }
 
     renderEvents(action) {
-
         axios.post(
             this.uri + this.path +
             'calendar-create-admin', {}
@@ -269,11 +260,17 @@ class Calendar {
 
                 if (response.status == 200 && response.statusText == 'OK') {
 
+                    // let call = new Calendar();
+                    // let dataDate = new Date(call.y, call.m + call.d);
+                    // let lastD = call.lastDayM, curentDay = call.curentDay;
                     const data = response.data.allData;
                     const allEvens = document.getElementById('daysEvens');
                     let HTML = "";
                     let keys = [];
+                    let keys1 = [];
                     let value = "";
+                    let value1 = [];
+                    let newValue = "";
 
                     for (let key in data) {
                         keys.push(key);
@@ -282,17 +279,37 @@ class Calendar {
                     for (let i = 0; i < keys.length; i++) {
                         value = data[keys[i]];
                         if (action == value.event_date) {
-                            HTML += `<div class="oneEventBtn">
-                                <div class="oneEvent">
-                                    ${value.event_time}   ${value.event_description}
-                                </div>
-                                <div class="myEventBtn" id="${value.ID}" data-date="${action}">
-                                    Trinti
-                                </div>
-                            </div>`
+                            value1[i] = value;
                         }
-                        allEvens.innerHTML = HTML;
                     }
+
+                    value1.sort((a, b) => (a.event_time < b.event_time) ? -1 : ((a.event_time > b.event_time) ? 1 : 0));
+
+                    for (let key1 in value1) {
+                        keys1.push(key1);
+                    }
+                    if (keys1.length != 0) {
+                        for (let j = 0; j < keys1.length; j++) {
+                            newValue = value1[keys1[j]];
+                            if (action == newValue.event_date) {
+
+                                HTML += `<div class="oneEventBtn">
+                                    <div class="oneEvent">
+                                        ${newValue.event_time}   ${newValue.event_description}
+                                    </div>
+                                    <div class="myEventBtn" id="${newValue.ID}" data-date="${action}">
+                                        Trinti
+                                    </div>
+                                </div>`
+                            }
+                            allEvens.innerHTML = HTML;
+                        }
+                    } else {
+                        HTML = "";
+                        allEvens.innerHTML = HTML;
+                        // setTimeout(() => { call.render(lastD, curentDay, dataDate); }, 500);
+                    }
+
                     let deleteBtn = document.querySelectorAll(".myEventBtn");
 
                     for (let j = 0; j < deleteBtn.length; j++) {
@@ -302,39 +319,26 @@ class Calendar {
                             e => {
                                 let action = deleteBtn[j].dataset.date;
                                 let id = deleteBtn[j].id;
-                                let call = new Calendar();
-                                call.deleteEvent(id, action, value);
+                                return call.deleteEvent(id, action);
                             }
                         )
                     };
                 }
             }).catch(function (error) {
                 if (error.response) {
-                    /*
-                     * The request was made and the server responded with a
-                     * status code that falls out of the range of 2xx
-                     */
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
                 } else if (error.request) {
-                    /*
-                     * The request was made but no response was received, `error.request`
-                     * is an instance of XMLHttpRequest in the browser and an instance
-                     * of http.ClientRequest in Node.js
-                     */
                     console.log(error.request);
                 } else {
-                    // Something happened in setting up the request and triggered an Error
                     console.log('Error', error.message);
                 }
                 console.log(error);
             });
     }
 
-    deleteEvent(id, action, value) {
-        console.log(value);
-        console.log(action);
+    deleteEvent(id, action) {
         axios
             .post(
                 this.uri + this.path +
@@ -344,8 +348,7 @@ class Calendar {
             .catch((err) => {
                 console.log(err instanceof TypeError);
             });
-
-          setTimeout(() => { this.renderEvents(action); }, 500);
+        return setTimeout(() => { this.renderEvents(action); }, 500);
     }
 
     getData() {
@@ -354,8 +357,6 @@ class Calendar {
             'calendar-create-admin', {}
         )
             .then(function (response) {
-
-                let call = new Calendar();
 
                 if (response.status == 200 && response.statusText == 'OK') {
                     const data = response.data.allData;
@@ -392,3 +393,4 @@ class Calendar {
 
 export default Calendar;
 
+// 26-12
