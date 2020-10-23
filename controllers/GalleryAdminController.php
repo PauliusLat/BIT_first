@@ -101,9 +101,13 @@ class GalleryAdminController
 		$output = View::render('gallery.all-images');
 		$response->prepare($request);
 		$response = new JsonResponse(['html' => $output, 'Images' => $data]);
-
 		return $response;
 	}
+
+	// nuo cia istrinti, testas
+
+
+	// iki cia istrinti, testas
 
 	private function decodeRequest($request)
 	{

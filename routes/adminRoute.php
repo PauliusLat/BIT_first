@@ -2,8 +2,8 @@
 
 return [
 	'admin' => 'AdminController@index',
-	'news' => 'NewsController@index',
-	'news@' => ['News List' => 'NewsController@index', 'Add New' => 'NewsController@create'],
+	'news' => 'NewsController@create',
+	'news@' => ['list' => 'NewsController@create', 'news_edit' => 'NewsController@edit'],
 
 	'idejos' => 'IdeAdminController@adminIndex',
 
@@ -12,5 +12,7 @@ return [
 	'philosophy' => 'PhilosophyController@index',
 
 	'category' => 'CategoryAdminController@create',
+
+	'category@' => ['list' =>'CategoryAdminController@create', 'category_edit'=> 'CategoryAdminController@edit']
 	
 ];

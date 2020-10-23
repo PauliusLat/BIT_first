@@ -81,36 +81,39 @@ table th {
     <table>
     <tr>
         <th>Pavadinimas</th>
+        <th>Id</th>
         <th>Aprašymas</th> 
         <th>'Slug'</th>
         <th>'Count'</th>
         <th>Paveiksliukas</th>
     <div>
         <?php
-        // _dc($image);
         foreach ($categories as $category) {
-            $category->image = get_term_meta(78, "my_term_key");
-            _dc($category);
-            _dc($category->image);
-            // _dc($app);
-            // $app = App::start();
+            $category->image = get_term_meta($category->term_id, "my_term_key");
             $url = $app->apiUrl.'/resources/img/';
             ?>
                 <tr>
                     <td><?=$category->name?></td>
+                    <td><?=$category->term_id?></td>
                     <td><?=$category->description?></td>
                     <td><?=$category->slug?></td>
                     <td><?=$category->count?></td>
-                    <?php foreach($category->image as $key=>$value){
-                        echo '<td><img style = "width: 200px; height: 200px; object-fit: cover;" src="'.$url.$value.'">';
-                        echo wp_get_attachment_image ($value);
+                    <td><?php foreach($category->image as $key=>$value){
+                        echo '<img style = "width: 200px; height: 200px; object-fit: cover;" src="'.$url.$value.'">';
                     }
                     ?>
+                    <td>
+                        <form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=category_edit&id=<?=$category->term_id?>" method="post"> 
+                        <button type="submit" name="edit" value="<?=$category->term_id?>">Edit</button> 
+                        </form>
+                        <form action="" method="post">
+                            <input type="hidden" name="ID" value="'<?=$category->term_id?>'"readonly>    
+                            <button type="submit" name="inesti">Delete</button>
+                        </form>
+                    <td>
                 </tr>
         </div>
     <?php
-    //   _dc( $_REQUEST);
-     
     }
     ?> 
 </table>

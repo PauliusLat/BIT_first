@@ -21,50 +21,51 @@ class CategoryAdminController {
         return View::adminRender('category.create', ['url' => PLUGIN_DIR_URL, 'categories' => $categories]);
     }
 
-    public function store(Request $request){
-        $category = new Category;
-        $categories = $category->getAllCats();
+    public function store(Request $request, Category $category){
+        // $category = new Category;
         $app = App::start();
-    //  _dc($request = $app->getService('request'));
-        _dc($name = $request->request->get('category-name'));
-        _dc($slug = $request->request->get('category-slug'));
-        _dc($description = $request->request->get('category-description'));
-        _dc($parent_name = $request->request->get('tevines-kategorijos'));
-        _dc($parent = get_term_by('name', $parent_name, 'maincat'));
+        // _dc($category);
+        $categories = $category->getAllCats();
+       
+        $name = $request->request->get('category-name');
+        $slug = $request->request->get('category-slug');
+        $description = $request->request->get('category-description');
+        $parent_name = $request->request->get('tevines-kategorijos');
+        $parent_id = $category->getTermId($parent_name);
+        $category->addCat($name, $description, $parent_id);
 
-        $category->addCat($name, $description, 'maincat', $parent->term_id);
-
-        // _dc($_FILES);
-        // _dc($dirpath = dirname(getcwd()));
+        //add image to category
         $uploads_dir = '/opt/lampp/htdocs/wordpress/wp-content/plugins/BIT_first/resources/img';
         $target_file = basename($_FILES["picture"]["name"]); //nuotrauka
         move_uploaded_file($_FILES["picture"]["tmp_name"], "$uploads_dir/$target_file");//nuotrauka
-        // _dc($request);
         $picture = $request->files->get('picture')->getClientOriginalName();
-        $url = $app->apiUrl.'/resources/img/';
-        // $picture = new Attachment;
-        // $picture->save($request->files->get('picture'));
-        echo '<pre>';
-        // _dc($picture);
-        // var_dump($picture);
-        _dc($category); 
-        // $category->image = $picture;  
-        // _dc($category->image);  
-        add_term_meta( 78, "my_term_key" , $picture );
-        $category->image = get_term_meta(78, "my_term_key");
-        // _dc( $image);
-        // add_term_meta( 78, "my_term_key" , $picture );
-        // $file = "$uploads_dir/$target_file";
-        // $response = new BinaryFileResponse($file);
-        // $cat = file_get_contents('/opt/lampp/htdocs/grazus/Uzdaviniai/composer/img/kaciukas1.jpeg');// nuotrauka
-        // $cat1 = 'data:image/jpeg;base64,'.base64_encode($cat);
-
-        // _dc($request->file->get('picture'));
+        $catID =  $category->getTermId($name);
+        $category->addImageToCat($catID, "my_term_key" , $picture);
         $response = new Response;
         $response->prepare($request);
         wp_redirect('http://localhost:8080/wordpress/wp-admin/admin.php?page=category');
         exit;
         return $response;
-
     }  
+
+    public function edit(Request $request, Category $category){
+        // $app = App::start();
+        // $category = new Category;
+        // _dc($category);
+        // $categories = $category->getAllCats();
+        
+        return View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]);
+
+    }
+
+    public function delete(){
+
+    }
+
+    public function update(){
+
+
+    }
+
+
 }

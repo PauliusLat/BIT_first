@@ -17,6 +17,8 @@ use BIT\app\Cookie;
 use BIT\app\Transient;
 use BIT\app\Session;
 use BIT\app\Category;
+use BIT\app\View;
+use BIT\app\Collection;
 use BIT\controllers\NewsController;
 use BIT\models\IdeaPost;
 use BIT\app\modelTraits\Tcategory;
@@ -29,12 +31,23 @@ use BIT\app\coreExeptions\wrongArgsTypeExeption;
 
 require_once __DIR__.'/vendor/autoload.php';
 
-
 define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
-App::start();
+$app = App::start();
+$query = new Query;
 
+// _dc($query->postMeta('event_date', 'konkreti data, kurios reikia')->postSort('event_time')->getPost()->all());
+
+
+
+// $getPostType = $query->postSort('date','DESC')->getPost();
+
+// _dc($getPostType);
+
+// _dc($app->getService('requestId'));
+$category = new Category;
+// _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 add_action('init', function() {
 // $album = new AlbumPost;
@@ -49,6 +62,9 @@ add_action('init', function() {
 // // ($album->getCats());
 // //  _dc($album->getChildCats([45, 0]
 $category = new Category;
+$category->deleteCatImage(78, 'my_term_key');
+// _dc($category);
+//  _dc($category->getTermId('stalai'));
 // _dc(get_term_by('name', 'stalai', 'maincat'));
 // $category->addCat('stalai', 'maincat');
 // // $album->addTag('ooorrr');

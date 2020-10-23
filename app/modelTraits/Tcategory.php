@@ -31,7 +31,7 @@ trait Tcategory {
      * $album->save();
      * $album->addCat('cat1', 'maincat'); or $album->addCat(['cat1', 'cat2'], 'maincat', 45));*/
 
-    public function addCat($cat, $description, $taxonomy_type, int $parent_id = 0){
+    public function addCat($cat, $description, int $parent_id = 0, string $slug = '', $taxonomy_type = 'maincat'){
 
         $cat = (array)$cat;
         foreach ($this->cattax as $value){
@@ -52,6 +52,24 @@ trait Tcategory {
         }
     }
     
+    public function getTermId($name, $taxonony_type = 'maincat'){
+        $term = get_term_by('name', $name, $taxonony_type);
+        return $term->term_id;
+    }
+
+    public function addImageToCat(int $term_id, string $meta_key, $image){
+        add_term_meta($term_id, $meta_key, $image);
+    }
+
+    public function getCatImage(int $term_id, string $meta_key){
+       $image = get_term_meta($term_id, $meta_key);
+       return $image;
+    }
+
+    public function deleteCatImage(int $term_id, string $meta_key, $meta_value = ''){
+        delete_metadata('term', $term_id, $meta_key, $meta_value);
+    }
+
     public function addCatt($cat, $taxonomy_type, int $parent_id = 0)    // ar gali buti dvi default reiksmes
 
     {   

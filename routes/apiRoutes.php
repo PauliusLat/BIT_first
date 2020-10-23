@@ -28,9 +28,11 @@ return [
 	'news_store' => 'NewsController@store',
 	'news_update' => 'NewsController@update',
 	'news_destroy' => 'NewsController@destroy',
+	'news_edit' => 'NewsController@edit',
 
 
 	'category_store' => 'CategoryAdminController@store',
 	'category_update' => 'CategoryAdminController@update',
 	'category_destroy' => 'CategoryAdminController@destroy',
+	'category_edit' => 'CategoryAdminController@edit',
 ];

@@ -47,7 +47,7 @@ class Query{
         return $this; 
      }
 
-    public function getPost() :array
+    public function getPost() :Collection
     {
          //naudodami WP_query gauname postus pagal mums reikalingus parametrus. Paramentai nurodyti funkcijose aukščiau - postType, postTitle. KOnkrečius paramentrus (posto tipą, pavadinimą ir kt. nurodome kviesdami funckcija)
         //Thanks to WP_Query Class, WordPress gives us access to the database quickly (no need to get our hands dirty with SQL) and securely (WP_Query builds safe queries behind the scenes).
