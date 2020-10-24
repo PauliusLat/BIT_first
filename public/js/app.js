@@ -458,10 +458,12 @@ var Calendar = /*#__PURE__*/function () {
             keys.push(key);
           }
 
-          if (keys.length == 0) {
-            for (var i = 0; i < dayEvents.length; i++) {
-              console.log(dayEvents[i]);
-              dayEvents[i].classList.add("removeDay");
+          for (var i = 0; i < dayEvents.length; i++) {
+            for (var j = 0; j < keys.length; j++) {
+              if (data[keys[j]].event_date != action && action == dayEvents[i].dataset.date) {
+                dayEvents[i].classList.add("removeDay");
+                break;
+              }
             }
           }
         }

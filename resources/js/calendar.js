@@ -351,15 +351,16 @@ class Calendar {
                     for (let key in data) {
                         keys.push(key);
                     }
-                    
-                    if (keys.length == 0){
- 
-                        for (let i = 0; i < dayEvents.length; i++) {
-                            console.log(dayEvents[i]);
-                            dayEvents[i].classList.add("removeDay");
+
+                    for (let i = 0; i < dayEvents.length; i++) {
+                        for (let j = 0; j < keys.length; j++) {
+                            if (data[keys[j]].event_date != action &&
+                                action == dayEvents[i].dataset.date) {
+                                dayEvents[i].classList.add("removeDay");
+                                break;
+                            }
                         }
                     }
-
                 }
             })
             .catch((err) => {
