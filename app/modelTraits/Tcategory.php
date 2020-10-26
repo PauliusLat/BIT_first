@@ -51,10 +51,24 @@ trait Tcategory {
             }
         }
     }
+
+    public function updateCat(int $id, string $name, string $description, $parent_id = 0, string $slug = '', $taxonomy_type = 'maincat'){
+        if (did_action('init')) {    
+                $args = ['parent'=>$parent_id, 'description'=>$description, 'slug' => $slug, 'name' => $name];
+                wp_update_term($id, $taxonomy_type, $args);
+        } else {
+            throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+        }
+    }
     
-    public function getTermId($name, $taxonony_type = 'maincat'){
-        $term = get_term_by('name', $name, $taxonony_type);
-        return $term->term_id;
+    public function getCatId($name, $taxonony_type = 'maincat'){
+        $cat = get_term_by('name', $name, $taxonony_type);
+        return $cat->term_id;
+    }
+
+    public function getCat($id, $taxonony_type = 'maincat'){
+        $cat = get_term_by('id', $id, $taxonony_type);
+        return $cat;
     }
 
     public function addImageToCat(int $term_id, string $meta_key, $image){
@@ -70,7 +84,7 @@ trait Tcategory {
         delete_metadata('term', $term_id, $meta_key, $meta_value);
     }
 
-    public function addCatt($cat, $taxonomy_type, int $parent_id = 0)    // ar gali buti dvi default reiksmes
+    public function addCatt($cat, $taxonomy_type, $parent_id = 0)    // ar gali buti dvi default reiksmes
 
     {   
         $cat = (array)$cat;

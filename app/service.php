@@ -29,12 +29,8 @@ return function(ContainerConfigurator $configurator) {
     $services->alias(RequestId::class, 'requestId');
 
     $services->set('newsPost', NewsPost::class)
-    ->arg('id', ref(RequestId::class));
+    ->args([ref(RequestId::class)]);
     $services->alias(NewsPost::class, 'newsPost');
-
-    // $services->set('newsPost', NewsPost::class)
-    // ->call('__toString', [ref('requestId')]);
-    // $services->alias(NewsPost::class, 'newsPost');
 
     $services->set('albumPost', AlbumPost::class)
     ->args([ref(RequestId::class)]);

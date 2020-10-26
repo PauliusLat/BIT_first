@@ -13,6 +13,6 @@ return [
 
 	'category' => 'CategoryAdminController@create',
 
-	'category@' => ['list' =>'CategoryAdminController@create', 'category_edit'=> 'CategoryAdminController@edit']
+	'category@' => ['list' =>'CategoryAdminController@create', 'category_edit'=> 'CategoryAdminController@edit', 'category_destroy'=> 'CategoryAdminController@destroy', 'category_update'=> 'CategoryAdminController@update']
 	
 ];

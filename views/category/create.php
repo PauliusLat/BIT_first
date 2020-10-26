@@ -40,14 +40,9 @@ table th {
 }
 
 </style>
-<form action="http://localhost:8080/wordpress/wp-content/plugins/BIT_first/api/?route=category_store" method="post" enctype="multipart/form-data">
 
-	Your Photo: <input type="file" name="derr" size="25" />
-	<input type="submit" name="submit" value="Submit" />
-</form>
 
 <div class = 'category-container'>
-
     <div class="admin-category-div-first" >
         <input type="hidden" name="news_new" value="new news">
         <form action="http://localhost:8080/wordpress/wp-content/plugins/BIT_first/api/?route=category_store" method="post" enctype="multipart/form-data">
@@ -98,17 +93,20 @@ table th {
                     <td><?=$category->description?></td>
                     <td><?=$category->slug?></td>
                     <td><?=$category->count?></td>
+                 
                     <td><?php foreach($category->image as $key=>$value){
+                       if($key == 0){
                         echo '<img style = "width: 200px; height: 200px; object-fit: cover;" src="'.$url.$value.'">';
+                    }
                     }
                     ?>
                     <td>
                         <form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=category_edit&id=<?=$category->term_id?>" method="post"> 
                         <button type="submit" name="edit" value="<?=$category->term_id?>">Edit</button> 
                         </form>
-                        <form action="" method="post">
+                        <form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=category_destroy&id=<?=$category->term_id?>" method="post">
                             <input type="hidden" name="ID" value="'<?=$category->term_id?>'"readonly>    
-                            <button type="submit" name="inesti">Delete</button>
+                            <button type="submit" name="delete">Delete</button>
                         </form>
                     <td>
                 </tr>
