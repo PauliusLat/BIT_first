@@ -63,12 +63,12 @@ $api = new ApiRoute;
 // _dc($getPostType);
 
 // _dc($app->getService('requestId'));
-$category = new Category;
+// $category = new Category;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
-add_action('init', function() {
-    $category = new Category;
-    $page = new Page;
+// add_action('init', function() {
+//     $category = new Category;
+//     $page = new Page;
     // $page->createPage('kalendorius');
     // $my_post = array(
     //     'post_title'    => 'Ideja',
@@ -127,7 +127,7 @@ add_action('init', function() {
 // //     //  $idea->save();
 // //     //  _dc( $idea);
 // //     //  $idea->addTag('');
-});
+// });
 
 
 
