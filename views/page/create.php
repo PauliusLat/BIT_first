@@ -47,36 +47,16 @@ table th {
 <div class = 'category-container'>
     <div class="admin-category-div-first" >
         <input type="hidden" name="news_new" value="new news">
-        <form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=category_store" method="post" enctype="multipart/form-data">
+        <form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=page_store" method="post" enctype="multipart/form-data">
             <div class="admin-event-form-group">
-                <h3>Pridėkite naują kategoriją<h3>
-                <label class="admin-label">Kategorijos pavadinimas</label><br>
-                <input type="text" name="category-name" id="category-name" value="" placeholder="Įrašykite kategorijos pavadinimą..." class="admin-input"><br><br>
-                <label class="admin-label">Kategorijos 'slug'</label><br>
-                <input type="text" name="category-slug" id="category-slug" value="" placeholder="Įrašykite kategorijos slug..." class="admin-input"><br><br>
-                <label class="admin-label">'Pasirinkite 'tėvinę' kategoriją</label><br>
-                <select class="form-control" name = "tevines-kategorijos">
-                    <?php 
-                        foreach ($categories as $cat){
-                           
-                            $category = new Category;
-                            echo '<option value = "'.$cat->name.'">'.$cat->name.'</option>';
-                            if(!empty(get_term_children( $cat->term_id, 'maincat'))){
-                                $children = $category->getChildCats($cat->term_id);
-                                foreach($children as $child){
-                                    ?>
-                                    <option  value = "<?=$child->name?>">&nbsp;&nbsp;<?=$child->name?></option>
-                                    <?php
-                                }
-                            }
-
-                    }?>
+                <h3>Pridėkite naują puslapį<h3>
+                <label class="admin-label">Puslapio pavadinimas</label><br>
+                <input type="text" name="page-name" id="page-name" value="" placeholder="Įrašykite puslapio pavadinimą..." class="admin-input"><br><br>
+                <label class="admin-label">'Pasirinkite post'o tipą</label><br>
+                <select class="form-control" name = "post-type">
+                    <option value = "ideja">ideja</option>
+                    <option value = "kalendorius">kalendorius</option>
                 </select><br><br>
-                <label class="admin-label">Kategorijos aprašymas</label><br>
-                <input type="textarea" name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos slug..." class="admin-input"><br><br>
-                
-                Your Photo: <input type="file" name="picture" size="25"/><br><br>
-                
                 <div class="admin-event-buttons">
                     <button type="submit" id="create" class="admin-event-button">Pridėti</button>
                 </div>

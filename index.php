@@ -10,8 +10,10 @@
  **/
 use BIT\models\AlbumPost;
 use BIT\app\App;
+use BIT\app\ApiRoute;
 use BIT\app\Query;
 use BIT\app\Post;
+use BIT\app\Page;
 use BIT\app\RequestId;
 use BIT\app\Cookie;
 use BIT\app\Transient;
@@ -37,10 +39,25 @@ define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 $app = App::start();
 $query = new Query;
 
+$api = new ApiRoute;
+// 
+// _dc($app->getService('request')->query->get('route', ''));
+
+
+
+// $my_post = array(
+//     'post_content'   => "My page content",
+//     'post_title'     => 'idea',
+//     'post_name'      => 'idea',
+//     'post_type'      => 'page',  // must be 'page'  to accept the 'page_template' below
+//     'page_template'  => "listing.php",
+//     'post_status'    => "publish"
+// );
+// $ID = wp_insert_post( $my_post );
+// $permalink = get_permalink($ID);
+// echo "<br />ID for new page is $ID, Permalink for new page is $permalink";
+
 // _dc($query->postMeta('event_date', 'konkreti data, kurios reikia')->postSort('event_time')->getPost()->all());
-
-
-
 // $getPostType = $query->postSort('date','DESC')->getPost();
 
 // _dc($getPostType);
@@ -50,8 +67,32 @@ $category = new Category;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 add_action('init', function() {
-// $album = new AlbumPost;
-// $album->save();
+    $category = new Category;
+    $page = new Page;
+    // $page->createPage('kalendorius');
+    // $my_post = array(
+    //     'post_title'    => 'Ideja',
+    //     'post_type'     => 'page',
+    //     'post_name'     => 'ideja',
+    //     'post_content'  => '[front_shortcode route="ideja"]',
+    //     'post_status'   => 'publish',
+    //     'comment_status' => 'closed',
+    //     'ping_status' => 'closed',
+    //     'post_author' => 1,
+    //     'menu_order' => 0
+    //   );
+      
+    //   $id = wp_insert_post( $my_post );
+    //   $permalink = get_permalink($id);
+    //   _dc($permalink);
+
+
+
+    // _dc($category->get_taxonomy_hierarchy());
+
+    // _dc(get_term_children(43, 'maincat'));
+    // $album = new AlbumPost;
+    // $album->save();
 // // //      _dc( $album);
 // // // $album->addTag(['atostogos', 'namai']);
 // // // $album->addTag(['tttt']);
@@ -59,10 +100,8 @@ add_action('init', function() {
 // $album->addCat('baldai', 'maincat');
 // $album->addCat(['lekstutes', 'sauksteliai'], 'maincat', 45); //gl padaryti, kad ne is butu o stringas kaip kat
 // $album->addCat([' mazo lekstutes', 'dideles lekstutes'], 'maincat', 53);
-// // ($album->getCats());
+    // _dc($category->get_taxonomy_hierarchy('maincat'));
 // //  _dc($album->getChildCats([45, 0]
-$category = new Category;
-$category->deleteCatImage(78, 'my_term_key');
 // _dc($category);
 //  _dc($category->getTermId('stalai'));
 // _dc(get_term_by('name', 'stalai', 'maincat'));

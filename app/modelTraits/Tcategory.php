@@ -66,6 +66,11 @@ trait Tcategory {
         return $cat->term_id;
     }
 
+    public function getCatName($id, $taxonony_type = 'maincat'){
+        $cat = get_term_by('id', $id, $taxonony_type);
+        return $cat->name;
+    }
+
     public function getCat($id, $taxonony_type = 'maincat'){
         $cat = get_term_by('id', $id, $taxonony_type);
         return $cat;
@@ -84,8 +89,7 @@ trait Tcategory {
         delete_metadata('term', $term_id, $meta_key, $meta_value);
     }
 
-    public function addCatt($cat, $taxonomy_type, $parent_id = 0)    // ar gali buti dvi default reiksmes
-
+    public function addCatt($cat, $taxonomy_type, $parent_id = 0)
     {   
         $cat = (array)$cat;
         foreach ($this->cattax as $value){
@@ -101,7 +105,6 @@ trait Tcategory {
                         $terms = get_terms(['name'=>$cat, 'taxonomy'=> $value, 'hide_empty'=>false]);
                         foreach($terms as $term){
                             wp_set_post_terms($this->ID, $term->term_id, $value, $append = true);
-
                         }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
                          * so that children with the same names but different parents aren't confused.*/
@@ -113,7 +116,6 @@ trait Tcategory {
         }
     } 
 
-    //padaryti, kad neleistu trinti kategorijos, kuti turi vaiku - ar to reikia?
     private function catDelete(string $cat, $taxonomy_type = 'maincat') 
     {
         foreach ($this->cattax as $value){
@@ -141,7 +143,6 @@ trait Tcategory {
      */
 
     public function removeCat($cat, $taxonomy_type = 'maincat'){
-
         
             if(is_string($cat)){
                 $this->catDelete($cat, $taxonomy_type);
@@ -157,7 +158,6 @@ trait Tcategory {
     //     return $array;
 
     // }
-
 
     /** returns all post cats as Collection */
     
@@ -179,7 +179,7 @@ trait Tcategory {
         }
     }
 
-    private function getChildCats($parent_id, $taxonomy_type = 'maincat') 
+    public function getChildCats($parent_id, $taxonomy_type = 'maincat') 
     {
         $parent_id = (array)$parent_id;
         foreach ($this->cattax as $value){
@@ -187,8 +187,14 @@ trait Tcategory {
                 if (did_action('init')) {
                     $taxCollection = new TaxCollection();
                     foreach($parent_id as $id){
-                        $terms = get_terms([ 'taxonomy'=> $value, 'object_ids'=>$this->ID, 'parent'=>$id, 'hide_empty'=>false]); 
+                        if(isset($this->ID)){
+                            $terms = get_terms([ 'taxonomy'=> $value, 'object_ids'=>$this->ID, 'parent'=>$id, 'hide_empty'=>false]);
+                        } 
+                        else{
+                            $terms = get_terms([ 'taxonomy'=> $value, 'parent'=>$id, 'hide_empty'=>false]);
+                        }
                         foreach ($terms as $term) {
+                            echo ".'$term->name'.";
                             $taxCollection->addTerm($term);
                         }
                     }
@@ -200,21 +206,16 @@ trait Tcategory {
         }
     }
 
-    public function get_taxonomy_hierarchy( $taxonomy, $parent=0) {
+    public function get_taxonomy_hierarchy( $taxonomy = 'maincat', $parent=0) {
         // only 1 taxonomy
         $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
-        // _dc($taxonomy);
-        // get all direct decendants of the $parent
-        // $terms=get_terms( ['taxonomy'=> $taxonomy, 'parent'=> $parent, 'object_ids'=>$this->ID, 'hide_empty'=> 0]);
-        // _dc($parent);
         $terms=$this->getChildCats($parent, $taxonomy);
-        // _dc($terms);
-
         if (did_action('init')) {
             $taxCollection = new TaxCollection();
             foreach ( $terms as $term) {
                 // recurse to get the direct decendants of "this" term
                 $term->children = $this->get_taxonomy_hierarchy( $taxonomy, $term->term_id);
+
                 $taxCollection->addTerm($term);
             }
             return $taxCollection;
@@ -223,71 +224,11 @@ trait Tcategory {
         }
     }
 
-    // public function get_taxonomy_hierarchy( $taxonomy, $parent=0) {
-    //     // only 1 taxonomy
-    //     $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
-    //     // get all direct decendants of the $parent
-    //     $terms=get_terms( ['taxonomy'=> $taxonomy, 'parent'=> $parent, 'object_ids'=>$this->ID, 'hide_empty'=> 0]);
+    //deletes category from db
+    public function deleteCatFromDb(int $id, $taxonomy_type = 'maincat'){
+        wp_delete_term($id, $taxonomy_type);
+    }
 
-    //     // _dc($terms);
-    //     // prepare a new array.  these are the children of $parent
-    //     // we'll ultimately copy all the $terms into this new array, but only after they
-    //     // find their own children
-    //     $children=array();
-    //     // _dc($children);
-    //     // go through all the direct decendants of $parent, and gather their children
-    //     foreach ( $terms as $term) {
-    //         _dc($term);
-    //         // recurse to get the direct decendants of "this" term
-    //         $term->children = $this->get_taxonomy_hierarchy( $taxonomy, $term->term_id);
-    //         // add the term to our new array
-    //         $children[ $term->term_id]=$term;
-    //     }
-    //     // send the results back to the caller
-    //     return $children;
-    // }
-
-
-    // public function get_taxonomy_hierarchy( $taxonomy, $parent=0) {
-    //     // only 1 taxonomy
-    //     $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
-    //     // get all direct decendants of the $parent
-    //     $terms=$this->getChildCats($parent, $taxonomy);
-    //     _dc($terms);
-    //     // prepare a new array.  these are the children of $parent
-    //     // we'll ultimately copy all the $terms into this new array, but only after they
-    //     // find their own children
-    //     $children=array();
-    //     // _dc($children);
-    //     // go through all the direct decendants of $parent, and gather their children
-    //     foreach ( $terms as $term) {
-    //         // _dc($term);
-    //         // recurse to get the direct decendants of "this" term
-    //         $term->children = $this->get_taxonomy_hierarchy( $taxonomy, $term->term_id);
-    //         // add the term to our new array
-    //         $children[ $term->term_id]=$term;
-    //     }
-    //     // send the results back to the caller
-    //     return $children;
-    // }
-
-
-    // public function get_taxonomy_hierarchy_multiple( $taxonomies, $parent = 0 ) {
-    //     if ( ! is_array( $taxonomies )  ) {
-    //         $taxonomies = array( $taxonomies );
-    //     }
-    //     $results = array();
-    //     foreach( $taxonomies as $taxonomy ){
-    //         $terms = $this->getChildCats($taxonomy, $parent) ;
-    //         if ( $terms ) {
-    //             $results[ $taxonomy ] = $terms;
-    //         }
-    //     }
-    //     return $results;
-    // }
-
-
-    /** returns all cats as Collection */
     public function getAllCats($taxonomy_type = 'maincat') 
     {
         foreach ($this->cattax as $value){

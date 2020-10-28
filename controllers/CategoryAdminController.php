@@ -18,7 +18,12 @@ class CategoryAdminController {
     public function create(Request $request){
         $category = new Category;
         $categories = $category->getAllCats();
-        return View::adminRender('category.create', ['url' => PLUGIN_DIR_URL, 'categories' => $categories]);
+      
+        foreach ($categories as $cat){
+            $children = $category->getChildCats($cat->term_id);
+        }
+        
+        return View::adminRender('category.create', ['url' => PLUGIN_DIR_URL, 'categories' => $categories, 'children' => $children]);
     }
 
     public function store(Request $request, Category $category){
@@ -56,8 +61,8 @@ class CategoryAdminController {
 
     public function edit(Request $request, Category $category){
         $categories = $category->getAllCats();
-        _dc($id = $request->query->get('id'));
-        _dc($category = $category->getCat($id));
+        $id = $request->query->get('id');
+        $category = $category->getCat($id);
         return View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'categories' => $categories, 'category' => $category]);
 
     }
@@ -65,7 +70,7 @@ class CategoryAdminController {
     public function update(Request $request, Category $category){
        
         $categories = $category->getAllCats();
-        _dc($id = $request->query->get('id'));
+        $id = $request->query->get('id');
         $name = $request->request->get('category-name');
         $slug = $request->request->get('category-slug');
         $description = $request->request->get('category-description');
@@ -74,7 +79,7 @@ class CategoryAdminController {
         $category->updateCat($id, $name, $description, $parent_id);
        
         if ($request->files->get('picture')){
-            _dc($image = $category->getCatImage($id, "my_term_key"));
+            $image = $category->getCatImage($id, "my_term_key");
             $category->deleteCatImage($id, "my_term_key");
             $uploads_dir = '/opt/lampp/htdocs/wordpress/wp-content/plugins/BIT_first/resources/img';
             $target_file = basename($_FILES["picture"]["name"]); //nuotrauka
@@ -82,8 +87,6 @@ class CategoryAdminController {
             $picture = $request->files->get('picture')->getClientOriginalName();
             $category->addImageToCat($id, "my_term_key" , $picture);
         }
-
-
 
         $response = new Response;
         $response->prepare($request);
@@ -94,9 +97,14 @@ class CategoryAdminController {
     }
 
     public function destroy(Request $request, Category $category){
-        // $app = App::start();
-        _dc($category);
-        // $category->catDelete($cat, $taxonomy_type = 'maincat');
+
+        $id = $request->query->get('id');
+        $category->deleteCatFromDb($id);
+        $response = new Response;
+        $response->prepare($request);
+        wp_redirect('http://localhost:8080/wordpress/wp-admin/admin.php?page=category');
+        exit;
+        return $response;
 
     }
 
