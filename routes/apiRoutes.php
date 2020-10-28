@@ -28,6 +28,8 @@ return [
 	'gallery-store-front' => 'GalleryFrontController@store',
 	'gallery-create-front' => 'GalleryFrontController@create',
 
+	'album-create-admin' => 'AlbumFrontController@create',
+
 	'news_store' => 'NewsController@store',
 	'news_update' => 'NewsController@update',
 	'news_destroy' => 'NewsController@destroy',

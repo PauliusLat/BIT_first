@@ -240,7 +240,7 @@ var Calendar = /*#__PURE__*/function () {
           var month = _this2.translate(curentM);
 
           _this2.event(action, month, day);
-        }, false);
+        });
       };
 
       for (var _i2 = 0; _i2 < event.length; _i2++) {
@@ -264,7 +264,7 @@ var Calendar = /*#__PURE__*/function () {
       var lastDayM = new Date(y, m + a, 0).getDate();
       var newM = new Date(y, m + a, 0).getMonth();
       var startDay = new Date(curentY, newM, 1).getDay();
-      this.render(lastDayM, startDay, dataDate);
+      return this.render(lastDayM, startDay, dataDate);
     }
   }, {
     key: "translate",
@@ -350,7 +350,7 @@ var Calendar = /*#__PURE__*/function () {
           });
           setTimeout(function () {
             _this3.getData(action);
-          }, 300);
+          }, 400);
           setTimeout(function () {
             _this3.renderEvents(action);
           }, 500);
@@ -365,11 +365,15 @@ var Calendar = /*#__PURE__*/function () {
       axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
         if (response.status == 200 && response.statusText == 'OK') {
           (function () {
+            var call = new Calendar();
             var data = response.data.allData;
             var allEvens = document.getElementById('daysEvens');
             var HTML = "";
             var keys = [];
+            var keys1 = [];
             var value = "";
+            var value1 = [];
+            var newValue = "";
 
             for (var key in data) {
               keys.push(key);
@@ -379,25 +383,45 @@ var Calendar = /*#__PURE__*/function () {
               value = data[keys[i]];
 
               if (action == value.event_date) {
-                HTML += "<div class=\"oneEventBtn\">\n                                <div class=\"oneEvent\">\n                                    ".concat(value.event_time, "   ").concat(value.event_description, "\n                                </div>\n                                <div class=\"myEventBtn\" id=\"").concat(value.ID, "\" data-date=\"").concat(action, "\">\n                                    Trinti\n                                </div>\n                            </div>");
+                value1[i] = value;
               }
+            }
 
+            value1.sort(function (a, b) {
+              return a.event_time < b.event_time ? -1 : a.event_time > b.event_time ? 1 : 0;
+            });
+
+            for (var key1 in value1) {
+              keys1.push(key1);
+            }
+
+            if (keys1.length != 0) {
+              for (var j = 0; j < keys1.length; j++) {
+                newValue = value1[keys1[j]];
+
+                if (action == newValue.event_date) {
+                  HTML += "<div class=\"oneEventBtn\">\n                                    <div class=\"oneEvent\">\n                                        ".concat(newValue.event_time, "   ").concat(newValue.event_description, "\n                                    </div>\n                                    <div class=\"myEventBtn\" id=\"").concat(newValue.ID, "\" data-date=\"").concat(action, "\">\n                                        Trinti\n                                    </div>\n                                </div>");
+                }
+
+                allEvens.innerHTML = HTML;
+              }
+            } else {
+              HTML = "";
               allEvens.innerHTML = HTML;
             }
 
             var deleteBtn = document.querySelectorAll(".myEventBtn");
 
-            var _loop2 = function _loop2(j) {
-              deleteBtn[j].addEventListener("click", function (e) {
-                var action = deleteBtn[j].dataset.date;
-                var id = deleteBtn[j].id;
-                var call = new Calendar();
-                call.deleteEvent(id, action, value);
+            var _loop2 = function _loop2(_j) {
+              deleteBtn[_j].addEventListener("click", function (e) {
+                var action = deleteBtn[_j].dataset.date;
+                var id = deleteBtn[_j].id;
+                call.deleteEvent(id, action);
               });
             };
 
-            for (var j = 0; j < deleteBtn.length; j++) {
-              _loop2(j);
+            for (var _j = 0; _j < deleteBtn.length; _j++) {
+              _loop2(_j);
             }
 
             ;
@@ -405,22 +429,12 @@ var Calendar = /*#__PURE__*/function () {
         }
       })["catch"](function (error) {
         if (error.response) {
-          /*
-           * The request was made and the server responded with a
-           * status code that falls out of the range of 2xx
-           */
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
         } else if (error.request) {
-          /*
-           * The request was made but no response was received, `error.request`
-           * is an instance of XMLHttpRequest in the browser and an instance
-           * of http.ClientRequest in Node.js
-           */
           console.log(error.request);
         } else {
-          // Something happened in setting up the request and triggered an Error
           console.log('Error', error.message);
         }
 
@@ -429,17 +443,34 @@ var Calendar = /*#__PURE__*/function () {
     }
   }, {
     key: "deleteEvent",
-    value: function deleteEvent(id, action, value) {
+    value: function deleteEvent(id, action) {
       var _this4 = this;
 
-      console.log(value);
-      console.log(action);
       axios.post(this.uri + this.path + "calendar-delete-admin", {
         eventID: id
+      }).then(function (response) {
+        if (response.status == 200 && response.statusText == 'OK') {
+          var data = response.data.allData;
+          var dayEvents = document.querySelectorAll(".daysEvent");
+          var keys = [];
+
+          for (var key in data) {
+            keys.push(key);
+          }
+
+          for (var i = 0; i < dayEvents.length; i++) {
+            for (var j = 0; j < keys.length; j++) {
+              if (data[keys[j]].event_date != action && action == dayEvents[i].dataset.date) {
+                dayEvents[i].classList.add("removeDay");
+                break;
+              }
+            }
+          }
+        }
       })["catch"](function (err) {
         console.log(err instanceof TypeError);
       });
-      setTimeout(function () {
+      return setTimeout(function () {
         _this4.renderEvents(action);
       }, 500);
     }
@@ -447,8 +478,6 @@ var Calendar = /*#__PURE__*/function () {
     key: "getData",
     value: function getData() {
       axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
-        var call = new Calendar();
-
         if (response.status == 200 && response.statusText == 'OK') {
           var data = response.data.allData;
           var dayEvents = document.querySelectorAll(".cview--date");
@@ -485,7 +514,7 @@ var Calendar = /*#__PURE__*/function () {
   return Calendar;
 }();
 
-/* harmony default export */ __webpack_exports__["default"] = (Calendar);
+/* harmony default export */ __webpack_exports__["default"] = (Calendar); // 26-12
 
 /***/ }),
 
@@ -697,6 +726,7 @@ function sendImageData(filesAll) {
   }
 
   formData.append('album', album.value);
+  console.log(Object.fromEntries(formData));
   axios.post(uri + path + 'gallery-store-admin', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -713,8 +743,7 @@ function sendImageData(filesAll) {
     }
 
     console.log(error);
-  });
-  location.reload();
+  }); //  location.reload();
 }
 
         /* harmony default export */ __webpack_exports__[
