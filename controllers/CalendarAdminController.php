@@ -21,9 +21,9 @@ class CalendarAdminController
 
 	public function create()
 	{
-			$data = (EventPost::all())->pluck('event_description', 'event_date', 'event_time', 'ID')->all();
-			$response = new JsonResponse(['allData' => $data]);
-			return $response;
+		$data = (EventPost::all())->pluck('event_description', 'event_date', 'event_time', 'ID')->all();
+		$response = new JsonResponse(['allData' => $data]);
+		return $response;
 	}
 
 	public function store(request $requestJson, EventPost $event)
@@ -51,7 +51,10 @@ class CalendarAdminController
 			$deletePost = EventPost::get($deleteId);
 			$deletePost->delete();
 		}
-		return $response = new Response;
+		$data = (EventPost::all())->pluck('event_description', 'event_date', 'event_time', 'ID')->all();
+		$response = new JsonResponse(['allData' => $data]);
+		return $response;
+		
 	}
 
 	private function decodeRequest($request)

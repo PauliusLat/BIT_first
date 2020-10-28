@@ -24,10 +24,6 @@ class GalleryFrontController
 	{
 		return View::render('gallery.uploade-images');
 	}
-	public function albumIndex()
-	{
-		return View::render('gallery.all-album');
-	}
 
 	public function store(Request $request, AlbumPost $album)
 	{
@@ -50,9 +46,15 @@ class GalleryFrontController
 				$image = new Attachment();
 				foreach ($tags as $key1 => $tag) {
 					if ($key1 + 1 == $count) {
-						// $image->save($request->files->all()[$key], $album->ID);
-						// $image->addTag($tags[$key1]);
-						// $image->save();
+
+						$image->save($request->files->all()[$key], $album->ID);
+					//	AlbumPost::get($image->ID);
+					// echo" <pre>";
+					// 	var_dump(AlbumPost::get($album->ID)->attachments);
+						$image->addTag($tags[$key1]);
+						// var_dump($image->save());
+						$image->save();
+
 					}
 				}
 			}
@@ -87,18 +89,6 @@ class GalleryFrontController
 		// $album->getTags('maincat')->sortBy('count', 'desc');
 
 		return new Response();
-	}
-
-	public function create()
-	{
-		$albumData  = (AlbumPost::all())->all();
-		$data = (Attachment::all())->all();
-		echo '<pre>';
-		var_dump($albumData);
-		$data = (Atachment::all())->all();
-		foreach ($data as $img) {
-			$allImages = $img->getUrl();
-		}
 	}
 
 	// private function getFilesFromRequest(Request $request){
