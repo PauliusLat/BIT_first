@@ -1,9 +1,9 @@
-<div class="album">
-    <table>
-        <?php foreach ($album as $key => $value) : ?>
-            <tr>
-                <td><?php echo $value; ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
+
+<div>
+    <?php foreach ($album as $key => $value) : ?>
+            <div><?php echo $value->album_title; ?></div>
+    <?php endforeach; ?>
 </div>
+
+
+
