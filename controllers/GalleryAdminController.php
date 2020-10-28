@@ -36,13 +36,14 @@ class GalleryAdminController {
 		foreach ($request->request as $value) {
 			$tags[] = trim($value);
 		}
-		var_dump($request->files);
+		var_dump($request);
 		foreach ($request->files->all() as $key => $filesArr) {
 			if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
 				$count++;
 				$image = new Attachment();
 				foreach ($tags as $key1 => $tag) {
 					if ($key1 + 1 == $count) {
+						// var_dump($image);
 						// $image->save($request->files->all()[$key], $album->ID);
 						// $image->addTag($tags[$key1]);
 						// $image->save();

@@ -6,15 +6,16 @@
   height   : 300px;
 
   .popup {
-    height          : 100%;
-    width           : 100%;
+    height: 100%;
+    width : 100%;
+
     .content {
       height: 60px;
 
       .eventBox {
         background-color: grey;
-        display: inline-block;
-        width  : 100%;
+        display         : inline-block;
+        width           : 100%;
 
         .myEventBtn {
           box-shadow      : inset 0px 39px 0px -24px #e67a73;
@@ -42,8 +43,9 @@
 
         .oneEventBtn {
           display: flex;
-          color: rgb(22, 21, 21);
+          color  : rgb(22, 21, 21);
           padding: 10px;
+
           .oneEvent {
             line-height: 25px;
             font-size  : 16px;
@@ -61,18 +63,19 @@
   }
 
   .eventH2 {
-    text-align : center;
-    line-height: 20px;
-    font-size  : 1.2rem;
+    text-align      : center;
+    line-height     : 20px;
+    font-size       : 1.2rem;
     background-color: grey;
-    color: black;
-    padding: 10px;
+    color           : black;
+    padding         : 10px;
   }
 }
 
 .event {
-  padding: 10px;
+  padding         : 10px;
   background-color: grey;
+
   .subscribe {
     width: 350px;
   }

@@ -54,7 +54,7 @@ class CalendarAdminController
 		$data = (EventPost::all())->pluck('event_description', 'event_date', 'event_time', 'ID')->all();
 		$response = new JsonResponse(['allData' => $data]);
 		return $response;
-		return $response = new Response;
+		
 	}
 
 	private function decodeRequest($request)

@@ -616,6 +616,7 @@ function sendImageData(filesAll) {
   }
 
   formData.append('album', album.value);
+  console.log(Object.fromEntries(formData));
   axios.post(uri + path + 'gallery-store-admin', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -632,8 +633,7 @@ function sendImageData(filesAll) {
     }
 
     console.log(error);
-  });
-  location.reload();
+  }); //  location.reload();
 }
 
 function getID() {
