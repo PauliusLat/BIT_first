@@ -96,7 +96,6 @@ class GalleryAdminController {
 		$output = View::render('gallery.all-images');
 		$response->prepare($request);
 		$response = new JsonResponse(['html' => $output, 'Images' => $data]);
-
 		return $response;
 	}
 

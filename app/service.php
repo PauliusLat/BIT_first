@@ -1,6 +1,7 @@
 <?php
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use Symfony\Component\HttpFoundation\Request;
+
 use BIT\models\NewsPost;
 use BIT\models\IdeaPost;
 use BIT\models\EventPost;
@@ -8,10 +9,16 @@ use BIT\models\AlbumPost;
 use BIT\app\RequestId;
 use BIT\app\Cookie;
 use BIT\app\Session;
+use BIT\app\Category;
 
 return function(ContainerConfigurator $configurator) {
 
-    $services = $configurator->services();
+    $services = $configurator->services()
+    ->defaults()
+    ->autowire()      // Automatically injects dependencies in your services.
+    ->autoconfigure();
+
+
     $services->set('request', Request::class)
     // In versions earlier to Symfony 5.1 the service() function was called ref()
     ->factory([Request::class, 'createFromGlobals']);
@@ -34,7 +41,7 @@ return function(ContainerConfigurator $configurator) {
     $services->alias(EventPost::class, 'eventPost');
 
     $services->set('ideaPost', IdeaPost::class)
-    ->args([ref(RequestId::class)]);
+    ->args([ref(RequestId::class)] );
     $services->alias(IdeaPost::class, 'ideaPost');
 
     $services->set('uuid', Cookie::class)
@@ -44,5 +51,9 @@ return function(ContainerConfigurator $configurator) {
     $services->set('session', Session::class)
     ->factory([Session::class, 'start']);
     $services->alias(Session::class, 'session');
+
+    $services->set('category', Category::class)
+    ->factory([Category::class, 'start']);
+    $services->alias(Category::class, 'category');
 
 };

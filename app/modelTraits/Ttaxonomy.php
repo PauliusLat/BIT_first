@@ -41,7 +41,6 @@ trait Ttaxonomy {
                         // if (!term_exists( $tag, $this->taxonomy )) {
                         //     wp_insert_term( $tag, $this->taxonomy, ['slug' => str_replace(' ', '-', $tag)] );                           
                         // }
-                        
                         if ($this->ID == null) {
                             throw new PostIdNotSetException('Error: Call to addTag() function before save()');
                         } else {
