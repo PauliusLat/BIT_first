@@ -47,7 +47,7 @@ table th {
 <div class = 'category-container'>
     <div class="admin-category-div-first" >
         <input type="hidden" name="news_new" value="new news">
-        <form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=page_store" method="post" enctype="multipart/form-data">
+        <form action="http://localhost/wordpress/wp-admin/admin.php?page=page_store" method="post" enctype="multipart/form-data">
             <div class="admin-event-form-group">
                 <h3>Pridėkite naują puslapį<h3>
                 <label class="admin-label">Puslapio pavadinimas</label><br>
@@ -94,10 +94,10 @@ table th {
                     }
                     ?>
                     <td>
-                        <form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=category_edit&id=<?=$category->term_id?>" method="post"> 
+                        <form action="http://localhost/wordpress/wp-admin/admin.php?page=category_edit&id=<?=$category->term_id?>" method="post"> 
                         <button type="submit" name="edit" value="<?=$category->term_id?>">Edit</button> 
                         </form>
-                        <form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=category_destroy&id=<?=$category->term_id?>" method="post">
+                        <form action="http://localhost/wordpress/wp-admin/admin.php?page=category_destroy&id=<?=$category->term_id?>" method="post">
                             <input type="hidden" name="ID" value="<?=$category->term_id?>"readonly>    
                             <button type="submit" name="delete">Delete</button>
                         </form>

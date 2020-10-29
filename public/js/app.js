@@ -367,7 +367,8 @@ var Calendar = /*#__PURE__*/function () {
           (function () {
             var call = new Calendar();
             var data = response.data.allData;
-            var allEvens = document.getElementById('daysEvens');
+            var allEvens = document.getElementById('daysEvens'); // const removeDays = document.querySelectorAll(".removeDay");
+
             var HTML = "";
             var keys = [];
             var keys1 = [];
@@ -458,11 +459,17 @@ var Calendar = /*#__PURE__*/function () {
             keys.push(key);
           }
 
+          var counter = 0;
+          console.log(action);
+
           for (var i = 0; i < dayEvents.length; i++) {
             for (var j = 0; j < keys.length; j++) {
-              if (data[keys[j]].event_date != action && action == dayEvents[i].dataset.date) {
-                dayEvents[i].classList.add("removeDay");
-                break;
+              if (data[keys[j]].event_date == action) {
+                counter++;
+              }
+
+              if (counter < 1 && action == dayEvents[i].dataset.date) {
+                dayEvents[i].classList.remove("daysEvent");
               }
             }
           }
@@ -514,7 +521,7 @@ var Calendar = /*#__PURE__*/function () {
   return Calendar;
 }();
 
-/* harmony default export */ __webpack_exports__["default"] = (Calendar); // 26-12
+/* harmony default export */ __webpack_exports__["default"] = (Calendar);
 
 /***/ }),
 
@@ -522,170 +529,60 @@ var Calendar = /*#__PURE__*/function () {
 /*!*********************************!*\
   !*** ./resources/js/gallery.js ***!
   \*********************************/
-      /*! exports provided: default */
-      /***/ function(module, __webpack_exports__, __webpack_require__) {
-        "use strict";
-        __webpack_require__.r(__webpack_exports__);
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-        var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-        var uri = document.location.origin;
-        var gallery = document.getElementById("loadeGallery");
-        var arraySend = [];
-        var isListener = true;
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 
-        function startGallery() {
-          if (gallery) {
-            window.addEventListener("load", renderGallery, false);
-          }
-        }
 
-        function renderGallery() {
-          //Check File API support
-          if (window.File && window.FileList && window.FileReader) {
-            var filesInput = document.getElementById("files");
-            filesInput.addEventListener("change", function(event) {
-              var array = Array.from(event.target.files);
-              renderImages(array);
-            });
-          } else {
-            console.log("Your browser does not support File API");
-          }
-        }
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var gallery = document.getElementById("loadeGallery");
+var arraySend = [];
+var isListener = true;
 
-        function renderImages(filesAll) {
-          var currentDiv = document.getElementById("message");
+function startGallery() {
+  if (gallery) {
+    window.addEventListener("load", renderGallery, false);
+  }
+}
 
-          var _loop = function _loop(i) {
-            if (filesAll[i].size < 1048576) {
-              if (filesAll[i].type.match("image")) {
-                var picReader = new FileReader();
-                picReader.addEventListener("load", function(event) {
-                  var picFile = event.target;
-                  var deleteId = getID();
-                  var deleteBtn = getID();
-                  var output = document.getElementById("result");
-                  var div = document.createElement("div");
-                  div.className = "galleryDiv";
-                  div.id = deleteId;
-                  div.innerHTML = '<img class="uploadeImageGallery" src=" '
-                    .concat(
-                      picFile.result,
-                      ' "\n                      alt=" "/>\n                      <label for="'
-                    )
-                    .concat(
-                      deleteBtn,
-                      '">Tag: </label>\n                      <input type="text" id="'
-                    )
-                    .concat(
-                      filesAll[i].name,
-                      '" class="altInput" name="altImage" value="">\n                      <div class="deleteImd" id="'
-                    )
-                    .concat(deleteBtn, '">Trinti<div/>');
-                  output.insertBefore(div, currentDiv);
-                  var imgDeleteBtn = document.getElementById(deleteBtn);
-                  var deleteDiv = document.getElementById(deleteId);
-                  imgDeleteBtn.addEventListener("click", function() {
-                    filesAll.splice(i, 1);
-                    deleteDiv.remove();
-                  });
-                });
-                picReader.readAsDataURL(filesAll[i]);
-              } else {
-                alert("Tai nera paveikslelio tipo formatas");
-              }
-            } else {
-              alert(
-                "Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"
-              ); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-              //   currentDiv.appendChild(newContent);
-            }
-          };
+function renderGallery() {
+  //Check File API support
+  if (window.File && window.FileList && window.FileReader) {
+    var filesInput = document.getElementById("files");
+    filesInput.addEventListener("change", function (event) {
+      var array = Array.from(event.target.files);
+      renderImages(array);
+    });
+  } else {
+    console.log("Your browser does not support File API");
+  }
+}
 
-          for (var i = 0; i < filesAll.length; i++) {
-            _loop(i);
-          }
+function renderImages(filesAll) {
+  var currentDiv = document.getElementById("message");
 
-          arraySend.push(filesAll);
-          var uploadeImg = document.getElementById("submitImg");
-
-          if (isListener) {
-            uploadeImg.addEventListener("click", function() {
-              arraySend = filter(arraySend);
-              sendImageData(arraySend);
-            });
-            isListener = false;
-          }
-        }
-
-        function sendImageData(filesAll) {
-          var tagInput;
-          var formData = new FormData();
-          var album = document.getElementById("albumName");
-
-          for (var i = 0; i < filesAll.length; i++) {
-            tagInput = document.getElementById(filesAll[i].name);
-            formData.append("files" + i, filesAll[i]);
-            formData.append("tag" + i, tagInput.value + " ");
-          }
-
-          formData.append("album", album.value);
-          axios
-            .post(uri + path + "gallery-store-admin", formData, {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            })
-            .then(function(response) {})
-            ["catch"](function(error) {
-              if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-              } else if (error.request) {
-                console.log(error.request);
-              } else {
-                console.log("Error", error.message);
-              }
-
-              console.log(error);
-            });
-          location.reload();
-        }
-
-        function getID() {
-          return (
-            Date.now().toString(36) +
-            Math.random()
-              .toString(36)
-              .substr(2, 5)
-          ).toUpperCase();
-        }
-
-        function filter(filesAll) {
-          var file = [];
-
-          for (var i = 0; i < filesAll.length; i++) {
-            for (var j = 0; j < filesAll[i].length; j++) {
-              if (
-                filesAll[i][j] != undefined &&
-                filesAll[i][j] != null &&
-                filesAll[i][j] != "" &&
-                filesAll[i][j] != NaN &&
-                filesAll[i][j].size < 1048576
-              ) {
-                file.push(filesAll[i][j]);
-              }
-            }
-          }
-
-          file = file.filter(function(power, toThe, yellowVests) {
-            return (
-              yellowVests
-                .map(function(updateDemocracy) {
-                  return updateDemocracy["name"];
-                })
-                .indexOf(power["name"]) === toThe
-            );
+  var _loop = function _loop(i) {
+    if (filesAll[i].size < 1048576) {
+      if (filesAll[i].type.match('image')) {
+        var picReader = new FileReader();
+        picReader.addEventListener("load", function (event) {
+          var picFile = event.target;
+          var deleteId = getID();
+          var deleteBtn = getID();
+          var output = document.getElementById("result");
+          var div = document.createElement("div");
+          div.className = "galleryDiv";
+          div.id = deleteId;
+          div.innerHTML = "<img class=\"uploadeImageGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <label for=\"").concat(deleteBtn, "\">Tag: </label>\n                      <input type=\"text\" id=\"").concat(filesAll[i].name, "\" class=\"altInput\" name=\"altImage\" value=\"\">\n                      <div class=\"deleteImd\" id=\"").concat(deleteBtn, "\">Trinti<div/>");
+          output.insertBefore(div, currentDiv);
+          var imgDeleteBtn = document.getElementById(deleteBtn);
+          var deleteDiv = document.getElementById(deleteId);
+          imgDeleteBtn.addEventListener("click", function () {
+            filesAll.splice(i, 1);
+            deleteDiv.remove();
           });
         });
         picReader.readAsDataURL(filesAll[i]);
@@ -746,15 +643,35 @@ function sendImageData(filesAll) {
   }); //  location.reload();
 }
 
-        /* harmony default export */ __webpack_exports__[
-          "default"
-        ] = startGallery();
+function getID() {
+  return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+}
 
-        /***/
-      },
+function filter(filesAll) {
+  var file = [];
 
-    /***/ "./resources/js/idea.js":
-      /*!******************************!*\
+  for (var i = 0; i < filesAll.length; i++) {
+    for (var j = 0; j < filesAll[i].length; j++) {
+      if (filesAll[i][j] != undefined && filesAll[i][j] != null && filesAll[i][j] != "" && filesAll[i][j] != NaN && filesAll[i][j].size < 1048576) {
+        file.push(filesAll[i][j]);
+      }
+    }
+  }
+
+  file = file.filter(function (power, toThe, yellowVests) {
+    return yellowVests.map(function (updateDemocracy) {
+      return updateDemocracy['name'];
+    }).indexOf(power['name']) === toThe;
+  });
+  return file;
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startGallery());
+
+/***/ }),
+
+/***/ "./resources/js/idea.js":
+/*!******************************!*\
   !*** ./resources/js/idea.js ***!
   \******************************/
 /*! exports provided: default */
@@ -926,14 +843,15 @@ new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.calendar');
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
   \*********************************/
-      /*! no static exports found */
-      /***/ function(module, exports) {
-        // removed by extract-text-webpack-plugin
-        /***/
-      },
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-    /***/ 0:
-      /*!**************************************************************!*\
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 0:
+/*!**************************************************************!*\
   !*** multi ./resources/js/main.js ./resources/sass/app.scss ***!
   \**************************************************************/
 /*! no static exports found */

@@ -27,7 +27,7 @@ class PageController {
         $page->createPage($post_type, $post_title);
         $response = new Response;
         $response->prepare($request);
-        wp_redirect('http://localhost:8080/wordpress/wp-admin/admin.php?page=page');
+        wp_redirect('http://localhost/wordpress/wp-admin/admin.php?page=page');
         exit;
         return $response;
     }  
@@ -43,7 +43,7 @@ class PageController {
 
         $response = new Response;
         $response->prepare($request);
-        wp_redirect('http://localhost:8080/wordpress/wp-admin/admin.php?page=page');
+        wp_redirect('http://localhost/wordpress/wp-admin/admin.php?page=page');
         exit;
         return $response;
 
@@ -54,7 +54,7 @@ class PageController {
         
         $response = new Response;
         $response->prepare($request);
-        wp_redirect('http://localhost:8080/wordpress/wp-admin/admin.php?page=page');
+        wp_redirect('http://localhost/wordpress/wp-admin/admin.php?page=page');
         exit;
         return $response;
 

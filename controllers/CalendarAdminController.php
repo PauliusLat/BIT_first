@@ -26,15 +26,15 @@ class CalendarAdminController
 		return $response;
 	}
 
-	public function store(request $requestJson, EventPost $event)
+	public function store(request $requestJson)
 	{
+		$event = new EventPost();
 
 		$request = $this->decodeRequest($requestJson);
 
 		$event->event_description = $request->request->get('event');
 		$event->event_time = $request->request->get('time');
 		$event->event_date = $request->request->get('date');
-
 		$event->save();
 
 		return $response = new Response;
@@ -54,7 +54,6 @@ class CalendarAdminController
 		$data = (EventPost::all())->pluck('event_description', 'event_date', 'event_time', 'ID')->all();
 		$response = new JsonResponse(['allData' => $data]);
 		return $response;
-		
 	}
 
 	private function decodeRequest($request)

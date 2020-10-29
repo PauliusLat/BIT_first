@@ -1,7 +1,9 @@
-
 <div>
     <?php foreach ($album as $key => $value) : ?>
-            <div><?php echo $value->album_title; ?></div>
+        <div>
+ 
+            <a href="http://localhost/wordpress/<?=$value?>"><?=$value?></a>
+        </div>
     <?php endforeach; ?>
 </div>
 
