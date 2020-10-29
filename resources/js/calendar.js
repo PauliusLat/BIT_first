@@ -263,6 +263,7 @@ class Calendar {
                     let call = new Calendar();
                     const data = response.data.allData;
                     const allEvens = document.getElementById('daysEvens');
+                    // const removeDays = document.querySelectorAll(".removeDay");
                     let HTML = "";
                     let keys = [];
                     let keys1 = [];
@@ -351,13 +352,17 @@ class Calendar {
                     for (let key in data) {
                         keys.push(key);
                     }
-
+                    let counter = 0;
+                    console.log(action);
                     for (let i = 0; i < dayEvents.length; i++) {
                         for (let j = 0; j < keys.length; j++) {
-                            if (data[keys[j]].event_date != action &&
+
+                            if (data[keys[j]].event_date == action) {
+                                counter++
+                            }
+                            if (counter < 1 &&
                                 action == dayEvents[i].dataset.date) {
-                                dayEvents[i].classList.add("removeDay");
-                                break;
+                                dayEvents[i].classList.remove("daysEvent");
                             }
                         }
                     }
@@ -411,4 +416,3 @@ class Calendar {
 
 export default Calendar;
 
-// 26-12

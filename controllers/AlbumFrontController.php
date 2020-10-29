@@ -19,15 +19,16 @@ class AlbumFrontController
     public function create(AlbumPost $album)
     {
         $allImages = [];
+        $albumName = [];
         $albumData  = (AlbumPost::all())->all();
         foreach ($albumData as $data) {
-            $allImages[] = $data->album_title;
+            $albumName[] = $data->album_title;
             foreach ($data->attachments as $key => $img) {
                 $allImages[] = $img->getUrl();
             }
         }
-
-        $output = View::adminRender('album.album',  ["album" => $albumData]);
+        $albumName = str_replace(' ', '-', $albumName);
+        $output = View::adminRender('album.album',  ["album" => $albumName]);
         $response = new JsonResponse(['html' => $output]);
 
         return $response;
