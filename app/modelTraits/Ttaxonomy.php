@@ -24,6 +24,22 @@ trait Ttaxonomy {
             throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
         }    
     }
+
+    // add tag to DB
+    public function addTagtoDB($tag, $taxonomy_type = 'hashtag'){
+        $tag = (array)$tag;
+        foreach ($this->taxonomy as $value){
+            if($value == $taxonomy_type){
+                if (did_action('init')) {    
+                        foreach ($tag as $key){
+                            wp_insert_term($key, $value);
+                        }
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
     
     /** adds tag (default - Hashtag term) to post type Album
      * string $tag: 'tag' or 'tag1, tag2'
@@ -32,7 +48,10 @@ trait Ttaxonomy {
      * $album = new AlbumPost;
      * $album->save();
      * $album->addTag('tag1'); or $album->addTag(['tag1', 'tag2']);
+     * 
      */
+
+     //add tag to db and the post type
     public function addTag($tag, $taxonomy_type = 'hashtag')    
     {
             foreach ($this->taxonomy as $value){
@@ -105,7 +124,6 @@ trait Ttaxonomy {
                 if (did_action('init')) {
                     $taxCollection = new TaxCollection();
                     $terms = get_terms([ 'taxonomy'=> $value, 'object_ids'=>$this->ID,  'hide_empty'=>false]);  //perdaryti i get_terms ir kategorijose
-                    _dc( $terms);
 
                     foreach ($terms as $term) {
                         $taxCollection->addTerm($term);

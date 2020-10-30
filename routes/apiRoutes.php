@@ -35,9 +35,9 @@ return [
 	'news_destroy' => 'NewsController@destroy',
 	'news_edit' => 'NewsController@edit',
 
-
-	'category_store' => 'CategoryAdminController@store',
-	'category_update' => 'CategoryAdminController@update',
-	'category_destroy' => 'CategoryAdminController@destroy',
-	'category_edit' => 'CategoryAdminController@edit',
+	'tag_create' => 'TagController@create',
+	'tag_store' => 'TagController@store',
+	'tag_update' => 'TagController@update',
+	'tag_destroy' => 'TagController@destroy',
+	'tag_edit' => 'TagController@edit',
 ];

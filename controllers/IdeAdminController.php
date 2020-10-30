@@ -61,6 +61,8 @@ class IdeAdminController
 
 		$request = $this->decodeRequest($requestJson);
 
+		_dc($request);
+
 		$soliutionId = $idea->ID = $request->request->get('solutionId');
 		$soliution = $idea->idea_solution = $request->request->get('soliution');
 

@@ -23,6 +23,8 @@ use BIT\app\View;
 use BIT\app\Collection;
 use BIT\controllers\NewsController;
 use BIT\models\IdeaPost;
+use BIT\models\NewsPost;
+use BIT\app\Tag;
 use BIT\app\modelTraits\Tcategory;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -66,7 +68,16 @@ $api = new ApiRoute;
 // $category = new Category;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
-// add_action('init', function() {
+add_action('init', function() {
+
+    // $album = new AlbumPost;
+    // $album->save();
+
+    // $tag = new Tag;
+    // $tag->addTagtoDB('hot');
+    // $album->addTag('cold');
+    // $terms = get_terms(['name'=>'aauga', 'taxonomy'=> 'maincat', 'hide_empty'=>false]);
+    // _dc($terms);
 //     $category = new Category;
 //     $page = new Page;
     // $page->createPage('kalendorius');
@@ -127,7 +138,7 @@ $api = new ApiRoute;
 // //     //  $idea->save();
 // //     //  _dc( $idea);
 // //     //  $idea->addTag('');
-// });
+});
 
 
 

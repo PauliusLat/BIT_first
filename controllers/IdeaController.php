@@ -34,6 +34,7 @@ class IdeaController {
 		$response = new Response;
 
 		$request = $this->decodeRequest($requestJson);
+		_dc($request);
 
 		$array = $idea->idea_content = $request->request->get('idea');
 
