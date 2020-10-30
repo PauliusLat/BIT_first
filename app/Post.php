@@ -11,7 +11,7 @@ use BIT\models\AlbumPost;
 
 class Post{
     
-    private $ID;
+    public $ID;
     protected static $type = 'post';
     public $attachments = [];
     // combines meta ant post tables

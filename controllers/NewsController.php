@@ -6,6 +6,7 @@ use BIT\app\View;
 use BIT\app\Attachment;
 use BIT\app\Query;
 use BIT\models\NewsPost;
+use BIT\app\RequestId;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -44,14 +45,21 @@ class NewsController {
 
     
     
-    public function store(Request $request, NewsPost $newsPost) 
-    {   
+    public function store(Request $request, NewsPost $newsPost) { 
+        //   _dc($request);
+        _dc($request->request->get('content'));
+        $news = new NewsPost;
+        $news->content = $request->request->get('content');
+        $news->date = $request->request->get('date');
+
+        _dc($request->request->all());
+        $news->save();
         // foreach ($request->files->all() as $file) {
-            $post = Attachment::get(783);
-            $post->setDescription('NNNNNNNNNNN');
-            $post->setAlt('BBBBBBBB');
-            $post->save(null, 760);        
-            _dc($file);
+            // $post = Attachment::get(783);
+            // $post->setDescription('NNNNNNNNNNN');
+            // $post->setAlt('BBBBBBBB');
+            // $post->save(null, 760);        
+            // _dc($file);
 
         // }
        
@@ -63,7 +71,7 @@ class NewsController {
 
         // $new_news = new NewsPost();
         
-        // $new_news->news_content = $request->request->get('news-content');
+       
         // $new_news->news_content = $request->content->get('content');        
         // $newsPost->news_content = $request->query->get('content');
         // $new_news->news_content = $request->query->get('content');
@@ -98,7 +106,9 @@ class NewsController {
 
         $response = new Response;
         $response->prepare($request);
-        $response->setContent(json_encode(['html' => $this->index()]));
+        // $response->setContent(json_encode(['html' => $this->index()]));
+        wp_redirect('http://localhost:8080/wordpress/wp-admin/admin.php?page=news');
+        exit;
         return $response;
 
         // print_r($news_content.value);
@@ -107,17 +117,25 @@ class NewsController {
 
     public function show (){}
 
-    public function edit (){}
+    public function edit (Request $request, NewsPost $newsPost, RequestId $requestId){
+
+        $app = App::start();
+        _dc($requestId);
+       
+     
+        _dc($newsPost);
+        // $categories = $category->getAllCats();
+        
+        return View::adminRender('news.edit', ['url' => PLUGIN_DIR_URL, 'news' => $newsPost]);
+    }
 
     public function update(Request $request, NewsPost $newsPost)
     {   
         $newsPost->news_content = $request->get('news-content');
         
         $newsPost->save();
-        
-
+        $newsPost;
         $news = NewsPost::all();
-
         $response = new Response;
         $response->prepare($request);
         $response->setContent(json_encode(['list' => 'hello']));

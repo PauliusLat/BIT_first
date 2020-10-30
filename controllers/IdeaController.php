@@ -29,7 +29,9 @@ class IdeaController {
 		return $response;
 	}
 
-	public function create(Request $requestJson, IdeaPost $idea) {
+	public function create(Request $requestJson) {
+
+		$idea = new IdeaPost;
 
 		$response = new Response;
 
@@ -42,7 +44,7 @@ class IdeaController {
 			$txt = '';
 
 			foreach ($array as $text) {
-				;
+
 				$txt .= $text . ' ';
 			}
 

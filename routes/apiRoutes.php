@@ -5,10 +5,13 @@
 return [
 	'event' => 'EventController@index',
 
-	'calendar' => 'calendarFrontController@index',
+	'calendar-create-front' => 'CalendarFrontController@create',
+
+	'calendar-create-admin' => 'CalendarAdminController@create',
+	'calendar-store-admin' => 'CalendarAdminController@store',
+	'calendar-delete-admin' => 'CalendarAdminController@delete',
 
 	'ideas-render-front' => 'IdeasController@render',
-
 	'idea-create-front' => 'IdeaController@create',
 	'idea-render-front' => 'IdeaController@render',
 
@@ -25,8 +28,17 @@ return [
 	'gallery-store-front' => 'GalleryFrontController@store',
 	'gallery-create-front' => 'GalleryFrontController@create',
 
+	'album-create-admin' => 'AlbumFrontController@create',
+
 	'news-list' => 'NewsController@list',
 	'news_store' => 'NewsController@store',
 	'news_update' => 'NewsController@update',
 	'news_destroy' => 'NewsController@destroy',
+	'news_edit' => 'NewsController@edit',
+
+
+	'category_store' => 'CategoryAdminController@store',
+	'category_update' => 'CategoryAdminController@update',
+	'category_destroy' => 'CategoryAdminController@destroy',
+	'category_edit' => 'CategoryAdminController@edit',
 ];

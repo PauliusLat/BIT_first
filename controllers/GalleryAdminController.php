@@ -5,15 +5,12 @@ namespace BIT\controllers;
 use BIT\app\Attachment;
 use BIT\app\View;
 use BIT\models\AlbumPost;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
-
-class GalleryAdminController
-{
-	public function __construct()
-	{
+class GalleryAdminController {
+	public function __construct() {
 
 		// 		$attachment = new Attachment();
 		// $attachment->save($request, $post_parent_id(optional)); -sukuria nauja, arba update’ina esanti.
@@ -22,15 +19,11 @@ class GalleryAdminController
 		// $attachment->geAttachmentDetails();
 	}
 
-	public function adminIndex()
-	{
+	public function adminIndex() {
 		return View::adminRender('gallery.galerija');
 	}
 
-	public function store(Request $request, AlbumPost $album)
-	{	
-		_dc($request);
-		_dc($album);
+	public function store(Request $request, AlbumPost $album) {
 		foreach ($request->request as $key => $a) {
 			if ($key == "album") {
 				$album->album_title = $a;
@@ -43,13 +36,14 @@ class GalleryAdminController
 		foreach ($request->request as $value) {
 			$tags[] = trim($value);
 		}
-
+		var_dump($request);
 		foreach ($request->files->all() as $key => $filesArr) {
 			if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
 				$count++;
 				$image = new Attachment();
 				foreach ($tags as $key1 => $tag) {
 					if ($key1 + 1 == $count) {
+						// var_dump($image);
 						// $image->save($request->files->all()[$key], $album->ID);
 						// $image->addTag($tags[$key1]);
 						// $image->save();
@@ -89,8 +83,7 @@ class GalleryAdminController
 		return new Response();
 	}
 
-	public function create(Request $request, AlbumPost $album)
-	{
+	public function create(Request $request, AlbumPost $album) {
 		$data = (AlbumPost::all())->all();
 		//AlbumPost::get($post_id)->attachments; grazina albuma
 		// $allImages = [];
@@ -103,12 +96,10 @@ class GalleryAdminController
 		$output = View::render('gallery.all-images');
 		$response->prepare($request);
 		$response = new JsonResponse(['html' => $output, 'Images' => $data]);
-
 		return $response;
 	}
 
-	private function decodeRequest($request)
-	{
+	private function decodeRequest($request) {
 
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);
