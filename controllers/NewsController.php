@@ -2,25 +2,46 @@
 
 namespace BIT\controllers;
 
-use BIT\app\App;
 use BIT\app\View;
 use BIT\app\Attachment;
+use BIT\app\Query;
 use BIT\models\NewsPost;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class NewsController {
-    
-    public function index() 
-    {   
-        $news = NewsPost::all();
-        return View::adminRender('news.index', ['url' => PLUGIN_DIR_URL, 'news' => $news]);
-    }
 
-    public function create(){
+    public function index(){
 
+        return View::adminRender('news.create');
 
     }
+
+    public function list(Request $request) 
+    {           
+        var_dump(get_permalink(940, true));
+        $news = NewsPost::all()->pluck('post_date', 'post_title', 'ID', 'attachments')->all();
+        foreach ($news as &$value) {
+            if($value){
+                foreach ($value['attachments'] as $img) {
+                    $value['attachments'] = $img->getUrl();
+                }
+            }else{
+                $value['attachments'] = '';
+            }
+        }
+        $output = View::adminRender('news.create');
+        $response = new JsonResponse(['html' => $output, 'data' => $news]);
+
+		return $response;
+
+    }
+    public function create(Request $request) {
+
+    }
+
     
     
     public function store(Request $request, NewsPost $newsPost) 
@@ -90,7 +111,7 @@ class NewsController {
 
     public function update(Request $request, NewsPost $newsPost)
     {   
-        $new_news->news_content = $request->get('news-content');
+        $newsPost->news_content = $request->get('news-content');
         
         $newsPost->save();
         
@@ -104,16 +125,19 @@ class NewsController {
         return $response;
     }
 
-
-    public function destroy(Request $request, NewsPost $newsPost)
-    {   
-        // $newsPost->delete();
-        // $news = NewsPost::all();
-        $response = new Response;
-        $response->prepare($request);
-        $response->setContent(json_encode(['list' => 'hello']));
-        // $response->setContent(json_encode(['list' => View::adminRender('news.list', ['news' => $news])]));
-        return $response;
- 
+    public function destroy(NewsPost $newsPost) {   
+     
+        $newsPost->delete();
+		return new Response;
+         
     }
+    protected function decodeRequest($request){
+
+		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+			$data = json_decode($request->getContent(), true);
+			$request->request->replace(is_array($data) ? $data : array());
+		}
+
+        return $request;
+	}
 }

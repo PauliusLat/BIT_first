@@ -25,6 +25,7 @@ return [
 	'gallery-store-front' => 'GalleryFrontController@store',
 	'gallery-create-front' => 'GalleryFrontController@create',
 
+	'news-list' => 'NewsController@list',
 	'news_store' => 'NewsController@store',
 	'news_update' => 'NewsController@update',
 	'news_destroy' => 'NewsController@destroy',

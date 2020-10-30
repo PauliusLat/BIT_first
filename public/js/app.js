@@ -200,7 +200,7 @@ function sendImageData(filesAll) {
     }
 
     console.log(error);
-  }); // location.reload();
+  }); //  location.reload();
 }
 
 function getID() {
@@ -392,8 +392,120 @@ function renderColons(e) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
 /* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gallery.js */ "./resources/js/gallery.js");
+/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
+
 
  // import Header from "./test.js"
+
+/***/ }),
+
+/***/ "./resources/js/news.js":
+/*!******************************!*\
+  !*** ./resources/js/news.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/** @format */
+
+
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var newsStart = document.getElementById("startNewsAdmin");
+
+function startNews() {
+  if (newsStart) {
+    window.addEventListener("load", renderNews, false);
+  }
+}
+/*----------------------- edit content axios----------------------------*/
+
+
+function editNews(editId) {
+  axios.get(uri + path + "news-edit-admin", {
+    editId: editId
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  }); // setTimeout(renderNews, 500);
+}
+
+function deleteNews(delId) {
+  axios.post(uri + path + "news_destroy&id=" + delId, {
+    deleteId: delId
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+    console.log("Problemos su Delete api");
+  });
+  setTimeout(renderNews, 500);
+}
+
+function renderNews() {
+  axios.get(uri + path + "news-list", {}).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      var data = response.data.data;
+      var dom = document.getElementById("renderNewsList");
+      var HTMLString = "";
+      var counter = 0;
+      var keys = [];
+
+      for (var key in data) {
+        keys.push(key);
+      }
+
+      for (var i = keys.length - 1; i >= 0; i--) {
+        var value = data[keys[i]];
+        counter++;
+        HTMLString += "<div class=\"news-box\"> \n  \n                      <div class=\"news-img\">\n                        <img src=\"".concat(value.attachments, "\" alt=\"\">\n                      </div>\n                      <div class=\"news-text\">\n                        <div class=\"news-date\">\n                            <p>").concat(value.post_date, "</p>\n                        </div>\n                        <div class=\"news-content\">\n                            <p>").concat(value.post_title, "</p>\n                        </div>\n                      </div>\n                      <div class=\"news-buttons\">\n                        <button  class=\"newsBtn deleteBtnNews\" id=\"").concat(value.ID, "\">\n                            Trinti\n                        </button> \n                        <button  class=\"newsBtn editBtnNews\" id=\"").concat(value.ID, "\">\n                            Redaguoti\n                        </button> \n                      </div>\n                    </div>");
+      }
+
+      dom.innerHTML = HTMLString;
+      var editBtn = document.querySelectorAll(".editBtnNews");
+      var deletetBtn = document.querySelectorAll(".deleteBtnNews");
+
+      var _loop = function _loop(_i) {
+        var editId = editBtn[_i].id;
+
+        editBtn[_i].addEventListener("click", function () {
+          editNews(editId);
+        }, false);
+      };
+
+      for (var _i = 0; _i < editBtn.length; _i++) {
+        _loop(_i);
+      }
+
+      var _loop2 = function _loop2(_i2) {
+        var delId = deletetBtn[_i2].id;
+
+        deletetBtn[_i2].addEventListener("click", function () {
+          deleteNews(delId);
+        }, false);
+      };
+
+      for (var _i2 = 0; _i2 < deletetBtn.length; _i2++) {
+        _loop2(_i2);
+      }
+    }
+
+    return response;
+  })["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
+    }
+
+    console.log(error);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startNews());
 
 /***/ }),
 

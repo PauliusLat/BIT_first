@@ -28,7 +28,9 @@ class GalleryAdminController
 	}
 
 	public function store(Request $request, AlbumPost $album)
-	{
+	{	
+		_dc($request);
+		_dc($album);
 		foreach ($request->request as $key => $a) {
 			if ($key == "album") {
 				$album->album_title = $a;

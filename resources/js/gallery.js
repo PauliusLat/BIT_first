@@ -129,7 +129,7 @@ function sendImageData(filesAll) {
         }
         console.log(error);
     });
-     location.reload();
+    //  location.reload();
 
 }
 
