@@ -21,8 +21,11 @@ class NewsController {
     }
 
     public function list(Request $request) 
-    {           
-        var_dump(get_permalink(940, true));
+    {   
+        $a = NewsPost::get(952);
+        $a->post_name = 'Naujas deeded';
+        $a->save();
+        echo($a->getLink());   
         $news = NewsPost::all()->pluck('post_date', 'post_title', 'ID', 'attachments')->all();
         foreach ($news as &$value) {
             if($value){
@@ -47,12 +50,10 @@ class NewsController {
     
     public function store(Request $request, NewsPost $newsPost) { 
         //   _dc($request);
-        _dc($request->request->get('content'));
         $news = new NewsPost;
         $news->content = $request->request->get('content');
         $news->date = $request->request->get('date');
 
-        _dc($request->request->all());
         $news->save();
         // foreach ($request->files->all() as $file) {
             // $post = Attachment::get(783);
@@ -120,10 +121,7 @@ class NewsController {
     public function edit (Request $request, NewsPost $newsPost, RequestId $requestId){
 
         $app = App::start();
-        _dc($requestId);
-       
-     
-        _dc($newsPost);
+ 
         // $categories = $category->getAllCats();
         
         return View::adminRender('news.edit', ['url' => PLUGIN_DIR_URL, 'news' => $newsPost]);

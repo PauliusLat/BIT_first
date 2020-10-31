@@ -31,10 +31,10 @@ return [
 	'album-create-admin' => 'AlbumFrontController@create',
 
 	'news-list' => 'NewsController@list',
-	'news_store' => 'NewsController@store',
-	'news_update' => 'NewsController@update',
-	'news_destroy' => 'NewsController@destroy',
-	'news_edit' => 'NewsController@edit',
+	'news-store' => 'NewsController@store',
+	'news-update' => 'NewsController@update',
+	'news-destroy' => 'NewsController@destroy',
+	'news-edit' => 'NewsController@edit',
 
 
 	'category_store' => 'CategoryAdminController@store',
