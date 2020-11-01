@@ -263,7 +263,7 @@ class Calendar {
                     let call = new Calendar();
                     const data = response.data.allData;
                     const allEvens = document.getElementById('daysEvens');
-                    // const removeDays = document.querySelectorAll(".removeDay");
+
                     let HTML = "";
                     let keys = [];
                     let keys1 = [];

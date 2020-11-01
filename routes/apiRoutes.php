@@ -3,7 +3,7 @@
 // example Controller names and functions
 // 'event' (key) is part of URL http://.../bebras/api/?route=event
 return [
-	'event' => 'EventController@index',
+	'event-create-front' => 'EventController@create',
 
 	'calendar-create-front' => 'CalendarFrontController@create',
 
