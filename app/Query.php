@@ -2,6 +2,7 @@
 
 namespace BIT\app;
 use BIT\app\Post;
+use BIT\app\Collection;
 use WP_Query;
 use BIT\app\coreExeptions\wrongArgsTypeExeption;
 include_once(ABSPATH . 'wp-includes/pluggable.php');
