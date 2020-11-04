@@ -1,37 +1,34 @@
-/** @format */
-
 "use strict";
 
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
-const tagStrt = document.getElementById("tagStart");
+const catStrt = document.getElementById("catStart");
+console.log(catStrt);
 
-// console.log(tagStrt);
-
-function startTag() {
-  if (tagStrt) {
+function startCat() {
+  if (catStrt) {
     window.addEventListener("load", init, false);
   }
 }
 
 function init() {
   axios
-    .post(uri + path + "tag_create", {})
+    .post(uri + path + "category_create", {})
     .then(function(response) {
-      const test = document.querySelector(".test");
+      const test = document.querySelector(".innercat");
       if (response.status == 200 && response.statusText == "OK") {
         const HTML = response.data.html;
         test.innerHTML = HTML;
 
         const submit = document.getElementById("create");
         submit.addEventListener("click", () => {
-          const name = document.getElementById("tag-name").value;
-          const slug = document.getElementById("tag-slug").value;
-          const description = document.getElementById("tag-description").value;
-          tagStore(name, slug, description);
+          const name = document.getElementById("category-name").value;
+          const slug = document.getElementById("category-slug").value;
+          const description = document.getElementById("category-description").value;
+          catStore(name, slug, description);
         });
 
-        const editBtn = tagStrt.querySelectorAll(".tag-edit");
+        const editBtn = catStrt.querySelectorAll(".category-edit");
 
         for (let i = 0; i < editBtn.length; i++) {
           let ID = editBtn[i].value;
@@ -39,13 +36,13 @@ function init() {
           editBtn[i].addEventListener(
             "click",
             function() {
-              tagEdit(ID, taxonomy);
+              catEdit(ID, taxonomy);
             },
             false
           );
         }
 
-        const deleteBtn = document.querySelectorAll(".tag-delete");
+        const deleteBtn = document.querySelectorAll(".category-delete");
         for (let i = 0; i < deleteBtn.length; i++) {
           let ID = deleteBtn[i].value;
           let taxonomy = deleteBtn[i].id;
@@ -53,7 +50,7 @@ function init() {
           deleteBtn[i].addEventListener(
             "click",
             function() {
-              tagDelete(ID, taxonomy);
+              catDelete(ID, taxonomy);
               console.log(ID);
               console.log(taxonomy);
             },
@@ -77,12 +74,12 @@ function init() {
   1;
 }
 
-function tagStore(name, slug, description) {
+function catStore(name, slug, description) {
   axios
-    .post(uri + path + "tag_store", {
-      tag_name: name,
-      tag_slug: slug,
-      tag_description: description
+    .post(uri + path + "category_store", {
+      cat_name: name,
+      cat_slug: slug,
+      cat_description: description
     })
     .then(function(response) {
       console.log(response);
@@ -91,25 +88,25 @@ function tagStore(name, slug, description) {
     .catch((err) => {
       console.log(err instanceof TypeError);
     });
-  document.getElementById("tag-name").value = "";
+  document.getElementById("category-name").value = "";
 }
 
-function tagEdit(editID, taxonomy) {
+function catEdit(editID, taxonomy) {
   axios
-    .post(uri + path + "tag_edit", {
+    .post(uri + path + "category_edit", {
       editID: editID,
       taxonomy_type: taxonomy,
     })
     .then(function(response) {
-      const test = document.querySelector(".test");
+      const test = document.querySelector(".innercat");
       if (response.status == 200 && response.statusText == "OK") {
         const HTML = response.data.html;
         test.innerHTML = HTML;
       }
-      const updateBtn = document.getElementById("tagUpdate");
+      const updateBtn = document.getElementById("catUpdate");
       updateBtn.addEventListener("click", () => {
         const updateId = updateBtn.value;
-        tagUpdate(updateId);
+        catUpdate(updateId);
       });
     })
     .catch((err) => {
@@ -117,17 +114,17 @@ function tagEdit(editID, taxonomy) {
     });
 }
 
-function tagUpdate(updateId) {
-  const name = document.getElementById("tag_name").value;
-  const slug = document.getElementById("tag_slug").value;
-  const description = document.getElementById("tag_description").value;
+function catUpdate(updateId) {
+  const name = document.getElementById("category_name").value;
+  const slug = document.getElementById("category_slug").value;
+  const description = document.getElementById("category_description").value;
 
   axios
-    .post(uri + path + "tag_update", {
+    .post(uri + path + "category_update", {
       updateId: updateId,
-      tag_name: name,
-      tag_slug: slug,
-      tag_description: description
+      cat_name: name,
+      cat_slug: slug,
+      cat_description: description
 
     })
     .then(function(response) {
@@ -144,10 +141,10 @@ function tagUpdate(updateId) {
     });
 }
 
-function tagDelete(ID, taxonomy) {
+function catDelete(ID, taxonomy) {
   console.log(ID)
   axios
-    .post(uri + path + "tag_destroy", {
+    .post(uri + path + "category_destroy", {
       deleteID: ID,
       taxonomy_type: taxonomy,
     })
@@ -164,4 +161,4 @@ function tagDelete(ID, taxonomy) {
     });
 }
 
-export default startTag();
+export default startCat();

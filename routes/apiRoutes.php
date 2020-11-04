@@ -40,4 +40,10 @@ return [
 	'tag_update' => 'TagController@update',
 	'tag_destroy' => 'TagController@destroy',
 	'tag_edit' => 'TagController@edit',
+
+	'category_create' => 'CategoryController@create',
+	'category_store' => 'CategoryController@store',
+	'category_update' => 'CategoryController@update',
+	'category_destroy' => 'CategoryController@destroy',
+	'category_edit' => 'CategoryController@edit',
 ];

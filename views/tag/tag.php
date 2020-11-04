@@ -1,7 +1,3 @@
-<style>
-
-
-</style>
 
 <div class = 'tagCreate'>
     <div class="admin-tag-div-first" >
