@@ -1,7 +1,7 @@
 
     <div class="admin-category-div-first" >
         <input type="hidden" name="news_new" value="new news">
-        <form action="http://localhost:8080/wordpress/wp-content/plugins/BIT_first/api/?route=category_update&id=<?=$category->term_id?>" method="post" enctype="multipart/form-data">
+        <form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=category_update&id=<?=$category->term_id?>" method="post" enctype="multipart/form-data">
             <div class="admin-event-form-group">
                
                 <label class="admin-label">Įveskite naują kategorijos pavadinimą</label><br>

@@ -40,9 +40,7 @@ table th {
 }
 
 </style>
- <?php
-//  _dc($categories);
-?>
+
 
 <div class = 'category-container'>
     <div class="admin-category-div-first" >

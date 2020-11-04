@@ -7,10 +7,7 @@ return [
     
     'uploade-images' => 'GalleryFrontController@uploadeIndex',
     'all-album' => 'AlbumFrontController@index',
-
-
     'kalendorius' => 'CalendarFrontController@index',
-
     'ideja' => 'IdeaController@frontIndex',
     'idejos' => 'IdeasController@index',
    
