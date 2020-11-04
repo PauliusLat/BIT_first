@@ -4,7 +4,6 @@
 
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
-
 const ideaStrt = document.getElementById("startIdeaAdmin");
 
 function startIdea() {
@@ -66,6 +65,7 @@ function solutionText(sId, i) {
 /*----------------------- delete content axios----------------------------*/
 
 function deleteIdea(delId) {
+  console.log(delId);
   axios
     .post(uri + path + "idea-delete-admin", {
       deleteId: delId,

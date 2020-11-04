@@ -60,10 +60,11 @@ class CategoryAdminController {
     }  
 
     public function edit(Request $request, Category $category){
-        $categories = $category->getAllCats();
+        // $categories = $category->getAllCats();
         $id = $request->query->get('id');
         $category = $category->getCat($id);
-        return View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'categories' => $categories, 'category' => $category]);
+        
+        return View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]);
 
     }
 

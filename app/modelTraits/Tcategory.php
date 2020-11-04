@@ -32,7 +32,7 @@ trait Tcategory {
      * $album->addCat('cat1', 'maincat'); or $album->addCat(['cat1', 'cat2'], 'maincat', 45));*/
 
     // add category to DB
-    public function addCat($cat, $description, int $parent_id = 0, string $slug = '', $taxonomy_type = 'maincat'){
+    public function addCat($cat, string $description = '', int $parent_id = 0, string $slug = '', $taxonomy_type = 'maincat'){
 
         $cat = (array)$cat;
         foreach ($this->cattax as $value){
@@ -41,7 +41,7 @@ trait Tcategory {
                     // if ($this->ID == null) {
                     //     throw new PostIdNotSetException('Error: Call to addTag() function before save()');
                     // } else {
-                        $args = ['parent'=>$parent_id, 'description'=>$description];
+                        $args = ['parent'=>$parent_id, 'description'=>$description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
                         foreach ($cat as $key){
                             wp_insert_term($key, $value, $args);
                         }

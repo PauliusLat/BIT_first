@@ -42,6 +42,8 @@ $app = App::start();
 $query = new Query;
 
 $api = new ApiRoute;
+
+
 // 
 // _dc($app->getService('request')->query->get('route', ''));
 
@@ -69,6 +71,16 @@ $api = new ApiRoute;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 add_action('init', function() {
+    $tag = new Tag;
+    // _dc($tag);
+    foreach($tag as $taxonomy){
+        var_dump($tag);
+    }
+   
+    $tag->deleteTagFromDb(21, 'ideatag');
+
+    $category = new Category;
+    $category->deleteCatFromDb(103);
 
     // $album = new AlbumPost;
     // $album->save();

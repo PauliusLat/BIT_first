@@ -32,55 +32,56 @@ class TagController {
     }
 
     public function store(Request $requestJson){
-        // $data = $requestJson->getContent();
-         _dc($requestJson);
-
-        // $response = new Response;
 		$request = $this->decodeRequest($requestJson);
-        // // _dc($request);
         $tag = new Tag;
-        $name = $request->request->get('name');
-        _dc($name);
-
-        $newTag = $tag->addTagtoDB($name);
-        _dc($newTag);
-
-       
-        // $response = new Response;
-        // $response->prepare($request);
-        // wp_redirect('http://localhost:8080/wordpress/wp-admin/admin.php?page=category');
-        // exit;
+        $name = $request->request->get('tag_name');
+        $slug = $request->request->get('tag_slug');
+        $description = $request->request->get('tag_description');
+        $newTag = $tag->addTagtoDB($name, $slug, $description);
         return $response = new Response;
     }  
 
-    public function indexAdmin(Request $request)
+    public function edit(Request $requestJson){
+        $request = $this->decodeRequest($requestJson);
+        $tag = new Tag;
+        $id = $request->request->get('editID');
+        $taxonomy_type = $request->request->get('taxonomy_type');
+        $tag = $tag->getTag($id, $taxonomy_type);
+        $output = View::adminRender('tag.edit',  ['tag' => $tag]);
+        $response = new JsonResponse(['html' => $output]);
+        return $response;
+    }
+
+    public function update(Request $requestJson)
     {
-        $allImages = [];
-        $albumData  = (AlbumPost::all())->all();
-        // echo '<pre>';
-        // var_dump($albumData);
-        foreach ($albumData as $data) {
-            $allImages[] = $data->album_title;
-            foreach ($data->attachments as $key => $img) {
-                // echo '<pre>';
-                // var_dump($img->getUrl());
-                $allImages[] = $img->getUrl();
-            }
-        }
-        echo '<pre>';
-        var_dump($allImages);
-        // return View::adminRender('album.album', ["album" => $allImages]);
-        // $response = new Response;
-        // $output = View::adminRender('album.album');
-        // $response->prepare($request);
-        // $response = new JsonResponse(['html' => $output]);
-// var_dump($output);
-        // return $response;
-        return View::adminRender('album.album', ["album" => $allImages]);
+        $tag = new Tag;
+        $request = $this->decodeRequest($requestJson);
+        $name = $request->request->get('tag_name');
+        $slug = $request->request->get('tag_slug');
+        $description = $request->request->get('tag_description');
+        $id = $request->request->get('updateId');
+        $updateTag = $tag->updateTag($id, $name, $slug, $description);
+        $tags = $tag->getAllTags(); 
+        $output = View::adminRender('tag.tag',  ["tags" => $tags]);
+        $response = new JsonResponse(['html' => $output]);
+        return $response;
+    }
+
+    public function destroy(Request $requestJson){
+
+        $tag = new Tag;
+        $request = $this->decodeRequest($requestJson);   
+        $tags = $tag->getAllTags(); 
+        $id = $request->request->get('deleteID');
+        $taxonomy_type = $request->request->get('taxonomy_type');
+        $tag->deleteTagFromDb($id, $taxonomy_type);
+        return $response = new Response;
+        $response->prepare($request);
+        return $response;
+
     }
 
     public function decodeRequest($request) {
-
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);
 			$request->request->replace(is_array($data) ? $data : array());

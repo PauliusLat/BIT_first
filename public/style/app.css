@@ -1,3 +1,5 @@
+/** @format */
+
 body {
   background-color: white;
 }
@@ -903,4 +905,82 @@ h1 {
   position: relative;
   top: 1px;
 }
+
+/** @format */
+
+.category-container {
+  width: 100%;
+  display: flex;
+}
+
+.admin-category-div-first {
+  width: 40%;
+}
+
+table {
+  font-family: "Montserrat", sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+table td,
+table th {
+  font-family: "Montserrat", sans-serif;
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+table th {
+  font-family: "Montserrat", sans-serif;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #f3f5f6;
+  color: white;
+}
+
+/** @format */
+
+.tagCreate {
+  width: 100%;
+  display: flex;
+}
+
+.admin-tag-div-first {
+  width: 40%;
+}
+
+table {
+  font-family: "Montserrat", sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+table td,
+table th {
+  font-family: "Montserrat", sans-serif;
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+table th {
+  font-family: "Montserrat", sans-serif;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #f3f5f6;
+  color: #0071a1;
+}
+
+/** @format */
 

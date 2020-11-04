@@ -1,12 +1,13 @@
 <?php
 namespace BIT\app;
 
-class Page {
+class Page extends Post{
 
     public static function start()
     {
         return self::$obj ?? self::$obj = new self;
     }
+
 
     public function createPage($post_type, $post_title) {
         $args = [
@@ -23,9 +24,9 @@ class Page {
 
         $id = wp_insert_post( $args );
         $permalink = get_permalink($id);
-
-
     }
+
+    
 
    
    

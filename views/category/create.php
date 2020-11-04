@@ -2,48 +2,6 @@
 use BIT\app\Category;
 ?>
 
-<style>
-.category-container{
-    width: 100%;
-    display: flex;
-}
-
-.admin-category-div-first{
-    width: 40%;
-}
-
-table {
-  font-family: "Montserrat", sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 100px;
-}
-
-table td,
-table th {
-  font-family: "Montserrat", sans-serif;
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-table tr:hover {
-  background-color: #ddd;
-}
-
-table th {
-  font-family: "Montserrat", sans-serif;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #284646;
-  color: white;
-}
-
-</style>
- <?php
-//  _dc($categories);
-?>
-
 <div class = 'category-container'>
     <div class="admin-category-div-first" >
         <input type="hidden" name="news_new" value="new news">
@@ -94,6 +52,7 @@ table th {
         <th>'Slug'</th>
         <th>'Count'</th>
         <th>Paveiksliukas</th>
+        <th>Veiksmai</th>
     <div>
         <?php
         foreach ($categories as $category) {
@@ -121,7 +80,7 @@ table th {
                             <input type="hidden" name="ID" value="<?=$category->term_id?>"readonly>    
                             <button type="submit" name="delete">Delete</button>
                         </form>
-                    <td>
+                    </td>
                 </tr>
         </div>
     <?php

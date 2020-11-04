@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class PageController {
 
     public function create(Request $request){
-        return View::adminRender('page.create', ['url' => PLUGIN_DIR_URL, 'pages' => $pages]);
+        return View::adminRender('page.create', ['url' => PLUGIN_DIR_URL]);
     }
 
     public function store(Request $request){
