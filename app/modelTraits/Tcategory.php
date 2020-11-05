@@ -41,7 +41,7 @@ trait Tcategory {
                     // if ($this->ID == null) {
                     //     throw new PostIdNotSetException('Error: Call to addTag() function before save()');
                     // } else {
-                        $args = ['parent'=>$parent_id, 'description'=>$description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type, 'level' => 0];
+                        $args = ['parent'=>$parent_id, 'description'=>$description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
                         foreach ($cat as $key){
                             wp_insert_term($key, $value, $args);
                         }
@@ -209,8 +209,6 @@ trait Tcategory {
                             $terms = get_terms([ 'taxonomy'=> $value, 'parent'=>$id, 'hide_empty'=>false]);
                         }
                         foreach ($terms as $term) {
-                            echo ".'$term->name'.";
-
                             $taxCollection->addTerm($term);
                         }
                     }
@@ -226,6 +224,7 @@ trait Tcategory {
         // only 1 taxonomy
         $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
         $terms=$this->getChildCats($parent, $taxonomy);
+        // _dc($terms);
         if (did_action('init')) {
             $taxCollection = new TaxCollection();
             foreach ( $terms as $term) {
@@ -240,28 +239,54 @@ trait Tcategory {
         }
     }
 
-    // get taxonomies as arr, not collection
-    function get_taxonomy_hierarchy_arr( $taxonomy, $parent = 0 ) {
-        // only 1 taxonomy
-        $taxonomy = is_array( $taxonomy ) ? array_shift( $taxonomy ) : $taxonomy;
-        // get all direct descendants of the $parent
-        $terms = get_terms( $taxonomy, array( 'parent' => $parent ) );
 
-
-        // prepare a new array.  these are the children of $parent
-        // we'll ultimately copy all the $terms into this new array, but only after they
-        // find their own children
-        $children = array();
-        // go through all the direct descendants of $parent, and gather their children
-        foreach ( $terms as $term ){
-            // recurse to get the direct descendants of "this" term
-            $term->children = $this->get_taxonomy_hierarchy_arr( $taxonomy, $term->term_id );
-            // add the term to our new array
-            $children[ $term->term_id ] = $term;
+    public function getChildCats_arr($parent_id, $taxonomy_type = 'maincat') 
+    {
+        $parent_id = (array)$parent_id;
+        foreach ($this->cattax as $value){
+            if($value == $taxonomy_type){
+                if (did_action('init')) {
+                   $children = [];
+                    foreach($parent_id as $id){
+                        if(isset($this->ID)){
+                            $terms = get_terms([ 'taxonomy'=> $value, 'object_ids'=>$this->ID, 'parent'=>$id, 'hide_empty'=>false]);
+                        } 
+                        else{
+                            $terms = get_terms([ 'taxonomy'=> $value, 'parent'=>$id, 'hide_empty'=>false]);
+                        }
+                        foreach ($terms as $term) {
+                            $children[ $term->term_id ] = $term;
+                        }
+                    }
+                    return $children;
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
         }
-        // send the results back to the caller
-        return $children;
     }
+    // get taxonomies as arr, not collection
+    public function get_taxonomy_hierarchy_arr( $taxonomy = 'maincat', $parent=0) {
+        // only 1 taxonomy
+        $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
+        $terms=$this->getChildCats_arr($parent, $taxonomy);
+        // _dc($terms);
+        if (did_action('init')) {
+            $children = [];
+            foreach ( $terms as $term) {
+                // recurse to get the direct decendants of "this" term
+                $term->children = $this->get_taxonomy_hierarchy_arr( $taxonomy, $term->term_id);
+
+                $children[ $term->term_id ] = $term;
+            }
+            return $children;
+        } else {
+            throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+        }
+    }
+        // send the results back to the caller
+ 
+        
  
 
     public function getAllCats($taxonomy_type = 'maincat') 

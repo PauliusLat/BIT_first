@@ -3,7 +3,6 @@ use BIT\app\Category;
 ?>
 
 
-
 <div class = 'catCreate'>
     <div class="admin-tag-div-first" >
         <div class="admin-tag-form-group">
@@ -31,21 +30,6 @@ use BIT\app\Category;
                         <ul style = "display:inline-block">
                         <?php wp_dropdown_categories( $args );?>
                         </ul>
-
-                        <?php
-                        // foreach ($categories as $cat){
-                        //     $category = new Category;
-                        //     echo '<option class = "parent" value = "'.$cat->name.'">'.$cat->name.'</option>';
-                        //     if(!empty(get_term_children( $cat->term_id, 'maincat'))){
-                        //         $children = $category->getChildCats($cat->term_id);
-                        //         foreach($children as $child){
-                        //             ?>
-                        <!-- //             <option  value = "<?=$child->name?>">&nbsp;&nbsp;<?=$child->name?></option> -->
-                                    <?php
-                        //         }
-                        //     }
-                        // }
-                        ?>
                 <br><br>
                 <label class="admin-label">Kategorijos aprašymas</label><br>
                 <input type="textarea" name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="admin-input"><br><br>
@@ -76,66 +60,47 @@ use BIT\app\Category;
                     </td>
                 </tr>
                 <?php
-                }
-                ?> 
+            }
+            ?>
         </table>
-    </div> 
+    </div>
+
+    <div>
 
     <?php
-     $args = array(
-        'taxonomy'     => 'maincat',
-        'depth' => 10,
-        'orderby'      => 'name',
-        'hide_empty'   => false,
-        'show_count'   => false,
-        'pad_counts'   => false,
-        // 'order'               => '',
-        'hierarchical' => false,
-        // 'style'               => '',
+    $category = new Category;
+                  
+    // $terms = $category->get_taxonomy_hierarchy('maincat');
+//   _dc($terms);
+                  $level = 0;
+                  $sorted = [];
+                  $parent = 0;
+                  $sorter = function ($parent = 0) use (&$terms, &$sorted, &$level, &$sorter){
+                      foreach ($terms as $key => $term){
+                      
+                          if($term->parent == $parent){
+                              // _dc( $term->parent);
+                              $term->level = $level;
+                          
+                              $sorted[] = $term;
+                              unset($terms[$key]);
+                              $level++;
+                          
+                              $sorter($term->id);
+                              $level--;
+                              // _dc($term->level);
+                              // _dc($term);
+                              
+                          }
+                  
+                          ?>
+                          <span style = "margin-left:200px;"><?=str_repeat('-', $term->level)?> <?=$term->name?></span><br>
+                          <?php
+                      }
+                      
+                  };
+                  $sorter();
+    ?>
+ 
 
-        // 'taxonomy'     => 'maincat',
-        // // 'child_of'            => 0,
-        // 'current_category'    => 0,
-        // 'echo'                => 1,
-        // 'exclude'             => '',
-        // 'exclude_tree'        => '',
-        // 'feed'                => '',
-        // 'feed_image'          => '',
-        // 'feed_type'           => '',
-        // 'hide_empty'          => false,
-        // 'hide_title_if_empty' => false,
-        // 'hierarchical'        => true,
-        // 'order'               => 'ASC',
-        // 'orderby'             => 'name',
-        // 'separator'           => '<br />',
-        // 'show_count'          => 0,
-        // 'show_option_all'     => '',
-        // 'show_option_none'    => __( 'No categories' ),
-        // 'style'               => 'list',
-        // 'title_li'            => __( 'Categories' ),
-        // 'use_desc_for_title'  => 1,
-    );
-//  
-// $args = array(
-
-//     'hide_empty'         => 0,
-//     'echo'               => 1,
-//     'taxonomy'           => 'maincat',
-//     'hierarchical'  =>1,
-//     'show_count' => 0,
-
-// );
-
-// function add_class_wp_list_categories($wp_list_categories) {
-//         $pattern = '/<li class="/is';
-//         $replacement = '<li class="first ';
-//         return preg_replace($pattern, $replacement, $wp_list_categories);
-// }
-// add_filter('wp_list_categories','add_class_wp_list_categories');
-
-// echo wp_list_categories( $args );
-
-?>
-</div> 
-
-
+    </div>
