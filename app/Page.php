@@ -1,7 +1,7 @@
 <?php
 namespace BIT\app;
 
-class Page {
+class Page extends Post{
 
     protected static $type = 'page';
 

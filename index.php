@@ -23,6 +23,8 @@ use BIT\app\View;
 use BIT\app\Collection;
 use BIT\controllers\NewsController;
 use BIT\models\IdeaPost;
+use BIT\models\NewsPost;
+use BIT\app\Tag;
 use BIT\app\modelTraits\Tcategory;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +42,8 @@ $app = App::start();
 $query = new Query;
 
 $api = new ApiRoute;
+
+
 // 
 // _dc($app->getService('request')->query->get('route', ''));
 
@@ -66,7 +70,66 @@ $api = new ApiRoute;
 // $category = new Category;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
-// add_action('init', function() {
+add_action('init', function() {
+    $tag = new Tag;
+    // _dc($tag);
+    foreach($tag as $taxonomy){
+        var_dump($tag);
+    }
+   
+
+    $tag->deleteTagFromDb(21, 'ideatag');
+
+    $category = new Category;
+
+ 
+    $terms = $category->get_taxonomy_hierarchy_arr('maincat');
+    // _dc($terms);
+    $level = 0;
+    $sorted = [];
+    $parent = 0;
+    $sorter = function ($parent = 0) use (&$terms, &$sorted, &$level, &$sorter){
+        foreach ($terms as $key => $term){
+        
+            if($term->parent == $parent){
+                _dc( $term->parent);
+                $term->level = $level;
+            
+                $sorted[] = $term;
+                unset($terms[$key]);
+                $level++;
+            
+                $sorter($term->id);
+                $level--;
+                // _dc($term->name);
+                // _dc($term->level);
+                // _dc($term);
+                
+            }
+            ?>
+            <span><?=str_repeat('-', $term->level)?><?=$term->name?></span>
+            <?php
+        }
+        
+    };
+
+
+    // _dc($category->getAllCats());
+
+
+
+
+
+    $category->deleteCatFromDb(103);
+
+    // $album = new AlbumPost;
+    // $album->save();
+
+    // $tag = new Tag;
+    // $tag->addTagtoDB('hot');
+    // $album->addTag('cold');
+    // $terms = get_terms(['name'=>'aauga', 'taxonomy'=> 'maincat', 'hide_empty'=>false]);
+    // _dc($terms);
 //     $category = new Category;
 //     $page = new Page;
     // $page->createPage('kalendorius');
@@ -91,14 +154,17 @@ $api = new ApiRoute;
     // _dc($category->get_taxonomy_hierarchy());
 
     // _dc(get_term_children(43, 'maincat'));
-    // $album = new AlbumPost;
+// $album = new AlbumPost;
+// $album->save();
     // $album->save();
 // // //      _dc( $album);
 // // // $album->addTag(['atostogos', 'namai']);
 // // // $album->addTag(['tttt']);
 // $album->addCat('indai', 'maincat');
 // $album->addCat('baldai', 'maincat');
-// $album->addCat(['lekstutes', 'sauksteliai'], 'maincat', 45); //gl padaryti, kad ne is butu o stringas kaip kat
+// $category->addCat(['mazi sauksteliai'], 54);
+// $album->attachCat('mazi sauksteliai');
+ //gl padaryti, kad ne is butu o stringas kaip kat
 // $album->addCat([' mazo lekstutes', 'dideles lekstutes'], 'maincat', 53);
     // _dc($category->get_taxonomy_hierarchy('maincat'));
 // //  _dc($album->getChildCats([45, 0]
@@ -127,7 +193,7 @@ $api = new ApiRoute;
 // //     //  $idea->save();
 // //     //  _dc( $idea);
 // //     //  $idea->addTag('');
-// });
+});
 
 
 
