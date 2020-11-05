@@ -32,8 +32,8 @@ trait Tcategory {
      * $album->addCat('cat1', 'maincat'); or $album->addCat(['cat1', 'cat2'], 'maincat', 45));*/
 
     // add category to DB
-    public function addCat($cat, string $description = '', int $parent_id = 0, string $slug = '', $taxonomy_type = 'maincat'){
-
+    public function addCat($cat, $parent_id = 0, $description = '',  $slug = '', $taxonomy_type = 'maincat'){
+        
         $cat = (array)$cat;
         foreach ($this->cattax as $value){
             if($value == $taxonomy_type){
@@ -116,7 +116,7 @@ trait Tcategory {
                         //     wp_insert_term($key, $value, $args);
                         // }
                         $terms = get_terms(['name'=>$cat, 'taxonomy'=> $value, 'hide_empty'=>false]);
-                        _dc($terms);
+                        // _dc($terms);
                         foreach($terms as $term){
                             wp_set_post_terms($this->ID, $term->term_id, $value, $append = true);
                         }

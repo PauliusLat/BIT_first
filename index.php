@@ -77,9 +77,16 @@ add_action('init', function() {
         var_dump($tag);
     }
    
+
     $tag->deleteTagFromDb(21, 'ideatag');
 
     $category = new Category;
+
+    // _dc($category->get_taxonomy_hierarchy());
+ 
+    
+
+
     $category->deleteCatFromDb(103);
 
     // $album = new AlbumPost;
@@ -114,14 +121,17 @@ add_action('init', function() {
     // _dc($category->get_taxonomy_hierarchy());
 
     // _dc(get_term_children(43, 'maincat'));
-    // $album = new AlbumPost;
+// $album = new AlbumPost;
+// $album->save();
     // $album->save();
 // // //      _dc( $album);
 // // // $album->addTag(['atostogos', 'namai']);
 // // // $album->addTag(['tttt']);
 // $album->addCat('indai', 'maincat');
 // $album->addCat('baldai', 'maincat');
-// $album->addCat(['lekstutes', 'sauksteliai'], 'maincat', 45); //gl padaryti, kad ne is butu o stringas kaip kat
+// $category->addCat(['mazi sauksteliai'], 54);
+// $album->attachCat('mazi sauksteliai');
+ //gl padaryti, kad ne is butu o stringas kaip kat
 // $album->addCat([' mazo lekstutes', 'dideles lekstutes'], 'maincat', 53);
     // _dc($category->get_taxonomy_hierarchy('maincat'));
 // //  _dc($album->getChildCats([45, 0]

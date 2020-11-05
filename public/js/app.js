@@ -551,7 +551,10 @@ function init() {
         var name = document.getElementById("category-name").value;
         var slug = document.getElementById("category-slug").value;
         var description = document.getElementById("category-description").value;
-        catStore(name, slug, description);
+        var parent = document.getElementById('cat');
+        var select = parent.options[parent.selectedIndex].value;
+        console.log(select);
+        catStore(name, select, slug, description);
       });
       var editBtn = catStrt.querySelectorAll(".category-edit");
 
@@ -600,11 +603,14 @@ function init() {
   1;
 }
 
-function catStore(name, slug, description) {
+function catStore(name, select, slug, description) {
+  console.log(select);
+  console.log(name);
   axios.post(uri + path + "category_store", {
     cat_name: name,
     cat_slug: slug,
-    cat_description: description
+    cat_description: description,
+    cat_parent: select
   }).then(function (response) {
     console.log(response);
     init();
@@ -615,6 +621,7 @@ function catStore(name, slug, description) {
 }
 
 function catEdit(editID, taxonomy) {
+  console.log(editID);
   axios.post(uri + path + "category_edit", {
     editID: editID,
     taxonomy_type: taxonomy

@@ -19,7 +19,7 @@ class CategoryController {
 
     public function index()
     {
-        return View::adminRender('category.maincategory');
+        return View::adminRender('category.maincat');
     }
 
     public function create(Request $request)
@@ -34,10 +34,17 @@ class CategoryController {
     public function store(Request $requestJson){
 		$request = $this->decodeRequest($requestJson);
         $category = new Category;
-        $name = $request->request->get('category_name');
-        $slug = $request->request->get('category_slug');
-        $description = $request->request->get('category_description');
-        $newCat = $category->addCat($name, $slug, $description);
+        $name = $request->request->get('cat_name');
+        $slug = $request->request->get('cat_slug');
+        $description = $request->request->get('cat_description');
+
+        if($request->request->get('cat_parent')){
+            $parent_id = $request->request->get('cat_parent');
+        }else {
+            $parent_id = 0;
+        }
+        // $parent = $request->request->get('cat_parent');
+        $newCat = $category->addCat($name, $parent_id, $slug,  $description);
         return $response = new Response;
     }  
 
@@ -56,9 +63,9 @@ class CategoryController {
     {
         $category = new Category;
         $request = $this->decodeRequest($requestJson);
-        $name = $request->request->get('category_name');
-        $slug = $request->request->get('category_slug');
-        $description = $request->request->get('category_description');
+        $name = $request->request->get('cat_name');
+        $slug = $request->request->get('cat_slug');
+        $description = $request->request->get('cat_description');
         $id = $request->request->get('updateId');
         $updateCat = $category->updateCat($id, $name, $slug, $description);
         $categories = $category->getAllCats(); 
