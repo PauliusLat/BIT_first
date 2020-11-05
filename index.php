@@ -82,9 +82,42 @@ add_action('init', function() {
 
     $category = new Category;
 
-    // _dc($category->get_taxonomy_hierarchy());
  
-    
+    $terms = $category->get_taxonomy_hierarchy_arr('maincat');
+    // _dc($terms);
+    $level = 0;
+    $sorted = [];
+    $parent = 0;
+    $sorter = function ($parent = 0) use (&$terms, &$sorted, &$level, &$sorter){
+        foreach ($terms as $key => $term){
+        
+            if($term->parent == $parent){
+                _dc( $term->parent);
+                $term->level = $level;
+            
+                $sorted[] = $term;
+                unset($terms[$key]);
+                $level++;
+            
+                $sorter($term->id);
+                $level--;
+                // _dc($term->name);
+                // _dc($term->level);
+                // _dc($term);
+                
+            }
+            ?>
+            <span><?=str_repeat('-', $term->level)?><?=$term->name?></span>
+            <?php
+        }
+        
+    };
+
+
+    // _dc($category->getAllCats());
+
+
+
 
 
     $category->deleteCatFromDb(103);

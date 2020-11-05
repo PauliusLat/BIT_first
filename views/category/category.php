@@ -18,13 +18,13 @@ use BIT\app\Category;
                 
                         $args = array(
                         'taxonomy'     => 'maincat',
-                        'show_option_all' => true,
+                        'show_option_all' => 'pasirinkite tėvinę kategoriją',
                         'orderby'      => 'name',
                         'hide_empty'   => false,
                         'show_count'   => false,
                         'pad_counts'   => false,
                         'hierarchical' => true,
-                        'title_li'     => ''
+                       
                         );
                         ?>
 
@@ -80,7 +80,62 @@ use BIT\app\Category;
                 ?> 
         </table>
     </div> 
-    
+
+    <?php
+     $args = array(
+        'taxonomy'     => 'maincat',
+        'depth' => 10,
+        'orderby'      => 'name',
+        'hide_empty'   => false,
+        'show_count'   => false,
+        'pad_counts'   => false,
+        // 'order'               => '',
+        'hierarchical' => false,
+        // 'style'               => '',
+
+        // 'taxonomy'     => 'maincat',
+        // // 'child_of'            => 0,
+        // 'current_category'    => 0,
+        // 'echo'                => 1,
+        // 'exclude'             => '',
+        // 'exclude_tree'        => '',
+        // 'feed'                => '',
+        // 'feed_image'          => '',
+        // 'feed_type'           => '',
+        // 'hide_empty'          => false,
+        // 'hide_title_if_empty' => false,
+        // 'hierarchical'        => true,
+        // 'order'               => 'ASC',
+        // 'orderby'             => 'name',
+        // 'separator'           => '<br />',
+        // 'show_count'          => 0,
+        // 'show_option_all'     => '',
+        // 'show_option_none'    => __( 'No categories' ),
+        // 'style'               => 'list',
+        // 'title_li'            => __( 'Categories' ),
+        // 'use_desc_for_title'  => 1,
+    );
+//  
+// $args = array(
+
+//     'hide_empty'         => 0,
+//     'echo'               => 1,
+//     'taxonomy'           => 'maincat',
+//     'hierarchical'  =>1,
+//     'show_count' => 0,
+
+// );
+
+// function add_class_wp_list_categories($wp_list_categories) {
+//         $pattern = '/<li class="/is';
+//         $replacement = '<li class="first ';
+//         return preg_replace($pattern, $replacement, $wp_list_categories);
+// }
+// add_filter('wp_list_categories','add_class_wp_list_categories');
+
+// echo wp_list_categories( $args );
+
+?>
 </div> 
 
 

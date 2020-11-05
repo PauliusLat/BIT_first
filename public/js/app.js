@@ -165,7 +165,7 @@ var Calendar = /*#__PURE__*/function () {
         var nowY = nowM.toString().slice(11, -47);
         nowM = nowM.toString().slice(4, -55);
         nowM = this.translate(nowM);
-        document.getElementById("calendar-month").innerHTML = nowY + " " + nowM;
+        document.getElementById("calendar-month").innerHTML = nowY + ' ' + nowM;
       }
 
       var check = document.querySelectorAll(".cview--spacer");
@@ -193,10 +193,10 @@ var Calendar = /*#__PURE__*/function () {
           calendarDays.appendChild(day);
         }
       } else {
-        Array.from(document.querySelectorAll(".cview--spacer")).forEach(function (el) {
+        Array.from(document.querySelectorAll('.cview--spacer')).forEach(function (el) {
           return el.remove();
         });
-        Array.from(document.querySelectorAll(".cview--date")).forEach(function (el) {
+        Array.from(document.querySelectorAll('.cview--date')).forEach(function (el) {
           return el.remove();
         });
 
@@ -261,7 +261,7 @@ var Calendar = /*#__PURE__*/function () {
       var curentY = curentM.toString().slice(11, -47);
       curentM = curentM.toString().slice(4, -55);
       var curM = this.translate(curentM);
-      curentMth.innerHTML = curentY + " " + curM;
+      curentMth.innerHTML = curentY + ' ' + curM;
       var lastDayM = new Date(y, m + a, 0).getDate();
       var newM = new Date(y, m + a, 0).getMonth();
       var startDay = new Date(curentY, newM, 1).getDay();
@@ -271,52 +271,52 @@ var Calendar = /*#__PURE__*/function () {
     key: "translate",
     value: function translate(curentM) {
       switch (curentM) {
-        case "Jan":
-          return curentM = "Sausis";
+        case 'Jan':
+          return curentM = 'Sausis';
           break;
 
-        case "Feb":
-          return curentM = "Vasaris";
+        case 'Feb':
+          return curentM = 'Vasaris';
           break;
 
-        case "Mar":
-          return curentM = "Kovas";
+        case 'Mar':
+          return curentM = 'Kovas';
           break;
 
-        case "Apr":
-          return curentM = "Balandis";
+        case 'Apr':
+          return curentM = 'Balandis';
           break;
 
-        case "May":
-          return curentM = "Gegužė";
+        case 'May':
+          return curentM = 'Gegužė';
           break;
 
-        case "Jun":
-          return curentM = "Birželis";
+        case 'Jun':
+          return curentM = 'Birželis';
           break;
 
-        case "Jul":
-          return curentM = "Liepa";
+        case 'Jul':
+          return curentM = 'Liepa';
           break;
 
-        case "Aug":
-          return curentM = "Rugpjūtis";
+        case 'Aug':
+          return curentM = 'Rugpjūtis';
           break;
 
-        case "Sep":
-          return curentM = "Rugsėjis";
+        case 'Sep':
+          return curentM = 'Rugsėjis';
           break;
 
-        case "Oct":
-          return curentM = "Spalis";
+        case 'Oct':
+          return curentM = 'Spalis';
           break;
 
-        case "Nov":
-          return curentM = "Lapkritis";
+        case 'Nov':
+          return curentM = 'Lapkritis';
           break;
 
-        case "Dec":
-          return curentM = "Gruodis";
+        case 'Dec':
+          return curentM = 'Gruodis';
           break;
       }
     }
@@ -338,8 +338,8 @@ var Calendar = /*#__PURE__*/function () {
         table.innerHTML = HTML;
       });
       send.addEventListener("click", function (e) {
-        var sendE = document.getElementById("sendText").value;
-        var time = document.getElementById("appt").value;
+        var sendE = document.getElementById('sendText').value;
+        var time = document.getElementById('appt').value;
 
         if (sendE.length != 0) {
           axios.post(_this3.uri + _this3.path + "calendar-store-admin", {
@@ -363,12 +363,12 @@ var Calendar = /*#__PURE__*/function () {
   }, {
     key: "renderEvents",
     value: function renderEvents(action) {
-      axios.post(this.uri + this.path + "calendar-create-admin", {}).then(function (response) {
-        if (response.status == 200 && response.statusText == "OK") {
+      axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
+        if (response.status == 200 && response.statusText == 'OK') {
           (function () {
             var call = new Calendar();
             var data = response.data.allData;
-            var allEvens = document.getElementById("daysEvens");
+            var allEvens = document.getElementById('daysEvens');
             var HTML = "";
             var keys = [];
             var keys1 = [];
@@ -424,6 +424,8 @@ var Calendar = /*#__PURE__*/function () {
             for (var _j = 0; _j < deleteBtn.length; _j++) {
               _loop2(_j);
             }
+
+            ;
           })();
         }
       })["catch"](function (error) {
@@ -434,7 +436,7 @@ var Calendar = /*#__PURE__*/function () {
         } else if (error.request) {
           console.log(error.request);
         } else {
-          console.log("Error", error.message);
+          console.log('Error', error.message);
         }
 
         console.log(error);
@@ -448,7 +450,7 @@ var Calendar = /*#__PURE__*/function () {
       axios.post(this.uri + this.path + "calendar-delete-admin", {
         eventID: id
       }).then(function (response) {
-        if (response.status == 200 && response.statusText == "OK") {
+        if (response.status == 200 && response.statusText == 'OK') {
           var data = response.data.allData;
           var dayEvents = document.querySelectorAll(".daysEvent");
           var keys = [];
@@ -457,11 +459,17 @@ var Calendar = /*#__PURE__*/function () {
             keys.push(key);
           }
 
+          var counter = 0;
+          console.log(action);
+
           for (var i = 0; i < dayEvents.length; i++) {
             for (var j = 0; j < keys.length; j++) {
-              if (data[keys[j]].event_date != action && action == dayEvents[i].dataset.date) {
-                dayEvents[i].classList.add("removeDay");
-                break;
+              if (data[keys[j]].event_date == action) {
+                counter++;
+              }
+
+              if (counter < 1 && action == dayEvents[i].dataset.date) {
+                dayEvents[i].classList.remove("daysEvent");
               }
             }
           }
@@ -476,8 +484,8 @@ var Calendar = /*#__PURE__*/function () {
   }, {
     key: "getData",
     value: function getData() {
-      axios.post(this.uri + this.path + "calendar-create-admin", {}).then(function (response) {
-        if (response.status == 200 && response.statusText == "OK") {
+      axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
+        if (response.status == 200 && response.statusText == 'OK') {
           var data = response.data.allData;
           var dayEvents = document.querySelectorAll(".cview--date");
           var keys = [];
@@ -502,7 +510,7 @@ var Calendar = /*#__PURE__*/function () {
         } else if (error.request) {
           console.log(error.request);
         } else {
-          console.log("Error", error.message);
+          console.log('Error', error.message);
         }
 
         console.log(error);
@@ -513,7 +521,7 @@ var Calendar = /*#__PURE__*/function () {
   return Calendar;
 }();
 
-/* harmony default export */ __webpack_exports__["default"] = (Calendar); // 26-12
+/* harmony default export */ __webpack_exports__["default"] = (Calendar);
 
 /***/ }),
 

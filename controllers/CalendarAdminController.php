@@ -26,21 +26,16 @@ class CalendarAdminController
 		return $response;
 	}
 
-	public function store(Request $requestJson, EventPost $eventPost)
-	{	
-	// 	$app = App::start();
-	// $request = $app->getService('eventPost');
-	//  _dc($request);
-		// _dc($eventPost);
-		$eventPost = new EventPost;
-		$request = $this->decodeRequest($requestJson);
-		_dc($request);
-		
-		$eventPost->event_description = $request->request->get('event');
-		$eventPost->event_time = $request->request->get('time');
-		$eventPost->event_date = $request->request->get('date');
+	public function store(request $requestJson)
+	{
+		$event = new EventPost();
 
-		$eventPost->save();
+		$request = $this->decodeRequest($requestJson);
+
+		$event->event_description = $request->request->get('event');
+		$event->event_time = $request->request->get('time');
+		$event->event_date = $request->request->get('date');
+		$event->save();
 
 		return $response = new Response;
 	}
@@ -49,7 +44,9 @@ class CalendarAdminController
 	{
 
 		$request = $this->decodeRequest($requestJson);
+
 		$deleteId = $event->ID = $request->request->get('eventID');
+
 		if ($deleteId) {
 			$deletePost = EventPost::get($deleteId);
 			$deletePost->delete();
@@ -57,15 +54,16 @@ class CalendarAdminController
 		$data = (EventPost::all())->pluck('event_description', 'event_date', 'event_time', 'ID')->all();
 		$response = new JsonResponse(['allData' => $data]);
 		return $response;
-		
 	}
 
 	private function decodeRequest($request)
 	{
+
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);
 			$request->request->replace(is_array($data) ? $data : array());
 		}
+
 		return $request;
 	}
 }

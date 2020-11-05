@@ -13,7 +13,7 @@ class Page extends Post{
         $args = [
         'post_title'    => $post_title,
         'post_type'     => 'page',
-        'post_name'     => $post_type,
+        'post_name'     => $post_title,
         'post_content'  => '[front_shortcode route="'.$post_type.'"]',
         'post_status'   => 'publish',
         'comment_status' => 'closed',
@@ -23,7 +23,7 @@ class Page extends Post{
         ];
 
         $id = wp_insert_post( $args );
-        $permalink = get_permalink($id);
+        // $permalink = get_permalink($id);
     }
 
     

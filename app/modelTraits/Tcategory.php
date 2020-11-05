@@ -41,7 +41,7 @@ trait Tcategory {
                     // if ($this->ID == null) {
                     //     throw new PostIdNotSetException('Error: Call to addTag() function before save()');
                     // } else {
-                        $args = ['parent'=>$parent_id, 'description'=>$description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
+                        $args = ['parent'=>$parent_id, 'description'=>$description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type, 'level' => 0];
                         foreach ($cat as $key){
                             wp_insert_term($key, $value, $args);
                         }
@@ -210,6 +210,7 @@ trait Tcategory {
                         }
                         foreach ($terms as $term) {
                             echo ".'$term->name'.";
+
                             $taxCollection->addTerm($term);
                         }
                     }
@@ -239,6 +240,28 @@ trait Tcategory {
         }
     }
 
+    // get taxonomies as arr, not collection
+    function get_taxonomy_hierarchy_arr( $taxonomy, $parent = 0 ) {
+        // only 1 taxonomy
+        $taxonomy = is_array( $taxonomy ) ? array_shift( $taxonomy ) : $taxonomy;
+        // get all direct descendants of the $parent
+        $terms = get_terms( $taxonomy, array( 'parent' => $parent ) );
+
+
+        // prepare a new array.  these are the children of $parent
+        // we'll ultimately copy all the $terms into this new array, but only after they
+        // find their own children
+        $children = array();
+        // go through all the direct descendants of $parent, and gather their children
+        foreach ( $terms as $term ){
+            // recurse to get the direct descendants of "this" term
+            $term->children = $this->get_taxonomy_hierarchy_arr( $taxonomy, $term->term_id );
+            // add the term to our new array
+            $children[ $term->term_id ] = $term;
+        }
+        // send the results back to the caller
+        return $children;
+    }
  
 
     public function getAllCats($taxonomy_type = 'maincat') 
