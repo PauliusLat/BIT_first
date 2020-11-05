@@ -1,20 +1,27 @@
 <?php
-namespace BIT\controllers;
-use BIT\app\View;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-class EventController {
-	public function __construct() {
-		//
+namespace BIT\controllers;
+
+use BIT\app\View;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use BIT\models\EventPost;
+
+class EventController
+{
+	public function __construct()
+	{
 	}
 
-	function index(Request $request) {
-		$response = new Response;
-		$output = View::render('calendar', ['a' => 86]);
-		$response->prepare($request);
-		$response->setContent(json_encode(['html' => $output]));
-		// var_dump($request->query->get('route'));
+	function index()
+	{
+		return View::render('events.events');
+	}
+	
+	function create()
+	{
+		$data = (EventPost::all())->pluck('event_description', 'event_date', 'event_time')->all();
+		$response = new JsonResponse(['html' => $data]);
+
 		return $response;
 	}
 }

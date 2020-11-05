@@ -1,9 +1,11 @@
-<div class="album">
-    <table>
-        <?php foreach ($album as $key => $value) : ?>
-            <tr>
-                <td><?php echo $value; ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
+<div>
+    <?php foreach ($album as $key => $value) : ?>
+        <div>
+ 
+            <a href="http://localhost/wordpress/<?=$value?>"><?=$value?></a>
+        </div>
+    <?php endforeach; ?>
 </div>
+
+
+

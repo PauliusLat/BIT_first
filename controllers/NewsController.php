@@ -2,36 +2,58 @@
 
 namespace BIT\controllers;
 
-use BIT\app\App;
 use BIT\app\View;
 use BIT\app\Attachment;
+use BIT\app\Query;
 use BIT\models\NewsPost;
 use BIT\app\RequestId;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class NewsController {
-    
-    public function create() 
-    {   
-        $news = NewsPost::all();
-        // _dc($news);
-        return View::adminRender('news.create', ['url' => PLUGIN_DIR_URL, 'news' => $news]);
+
+    public function index(){
+
+        return View::adminRender('news.create');
+
     }
 
-    // public function create(){
+    public function list(Request $request) 
+    {   
+        $a = NewsPost::get(952);
+        $a->post_name = 'Naujas deeded';
+        $a->save();
+        echo($a->getLink());   
+        $news = NewsPost::all()->pluck('post_date', 'post_title', 'ID', 'attachments')->all();
+        foreach ($news as &$value) {
+            if($value){
+                foreach ($value['attachments'] as $img) {
+                    $value['attachments'] = $img->getUrl();
+                }
+            }else{
+                $value['attachments'] = '';
+            }
+        }
+        $output = View::adminRender('news.create');
+        $response = new JsonResponse(['html' => $output, 'data' => $news]);
 
-    // }
+		return $response;
+
+    }
+    public function create(Request $request) {
+
+    }
+
     
     
     public function store(Request $request, NewsPost $newsPost) { 
         //   _dc($request);
-        _dc($request->request->get('content'));
         $news = new NewsPost;
         $news->content = $request->request->get('content');
         $news->date = $request->request->get('date');
 
-        _dc($request->request->all());
         $news->save();
         // foreach ($request->files->all() as $file) {
             // $post = Attachment::get(783);
@@ -99,10 +121,7 @@ class NewsController {
     public function edit (Request $request, NewsPost $newsPost, RequestId $requestId){
 
         $app = App::start();
-        _dc($requestId);
-       
-     
-        _dc($newsPost);
+ 
         // $categories = $category->getAllCats();
         
         return View::adminRender('news.edit', ['url' => PLUGIN_DIR_URL, 'news' => $newsPost]);
@@ -110,7 +129,8 @@ class NewsController {
 
     public function update(Request $request, NewsPost $newsPost)
     {   
-        $new_news->news_content = $request->get('news-content');
+        $newsPost->news_content = $request->get('news-content');
+        
         $newsPost->save();
         $newsPost;
         $news = NewsPost::all();
@@ -121,16 +141,19 @@ class NewsController {
         return $response;
     }
 
-
-    public function destroy(Request $request, NewsPost $newsPost)
-    {   
-        // $newsPost->delete();
-        // $news = NewsPost::all();
-        $response = new Response;
-        $response->prepare($request);
-        $response->setContent(json_encode(['list' => 'hello']));
-        // $response->setContent(json_encode(['list' => View::adminRender('news.list', ['news' => $news])]));
-        return $response;
- 
+    public function destroy(NewsPost $newsPost) {   
+     
+        $newsPost->delete();
+		return new Response;
+         
     }
+    protected function decodeRequest($request){
+
+		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+			$data = json_decode($request->getContent(), true);
+			$request->request->replace(is_array($data) ? $data : array());
+		}
+
+        return $request;
+	}
 }

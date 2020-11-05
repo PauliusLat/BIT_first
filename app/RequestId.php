@@ -8,10 +8,9 @@ class RequestId
 
     public function __construct(Request $request)
     {
-       
-        $this->id = $request->query->get('id');
+        $this->id = $request->query->get('id');   
     }
-
+    
     public function __toString() {
         return $this->id ?? '';
     }

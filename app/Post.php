@@ -11,18 +11,17 @@ use BIT\models\AlbumPost;
 
 class Post{
     
-    public $ID;
+    protected $ID;
     protected static $type = 'post';
     public $attachments = [];
     // combines meta ant post tables
     
     public function __construct($post_id = 0){
-      
+
         if(is_object($post_id)){
             $post_id = (string) $post_id;
         }
-
-          if(!is_string($post_id) && !is_integer($post_id)){
+        if(!is_string($post_id) && !is_integer($post_id)){
             $post_id = 0;
         }
         if(strcmp($post_id, '0')===0){
@@ -167,4 +166,8 @@ class Post{
         }
 
     }
+    public function getLink(){
+        return get_permalink($this->ID);
+    }
+
 }

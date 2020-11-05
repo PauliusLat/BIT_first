@@ -3,7 +3,7 @@
 // example Controller names and functions
 // 'event' (key) is part of URL http://.../bebras/api/?route=event
 return [
-	'event' => 'EventController@index',
+	'event-create-front' => 'EventController@create',
 
 	'calendar-create-front' => 'CalendarFrontController@create',
 
@@ -30,10 +30,11 @@ return [
 
 	'album-create-admin' => 'AlbumFrontController@create',
 
-	'news_store' => 'NewsController@store',
-	'news_update' => 'NewsController@update',
-	'news_destroy' => 'NewsController@destroy',
-	'news_edit' => 'NewsController@edit',
+	'news-list' => 'NewsController@list',
+	'news-store' => 'NewsController@store',
+	'news-update' => 'NewsController@update',
+	'news-destroy' => 'NewsController@destroy',
+	'news-edit' => 'NewsController@edit',
 
 	'tag_create' => 'TagController@create',
 	'tag_store' => 'TagController@store',

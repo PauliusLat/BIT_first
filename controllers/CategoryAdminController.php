@@ -54,7 +54,7 @@ class CategoryAdminController {
         }
         $response = new Response;
         $response->prepare($request);
-        wp_redirect('http://localhost:8080/wordpress/wp-admin/admin.php?page=category');
+        wp_redirect('http://localhost/wordpress/wp-admin/admin.php?page=category');
         exit;
         return $response;
     }  
@@ -91,7 +91,7 @@ class CategoryAdminController {
 
         $response = new Response;
         $response->prepare($request);
-        wp_redirect('http://localhost:8080/wordpress/wp-admin/admin.php?page=category');
+        wp_redirect('http://localhost/wordpress/wp-admin/admin.php?page=category');
         exit;
         return $response;
 
@@ -103,7 +103,7 @@ class CategoryAdminController {
         $category->deleteCatFromDb($id);
         $response = new Response;
         $response->prepare($request);
-        wp_redirect('http://localhost:8080/wordpress/wp-admin/admin.php?page=category');
+        wp_redirect('http://localhost/wordpress/wp-admin/admin.php?page=category');
         exit;
         return $response;
 

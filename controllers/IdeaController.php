@@ -29,7 +29,9 @@ class IdeaController {
 		return $response;
 	}
 
-	public function create(Request $requestJson, IdeaPost $idea) {
+	public function create(Request $requestJson) {
+
+		$idea = new IdeaPost;
 
 		$response = new Response;
 
