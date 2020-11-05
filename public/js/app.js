@@ -367,8 +367,7 @@ var Calendar = /*#__PURE__*/function () {
           (function () {
             var call = new Calendar();
             var data = response.data.allData;
-            var allEvens = document.getElementById('daysEvens'); // const removeDays = document.querySelectorAll(".removeDay");
-
+            var allEvens = document.getElementById('daysEvens');
             var HTML = "";
             var keys = [];
             var keys1 = [];

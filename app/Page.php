@@ -3,30 +3,16 @@ namespace BIT\app;
 
 class Page {
 
-    public static function start()
-    {
-        return self::$obj ?? self::$obj = new self;
+    protected static $type = 'page';
+
+    public function setRoute($route) {
+        $this->post_content  = '[front_shortcode route="'.$route.'"]';
+    }
+    public function setTitle($post_title){
+            $this->post_title = $post_title;
+            $this->post_name= $post_title;
+            $this->comment_status = 'closed';
+            $this->ping_status = 'closed';
     }
 
-    public function createPage($post_type, $post_title) {
-        $args = [
-        'post_title'    => $post_title,
-        'post_type'     => 'page',
-        'post_name'     => $post_type,
-        'post_content'  => '[front_shortcode route="'.$post_type.'"]',
-        'post_status'   => 'publish',
-        'comment_status' => 'closed',
-        'ping_status' => 'closed',
-        'post_author' => 1,
-        'menu_order' => 0
-        ];
-
-        $id = wp_insert_post( $args );
-        $permalink = get_permalink($id);
-
-
-    }
-
-   
-   
 }
