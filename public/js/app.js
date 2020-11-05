@@ -368,8 +368,7 @@ var Calendar = /*#__PURE__*/function () {
           (function () {
             var call = new Calendar();
             var data = response.data.allData;
-            var allEvens = document.getElementById('daysEvens'); // const removeDays = document.querySelectorAll(".removeDay");
-
+            var allEvens = document.getElementById('daysEvens');
             var HTML = "";
             var keys = [];
             var keys1 = [];
@@ -526,32 +525,6 @@ var Calendar = /*#__PURE__*/function () {
 
 /***/ }),
 
-
-
-  
-/*!*********************************!*\
-  !*** ./resources/js/gallery.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var gallery = document.getElementById("loadeGallery");
-var arraySend = [];
-var isListener = true;
-
-function startGallery() {
-  if (gallery) {
-    window.addEventListener("load", renderGallery, false);
-  }
-}
-
-=======
 /***/ "./resources/js/category.js":
 /*!**********************************!*\
   !*** ./resources/js/category.js ***!
@@ -742,7 +715,6 @@ function startGallery() {
   }
 }
 
-
 function renderGallery() {
   //Check File API support
   if (window.File && window.FileList && window.FileReader) {
@@ -842,7 +814,6 @@ function getID() {
   return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
 }
 
-
 function filter(filesAll) {
   var file = [];
 
@@ -865,7 +836,6 @@ function filter(filesAll) {
 /* harmony default export */ __webpack_exports__["default"] = (startGallery());
 
 /***/ }),
-
 
 /***/ "./resources/js/idea.js":
 /*!******************************!*\
@@ -1032,180 +1002,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
 /* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gallery.js */ "./resources/js/gallery.js");
 /* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
-
-/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
-
-
 /* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
 /* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
+/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
 /** @format */
+
 
 
 
 
 
 new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"](".calendar");
-
-/***/ }),
-
-/***/ "./resources/js/tag.js":
-/*!*****************************!*\
-  !*** ./resources/js/tag.js ***!
-  \*****************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/** @format */
-
-
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var tagStrt = document.getElementById("tagStart"); // console.log(tagStrt);
-
-function startTag() {
-  if (tagStrt) {
-    window.addEventListener("load", init, false);
-  }
-}
-
-function init() {
-  axios.post(uri + path + "tag_create", {}).then(function (response) {
-    var test = document.querySelector(".test");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-      var submit = document.getElementById("create");
-      submit.addEventListener("click", function () {
-        var name = document.getElementById("tag-name").value;
-        var slug = document.getElementById("tag-slug").value;
-        var description = document.getElementById("tag-description").value;
-        tagStore(name, slug, description);
-      });
-      var editBtn = tagStrt.querySelectorAll(".tag-edit");
-
-      var _loop = function _loop(i) {
-        var ID = editBtn[i].value;
-        var taxonomy = editBtn[i].id;
-        editBtn[i].addEventListener("click", function () {
-          tagEdit(ID, taxonomy);
-        }, false);
-      };
-
-      for (var i = 0; i < editBtn.length; i++) {
-        _loop(i);
-      }
-
-      var deleteBtn = document.querySelectorAll(".tag-delete");
-
-      var _loop2 = function _loop2(_i) {
-        var ID = deleteBtn[_i].value;
-        var taxonomy = deleteBtn[_i].id;
-
-
-        deleteBtn[_i].addEventListener("click", function () {
-          tagDelete(ID, taxonomy);
-          console.log(ID);
-          console.log(taxonomy);
-        }, false);
-      };
-
-      for (var _i = 0; _i < deleteBtn.length; _i++) {
-        _loop2(_i);
-      }
-    }
-  })["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error.message);
-    }
-
-    console.log(error);
-  });
-  1;
-}
-
-function tagStore(name, slug, description) {
-  axios.post(uri + path + "tag_store", {
-    tag_name: name,
-    tag_slug: slug,
-    tag_description: description
-  }).then(function (response) {
-    console.log(response);
-    init();
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-  document.getElementById("tag-name").value = "";
-}
-
-function tagEdit(editID, taxonomy) {
-  axios.post(uri + path + "tag_edit", {
-    editID: editID,
-    taxonomy_type: taxonomy
-  }).then(function (response) {
-    var test = document.querySelector(".test");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-    }
-
-    var updateBtn = document.getElementById("tagUpdate");
-    updateBtn.addEventListener("click", function () {
-      var updateId = updateBtn.value;
-      tagUpdate(updateId);
-    });
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function tagUpdate(updateId) {
-  var name = document.getElementById("tag_name").value;
-  var slug = document.getElementById("tag_slug").value;
-  var description = document.getElementById("tag_description").value;
-  axios.post(uri + path + "tag_update", {
-    updateId: updateId,
-    tag_name: name,
-    tag_slug: slug,
-    tag_description: description
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init(); // setTimeout(call.init(), 500);
-
-      console.log(11111);
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function tagDelete(ID, taxonomy) {
-  console.log(ID);
-  axios.post(uri + path + "tag_destroy", {
-    deleteID: ID,
-    taxonomy_type: taxonomy
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init(); // setTimeout(init(), 500);
-      // console.log(11111);
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startTag());
 
 /***/ }),
 
@@ -1319,6 +1126,166 @@ function renderNews() {
 
 /***/ }),
 
+/***/ "./resources/js/tag.js":
+/*!*****************************!*\
+  !*** ./resources/js/tag.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/** @format */
+
+
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var tagStrt = document.getElementById("tagStart"); // console.log(tagStrt);
+
+function startTag() {
+  if (tagStrt) {
+    window.addEventListener("load", init, false);
+  }
+}
+
+function init() {
+  axios.post(uri + path + "tag_create", {}).then(function (response) {
+    var test = document.querySelector(".test");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+      var submit = document.getElementById("create");
+      submit.addEventListener("click", function () {
+        var name = document.getElementById("tag-name").value;
+        var slug = document.getElementById("tag-slug").value;
+        var description = document.getElementById("tag-description").value;
+        tagStore(name, slug, description);
+      });
+      var editBtn = tagStrt.querySelectorAll(".tag-edit");
+
+      var _loop = function _loop(i) {
+        var ID = editBtn[i].value;
+        var taxonomy = editBtn[i].id;
+        editBtn[i].addEventListener("click", function () {
+          tagEdit(ID, taxonomy);
+        }, false);
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
+      }
+
+      var deleteBtn = document.querySelectorAll(".tag-delete");
+
+      var _loop2 = function _loop2(_i) {
+        var ID = deleteBtn[_i].value;
+        var taxonomy = deleteBtn[_i].id;
+
+        deleteBtn[_i].addEventListener("click", function () {
+          tagDelete(ID, taxonomy);
+          console.log(ID);
+          console.log(taxonomy);
+        }, false);
+      };
+
+      for (var _i = 0; _i < deleteBtn.length; _i++) {
+        _loop2(_i);
+      }
+    }
+  })["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
+    }
+
+    console.log(error);
+  });
+  1;
+}
+
+function tagStore(name, slug, description) {
+  axios.post(uri + path + "tag_store", {
+    tag_name: name,
+    tag_slug: slug,
+    tag_description: description
+  }).then(function (response) {
+    console.log(response);
+    init();
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+  document.getElementById("tag-name").value = "";
+}
+
+function tagEdit(editID, taxonomy) {
+  axios.post(uri + path + "tag_edit", {
+    editID: editID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    var test = document.querySelector(".test");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+    }
+
+    var updateBtn = document.getElementById("tagUpdate");
+    updateBtn.addEventListener("click", function () {
+      var updateId = updateBtn.value;
+      tagUpdate(updateId);
+    });
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function tagUpdate(updateId) {
+  var name = document.getElementById("tag_name").value;
+  var slug = document.getElementById("tag_slug").value;
+  var description = document.getElementById("tag_description").value;
+  axios.post(uri + path + "tag_update", {
+    updateId: updateId,
+    tag_name: name,
+    tag_slug: slug,
+    tag_description: description
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(call.init(), 500);
+
+      console.log(11111);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function tagDelete(ID, taxonomy) {
+  console.log(ID);
+  axios.post(uri + path + "tag_destroy", {
+    deleteID: ID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(init(), 500);
+      // console.log(11111);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startTag());
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -1337,10 +1304,8 @@ function renderNews() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-
 __webpack_require__(/*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
 module.exports = __webpack_require__(/*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
-
 
 
 /***/ })
