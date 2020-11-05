@@ -24,7 +24,45 @@ trait Ttaxonomy {
             throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
         }    
     }
+
+    // add tag to DB
+    public function addTagtoDB($tag, $slug = '', $description = '', $taxonomy_type = 'hashtag'){
+        $tag = (array)$tag;
+        foreach ($this->taxonomy as $value){
+            if($value == $taxonomy_type){
+                if (did_action('init')) {    
+                    $args = ['description'=>$description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
+                        foreach ($tag as $key){
+                            wp_insert_term($key, $value, $args);
+                        }
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
+    // get tag from DB by ID
+    public function getTag($id, $taxonony_type = 'hashtag'){
+        $tag = get_term_by('id', $id, $taxonony_type);
+        return $tag;
+    }
+
+    public function updateTag(int $id, string $name, string $slug = '', string $description = '', $taxonomy_type = 'hashtag'){
+        if (did_action('init')) {    
+                $args = ['name' => $name, 'slug' => $slug, 'description' => $description];
+                wp_update_term($id, $taxonomy_type, $args);
+        } else {
+            throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+        }
+    }
     
+      //deletes tag from db
+    public function deleteTagFromDb(int $id, $taxonomy_type = 'hashtag'){
+      
+        wp_delete_term($id, $taxonomy_type);
+    }
+
     /** adds tag (default - Hashtag term) to post type Album
      * string $tag: 'tag' or 'tag1, tag2'
      */
@@ -32,7 +70,10 @@ trait Ttaxonomy {
      * $album = new AlbumPost;
      * $album->save();
      * $album->addTag('tag1'); or $album->addTag(['tag1', 'tag2']);
+     * 
      */
+
+     //add tag to db and the post type
     public function addTag($tag, $taxonomy_type = 'hashtag')    
     {
             foreach ($this->taxonomy as $value){
@@ -54,8 +95,6 @@ trait Ttaxonomy {
                 }
             }
     } 
-
-    //wp insert term - prideti paprastai. paskui tureti id ir prideti.
 
     private function tagDelete(string $tag, $taxonomy_type = 'hashtag') 
     {
@@ -96,7 +135,6 @@ trait Ttaxonomy {
     }
 
     /** returns all post tags as Collection */
-  
     public function getTags($taxonomy_type = 'hashtag') 
     {
         foreach ($this->taxonomy as $value){
@@ -105,7 +143,6 @@ trait Ttaxonomy {
                 if (did_action('init')) {
                     $taxCollection = new TaxCollection();
                     $terms = get_terms([ 'taxonomy'=> $value, 'object_ids'=>$this->ID,  'hide_empty'=>false]);  //perdaryti i get_terms ir kategorijose
-                    _dc( $terms);
 
                     foreach ($terms as $term) {
                         $taxCollection->addTerm($term);
@@ -119,7 +156,6 @@ trait Ttaxonomy {
     }
 
     /** returns all hashtags as Collection */
-
     public function getAllTags($taxonomy_type = 'hashtag') 
     {
         foreach ($this->taxonomy as $value){

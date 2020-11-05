@@ -2,47 +2,49 @@
 use BIT\app\Category;
 ?>
 
-<style>
-.category-container{
-    width: 100%;
-    display: flex;
-}
+<div class = 'tagCreate'>
+    <div class="admin-tag-div-first" >
+        <div class="admin-tag-form-group">
+            <h3>Pridėkite naują 'tag'ą'<h3>
+                <label class="admin-label">'Tag'o' pavadinimas</label><br>
+                <input type="text" name="tag-name" id="tag-name" value="" placeholder="Įrašykite tag'o pavadinimą..." class="admin-input"><br><br>
+                <label class="admin-label">'Tag'o' 'slug'</label><br>
+                <input type="text" name="tag-slug" id="tag-slug" value="" placeholder="Įrašykite tag'o slug..." class="admin-input"><br><br>
+                <label class="admin-label">'Tag'o' aprašymas</label><br>
+                <input type="textarea" name="tag-description" id="tag-description" value="" placeholder="Įrašykite tag'o aprašymą..." class="admin-input"><br><br>
+                <div class="admin-event-buttons">
+                    <button type="submit" id="create" class="admin-event-button">Pridėti</button>
+                </div>
+        </div>
+    </div>
+    <div class="admin-tag-div">
+        <table>
+            <th>Pavadinimas</th>
+            <th>Id</th>
+            <th>Slug</th>
+            <th>Description</th>
+            <th>Veiksmai</th>
+            <?php
+            foreach ($tags as $tag) {
+                ?>
+                <tr>
+                    <td><?=$tag->name?></td>
+                    <td><?=$tag->term_id?></td>
+                    <td><?=$tag->slug?></td>
+                    <td><?=$tag->description?></td>
+                    <td>
+                        <button class= "tag-edit" type="submit" name="tag-name" id = "<?=$tag->taxonomy?>" value="<?=$tag->term_id?>">Edit</button> 
+                        <button class= "tag-delete" type="submit" name="tagDelete" id = "<?=$tag->taxonomy?>" value="<?=$tag->term_id?>">Delete</button>
+                       
+                    </td>
+                </tr>
+                <?php
+                }
+                ?> 
+        </table>
+    </div> 
+</div> 
 
-.admin-category-div-first{
-    width: 40%;
-}
-
-table {
-  font-family: "Montserrat", sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 100px;
-}
-
-table td,
-table th {
-  font-family: "Montserrat", sans-serif;
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-table tr:hover {
-  background-color: #ddd;
-}
-
-table th {
-  font-family: "Montserrat", sans-serif;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #284646;
-  color: white;
-}
-
-</style>
- <?php
-//  _dc($categories);
-?>
 
 <div class = 'category-container'>
     <div class="admin-category-div-first" >
@@ -94,6 +96,7 @@ table th {
         <th>'Slug'</th>
         <th>'Count'</th>
         <th>Paveiksliukas</th>
+        <th>Veiksmai</th>
     <div>
         <?php
         foreach ($categories as $category) {
@@ -121,7 +124,7 @@ table th {
                             <input type="hidden" name="ID" value="<?=$category->term_id?>"readonly>    
                             <button type="submit" name="delete">Delete</button>
                         </form>
-                    <td>
+                    </td>
                 </tr>
         </div>
     <?php

@@ -40,9 +40,7 @@ table th {
 }
 
 </style>
- <?php
-//  _dc($categories);
-?>
+
 
 <div class = 'category-container'>
     <div class="admin-category-div-first" >
@@ -54,8 +52,16 @@ table th {
                 <input type="text" name="page-name" id="page-name" value="" placeholder="Įrašykite puslapio pavadinimą..." class="admin-input"><br><br>
                 <label class="admin-label">'Pasirinkite post'o tipą</label><br>
                 <select class="form-control" name = "post-type">
-                    <option value = "ideja">ideja</option>
-                    <option value = "kalendorius">kalendorius</option>
+                    <?php
+                        $pages = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
+                        if ($pages) {
+                          foreach ($pages as $page => $args) {
+                              ?>
+                            <option value = "<?=$page?>"><?=$page?></option>
+                            <?php
+                            }      
+                        }
+                ?>
                 </select><br><br>
                 <div class="admin-event-buttons">
                     <button type="submit" id="create" class="admin-event-button">Pridėti</button>

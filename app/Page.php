@@ -1,18 +1,19 @@
 <?php
 namespace BIT\app;
 
-class Page {
+class Page extends Post{
 
     public static function start()
     {
         return self::$obj ?? self::$obj = new self;
     }
 
+
     public function createPage($post_type, $post_title) {
         $args = [
         'post_title'    => $post_title,
         'post_type'     => 'page',
-        'post_name'     => $post_type,
+        'post_name'     => $post_title,
         'post_content'  => '[front_shortcode route="'.$post_type.'"]',
         'post_status'   => 'publish',
         'comment_status' => 'closed',
@@ -22,10 +23,10 @@ class Page {
         ];
 
         $id = wp_insert_post( $args );
-        $permalink = get_permalink($id);
-
-
+        // $permalink = get_permalink($id);
     }
+
+    
 
    
    
