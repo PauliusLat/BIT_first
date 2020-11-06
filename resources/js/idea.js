@@ -67,9 +67,15 @@ function solutionText(sId, i) {
 function deleteIdea(delId) {
   console.log(delId);
   axios
-    .post(uri + path + "idea-delete-admin", {
-      deleteId: delId,
-    })
+
+    .post(
+      uri + path +
+      "idea-delete-admin&id="+delId,
+      {
+        deleteId: delId,
+      }
+    )
+
     .catch((err) => {
       console.log(err instanceof TypeError);
       console.log("Problemos su Delete api");
