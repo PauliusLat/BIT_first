@@ -73,7 +73,7 @@ class IdeAdminController
 			foreach ($array as $text) {
 				$txt .= $text . ' ';
 			}
-			var_dump($text);
+
 			$soliutionPost->idea_solution = $txt;
 
 			$soliutionPost->save();
@@ -81,17 +81,10 @@ class IdeAdminController
 		return $response = new Response;
 	}
 	//	public function delete($force_delete = false)
-	public function delete(Request $requestJson, IdeaPost $idea)
+	public function delete(IdeaPost $idea)
 	{
+		$idea->delete();
 
-		$request = $this->decodeRequest($requestJson);
-
-		$deleteId = $idea->ID = $request->request->get('deleteId');
-
-		if ($deleteId) {
-			$deletePost = IdeaPost::get($deleteId);
-			$deletePost->delete();
-		}
 		return $response = new Response;
 	}
 

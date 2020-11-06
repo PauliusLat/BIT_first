@@ -74,7 +74,7 @@ function deleteIdea(delId) {
   axios
     .post(
       uri + path +
-      "idea-delete-admin",
+      "idea-delete-admin&id="+delId,
       {
         deleteId: delId,
       }

@@ -340,7 +340,7 @@ class Calendar {
         axios
             .post(
                 this.uri + this.path +
-                "calendar-delete-admin", {
+                "calendar-delete-admin&id="+id, {
                 eventID: id,
             }).then(function (response) {
                 if (response.status == 200 && response.statusText == 'OK') {
@@ -353,7 +353,7 @@ class Calendar {
                         keys.push(key);
                     }
                     let counter = 0;
-                    console.log(action);
+ 
                     for (let i = 0; i < dayEvents.length; i++) {
                         for (let j = 0; j < keys.length; j++) {
 

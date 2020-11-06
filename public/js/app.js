@@ -367,8 +367,7 @@ var Calendar = /*#__PURE__*/function () {
           (function () {
             var call = new Calendar();
             var data = response.data.allData;
-            var allEvens = document.getElementById('daysEvens'); // const removeDays = document.querySelectorAll(".removeDay");
-
+            var allEvens = document.getElementById('daysEvens');
             var HTML = "";
             var keys = [];
             var keys1 = [];
@@ -447,7 +446,7 @@ var Calendar = /*#__PURE__*/function () {
     value: function deleteEvent(id, action) {
       var _this4 = this;
 
-      axios.post(this.uri + this.path + "calendar-delete-admin", {
+      axios.post(this.uri + this.path + "calendar-delete-admin&id=" + id, {
         eventID: id
       }).then(function (response) {
         if (response.status == 200 && response.statusText == 'OK') {
@@ -460,7 +459,6 @@ var Calendar = /*#__PURE__*/function () {
           }
 
           var counter = 0;
-          console.log(action);
 
           for (var i = 0; i < dayEvents.length; i++) {
             for (var j = 0; j < keys.length; j++) {
@@ -728,7 +726,7 @@ function solutionText(sId, i) {
 
 
 function deleteIdea(delId) {
-  axios.post(uri + path + "idea-delete-admin", {
+  axios.post(uri + path + "idea-delete-admin&id=" + delId, {
     deleteId: delId
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
@@ -832,11 +830,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
 /* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gallery.js */ "./resources/js/gallery.js");
 /* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
-/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
+/* harmony import */ var _text_editor_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./text-editor.js */ "./resources/js/text-editor.js");
+/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
 
 
 
 
+
+new _text_editor_js__WEBPACK_IMPORTED_MODULE_3__["default"]('.news-container');
 new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.calendar');
 
 /***/ }),
@@ -951,6 +952,187 @@ function renderNews() {
 
 /***/ }),
 
+/***/ "./resources/js/text-editor.js":
+/*!*************************************!*\
+  !*** ./resources/js/text-editor.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var TextEditor = /*#__PURE__*/function () {
+  function TextEditor(e) {
+    _classCallCheck(this, TextEditor);
+
+    this.target = e;
+    this.DOM = null;
+    this.init();
+  }
+
+  _createClass(TextEditor, [{
+    key: "init",
+    value: function init() {
+      var _this = this;
+
+      var DOM = document.querySelector(this.target);
+
+      if (DOM) {
+        var contenteditable = document.querySelector("[contenteditable]");
+        var el = document.querySelector('.editor');
+        var bold = document.querySelector(".click-Blod");
+        var italic = document.querySelector(".click-Italc");
+        var li = document.querySelector(".click-li");
+        var a = document.querySelector(".click-a");
+        var link = document.getElementById("txtFormatUrl");
+        var input = document.querySelector('div'); // const pad = document.createTextNode('\u00A0');
+        // input.appendChild(pad);
+        // let selection = window.getSelection();
+
+        bold.addEventListener("click", function () {
+          _this.surroundSelection(); // let b = document.createElement("b")
+          // let range = selection.getRangeAt(0).cloneRange();
+          // range.surroundContents(b)
+          // selection.removeAllRanges();
+          // selection.addRange(range);
+          // let pad = this.addPad();
+          // range.setEnd(pad, 1);
+          // selection.collapseToEnd();
+          // this.getContent(contenteditable)
+
+        });
+        italic.addEventListener("click", function () {
+          var i = document.createElement("i");
+          window.getSelection().getRangeAt(0).surroundContents(i); // this.getContent(contenteditable)
+        });
+        li.addEventListener("click", function () {
+          var li = document.createElement("li");
+          window.getSelection().getRangeAt(0).surroundContents(li); // this.getContent(contenteditable)
+        });
+        a.addEventListener("click", function () {
+          // console.log(link.value);
+          var a = document.createElement("a");
+          a.href = link.value;
+          console.log(a);
+          window.getSelection().getRangeAt(0).surroundContents(a); // this.pasteHtmlAtCaret(a);
+          // this.getContent(contenteditable)
+        });
+      }
+    }
+  }, {
+    key: "getContent",
+    value: function getContent(text) {
+      // let range = new Range();
+      // const el = document.querySelector('.editor')//ideti linka
+      // el.setAttribute('contenteditable', true);
+      // let textNode = el.firstChild
+      // let caret = textNode.length
+      // let element = document.createElement("b")
+      // window.getSelection().getRangeAt(0).surroundContents(element)
+      var sel = document.getSelection(); // sel.setEnd;
+
+      if (document.getSelection) {
+        // all browsers, except IE before version 9
+        alert(sel);
+      } else {
+        if (document.selection) {
+          // Internet Explorer before version 9
+          var textRange = document.selection.createRange();
+          alert(textRange.text);
+        }
+      }
+
+      var savedRange = sel.getRangeAt(0);
+      sel.removeAllRanges();
+      console.log(sel);
+      sel.addRange(savedRange);
+    }
+  }, {
+    key: "pasteHtmlAtCaret",
+    value: function pasteHtmlAtCaret(html) {
+      var sel, range;
+
+      if (window.getSelection) {
+        // IE9 and non-IE
+        sel = window.getSelection();
+
+        if (sel.getRangeAt && sel.rangeCount) {
+          range = sel.getRangeAt(0);
+          range.deleteContents(); // Range.createContextualFragment() would be useful here but is
+          // non-standard and not supported in all browsers (IE9, for one)
+
+          var el = document.createElement("img");
+          el.innerHTML = html;
+          var frag = document.createDocumentFragment(),
+              node,
+              lastNode;
+          console.log(frag);
+
+          while (node = el.firstChild) {
+            lastNode = frag.appendChild(node);
+            console.log(lastNode);
+          }
+
+          range.insertNode(frag); // Preserve the selection
+
+          if (lastNode) {
+            range = range.cloneRange();
+            range.setStartAfter(lastNode);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }
+        }
+      } else if (document.selection && document.selection.type != "Control") {
+        // IE < 9
+        document.selection.createRange().pasteHTML(html);
+      }
+    }
+  }, {
+    key: "addPad",
+    value: function addPad() {
+      var $input = document.querySelector('.editorContainer > div');
+      var pad = document.createTextNode("\xA0"); // console.log($input);
+      //         $input.appendChild(pad);
+
+      return pad;
+    }
+  }, {
+    key: "surroundSelection",
+    value: function surroundSelection() {
+      var sel = window.getSelection();
+      if (!sel || !sel.rangeCount) return;
+      console.log(sel);
+      var code = document.createElement("b"); // code.style.fontStyle = "italic";
+      // code.style.background = "#ddd";
+
+      var range = sel.getRangeAt(0).cloneRange();
+      console.log(range);
+      range.surroundContents(code); // sel.removeAllRanges();
+
+      sel.addRange(range);
+      var padNode = this.addPad();
+      range.setEnd(padNode, 1);
+      console.log(range);
+      sel.collapseToEnd();
+    }
+  }]);
+
+  return TextEditor;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (TextEditor);
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -969,8 +1151,8 @@ function renderNews() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
