@@ -266,27 +266,114 @@ trait Tcategory {
         }
     }
     // get taxonomies as arr, not collection
-    public function get_taxonomy_hierarchy_arr( $taxonomy = 'maincat', $parent=0) {
+    public function get_taxonomy_hierarchy_arr($level, $taxonomy = 'maincat', $parent=0) {
         // only 1 taxonomy
         $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
         $terms=$this->getChildCats_arr($parent, $taxonomy);
         // _dc($terms);
+       
+      
+        //  _dc($terms);
         if (did_action('init')) {
             $children = [];
             foreach ( $terms as $term) {
-                // recurse to get the direct decendants of "this" term
-                $term->children = $this->get_taxonomy_hierarchy_arr( $taxonomy, $term->term_id);
-
+            
                 $children[ $term->term_id ] = $term;
+            
+            if($term->parent == 0)
+            {
+                $term->level = 0;
+                $term->children = $this->get_taxonomy_hierarchy_arr($term->level, $taxonomy, $term->term_id);
+
+            }
+            else
+            {
+                $term->level = $level+1;
+                $term->children = $this->get_taxonomy_hierarchy_arr($term->level, $taxonomy, $term->term_id);
+            }
+            
+            
+            
+          
+
+            $term->children = $this->get_taxonomy_hierarchy_arr($term->level, $taxonomy, $term->term_id);
+            
+
+            // $children[$term->level]= $level+1;
+            // _dc($children[$term->level]);
+            // if($term->parent != 0){
+                // $level++;
+            // }
+           
             }
             return $children;
         } else {
             throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
         }
     }
+       
+    public function print_taxonomy_hierarchy( $taxonomy, $parent = 0 ) {
+        // // only 1 taxonomy
+        // $level = 0;
+        // $parent = 0;
+        $taxonomy = is_array( $taxonomy ) ? array_shift( $taxonomy ) : $taxonomy;
+        // get all direct descendants of the $parent
+        $terms = get_terms( $taxonomy, array( 'parent' => $parent,  'hide_empty'=> 0,) );
+       
+        // prepare a new array.  these are the children of $parent
+        // we'll ultimately copy all the $terms into this new array, but only after they
+        // find their own children
+        $children = array();
+        // go through all the direct descendants of $parent, and gather their children
+        foreach ( $terms as $term ){
+            //  if($term->parent == $parent){
+            //         $term->level = $level;
+            //     }
+            // recurse to get the direct descendants of "this" term
+            $term->children = $this->print_taxonomy_hierarchy( $taxonomy, $term->term_id );
+            // add the term to our new array
+            $children[ $term->term_id ] = $term;
+        }
         // send the results back to the caller
- 
+        return $children;
+    }
+
+        //nesigauna niekas 
+    public function printHierarchy(){
+           
+            $terms = $this->get_taxonomy_hierarchy_arr('maincat');
+        //   _dc($terms);
+                          $level = 0;
+                          $sorted = [];
+                          $parent = 0;
+                          $sorter = function ($parent = 0) use (&$terms, &$sorted, &$level, &$sorter){
+                              foreach ($terms as $key => $term){
+                              
+                                  if($term->parent == $parent){
+                                    //    _dc( $term->parent);
+                                      $term->level = $level;
+                                  
+                                      $sorted[] = $term;
+                                      unset($terms[$key]);
+                                      $level++;
+                                  
+                                      $sorter($term->id);
+                                      $level--;
+                                      // _dc($term->level);
+                                      // _dc($term);
+                                      
+                                  }
+                          
+                                  ?>
+                              <span style = "margin-left:200px;"><?=str_repeat('-', $term->level)?> <?=$term->name?></span><br>
+                              <?php
+                              }
         
+                             
+                              
+                          };
+                        //   $sorter();
+     }
  
 
     public function getAllCats($taxonomy_type = 'maincat') 

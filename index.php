@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -43,12 +44,8 @@ $query = new Query;
 
 $api = new ApiRoute;
 
-
 // 
 // _dc($app->getService('request')->query->get('route', ''));
-
-
-
 // $my_post = array(
 //     'post_content'   => "My page content",
 //     'post_title'     => 'idea',
@@ -73,19 +70,27 @@ $api = new ApiRoute;
 add_action('init', function() {
     $tag = new Tag;
     // _dc($tag);
-    foreach($tag as $taxonomy){
-        var_dump($tag);
-    }
-   
+    
 
     $tag->deleteTagFromDb(21, 'ideatag');
     $category = new Category;
 
+    //nesigaua
     $terms = $category->get_taxonomy_hierarchy_arr('maincat');
+   _dc( $terms);
    
-    _dc($terms);
+    //    $args = array(
+
+//     'hide_empty'         => 0,
+//     'echo'               => 0,
+//     'taxonomy'           => 'maincat',
+//     'hierarchical'  =>1,
+//     'show_count' => 1,
+
+// );
 
 
+// wp_list_categories( $args );
     // $category->deleteCatFromDb(103);
 
     // $album = new AlbumPost;

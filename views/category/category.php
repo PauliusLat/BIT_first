@@ -30,6 +30,8 @@ use BIT\app\Category;
                         <ul style = "display:inline-block">
                         <?php wp_dropdown_categories( $args );?>
                         </ul>
+
+                      
                 <br><br>
                 <label class="admin-label">Kategorijos aprašymas</label><br>
                 <input type="textarea" name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="admin-input"><br><br>
@@ -60,47 +62,12 @@ use BIT\app\Category;
                     </td>
                 </tr>
                 <?php
-            }
-            ?>
+                }
+                ?> 
         </table>
-    </div>
+    </div> 
 
-    <div>
+   
 
-    <?php
-    $category = new Category;
-                  
-    // $terms = $category->get_taxonomy_hierarchy('maincat');
-//   _dc($terms);
-                  $level = 0;
-                  $sorted = [];
-                  $parent = 0;
-                  $sorter = function ($parent = 0) use (&$terms, &$sorted, &$level, &$sorter){
-                      foreach ($terms as $key => $term){
-                      
-                          if($term->parent == $parent){
-                              // _dc( $term->parent);
-                              $term->level = $level;
-                          
-                              $sorted[] = $term;
-                              unset($terms[$key]);
-                              $level++;
-                          
-                              $sorter($term->id);
-                              $level--;
-                              // _dc($term->level);
-                              // _dc($term);
-                              
-                          }
-                  
-                          ?>
-                          <span style = "margin-left:200px;"><?=str_repeat('-', $term->level)?> <?=$term->name?></span><br>
-                          <?php
-                      }
-                      
-                  };
-                  $sorter();
-    ?>
- 
 
-    </div>
+</div> 
