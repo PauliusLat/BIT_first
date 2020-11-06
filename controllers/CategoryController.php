@@ -15,66 +15,73 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
-class TagController {
+class CategoryController {
 
     public function index()
     {
-        return View::adminRender('tag.maintag');
+        return View::adminRender('category.maincat');
     }
 
     public function create(Request $request)
     {
-        $tag = new Tag;
-        $tags = $tag->getAllTags(); 
-        $output = View::adminRender('tag.tag',  ["tags" => $tags]);
+        $category = new Category;
+        $categories = $category->getAllCats(); 
+        $output = View::adminRender('category.category',  ["categories" => $categories]);
         $response = new JsonResponse(['html' => $output]);
         return $response;
     }
 
     public function store(Request $requestJson){
 		$request = $this->decodeRequest($requestJson);
-        $tag = new Tag;
-        $name = $request->request->get('tag_name');
-        $slug = $request->request->get('tag_slug');
-        $description = $request->request->get('tag_description');
-        $newTag = $tag->addTagtoDB($name, $slug, $description);
+        $category = new Category;
+        $name = $request->request->get('cat_name');
+        $slug = $request->request->get('cat_slug');
+        $description = $request->request->get('cat_description');
+
+        if($request->request->get('cat_parent')){
+            $parent_id = $request->request->get('cat_parent');
+        }else {
+            $parent_id = 0;
+        }
+        // $parent = $request->request->get('cat_parent');
+        $newCat = $category->addCat($name, $parent_id, $slug,  $description);
         return $response = new Response;
     }  
 
     public function edit(Request $requestJson){
         $request = $this->decodeRequest($requestJson);
-        $tag = new Tag;
+        $category = new Category;
         $id = $request->request->get('editID');
         $taxonomy_type = $request->request->get('taxonomy_type');
-        $tag = $tag->getTag($id, $taxonomy_type);
-        $output = View::adminRender('tag.edit',  ['tag' => $tag]);
+        $category = $category->getCat($id, $taxonomy_type);
+        $output = View::adminRender('category.edit',  ['category' => $category]);
         $response = new JsonResponse(['html' => $output]);
         return $response;
     }
 
     public function update(Request $requestJson)
     {
-        $tag = new Tag;
+        $category = new Category;
         $request = $this->decodeRequest($requestJson);
-        $name = $request->request->get('tag_name');
-        $slug = $request->request->get('tag_slug');
-        $description = $request->request->get('tag_description');
+        $name = $request->request->get('cat_name');
+        $slug = $request->request->get('cat_slug');
+        $description = $request->request->get('cat_description');
         $id = $request->request->get('updateId');
-        $updateTag = $tag->updateTag($id, $name, $slug, $description);
-        $tags = $tag->getAllTags(); 
-        $output = View::adminRender('tag.tag',  ["tags" => $tags]);
+        $updateCat = $category->updateCat($id, $name, $slug, $description);
+        $categories = $category->getAllCats(); 
+        $output = View::adminRender('category.category',  ["categories" => $categories]);
         $response = new JsonResponse(['html' => $output]);
         return $response;
     }
 
     public function destroy(Request $requestJson){
 
-        $tag = new Tag;
+        $category = new Category;
         $request = $this->decodeRequest($requestJson);   
-        $tags = $tag->getAllTags(); 
+        $categories = $category->getAllCats();
         $id = $request->request->get('deleteID');
         $taxonomy_type = $request->request->get('taxonomy_type');
-        $tag->deleteTagFromDb($id, $taxonomy_type);
+        $category->deleteCatFromDb($id, $taxonomy_type);
         return $response = new Response;
         $response->prepare($request);
         return $response;

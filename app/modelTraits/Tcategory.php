@@ -31,8 +31,9 @@ trait Tcategory {
      * $album->save();
      * $album->addCat('cat1', 'maincat'); or $album->addCat(['cat1', 'cat2'], 'maincat', 45));*/
 
-    public function addCat($cat, $description, int $parent_id = 0, string $slug = '', $taxonomy_type = 'maincat'){
-
+    // add category to DB
+    public function addCat($cat, $parent_id = 0, $description = '',  $slug = '', $taxonomy_type = 'maincat'){
+        
         $cat = (array)$cat;
         foreach ($this->cattax as $value){
             if($value == $taxonomy_type){
@@ -40,7 +41,7 @@ trait Tcategory {
                     // if ($this->ID == null) {
                     //     throw new PostIdNotSetException('Error: Call to addTag() function before save()');
                     // } else {
-                        $args = ['parent'=>$parent_id, 'description'=>$description];
+                        $args = ['parent'=>$parent_id, 'description'=>$description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type, 'level' => 0];
                         foreach ($cat as $key){
                             wp_insert_term($key, $value, $args);
                         }
@@ -60,49 +61,62 @@ trait Tcategory {
             throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
         }
     }
-    
+
+     //get category id by name
     public function getCatId($name, $taxonony_type = 'maincat'){
         $cat = get_term_by('name', $name, $taxonony_type);
         return $cat->term_id;
     }
 
+    //get category name by id
     public function getCatName($id, $taxonony_type = 'maincat'){
         $cat = get_term_by('id', $id, $taxonony_type);
         return $cat->name;
     }
 
+    //get category by id
     public function getCat($id, $taxonony_type = 'maincat'){
         $cat = get_term_by('id', $id, $taxonony_type);
         return $cat;
     }
 
+     //adds image to category
     public function addImageToCat(int $term_id, string $meta_key, $image){
         add_term_meta($term_id, $meta_key, $image);
     }
 
+     //gets category image from db
     public function getCatImage(int $term_id, string $meta_key){
        $image = get_term_meta($term_id, $meta_key);
        return $image;
     }
 
+     //deletes category image from db
     public function deleteCatImage(int $term_id, string $meta_key, $meta_value = ''){
         delete_metadata('term', $term_id, $meta_key, $meta_value);
     }
 
-    public function addCatt($cat, $taxonomy_type, $parent_id = 0)
+    //deletes category from db
+    public function deleteCatFromDb(int $id, $taxonomy_type = 'maincat'){
+        wp_delete_term($id, $taxonomy_type);
+    }
+
+    //attach category to post type
+    public function attachCat($cat, $taxonomy_type = 'maincat')
     {   
         $cat = (array)$cat;
         foreach ($this->cattax as $value){
             if($value == $taxonomy_type){
                 if (did_action('init')) {    
                     if ($this->ID == null) {
-                        throw new PostIdNotSetException('Error: Call to addTag() function before save()');
+                        throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
                     } else {
-                        $args = ['parent'=>$parent_id];
-                        foreach ($cat as $key){
-                            wp_insert_term($key, $value, $args);
-                        }
+                        // $args = ['parent'=>$parent_id];
+                        // foreach ($cat as $key){
+                        //     wp_insert_term($key, $value, $args);
+                        // }
                         $terms = get_terms(['name'=>$cat, 'taxonomy'=> $value, 'hide_empty'=>false]);
+                        // _dc($terms);
                         foreach($terms as $term){
                             wp_set_post_terms($this->ID, $term->term_id, $value, $append = true);
                         }
@@ -116,6 +130,7 @@ trait Tcategory {
         }
     } 
 
+    //removes category form post type
     private function catDelete(string $cat, $taxonomy_type = 'maincat') 
     {
         foreach ($this->cattax as $value){
@@ -138,7 +153,7 @@ trait Tcategory {
         }
     }
 
-     /** removes cat form post type Album
+     /** removes cat form post type
      * $album->removeCat('cat') or $album->removeCat(['cat1', 'cat2'])
      */
 
@@ -195,6 +210,7 @@ trait Tcategory {
                         }
                         foreach ($terms as $term) {
                             echo ".'$term->name'.";
+
                             $taxCollection->addTerm($term);
                         }
                     }
@@ -224,10 +240,29 @@ trait Tcategory {
         }
     }
 
-    //deletes category from db
-    public function deleteCatFromDb(int $id, $taxonomy_type = 'maincat'){
-        wp_delete_term($id, $taxonomy_type);
+    // get taxonomies as arr, not collection
+    function get_taxonomy_hierarchy_arr( $taxonomy, $parent = 0 ) {
+        // only 1 taxonomy
+        $taxonomy = is_array( $taxonomy ) ? array_shift( $taxonomy ) : $taxonomy;
+        // get all direct descendants of the $parent
+        $terms = get_terms( $taxonomy, array( 'parent' => $parent ) );
+
+
+        // prepare a new array.  these are the children of $parent
+        // we'll ultimately copy all the $terms into this new array, but only after they
+        // find their own children
+        $children = array();
+        // go through all the direct descendants of $parent, and gather their children
+        foreach ( $terms as $term ){
+            // recurse to get the direct descendants of "this" term
+            $term->children = $this->get_taxonomy_hierarchy_arr( $taxonomy, $term->term_id );
+            // add the term to our new array
+            $children[ $term->term_id ] = $term;
+        }
+        // send the results back to the caller
+        return $children;
     }
+ 
 
     public function getAllCats($taxonomy_type = 'maincat') 
     {

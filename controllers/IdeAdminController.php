@@ -61,6 +61,8 @@ class IdeAdminController
 
 		$request = $this->decodeRequest($requestJson);
 
+		_dc($request);
+
 		$soliutionId = $idea->ID = $request->request->get('solutionId');
 		$soliution = $idea->idea_solution = $request->request->get('soliution');
 
@@ -83,7 +85,9 @@ class IdeAdminController
 	//	public function delete($force_delete = false)
 	public function delete(IdeaPost $idea)
 	{
+
 		$idea->delete();
+
 
 		return $response = new Response;
 	}
