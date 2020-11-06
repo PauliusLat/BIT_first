@@ -1,8 +1,9 @@
+/** @format */
+
 "use strict";
 
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
-
 const ideaStrt = document.getElementById("startIdeaAdmin");
 
 function startIdea() {
@@ -24,14 +25,10 @@ function editText(editId) {
   ) {
     let text = txt.split(/\s+/);
     axios
-      .post(
-        uri + path +
-        "idea-edit-admin",
-        {
-          idea: text,
-          editId: editId,
-        }
-      )
+      .post(uri + path + "idea-edit-admin", {
+        idea: text,
+        editId: editId,
+      })
       .catch((err) => {
         console.log(err instanceof TypeError);
       });
@@ -43,6 +40,7 @@ function editText(editId) {
 
 function solutionText(sId, i) {
   const txt1 = document.getElementById(i).value;
+  console.log(txt1);
 
   if (
     txt1 != undefined &&
@@ -53,14 +51,10 @@ function solutionText(sId, i) {
   ) {
     let text1 = txt1.split(/\s+/);
     axios
-      .post(
-        uri + path +
-        "idea-create-admin",
-        {
-          soliution: text1,
-          solutionId: sId,
-        }
-      )
+      .post(uri + path + "idea-create-admin", {
+        soliution: text1,
+        solutionId: sId,
+      })
       .catch((err) => {
         console.log(err instanceof TypeError);
       });
@@ -71,7 +65,9 @@ function solutionText(sId, i) {
 /*----------------------- delete content axios----------------------------*/
 
 function deleteIdea(delId) {
+  console.log(delId);
   axios
+<<<<<<< HEAD
     .post(
       uri + path +
       "idea-delete-admin&id="+delId,
@@ -79,6 +75,11 @@ function deleteIdea(delId) {
         deleteId: delId,
       }
     )
+=======
+    .post(uri + path + "idea-delete-admin", {
+      deleteId: delId,
+    })
+>>>>>>> main
     .catch((err) => {
       console.log(err instanceof TypeError);
       console.log("Problemos su Delete api");
@@ -89,14 +90,9 @@ function deleteIdea(delId) {
 //  /*------------------------------render data  axios-----------------------------------------*/
 
 function renderColons(e) {
-
   axios
-    .get(
-      uri + path +
-      "idea-render-admin",
-      {}
-    )
-    .then(function (response) {
+    .get(uri + path + "idea-render-admin", {})
+    .then(function(response) {
       if (response.status == 200 && response.statusText == "OK") {
         const data = response.data.allData;
 
@@ -156,7 +152,7 @@ function renderColons(e) {
           let sId = postBtn[i].id;
           postBtn[i].addEventListener(
             "click",
-            function () {
+            function() {
               solutionText(sId, i + 1);
             },
             false
@@ -166,7 +162,7 @@ function renderColons(e) {
           let editId = editBtn[i].id;
           editBtn[i].addEventListener(
             "click",
-            function () {
+            function() {
               editText(editId);
             },
             false
@@ -176,7 +172,7 @@ function renderColons(e) {
           let delId = deletetBtn[i].id;
           deletetBtn[i].addEventListener(
             "click",
-            function () {
+            function() {
               deleteIdea(delId);
             },
             false
@@ -186,7 +182,7 @@ function renderColons(e) {
 
       return response;
     })
-    .catch(function (error) {
+    .catch(function(error) {
       if (error.response) {
         console.log(error.response.data);
         console.log(error.response.status);
