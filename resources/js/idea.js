@@ -67,7 +67,6 @@ function solutionText(sId, i) {
 function deleteIdea(delId) {
   console.log(delId);
   axios
-
     .post(
       uri + path +
       "idea-delete-admin&id="+delId,
