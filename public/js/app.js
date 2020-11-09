@@ -447,7 +447,7 @@ var Calendar = /*#__PURE__*/function () {
     value: function deleteEvent(id, action) {
       var _this4 = this;
 
-      axios.post(this.uri + this.path + "calendar-delete-admin", {
+      axios.post(this.uri + this.path + "calendar-delete-admin&id=" + id, {
         eventID: id
       }).then(function (response) {
         if (response.status == 200 && response.statusText == 'OK') {
@@ -460,7 +460,6 @@ var Calendar = /*#__PURE__*/function () {
           }
 
           var counter = 0;
-          console.log(action);
 
           for (var i = 0; i < dayEvents.length; i++) {
             for (var j = 0; j < keys.length; j++) {
@@ -522,173 +521,6 @@ var Calendar = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (Calendar);
-
-/***/ }),
-
-/***/ "./resources/js/category.js":
-/*!**********************************!*\
-  !*** ./resources/js/category.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var catStrt = document.getElementById("catStart");
-console.log(catStrt);
-
-function startCat() {
-  if (catStrt) {
-    window.addEventListener("load", init, false);
-  }
-}
-
-function init() {
-  axios.post(uri + path + "category_create", {}).then(function (response) {
-    var test = document.querySelector(".innercat");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-      var submit = document.getElementById("create");
-      submit.addEventListener("click", function () {
-        var name = document.getElementById("category-name").value;
-        var slug = document.getElementById("category-slug").value;
-        var description = document.getElementById("category-description").value;
-        var parent = document.getElementById('cat');
-        var select = parent.options[parent.selectedIndex].value;
-        console.log(select);
-        catStore(name, select, slug, description);
-      });
-      var editBtn = catStrt.querySelectorAll(".category-edit");
-
-      var _loop = function _loop(i) {
-        var ID = editBtn[i].value;
-        var taxonomy = editBtn[i].id;
-        editBtn[i].addEventListener("click", function () {
-          catEdit(ID, taxonomy);
-        }, false);
-      };
-
-      for (var i = 0; i < editBtn.length; i++) {
-        _loop(i);
-      }
-
-      var deleteBtn = document.querySelectorAll(".category-delete");
-
-      var _loop2 = function _loop2(_i) {
-        var ID = deleteBtn[_i].value;
-        var taxonomy = deleteBtn[_i].id;
-
-        deleteBtn[_i].addEventListener("click", function () {
-          catDelete(ID, taxonomy);
-          console.log(ID);
-          console.log(taxonomy);
-        }, false);
-      };
-
-      for (var _i = 0; _i < deleteBtn.length; _i++) {
-        _loop2(_i);
-      }
-    }
-  })["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error.message);
-    }
-
-    console.log(error);
-  });
-  1;
-}
-
-function catStore(name, select, slug, description) {
-  console.log(select);
-  console.log(name);
-  axios.post(uri + path + "category_store", {
-    cat_name: name,
-    cat_slug: slug,
-    cat_description: description,
-    cat_parent: select
-  }).then(function (response) {
-    console.log(response);
-    init();
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-  document.getElementById("category-name").value = "";
-}
-
-function catEdit(editID, taxonomy) {
-  console.log(editID);
-  axios.post(uri + path + "category_edit", {
-    editID: editID,
-    taxonomy_type: taxonomy
-  }).then(function (response) {
-    var test = document.querySelector(".innercat");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-    }
-
-    var updateBtn = document.getElementById("catUpdate");
-    updateBtn.addEventListener("click", function () {
-      var updateId = updateBtn.value;
-      catUpdate(updateId);
-    });
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function catUpdate(updateId) {
-  var name = document.getElementById("category_name").value;
-  var slug = document.getElementById("category_slug").value;
-  var description = document.getElementById("category_description").value;
-  axios.post(uri + path + "category_update", {
-    updateId: updateId,
-    cat_name: name,
-    cat_slug: slug,
-    cat_description: description
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init(); // setTimeout(call.init(), 500);
-
-      console.log(11111);
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function catDelete(ID, taxonomy) {
-  console.log(ID);
-  axios.post(uri + path + "category_destroy", {
-    deleteID: ID,
-    taxonomy_type: taxonomy
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init(); // setTimeout(init(), 500);
-      // console.log(11111);
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startCat());
 
 /***/ }),
 
@@ -898,7 +730,7 @@ function solutionText(sId, i) {
 
 function deleteIdea(delId) {
   console.log(delId);
-  axios.post(uri + path + "idea-delete-admin", {
+  axios.post(uri + path + "idea-delete-admin&id=" + delId, {
     deleteId: delId
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
@@ -1002,17 +834,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
 /* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gallery.js */ "./resources/js/gallery.js");
 /* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
-/* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
-/* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
-/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
+/* harmony import */ var _text_editor_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./text-editor.js */ "./resources/js/text-editor.js");
+/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
 /** @format */
 
 
 
 
 
-
-new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"](".calendar");
+new _text_editor_js__WEBPACK_IMPORTED_MODULE_3__["default"]('.news-container');
+new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.calendar');
 
 /***/ }),
 
@@ -1126,163 +957,184 @@ function renderNews() {
 
 /***/ }),
 
-/***/ "./resources/js/tag.js":
-/*!*****************************!*\
-  !*** ./resources/js/tag.js ***!
-  \*****************************/
+/***/ "./resources/js/text-editor.js":
+/*!*************************************!*\
+  !*** ./resources/js/text-editor.js ***!
+  \*************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/** @format */
 
 
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var tagStrt = document.getElementById("tagStart"); // console.log(tagStrt);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function startTag() {
-  if (tagStrt) {
-    window.addEventListener("load", init, false);
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var TextEditor = /*#__PURE__*/function () {
+  function TextEditor(e) {
+    _classCallCheck(this, TextEditor);
+
+    this.target = e;
+    this.DOM = null;
+    this.init();
   }
-}
 
-function init() {
-  axios.post(uri + path + "tag_create", {}).then(function (response) {
-    var test = document.querySelector(".test");
+  _createClass(TextEditor, [{
+    key: "init",
+    value: function init() {
+      var _this = this;
 
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-      var submit = document.getElementById("create");
-      submit.addEventListener("click", function () {
-        var name = document.getElementById("tag-name").value;
-        var slug = document.getElementById("tag-slug").value;
-        var description = document.getElementById("tag-description").value;
-        tagStore(name, slug, description);
-      });
-      var editBtn = tagStrt.querySelectorAll(".tag-edit");
+      var DOM = document.querySelector(this.target);
 
-      var _loop = function _loop(i) {
-        var ID = editBtn[i].value;
-        var taxonomy = editBtn[i].id;
-        editBtn[i].addEventListener("click", function () {
-          tagEdit(ID, taxonomy);
-        }, false);
-      };
+      if (DOM) {
+        var contenteditable = document.querySelector("[contenteditable]");
+        var el = document.querySelector('.editor');
+        var bold = document.querySelector(".click-Blod");
+        var italic = document.querySelector(".click-Italc");
+        var li = document.querySelector(".click-li");
+        var a = document.querySelector(".click-a");
+        var link = document.getElementById("txtFormatUrl");
+        var input = document.querySelector('div'); // const pad = document.createTextNode('\u00A0');
+        // input.appendChild(pad);
+        // let selection = window.getSelection();
 
-      for (var i = 0; i < editBtn.length; i++) {
-        _loop(i);
+        bold.addEventListener("click", function () {
+          _this.surroundSelection(); // let b = document.createElement("b")
+          // let range = selection.getRangeAt(0).cloneRange();
+          // range.surroundContents(b)
+          // selection.removeAllRanges();
+          // selection.addRange(range);
+          // let pad = this.addPad();
+          // range.setEnd(pad, 1);
+          // selection.collapseToEnd();
+          // this.getContent(contenteditable)
+
+        });
+        italic.addEventListener("click", function () {
+          var i = document.createElement("i");
+          window.getSelection().getRangeAt(0).surroundContents(i); // this.getContent(contenteditable)
+        });
+        li.addEventListener("click", function () {
+          var li = document.createElement("li");
+          window.getSelection().getRangeAt(0).surroundContents(li); // this.getContent(contenteditable)
+        });
+        a.addEventListener("click", function () {
+          // console.log(link.value);
+          var a = document.createElement("a");
+          a.href = link.value;
+          console.log(a);
+          window.getSelection().getRangeAt(0).surroundContents(a); // this.pasteHtmlAtCaret(a);
+          // this.getContent(contenteditable)
+        });
+      }
+    }
+  }, {
+    key: "getContent",
+    value: function getContent(text) {
+      // let range = new Range();
+      // const el = document.querySelector('.editor')//ideti linka
+      // el.setAttribute('contenteditable', true);
+      // let textNode = el.firstChild
+      // let caret = textNode.length
+      // let element = document.createElement("b")
+      // window.getSelection().getRangeAt(0).surroundContents(element)
+      var sel = document.getSelection(); // sel.setEnd;
+
+      if (document.getSelection) {
+        // all browsers, except IE before version 9
+        alert(sel);
+      } else {
+        if (document.selection) {
+          // Internet Explorer before version 9
+          var textRange = document.selection.createRange();
+          alert(textRange.text);
+        }
       }
 
-      var deleteBtn = document.querySelectorAll(".tag-delete");
+      var savedRange = sel.getRangeAt(0);
+      sel.removeAllRanges();
+      console.log(sel);
+      sel.addRange(savedRange);
+    }
+  }, {
+    key: "pasteHtmlAtCaret",
+    value: function pasteHtmlAtCaret(html) {
+      var sel, range;
 
-      var _loop2 = function _loop2(_i) {
-        var ID = deleteBtn[_i].value;
-        var taxonomy = deleteBtn[_i].id;
+      if (window.getSelection) {
+        // IE9 and non-IE
+        sel = window.getSelection();
 
-        deleteBtn[_i].addEventListener("click", function () {
-          tagDelete(ID, taxonomy);
-          console.log(ID);
-          console.log(taxonomy);
-        }, false);
-      };
+        if (sel.getRangeAt && sel.rangeCount) {
+          range = sel.getRangeAt(0);
+          range.deleteContents(); // Range.createContextualFragment() would be useful here but is
+          // non-standard and not supported in all browsers (IE9, for one)
 
-      for (var _i = 0; _i < deleteBtn.length; _i++) {
-        _loop2(_i);
+          var el = document.createElement("img");
+          el.innerHTML = html;
+          var frag = document.createDocumentFragment(),
+              node,
+              lastNode;
+          console.log(frag);
+
+          while (node = el.firstChild) {
+            lastNode = frag.appendChild(node);
+            console.log(lastNode);
+          }
+
+          range.insertNode(frag); // Preserve the selection
+
+          if (lastNode) {
+            range = range.cloneRange();
+            range.setStartAfter(lastNode);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }
+        }
+      } else if (document.selection && document.selection.type != "Control") {
+        // IE < 9
+        document.selection.createRange().pasteHTML(html);
       }
     }
-  })["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error.message);
+  }, {
+    key: "addPad",
+    value: function addPad() {
+      var $input = document.querySelector('.editorContainer > div');
+      var pad = document.createTextNode("\xA0"); // console.log($input);
+      //         $input.appendChild(pad);
+
+      return pad;
     }
+  }, {
+    key: "surroundSelection",
+    value: function surroundSelection() {
+      var sel = window.getSelection();
+      if (!sel || !sel.rangeCount) return;
+      console.log(sel);
+      var code = document.createElement("b"); // code.style.fontStyle = "italic";
+      // code.style.background = "#ddd";
 
-    console.log(error);
-  });
-  1;
-}
+      var range = sel.getRangeAt(0).cloneRange();
+      console.log(range);
+      range.surroundContents(code); // sel.removeAllRanges();
 
-function tagStore(name, slug, description) {
-  axios.post(uri + path + "tag_store", {
-    tag_name: name,
-    tag_slug: slug,
-    tag_description: description
-  }).then(function (response) {
-    console.log(response);
-    init();
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-  document.getElementById("tag-name").value = "";
-}
-
-function tagEdit(editID, taxonomy) {
-  axios.post(uri + path + "tag_edit", {
-    editID: editID,
-    taxonomy_type: taxonomy
-  }).then(function (response) {
-    var test = document.querySelector(".test");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
+      sel.addRange(range);
+      var padNode = this.addPad();
+      range.setEnd(padNode, 1);
+      console.log(range);
+      sel.collapseToEnd();
     }
+  }]);
 
-    var updateBtn = document.getElementById("tagUpdate");
-    updateBtn.addEventListener("click", function () {
-      var updateId = updateBtn.value;
-      tagUpdate(updateId);
-    });
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
+  return TextEditor;
+}();
 
-function tagUpdate(updateId) {
-  var name = document.getElementById("tag_name").value;
-  var slug = document.getElementById("tag_slug").value;
-  var description = document.getElementById("tag_description").value;
-  axios.post(uri + path + "tag_update", {
-    updateId: updateId,
-    tag_name: name,
-    tag_slug: slug,
-    tag_description: description
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init(); // setTimeout(call.init(), 500);
-
-      console.log(11111);
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function tagDelete(ID, taxonomy) {
-  console.log(ID);
-  axios.post(uri + path + "tag_destroy", {
-    deleteID: ID,
-    taxonomy_type: taxonomy
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init(); // setTimeout(init(), 500);
-      // console.log(11111);
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startTag());
+/* harmony default export */ __webpack_exports__["default"] = (TextEditor);
 
 /***/ }),
 
@@ -1304,8 +1156,8 @@ function tagDelete(ID, taxonomy) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Users/ievaskyriene/.bitnami/stackman/machines/xampp/volumes/root/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

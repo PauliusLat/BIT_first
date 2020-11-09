@@ -40,17 +40,10 @@ class CalendarAdminController
 		return $response = new Response;
 	}
 
-	public function delete(Request $requestJson, EventPost $event)
+	public function delete(EventPost $event)
 	{
+		$event->delete();
 
-		$request = $this->decodeRequest($requestJson);
-
-		$deleteId = $event->ID = $request->request->get('eventID');
-
-		if ($deleteId) {
-			$deletePost = EventPost::get($deleteId);
-			$deletePost->delete();
-		}
 		$data = (EventPost::all())->pluck('event_description', 'event_date', 'event_time', 'ID')->all();
 		$response = new JsonResponse(['allData' => $data]);
 		return $response;
