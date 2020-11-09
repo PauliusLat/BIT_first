@@ -26,6 +26,7 @@ use BIT\controllers\NewsController;
 use BIT\models\IdeaPost;
 use BIT\models\NewsPost;
 use BIT\app\Tag;
+use BIT\app\Server;
 use BIT\app\modelTraits\Tcategory;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -40,9 +41,31 @@ define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 $app = App::start();
-$query = new Query;
+// $query = new Query;
 
-$api = new ApiRoute;
+// $api = new ApiRoute;
+
+// $session = App::start()->getService('session');
+// _dc($_SERVER);
+
+// $server = new Server;
+
+// // now try it
+// $ua=$server->getBrowser();
+// _dc($ua);
+// $yourbrowser= "Your browser: " . $ua['name'] . " " . $ua['version'] . " on " .$ua['platform'] . " reports: <br >" . $ua['userAgent'];
+// print_r($yourbrowser);
+// $user_agent = $_SERVER['HTTP_USER_AGENT'] . "\n\n";
+// _dc(get_browser_name($user_agent));
+
+// $session = new Session;
+// $session->set(9,3);
+// // _dc($session->get(4));
+//  $session->set(9,3);
+// $session->set('b',[3,2,4]);
+
+// $session->set('id',5);
+// _dc($session->get('id'));
 
 // 
 // _dc($app->getService('request')->query->get('route', ''));
@@ -67,18 +90,85 @@ $api = new ApiRoute;
 // $category = new Category;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
-add_action('init', function() {
-    $tag = new Tag;
-    // _dc($tag);
-    
+// add_action('init', function() {
 
-    $tag->deleteTagFromDb(21, 'ideatag');
-    $category = new Category;
 
-    //nesigaua
-    $terms = $category->get_taxonomy_hierarchy_arr('maincat');
-   _dc( $terms);
-   
+
+    // $terms = $category->getTaxonomyHierarchy('maincat');
+    // _dc($terms);
+
+    // foreach ($terms as $term){
+    //     _dc($term);
+    // }
+    // $cats = $category->flattenArray($terms);
+    // _dc($cats);
+
+    // $terms = $category->get_taxonomy_hierarchy()->pluck('name', 'slug', 'term_id', 'parent');
+    // _dc($terms);
+
+// function flatten_array($array) {
+//     $flattened_array = array();
+//     array_walk_recursive($array, function($a) use (&$flattened_array) { $flattened_array[] = $a; });
+//     return $flattened_array;
+// }
+
+// _dc(flatten_array($terms));
+
+// function flattenArray($array)
+// {
+// static $flattened = [];
+// if(is_array($array) && count($array) > 0)
+// {   
+//     foreach ($array as $member) {
+//         if(empty($member->children)) 
+//         {
+//             $flattened[] = $member; 
+//         } else
+//         {
+//             flattenArray($member->children);
+//             unset($member->children);
+//             $flattened[] = $member; 
+//         }
+//     }
+// }
+// return $flattened;
+// }
+
+// _dc($category->flattenArray($category->get_taxonomy_hierarchy_arr('maincat')));
+
+// function flattenWithKeys(array $array, $childPrefix = '.', $root = '', $result = array()) {
+//     // redundant with type hint
+//     //if(!is_array($array)) return $result;
+
+//     ### print_r(array(__LINE__, 'arr' => $array, 'prefix' => $childPrefix, 'root' => $root, 'result' => $result));
+
+//     foreach($array as $k => $v) {
+//         if(is_array($v) || is_object($v)) $result = flattenWithKeys( (array) $v, $childPrefix, $root . $k . $childPrefix, $result);
+//         else $result[ $root . $k ] = $v;
+//     }
+//     return $result;
+// }
+
+// _dc(flattenWithKeys($terms));
+
+
+    // function array_flatten($array) {
+
+    //     $return = array();
+    //     foreach ($array as $key => $value) {
+    //         //  _dc((array)$value);
+    //         // _dc($value);
+    //         if (is_array($value)){ $return = array_merge($return, array_flatten((array)$value));}
+    //         else {$return[$key] = $value;}
+    //     }
+    //     return $return;
+     
+    // }
+
+    //  _dc(array_flatten($terms));
+    //array_flatten($terms);
+
+
     //    $args = array(
 
 //     'hide_empty'         => 0,
@@ -164,15 +254,8 @@ add_action('init', function() {
 // //     //  $idea->save();
 // //     //  _dc( $idea);
 // //     //  $idea->addTag('');
-});
+// });
 
-
-
-// $request = App::start()->getService('request');
-// $request->attributes->set('mykey', 'myvalue');
-// $parameters = $request->attributes->get('mykey', 'myvalue');
-
-// _dc($parameters);
 
 
 

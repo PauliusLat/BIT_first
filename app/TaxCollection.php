@@ -91,7 +91,7 @@ class TaxCollection implements \IteratorAggregate
     * $album->getAllTags()->sortBy('count', 'desc')->pluck('name', 'slug') */
     public function pluck(...$args)
     {
-        $termProps = ['term_id', 'name', 'slug', 'term_taxonomy_id', 'description', 'count', 'filter'];
+        $termProps = ['term_id', 'name', 'slug', 'term_taxonomy_id', 'description', 'count', 'filter', 'parent'];
         $pluckedTags = [];
         if ($args) {
             foreach ($args as $arg) {
