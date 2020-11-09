@@ -171,3 +171,31 @@ class Post{
     }
 
 }
+
+
+
+// $idea_content;
+// $idea_like;
+// NewsPost.php Aiste Noreikaite
+// $news_content;
+// attach pic; //TODO
+// AlbumPost.php Jul1u5.lt 
+// $post_title;
+// $album_description;
+// $album_date;
+// attach pic; //TODO
+// naujas objektas - new EventPost(); arba new IdeaPost();
+// pvz:
+// $kazkas = new EventPost();
+// $kazkas->event_description = ‘tekstas is requesto, geto arba posto’;
+// $kazkas->event_date = 'YYYY-MM-DD';
+// $kazkas->save();
+// editinam objekta taip pat taip pat, tik objekta pasiimam per ::get(), naujo nekuriam:
+// $kazkas = EventPost::get($post_id);
+// $kazkas->event_description = ‘tekstas is requesto, geto arba posto’;
+// $kazkas->event_date = 'YYYY-MM-DD';
+// $kazkas->save();
+// ::get($post_id) - grazins jusu objekta.
+// ::all() - grazins Collection objekta.
+// save() - irasys DB nauja objekta, arba editins jau esanti, pagal tai ar sukursite nauja obj, ar pakeisite lauku reiksmes jau esanciam obj.
+// delete() - posto istrynimui.
