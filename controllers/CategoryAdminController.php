@@ -17,7 +17,7 @@ class CategoryAdminController {
 
     public function create(Request $request){
         $category = new Category;
-        $categories = $category->getAllCats();
+        $categories = $category->flattenArray($category->get_taxonomy_hierarchy_arr('maincat'));
       
         foreach ($categories as $cat){
             $children = $category->getChildCats($cat->term_id);
@@ -30,7 +30,7 @@ class CategoryAdminController {
         // $category = new Category;
         $app = App::start();
         // _dc($category);
-        $categories = $category->getAllCats();
+        $categories = $category->flattenArray($category->get_taxonomy_hierarchy_arr('maincat'));
         $name = $request->request->get('category-name');
         $slug = $request->request->get('category-slug');
         $description = $request->request->get('category-description');

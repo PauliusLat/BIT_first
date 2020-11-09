@@ -25,7 +25,7 @@ class CategoryController {
     public function create(Request $request)
     {
         $category = new Category;
-        $categories = $category->getAllCats(); 
+        $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr('maincat')));
         $output = View::adminRender('category.category',  ["categories" => $categories]);
         $response = new JsonResponse(['html' => $output]);
         return $response;
