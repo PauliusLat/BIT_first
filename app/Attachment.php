@@ -126,3 +126,22 @@ class Attachment extends Post{
 
 
 }
+
+
+
+
+
+// Attachment klase, kaip ir kiti modeliai paveldi Post.php ir turi visus kitu modeliu metodus.
+// Issaugodami perduodame visa $request, ir $parent_id(optional, jei norime priskirti kazkuriam modelio objektui).
+// Kaip sukurti atachment’a:
+// $attachment = new Attachment();
+// $attachment->save($request, $post_parent_id(optional)); -sukuria nauja, arba update’ina esanti.
+// $attachment->delete();
+// $attachment->getURL();
+// $attachment->geAttachmentDetails();
+// $post_parent_id* galime perduoti, jei attachment’a norime priskirti kazkuriam postui(modelio objektui).Jei jo neperduodame, attachmentas liks be konteksto - be rysio i kazkuri post objekta.
+// Visi modeliai, turi nauja savybe attachments. Ji  grazins masyva attachment tipo objektu. T.y. visi failai priskirti tam modelio objektui.
+// Pvz.: 
+// $album = AlbumPost::get($post_id);
+// $album->attachments;
+// grazins masyva nuotrauku(kaip Attachment objektu) priskirtu siam objektui.

@@ -22,9 +22,7 @@ class NewsController {
 
     public function list(Request $request) 
     {   
-        $a = NewsPost::get(952);
-        $a->post_name = 'Naujas deeded';
-        $a->save();
+        $a = NewsPost::get(951);
         echo($a->getLink());   
         $news = NewsPost::all()->pluck('post_date', 'post_title', 'ID', 'attachments')->all();
         foreach ($news as &$value) {

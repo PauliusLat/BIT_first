@@ -13,4 +13,5 @@ return [
     'idejos' => 'IdeasController@index',
    
     'test' => 'TestController@front',
+    'news' =>'NewsController@index',
 ];
