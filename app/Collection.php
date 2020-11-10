@@ -44,6 +44,17 @@ class Collection {
         return new self($pluckedItems);
     }
 
+    public function pageState($state = ''){
+        $state = (string)$state;
+        $stateItems = [];
+        foreach ($this->items as $value) {
+            if( strcmp ( $value->pageState , $state ) === 0){
+                $stateItems[$value->ID] = $value;
+            }
+        }
+        return new self($stateItems);
+    }
+
     // public function contains($key, $operator = null, $value = null)
     // {
     //     if (func_num_args() === 1) {
