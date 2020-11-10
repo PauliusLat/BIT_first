@@ -4,6 +4,7 @@ namespace BIT\controllers;
 
 use BIT\app\Attachment;
 use BIT\app\View;
+use BIT\app\Page;
 use BIT\models\AlbumPost;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,19 +19,38 @@ class AlbumFrontController
 
     public function create(AlbumPost $album)
     {
+ 
+//7-4:4
+$page = (Page::all())->all();
+foreach ($page as $key => $value) {
+    echo '<pre>';
+    var_dump(  $value->getLink());
+    $value->getLink();
+}
         $allImages = [];
         $albumName = [];
         $albumData  = (AlbumPost::all())->all();
+        echo '<pre>' ;
+        var_dump($page );
         foreach ($albumData as $data) {
             $albumName[] = $data->album_title;
             foreach ($data->attachments as $key => $img) {
                 $allImages[] = $img->getUrl();
             }
         }
-        $albumName = str_replace(' ', '-', $albumName);
-        $output = View::adminRender('album.album',  ["album" => $albumName]);
+        $output = View::adminRender('album.album',  ["album" =>  $albumName]);
         $response = new JsonResponse(['html' => $output]);
 
         return $response;
     }
 }
+
+// $page = new Page();
+// $page->setRoute(‘album’);  - sklaisutuose routo pavadinimas is frontRoutes i kuri nori nukreipti.
+// $page->setTitle($userio_albumo_pavadinimas’); - skliaustuose Page pavadinimas kuris bus ir slug, arba kintamasis - gautas ir request - albumo_pavadinimas;
+// // $page->pageState = ‘Site Page’;   - cia gali priskirti pageState. Sita eilute nebuina, jei nieko nerasysi pageState defaultas Site Page, kaip pas Arvyda.
+// $page->save();
+// $album = new AlbumPost();
+// $album->post_parent = $page->ID;
+// // $album->savybe = ‘tekstas’;  - priskiri reikalingas savybes;
+// $album->save()

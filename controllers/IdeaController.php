@@ -4,6 +4,7 @@ namespace BIT\controllers;
 
 use BIT\app\Cookie;
 use BIT\app\View;
+use BIT\app\Server;
 use BIT\app\Session;
 use BIT\models\IdeaPost;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,7 +20,6 @@ class IdeaController
 	public function frontIndex()
 	{
 		return View::render('home.ideja');
-
 	}
 
 	public function render(Request $request)
@@ -37,6 +37,8 @@ class IdeaController
 
 	public function create(Request $requestJson, Session $session)
 	{
+		$server = new Server;
+
 		$idea = new IdeaPost;
 
 		$response = new Response;
@@ -44,7 +46,6 @@ class IdeaController
 		$request = $this->decodeRequest($requestJson);
 
 		$array = $idea->idea_content = $request->request->get('idea');
-
 
 		if (is_array($array) && count(array_filter($array)) != "") {
 
@@ -59,16 +60,20 @@ class IdeaController
 
 			$idea->save();
 		} else {
-
+			$array = [];
 			$like = $idea->idea_like = $request->request->get('idea_like');
-
-			if ($like) {
-				Cookie::ideaCookie($like);
-
+			$idBrowser = $server->getBrowser();
+			$id = $idBrowser['version'];
+			$array[] = $id;
+			$array[] = $like;
+			// $session->set('id', $array);
+			// var_dump($session->get('id'));
+			// $session->deleteSession();
+			// if ($session->get('id') != $array) {
 				$ideaLike = IdeaPost::get($like);
 				$ideaLike->idea_like = $ideaLike->idea_like + 1;
 				$ideaLike->save();
-			}
+			// }
 		}
 		return $response;
 	}

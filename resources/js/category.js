@@ -8,6 +8,7 @@ console.log(catStrt);
 function startCat() {
   if (catStrt) {
     window.addEventListener("load", init, false);
+
   }
 }
 

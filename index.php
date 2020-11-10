@@ -42,10 +42,13 @@ define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 $app = App::start();
 // $query = new Query;
-
+$session = App::start()->getService('session');
+$a=101;
+$session->set('dt', 2);
+// var_dump($session->get('dt'));
 // $api = new ApiRoute;
 
-// $session = App::start()->getService('session');
+
 // _dc($_SERVER);
 
 // $server = new Server;
