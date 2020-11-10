@@ -146,4 +146,4 @@ function renderNews() {
 
 
 
-export default startNews();
+// export default startNews();

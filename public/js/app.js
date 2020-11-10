@@ -836,6 +836,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
 /* harmony import */ var _text_editor_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./text-editor.js */ "./resources/js/text-editor.js");
 /* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
+/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_news_js__WEBPACK_IMPORTED_MODULE_4__);
 /** @format */
 
 
@@ -851,11 +852,10 @@ new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.calendar');
 /*!******************************!*\
   !*** ./resources/js/news.js ***!
   \******************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
 /** @format */
 
 
@@ -951,9 +951,7 @@ function renderNews() {
 
     console.log(error);
   });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startNews());
+} // export default startNews();
 
 /***/ }),
 
