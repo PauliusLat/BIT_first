@@ -40,12 +40,29 @@ require_once __DIR__.'/vendor/autoload.php';
 define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
-$app = App::start();
+App::start();
 // $query = new Query;
 
 // $api = new ApiRoute;
 
-// $session = App::start()->getService('session');
+$session = App::start()->getService('session');
+$pages = Page::all(); 
+_dc($pages);
+// _dc($session);
+
+// $session = new Session;
+// _dc($_COOKIE);
+//  $session->set('kuku',5);
+// _dc($session->get('kuku'));
+// $session->set('lala',5);
+// $session->set('br',5);
+
+//  _dc($session->get('c'));
+// $session->set('p',5);
+// $session->set('x',5);
+// $session->flash('j',5);
+// $session->deleteSession();
+// _dc($session);
 // _dc($_SERVER);
 
 // $server = new Server;
@@ -64,8 +81,9 @@ $app = App::start();
 //  $session->set(9,3);
 // $session->set('b',[3,2,4]);
 
-// $session->set('id',5);
-// _dc($session->get('id'));
+// $session->set('idd',5);
+// _dc($session->get('idd'));
+
 
 // 
 // _dc($app->getService('request')->query->get('route', ''));
@@ -90,18 +108,21 @@ $app = App::start();
 // $category = new Category;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
-// add_action('init', function() {
+
+add_action('init', function() {
 
 
 
-    // $terms = $category->getTaxonomyHierarchy('maincat');
+$category = new Category;
+
+$terms = $category->getTaxonomyHierarchyArr('maincat');
     // _dc($terms);
 
     // foreach ($terms as $term){
     //     _dc($term);
     // }
-    // $cats = $category->flattenArray($terms);
-    // _dc($cats);
+ $cats = $category->flattenArray($terms);
+// _dc($cats);
 
     // $terms = $category->get_taxonomy_hierarchy()->pluck('name', 'slug', 'term_id', 'parent');
     // _dc($terms);
@@ -254,7 +275,7 @@ $app = App::start();
 // //     //  $idea->save();
 // //     //  _dc( $idea);
 // //     //  $idea->addTag('');
-// });
+});
 
 
 

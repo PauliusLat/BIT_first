@@ -28,6 +28,11 @@ use BIT\app\Category;
                 <br><br>
                 <label class="admin-label">Kategorijos aprašymas</label><br>
                 <input type="textarea" name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="admin-input"><br><br>
+                
+                <!-- <form action="" method="post" enctype="multipart/form-data"> -->
+                <!-- Your Photo: <input type="file" name="picture" size="25"/><br><br> -->
+                <!-- <form> -->
+                
                 <div class="admin-event-buttons">
                     <button type="submit" id="create" class="admin-event-button">Pridėti</button>
                 </div>

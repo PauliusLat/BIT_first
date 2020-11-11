@@ -11,13 +11,25 @@ use BIT\models\AlbumPost;
 use BIT\app\Category;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
 class PageController {
 
-    public function create(Request $request){
-        return View::adminRender('page.create', ['url' => PLUGIN_DIR_URL]);
+    public function index()
+    {
+        return View::adminRender('page.mainpage');
+    }
+
+    public function create(Request $request)
+    {
+        // $page = new Page;
+        $pages = Page::all(); 
+        _dc($pages);
+        $output = View::adminRender('page.page',["pages" => $pages]);
+        $response = new JsonResponse(['html' => $output]);
+        return $response;
     }
 
     public function store(Request $request){
