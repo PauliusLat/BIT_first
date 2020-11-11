@@ -16,7 +16,7 @@ class NewsController {
 
     public function index(){
 
-        return View::adminRender('news.create');
+        return View::adminRender('news.index');
 
     }
 

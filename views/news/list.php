@@ -1,27 +1,34 @@
 <?php
 
-echo '<div id="list">';
-foreach ($news as $key => $post) {
+use BIT\models\NewsPost;
 
+$list = NewsPost::all()->all();
+$htmlString = '';
 
-    echo '<div class="admin-event-div">
-        <div class="admin-event-forms">
-            <input type="hidden" name="news_update" value="update news">
-            <input type="hidden" name="news_id" value="' . $post->ID  . '">
-            <div class="admin-event-form-group">
-                <label class="admin-label">Keisti naujienos pavadinimą:</label><br>
-                <input class="admin-input" type="text" name="news-content" value="' . $post->news_content .'">
-            </div>
-            <div class="admin-event-buttons">
-                <button type="submit" class="admin-event-button">Redaguoti</button>
-            </div>
-        </div>
-        <div>
-            <div class="admin-event-buttons">
-                <button type="submit" class="news-delete admin-event-button" data-id="' . $post->ID . '">Trinti</button>
-            </div>
-        </div>
-    </div>'
-;
+foreach ($list as $id => $news) {
+    $attachment = $news->attachments[0]->getUrl();
+    $htmlString .= 
+                    `<div class="news-box"> 
+  
+                      <div class="news-img">
+                        <img src="$attachment" alt="">
+                      </div>
+                      <div class="news-text">
+                        <div class="news-date">
+                            <p>$news->post_date</p>
+                        </div>
+                        <div class="news-content">
+                            <p>$news->post_title</p>
+                        </div>
+                      </div>
+                      <div class="news-buttons">
+                        <button  class="newsBtn deleteBtnNews" id="$news->ID">
+                            Trinti
+                        </button> 
+                        <button  class="newsBtn editBtnNews" id="$news->ID">
+                            Redaguoti
+                        </button> 
+                      </div>
+                    </div>`;
 }
-echo '</div>';
+
