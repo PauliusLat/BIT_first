@@ -47,4 +47,10 @@ return [
 	'category_update' => 'CategoryController@update',
 	'category_destroy' => 'CategoryController@destroy',
 	'category_edit' => 'CategoryController@edit',
+
+	'page_create' => 'PageController@create',
+	'page_store' => 'PageController@store',
+	'page_update' => 'PageController@update',
+	'page_destroy' => 'PageController@destroy',
+	'page_edit' => 'PageController@edit',
 ];

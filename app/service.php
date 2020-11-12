@@ -1,7 +1,6 @@
 <?php
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use Symfony\Component\HttpFoundation\Request;
-
 use BIT\models\NewsPost;
 use BIT\models\IdeaPost;
 use BIT\models\EventPost;
@@ -10,6 +9,7 @@ use BIT\app\RequestId;
 use BIT\app\Cookie;
 use BIT\app\Session;
 use BIT\app\Category;
+use BIT\app\Page;
 
 return function(ContainerConfigurator $configurator) {
 
@@ -43,6 +43,10 @@ return function(ContainerConfigurator $configurator) {
     $services->set('ideaPost', IdeaPost::class)
     ->args([ref(RequestId::class)] );
     $services->alias(IdeaPost::class, 'ideaPost');
+
+    $services->set('page', Page::class)
+    ->args([ref(RequestId::class)] );
+    $services->alias(Page::class, 'page');
 
     $services->set('uuid', Cookie::class)
     ->factory([Cookie::class, 'getUuid']);

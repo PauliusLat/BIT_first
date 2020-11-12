@@ -15,10 +15,10 @@ class Session{
     }
 
     public function set($a, $b){
-            $transient = Transient::start();
-            self::$array = $transient->newValue; 
-            self::$array[$a] = $b;
-            return self::$array;
+        $transient = Transient::start();
+        self::$array = $transient->newValue; 
+        self::$array[$a] = $b;
+        return self::$array;
     }
 
     public function flash($a, $b){
