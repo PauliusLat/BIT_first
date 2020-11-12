@@ -20,43 +20,50 @@ function init() {
         const HTML = response.data.html;
         test.innerHTML = HTML;
 
-        // const submit = document.getElementById("create");
-        // submit.addEventListener("click", () => {
-        //   const name = document.getElementById("tag-name").value;
-        //   const slug = document.getElementById("tag-slug").value;
-        //   const description = document.getElementById("tag-description").value;
-        //   tagStore(name, slug, description);
-        // });
+        const submit = document.getElementById("create");
+        submit.addEventListener("click", () => {
+          const name = document.getElementById("page-name").value;
+        //   const slug = document.getElementById("post-slug").value;
+        //   const description = document.getElementById("page-description").value;
 
-        // const editBtn = tagStrt.querySelectorAll(".tag-edit");
-
-        // for (let i = 0; i < editBtn.length; i++) {
-        //   let ID = editBtn[i].value;
-        //   let taxonomy = editBtn[i].id;
-        //   editBtn[i].addEventListener(
-        //     "click",
-        //     function() {
-        //       tagEdit(ID, taxonomy);
-        //     },
-        //     false
-        //   );
-        // }
-
-        // const deleteBtn = document.querySelectorAll(".tag-delete");
-        // for (let i = 0; i < deleteBtn.length; i++) {
-        //   let ID = deleteBtn[i].value;
-        //   let taxonomy = deleteBtn[i].id;
+          let post = document.getElementById('post');
+          console.log(post);
+          let select = post.options[post.selectedIndex].value;
+          console.log(select);  
+ 
+        pageStore(name, select);
          
-        //   deleteBtn[i].addEventListener(
-        //     "click",
-        //     function() {
-        //       tagDelete(ID, taxonomy);
-        //       console.log(ID);
-        //       console.log(taxonomy);
-        //     },
-        //     false
-        //   );
-        // }
+        });
+
+        const editBtn = pageStrt.querySelectorAll(".page-edit");
+
+        for (let i = 0; i < editBtn.length; i++) {
+          let ID = editBtn[i].value;
+        //   console.log(ID);
+        //   let page = editBtn[i].id;
+          editBtn[i].addEventListener(
+            "click",
+            function() {
+              pageEdit(ID);
+            },
+            false
+          );
+        }
+
+        const deleteBtn = document.querySelectorAll(".page-delete");
+        console.log(deleteBtn);
+        for (let i = 0; i < deleteBtn.length; i++) {
+          let ID = deleteBtn[i].value;
+         
+          deleteBtn[i].addEventListener(
+            "click",
+            function() {
+              pageDelete(ID);
+              console.log(ID);
+            },
+            false
+          );
+        }
       }
     })
     .catch(function(error) {
@@ -74,91 +81,87 @@ function init() {
   1;
 }
 
-// function tagStore(name, slug, description) {
-//   axios
-//     .post(uri + path + "tag_store", {
-//       tag_name: name,
-//       tag_slug: slug,
-//       tag_description: description
-//     })
-//     .then(function(response) {
-//       console.log(response);
-//       init();
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-//   document.getElementById("tag-name").value = "";
-// }
+function pageStore(name, select) {
+  axios
+    .post(uri + path + "page_store", {
+      page_title: name,
+    //   page_slug: slug,
+      post_type: select
+    })
+    .then(function(response) {
+      console.log(response);
+      init();
+    })
+    .catch((err) => {
+      console.log(err instanceof TypeError);
+    });
+  document.getElementById("page-name").value = "";
+}
 
-// function tagEdit(editID, taxonomy) {
-//   axios
-//     .post(uri + path + "tag_edit", {
-//       editID: editID,
-//       taxonomy_type: taxonomy,
-//     })
-//     .then(function(response) {
-//       const test = document.querySelector(".test");
-//       if (response.status == 200 && response.statusText == "OK") {
-//         const HTML = response.data.html;
-//         test.innerHTML = HTML;
-//       }
-//       const updateBtn = document.getElementById("tagUpdate");
-//       updateBtn.addEventListener("click", () => {
-//         const updateId = updateBtn.value;
-//         tagUpdate(updateId);
-//       });
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
+function pageEdit(ID) {
+    console.log(ID);
+  axios
+    .post(uri + path + "page_edit&id="+ID, {
+      editID: ID,
+    })
+    .then(function(response) {
+      const test = document.querySelector(".innerpage");
+      if (response.status == 200 && response.statusText == "OK") {
+        const HTML = response.data.html;
+        test.innerHTML = HTML;
+      }
+      const updateBtn = document.getElementById("pageUpdate");
+      updateBtn.addEventListener("click", () => {
+        const updateId = updateBtn.value;
+        pageUpdate(updateId);
+      });
+    })
+    .catch((err) => {
+      console.log(err instanceof TypeError);
+    });
+}
 
-// function tagUpdate(updateId) {
-//   const name = document.getElementById("tag_name").value;
-//   const slug = document.getElementById("tag_slug").value;
-//   const description = document.getElementById("tag_description").value;
+function pageUpdate(updateId) {
+  const title = document.getElementById("page_name").value;
+  console.log(title);
+//   const slug = document.getElementById("page_slug").value;
+//   const description = document.getElementById("page_description").value;
 
-//   axios
-//     .post(uri + path + "tag_update", {
-//       updateId: updateId,
-//       tag_name: name,
-//       tag_slug: slug,
-//       tag_description: description
+  axios
+    .post(uri + path + "page_update&id="+updateId, {
+      updateId: updateId,
+      page_title: title,
+    //   page_slug: slug,
+    //   page_description: description
 
-//     })
-//     .then(function(response) {
-//       if (response.status == 200 && response.statusText == "OK") {
-//         console.log(response);
-//         init();
-//         // setTimeout(call.init(), 500);
-//         console.log(11111);
-//       }
-//     })
+    })
+    .then(function(response) {
+      if (response.status == 200 && response.statusText == "OK") {
+        // console.log(response);
+        init();
+      }
+    })
 
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
+    .catch((err) => {
+      console.log(err instanceof TypeError);
+    });
+}
 
-// function tagDelete(ID, taxonomy) {
-//   console.log(ID)
-//   axios
-//     .post(uri + path + "tag_destroy", {
-//       deleteID: ID,
-//       taxonomy_type: taxonomy,
-//     })
-//     .then(function(response) {
-//       if (response.status == 200 && response.statusText == "OK") {
-//         console.log(response);
-//         init();
-//         // setTimeout(init(), 500);
-//         // console.log(11111);
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
+function pageDelete(ID) {
+  console.log(ID)
+  axios
+    .post(uri + path + "page_destroy&id="+ID, {
+      deleteID: ID,
+    })
+    .then(function(response) {
+      if (response.status == 200 && response.statusText == "OK") {
+        console.log(response);
+        init();
+      }
+    })
+    .catch((err) => {
+      console.log(err instanceof TypeError);
+    });
+}
 
 export default startPage();

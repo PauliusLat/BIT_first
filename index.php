@@ -46,8 +46,8 @@ App::start();
 // $api = new ApiRoute;
 
 $session = App::start()->getService('session');
-$pages = Page::all(); 
-_dc($pages);
+// $pages = Page::all(); 
+// _dc($pages);
 // _dc($session);
 
 // $session = new Session;
