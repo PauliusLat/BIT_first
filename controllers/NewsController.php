@@ -20,109 +20,40 @@ class NewsController {
 
     }
 
-    public function list(Request $request) 
-    {   
-        $a = NewsPost::get(951);
-        echo($a->getLink());   
-        $news = NewsPost::all()->pluck('post_date', 'post_title', 'ID', 'attachments')->all();
-        foreach ($news as &$value) {
-            if($value){
-                foreach ($value['attachments'] as $img) {
-                    $value['attachments'] = $img->getUrl();
-                }
-            }else{
-                $value['attachments'] = '';
-            }
-        }
-        $output = View::adminRender('news.create');
-        $response = new JsonResponse(['html' => $output, 'data' => $news]);
-
+    public function list(){  
+        // $html = require '/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/views/news/list.php';
+        $news = NewsPost::all()->all();
+        $html = View::adminRender('news.list', ["news" => $news]);   
+        $response = new JsonResponse(['htmlString' => $html]);
 		return $response;
 
     }
+
     public function create(Request $request) {
+        return View::adminRender('news.create');
 
     }
 
     
     
-    public function store(Request $request, NewsPost $newsPost) { 
-        //   _dc($request);
+    public function store(Request $request) { 
+        // _dc($request);
         $news = new NewsPost;
-        $news->content = $request->request->get('content');
+        $news->post_title = $request->request->get('content');
         $news->date = $request->request->get('date');
-
         $news->save();
-        // foreach ($request->files->all() as $file) {
-            // $post = Attachment::get(783);
-            // $post->setDescription('NNNNNNNNNNN');
-            // $post->setAlt('BBBBBBBB');
-            // $post->save(null, 760);        
-            // _dc($file);
+        $pic = new Attachment;
+        $pic->save($request->files->get('newsImg'), $news->ID);
 
-        // }
-       
-        // $new = new Attachment();
-        // $new->setCaption('antrasA');
-        // $new->setDescription('treciasA');
-        // $new->setAlt('treciasA');
-        // $new->save();
-
-        // $new_news = new NewsPost();
-        
-       
-        // $new_news->news_content = $request->content->get('content');        
-        // $newsPost->news_content = $request->query->get('content');
-        // $new_news->news_content = $request->query->get('content');
-        
-        // $newsPost->save();
-       
-        _dc($request);
-
-        // $new_news->attachments = [u, i, j];
-        
-        // var_dump($newsPost);
-        // $new_content = $newsPost->news_content;
-        // var_dump($new_content);
-        // $new_news_attachment = new Attachment();
-        // $new_news_attachment->save('news-picture', $postID);
-        
-        // $new_news_attachment->attachments = [o, p, u];
-        // var_dump($new_news_attachment);
-        // $new_news->attachments = $_FILES['news-picture'];
-        // $new_news = new NewsPost();
-        // $new_news->news_content = $request->get('content');
-        // $new_news->save();
-        
-        // $inputName = 'photo';
-        // $attachment = new Attachment();
-        // $attachment->save($inputName, $new_news->ID);
-        //atsiskirti attachment, kintamajame, wordpress irasytu attachment - 3 failai
-
-        // var_dump($request);
-        // // $new_news->news_content = 'hey';
-        // $new_news->save();
-
-        $response = new Response;
-        $response->prepare($request);
-        // $response->setContent(json_encode(['html' => $this->index()]));
-        wp_redirect('http://localhost:8080/wordpress/wp-admin/admin.php?page=news');
-        exit;
-        return $response;
-
-        // print_r($news_content.value);
+        return new Response();
+   
     }
 
 
     public function show (){}
 
     public function edit (Request $request, NewsPost $newsPost, RequestId $requestId){
-
-        $app = App::start();
- 
-        // $categories = $category->getAllCats();
-        
-        return View::adminRender('news.edit', ['url' => PLUGIN_DIR_URL, 'news' => $newsPost]);
+            while(true){}
     }
 
     public function update(Request $request, NewsPost $newsPost)
@@ -139,8 +70,7 @@ class NewsController {
         return $response;
     }
 
-    public function destroy(NewsPost $newsPost) {   
-     
+    public function destroy(NewsPost $newsPost) {  
         $newsPost->delete();
 		return new Response;
          

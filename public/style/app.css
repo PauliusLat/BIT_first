@@ -1005,6 +1005,14 @@ body {
   color: white;
 }
 
+.collapsible-content {
+  display: none;
+}
+
+#editor {
+  min-height: 100px;
+}
+
 .admin-event-form-group {
   width: 50%;
 }

@@ -10,11 +10,25 @@ const newsStart = document.getElementById("startNewsAdmin");
 
 function startNews() {
     if (newsStart) {
-        window.addEventListener("load", renderNews, false);
+        window.addEventListener("load", ()=>{
+                                          renderNews();
+                                          collapseNews();
+                                          addNewsListener();
+                                        }, false);
     }
 }
 
-/*----------------------- edit content axios----------------------------*/
+function addNewsListener(){
+  let button = document.getElementById("addNews");
+  button.addEventListener(
+    "click",
+    function() {
+      storeNews();
+    },
+    false
+  );
+}
+
 
 function editNews(editId) {
     
@@ -29,75 +43,68 @@ function editNews(editId) {
     .catch((err) => {
         console.log(err instanceof TypeError);
     });
-    // setTimeout(renderNews, 500);
+    setTimeout(renderNews, 300);
     
 }
 function deleteNews(delId) {
     axios
       .post(
         uri + path +
-          "news_destroy&id="+delId,
-        {
-          deleteId: delId,
-        }
+          "news-destroy&id="+delId
       )
       .catch((err) => {
         console.log(err instanceof TypeError);
-        console.log("Problemos su Delete api");
+        console.log("Problemos su DeleteNews api");
       });
-    setTimeout(renderNews, 500);
-  }
+    setTimeout(renderNews, 100);
+}
 
+function storeNews(){
+  axios
+      .post(
+        uri + path +
+          "news-store"
+      )
+      .catch((err) => {
+        console.log(err instanceof TypeError);
+        console.log("Problemos su StoreNews api");
+      });
+    setTimeout(renderNews, 100);
+
+}
+
+function collapseNews(){
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function(event) {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+        event.target.innerHTML = 'SUKURTI NAUJIENĄ';
+      } else {
+        content.style.display = "block";
+        event.target.innerHTML = 'PASLĖPTI';
+      }
+    });
+  }
+}
 
 
 function renderNews() {
+
     axios
     .get(
-        uri + path +
-        "news-list",
-        {}
-        )
-        .then(function (response) {
-            if (response.status == 200 && response.statusText == "OK") {
-                const data = response.data.data;
-
+      uri + path +
+      "news-list",
+      {}
+      )
+      .then(function (response) {
+              if (response.status == 200 && response.statusText == "OK") {
                 const dom = document.getElementById("renderNewsList");
-                let HTMLString = "";
-                let counter = 0;
-
-                let keys = [];
-                for (let key in data) {
-                  keys.push(key);
-                }
-
-                for (let i = keys.length - 1; i >= 0; i--) {
-                    let value = data[keys[i]];
-                    counter++;
-
-                    HTMLString += 
-                    `<div class="news-box"> 
-  
-                      <div class="news-img">
-                        <img src="${value.attachments}" alt="">
-                      </div>
-                      <div class="news-text">
-                        <div class="news-date">
-                            <p>${value.post_date}</p>
-                        </div>
-                        <div class="news-content">
-                            <p>${value.post_title}</p>
-                        </div>
-                      </div>
-                      <div class="news-buttons">
-                        <button  class="newsBtn deleteBtnNews" id="${value.ID}">
-                            Trinti
-                        </button> 
-                        <button  class="newsBtn editBtnNews" id="${value.ID}">
-                            Redaguoti
-                        </button> 
-                      </div>
-                    </div>`;
-                }
+                let HTMLString = response.data.htmlString;
                 dom.innerHTML = HTMLString;
 
                 const editBtn = document.querySelectorAll(".editBtnNews");
@@ -114,7 +121,6 @@ function renderNews() {
                 }
                 for (let i = 0; i < deletetBtn.length; i++) {
                   let delId = deletetBtn[i].id;
-
                   deletetBtn[i].addEventListener(
                     "click",
                     function() {
@@ -145,5 +151,4 @@ function renderNews() {
 
 
 
-
-// export default startNews();
+export default startNews();

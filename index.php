@@ -65,6 +65,10 @@ $session = App::start()->getService('session');
 // _dc($session);
 // _dc($_SERVER);
 
+// $pages = Page::all()->pageState('Site Page')->all();
+// _dc($pages);
+// _dc($_SERVER);
+// _dc($session->get('333333333333cassdca'));
 // $server = new Server;
 
 // // now try it
