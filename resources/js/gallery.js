@@ -82,7 +82,7 @@ function sendImageData(file) {
 
     formData.append('imge', file);
 
-    formData.append('album', album.value);
+    formData.append('album', album.value); 
     console.log(Object.fromEntries(formData))
     axios.post(uri + path + 'gallery-store-admin', formData, {
 
@@ -99,7 +99,7 @@ function sendImageData(file) {
         }
         console.log(error);
     });
-     location.reload();
+     location.reload(); // uzkomentuoti jei norite kad nedingtu image
 
 }
 export default startGallery();
