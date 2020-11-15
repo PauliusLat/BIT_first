@@ -524,6 +524,173 @@ var Calendar = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/category.js":
+/*!**********************************!*\
+  !*** ./resources/js/category.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var catStrt = document.getElementById("catStart");
+console.log(catStrt);
+
+function startCat() {
+  if (catStrt) {
+    window.addEventListener("load", init, false);
+  }
+}
+
+function init() {
+  axios.post(uri + path + "category_create", {}).then(function (response) {
+    var test = document.querySelector(".innercat");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+      var submit = document.getElementById("create");
+      submit.addEventListener("click", function () {
+        var name = document.getElementById("category-name").value;
+        var slug = document.getElementById("category-slug").value;
+        var description = document.getElementById("category-description").value;
+        var parent = document.getElementById('cat');
+        var select = parent.options[parent.selectedIndex].value;
+        console.log(select);
+        catStore(name, select, slug, description);
+      });
+      var editBtn = catStrt.querySelectorAll(".category-edit");
+
+      var _loop = function _loop(i) {
+        var ID = editBtn[i].value;
+        var taxonomy = editBtn[i].id;
+        editBtn[i].addEventListener("click", function () {
+          catEdit(ID, taxonomy);
+        }, false);
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
+      }
+
+      var deleteBtn = document.querySelectorAll(".category-delete");
+
+      var _loop2 = function _loop2(_i) {
+        var ID = deleteBtn[_i].value;
+        var taxonomy = deleteBtn[_i].id;
+
+        deleteBtn[_i].addEventListener("click", function () {
+          catDelete(ID, taxonomy);
+          console.log(ID);
+          console.log(taxonomy);
+        }, false);
+      };
+
+      for (var _i = 0; _i < deleteBtn.length; _i++) {
+        _loop2(_i);
+      }
+    }
+  })["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
+    }
+
+    console.log(error);
+  });
+  1;
+}
+
+function catStore(name, select, slug, description) {
+  // console.log(select)
+  // console.log(name)
+  axios.post(uri + path + "category_store", {
+    cat_name: name,
+    cat_slug: slug,
+    cat_description: description,
+    cat_parent: select
+  }).then(function (response) {
+    console.log(response);
+    init();
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+  document.getElementById("category-name").value = "";
+}
+
+function catEdit(editID, taxonomy) {
+  console.log(editID);
+  axios.post(uri + path + "category_edit", {
+    editID: editID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    var test = document.querySelector(".innercat");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+    }
+
+    var updateBtn = document.getElementById("catUpdate");
+    updateBtn.addEventListener("click", function () {
+      var updateId = updateBtn.value;
+      catUpdate(updateId);
+    });
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function catUpdate(updateId) {
+  var name = document.getElementById("category_name").value;
+  var slug = document.getElementById("category_slug").value;
+  var description = document.getElementById("category_description").value;
+  axios.post(uri + path + "category_update", {
+    updateId: updateId,
+    cat_name: name,
+    cat_slug: slug,
+    cat_description: description
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(call.init(), 500);
+
+      console.log(11111);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function catDelete(ID, taxonomy) {
+  console.log(ID);
+  axios.post(uri + path + "category_destroy", {
+    deleteID: ID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(init(), 500);
+      // console.log(11111);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startCat());
+
+/***/ }),
+
 /***/ "./resources/js/gallery.js":
 /*!*********************************!*\
   !*** ./resources/js/gallery.js ***!
@@ -833,16 +1000,22 @@ function renderColons(e) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
 /* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gallery.js */ "./resources/js/gallery.js");
-/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
-/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
+/* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
+/* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
+/* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
+/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
+/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
 /** @format */
+
+
+
 
 
  // import TextEditor from './text-editor.js'
 
  // new TextEditor('.news-container')
 
-new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.calendar');
+new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
 
 /***/ }),
 
@@ -974,6 +1147,327 @@ function renderNews() {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (startNews());
+
+/***/ }),
+
+/***/ "./resources/js/page.js":
+/*!******************************!*\
+  !*** ./resources/js/page.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var pageStrt = document.getElementById("pageStart");
+console.log(pageStrt);
+
+function startPage() {
+  if (pageStrt) {
+    window.addEventListener("load", init, false);
+  }
+}
+
+function init() {
+  axios.post(uri + path + "page_create", {}).then(function (response) {
+    var test = document.querySelector(".innerpage");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+      var submit = document.getElementById("create");
+      submit.addEventListener("click", function () {
+        var name = document.getElementById("page-name").value; //   const slug = document.getElementById("post-slug").value;
+        //   const description = document.getElementById("page-description").value;
+
+        var post = document.getElementById('post');
+        console.log(post);
+        var select = post.options[post.selectedIndex].value;
+        console.log(select);
+        pageStore(name, select);
+      });
+      var editBtn = pageStrt.querySelectorAll(".page-edit");
+
+      var _loop = function _loop(i) {
+        var ID = editBtn[i].value; //   console.log(ID);
+        //   let page = editBtn[i].id;
+
+        editBtn[i].addEventListener("click", function () {
+          pageEdit(ID);
+        }, false);
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
+      }
+
+      var deleteBtn = document.querySelectorAll(".page-delete");
+      console.log(deleteBtn);
+
+      var _loop2 = function _loop2(_i) {
+        var ID = deleteBtn[_i].value;
+
+        deleteBtn[_i].addEventListener("click", function () {
+          pageDelete(ID);
+          console.log(ID);
+        }, false);
+      };
+
+      for (var _i = 0; _i < deleteBtn.length; _i++) {
+        _loop2(_i);
+      }
+    }
+  })["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
+    }
+
+    console.log(error);
+  });
+  1;
+}
+
+function pageStore(name, select) {
+  axios.post(uri + path + "page_store", {
+    page_title: name,
+    //   page_slug: slug,
+    post_type: select
+  }).then(function (response) {
+    console.log(response);
+    init();
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+  document.getElementById("page-name").value = "";
+}
+
+function pageEdit(ID) {
+  console.log(ID);
+  axios.post(uri + path + "page_edit&id=" + ID, {
+    editID: ID
+  }).then(function (response) {
+    var test = document.querySelector(".innerpage");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+    }
+
+    var updateBtn = document.getElementById("pageUpdate");
+    updateBtn.addEventListener("click", function () {
+      var updateId = updateBtn.value;
+      pageUpdate(updateId);
+    });
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function pageUpdate(updateId) {
+  var title = document.getElementById("page_name").value;
+  console.log(title); //   const slug = document.getElementById("page_slug").value;
+  //   const description = document.getElementById("page_description").value;
+
+  axios.post(uri + path + "page_update&id=" + updateId, {
+    updateId: updateId,
+    page_title: title //   page_slug: slug,
+    //   page_description: description
+
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      // console.log(response);
+      init();
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function pageDelete(ID) {
+  console.log(ID);
+  axios.post(uri + path + "page_destroy&id=" + ID, {
+    deleteID: ID
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init();
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startPage());
+
+/***/ }),
+
+/***/ "./resources/js/tag.js":
+/*!*****************************!*\
+  !*** ./resources/js/tag.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/** @format */
+
+
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var tagStrt = document.getElementById("tagStart"); // console.log(tagStrt);
+
+function startTag() {
+  if (tagStrt) {
+    window.addEventListener("load", init, false);
+  }
+}
+
+function init() {
+  axios.post(uri + path + "tag_create", {}).then(function (response) {
+    var test = document.querySelector(".test");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+      var submit = document.getElementById("create");
+      submit.addEventListener("click", function () {
+        var name = document.getElementById("tag-name").value;
+        var slug = document.getElementById("tag-slug").value;
+        var description = document.getElementById("tag-description").value;
+        tagStore(name, slug, description);
+      });
+      var editBtn = tagStrt.querySelectorAll(".tag-edit");
+
+      var _loop = function _loop(i) {
+        var ID = editBtn[i].value;
+        var taxonomy = editBtn[i].id;
+        editBtn[i].addEventListener("click", function () {
+          tagEdit(ID, taxonomy);
+        }, false);
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
+      }
+
+      var deleteBtn = document.querySelectorAll(".tag-delete");
+
+      var _loop2 = function _loop2(_i) {
+        var ID = deleteBtn[_i].value;
+        var taxonomy = deleteBtn[_i].id;
+
+        deleteBtn[_i].addEventListener("click", function () {
+          tagDelete(ID, taxonomy);
+          console.log(ID);
+          console.log(taxonomy);
+        }, false);
+      };
+
+      for (var _i = 0; _i < deleteBtn.length; _i++) {
+        _loop2(_i);
+      }
+    }
+  })["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
+    }
+
+    console.log(error);
+  });
+  1;
+}
+
+function tagStore(name, slug, description) {
+  axios.post(uri + path + "tag_store", {
+    tag_name: name,
+    tag_slug: slug,
+    tag_description: description
+  }).then(function (response) {
+    console.log(response);
+    init();
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+  document.getElementById("tag-name").value = "";
+}
+
+function tagEdit(editID, taxonomy) {
+  axios.post(uri + path + "tag_edit", {
+    editID: editID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    var test = document.querySelector(".test");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+    }
+
+    var updateBtn = document.getElementById("tagUpdate");
+    updateBtn.addEventListener("click", function () {
+      var updateId = updateBtn.value;
+      tagUpdate(updateId);
+    });
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function tagUpdate(updateId) {
+  var name = document.getElementById("tag_name").value;
+  var slug = document.getElementById("tag_slug").value;
+  var description = document.getElementById("tag_description").value;
+  axios.post(uri + path + "tag_update", {
+    updateId: updateId,
+    tag_name: name,
+    tag_slug: slug,
+    tag_description: description
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(call.init(), 500);
+
+      console.log(11111);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function tagDelete(ID, taxonomy) {
+  console.log(ID);
+  axios.post(uri + path + "tag_destroy", {
+    deleteID: ID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(init(), 500);
+      // console.log(11111);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startTag());
 
 /***/ }),
 

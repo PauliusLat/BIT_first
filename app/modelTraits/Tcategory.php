@@ -239,7 +239,7 @@ trait Tcategory {
     //     }
     // }
 
-    public function getTaxonomyHierarchy( $plevel, $taxonomy = 'maincat', $parent=0) {
+    public function getTaxonomyHierarchy($plevel = 1, $taxonomy = 'maincat', $parent=0) {
         // only 1 taxonomy
         $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
         $terms=$this->getChildCats($parent, $taxonomy);
@@ -252,7 +252,7 @@ trait Tcategory {
                 if($term->parent == 0)
                 {
                     $term->level = 0;
-                    $term->children = $this->getTaxonomyHierarchy(0, $taxonomy, $term->term_id);
+                    $term->children = $this->getTaxonomyHierarchy($term->level, $taxonomy, $term->term_id);
                 }
                 else
                 {
@@ -267,7 +267,7 @@ trait Tcategory {
         }
     }
 
-    public function getTaxonomyHierarchyArr($plevel, $taxonomy = 'maincat', $parent=0){
+    public function getTaxonomyHierarchyArr($plevel = 0, $taxonomy = 'maincat', $parent=0){
         // only 1 taxonomy
         $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
         $terms=$this->getChildCatsArr($parent, $taxonomy);
