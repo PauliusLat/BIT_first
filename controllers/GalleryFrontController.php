@@ -4,6 +4,7 @@ namespace BIT\controllers;
 
 use BIT\app\Attachment;
 use BIT\app\View;
+use BIT\app\Page;
 use BIT\models\AlbumPost;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,12 +26,21 @@ class GalleryFrontController
 		return View::render('gallery.uploade-images');
 	}
 
-	public function store(Request $request, AlbumPost $album)
+	public function store(Request $request)
 	{
+		$album = new AlbumPost();
 		foreach ($request->request as $key => $a) {
 			if ($key == "album") {
-				$album->album_title = $a;
+				$page = new Page();
+				$page->pageState = 'Album Page'; 
+				$page->setRoute('all-album');
+				$page->setTitle($a);
+
+				$page->save();
+				$album->post_parent = $page->ID;
+				$album->savybe = 'album_title';
 				$album->save();
+
 			}
 		}
 
@@ -54,7 +64,6 @@ class GalleryFrontController
 						$image->addTag($tags[$key1]);
 						// var_dump($image->save());
 						$image->save();
-
 					}
 				}
 			}
