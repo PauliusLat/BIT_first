@@ -1,7 +1,7 @@
 /** @format */
 
 "use strict";
-console.log(1111111111111);
+
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
 const ideaStrt = document.getElementById("startIdeaAdmin");

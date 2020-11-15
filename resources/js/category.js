@@ -15,10 +15,10 @@ function startCat() {
 function init() {
   axios
     .post(uri + path + "category_create", {})
-    .then(function(response) {
+    .then(function (response) {
       const test = document.querySelector(".innercat");
-    
-     
+
+
       if (response.status == 200 && response.statusText == "OK") {
         const HTML = response.data.html;
         test.innerHTML = HTML;
@@ -26,29 +26,29 @@ function init() {
         const submit = document.getElementById("create");
 
         submit.addEventListener("click", () => {
-            const name = document.getElementById("category-name").value;
-            const slug = document.getElementById("category-slug").value;
-            const description = document.getElementById("category-description").value;
-            let parent = document.getElementById('cat');
-            
-            let select = parent.options[parent.selectedIndex].value;
-                  console.log(select);  
-         
+          const name = document.getElementById("category-name").value;
+          const slug = document.getElementById("category-slug").value;
+          const description = document.getElementById("category-description").value;
+          let parent = document.getElementById('cat');
+
+          let select = parent.options[parent.selectedIndex].value;
+          console.log(select);
+
           catStore(name, select, slug, description);
         });
 
         const editBtn = catStrt.querySelectorAll(".category-edit");
-       
+
 
         for (let i = 0; i < editBtn.length; i++) {
           let ID = editBtn[i].value;
-          
+
           let taxonomy = editBtn[i].id;
           editBtn[i].addEventListener(
             "click",
-            function() {
+            function () {
               catEdit(ID, taxonomy);
-               
+
             },
             false
           );
@@ -58,10 +58,10 @@ function init() {
         for (let i = 0; i < deleteBtn.length; i++) {
           let ID = deleteBtn[i].value;
           let taxonomy = deleteBtn[i].id;
-         
+
           deleteBtn[i].addEventListener(
             "click",
-            function() {
+            function () {
               catDelete(ID, taxonomy);
               console.log(ID);
               console.log(taxonomy);
@@ -71,7 +71,7 @@ function init() {
         }
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       if (error.response) {
         console.log(error.response.data);
         console.log(error.response.status);
@@ -87,8 +87,8 @@ function init() {
 }
 
 function catStore(name, select, slug, description) {
-    console.log(select)
-    console.log(name)
+  console.log(select)
+  console.log(name)
   axios
     .post(uri + path + "category_store", {
       cat_name: name,
@@ -96,7 +96,7 @@ function catStore(name, select, slug, description) {
       cat_description: description,
       cat_parent: select
     })
-    .then(function(response) {
+    .then(function (response) {
       console.log(response);
       init();
     })
@@ -107,13 +107,13 @@ function catStore(name, select, slug, description) {
 }
 
 function catEdit(editID, taxonomy) {
-    console.log(editID);
+  console.log(editID);
   axios
     .post(uri + path + "category_edit", {
       editID: editID,
       taxonomy_type: taxonomy,
     })
-    .then(function(response) {
+    .then(function (response) {
       const test = document.querySelector(".innercat");
       if (response.status == 200 && response.statusText == "OK") {
         const HTML = response.data.html;
@@ -143,7 +143,7 @@ function catUpdate(updateId) {
       cat_description: description
 
     })
-    .then(function(response) {
+    .then(function (response) {
       if (response.status == 200 && response.statusText == "OK") {
         console.log(response);
         init();
@@ -164,7 +164,7 @@ function catDelete(ID, taxonomy) {
       deleteID: ID,
       taxonomy_type: taxonomy,
     })
-    .then(function(response) {
+    .then(function (response) {
       if (response.status == 200 && response.statusText == "OK") {
         console.log(response);
         init();

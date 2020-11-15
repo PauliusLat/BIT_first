@@ -9,45 +9,20 @@
  * Author: Your Name Here
  * Author URI: http://yourwebsiteurl.com/
  **/
-use BIT\models\AlbumPost;
 use BIT\app\App;
-use BIT\app\ApiRoute;
-use BIT\app\Query;
-use BIT\app\Post;
-use BIT\app\Page;
-use BIT\app\RequestId;
-use BIT\app\Cookie;
-use BIT\app\Transient;
-use BIT\app\Session;
-use BIT\app\Category;
-use BIT\app\View;
-use BIT\app\Collection;
-use BIT\controllers\NewsController;
-use BIT\models\IdeaPost;
-use BIT\models\NewsPost;
-use BIT\app\Tag;
-use BIT\app\Server;
-use BIT\app\modelTraits\Tcategory;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
-use BIT\app\coreExeptions\wrongArgsTypeExeption;
-
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 $app = App::start();
 // $query = new Query;
-$session = App::start()->getService('session');
-$a=101;
-$session->set('dt', 2);
+// $session = App::start()->getService('session');
+
+// $session->set('jjjj', 5);
 // var_dump($session->get('dt'));
 // $api = new ApiRoute;
-
 
 // _dc($_SERVER);
 
@@ -70,7 +45,7 @@ $session->set('dt', 2);
 // $session->set('id',5);
 // _dc($session->get('id'));
 
-// 
+//
 // _dc($app->getService('request')->query->get('route', ''));
 // $my_post = array(
 //     'post_content'   => "My page content",
@@ -95,19 +70,17 @@ $session->set('dt', 2);
 
 // add_action('init', function() {
 
+// $terms = $category->getTaxonomyHierarchy('maincat');
+// _dc($terms);
 
+// foreach ($terms as $term){
+//     _dc($term);
+// }
+// $cats = $category->flattenArray($terms);
+// _dc($cats);
 
-    // $terms = $category->getTaxonomyHierarchy('maincat');
-    // _dc($terms);
-
-    // foreach ($terms as $term){
-    //     _dc($term);
-    // }
-    // $cats = $category->flattenArray($terms);
-    // _dc($cats);
-
-    // $terms = $category->get_taxonomy_hierarchy()->pluck('name', 'slug', 'term_id', 'parent');
-    // _dc($terms);
+// $terms = $category->get_taxonomy_hierarchy()->pluck('name', 'slug', 'term_id', 'parent');
+// _dc($terms);
 
 // function flatten_array($array) {
 //     $flattened_array = array();
@@ -121,16 +94,16 @@ $session->set('dt', 2);
 // {
 // static $flattened = [];
 // if(is_array($array) && count($array) > 0)
-// {   
+// {
 //     foreach ($array as $member) {
-//         if(empty($member->children)) 
+//         if(empty($member->children))
 //         {
-//             $flattened[] = $member; 
+//             $flattened[] = $member;
 //         } else
 //         {
 //             flattenArray($member->children);
 //             unset($member->children);
-//             $flattened[] = $member; 
+//             $flattened[] = $member;
 //         }
 //     }
 // }
@@ -154,25 +127,23 @@ $session->set('dt', 2);
 
 // _dc(flattenWithKeys($terms));
 
+// function array_flatten($array) {
 
-    // function array_flatten($array) {
+//     $return = array();
+//     foreach ($array as $key => $value) {
+//         //  _dc((array)$value);
+//         // _dc($value);
+//         if (is_array($value)){ $return = array_merge($return, array_flatten((array)$value));}
+//         else {$return[$key] = $value;}
+//     }
+//     return $return;
 
-    //     $return = array();
-    //     foreach ($array as $key => $value) {
-    //         //  _dc((array)$value);
-    //         // _dc($value);
-    //         if (is_array($value)){ $return = array_merge($return, array_flatten((array)$value));}
-    //         else {$return[$key] = $value;}
-    //     }
-    //     return $return;
-     
-    // }
+// }
 
-    //  _dc(array_flatten($terms));
-    //array_flatten($terms);
+//  _dc(array_flatten($terms));
+//array_flatten($terms);
 
-
-    //    $args = array(
+//    $args = array(
 
 //     'hide_empty'         => 0,
 //     'echo'               => 0,
@@ -182,45 +153,42 @@ $session->set('dt', 2);
 
 // );
 
-
 // wp_list_categories( $args );
-    // $category->deleteCatFromDb(103);
+// $category->deleteCatFromDb(103);
 
-    // $album = new AlbumPost;
-    // $album->save();
-
-    // $tag = new Tag;
-    // $tag->addTagtoDB('hot');
-    // $album->addTag('cold');
-    // $terms = get_terms(['name'=>'aauga', 'taxonomy'=> 'maincat', 'hide_empty'=>false]);
-    // _dc($terms);
-//     $category = new Category;
-//     $page = new Page;
-    // $page->createPage('kalendorius');
-    // $my_post = array(
-    //     'post_title'    => 'Ideja',
-    //     'post_type'     => 'page',
-    //     'post_name'     => 'ideja',
-    //     'post_content'  => '[front_shortcode route="ideja"]',
-    //     'post_status'   => 'publish',
-    //     'comment_status' => 'closed',
-    //     'ping_status' => 'closed',
-    //     'post_author' => 1,
-    //     'menu_order' => 0
-    //   );
-      
-    //   $id = wp_insert_post( $my_post );
-    //   $permalink = get_permalink($id);
-    //   _dc($permalink);
-
-
-
-    // _dc($category->get_taxonomy_hierarchy());
-
-    // _dc(get_term_children(43, 'maincat'));
 // $album = new AlbumPost;
 // $album->save();
-    // $album->save();
+
+// $tag = new Tag;
+// $tag->addTagtoDB('hot');
+// $album->addTag('cold');
+// $terms = get_terms(['name'=>'aauga', 'taxonomy'=> 'maincat', 'hide_empty'=>false]);
+// _dc($terms);
+//     $category = new Category;
+//     $page = new Page;
+// $page->createPage('kalendorius');
+// $my_post = array(
+//     'post_title'    => 'Ideja',
+//     'post_type'     => 'page',
+//     'post_name'     => 'ideja',
+//     'post_content'  => '[front_shortcode route="ideja"]',
+//     'post_status'   => 'publish',
+//     'comment_status' => 'closed',
+//     'ping_status' => 'closed',
+//     'post_author' => 1,
+//     'menu_order' => 0
+//   );
+
+//   $id = wp_insert_post( $my_post );
+//   $permalink = get_permalink($id);
+//   _dc($permalink);
+
+// _dc($category->get_taxonomy_hierarchy());
+
+// _dc(get_term_children(43, 'maincat'));
+// $album = new AlbumPost;
+// $album->save();
+// $album->save();
 // // //      _dc( $album);
 // // // $album->addTag(['atostogos', 'namai']);
 // // // $album->addTag(['tttt']);
@@ -228,22 +196,22 @@ $session->set('dt', 2);
 // $album->addCat('baldai', 'maincat');
 // $category->addCat(['mazi sauksteliai'], 54);
 // $album->attachCat('mazi sauksteliai');
- //gl padaryti, kad ne is butu o stringas kaip kat
+//gl padaryti, kad ne is butu o stringas kaip kat
 // $album->addCat([' mazo lekstutes', 'dideles lekstutes'], 'maincat', 53);
-    // _dc($category->get_taxonomy_hierarchy('maincat'));
+// _dc($category->get_taxonomy_hierarchy('maincat'));
 // //  _dc($album->getChildCats([45, 0]
 // _dc($category);
 //  _dc($category->getTermId('stalai'));
 // _dc(get_term_by('name', 'stalai', 'maincat'));
 // $category->addCat('stalai', 'maincat');
 // // $album->addTag('ooorrr');
-// //     // echo '<pre>';    
-   
+// //     // echo '<pre>';
+
 //     // _dc( $album);
 // //     // wp_remove_object_terms( '953', '27', 'hashtag');
 // // $album->removeTag(['atostogos', 'namai']);
-// // // 
-// // 
+// // //
+// //
 // // $album->removeCat('Indai');
 
 // // _dc($album->getChildCats([45]));
@@ -258,9 +226,3 @@ $session->set('dt', 2);
 // //     //  _dc( $idea);
 // //     //  $idea->addTag('');
 // });
-
-
-
-
-
-

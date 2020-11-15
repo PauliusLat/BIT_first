@@ -538,8 +538,6 @@ __webpack_require__.r(__webpack_exports__);
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
 var gallery = document.getElementById("loadeGallery");
-var arraySend = [];
-var isListener = true;
 
 function startGallery() {
   if (gallery) {
@@ -552,7 +550,7 @@ function renderGallery() {
   if (window.File && window.FileList && window.FileReader) {
     var filesInput = document.getElementById("files");
     filesInput.addEventListener("change", function (event) {
-      var array = Array.from(event.target.files);
+      var array = filesInput.files[0];
       renderImages(array);
     });
   } else {
@@ -560,74 +558,43 @@ function renderGallery() {
   }
 }
 
-function renderImages(filesAll) {
+function renderImages(file) {
   var currentDiv = document.getElementById("message");
 
-  var _loop = function _loop(i) {
-    if (filesAll[i].size < 1048576) {
-      if (filesAll[i].type.match('image')) {
-        var picReader = new FileReader();
-        picReader.addEventListener("load", function (event) {
-          var picFile = event.target;
-          var deleteId = getID();
-          var deleteBtn = getID();
-          var output = document.getElementById("result");
-          var div = document.createElement("div");
-          div.className = "galleryDiv";
-          div.id = deleteId;
-          div.innerHTML = "<img class=\"uploadeImageGallery\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>\n                      <label for=\"").concat(deleteBtn, "\">Tag: </label>\n                      <input type=\"text\" id=\"").concat(filesAll[i].name, "\" class=\"altInput\" name=\"altImage\" value=\"\">\n                      <div class=\"deleteImd\" id=\"").concat(deleteBtn, "\">Trinti<div/>");
-          output.insertBefore(div, currentDiv);
-          var imgDeleteBtn = document.getElementById(deleteBtn);
-          var deleteDiv = document.getElementById(deleteId);
-          imgDeleteBtn.addEventListener("click", function () {
-            filesAll.splice(i, 1);
-            deleteDiv.remove();
-          });
-        });
-        picReader.readAsDataURL(filesAll[i]);
-      } else {
-        alert("Tai nera paveikslelio tipo formatas");
-      }
+  if (file.size < 1048576) {
+    if (file.type.match('image')) {
+      var picReader = new FileReader();
+      picReader.addEventListener("load", function (event) {
+        var picFile = event.target;
+        var output = document.getElementById("result");
+        var div = document.createElement("div");
+        div.className = "galleryDiv";
+        var removeUploade = document.querySelector(".wrapper");
+        removeUploade.remove();
+        div.innerHTML = "<img class=\"uploadeImageGallery\" height=\"200px\" width=\"200px\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>");
+        output.insertBefore(div, currentDiv);
+      });
+      picReader.readAsDataURL(file);
+      var uploadeImg = document.getElementById("submitImg");
+      uploadeImg.addEventListener('click', function () {
+        sendImageData(file);
+      });
     } else {
-      alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-      //   currentDiv.appendChild(newContent);
+      alert("Tai nera paveikslelio tipo formatas");
     }
-  };
-
-  for (var i = 0; i < filesAll.length; i++) {
-    _loop(i);
-  }
-
-  arraySend.push(filesAll);
-  var uploadeImg = document.getElementById("submitImg");
-
-  if (isListener) {
-    uploadeImg.addEventListener('click', function () {
-      arraySend = filter(arraySend);
-      sendImageData(arraySend);
-    });
-    isListener = false;
+  } else {
+    alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+    //   currentDiv.appendChild(newContent);
   }
 }
 
-function sendImageData(filesAll) {
-  var tagInput;
+function sendImageData(file) {
   var formData = new FormData();
   var album = document.getElementById('albumName');
-
-  for (var i = 0; i < filesAll.length; i++) {
-    tagInput = document.getElementById(filesAll[i].name);
-    formData.append('files' + i, filesAll[i]);
-    formData.append('tag' + i, tagInput.value + ' ');
-  }
-
+  formData.append('imge', file);
   formData.append('album', album.value);
   console.log(Object.fromEntries(formData));
-  axios.post(uri + path + 'gallery-store-admin', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  }).then(function (response) {})["catch"](function (error) {
+  axios.post(uri + path + 'gallery-store-admin', formData, {}).then(function (response) {})["catch"](function (error) {
     if (error.response) {
       console.log(error.response.data);
       console.log(error.response.status);
@@ -639,30 +606,8 @@ function sendImageData(filesAll) {
     }
 
     console.log(error);
-  }); //  location.reload();
-}
-
-function getID() {
-  return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
-}
-
-function filter(filesAll) {
-  var file = [];
-
-  for (var i = 0; i < filesAll.length; i++) {
-    for (var j = 0; j < filesAll[i].length; j++) {
-      if (filesAll[i][j] != undefined && filesAll[i][j] != null && filesAll[i][j] != "" && filesAll[i][j] != NaN && filesAll[i][j].size < 1048576) {
-        file.push(filesAll[i][j]);
-      }
-    }
-  }
-
-  file = file.filter(function (power, toThe, yellowVests) {
-    return yellowVests.map(function (updateDemocracy) {
-      return updateDemocracy['name'];
-    }).indexOf(power['name']) === toThe;
   });
-  return file;
+  location.reload();
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (startGallery());
@@ -681,7 +626,6 @@ __webpack_require__.r(__webpack_exports__);
 /** @format */
 
 
-console.log(1111111111111);
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
 var ideaStrt = document.getElementById("startIdeaAdmin");

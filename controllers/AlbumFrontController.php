@@ -16,22 +16,22 @@ class AlbumFrontController
     {
         return View::render('gallery.all-album');
     }
-
+    
     public function create(AlbumPost $album)
     {
- 
-//7-4:4
-$page = (Page::all())->all();
-foreach ($page as $key => $value) {
-    echo '<pre>';
-    var_dump(  $value->getLink());
-    $value->getLink();
-}
+
+        //7-4:4
+        $page = (Page::all())->all();
+        foreach ($page as $key => $value) {
+            echo '<pre>';
+            var_dump($value->getLink());
+            $value->getLink();
+        }
         $allImages = [];
         $albumName = [];
         $albumData  = (AlbumPost::all())->all();
-        echo '<pre>' ;
-        var_dump($page );
+        echo '<pre>';
+        var_dump($page);
         foreach ($albumData as $data) {
             $albumName[] = $data->album_title;
             foreach ($data->attachments as $key => $img) {
