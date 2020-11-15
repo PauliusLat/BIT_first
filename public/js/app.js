@@ -834,16 +834,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
 /* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gallery.js */ "./resources/js/gallery.js");
 /* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
-/* harmony import */ var _text_editor_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./text-editor.js */ "./resources/js/text-editor.js");
-/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
-/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_news_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
 /** @format */
 
 
+ // import TextEditor from './text-editor.js'
 
+ // new TextEditor('.news-container')
 
-
-new _text_editor_js__WEBPACK_IMPORTED_MODULE_3__["default"]('.news-container');
 new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.calendar');
 
 /***/ }),
@@ -852,10 +850,11 @@ new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.calendar');
 /*!******************************!*\
   !*** ./resources/js/news.js ***!
   \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /** @format */
 
 
@@ -865,75 +864,96 @@ var newsStart = document.getElementById("startNewsAdmin");
 
 function startNews() {
   if (newsStart) {
-    window.addEventListener("load", renderNews, false);
+    window.addEventListener("load", function () {
+      renderNews();
+      collapseNews();
+      addNewsListener();
+    }, false);
   }
 }
-/*----------------------- edit content axios----------------------------*/
 
+function addNewsListener() {
+  var button = document.getElementById("addNews");
+  button.addEventListener("click", function () {
+    storeNews();
+  }, false);
+}
 
 function editNews(editId) {
   axios.get(uri + path + "news-edit-admin", {
     editId: editId
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
-  }); // setTimeout(renderNews, 500);
+  });
+  setTimeout(renderNews, 300);
 }
 
 function deleteNews(delId) {
-  axios.post(uri + path + "news_destroy&id=" + delId, {
-    deleteId: delId
-  })["catch"](function (err) {
+  axios.post(uri + path + "news-destroy&id=" + delId)["catch"](function (err) {
     console.log(err instanceof TypeError);
-    console.log("Problemos su Delete api");
+    console.log("Problemos su DeleteNews api");
   });
-  setTimeout(renderNews, 500);
+  setTimeout(renderNews, 100);
+}
+
+function storeNews() {
+  axios.post(uri + path + "news-store")["catch"](function (err) {
+    console.log(err instanceof TypeError);
+    console.log("Problemos su StoreNews api");
+  });
+  setTimeout(renderNews, 100);
+}
+
+function collapseNews() {
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function (event) {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+
+      if (content.style.display === "block") {
+        content.style.display = "none";
+        event.target.innerHTML = 'SUKURTI NAUJIENĄ';
+      } else {
+        content.style.display = "block";
+        event.target.innerHTML = 'PASLĖPTI';
+      }
+    });
+  }
 }
 
 function renderNews() {
   axios.get(uri + path + "news-list", {}).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {
-      var data = response.data.data;
       var dom = document.getElementById("renderNewsList");
-      var HTMLString = "";
-      var counter = 0;
-      var keys = [];
-
-      for (var key in data) {
-        keys.push(key);
-      }
-
-      for (var i = keys.length - 1; i >= 0; i--) {
-        var value = data[keys[i]];
-        counter++;
-        HTMLString += "<div class=\"news-box\"> \n  \n                      <div class=\"news-img\">\n                        <img src=\"".concat(value.attachments, "\" alt=\"\">\n                      </div>\n                      <div class=\"news-text\">\n                        <div class=\"news-date\">\n                            <p>").concat(value.post_date, "</p>\n                        </div>\n                        <div class=\"news-content\">\n                            <p>").concat(value.post_title, "</p>\n                        </div>\n                      </div>\n                      <div class=\"news-buttons\">\n                        <button  class=\"newsBtn deleteBtnNews\" id=\"").concat(value.ID, "\">\n                            Trinti\n                        </button> \n                        <button  class=\"newsBtn editBtnNews\" id=\"").concat(value.ID, "\">\n                            Redaguoti\n                        </button> \n                      </div>\n                    </div>");
-      }
-
+      var HTMLString = response.data.htmlString;
       dom.innerHTML = HTMLString;
       var editBtn = document.querySelectorAll(".editBtnNews");
       var deletetBtn = document.querySelectorAll(".deleteBtnNews");
 
-      var _loop = function _loop(_i) {
-        var editId = editBtn[_i].id;
-
-        editBtn[_i].addEventListener("click", function () {
+      var _loop = function _loop(i) {
+        var editId = editBtn[i].id;
+        editBtn[i].addEventListener("click", function () {
           editNews(editId);
         }, false);
       };
 
-      for (var _i = 0; _i < editBtn.length; _i++) {
-        _loop(_i);
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
       }
 
-      var _loop2 = function _loop2(_i2) {
-        var delId = deletetBtn[_i2].id;
+      var _loop2 = function _loop2(_i) {
+        var delId = deletetBtn[_i].id;
 
-        deletetBtn[_i2].addEventListener("click", function () {
+        deletetBtn[_i].addEventListener("click", function () {
           deleteNews(delId);
         }, false);
       };
 
-      for (var _i2 = 0; _i2 < deletetBtn.length; _i2++) {
-        _loop2(_i2);
+      for (var _i = 0; _i < deletetBtn.length; _i++) {
+        _loop2(_i);
       }
     }
 
@@ -951,188 +971,9 @@ function renderNews() {
 
     console.log(error);
   });
-} // export default startNews();
+}
 
-/***/ }),
-
-/***/ "./resources/js/text-editor.js":
-/*!*************************************!*\
-  !*** ./resources/js/text-editor.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var TextEditor = /*#__PURE__*/function () {
-  function TextEditor(e) {
-    _classCallCheck(this, TextEditor);
-
-    this.target = e;
-    this.DOM = null;
-    this.init();
-  }
-
-  _createClass(TextEditor, [{
-    key: "init",
-    value: function init() {
-      var _this = this;
-
-      var DOM = document.querySelector(this.target);
-
-      if (DOM) {
-        var contenteditable = document.querySelector("[contenteditable]");
-        var el = document.querySelector('.editor');
-        var bold = document.querySelector(".click-Blod");
-        var italic = document.querySelector(".click-Italc");
-        var li = document.querySelector(".click-li");
-        var a = document.querySelector(".click-a");
-        var link = document.getElementById("txtFormatUrl");
-        var input = document.querySelector('div'); // const pad = document.createTextNode('\u00A0');
-        // input.appendChild(pad);
-        // let selection = window.getSelection();
-
-        bold.addEventListener("click", function () {
-          _this.surroundSelection(); // let b = document.createElement("b")
-          // let range = selection.getRangeAt(0).cloneRange();
-          // range.surroundContents(b)
-          // selection.removeAllRanges();
-          // selection.addRange(range);
-          // let pad = this.addPad();
-          // range.setEnd(pad, 1);
-          // selection.collapseToEnd();
-          // this.getContent(contenteditable)
-
-        });
-        italic.addEventListener("click", function () {
-          var i = document.createElement("i");
-          window.getSelection().getRangeAt(0).surroundContents(i); // this.getContent(contenteditable)
-        });
-        li.addEventListener("click", function () {
-          var li = document.createElement("li");
-          window.getSelection().getRangeAt(0).surroundContents(li); // this.getContent(contenteditable)
-        });
-        a.addEventListener("click", function () {
-          // console.log(link.value);
-          var a = document.createElement("a");
-          a.href = link.value;
-          console.log(a);
-          window.getSelection().getRangeAt(0).surroundContents(a); // this.pasteHtmlAtCaret(a);
-          // this.getContent(contenteditable)
-        });
-      }
-    }
-  }, {
-    key: "getContent",
-    value: function getContent(text) {
-      // let range = new Range();
-      // const el = document.querySelector('.editor')//ideti linka
-      // el.setAttribute('contenteditable', true);
-      // let textNode = el.firstChild
-      // let caret = textNode.length
-      // let element = document.createElement("b")
-      // window.getSelection().getRangeAt(0).surroundContents(element)
-      var sel = document.getSelection(); // sel.setEnd;
-
-      if (document.getSelection) {
-        // all browsers, except IE before version 9
-        alert(sel);
-      } else {
-        if (document.selection) {
-          // Internet Explorer before version 9
-          var textRange = document.selection.createRange();
-          alert(textRange.text);
-        }
-      }
-
-      var savedRange = sel.getRangeAt(0);
-      sel.removeAllRanges();
-      console.log(sel);
-      sel.addRange(savedRange);
-    }
-  }, {
-    key: "pasteHtmlAtCaret",
-    value: function pasteHtmlAtCaret(html) {
-      var sel, range;
-
-      if (window.getSelection) {
-        // IE9 and non-IE
-        sel = window.getSelection();
-
-        if (sel.getRangeAt && sel.rangeCount) {
-          range = sel.getRangeAt(0);
-          range.deleteContents(); // Range.createContextualFragment() would be useful here but is
-          // non-standard and not supported in all browsers (IE9, for one)
-
-          var el = document.createElement("img");
-          el.innerHTML = html;
-          var frag = document.createDocumentFragment(),
-              node,
-              lastNode;
-          console.log(frag);
-
-          while (node = el.firstChild) {
-            lastNode = frag.appendChild(node);
-            console.log(lastNode);
-          }
-
-          range.insertNode(frag); // Preserve the selection
-
-          if (lastNode) {
-            range = range.cloneRange();
-            range.setStartAfter(lastNode);
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
-          }
-        }
-      } else if (document.selection && document.selection.type != "Control") {
-        // IE < 9
-        document.selection.createRange().pasteHTML(html);
-      }
-    }
-  }, {
-    key: "addPad",
-    value: function addPad() {
-      var $input = document.querySelector('.editorContainer > div');
-      var pad = document.createTextNode("\xA0"); // console.log($input);
-      //         $input.appendChild(pad);
-
-      return pad;
-    }
-  }, {
-    key: "surroundSelection",
-    value: function surroundSelection() {
-      var sel = window.getSelection();
-      if (!sel || !sel.rangeCount) return;
-      console.log(sel);
-      var code = document.createElement("b"); // code.style.fontStyle = "italic";
-      // code.style.background = "#ddd";
-
-      var range = sel.getRangeAt(0).cloneRange();
-      console.log(range);
-      range.surroundContents(code); // sel.removeAllRanges();
-
-      sel.addRange(range);
-      var padNode = this.addPad();
-      range.setEnd(padNode, 1);
-      console.log(range);
-      sel.collapseToEnd();
-    }
-  }]);
-
-  return TextEditor;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (TextEditor);
+/* harmony default export */ __webpack_exports__["default"] = (startNews());
 
 /***/ }),
 

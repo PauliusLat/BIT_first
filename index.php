@@ -46,8 +46,12 @@ $app = App::start();
 // $api = new ApiRoute;
 
 // $session = App::start()->getService('session');
-// _dc($_SERVER);
+// $session->set('333333333333cassdca', [42,2,'sadd']);
 
+// $pages = Page::all()->pageState('Site Page')->all();
+// _dc($pages);
+// _dc($_SERVER);
+// _dc($session->get('333333333333cassdca'));
 // $server = new Server;
 
 // // now try it
