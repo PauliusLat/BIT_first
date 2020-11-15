@@ -17,10 +17,10 @@ class Session
         return self::$obj ?? self::$obj = new self;
     }
 
-    public function set($a, $b)
-    {
+
+    public function set($a, $b){
         $transient = Transient::start();
-        self::$array = $transient->newValue;
+        self::$array = $transient->newValue; 
         self::$array[$a] = $b;
         return self::$array;
     }

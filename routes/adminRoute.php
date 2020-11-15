@@ -3,7 +3,7 @@
 return [
 	'admin' => 'AdminController@index',
 	'news' => 'NewsController@index',
-	'news@' => ['list' => 'NewsController@index', 'add_new' => 'NewsController@create', 'news_edit' => 'NewsController@edit'],
+	'news@' => ['list' => 'NewsController@index', 'news_edit' => 'NewsController@edit'],
 
 	'idejos' => 'IdeAdminController@adminIndex',
 	'galerija' => 'GalleryAdminController@adminIndex',
@@ -17,8 +17,8 @@ return [
 	
 	'category' => 'CategoryController@index',
 
-	'page' => 'PageController@create',
-	'page@' => ['list' =>'PageController@create', 'page_edit'=> 'PageController@edit', 'page_store'=> 'PageController@store', 'page_destroy'=> 'PageController@destroy', 'page_update'=> 'PageController@update'],
+	'page' => 'PageController@index',
+	// 'page@' => ['list' =>'PageController@create', 'page_edit'=> 'PageController@edit', 'page_store'=> 'PageController@store', 'page_destroy'=> 'PageController@destroy', 'page_update'=> 'PageController@update'],
 
 	'tag' => 'TagController@index',
 	// 'tag@' => ['list' =>'TagController@create', 'tag_edit'=> 'TagController@edit', 'tag_store'=> 'TagController@store', 'tag_destroy'=> 'TagController@destroy', 'tag_update'=> 'TagController@update']

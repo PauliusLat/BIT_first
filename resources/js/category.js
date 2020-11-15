@@ -87,8 +87,10 @@ function init() {
 }
 
 function catStore(name, select, slug, description) {
-  console.log(select)
-  console.log(name)
+
+    // console.log(select)
+    // console.log(name)
+
   axios
     .post(uri + path + "category_store", {
       cat_name: name,

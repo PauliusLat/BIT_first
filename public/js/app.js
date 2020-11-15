@@ -524,6 +524,173 @@ var Calendar = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/js/category.js":
+/*!**********************************!*\
+  !*** ./resources/js/category.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var catStrt = document.getElementById("catStart");
+console.log(catStrt);
+
+function startCat() {
+  if (catStrt) {
+    window.addEventListener("load", init, false);
+  }
+}
+
+function init() {
+  axios.post(uri + path + "category_create", {}).then(function (response) {
+    var test = document.querySelector(".innercat");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+      var submit = document.getElementById("create");
+      submit.addEventListener("click", function () {
+        var name = document.getElementById("category-name").value;
+        var slug = document.getElementById("category-slug").value;
+        var description = document.getElementById("category-description").value;
+        var parent = document.getElementById('cat');
+        var select = parent.options[parent.selectedIndex].value;
+        console.log(select);
+        catStore(name, select, slug, description);
+      });
+      var editBtn = catStrt.querySelectorAll(".category-edit");
+
+      var _loop = function _loop(i) {
+        var ID = editBtn[i].value;
+        var taxonomy = editBtn[i].id;
+        editBtn[i].addEventListener("click", function () {
+          catEdit(ID, taxonomy);
+        }, false);
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
+      }
+
+      var deleteBtn = document.querySelectorAll(".category-delete");
+
+      var _loop2 = function _loop2(_i) {
+        var ID = deleteBtn[_i].value;
+        var taxonomy = deleteBtn[_i].id;
+
+        deleteBtn[_i].addEventListener("click", function () {
+          catDelete(ID, taxonomy);
+          console.log(ID);
+          console.log(taxonomy);
+        }, false);
+      };
+
+      for (var _i = 0; _i < deleteBtn.length; _i++) {
+        _loop2(_i);
+      }
+    }
+  })["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
+    }
+
+    console.log(error);
+  });
+  1;
+}
+
+function catStore(name, select, slug, description) {
+  // console.log(select)
+  // console.log(name)
+  axios.post(uri + path + "category_store", {
+    cat_name: name,
+    cat_slug: slug,
+    cat_description: description,
+    cat_parent: select
+  }).then(function (response) {
+    console.log(response);
+    init();
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+  document.getElementById("category-name").value = "";
+}
+
+function catEdit(editID, taxonomy) {
+  console.log(editID);
+  axios.post(uri + path + "category_edit", {
+    editID: editID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    var test = document.querySelector(".innercat");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+    }
+
+    var updateBtn = document.getElementById("catUpdate");
+    updateBtn.addEventListener("click", function () {
+      var updateId = updateBtn.value;
+      catUpdate(updateId);
+    });
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function catUpdate(updateId) {
+  var name = document.getElementById("category_name").value;
+  var slug = document.getElementById("category_slug").value;
+  var description = document.getElementById("category_description").value;
+  axios.post(uri + path + "category_update", {
+    updateId: updateId,
+    cat_name: name,
+    cat_slug: slug,
+    cat_description: description
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(call.init(), 500);
+
+      console.log(11111);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function catDelete(ID, taxonomy) {
+  console.log(ID);
+  axios.post(uri + path + "category_destroy", {
+    deleteID: ID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(init(), 500);
+      // console.log(11111);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startCat());
+
+/***/ }),
+
 /***/ "./resources/js/gallery.js":
 /*!*********************************!*\
   !*** ./resources/js/gallery.js ***!
@@ -778,18 +945,22 @@ function renderColons(e) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
 /* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gallery.js */ "./resources/js/gallery.js");
-/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
-/* harmony import */ var _text_editor_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./text-editor.js */ "./resources/js/text-editor.js");
-/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
-/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_news_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
+/* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
+/* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
+/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
+/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
 /** @format */
 
 
 
 
 
-new _text_editor_js__WEBPACK_IMPORTED_MODULE_3__["default"]('.news-container');
-new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.calendar');
+ // import TextEditor from './text-editor.js'
+
+ // new TextEditor('.news-container')
+
+new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
 
 /***/ }),
 
@@ -797,10 +968,11 @@ new _calendar_js__WEBPACK_IMPORTED_MODULE_2__["default"]('.calendar');
 /*!******************************!*\
   !*** ./resources/js/news.js ***!
   \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
 /** @format */
 
 
@@ -810,75 +982,96 @@ var newsStart = document.getElementById("startNewsAdmin");
 
 function startNews() {
   if (newsStart) {
-    window.addEventListener("load", renderNews, false);
+    window.addEventListener("load", function () {
+      renderNews();
+      collapseNews();
+      addNewsListener();
+    }, false);
   }
 }
-/*----------------------- edit content axios----------------------------*/
 
+function addNewsListener() {
+  var button = document.getElementById("addNews");
+  button.addEventListener("click", function () {
+    storeNews();
+  }, false);
+}
 
 function editNews(editId) {
   axios.get(uri + path + "news-edit-admin", {
     editId: editId
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
-  }); // setTimeout(renderNews, 500);
+  });
+  setTimeout(renderNews, 300);
 }
 
 function deleteNews(delId) {
-  axios.post(uri + path + "news_destroy&id=" + delId, {
-    deleteId: delId
-  })["catch"](function (err) {
+  axios.post(uri + path + "news-destroy&id=" + delId)["catch"](function (err) {
     console.log(err instanceof TypeError);
-    console.log("Problemos su Delete api");
+    console.log("Problemos su DeleteNews api");
   });
-  setTimeout(renderNews, 500);
+  setTimeout(renderNews, 100);
+}
+
+function storeNews() {
+  axios.post(uri + path + "news-store")["catch"](function (err) {
+    console.log(err instanceof TypeError);
+    console.log("Problemos su StoreNews api");
+  });
+  setTimeout(renderNews, 100);
+}
+
+function collapseNews() {
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function (event) {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+
+      if (content.style.display === "block") {
+        content.style.display = "none";
+        event.target.innerHTML = 'SUKURTI NAUJIENĄ';
+      } else {
+        content.style.display = "block";
+        event.target.innerHTML = 'PASLĖPTI';
+      }
+    });
+  }
 }
 
 function renderNews() {
   axios.get(uri + path + "news-list", {}).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {
-      var data = response.data.data;
       var dom = document.getElementById("renderNewsList");
-      var HTMLString = "";
-      var counter = 0;
-      var keys = [];
-
-      for (var key in data) {
-        keys.push(key);
-      }
-
-      for (var i = keys.length - 1; i >= 0; i--) {
-        var value = data[keys[i]];
-        counter++;
-        HTMLString += "<div class=\"news-box\"> \n  \n                      <div class=\"news-img\">\n                        <img src=\"".concat(value.attachments, "\" alt=\"\">\n                      </div>\n                      <div class=\"news-text\">\n                        <div class=\"news-date\">\n                            <p>").concat(value.post_date, "</p>\n                        </div>\n                        <div class=\"news-content\">\n                            <p>").concat(value.post_title, "</p>\n                        </div>\n                      </div>\n                      <div class=\"news-buttons\">\n                        <button  class=\"newsBtn deleteBtnNews\" id=\"").concat(value.ID, "\">\n                            Trinti\n                        </button> \n                        <button  class=\"newsBtn editBtnNews\" id=\"").concat(value.ID, "\">\n                            Redaguoti\n                        </button> \n                      </div>\n                    </div>");
-      }
-
+      var HTMLString = response.data.htmlString;
       dom.innerHTML = HTMLString;
       var editBtn = document.querySelectorAll(".editBtnNews");
       var deletetBtn = document.querySelectorAll(".deleteBtnNews");
 
-      var _loop = function _loop(_i) {
-        var editId = editBtn[_i].id;
-
-        editBtn[_i].addEventListener("click", function () {
+      var _loop = function _loop(i) {
+        var editId = editBtn[i].id;
+        editBtn[i].addEventListener("click", function () {
           editNews(editId);
         }, false);
       };
 
-      for (var _i = 0; _i < editBtn.length; _i++) {
-        _loop(_i);
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
       }
 
-      var _loop2 = function _loop2(_i2) {
-        var delId = deletetBtn[_i2].id;
+      var _loop2 = function _loop2(_i) {
+        var delId = deletetBtn[_i].id;
 
-        deletetBtn[_i2].addEventListener("click", function () {
+        deletetBtn[_i].addEventListener("click", function () {
           deleteNews(delId);
         }, false);
       };
 
-      for (var _i2 = 0; _i2 < deletetBtn.length; _i2++) {
-        _loop2(_i2);
+      for (var _i = 0; _i < deletetBtn.length; _i++) {
+        _loop2(_i);
       }
     }
 
@@ -896,14 +1089,16 @@ function renderNews() {
 
     console.log(error);
   });
-} // export default startNews();
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startNews());
 
 /***/ }),
 
-/***/ "./resources/js/text-editor.js":
-/*!*************************************!*\
-  !*** ./resources/js/text-editor.js ***!
-  \*************************************/
+/***/ "./resources/js/page.js":
+/*!******************************!*\
+  !*** ./resources/js/page.js ***!
+  \******************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -911,173 +1106,313 @@ function renderNews() {
 __webpack_require__.r(__webpack_exports__);
 
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var pageStrt = document.getElementById("pageStart");
+console.log(pageStrt);
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var TextEditor = /*#__PURE__*/function () {
-  function TextEditor(e) {
-    _classCallCheck(this, TextEditor);
-
-    this.target = e;
-    this.DOM = null;
-    this.init();
+function startPage() {
+  if (pageStrt) {
+    window.addEventListener("load", init, false);
   }
+}
 
-  _createClass(TextEditor, [{
-    key: "init",
-    value: function init() {
-      var _this = this;
+function init() {
+  axios.post(uri + path + "page_create", {}).then(function (response) {
+    var test = document.querySelector(".innerpage");
 
-      var DOM = document.querySelector(this.target);
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+      var submit = document.getElementById("create");
+      submit.addEventListener("click", function () {
+        var name = document.getElementById("page-name").value; //   const slug = document.getElementById("post-slug").value;
+        //   const description = document.getElementById("page-description").value;
 
-      if (DOM) {
-        var contenteditable = document.querySelector("[contenteditable]");
-        var el = document.querySelector('.editor');
-        var bold = document.querySelector(".click-Blod");
-        var italic = document.querySelector(".click-Italc");
-        var li = document.querySelector(".click-li");
-        var a = document.querySelector(".click-a");
-        var link = document.getElementById("txtFormatUrl");
-        var input = document.querySelector('div'); // const pad = document.createTextNode('\u00A0');
-        // input.appendChild(pad);
-        // let selection = window.getSelection();
+        var post = document.getElementById('post');
+        console.log(post);
+        var select = post.options[post.selectedIndex].value;
+        console.log(select);
+        pageStore(name, select);
+      });
+      var editBtn = pageStrt.querySelectorAll(".page-edit");
 
-        bold.addEventListener("click", function () {
-          _this.surroundSelection(); // let b = document.createElement("b")
-          // let range = selection.getRangeAt(0).cloneRange();
-          // range.surroundContents(b)
-          // selection.removeAllRanges();
-          // selection.addRange(range);
-          // let pad = this.addPad();
-          // range.setEnd(pad, 1);
-          // selection.collapseToEnd();
-          // this.getContent(contenteditable)
+      var _loop = function _loop(i) {
+        var ID = editBtn[i].value; //   console.log(ID);
+        //   let page = editBtn[i].id;
 
-        });
-        italic.addEventListener("click", function () {
-          var i = document.createElement("i");
-          window.getSelection().getRangeAt(0).surroundContents(i); // this.getContent(contenteditable)
-        });
-        li.addEventListener("click", function () {
-          var li = document.createElement("li");
-          window.getSelection().getRangeAt(0).surroundContents(li); // this.getContent(contenteditable)
-        });
-        a.addEventListener("click", function () {
-          // console.log(link.value);
-          var a = document.createElement("a");
-          a.href = link.value;
-          console.log(a);
-          window.getSelection().getRangeAt(0).surroundContents(a); // this.pasteHtmlAtCaret(a);
-          // this.getContent(contenteditable)
-        });
-      }
-    }
-  }, {
-    key: "getContent",
-    value: function getContent(text) {
-      // let range = new Range();
-      // const el = document.querySelector('.editor')//ideti linka
-      // el.setAttribute('contenteditable', true);
-      // let textNode = el.firstChild
-      // let caret = textNode.length
-      // let element = document.createElement("b")
-      // window.getSelection().getRangeAt(0).surroundContents(element)
-      var sel = document.getSelection(); // sel.setEnd;
+        editBtn[i].addEventListener("click", function () {
+          pageEdit(ID);
+        }, false);
+      };
 
-      if (document.getSelection) {
-        // all browsers, except IE before version 9
-        alert(sel);
-      } else {
-        if (document.selection) {
-          // Internet Explorer before version 9
-          var textRange = document.selection.createRange();
-          alert(textRange.text);
-        }
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
       }
 
-      var savedRange = sel.getRangeAt(0);
-      sel.removeAllRanges();
-      console.log(sel);
-      sel.addRange(savedRange);
-    }
-  }, {
-    key: "pasteHtmlAtCaret",
-    value: function pasteHtmlAtCaret(html) {
-      var sel, range;
+      var deleteBtn = document.querySelectorAll(".page-delete");
+      console.log(deleteBtn);
 
-      if (window.getSelection) {
-        // IE9 and non-IE
-        sel = window.getSelection();
+      var _loop2 = function _loop2(_i) {
+        var ID = deleteBtn[_i].value;
 
-        if (sel.getRangeAt && sel.rangeCount) {
-          range = sel.getRangeAt(0);
-          range.deleteContents(); // Range.createContextualFragment() would be useful here but is
-          // non-standard and not supported in all browsers (IE9, for one)
+        deleteBtn[_i].addEventListener("click", function () {
+          pageDelete(ID);
+          console.log(ID);
+        }, false);
+      };
 
-          var el = document.createElement("img");
-          el.innerHTML = html;
-          var frag = document.createDocumentFragment(),
-              node,
-              lastNode;
-          console.log(frag);
-
-          while (node = el.firstChild) {
-            lastNode = frag.appendChild(node);
-            console.log(lastNode);
-          }
-
-          range.insertNode(frag); // Preserve the selection
-
-          if (lastNode) {
-            range = range.cloneRange();
-            range.setStartAfter(lastNode);
-            range.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(range);
-          }
-        }
-      } else if (document.selection && document.selection.type != "Control") {
-        // IE < 9
-        document.selection.createRange().pasteHTML(html);
+      for (var _i = 0; _i < deleteBtn.length; _i++) {
+        _loop2(_i);
       }
     }
-  }, {
-    key: "addPad",
-    value: function addPad() {
-      var $input = document.querySelector('.editorContainer > div');
-      var pad = document.createTextNode("\xA0"); // console.log($input);
-      //         $input.appendChild(pad);
-
-      return pad;
+  })["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
     }
-  }, {
-    key: "surroundSelection",
-    value: function surroundSelection() {
-      var sel = window.getSelection();
-      if (!sel || !sel.rangeCount) return;
-      console.log(sel);
-      var code = document.createElement("b"); // code.style.fontStyle = "italic";
-      // code.style.background = "#ddd";
 
-      var range = sel.getRangeAt(0).cloneRange();
-      console.log(range);
-      range.surroundContents(code); // sel.removeAllRanges();
+    console.log(error);
+  });
+  1;
+}
 
-      sel.addRange(range);
-      var padNode = this.addPad();
-      range.setEnd(padNode, 1);
-      console.log(range);
-      sel.collapseToEnd();
+function pageStore(name, select) {
+  axios.post(uri + path + "page_store", {
+    page_title: name,
+    //   page_slug: slug,
+    post_type: select
+  }).then(function (response) {
+    console.log(response);
+    init();
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+  document.getElementById("page-name").value = "";
+}
+
+function pageEdit(ID) {
+  console.log(ID);
+  axios.post(uri + path + "page_edit&id=" + ID, {
+    editID: ID
+  }).then(function (response) {
+    var test = document.querySelector(".innerpage");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
     }
-  }]);
 
-  return TextEditor;
-}();
+    var updateBtn = document.getElementById("pageUpdate");
+    updateBtn.addEventListener("click", function () {
+      var updateId = updateBtn.value;
+      pageUpdate(updateId);
+    });
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
 
-/* harmony default export */ __webpack_exports__["default"] = (TextEditor);
+function pageUpdate(updateId) {
+  var title = document.getElementById("page_name").value;
+  console.log(title); //   const slug = document.getElementById("page_slug").value;
+  //   const description = document.getElementById("page_description").value;
+
+  axios.post(uri + path + "page_update&id=" + updateId, {
+    updateId: updateId,
+    page_title: title //   page_slug: slug,
+    //   page_description: description
+
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      // console.log(response);
+      init();
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function pageDelete(ID) {
+  console.log(ID);
+  axios.post(uri + path + "page_destroy&id=" + ID, {
+    deleteID: ID
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init();
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startPage());
+
+/***/ }),
+
+/***/ "./resources/js/tag.js":
+/*!*****************************!*\
+  !*** ./resources/js/tag.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/** @format */
+
+
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var tagStrt = document.getElementById("tagStart"); // console.log(tagStrt);
+
+function startTag() {
+  if (tagStrt) {
+    window.addEventListener("load", init, false);
+  }
+}
+
+function init() {
+  axios.post(uri + path + "tag_create", {}).then(function (response) {
+    var test = document.querySelector(".test");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+      var submit = document.getElementById("create");
+      submit.addEventListener("click", function () {
+        var name = document.getElementById("tag-name").value;
+        var slug = document.getElementById("tag-slug").value;
+        var description = document.getElementById("tag-description").value;
+        tagStore(name, slug, description);
+      });
+      var editBtn = tagStrt.querySelectorAll(".tag-edit");
+
+      var _loop = function _loop(i) {
+        var ID = editBtn[i].value;
+        var taxonomy = editBtn[i].id;
+        editBtn[i].addEventListener("click", function () {
+          tagEdit(ID, taxonomy);
+        }, false);
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
+      }
+
+      var deleteBtn = document.querySelectorAll(".tag-delete");
+
+      var _loop2 = function _loop2(_i) {
+        var ID = deleteBtn[_i].value;
+        var taxonomy = deleteBtn[_i].id;
+
+        deleteBtn[_i].addEventListener("click", function () {
+          tagDelete(ID, taxonomy);
+          console.log(ID);
+          console.log(taxonomy);
+        }, false);
+      };
+
+      for (var _i = 0; _i < deleteBtn.length; _i++) {
+        _loop2(_i);
+      }
+    }
+  })["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
+    }
+
+    console.log(error);
+  });
+  1;
+}
+
+function tagStore(name, slug, description) {
+  axios.post(uri + path + "tag_store", {
+    tag_name: name,
+    tag_slug: slug,
+    tag_description: description
+  }).then(function (response) {
+    console.log(response);
+    init();
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+  document.getElementById("tag-name").value = "";
+}
+
+function tagEdit(editID, taxonomy) {
+  axios.post(uri + path + "tag_edit", {
+    editID: editID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    var test = document.querySelector(".test");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+    }
+
+    var updateBtn = document.getElementById("tagUpdate");
+    updateBtn.addEventListener("click", function () {
+      var updateId = updateBtn.value;
+      tagUpdate(updateId);
+    });
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function tagUpdate(updateId) {
+  var name = document.getElementById("tag_name").value;
+  var slug = document.getElementById("tag_slug").value;
+  var description = document.getElementById("tag_description").value;
+  axios.post(uri + path + "tag_update", {
+    updateId: updateId,
+    tag_name: name,
+    tag_slug: slug,
+    tag_description: description
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(call.init(), 500);
+
+      console.log(11111);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function tagDelete(ID, taxonomy) {
+  console.log(ID);
+  axios.post(uri + path + "tag_destroy", {
+    deleteID: ID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(init(), 500);
+      // console.log(11111);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startTag());
 
 /***/ }),
 
