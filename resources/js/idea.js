@@ -155,6 +155,7 @@ function renderColons(e) {
         }
         for (let i = 0; i < editBtn.length; i++) {
           let editId = editBtn[i].id;
+
           editBtn[i].addEventListener(
             "click",
             function() {
