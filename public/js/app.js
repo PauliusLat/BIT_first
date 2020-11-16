@@ -717,17 +717,17 @@ function renderGallery() {
     var filesInput = document.getElementById("files");
     filesInput.addEventListener("change", function (event) {
       var array = filesInput.files[0];
-      renderImages(array);
+      renderImages(array, filesInput);
     });
   } else {
     console.log("Your browser does not support File API");
   }
 }
 
-function renderImages(file) {
+function renderImages(file, filesInput) {
   var currentDiv = document.getElementById("message");
 
-  if (file.size < 1048576 || file.length != 0) {
+  if (file.size < 1048576 || file.length != 0 && file != undefined && file != null) {
     if (file.type.match('image')) {
       var picReader = new FileReader();
       picReader.addEventListener("load", function (event) {
@@ -745,6 +745,7 @@ function renderImages(file) {
           changeImage.addEventListener("click", function () {
             removeUploade.style.display = "";
             changeImage.remove();
+            filesInput.value = '';
           });
         }
       });

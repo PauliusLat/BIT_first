@@ -21,18 +21,18 @@ function renderGallery() {
 
             let array = filesInput.files[0];
 
-            renderImages(array);
+            renderImages(array, filesInput);
         });
     } else {
         console.log("Your browser does not support File API");
     }
 }
 
-function renderImages(file) {
+function renderImages(file, filesInput) {
 
     const currentDiv = document.getElementById("message");
 
-    if (file.size < 1048576 || file.length != 0) {
+    if (file.size < 1048576 || file.length != 0 && file != undefined && file != null) {
 
         if (file.type.match('image')) {
 
@@ -56,6 +56,7 @@ function renderImages(file) {
                     changeImage.addEventListener("click", () => {
                         removeUploade.style.display = "";
                         changeImage.remove();
+                        filesInput.value = ''
                     });
                 }
             });
