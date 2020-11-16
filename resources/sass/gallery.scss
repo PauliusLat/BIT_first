@@ -139,10 +139,12 @@
 }
 
 .gallerGrid {
+
     position : absolute;
     top      : 40%;
     left     : 50%;
     transform: translate(-50%, -50%);
+
 
     .galleryDiv {
         cursor: pointer;
@@ -235,5 +237,3 @@
     transition      : all 0.3s;
 }
 
-
-//13-25

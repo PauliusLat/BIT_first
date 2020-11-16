@@ -109,15 +109,19 @@ add_action('init', function() {
 // $terms = $category->get_taxonomy_hierarchy()->pluck('name', 'slug', 'term_id', 'parent');
 // _dc($terms);
 
+
 // $category = new Category;
 
 // $terms = $category->getTaxonomyHierarchyArr('maincat');
+
     // _dc($terms);
 
     // foreach ($terms as $term){
     //     _dc($term);
     // }
+
 //  $cats = $category->flattenArray($terms);
+
 // _dc($cats);
 
     // $terms = $category->get_taxonomy_hierarchy()->pluck('name', 'slug', 'term_id', 'parent');
