@@ -1041,6 +1041,7 @@ function startNews() {
       renderNews();
       collapseNews();
       addNewsListener();
+      renderImg();
     }, false);
   }
 }
@@ -1050,6 +1051,64 @@ function addNewsListener() {
   button.addEventListener("click", function () {
     storeNews();
   }, false);
+}
+
+function renderImg() {
+  //Check File API support
+  if (window.File && window.FileList && window.FileReader) {
+    var fileInput = document.getElementById("newsImg");
+    fileInput.addEventListener("change", function (event) {
+      var array = Array.from(event.target.files);
+      console.log(array);
+      renderImage(array[0]);
+    });
+  } else {
+    console.log("Your browser does not support File API");
+  }
+}
+
+function renderImage(file) {
+  var currentDiv = document.getElementById("news-add");
+
+  if (file.size < 1048576) {
+    if (file.type.match('image')) {
+      var picReader = new FileReader();
+      picReader.addEventListener("load", function (event) {
+        var picFile = event.target; // let deleteId = getID();
+        // let deleteBtn = getID();
+        // const output = document.getElementById("result");
+        // const div = document.createElement("div");
+        // div.className = "galleryDiv";
+        // div.id = deleteId;
+
+        div.innerHTML = "<img class=\"uploadeImageGallery\" src=\" ".concat(picFile.result, " \"\n                  alt=\" \"/>\n                  <label for=\"").concat(deleteBtn, "\">Tag: </label>\n                  <input type=\"text\" id=\"").concat(filesAll[i].name, "\" class=\"altInput\" name=\"altImage\" value=\"\">\n                  <div class=\"deleteImd\" id=\"").concat(deleteBtn, "\">Trinti<div/>");
+        output.insertBefore(div, currentDiv);
+        var imgDeleteBtn = document.getElementById(deleteBtn);
+        var deleteDiv = document.getElementById(deleteId);
+        imgDeleteBtn.addEventListener("click", function () {
+          filesAll.splice(i, 1);
+          deleteDiv.remove();
+        });
+      });
+      picReader.readAsDataURL(filesAll[i]);
+    } else {
+      alert("Tai nera paveikslelio tipo formatas");
+    }
+  } else {
+    alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+    //   currentDiv.appendChild(newContent);
+  }
+
+  arraySend.push(filesAll);
+  var uploadeImg = document.getElementById("submitImg");
+
+  if (isListener) {
+    uploadeImg.addEventListener('click', function () {
+      arraySend = filter(arraySend);
+      sendImageData(arraySend);
+    });
+    isListener = false;
+  }
 }
 
 function editNews(editId) {
@@ -1070,6 +1129,20 @@ function deleteNews(delId) {
 }
 
 function storeNews() {
+  var txt1 = document.getElementById(i).value;
+  console.log(txt1);
+
+  if (txt1 != undefined && txt1 != null && txt1.length >= 0 && txt1 != "" && txt1 != NaN) {
+    var text1 = txt1.split(/\s+/);
+    axios.post(uri + path + "idea-create-admin", {
+      soliution: text1,
+      solutionId: sId
+    })["catch"](function (err) {
+      console.log(err instanceof TypeError);
+    });
+    return setTimeout(renderColons, 500);
+  }
+
   axios.post(uri + path + "news-store")["catch"](function (err) {
     console.log(err instanceof TypeError);
     console.log("Problemos su StoreNews api");
@@ -1106,27 +1179,28 @@ function renderNews() {
       var editBtn = document.querySelectorAll(".editBtnNews");
       var deletetBtn = document.querySelectorAll(".deleteBtnNews");
 
-      var _loop = function _loop(i) {
-        var editId = editBtn[i].id;
-        editBtn[i].addEventListener("click", function () {
+      var _loop = function _loop(_i) {
+        var editId = editBtn[_i].id;
+
+        editBtn[_i].addEventListener("click", function () {
           editNews(editId);
         }, false);
       };
 
-      for (var i = 0; i < editBtn.length; i++) {
-        _loop(i);
+      for (var _i = 0; _i < editBtn.length; _i++) {
+        _loop(_i);
       }
 
-      var _loop2 = function _loop2(_i) {
-        var delId = deletetBtn[_i].id;
+      var _loop2 = function _loop2(_i2) {
+        var delId = deletetBtn[_i2].id;
 
-        deletetBtn[_i].addEventListener("click", function () {
+        deletetBtn[_i2].addEventListener("click", function () {
           deleteNews(delId);
         }, false);
       };
 
-      for (var _i = 0; _i < deletetBtn.length; _i++) {
-        _loop2(_i);
+      for (var _i2 = 0; _i2 < deletetBtn.length; _i2++) {
+        _loop2(_i2);
       }
     }
 

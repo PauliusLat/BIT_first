@@ -7,16 +7,16 @@
         
         <button class="collapsible">SUKURTI NAUJIENĄ</button>
         <div class="collapsible-content">
-        <div class="news-title">
-            <h1>
-                NAUJA NAUJIENA
-            </h1>
-        </div>
-        <div class="news-add">
-            <input type="file" name="newsImg">
-            <div id="editor" name="newsEditor"></div>
-            <input class="uplodeBtn" type="button" id="addNews" value='Išsaugoti' enctype="multipart/form-data">
-        </div>
+            <div class="news-title">
+                <h1>
+                    NAUJA NAUJIENA
+                </h1>
+            </div>
+            <div class="news-add">
+                <input class="newsImage" type="file" id='newsImg' name="img" accept="image/*">
+                <div id="editor" name="newsEditor"></div>
+                <input class="uplodeBtn" type="button" id="addNews" value='Išsaugoti' enctype="multipart/form-data">
+            </div>
         </div>
     </div>
     <br>

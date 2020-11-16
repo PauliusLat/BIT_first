@@ -14,6 +14,7 @@ function startNews() {
                                           renderNews();
                                           collapseNews();
                                           addNewsListener();
+                                          renderImg();
                                         }, false);
     }
 }
@@ -28,6 +29,87 @@ function addNewsListener(){
     false
   );
 }
+
+function renderImg() {
+  //Check File API support
+  if (window.File && window.FileList && window.FileReader) {
+
+      let fileInput = document.getElementById("newsImg");
+
+      fileInput.addEventListener("change", function(event) {
+
+          let array = Array.from(event.target.files);
+  console.log(array);
+          renderImage(array[0]);
+      });
+  } else {
+      console.log("Your browser does not support File API");
+  }
+}
+
+
+function renderImage(file) {
+
+  const currentDiv = document.getElementById("news-add");
+
+    if (file.size < 1048576) {
+        if (file.type.match('image')) {
+            const picReader = new FileReader();
+            picReader.addEventListener("load", function(event) {
+                const picFile = event.target;
+                // let deleteId = getID();
+                // let deleteBtn = getID();
+                // const output = document.getElementById("result");
+                // const div = document.createElement("div");
+                // div.className = "galleryDiv";
+                // div.id = deleteId;
+
+                div.innerHTML = `<img class="uploadeImageGallery" src=" ${picFile.result} "
+                  alt=" "/>
+                  <label for="${deleteBtn}">Tag: </label>
+                  <input type="text" id="${filesAll[i].name}" class="altInput" name="altImage" value="">
+                  <div class="deleteImd" id="${deleteBtn}">Trinti<div/>`;
+
+                output.insertBefore(div, currentDiv);
+
+                const imgDeleteBtn = document.getElementById(deleteBtn);
+                const deleteDiv = document.getElementById(deleteId);
+
+                imgDeleteBtn.addEventListener("click", () => {
+                    filesAll.splice(i, 1);
+                    deleteDiv.remove();
+                });
+            });
+
+            picReader.readAsDataURL(filesAll[i]);
+
+        } else {
+            alert("Tai nera paveikslelio tipo formatas");
+        }
+    } else {
+        alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+        //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+        //   currentDiv.appendChild(newContent);
+    }
+
+  arraySend.push(filesAll);
+
+  const uploadeImg = document.getElementById("submitImg");
+
+  if (isListener) {
+      uploadeImg.addEventListener('click', function() {
+
+          arraySend = filter(arraySend);
+          sendImageData(arraySend);
+
+      });
+      isListener = false;
+  }
+}
+
+
+
+
 
 
 function editNews(editId) {
@@ -59,7 +141,32 @@ function deleteNews(delId) {
     setTimeout(renderNews, 100);
 }
 
-function storeNews(){
+function storeNews() {
+
+  const txt1 = document.getElementById(i).value;
+  console.log(txt1);
+
+  if (
+    txt1 != undefined &&
+    txt1 != null &&
+    txt1.length >= 0 &&
+    txt1 != "" &&
+    txt1 != NaN
+  ) {
+    let text1 = txt1.split(/\s+/);
+    axios
+      .post(uri + path + "idea-create-admin", {
+        soliution: text1,
+        solutionId: sId,
+      })
+      .catch((err) => {
+        console.log(err instanceof TypeError);
+      });
+    return setTimeout(renderColons, 500);
+  }
+
+
+
   axios
       .post(
         uri + path +
@@ -73,7 +180,7 @@ function storeNews(){
 
 }
 
-function collapseNews(){
+function collapseNews() {
   var coll = document.getElementsByClassName("collapsible");
   var i;
 
@@ -91,7 +198,6 @@ function collapseNews(){
     });
   }
 }
-
 
 function renderNews() {
 
