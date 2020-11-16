@@ -1,15 +1,21 @@
+/** @format */
+
+/** @format */
+
 html {
   scroll-behavior: smooth;
 }
 
 body,
-body * {
+body {
   margin: 0;
   padding: 0;
   vertical-align: top;
   box-sizing: border-box;
   font-family: "Poppins", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
+
+/** @format */
 
 .wd {
   margin: 0 calc(50% - 550px);
@@ -1887,13 +1893,48 @@ table th {
 
 /** @format */
 
-.tagCreate {
-  width: 100%;
-  display: flex;
+/** @format */
+
+/** @format */
+
+.label {
+  margin-top: 20px;
+  margin-bottom: 5px;
 }
 
-.admin-tag-div-first {
-  width: 40%;
+.buttons {
+  margin-top: 20px;
+}
+
+input[type=text].tcp-input,
+input[type=datetime-local].tcp-input,
+textarea.tcp-input {
+  width: 70%;
+  height: 40px;
+  font: 12px/12px "Open Sans", sans-serif;
+  letter-spacing: 1px;
+  margin: 10px 0;
+  color: #585858;
+  border-color: #bdbdbd;
+  border-radius: 4px;
+}
+
+input[type=text].tcp-input:focus,
+input[type=datetime-local].tcp-input:focus,
+textarea.tcp-input:focus {
+  outline: none;
+}
+
+textarea.tcp-input {
+  padding-top: 10px;
+  height: 70px;
+}
+
+.tcp-label {
+  width: 100%;
+  font-size: 13px;
+  padding-left: 10px;
+  cursor: auto;
 }
 
 table {
@@ -1922,6 +1963,4 @@ table th {
   background-color: #f3f5f6;
   color: #0071a1;
 }
-
-/** @format */
 
