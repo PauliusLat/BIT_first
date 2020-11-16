@@ -1,9 +1,12 @@
 <?php
+
 namespace BIT\app;
+
 use BIT\app\Transient;
 use BIT\app\Cookie;
 
-class Session{
+class Session
+{
 
     private $name;
     public static $array = [];
@@ -14,6 +17,7 @@ class Session{
         return self::$obj ?? self::$obj = new self;
     }
 
+
     public function set($a, $b){
         $transient = Transient::start();
         self::$array = $transient->newValue; 
@@ -21,35 +25,39 @@ class Session{
         return self::$array;
     }
 
-    public function flash($a, $b){
+    public function flash($a, $b)
+    {
         $transient = Transient::start();
         self::$array = $transient->newValue;
         self::$array[$a] = $b;
-        array_push( self::$array, 'autodelete_'.$a);
-        return self::$array;  
+        array_push(self::$array, 'autodelete_' . $a);
+        return self::$array;
     }
 
-    public function get($index){
+    public function get($index)
+    {
         $transient = Transient::start();
         self::$array = $transient->value;
-        if(array_key_exists ($index , self::$array)){
+        if (array_key_exists($index, self::$array)) {
             $indexValue =  self::$array[$index];
-            self::$array = $transient->newValue; 
+            self::$array = $transient->newValue;
             return $indexValue;
-        }else{
-            self::$array = $transient->newValue; 
+        } else {
+            self::$array = $transient->newValue;
             return null;
         }
     }
 
-    public function delete($index){
+    public function delete($index)
+    {
         $transient = Transient::start();
         self::$array = $transient->value;
-        unset(self::$array[$index]); 
+        unset(self::$array[$index]);
         return self::$array;
     }
 
-    public function deleteSession(){
+    public function deleteSession()
+    {
         $transient = Transient::start();
         $transient->deleteTransient();
         Cookie::deleteCookie();
@@ -59,6 +67,4 @@ class Session{
     {
         return $this->$dir;
     }
-
-
 }
