@@ -3,7 +3,7 @@
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
 const catStrt = document.getElementById("catStart");
-console.log(catStrt);
+// console.log(catStrt);
 
 function startCat() {
   if (catStrt) {
