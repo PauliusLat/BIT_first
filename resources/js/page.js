@@ -3,7 +3,7 @@
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
 const pageStrt = document.getElementById("pageStart");
-console.log(pageStrt);
+// console.log(pageStrt);
 
 function startPage() {
   if (pageStrt) {

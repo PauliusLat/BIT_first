@@ -1496,6 +1496,10 @@ button:focus {
   transform: translate(-50%, -50%);
 }
 
+.gallerGrid .galleryDiv {
+  cursor: pointer;
+}
+
 .gallerGrid .galleryDiv .deleteImd {
   box-shadow: inset 0px 1px 0px 0px #f5978e;
   background: linear-gradient(to bottom, #f5d5d2 5%, #c62d1f 100%);
