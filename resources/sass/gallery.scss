@@ -1,5 +1,6 @@
-h1 {
+.gellerTitle {
     text-align: center;
+    margin    : 30px 0 20px 0;
 }
 
 .galleryContainer {
@@ -33,9 +34,19 @@ h1 {
             border     : none;
             font-size  : 20px;
             line-height: 25px;
-            margin-top : -100px;
+            margin-top : -15px;
             cursor     : pointer;
         }
+
+        // .albumImage::after {
+        //     content    : "\2713";
+        //     color      : #6dc01a;
+        //     line-height: 85px;
+        //     font-size  : 85px;
+        //     font-weight: 1000;
+        //     margin     : 10px 0 0 -75px;
+        //     position   : absolute;
+        // }
 
         .svg-wrapper {
             margin       : 25px 0 0 0;
@@ -78,25 +89,30 @@ h1 {
         align-items    : center;
         justify-content: center;
 
+        .file-upload {
+
+
+            input[type=file] {
+                width : 100px;
+                height: 100px;
+            }
+        }
 
         .file-upload {
 
-            height       : 200px;
-            width        : 200px;
-            border-radius: 100px;
-            position     : relative;
-
+            height         : 200px;
+            width          : 200px;
+            border-radius  : 10px;
+            position       : relative;
             display        : flex;
             justify-content: center;
             align-items    : center;
-
-            border          : 4px solid #FFFFFF;
-            overflow        : hidden;
-            background-image: linear-gradient(to bottom, #2590EB 50%, #FFFFFF 50%);
-            background-size : 100% 200%;
-            transition      : all 1s;
-            color           : #FFFFFF;
-            font-size       : 100px;
+            border         : dashed;
+            overflow       : hidden;
+            background-size: 100% 200%;
+            transition     : all 1s;
+            color          : #c3c3c3;
+            font-size      : 100px;
 
             input[type='file'] {
 
@@ -114,24 +130,24 @@ h1 {
 
                 background-position: 0 -100%;
 
-                color: #2590EB;
+                color: rgb(195, 195, 195);
 
             }
-
-
         }
     }
 
 }
 
 .gallerGrid {
-    max-width            : 1000px;
-    margin               : 0 auto;
-    display              : grid;
-    grid-gap             : 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+    position : absolute;
+    top      : 40%;
+    left     : 50%;
+    transform: translate(-50%, -50%);
+
 
     .galleryDiv {
+        cursor: pointer;
 
         .deleteImd {
             box-shadow      : inset 0px 1px 0px 0px #f5978e;
@@ -163,8 +179,6 @@ h1 {
     }
 
     .uploadeImageGallery {
-        width     : 100%;
-        height    : 300px;
         object-fit: cover;
     }
 
@@ -222,3 +236,4 @@ h1 {
     border-bottom   : 0.3rem solid transparent;
     transition      : all 0.3s;
 }
+
