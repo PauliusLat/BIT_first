@@ -1,0 +1,65 @@
+/** @format */
+
+.label {
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+input[type="text"].tcp-input,
+input[type="datetime-local"].tcp-input,
+textarea.tcp-input {
+  width: 70%;
+  height: 40px;
+  //   font-size: 12px;
+  font: 12px/12px "Open Sans", sans-serif;
+  letter-spacing: 1px;
+  margin: 10px 0;
+  color: rgb(88, 88, 88);
+  border-color: rgb(189, 189, 189);
+  border-radius: 4px;
+}
+
+input[type="text"].tcp-input:focus,
+input[type="datetime-local"].tcp-input:focus,
+textarea.tcp-input:focus {
+  outline: none;
+}
+
+textarea.tcp-input {
+  padding-top: 10px;
+  height: 70px;
+}
+
+.tcp-label {
+  width: 100%;
+  font-size: 13px;
+  padding-left: 10px;
+  cursor: auto;
+}
+
+table {
+  font-family: "Montserrat", sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+table td,
+table th {
+  font-family: "Montserrat", sans-serif;
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+table th {
+  font-family: "Montserrat", sans-serif;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #f3f5f6;
+  color: #0071a1;
+}
