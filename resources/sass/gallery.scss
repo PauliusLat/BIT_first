@@ -139,11 +139,15 @@
 }
 
 .gallerGrid {
-        position        : absolute;
-        top             : 40%;
-        left            : 50%;
-        transform       : translate(-50%, -50%);
+
+    position : absolute;
+    top      : 40%;
+    left     : 50%;
+    transform: translate(-50%, -50%);
+
+
     .galleryDiv {
+        cursor: pointer;
 
         .deleteImd {
             box-shadow      : inset 0px 1px 0px 0px #f5978e;
@@ -232,3 +236,4 @@
     border-bottom   : 0.3rem solid transparent;
     transition      : all 0.3s;
 }
+

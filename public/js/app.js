@@ -537,8 +537,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
-var catStrt = document.getElementById("catStart");
-console.log(catStrt);
+var catStrt = document.getElementById("catStart"); // console.log(catStrt);
 
 function startCat() {
   if (catStrt) {
@@ -728,7 +727,7 @@ function renderGallery() {
 function renderImages(file) {
   var currentDiv = document.getElementById("message");
 
-  if (file.size < 1048576) {
+  if (file.size < 1048576 || file.length != 0) {
     if (file.type.match('image')) {
       var picReader = new FileReader();
       picReader.addEventListener("load", function (event) {
@@ -737,9 +736,17 @@ function renderImages(file) {
         var div = document.createElement("div");
         div.className = "galleryDiv";
         var removeUploade = document.querySelector(".wrapper");
-        removeUploade.remove();
+        removeUploade.style.display = "none";
         div.innerHTML = "<img class=\"uploadeImageGallery\" height=\"200px\" width=\"200px\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>");
         output.insertBefore(div, currentDiv);
+        var changeImage = document.querySelector(".galleryDiv");
+
+        if (changeImage) {
+          changeImage.addEventListener("click", function () {
+            removeUploade.style.display = "";
+            changeImage.remove();
+          });
+        }
       });
       picReader.readAsDataURL(file);
       var uploadeImg = document.getElementById("submitImg");
@@ -774,7 +781,7 @@ function sendImageData(file) {
 
     console.log(error);
   });
-  location.reload();
+  location.reload(); // uzkomentuoti jei norite kad nedingtu image
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (startGallery());
@@ -1108,8 +1115,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
-var pageStrt = document.getElementById("pageStart");
-console.log(pageStrt);
+var pageStrt = document.getElementById("pageStart"); // console.log(pageStrt);
 
 function startPage() {
   if (pageStrt) {

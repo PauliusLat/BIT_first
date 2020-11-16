@@ -32,7 +32,7 @@ function renderImages(file) {
 
     const currentDiv = document.getElementById("message");
 
-    if (file.size < 1048576) {
+    if (file.size < 1048576 || file.length != 0) {
 
         if (file.type.match('image')) {
 
@@ -45,11 +45,19 @@ function renderImages(file) {
                 const div = document.createElement("div");
                 div.className = "galleryDiv";
                 const removeUploade = document.querySelector(".wrapper");
-                removeUploade.remove();
+                removeUploade.style.display = "none";
                 div.innerHTML = `<img class="uploadeImageGallery" height="200px" width="200px" src=" ${picFile.result} "
                       alt=" "/>`;
 
                 output.insertBefore(div, currentDiv);
+
+                const changeImage = document.querySelector(".galleryDiv");
+                if (changeImage) {
+                    changeImage.addEventListener("click", () => {
+                        removeUploade.style.display = "";
+                        changeImage.remove();
+                    });
+                }
             });
 
             picReader.readAsDataURL(file);
@@ -99,7 +107,7 @@ function sendImageData(file) {
         }
         console.log(error);
     });
-     location.reload();
+    location.reload(); // uzkomentuoti jei norite kad nedingtu image
 
 }
 export default startGallery();
