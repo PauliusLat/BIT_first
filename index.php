@@ -4,6 +4,7 @@
 use BIT\app\Category;
 
 
+
 /**
  * Plugin Name: BIT First
  * Plugin URI: https://www.yourwebsiteurl.com/
@@ -22,13 +23,12 @@ define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 App::start();
 // $query = new Query;
-// $session = App::start()->getService('session');
+
 
 // $session->set('jjjj', 5);
 // var_dump($session->get('dt'));
 // $api = new ApiRoute;
 
-$session = App::start()->getService('session');
 
 // var_dump('pppppppppppppppp');
 // $pages = Page::all(); 
@@ -100,6 +100,8 @@ $session = App::start()->getService('session');
 
 
 add_action('init', function () {
+    $session = App::start()->getService('session');
+    // $session->delete('alert message');
 
 
     // $terms = $category->getTaxonomyHierarchy('maincat');
