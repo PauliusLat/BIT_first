@@ -1902,6 +1902,10 @@ table th {
   margin-bottom: 5px;
 }
 
+.buttons {
+  margin-top: 20px;
+}
+
 input[type=text].tcp-input,
 input[type=datetime-local].tcp-input,
 textarea.tcp-input {
