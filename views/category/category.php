@@ -48,9 +48,11 @@ use BIT\app\Category;
 
         <div class="buttons">
             <button type="submit" id="create" class="btn-blue">Pridėti</button>
-
         </div>
+
+        <div class='message'><?= $message ?></div>
     </div>
+
     <div class="sm-1-2">
         <table>
             <th>Pavadinimas</th>

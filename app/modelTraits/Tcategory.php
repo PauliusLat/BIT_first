@@ -53,8 +53,10 @@ trait Tcategory
                             echo '<pre>';
                             var_dump(get_term_by('name', $key, 'maincat'));
                             $session = App::start()->getService('session');
-                            // $session->flash('message', 'tokiu pavadinimu kategorija jau sukurta');
+                            $session->flash('message', 'tokiu pavadinimu kategorija jau sukurta');
+                            $categ->name != $key;
                         }
+
                         wp_insert_term($key, $value, $args);
                     }
                     // }
