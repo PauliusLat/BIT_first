@@ -9,6 +9,14 @@
   margin-top: 20px;
 }
 
+.message {
+  color: red;
+  padding: 20px;
+
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
 input[type="text"].tcp-input,
 input[type="datetime-local"].tcp-input,
 textarea.tcp-input {

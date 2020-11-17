@@ -607,7 +607,7 @@ function catStore(name, select, slug, description) {
     cat_description: description,
     cat_parent: select
   }).then(function (response) {
-    // console.log(response);
+    console.log(response);
     init();
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
@@ -663,7 +663,7 @@ function catDelete(ID, taxonomy) {
     taxonomy_type: taxonomy
   }).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {
-      // console.log(response);
+      console.log(response);
       init(); // setTimeout(init(), 500);
       // console.log(11111);
     }

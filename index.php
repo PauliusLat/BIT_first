@@ -4,6 +4,7 @@
 use BIT\app\Category;
 
 
+
 /**
  * Plugin Name: BIT First
  * Plugin URI: https://www.yourwebsiteurl.com/
@@ -21,60 +22,12 @@ define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 App::start();
-// $query = new Query;
-// $session = App::start()->getService('session');
-
-// $session->set('jjjj', 5);
-// var_dump($session->get('dt'));
-// $api = new ApiRoute;
-
-$session = App::start()->getService('session');
-
-// var_dump('pppppppppppppppp');
-// $pages = Page::all(); 
-// _dc($pages);
-// _dc($session);
-
-// $session = new Session;
-// _dc($_COOKIE);
-//  $session->set('kuku',5);
-// _dc($session->get('kuku'));
-// $session->set('lala',5);
-// $session->set('br',5);
-
-//  _dc($session->get('c'));
-// $session->set('p',5);
-// $session->set('x',5);
-// $session->flash('j',5);
-// $session->deleteSession();
-// _dc($session);
-
-// _dc($_SERVER);
 
 // $pages = Page::all()->pageState('Site Page')->all();
 // _dc($pages);
 // _dc($_SERVER);
 // _dc($session->get('333333333333cassdca'));
 // $server = new Server;
-
-// // now try it
-// $ua=$server->getBrowser();
-// _dc($ua);
-// $yourbrowser= "Your browser: " . $ua['name'] . " " . $ua['version'] . " on " .$ua['platform'] . " reports: <br >" . $ua['userAgent'];
-// print_r($yourbrowser);
-// $user_agent = $_SERVER['HTTP_USER_AGENT'] . "\n\n";
-// _dc(get_browser_name($user_agent));
-
-// $session = new Session;
-// $session->set(9,3);
-// // _dc($session->get(4));
-//  $session->set(9,3);
-// $session->set('b',[3,2,4]);
-
-// $session->set('idd',5);
-// _dc($session->get('idd'));
-
-
 //
 // _dc($app->getService('request')->query->get('route', ''));
 // $my_post = array(
@@ -100,21 +53,13 @@ $session = App::start()->getService('session');
 
 
 add_action('init', function () {
-
+    $session = App::start()->getService('session');
+    // $session->delete('message');
+    // $session->flash('messkukuku', 'tokiu pavadinimu kategorija jau sukurta');
+    // var_dump($session->get('messkukuku'));
 
     // $terms = $category->getTaxonomyHierarchy('maincat');
     // _dc($terms);
-
-
-    // foreach ($terms as $term){
-    //     _dc($term);
-    // }
-    // $cats = $category->flattenArray($terms);
-    // _dc($cats);
-
-    // $terms = $category->get_taxonomy_hierarchy()->pluck('name', 'slug', 'term_id', 'parent');
-    // _dc($terms);
-
 
     // $category = new Category;
     // $category->addCat('kategorija');
@@ -169,114 +114,5 @@ add_action('init', function () {
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
 
-    //     ### print_r(array(__LINE__, 'arr' => $array, 'prefix' => $childPrefix, 'root' => $root, 'result' => $result));
-
-    //     foreach($array as $k => $v) {
-    //         if(is_array($v) || is_object($v)) $result = flattenWithKeys( (array) $v, $childPrefix, $root . $k . $childPrefix, $result);
-    //         else $result[ $root . $k ] = $v;
-    //     }
-    //     return $result;
-    // }
-
-    // _dc(flattenWithKeys($terms));
-
-    // function array_flatten($array) {
-
-    //     $return = array();
-    //     foreach ($array as $key => $value) {
-    //         //  _dc((array)$value);
-    //         // _dc($value);
-    //         if (is_array($value)){ $return = array_merge($return, array_flatten((array)$value));}
-    //         else {$return[$key] = $value;}
-    //     }
-    //     return $return;
-
-    // }
-
-    //  _dc(array_flatten($terms));
-    //array_flatten($terms);
-
-    //    $args = array(
-
-    //     'hide_empty'         => 0,
-    //     'echo'               => 0,
-    //     'taxonomy'           => 'maincat',
-    //     'hierarchical'  =>1,
-    //     'show_count' => 1,
-
-    // );
-
-    // wp_list_categories( $args );
-    // $category->deleteCatFromDb(103);
-
-    // $album = new AlbumPost;
-    // $album->save();
-
-    // $tag = new Tag;
-    // $tag->addTagtoDB('hot');
-    // $album->addTag('cold');
-    // $terms = get_terms(['name'=>'aauga', 'taxonomy'=> 'maincat', 'hide_empty'=>false]);
-    // _dc($terms);
-    //     $category = new Category;
-    //     $page = new Page;
-    // $page->createPage('kalendorius');
-    // $my_post = array(
-    //     'post_title'    => 'Ideja',
-    //     'post_type'     => 'page',
-    //     'post_name'     => 'ideja',
-    //     'post_content'  => '[front_shortcode route="ideja"]',
-    //     'post_status'   => 'publish',
-    //     'comment_status' => 'closed',
-    //     'ping_status' => 'closed',
-    //     'post_author' => 1,
-    //     'menu_order' => 0
-    //   );
-
-    //   $id = wp_insert_post( $my_post );
-    //   $permalink = get_permalink($id);
-    //   _dc($permalink);
-
-    // _dc($category->get_taxonomy_hierarchy());
-
-    // _dc(get_term_children(43, 'maincat'));
-    // $album = new AlbumPost;
-    // $album->save();
-    // $album->save();
-    // // //      _dc( $album);
-    // // // $album->addTag(['atostogos', 'namai']);
-    // // // $album->addTag(['tttt']);
-    // $album->addCat('indai', 'maincat');
-    // $album->addCat('baldai', 'maincat');
-    // $category->addCat(['mazi sauksteliai'], 54);
-    // $album->attachCat('mazi sauksteliai');
-    //gl padaryti, kad ne is butu o stringas kaip kat
-    // $album->addCat([' mazo lekstutes', 'dideles lekstutes'], 'maincat', 53);
-    // _dc($category->get_taxonomy_hierarchy('maincat'));
-    // //  _dc($album->getChildCats([45, 0]
-    // _dc($category);
-    //  _dc($category->getTermId('stalai'));
-    // _dc(get_term_by('name', 'stalai', 'maincat'));
-    // $category->addCat('stalai', 'maincat');
-    // // $album->addTag('ooorrr');
-    // //     // echo '<pre>';
-
-    //     // _dc( $album);
-    // //     // wp_remove_object_terms( '953', '27', 'hashtag');
-    // // $album->removeTag(['atostogos', 'namai']);
-    // // //
-    // //
-    // // $album->removeCat('Indai');
-
-    // // _dc($album->getChildCats([45]));
-    //  _dc($album->get_taxonomy_hierarchy('maincat', 45));
-    // // $album->get_taxonomy_hierarchy(['maincat', 45]);
-    // //  _dc($album->getCats());
-    // //
-
-    // // _dc($album->getTags()->sortBy('count', 'desc'));
-    // //     //  $idea = new IdeaPost;
-    // //     //  $idea->save();
-    // //     //  _dc( $idea);
-    // //     //  $idea->addTag('');
 
 });
