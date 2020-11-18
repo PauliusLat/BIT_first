@@ -27,9 +27,9 @@ function init() {
         //   const description = document.getElementById("page-description").value;
 
           let post = document.getElementById('post');
-          console.log(post);
+          // console.log(post);
           let select = post.options[post.selectedIndex].value;
-          console.log(select);  
+          // console.log(select);  
  
         pageStore(name, select);
          
@@ -51,15 +51,12 @@ function init() {
         }
 
         const deleteBtn = document.querySelectorAll(".page-delete");
-        console.log(deleteBtn);
         for (let i = 0; i < deleteBtn.length; i++) {
           let ID = deleteBtn[i].value;
-         
           deleteBtn[i].addEventListener(
             "click",
             function() {
               pageDelete(ID);
-              console.log(ID);
             },
             false
           );
@@ -99,7 +96,6 @@ function pageStore(name, select) {
 }
 
 function pageEdit(ID) {
-    console.log(ID);
   axios
     .post(uri + path + "page_edit&id="+ID, {
       editID: ID,
@@ -123,10 +119,6 @@ function pageEdit(ID) {
 
 function pageUpdate(updateId) {
   const title = document.getElementById("page_name").value;
-  console.log(title);
-//   const slug = document.getElementById("page_slug").value;
-//   const description = document.getElementById("page_description").value;
-
   axios
     .post(uri + path + "page_update&id="+updateId, {
       updateId: updateId,
@@ -148,7 +140,6 @@ function pageUpdate(updateId) {
 }
 
 function pageDelete(ID) {
-  console.log(ID)
   axios
     .post(uri + path + "page_destroy&id="+ID, {
       deleteID: ID,

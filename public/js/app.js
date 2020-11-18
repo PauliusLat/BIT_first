@@ -537,7 +537,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
-var catStrt = document.getElementById("catStart"); // console.log(catStrt);
+var catStrt = document.getElementById("catStart");
 
 function startCat() {
   if (catStrt) {
@@ -559,7 +559,6 @@ function init() {
         var description = document.getElementById("category-description").value;
         var parent = document.getElementById('cat');
         var select = parent.options[parent.selectedIndex].value;
-        console.log(select);
         catStore(name, select, slug, description);
       });
       var editBtn = catStrt.querySelectorAll(".category-edit");
@@ -584,8 +583,6 @@ function init() {
 
         deleteBtn[_i].addEventListener("click", function () {
           catDelete(ID, taxonomy);
-          console.log(ID);
-          console.log(taxonomy);
         }, false);
       };
 
@@ -594,13 +591,7 @@ function init() {
       }
     }
   })["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
+    if (error.response) {} else if (error.request) {} else {
       console.log("Error", error.message);
     }
 
@@ -610,8 +601,6 @@ function init() {
 }
 
 function catStore(name, select, slug, description) {
-  // console.log(select)
-  // console.log(name)
   axios.post(uri + path + "category_store", {
     cat_name: name,
     cat_slug: slug,
@@ -627,7 +616,6 @@ function catStore(name, select, slug, description) {
 }
 
 function catEdit(editID, taxonomy) {
-  console.log(editID);
   axios.post(uri + path + "category_edit", {
     editID: editID,
     taxonomy_type: taxonomy
@@ -660,10 +648,8 @@ function catUpdate(updateId) {
     cat_description: description
   }).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
+      // console.log(response);
       init(); // setTimeout(call.init(), 500);
-
-      console.log(11111);
     }
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
@@ -671,7 +657,7 @@ function catUpdate(updateId) {
 }
 
 function catDelete(ID, taxonomy) {
-  console.log(ID);
+  // console.log(ID)
   axios.post(uri + path + "category_destroy", {
     deleteID: ID,
     taxonomy_type: taxonomy
@@ -1210,10 +1196,10 @@ function init() {
         var name = document.getElementById("page-name").value; //   const slug = document.getElementById("post-slug").value;
         //   const description = document.getElementById("page-description").value;
 
-        var post = document.getElementById('post');
-        console.log(post);
-        var select = post.options[post.selectedIndex].value;
-        console.log(select);
+        var post = document.getElementById('post'); // console.log(post);
+
+        var select = post.options[post.selectedIndex].value; // console.log(select);  
+
         pageStore(name, select);
       });
       var editBtn = pageStrt.querySelectorAll(".page-edit");
@@ -1232,14 +1218,12 @@ function init() {
       }
 
       var deleteBtn = document.querySelectorAll(".page-delete");
-      console.log(deleteBtn);
 
       var _loop2 = function _loop2(_i) {
         var ID = deleteBtn[_i].value;
 
         deleteBtn[_i].addEventListener("click", function () {
           pageDelete(ID);
-          console.log(ID);
         }, false);
       };
 
@@ -1278,7 +1262,6 @@ function pageStore(name, select) {
 }
 
 function pageEdit(ID) {
-  console.log(ID);
   axios.post(uri + path + "page_edit&id=" + ID, {
     editID: ID
   }).then(function (response) {
@@ -1301,9 +1284,6 @@ function pageEdit(ID) {
 
 function pageUpdate(updateId) {
   var title = document.getElementById("page_name").value;
-  console.log(title); //   const slug = document.getElementById("page_slug").value;
-  //   const description = document.getElementById("page_description").value;
-
   axios.post(uri + path + "page_update&id=" + updateId, {
     updateId: updateId,
     page_title: title //   page_slug: slug,
@@ -1320,7 +1300,6 @@ function pageUpdate(updateId) {
 }
 
 function pageDelete(ID) {
-  console.log(ID);
   axios.post(uri + path + "page_destroy&id=" + ID, {
     deleteID: ID
   }).then(function (response) {
@@ -1351,7 +1330,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
-var tagStrt = document.getElementById("tagStart"); // console.log(tagStrt);
+var tagStrt = document.getElementById("tagStart");
 
 function startTag() {
   if (tagStrt) {
@@ -1395,8 +1374,6 @@ function init() {
 
         deleteBtn[_i].addEventListener("click", function () {
           tagDelete(ID, taxonomy);
-          console.log(ID);
-          console.log(taxonomy);
         }, false);
       };
 
@@ -1469,8 +1446,6 @@ function tagUpdate(updateId) {
     if (response.status == 200 && response.statusText == "OK") {
       console.log(response);
       init(); // setTimeout(call.init(), 500);
-
-      console.log(11111);
     }
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
@@ -1478,7 +1453,6 @@ function tagUpdate(updateId) {
 }
 
 function tagDelete(ID, taxonomy) {
-  console.log(ID);
   axios.post(uri + path + "tag_destroy", {
     deleteID: ID,
     taxonomy_type: taxonomy
@@ -1486,7 +1460,6 @@ function tagDelete(ID, taxonomy) {
     if (response.status == 200 && response.statusText == "OK") {
       console.log(response);
       init(); // setTimeout(init(), 500);
-      // console.log(11111);
     }
   })["catch"](function (err) {
     console.log(err instanceof TypeError);

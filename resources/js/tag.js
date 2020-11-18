@@ -6,8 +6,6 @@ const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
 const tagStrt = document.getElementById("tagStart");
 
-// console.log(tagStrt);
-
 function startTag() {
   if (tagStrt) {
     window.addEventListener("load", init, false);
@@ -49,13 +47,10 @@ function init() {
         for (let i = 0; i < deleteBtn.length; i++) {
           let ID = deleteBtn[i].value;
           let taxonomy = deleteBtn[i].id;
-         
           deleteBtn[i].addEventListener(
             "click",
             function() {
               tagDelete(ID, taxonomy);
-              console.log(ID);
-              console.log(taxonomy);
             },
             false
           );
@@ -135,7 +130,6 @@ function tagUpdate(updateId) {
         console.log(response);
         init();
         // setTimeout(call.init(), 500);
-        console.log(11111);
       }
     })
 
@@ -145,7 +139,6 @@ function tagUpdate(updateId) {
 }
 
 function tagDelete(ID, taxonomy) {
-  console.log(ID)
   axios
     .post(uri + path + "tag_destroy", {
       deleteID: ID,
@@ -156,7 +149,6 @@ function tagDelete(ID, taxonomy) {
         console.log(response);
         init();
         // setTimeout(init(), 500);
-        // console.log(11111);
       }
     })
     .catch((err) => {
