@@ -1,13 +1,24 @@
 <?php
 
 namespace BIT\app;
+
 use BIT\app\Post;
 use BIT\app\Collection;
 use WP_Query;
 use BIT\app\coreExeptions\wrongArgsTypeExeption;
+
 include_once(ABSPATH . 'wp-includes/pluggable.php');
 
-class Query{
+class Query
+{
+
+    ///suskaiciuoti
+    public function taxonomy(string $taxonomy)
+    {
+        $this->args['taxonomy'] = $taxonomy;
+        return $this;
+    }
+
     //gauti postus pagal tipa
     public function postType(string $post_type)
     {
@@ -34,7 +45,7 @@ class Query{
     {
         $sortOrder = ['DESC', 'ASC'];
         if (!in_array($order, $sortOrder)) {
-            throw new wrongArgsTypeExeption ('Reikia nurodyti "DESC" arba "ASC"');
+            throw new wrongArgsTypeExeption('Reikia nurodyti "DESC" arba "ASC"');
         }
         $this->args['orderby'] = $orderby;
         $this->args['order'] = $order;
@@ -42,23 +53,32 @@ class Query{
     }
 
     //gauti reikmems is post_meta lenteles. Paduodama meta_key ir meta_value
-     function postMeta(string $key, string $value){
+    function postMeta(string $key, string $value)
+    {
         $this->args['meta_key'] = $key;
         $this->args['meta_value'] = $value;
-        return $this; 
-     }
+        return $this;
+    }
 
-    public function getPost() :Collection
+    public function countPosts()
     {
-         //naudodami WP_query gauname postus pagal mums reikalingus parametrus. Paramentai nurodyti funkcijose aukščiau - postType, postTitle. KOnkrečius paramentrus (posto tipą, pavadinimą ir kt. nurodome kviesdami funckcija)
+        $query = new WP_Query($this->args);
+
+        $count = $query->found_posts();
+        var_dump($count);
+        return $count;
+    }
+
+    public function getPost(): Collection
+    {
+        //naudodami WP_query gauname postus pagal mums reikalingus parametrus. Paramentai nurodyti funkcijose aukščiau - postType, postTitle. KOnkrečius paramentrus (posto tipą, pavadinimą ir kt. nurodome kviesdami funckcija)
         //Thanks to WP_Query Class, WordPress gives us access to the database quickly (no need to get our hands dirty with SQL) and securely (WP_Query builds safe queries behind the scenes).
         $query = new WP_Query($this->args);
         $list = $query->get_posts();
-        foreach ($list as &$post){
+        foreach ($list as &$post) {
             $post = Post::getModel($post);
-        } 
-       
+        }
+
         return new Collection($list);
     }
-
 }

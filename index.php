@@ -2,6 +2,7 @@
 <?php
 
 use BIT\app\Category;
+use BIT\app\Query;
 
 
 
@@ -45,15 +46,30 @@ App::start();
 // _dc($query->postMeta('event_date', 'konkreti data, kurios reikia')->postSort('event_time')->getPost()->all());
 // $getPostType = $query->postSort('date','DESC')->getPost();
 
-// _dc($getPostType);
+$query = new Query;
+// $getcount = wp_count_posts('page');
 
+// echo "<div style = 'font: 20px;padding: 100px;'>'.$getcount.'</div>";
+
+// _dc($getPostType);
 // _dc($app->getService('requestId'));
 // $category = new Category;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
+// 
 
 add_action('init', function () {
     $session = App::start()->getService('session');
+    $getcount = wp_count_terms('maincat', ['hide_empty' => false]);
+    // _dc($getcount);
+    $terms = get_terms(array(
+        'taxonomy' => 'maincat',
+        'hide_empty' => false,
+    ));
+    // _dc($terms);
+
+    // echo '<pre>';
+
     // $session->delete('message');
     // $session->flash('messkukuku', 'tokiu pavadinimu kategorija jau sukurta');
     // var_dump($session->get('messkukuku'));
