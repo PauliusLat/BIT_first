@@ -676,105 +676,6 @@ function catDelete(ID, taxonomy) {
 
 /***/ }),
 
-/***/ "./resources/js/gallery.js":
-/*!*********************************!*\
-  !*** ./resources/js/gallery.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var gallery = document.getElementById("loadeGallery");
-
-function startGallery() {
-  if (gallery) {
-    window.addEventListener("load", renderGallery, false);
-  }
-}
-
-function renderGallery() {
-  //Check File API support
-  if (window.File && window.FileList && window.FileReader) {
-    var filesInput = document.getElementById("files");
-    filesInput.addEventListener("change", function (event) {
-      var array = filesInput.files[0];
-      renderImages(array, filesInput);
-    });
-  } else {
-    console.log("Your browser does not support File API");
-  }
-}
-
-function renderImages(file, filesInput) {
-  var currentDiv = document.getElementById("message");
-
-  if (file.size < 1048576 || file.length != 0 && file != undefined && file != null) {
-    if (file.type.match('image')) {
-      var picReader = new FileReader();
-      picReader.addEventListener("load", function (event) {
-        var picFile = event.target;
-        var output = document.getElementById("result");
-        var div = document.createElement("div");
-        div.className = "galleryDiv";
-        var removeUploade = document.querySelector(".wrapper");
-        removeUploade.style.display = "none";
-        div.innerHTML = "<img class=\"uploadeImageGallery\" height=\"200px\" width=\"200px\" src=\" ".concat(picFile.result, " \"\n                      alt=\" \"/>");
-        output.insertBefore(div, currentDiv);
-        var changeImage = document.querySelector(".galleryDiv");
-
-        if (changeImage) {
-          changeImage.addEventListener("click", function () {
-            removeUploade.style.display = "";
-            changeImage.remove();
-            filesInput.value = '';
-          });
-        }
-      });
-      picReader.readAsDataURL(file);
-      var uploadeImg = document.getElementById("submitImg");
-      uploadeImg.addEventListener('click', function () {
-        sendImageData(file);
-      });
-    } else {
-      alert("Tai nera paveikslelio tipo formatas");
-    }
-  } else {
-    alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-    //   currentDiv.appendChild(newContent);
-  }
-}
-
-function sendImageData(file) {
-  var formData = new FormData();
-  var album = document.getElementById('albumName');
-  formData.append('imge', file);
-  formData.append('album', album.value);
-  console.log(Object.fromEntries(formData));
-  axios.post(uri + path + 'gallery-store-admin', formData, {}).then(function (response) {})["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log('Error', error.message);
-    }
-
-    console.log(error);
-  });
-  location.reload(); // uzkomentuoti jei norite kad nedingtu image
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startGallery());
-
-/***/ }),
-
 /***/ "./resources/js/idea.js":
 /*!******************************!*\
   !*** ./resources/js/idea.js ***!
@@ -938,14 +839,13 @@ function renderColons(e) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
-/* harmony import */ var _gallery_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gallery.js */ "./resources/js/gallery.js");
-/* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
-/* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
-/* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
-/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
-/* harmony import */ var _news_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./news.js */ "./resources/js/news.js");
+/* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
+/* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
+/* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
+/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
+/* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
 /** @format */
-
+ // import startGallery from './gallery.js';
 
 
 
@@ -954,7 +854,7 @@ __webpack_require__.r(__webpack_exports__);
 
  // new TextEditor('.news-container')
 
-new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
+new _calendar_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.calendar'); // new News('startNewsAdmin');
 
 /***/ }),
 
@@ -967,7 +867,6 @@ new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/** @format */
 
 
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
@@ -977,100 +876,71 @@ var newsStart = document.getElementById("startNewsAdmin");
 function startNews() {
   if (newsStart) {
     window.addEventListener("load", function () {
-      renderNews();
-      collapseNews();
-      addNewsListener();
-    }, false);
-  }
-}
+      if (window.File && window.FileList && window.FileReader) {
+        var filesInput = document.getElementById("files");
+        filesInput.addEventListener("change", function (event) {
+          var file = filesInput.files[0];
+          var currentDiv = document.getElementById("message");
 
-function addNewsListener() {
-  var button = document.getElementById("addNews");
-  button.addEventListener("click", function () {
-    storeNews();
-  }, false);
-}
+          if (file.size < 1048576 && file.length != 0 && file != undefined && file != null) {
+            if (file.type.match('image')) {
+              var picReader = new FileReader();
+              picReader.addEventListener("load", function (event) {
+                var picFile = event.target;
+                var output = document.getElementById("result");
+                var div = document.createElement("div");
+                div.className = "galleryDiv";
+                var removeUploade = document.querySelector(".wrapper");
+                removeUploade.style.display = "none";
+                div.innerHTML = "<img class=\"uploadeImageGallery\" height=\"200px\" width=\"200px\" src=\" ".concat(picFile.result, " \"\n                            alt=\" \"/>");
+                output.insertBefore(div, currentDiv);
+                var changeImage = document.querySelector(".galleryDiv");
 
-function editNews(editId) {
-  axios.get(uri + path + "news-edit-admin", {
-    editId: editId
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-  setTimeout(renderNews, 300);
-}
-
-function deleteNews(delId) {
-  axios.post(uri + path + "news-destroy&id=" + delId)["catch"](function (err) {
-    console.log(err instanceof TypeError);
-    console.log("Problemos su DeleteNews api");
-  });
-  setTimeout(renderNews, 100);
-}
-
-function storeNews() {
-  axios.post(uri + path + "news-store")["catch"](function (err) {
-    console.log(err instanceof TypeError);
-    console.log("Problemos su StoreNews api");
-  });
-  setTimeout(renderNews, 100);
-}
-
-function collapseNews() {
-  var coll = document.getElementsByClassName("collapsible");
-  var i;
-
-  for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function (event) {
-      this.classList.toggle("active");
-      var content = this.nextElementSibling;
-
-      if (content.style.display === "block") {
-        content.style.display = "none";
-        event.target.innerHTML = 'SUKURTI NAUJIENĄ';
+                if (changeImage) {
+                  changeImage.addEventListener("click", function () {
+                    removeUploade.style.display = "";
+                    changeImage.remove();
+                    filesInput.value = '';
+                  });
+                }
+              });
+              picReader.readAsDataURL(file);
+              var editables = document.querySelectorAll("[contenteditable]");
+              var button = document.getElementById("submit");
+              var newsImageTitle = document.getElementById("newsName");
+              var altText = document.getElementById("newsAlt");
+              button.addEventListener("click", function () {
+                var content = editables[0].innerHTML;
+                var alt = altText.value;
+                var title = newsImageTitle.value;
+                storeNews(content, alt, title, file);
+              });
+            } else {
+              alert("Tai nera paveikslelio tipo formatas");
+            }
+          } else {
+            alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+            //   currentDiv.appendChild(newContent);
+          }
+        });
       } else {
-        content.style.display = "block";
-        event.target.innerHTML = 'PASLĖPTI';
+        console.log("Your browser does not support File API");
       }
     });
+  } else {
+    throw 'ERROR: header target location was not found.';
   }
 }
 
-function renderNews() {
-  axios.get(uri + path + "news-list", {}).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      var dom = document.getElementById("renderNewsList");
-      var HTMLString = response.data.htmlString;
-      dom.innerHTML = HTMLString;
-      var editBtn = document.querySelectorAll(".editBtnNews");
-      var deletetBtn = document.querySelectorAll(".deleteBtnNews");
+function storeNews(content, alt, title, file) {
+  var formData = new FormData();
+  var album = document.getElementById('albumName');
+  formData.append('imge', file);
+  formData.append('content', content);
+  formData.append('altText', alt);
+  formData.append('title', title); // console.log(Object.fromEntries(formData))
 
-      var _loop = function _loop(i) {
-        var editId = editBtn[i].id;
-        editBtn[i].addEventListener("click", function () {
-          editNews(editId);
-        }, false);
-      };
-
-      for (var i = 0; i < editBtn.length; i++) {
-        _loop(i);
-      }
-
-      var _loop2 = function _loop2(_i) {
-        var delId = deletetBtn[_i].id;
-
-        deletetBtn[_i].addEventListener("click", function () {
-          deleteNews(delId);
-        }, false);
-      };
-
-      for (var _i = 0; _i < deletetBtn.length; _i++) {
-        _loop2(_i);
-      }
-    }
-
-    return response;
-  })["catch"](function (error) {
+  axios.post(uri + path + 'news-store', formData, {}).then(function (response) {})["catch"](function (error) {
     if (error.response) {
       console.log(error.response.data);
       console.log(error.response.status);
@@ -1078,12 +948,116 @@ function renderNews() {
     } else if (error.request) {
       console.log(error.request);
     } else {
-      console.log("Error", error.message);
+      console.log('Error', error.message);
     }
 
     console.log(error);
-  });
-}
+  }); //location.reload(); // uzkomentuoti jei norite kad nedingtu image
+} // storeNews(content, alt, title, file) {
+//   console.log(content, alt, title, file);
+//   axios
+//     .post(
+//       uri + path +
+//       "news-store", {
+//     });
+//     .catch((err) => {
+//       console.log(err instanceof TypeError);
+//       console.log("Problemos su StoreNews api");
+//     });
+// }
+// function editNews(editId) {
+//   axios
+//     .get(
+//       uri + path +
+//       "news-edit-admin",
+//       {
+//         editId: editId
+//       }
+//     )
+//     .catch((err) => {
+//       console.log(err instanceof TypeError);
+//     });
+//   setTimeout(renderNews, 300);
+// }
+// function deleteNews(delId) {
+//   axios
+//     .post(
+//       uri + path +
+//       "news-destroy&id=" + delId
+//     )
+//     .catch((err) => {
+//       console.log(err instanceof TypeError);
+//       console.log("Problemos su DeleteNews api");
+//     });
+//   setTimeout(renderNews, 100);
+// }
+// function collapseNews() {
+//   var coll = document.getElementsByClassName("collapsible");
+//   var i;
+//   for (i = 0; i < coll.length; i++) {
+//     coll[i].addEventListener("click", function (event) {
+//       this.classList.toggle("active");
+//       var content = this.nextElementSibling;
+//       if (content.style.display === "block") {
+//         content.style.display = "none";
+//         event.target.innerHTML = 'SUKURTI NAUJIENĄ';
+//       } else {
+//         content.style.display = "block";
+//         event.target.innerHTML = 'PASLĖPTI';
+//       }
+//     });
+//   }
+// }
+// function renderNews() {
+//   axios
+//     .get(
+//       uri + path +
+//       "news-list",
+//       {}
+//     )
+//     .then(function (response) {
+//       if (response.status == 200 && response.statusText == "OK") {
+//         const dom = document.getElementById("renderNewsList");
+//         let HTMLString = response.data.htmlString;
+//         dom.innerHTML = HTMLString;
+//         const editBtn = document.querySelectorAll(".editBtnNews");
+//         const deletetBtn = document.querySelectorAll(".deleteBtnNews");
+//         for (let i = 0; i < editBtn.length; i++) {
+//           let editId = editBtn[i].id;
+//           editBtn[i].addEventListener(
+//             "click", function () {
+//               editNews(editId);
+//             },
+//             false
+//           );
+//         }
+//         for (let i = 0; i < deletetBtn.length; i++) {
+//           let delId = deletetBtn[i].id;
+//           deletetBtn[i].addEventListener(
+//             "click",
+//             function () {
+//               deleteNews(delId);
+//             },
+//             false
+//           );
+//         }
+//       }
+//       return response;
+//     })
+//     .catch(function (error) {
+//       if (error.response) {
+//         console.log(error.response.data);
+//         console.log(error.response.status);
+//         console.log(error.response.headers);
+//       } else if (error.request) {
+//         console.log(error.request);
+//       } else {
+//         console.log("Error", error.message);
+//       }
+//       console.log(error);
+//     });
+// }
+
 
 /* harmony default export */ __webpack_exports__["default"] = (startNews());
 

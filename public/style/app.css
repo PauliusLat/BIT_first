@@ -850,10 +850,10 @@ body {
 
 .btn-grey {
   box-shadow: 0px 1px 0px 0px #f0f7fa;
-  background: linear-gradient(to bottom, #333232 5%, #7a7676 100%);
-  background-color: #333232;
+  background: linear-gradient(to bottom, #a8a8a8 5%, #7a7676 100%);
+  background-color: #e2e2e2;
   border-radius: 6px;
-  border: 1px solid #057fd0;
+  border: 1px solid #a8a8a8;
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
@@ -1017,6 +1017,125 @@ body {
 
 #editor {
   min-height: 100px;
+}
+
+.editor {
+  border: solid 1px #ccc;
+  padding: 20px;
+  min-height: 400px;
+  width: 60%;
+}
+
+.editor b,
+.editor strong {
+  font-weight: 800;
+}
+
+.sample-toolbar {
+  border: solid 1px #ddd;
+  background: #f4f4f4;
+  padding: 10px 0 0 0;
+  border-radius: 3px;
+  width: 60%;
+}
+
+.sample-toolbar a {
+  text-decoration: none;
+}
+
+.sample-toolbar .fa-bold {
+  margin: 0 5px 0 10px;
+}
+
+.sample-toolbar .fa-italic {
+  margin: 0 5px 0 5px;
+}
+
+.sample-toolbar .fa-list {
+  margin: 0 5px 0 5px;
+}
+
+.sample-toolbar .fa-link {
+  margin: 0 5px 0 5px;
+}
+
+.sample-toolbar > span {
+  cursor: pointer;
+}
+
+.sample-toolbar > span:hover {
+  text-decoration: underline;
+}
+
+.main_news_container .news-title {
+  margin: 10px;
+}
+
+.main_news_container .news-container .active-content .newHeight {
+  height: 400px;
+}
+
+.main_news_container .news-container .active-content .newHeight .ql-container .ql-editor p {
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.main_news_container .news-container .active-content .widthNews {
+  display: inline-block;
+  width: 100%;
+}
+
+.main_news_container .news-container .active-content .widthNews .newsBtnSend {
+  margin: 10px;
+  float: right;
+}
+
+.newsImg {
+  position: absolute;
+  top: 42%;
+  left: 85%;
+  transform: translate(-50%, -50%);
+}
+
+.newsImg .newsImgInputs {
+  width: 100%;
+  margin: 30px;
+}
+
+.newsImg .newsImgInputs .newsImgInput {
+  width: 200px;
+  margin: 10px;
+}
+
+.newsImg .galleryDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.newsImg .uploadeImageGallery {
+  background: no-repeat center center fixed;
+  background-size: cover;
+}
+
+.gallerBtn {
+  background-color: transparent;
+  border-radius: 6px 6px 0 0;
+  border: 2px solid #cccccc;
+  display: inline-block;
+  cursor: pointer;
+  color: #050505;
+  font-family: Arial;
+  font-size: 16px;
+  padding: 6px 20px;
+  text-decoration: none;
+  text-shadow: 0px 0px 0px #292929;
+  border-bottom: none;
+  margin: 20px 0 0 10px;
+}
+
+.gallerBtn:hover {
+  background-color: #d8d8d8;
 }
 
 .admin-event-form-group {
@@ -1385,11 +1504,7 @@ button:focus {
 }
 
 .galleryContainer {
-  width: calc(100% - 600px);
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1600px;
-  height: 300px;
+  height: 30px;
 }
 
 .galleryContainer .galleryImage {
@@ -1457,11 +1572,6 @@ button:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.galleryContainer .wrapper .file-upload input[type=file] {
-  width: 100px;
-  height: 100px;
 }
 
 .galleryContainer .wrapper .file-upload {
