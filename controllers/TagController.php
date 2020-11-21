@@ -23,14 +23,43 @@ class TagController
         return View::adminRender('tag.maintag');
     }
 
-    public function create(Request $request)
+    public function create(Request $requestJson)
     {
-        // $tag = new Tag;
-        $paged = (get_query_var('paged')) ? absint(get_query_var('paged')) : 1;
-        // _dc($paged);
-        $tags = get_terms('hashtag', array('number' => 10, 'hide_empty' => false, 'ofset' => $ofset));
-        // $tags = $tag->getAllTags();
-        $output = View::adminRender('tag.tag',  ["tags" => $tags]);
+        $request = $this->decodeRequest($requestJson);
+        $limit = 3;
+
+        // if ($request->request->get('pageSelected') != null) {
+        //     $limit = $request->request->get('pageSelected');
+        // } else {
+        //     $limit = 5;
+        // }
+
+        if (is_int($request->request->get('pages'))) {
+            $number = $request->request->get('pages');
+        } else {
+            $number = 1;
+        }
+        $offset = ($number - 1)  * $limit;
+        $total = wp_count_terms('hashtag', ['hide_empty' => false]);
+        $pages = ceil($total / $limit);
+
+        if ($number < $pages) {
+            $nextpage = $number + 1;
+        } else {
+            $nextpage = $number;
+        }
+
+        if ($number > 1) {
+            $prevpage = $number - 1;
+        } else {
+            $prevpage = $number;
+        }
+
+        $lastpage = $pages;
+        $firstpage = 1;
+
+        $tags = get_terms('hashtag', array('number' => $limit, 'hide_empty' => false, 'offset' => $offset));
+        $output = View::adminRender('tag.tag',  ['tags' => $tags, 'nextpage' => $nextpage, 'prevpage' => $prevpage, 'total' => $total, 'limit' => $limit, 'pages' => $pages, 'lastpage' => $lastpage, 'firstpage' => $firstpage]);
         $response = new JsonResponse(['html' => $output]);
         return $response;
     }
@@ -66,7 +95,7 @@ class TagController
         $slug = $request->request->get('tag_slug');
         $description = $request->request->get('tag_description');
         $id = $request->request->get('updateId');
-        $updateTag = $tag->updateTag($id, $name, $slug, $description);
+        $tag->updateTag($id, $name, $slug, $description);
         $tags = $tag->getAllTags();
         $output = View::adminRender('tag.tag',  ["tags" => $tags]);
         $response = new JsonResponse(['html' => $output]);

@@ -3,6 +3,9 @@
 
 use BIT\app\Category;
 use BIT\app\Query;
+use BIT\models\AlbumPost;
+use BIT\app\Tag;
+use BIT\app\Attachment;
 
 
 
@@ -56,7 +59,7 @@ $query = new Query;
 // $category = new Category;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
-// 
+
 
 add_action('init', function () {
     $session = App::start()->getService('session');
@@ -66,6 +69,15 @@ add_action('init', function () {
         'taxonomy' => 'maincat',
         'hide_empty' => false,
     ));
+
+    // $tag = new Tag;
+    // $album = new AlbumPost;
+    // $album->save();
+    // _dc($album);
+    // $attachment->addTag('zaislai');
+    // $album->addTag('naujas tagas');
+    // $album->addTag(['kukukukuku', 'dovanos']);
+
     // _dc($terms);
 
     // echo '<pre>';

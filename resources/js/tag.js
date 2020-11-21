@@ -12,9 +12,17 @@ function startTag() {
   }
 }
 
-function init() {
+function init(pageNo = 1) {
+  // console.log(pageNo)
+  // // console.log(typeof pageNo)
+  // console.log(pageSelected)
   axios
-    .post(uri + path + "tag_create", {})
+    .post(uri + path + "tag_create",{
+      // pageSelected: p,
+      pages: parseInt(pageNo),
+     
+    })
+    
     .then(function(response) {
       const test = document.querySelector(".test");
       if (response.status == 200 && response.statusText == "OK") {
@@ -28,7 +36,7 @@ function init() {
           const description = document.getElementById("tag-description").value;
           tagStore(name, slug, description);
         });
-
+        
         const editBtn = tagStrt.querySelectorAll(".tag-edit");
 
         for (let i = 0; i < editBtn.length; i++) {
@@ -43,6 +51,7 @@ function init() {
           );
         }
 
+
         const deleteBtn = document.querySelectorAll(".tag-delete");
         for (let i = 0; i < deleteBtn.length; i++) {
           let ID = deleteBtn[i].value;
@@ -55,6 +64,58 @@ function init() {
             false
           );
         }
+
+
+let dropdown = document.querySelector('select');
+console.log(dropdown)
+if (dropdown) dropdown.addEventListener('change', function(event) {
+ 
+  let p = event.target.value
+  // init(p)
+    // console.log(p);
+    // axios
+    // .post(uri + path + "tag_create", {
+    //   tagsInPage: p,
+    // })
+    // .then(function(response) {
+    //   console.log(response);
+    // })
+    // .catch((err) => {
+    //   console.log(err instanceof TypeError);
+    // });
+});
+
+
+
+        const pageBtn = document.getElementById("selectpage");
+        // console.log(pageBtn);
+        const select = document.getElementById("items");
+        console.log(select);
+        const pageSelected = select.options[select.selectedIndex].value;
+        console.log(pageSelected);
+        pageBtn.addEventListener(
+          "click",
+          function() {
+            init(pageSelected);
+            console.log(pageSelected);
+          },
+          false
+        );
+       
+      
+
+        const page = document.querySelectorAll(".paging");
+        for (let i = 0; i < page.length; i++){
+          let pageNo = page[i].id;
+          page[i].addEventListener(
+            "click",
+            function() {
+              init(pageNo);
+            },
+            false
+          );
+        }
+
       }
     })
     .catch(function(error) {
@@ -71,6 +132,7 @@ function init() {
     });
   1;
 }
+
 
 function tagStore(name, slug, description) {
   axios
@@ -155,5 +217,6 @@ function tagDelete(ID, taxonomy) {
       console.log(err instanceof TypeError);
     });
 }
+
 
 export default startTag();

@@ -27,85 +27,6 @@ use BIT\app\App;
 
     </div>
     <div class="sm-1-2">
-        <div class='pages'>
-            <?php
-            if (get_query_var('paged')) {
-                $paged = get_query_var('paged');
-            } else if (get_query_var('page')) {
-                $paged = get_query_var('page');
-            } else {
-                $paged = 1;
-            }
-
-            $per_page = 10;
-            $number_of_series = count(get_terms('hashtag', array('hide_empty' => '0')));
-            _dc($number_of_series);
-
-            $offset = ($paged - 1) * $per_page;
-            // _dc($offset);
-
-            // Setup the arguments to pass in
-            $args = array(
-                'offset'       => $offset,
-                'number'       => $per_page,
-                'hide_empty' => '0'
-            );
-
-            // // Gather the series
-            $tags = get_terms('hashtag', $args);
-            // _dc($tags);
-
-            // Loop through and display the series
-            // foreach ($tags as $s) {
-            //     $theurl = get_term_link($s, 'hashtag');
-            //     echo "<div class=\"ser-img img\" ><a href=\" . $theurl  . “\">" . $s->name . "</a>";
-            // }
-
-
-            echo "<br />";
-            $big = 999999;
-            // _dc(get_pagenum_link($big));
-            // _dc(str_replace($big, '%#%', esc_url(get_pagenum_link($big))));
-
-            echo paginate_links(array(
-                //'base'    => str_replace($big, '%#%', "http://localhost:8080/wordpress/wp-admin/admin.php?page=tag.'$big'."),
-                'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-                // 'base'    => "http://localhost:8080/wordpress/wp-admin/admin.php?page=tag%_% : %_%",
-                'format'  => '?paged=%#%',
-                'current' => $paged,
-                'total'   => ceil($number_of_series / $per_page) // 3 items per page
-            ));
-
-            ////////////
-            // Find out how many items are in the table
-            $total = wp_count_terms('hashtag', ['hide_empty' => false]);
-            // _dc($total);
-
-            // How many items to list per page
-            $limit = 10;
-
-            // How many pages will there be
-            $pages = ceil($total / $limit);
-            // _dc($pages);
-
-            // What page are we currently on?
-            $page = min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
-                'options' => array(
-                    'default'   => 1,
-                    'min_range' => 1,
-                ),
-            )));
-            _dc($page);
-
-            // Calculate the offset for the query
-            $offset = ($page - 1)  * $limit;
-
-            // Some information to display to the user
-            $start = $offset + 1;
-            $end = min(($offset + $limit), $total);
-
-            ?>
-        </div>
 
         <table>
             <th>Pavadinimas</th>
@@ -114,21 +35,58 @@ use BIT\app\App;
             <th>Description</th>
             <th>Veiksmai</th>
             <?php
-            // if (get_query_var('paged')) {
-            //     $paged = get_query_var('paged');
-            // }
-            // // else if (get_query_var('page')) {
-            // //     $paged = get_query_var('page');
-            // // } 
-            // else {
-            //     $paged = 1;
-            // }
-            $paged = App::start()->getService('request')->query->get('page=tag&paged', 1);
-            // _dc(App::start()->getService('request'));
-            // $paged = $request->query->get('paged');
-            // _dc($paged);
-            // $tags = get_terms('hashtag', array('number' => 10, 'hide_empty' => false, 'offset' => $offset));
+
+            $pageNum = 1;
+            for ($page = 1; $page <= $pages; $page++) {
+
+                $nav .= '&nbsp <a class="paging" id = "' . $page . ' ">' . $page . '</a> ';
+                $next = '<a class="paging" id = "' . $nextpage . ' ">>[Next]</a>';
+                $prev = '<a class="paging" id = "' . $prevpage . ' ">[Prev]<</a>';
+                $last = '<a class="paging" id = "' . $lastpage . ' ">[Last]</a>';
+                $first = '<a class="paging" id = "' . $firstpage . ' ">[First]</a>';
+            }
+
+            ?>
+            <div class='selectPages sm-1-2'>
+                <label for="items">Rodyti puslapyje:</label>
+                <select name="items" id="items">
+                    <option value="5">5</option>
+                    <option value="7">7</option>
+                </select>
+                <div class="buttons">
+                    <button type="submit" id="selectpage" class="btn-blue">Rinktis</button>
+                </div>
+            </div>
+
+
+            <?php
+
+            echo '<div class = "page">';
+            echo $first . $prev . $nav . $next . $last;
+            echo '</div>';
+
+
+            // The "back" link
+            // $prevlink = ($page > 1) ? '<a href="?page=1" title="First page">&laquo;</a> <a href="?page=tag&paged=' . ($page - 1) . '" title="Previous page">&lsaquo;</a>' : '<span class="disabled">&laquo;</span> <span class="disabled">&lsaquo;</span>';
+
+            // // The "forward" link
+            // $nextlink = ($page < $pages) ? '<a class = "paging" id = "' . ($page + 1) . '" href="?page=tag&paged=' . ($page + 1) . '" title="Next page">&rsaquo;</a> <a href="?page=tag&paged=' . $pages . '" title="Last page">&raquo;</a>' : '<span class="disabled">&rsaquo;</span> <span class="disabled">&raquo;</span>';
+
+            // // Display the paging information
+            // echo '<div id="paging"><p>', $prevlink, ' Page', $page, ' of ', $pages, ' pages, displaying', $start, '-', $end, ' of ', $total, ' results', $nextlink, ' </p></div>';
+
+            // echo '<form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=tag&paged=' . ($page + 1) . '" method="post">';
+            // $nextlink = ($page < $pages) ? '<input type = "submit" class = "submitLink" title="Next page">&rsaquo;> <a href="http://localhost:8080/wordpress/wp-admin/admin.php?page=tag&paged=' . $pages . '" title="Last page">&raquo;</a>' : '<span class="disabled">&rsaquo;</span> <span class="disabled">&raquo;</span>';
+            // $prevlink = ($page > 1) ? '<a href="?page=1" title="First page">&laquo;</a> <a href="http://localhost:8080/wordpress/wp-admin/admin.php?page=tag&paged=' . ($page - 1) . '" title="Previous page">&lsaquo;</a>' : '<span class="disabled">&laquo;</span> <span class="disabled">&lsaquo;</span>';
+            // // Display the paging information
+            // echo '<div id="paging"><p>', $prevlink, ' Page', $page, ' of ', $pages, ' pages, displaying', $start, '-', $end, ' of ', $total, ' results', $nextlink, ' </p></div>';
+            // _dc($request = App::start()->getService('request'));
+            // // _dc($request);
+            // echo '</form>';
+
+
             foreach ($tags as $tag) {
+                // _dc($request);
             ?>
                 <tr>
                     <td><?= $tag->name ?></td>
@@ -146,15 +104,6 @@ use BIT\app\App;
             ?>
         </table>
 
-        <?php
-        // The "back" link
-        $prevlink = ($page > 1) ? '<a href="?page=1" title="First page">&laquo;</a> <a href="?page=tag&paged=' . ($page - 1) . '" title="Previous page">&lsaquo;</a>' : '<span class="disabled">&laquo;</span> <span class="disabled">&lsaquo;</span>';
 
-        // The "forward" link
-        $nextlink = ($page < $pages) ? '<a href="?page=tag&paged=' . ($page + 1) . '" title="Next page">&rsaquo;</a> <a href="?page=tag&paged=' . $pages . '" title="Last page">&raquo;</a>' : '<span class="disabled">&rsaquo;</span> <span class="disabled">&raquo;</span>';
-
-        // Display the paging information
-        echo '<div id="paging"><p>', $prevlink, ' Page', $page, ' of ', $pages, ' pages, displaying', $start, '-', $end, ' of ', $total, ' results', $nextlink, ' </p></div>';
-        ?>
     </div>
 </div>

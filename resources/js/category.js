@@ -27,7 +27,9 @@ function init() {
           const slug = document.getElementById("category-slug").value;
           const description = document.getElementById("category-description").value;
           let parent = document.getElementById('cat');
+          console.log(parent)
           let select = parent.options[parent.selectedIndex].value;
+          console.log(select)
           catStore(name, select, slug, description);
         });
 

@@ -558,7 +558,9 @@ function init() {
         var slug = document.getElementById("category-slug").value;
         var description = document.getElementById("category-description").value;
         var parent = document.getElementById('cat');
+        console.log(parent);
         var select = parent.options[parent.selectedIndex].value;
+        console.log(select);
         catStore(name, select, slug, description);
       });
       var editBtn = catStrt.querySelectorAll(".category-edit");
@@ -1265,7 +1267,14 @@ function startTag() {
 }
 
 function init() {
-  axios.post(uri + path + "tag_create", {}).then(function (response) {
+  var pageNo = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+  // console.log(pageNo)
+  // // console.log(typeof pageNo)
+  // console.log(pageSelected)
+  axios.post(uri + path + "tag_create", {
+    // pageSelected: p,
+    pages: parseInt(pageNo)
+  }).then(function (response) {
     var test = document.querySelector(".test");
 
     if (response.status == 200 && response.statusText == "OK") {
@@ -1305,6 +1314,46 @@ function init() {
 
       for (var _i = 0; _i < deleteBtn.length; _i++) {
         _loop2(_i);
+      }
+
+      var dropdown = document.querySelector('select');
+      console.log(dropdown);
+      if (dropdown) dropdown.addEventListener('change', function (event) {
+        var p = event.target.value; // init(p)
+        // console.log(p);
+        // axios
+        // .post(uri + path + "tag_create", {
+        //   tagsInPage: p,
+        // })
+        // .then(function(response) {
+        //   console.log(response);
+        // })
+        // .catch((err) => {
+        //   console.log(err instanceof TypeError);
+        // });
+      });
+      var pageBtn = document.getElementById("selectpage"); // console.log(pageBtn);
+
+      var select = document.getElementById("items");
+      console.log(select);
+      var pageSelected = select.options[select.selectedIndex].value;
+      console.log(pageSelected);
+      pageBtn.addEventListener("click", function () {
+        init(pageSelected);
+        console.log(pageSelected);
+      }, false);
+      var page = document.querySelectorAll(".paging");
+
+      var _loop3 = function _loop3(_i2) {
+        var pageNo = page[_i2].id;
+
+        page[_i2].addEventListener("click", function () {
+          init(pageNo);
+        }, false);
+      };
+
+      for (var _i2 = 0; _i2 < page.length; _i2++) {
+        _loop3(_i2);
       }
     }
   })["catch"](function (error) {
