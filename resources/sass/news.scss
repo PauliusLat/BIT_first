@@ -3,7 +3,9 @@
     padding   : 20px;
     min-height: 400px;
     width     : 60%;
-    b, strong {
+
+    b,
+    strong {
         font-weight: 800;
     }
 }
@@ -14,6 +16,7 @@
     padding      : 10px 0 0 0;
     border-radius: 3px;
     width        : 60%;
+
     a {
         text-decoration: none;
     }
@@ -41,4 +44,91 @@
 
 .sample-toolbar>span:hover {
     text-decoration: underline;
+}
+
+.main_news_container {
+    .news-title {
+        margin: 10px;
+    }
+
+    .news-container {
+        .active-content {
+            .newHeight {
+                height: 400px;
+
+                .ql-container {
+                    .ql-editor {
+                        p {
+                            font-size  : 20px;
+                            font-weight: 200;
+                        }
+
+                    }
+                }
+            }
+
+            .widthNews {
+                display: inline-block;
+                width  : 100%;
+
+                .newsBtnSend {
+                    margin: 10px;
+                    float : right;
+                }
+            }
+
+        }
+    }
+}
+
+.newsImg {
+    position : absolute;
+    top      : 42%;
+    left     : 85%;
+    transform: translate(-50%, -50%);
+
+    .newsImgInputs {
+        width : 100%;
+        margin: 30px;
+
+        .newsImgInput {
+            width : 200px;
+            margin: 10px;
+
+        }
+    }
+
+    .galleryDiv {
+        display        : flex;
+        align-items    : center;
+        justify-content: center;
+    }
+
+    .uploadeImageGallery {
+        background             : no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size   : cover;
+        -o-background-size     : cover;
+        background-size        : cover;
+    }
+}
+
+.gallerBtn {
+    background-color: transparent;
+    border-radius   : 6px 6px 0 0;
+    border          : 2px solid #cccccc;
+    display         : inline-block;
+    cursor          : pointer;
+    color           : #050505;
+    font-family     : Arial;
+    font-size       : 16px;
+    padding         : 6px 20px;
+    text-decoration : none;
+    text-shadow     : 0px 0px 0px #292929;
+    border-bottom   : none;
+    margin          : 20px 0 0 10px;
+}
+
+.gallerBtn:hover {
+    background-color: #d8d8d8;
 }

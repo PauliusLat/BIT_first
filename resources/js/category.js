@@ -150,7 +150,7 @@ function catUpdate(updateId) {
         console.log(response);
         init();
         // setTimeout(call.init(), 500);
-        console.log(11111);
+        // console.log(11111);
       }
     })
 
