@@ -3,12 +3,9 @@
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
 const catStrt = document.getElementById("catStart");
-// console.log(catStrt);
-
 function startCat() {
   if (catStrt) {
     window.addEventListener("load", init, false);
-
   }
 }
 
@@ -30,10 +27,7 @@ function init() {
           const slug = document.getElementById("category-slug").value;
           const description = document.getElementById("category-description").value;
           let parent = document.getElementById('cat');
-
           let select = parent.options[parent.selectedIndex].value;
-          console.log(select);
-
           catStore(name, select, slug, description);
         });
 
@@ -63,8 +57,6 @@ function init() {
             "click",
             function () {
               catDelete(ID, taxonomy);
-              console.log(ID);
-              console.log(taxonomy);
             },
             false
           );
@@ -73,11 +65,7 @@ function init() {
     })
     .catch(function (error) {
       if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
       } else if (error.request) {
-        console.log(error.request);
       } else {
         console.log("Error", error.message);
       }
@@ -87,9 +75,6 @@ function init() {
 }
 
 function catStore(name, select, slug, description) {
-
-    // console.log(select)
-    // console.log(name)
 
   axios
     .post(uri + path + "category_store", {
@@ -109,7 +94,7 @@ function catStore(name, select, slug, description) {
 }
 
 function catEdit(editID, taxonomy) {
-  console.log(editID);
+
   axios
     .post(uri + path + "category_edit", {
       editID: editID,
@@ -147,7 +132,7 @@ function catUpdate(updateId) {
     })
     .then(function (response) {
       if (response.status == 200 && response.statusText == "OK") {
-        console.log(response);
+        // console.log(response);
         init();
         // setTimeout(call.init(), 500);
         // console.log(11111);
@@ -160,7 +145,7 @@ function catUpdate(updateId) {
 }
 
 function catDelete(ID, taxonomy) {
-  console.log(ID)
+  // console.log(ID)
   axios
     .post(uri + path + "category_destroy", {
       deleteID: ID,

@@ -529,163 +529,9 @@ var Calendar = /*#__PURE__*/function () {
   !*** ./resources/js/category.js ***!
   \**********************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var catStrt = document.getElementById("catStart"); // console.log(catStrt);
-
-function startCat() {
-  if (catStrt) {
-    window.addEventListener("load", init, false);
-  }
-}
-
-function init() {
-  axios.post(uri + path + "category_create", {}).then(function (response) {
-    var test = document.querySelector(".innercat");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-      var submit = document.getElementById("create");
-      submit.addEventListener("click", function () {
-        var name = document.getElementById("category-name").value;
-        var slug = document.getElementById("category-slug").value;
-        var description = document.getElementById("category-description").value;
-        var parent = document.getElementById('cat');
-        var select = parent.options[parent.selectedIndex].value;
-        console.log(select);
-        catStore(name, select, slug, description);
-      });
-      var editBtn = catStrt.querySelectorAll(".category-edit");
-
-      var _loop = function _loop(i) {
-        var ID = editBtn[i].value;
-        var taxonomy = editBtn[i].id;
-        editBtn[i].addEventListener("click", function () {
-          catEdit(ID, taxonomy);
-        }, false);
-      };
-
-      for (var i = 0; i < editBtn.length; i++) {
-        _loop(i);
-      }
-
-      var deleteBtn = document.querySelectorAll(".category-delete");
-
-      var _loop2 = function _loop2(_i) {
-        var ID = deleteBtn[_i].value;
-        var taxonomy = deleteBtn[_i].id;
-
-        deleteBtn[_i].addEventListener("click", function () {
-          catDelete(ID, taxonomy);
-          console.log(ID);
-          console.log(taxonomy);
-        }, false);
-      };
-
-      for (var _i = 0; _i < deleteBtn.length; _i++) {
-        _loop2(_i);
-      }
-    }
-  })["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error.message);
-    }
-
-    console.log(error);
-  });
-  1;
-}
-
-function catStore(name, select, slug, description) {
-  // console.log(select)
-  // console.log(name)
-  axios.post(uri + path + "category_store", {
-    cat_name: name,
-    cat_slug: slug,
-    cat_description: description,
-    cat_parent: select
-  }).then(function (response) {
-    console.log(response);
-    init();
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-  document.getElementById("category-name").value = "";
-}
-
-function catEdit(editID, taxonomy) {
-  console.log(editID);
-  axios.post(uri + path + "category_edit", {
-    editID: editID,
-    taxonomy_type: taxonomy
-  }).then(function (response) {
-    var test = document.querySelector(".innercat");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-    }
-
-    var updateBtn = document.getElementById("catUpdate");
-    updateBtn.addEventListener("click", function () {
-      var updateId = updateBtn.value;
-      catUpdate(updateId);
-    });
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function catUpdate(updateId) {
-  var name = document.getElementById("category_name").value;
-  var slug = document.getElementById("category_slug").value;
-  var description = document.getElementById("category_description").value;
-  axios.post(uri + path + "category_update", {
-    updateId: updateId,
-    cat_name: name,
-    cat_slug: slug,
-    cat_description: description
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init(); // setTimeout(call.init(), 500);
-      // console.log(11111);
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function catDelete(ID, taxonomy) {
-  console.log(ID);
-  axios.post(uri + path + "category_destroy", {
-    deleteID: ID,
-    taxonomy_type: taxonomy
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init(); // setTimeout(init(), 500);
-      // console.log(11111);
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startCat());
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\resources\\js\\category.js: Unexpected token (138:0)\n\n\u001b[0m \u001b[90m 136 | \u001b[39m        init()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 137 | \u001b[39m        \u001b[90m// setTimeout(call.init(), 500);\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 138 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 139 | \u001b[39m        \u001b[90m// console.log(11111);\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 140 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 141 | \u001b[39m       \u001b[0m\n    at Parser._raise (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:766:17)\n    at Parser.raiseWithData (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:759:17)\n    at Parser.raise (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:753:17)\n    at Parser.unexpected (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:8966:16)\n    at Parser.parseExprAtom (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:10282:20)\n    at Parser.parseExprSubscripts (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9844:23)\n    at Parser.parseUpdate (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9824:21)\n    at Parser.parseMaybeUnary (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9813:17)\n    at Parser.parseExprOps (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9683:23)\n    at Parser.parseMaybeConditional (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9657:23)\n    at Parser.parseMaybeAssign (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9620:21)\n    at Parser.parseExpressionBase (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9564:23)\n    at D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9558:39\n    at Parser.allowInAnd (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11296:16)\n    at Parser.parseExpression (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9558:17)\n    at Parser.parseStatementContent (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11561:23)\n    at Parser.parseStatement (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11430:17)\n    at Parser.parseBlockOrModuleBlockBody (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:12012:25)\n    at Parser.parseBlockBody (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11998:10)\n    at Parser.parseBlock (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11982:10)\n    at Parser.parseStatementContent (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11506:21)\n    at Parser.parseStatement (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11430:17)\n    at Parser.parseIfStatement (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11784:28)\n    at Parser.parseStatementContent (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11475:21)\n    at Parser.parseStatement (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11430:17)\n    at Parser.parseBlockOrModuleBlockBody (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:12012:25)\n    at Parser.parseBlockBody (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11998:10)\n    at Parser.parseBlock (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11982:10)\n    at Parser.parseFunctionBody (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:10962:24)\n    at Parser.parseFunctionBodyAndFinish (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:10945:10)\n    at D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:12152:12\n    at Parser.withTopicForbiddingContext (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11271:14)\n    at Parser.parseFunction (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:12151:10)\n    at Parser.parseFunctionOrFunctionSent (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:10377:17)\n    at Parser.parseExprAtom (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:10202:21)\n    at Parser.parseExprSubscripts (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9844:23)");
 
 /***/ }),
 
@@ -1109,10 +955,10 @@ function init() {
         var name = document.getElementById("page-name").value; //   const slug = document.getElementById("post-slug").value;
         //   const description = document.getElementById("page-description").value;
 
-        var post = document.getElementById('post');
-        console.log(post);
-        var select = post.options[post.selectedIndex].value;
-        console.log(select);
+        var post = document.getElementById('post'); // console.log(post);
+
+        var select = post.options[post.selectedIndex].value; // console.log(select);  
+
         pageStore(name, select);
       });
       var editBtn = pageStrt.querySelectorAll(".page-edit");
@@ -1131,14 +977,12 @@ function init() {
       }
 
       var deleteBtn = document.querySelectorAll(".page-delete");
-      console.log(deleteBtn);
 
       var _loop2 = function _loop2(_i) {
         var ID = deleteBtn[_i].value;
 
         deleteBtn[_i].addEventListener("click", function () {
           pageDelete(ID);
-          console.log(ID);
         }, false);
       };
 
@@ -1177,7 +1021,6 @@ function pageStore(name, select) {
 }
 
 function pageEdit(ID) {
-  console.log(ID);
   axios.post(uri + path + "page_edit&id=" + ID, {
     editID: ID
   }).then(function (response) {
@@ -1200,9 +1043,6 @@ function pageEdit(ID) {
 
 function pageUpdate(updateId) {
   var title = document.getElementById("page_name").value;
-  console.log(title); //   const slug = document.getElementById("page_slug").value;
-  //   const description = document.getElementById("page_description").value;
-
   axios.post(uri + path + "page_update&id=" + updateId, {
     updateId: updateId,
     page_title: title //   page_slug: slug,
@@ -1219,7 +1059,6 @@ function pageUpdate(updateId) {
 }
 
 function pageDelete(ID) {
-  console.log(ID);
   axios.post(uri + path + "page_destroy&id=" + ID, {
     deleteID: ID
   }).then(function (response) {
@@ -1250,7 +1089,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
-var tagStrt = document.getElementById("tagStart"); // console.log(tagStrt);
+var tagStrt = document.getElementById("tagStart");
 
 function startTag() {
   if (tagStrt) {
@@ -1294,8 +1133,6 @@ function init() {
 
         deleteBtn[_i].addEventListener("click", function () {
           tagDelete(ID, taxonomy);
-          console.log(ID);
-          console.log(taxonomy);
         }, false);
       };
 
@@ -1368,8 +1205,6 @@ function tagUpdate(updateId) {
     if (response.status == 200 && response.statusText == "OK") {
       console.log(response);
       init(); // setTimeout(call.init(), 500);
-
-      console.log(11111);
     }
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
@@ -1377,7 +1212,6 @@ function tagUpdate(updateId) {
 }
 
 function tagDelete(ID, taxonomy) {
-  console.log(ID);
   axios.post(uri + path + "tag_destroy", {
     deleteID: ID,
     taxonomy_type: taxonomy
@@ -1385,7 +1219,6 @@ function tagDelete(ID, taxonomy) {
     if (response.status == 200 && response.statusText == "OK") {
       console.log(response);
       init(); // setTimeout(init(), 500);
-      // console.log(11111);
     }
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
