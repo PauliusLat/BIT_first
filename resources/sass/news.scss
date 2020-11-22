@@ -56,6 +56,25 @@
             .newHeight {
                 height: 400px;
 
+                .titleInput {
+                    width        : 100%;
+                    border       : solid 2px #CCCCCC;
+                    height       : 50px;
+                    text-align   : center;
+                    margin: 0;
+                    font-size: 35px;
+                }
+
+                .titleInput:placeholder-shown {
+                    font-size: 35px;
+                }
+
+                .titleInput:placeholder {
+
+                    font-size: 35px;
+
+                }
+
                 .ql-container {
                     .ql-editor {
                         p {

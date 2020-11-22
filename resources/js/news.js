@@ -8,6 +8,16 @@ const newsStart = document.getElementById("startNewsAdmin");
 
 function startNews() {
   if (newsStart) {
+
+    const parentElement = document.querySelector(".news-add");
+    const editor = document.getElementById("editor");
+    const title = document.createElement("input");
+    title.setAttribute('placeholder', 'Pavadinimas');
+    title.className = "titleInput";
+
+    parentElement.insertBefore(title, editor);
+
+
     window.addEventListener("load", () => {
 
       if (window.File && window.FileList && window.FileReader) {
@@ -50,7 +60,8 @@ function startNews() {
               });
 
               picReader.readAsDataURL(file);
-
+              
+              const newsPostTitle = document.querySelector(".titleInput");
               const editables = document.querySelectorAll("[contenteditable]");
               const button = document.getElementById("submit");
               const newsImageTitle = document.getElementById("newsName");
@@ -59,11 +70,12 @@ function startNews() {
               button.addEventListener(
                 "click",
                 () => {
-     
+
                   let content = editables[0].innerHTML;
                   let alt = altText.value;
-                  let title = newsImageTitle.value;
-                  storeNews(content, alt, title, file)
+                  let imageTitle = newsImageTitle.value;
+                  let postTitle = newsPostTitle.value;
+                  storeNews(content, alt, imageTitle, postTitle, file)
                 }
               );
             } else {
@@ -84,33 +96,34 @@ function startNews() {
   }
 }
 
-function storeNews(content, alt, title, file) {
+function storeNews(content, alt, imageTitle, postTitle, file) {
 
-    let formData = new FormData();
+  let formData = new FormData();
 
-    const album = document.getElementById('albumName');
+  const album = document.getElementById('albumName');
 
-    formData.append('imge', file);
-    formData.append('content', content);
-    formData.append('altText', alt);
-    formData.append('title', title);
-    // console.log(Object.fromEntries(formData))
-    axios.post(uri + path + 'news-store', formData, {
+  formData.append('imge', file);
+  formData.append('content', content);
+  formData.append('altText', alt);
+  formData.append('postTitle', postTitle);
+  formData.append('imageTitle', imageTitle);
+  // console.log(Object.fromEntries(formData))
+  axios.post(uri + path + 'news-store', formData, {
 
-    }).then(function (response) {
-    }).catch(function (error) {
-        if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-        } else if (error.request) {
-            console.log(error.request);
-        } else {
-            console.log('Error', error.message);
-        }
-        console.log(error);
-    });
-    //location.reload(); // uzkomentuoti jei norite kad nedingtu image
+  }).then(function (response) {
+  }).catch(function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+    console.log(error);
+  });
+  //location.reload(); // uzkomentuoti jei norite kad nedingtu image
 
 }
 

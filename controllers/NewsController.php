@@ -40,10 +40,12 @@ class NewsController
     public function store(Request $request, Request $requestJson)
     {
         $request = $this->decodeRequest($requestJson);
-        var_dump($request->request);
+
         $news = new NewsPost;
         $news->post_title = $request->request->get('post');
         $news->date = $request->request->get('date');
+        echo "<pre>";
+        var_dump($news->date);
         // $news->save();
         // $pic = new Attachment;
         // $pic->save($request->files->get('newsImg'), $news->ID);
