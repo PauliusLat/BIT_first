@@ -70,9 +70,9 @@ class IdeaController
 			// var_dump($session->get('id'));
 			// $session->deleteSession();
 			// if ($session->get('id') != $array) {
-				$ideaLike = IdeaPost::get($like);
-				$ideaLike->idea_like = $ideaLike->idea_like + 1;
-				$ideaLike->save();
+			$ideaLike = IdeaPost::get($like);
+			$ideaLike->idea_like = $ideaLike->idea_like + 1;
+			$ideaLike->save();
 			// }
 		}
 		return $response;

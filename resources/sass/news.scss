@@ -57,12 +57,13 @@
                 height: 400px;
 
                 .titleInput {
-                    width        : 100%;
-                    border       : solid 2px #CCCCCC;
-                    height       : 50px;
-                    text-align   : center;
-                    margin: 0;
-                    font-size: 35px;
+                    width     : 100%;
+                    border    : solid 1px #CCCCCC;
+                    height    : 50px;
+                    text-align: center;
+                    margin    : 0;
+                    font-size : 35px;
+                    outline   : none;
                 }
 
                 .titleInput:placeholder-shown {
@@ -70,9 +71,7 @@
                 }
 
                 .titleInput:placeholder {
-
                     font-size: 35px;
-
                 }
 
                 .ql-container {
@@ -105,7 +104,9 @@
     top      : 42%;
     left     : 85%;
     transform: translate(-50%, -50%);
-
+    .galleryUploade{
+        display: none;
+    }
     .newsImgInputs {
         width : 100%;
         margin: 30px;

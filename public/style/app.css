@@ -1077,11 +1077,12 @@ body {
 
 .main_news_container .news-container .active-content .newHeight .titleInput {
   width: 100%;
-  border: solid 2px #CCCCCC;
+  border: solid 1px #CCCCCC;
   height: 50px;
   text-align: center;
   margin: 0;
   font-size: 35px;
+  outline: none;
 }
 
 .main_news_container .news-container .active-content .newHeight .titleInput:-moz-placeholder-shown {
@@ -1120,6 +1121,10 @@ body {
   top: 42%;
   left: 85%;
   transform: translate(-50%, -50%);
+}
+
+.newsImg .galleryUploade {
+  display: none;
 }
 
 .newsImg .newsImgInputs {
