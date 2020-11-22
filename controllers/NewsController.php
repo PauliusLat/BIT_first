@@ -45,7 +45,7 @@ class NewsController
         $news->post_title = $request->request->get('post');
         $news->date = $request->request->get('date');
         echo "<pre>";
-        var_dump($news->date);
+        var_dump($request->request);
         // $news->save();
         // $pic = new Attachment;
         // $pic->save($request->files->get('newsImg'), $news->ID);

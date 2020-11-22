@@ -529,9 +529,150 @@ var Calendar = /*#__PURE__*/function () {
   !*** ./resources/js/category.js ***!
   \**********************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\resources\\js\\category.js: Unexpected token (138:0)\n\n\u001b[0m \u001b[90m 136 | \u001b[39m        init()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 137 | \u001b[39m        \u001b[90m// setTimeout(call.init(), 500);\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 138 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 139 | \u001b[39m        \u001b[90m// console.log(11111);\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 140 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 141 | \u001b[39m\u001b[33m>>>\u001b[39m\u001b[33m>>>\u001b[39m\u001b[33m>\u001b[39m ae7237c2f42f8e297855428bfcab43dae64b1a06\u001b[0m\n    at Parser._raise (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:766:17)\n    at Parser.raiseWithData (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:759:17)\n    at Parser.raise (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:753:17)\n    at Parser.unexpected (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:8966:16)\n    at Parser.parseExprAtom (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:10282:20)\n    at Parser.parseExprSubscripts (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9844:23)\n    at Parser.parseUpdate (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9824:21)\n    at Parser.parseMaybeUnary (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9813:17)\n    at Parser.parseExprOps (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9683:23)\n    at Parser.parseMaybeConditional (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9657:23)\n    at Parser.parseMaybeAssign (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9620:21)\n    at Parser.parseExpressionBase (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9564:23)\n    at D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9558:39\n    at Parser.allowInAnd (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11296:16)\n    at Parser.parseExpression (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9558:17)\n    at Parser.parseStatementContent (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11561:23)\n    at Parser.parseStatement (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11430:17)\n    at Parser.parseBlockOrModuleBlockBody (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:12012:25)\n    at Parser.parseBlockBody (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11998:10)\n    at Parser.parseBlock (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11982:10)\n    at Parser.parseStatementContent (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11506:21)\n    at Parser.parseStatement (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11430:17)\n    at Parser.parseIfStatement (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11784:28)\n    at Parser.parseStatementContent (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11475:21)\n    at Parser.parseStatement (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11430:17)\n    at Parser.parseBlockOrModuleBlockBody (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:12012:25)\n    at Parser.parseBlockBody (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11998:10)\n    at Parser.parseBlock (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11982:10)\n    at Parser.parseFunctionBody (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:10962:24)\n    at Parser.parseFunctionBodyAndFinish (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:10945:10)\n    at D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:12152:12\n    at Parser.withTopicForbiddingContext (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:11271:14)\n    at Parser.parseFunction (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:12151:10)\n    at Parser.parseFunctionOrFunctionSent (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:10377:17)\n    at Parser.parseExprAtom (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:10202:21)\n    at Parser.parseExprSubscripts (D:\\xampp\\htdocs\\wordpress\\wp-content\\plugins\\BIT_first\\node_modules\\@babel\\parser\\lib\\index.js:9844:23)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var catStrt = document.getElementById("catStart");
+
+function startCat() {
+  if (catStrt) {
+    window.addEventListener("load", init, false);
+  }
+}
+
+function init() {
+  axios.post(uri + path + "category_create", {}).then(function (response) {
+    var test = document.querySelector(".innercat");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+      var submit = document.getElementById("create");
+      submit.addEventListener("click", function () {
+        var name = document.getElementById("category-name").value;
+        var slug = document.getElementById("category-slug").value;
+        var description = document.getElementById("category-description").value;
+        var parent = document.getElementById('cat');
+        var select = parent.options[parent.selectedIndex].value;
+        catStore(name, select, slug, description);
+      });
+      var editBtn = catStrt.querySelectorAll(".category-edit");
+
+      var _loop = function _loop(i) {
+        var ID = editBtn[i].value;
+        var taxonomy = editBtn[i].id;
+        editBtn[i].addEventListener("click", function () {
+          catEdit(ID, taxonomy);
+        }, false);
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
+      }
+
+      var deleteBtn = document.querySelectorAll(".category-delete");
+
+      var _loop2 = function _loop2(_i) {
+        var ID = deleteBtn[_i].value;
+        var taxonomy = deleteBtn[_i].id;
+
+        deleteBtn[_i].addEventListener("click", function () {
+          catDelete(ID, taxonomy);
+        }, false);
+      };
+
+      for (var _i = 0; _i < deleteBtn.length; _i++) {
+        _loop2(_i);
+      }
+    }
+  })["catch"](function (error) {
+    if (error.response) {} else if (error.request) {} else {
+      console.log("Error", error.message);
+    }
+
+    console.log(error);
+  });
+  1;
+}
+
+function catStore(name, select, slug, description) {
+  axios.post(uri + path + "category_store", {
+    cat_name: name,
+    cat_slug: slug,
+    cat_description: description,
+    cat_parent: select
+  }).then(function (response) {
+    console.log(response);
+    init();
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+  document.getElementById("category-name").value = "";
+}
+
+function catEdit(editID, taxonomy) {
+  axios.post(uri + path + "category_edit", {
+    editID: editID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    var test = document.querySelector(".innercat");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+    }
+
+    var updateBtn = document.getElementById("catUpdate");
+    updateBtn.addEventListener("click", function () {
+      var updateId = updateBtn.value;
+      catUpdate(updateId);
+    });
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function catUpdate(updateId) {
+  var name = document.getElementById("category_name").value;
+  var slug = document.getElementById("category_slug").value;
+  var description = document.getElementById("category_description").value;
+  axios.post(uri + path + "category_update", {
+    updateId: updateId,
+    cat_name: name,
+    cat_slug: slug,
+    cat_description: description
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      // console.log(response);
+      init(); // setTimeout(call.init(), 500);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function catDelete(ID, taxonomy) {
+  // console.log(ID)
+  axios.post(uri + path + "category_destroy", {
+    deleteID: ID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(init(), 500);
+      // console.log(11111);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startCat());
 
 /***/ }),
 
@@ -703,6 +844,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
 /* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
 /* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
+/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 /** @format */
  // import startGallery from './gallery.js';
 
@@ -711,9 +853,11 @@ __webpack_require__.r(__webpack_exports__);
 
  // import TextEditor from './text-editor.js'
 
+
  // new TextEditor('.news-container')
 
-new _calendar_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.calendar'); // new News('startNewsAdmin');
+new _calendar_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.calendar');
+new _news__WEBPACK_IMPORTED_MODULE_5__["default"]('startNewsAdmin');
 
 /***/ }),
 
@@ -726,102 +870,176 @@ new _calendar_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.calendar'); // new Ne
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 
 
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var newsStart = document.getElementById("startNewsAdmin");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function startNews() {
-  if (newsStart) {
-    var parentElement = document.querySelector(".news-add");
-    var editor = document.getElementById("editor");
-    var title = document.createElement("input");
-    title.setAttribute('placeholder', 'Pavadinimas');
-    title.className = "titleInput";
-    parentElement.insertBefore(title, editor);
-    window.addEventListener("load", function () {
-      if (window.File && window.FileList && window.FileReader) {
-        var filesInput = document.getElementById("files");
-        filesInput.addEventListener("change", function (event) {
-          var file = filesInput.files[0];
-          var currentDiv = document.getElementById("message");
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-          if (file.size < 1048576 && file.length != 0 && file != undefined && file != null) {
-            if (file.type.match('image')) {
-              var picReader = new FileReader();
-              picReader.addEventListener("load", function (event) {
-                var picFile = event.target;
-                var output = document.getElementById("result");
-                var div = document.createElement("div");
-                div.className = "galleryDiv";
-                var removeUploade = document.querySelector(".wrapper");
-                removeUploade.style.display = "none";
-                div.innerHTML = "<img class=\"uploadeImageGallery\" height=\"200px\" width=\"200px\" src=\" ".concat(picFile.result, " \"\n                            alt=\" \"/>");
-                output.insertBefore(div, currentDiv);
-                var changeImage = document.querySelector(".galleryDiv");
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-                if (changeImage) {
-                  changeImage.addEventListener("click", function () {
-                    removeUploade.style.display = "";
-                    changeImage.remove();
-                    filesInput.value = '';
-                  });
-                }
-              });
-              picReader.readAsDataURL(file);
-              var newsPostTitle = document.querySelector(".titleInput");
-              var editables = document.querySelectorAll("[contenteditable]");
-              var button = document.getElementById("submit");
-              var newsImageTitle = document.getElementById("newsName");
-              var altText = document.getElementById("newsAlt");
-              button.addEventListener("click", function () {
-                var content = editables[0].innerHTML;
-                var alt = altText.value;
-                var imageTitle = newsImageTitle.value;
-                var postTitle = newsPostTitle.value;
-                storeNews(content, alt, imageTitle, postTitle, file);
-              });
-            } else {
-              alert("Tai nera paveikslelio tipo formatas");
-            }
-          } else {
-            alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-            //   currentDiv.appendChild(newContent);
+
+
+var News = /*#__PURE__*/function () {
+  function News(target) {
+    _classCallCheck(this, News);
+
+    this.target = target;
+    this.getData();
+  }
+
+  _createClass(News, [{
+    key: "getData",
+    value: function getData() {
+      var DOM = document.getElementById(this.target);
+
+      if (DOM) {
+        var parentElement = document.querySelector(".news-add");
+        var editor = document.getElementById("editor");
+        var title = document.createElement("input");
+        title.setAttribute('placeholder', 'Pavadinimas');
+        title.className = "titleInput";
+        parentElement.insertBefore(title, editor);
+        var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_0__["default"]();
+        readImage.image();
+        var newsPostTitle = document.querySelector(".titleInput");
+        var editables = document.querySelectorAll("[contenteditable]");
+        var button = document.getElementById("submit");
+        var newsImageTitle = document.getElementById("newsName");
+        var altText = document.getElementById("newsAlt");
+        button.addEventListener("click", function () {
+          var obj = {
+            api: 'news-store',
+            content: editables[0].innerHTML,
+            alt: altText.value,
+            imageTitle: newsImageTitle.value,
+            postTitle: newsPostTitle.value
+          };
+
+          if (obj) {
+            readImage.sendImageData(obj);
           }
         });
       } else {
-        console.log("Your browser does not support File API");
+        throw 'ERROR: header target location was not found.';
       }
-    });
-  } else {
-    throw 'ERROR: header target location was not found.';
-  }
-}
-
-function storeNews(content, alt, imageTitle, postTitle, file) {
-  var formData = new FormData();
-  var album = document.getElementById('albumName');
-  formData.append('imge', file);
-  formData.append('content', content);
-  formData.append('altText', alt);
-  formData.append('postTitle', postTitle);
-  formData.append('imageTitle', imageTitle); // console.log(Object.fromEntries(formData))
-
-  axios.post(uri + path + 'news-store', formData, {}).then(function (response) {})["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log('Error', error.message);
     }
+  }]);
 
-    console.log(error);
-  }); //location.reload(); // uzkomentuoti jei norite kad nedingtu image
-} // storeNews(content, alt, title, file) {
+  return News;
+}(); //   storeNews(content, alt, title, file) {
+//     console.log(content, alt, title, file);
+//     axios
+//       .post(
+//         uri + path +
+//         "news-store", {
+//       }
+//       )
+//       .catch((err) => {
+//         console.log(err instanceof TypeError);
+//         console.log("Problemos su StoreNews api");
+//       });
+//   }
+// }
+// const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+// const uri = document.location.origin;
+// const newsStart = document.getElementById("startNewsAdmin");
+// function startNews() {
+//   if (newsStart) {
+// const parentElement = document.querySelector(".news-add");
+// const editor = document.getElementById("editor");
+// const title = document.createElement("input");
+// title.setAttribute('placeholder', 'Pavadinimas');
+// title.className = "titleInput";
+// parentElement.insertBefore(title, editor);
+//     window.addEventListener("load", () => {
+//       if (window.File && window.FileList && window.FileReader) {
+//         let filesInput = document.getElementById("files");
+//         filesInput.addEventListener("change", function (event) {
+//           let file = filesInput.files[0];
+//           const currentDiv = document.getElementById("message");
+//           if (file.size < 1048576 && file.length != 0 && file != undefined && file != null) {
+//             if (file.type.match('image')) {
+//               const picReader = new FileReader();
+//               picReader.addEventListener("load", function (event) {
+//                 const picFile = event.target;
+//                 const output = document.getElementById("result");
+//                 const div = document.createElement("div");
+//                 div.className = "galleryDiv";
+//                 const removeUploade = document.querySelector(".wrapper");
+//                 removeUploade.style.display = "none";
+//                 div.innerHTML = `<img class="uploadeImageGallery" height="200px" width="200px" src=" ${picFile.result} "
+//                             alt=" "/>`;
+//                 output.insertBefore(div, currentDiv);
+//                 const changeImage = document.querySelector(".galleryDiv");
+//                 if (changeImage) {
+//                   changeImage.addEventListener("click", () => {
+//                     removeUploade.style.display = "";
+//                     changeImage.remove();
+//                     filesInput.value = ''
+//                   });
+//                 }
+//               });
+//               picReader.readAsDataURL(file);
+//               const newsPostTitle = document.querySelector(".titleInput");
+//               const editables = document.querySelectorAll("[contenteditable]");
+//               const button = document.getElementById("submit");
+//               const newsImageTitle = document.getElementById("newsName");
+//               const altText = document.getElementById("newsAlt");
+//               button.addEventListener(
+//                 "click",
+//                 () => {
+//                   let content = editables[0].innerHTML;
+//                   let alt = altText.value;
+//                   let imageTitle = newsImageTitle.value;
+//                   let postTitle = newsPostTitle.value;
+//                   storeNews(content, alt, imageTitle, postTitle, file)
+//                 }
+//               );
+//             } else {
+//               alert("Tai nera paveikslelio tipo formatas");
+//             }
+//           } else {
+//             alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+//             //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+//             //   currentDiv.appendChild(newContent);
+//           }
+//         });
+//       } else {
+//         console.log("Your browser does not support File API");
+//       }
+//     });
+//   } else {
+//     throw 'ERROR: header target location was not found.';
+//   }
+// }
+// function storeNews(content, alt, imageTitle, postTitle, file) {
+//   let formData = new FormData();
+//   const album = document.getElementById('albumName');
+//   formData.append('imge', file);
+//   formData.append('content', content);
+//   formData.append('altText', alt);
+//   formData.append('postTitle', postTitle);
+//   formData.append('imageTitle', imageTitle);
+//   // console.log(Object.fromEntries(formData))
+//   axios.post(uri + path + 'news-store', formData, {
+//   }).then(function (response) {
+//   }).catch(function (error) {
+//     if (error.response) {
+//       console.log(error.response.data);
+//       console.log(error.response.status);
+//       console.log(error.response.headers);
+//     } else if (error.request) {
+//       console.log(error.request);
+//     } else {
+//       console.log('Error', error.message);
+//     }
+//     console.log(error);
+//   });
+//   //location.reload(); // uzkomentuoti jei norite kad nedingtu image
+// }
+// storeNews(content, alt, title, file) {
 //   console.log(content, alt, title, file);
 //   axios
 //     .post(
@@ -927,7 +1145,7 @@ function storeNews(content, alt, imageTitle, postTitle, file) {
 // }
 
 
-/* harmony default export */ __webpack_exports__["default"] = (startNews());
+/* harmony default export */ __webpack_exports__["default"] = (News);
 
 /***/ }),
 
@@ -1081,6 +1299,130 @@ function pageDelete(ID) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (startPage());
+
+/***/ }),
+
+/***/ "./resources/js/profile_image.js":
+/*!***************************************!*\
+  !*** ./resources/js/profile_image.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Profile_image = /*#__PURE__*/function () {
+  function Profile_image() {
+    _classCallCheck(this, Profile_image);
+
+    this.file = null;
+  }
+
+  _createClass(Profile_image, [{
+    key: "image",
+    value: function image() {
+      var _this = this;
+
+      if (window.File && window.FileList && window.FileReader) {
+        var filesInput = document.getElementById("files");
+        filesInput.addEventListener("change", function (event) {
+          var file = filesInput.files[0];
+          var currentDiv = document.getElementById("message");
+
+          if (file.size < 1048576 || file.length != 0 && file != undefined && file != null) {
+            if (file.type.match('image')) {
+              var picReader = new FileReader();
+              picReader.addEventListener("load", function (event) {
+                var picFile = event.target;
+                var output = document.getElementById("result");
+                var div = document.createElement("div");
+                div.className = "galleryDiv";
+                var removeUploade = document.querySelector(".wrapper");
+                removeUploade.style.display = "none";
+                div.innerHTML = "<img class=\"uploadeImageGallery\" height=\"200px\" width=\"200px\" src=\"".concat(picFile.result, "\" alt=\" \"/>");
+                output.insertBefore(div, currentDiv);
+                var changeImage = document.querySelector(".galleryDiv");
+
+                if (changeImage) {
+                  changeImage.addEventListener("click", function () {
+                    removeUploade.style.display = "";
+                    changeImage.remove();
+                    filesInput.value = '';
+                  });
+                }
+              });
+              picReader.readAsDataURL(file);
+              _this.file = file;
+            } else {
+              alert("Tai nera paveikslelio tipo formatas");
+            }
+          } else {
+            alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+            //   currentDiv.appendChild(newContent);
+          }
+        });
+      } else {
+        console.log("Your browser does not support File API");
+      }
+    }
+  }, {
+    key: "sendImageData",
+    value: function sendImageData(obj) {
+      console.log(obj);
+      var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+      var uri = document.location.origin;
+      var formData = new FormData();
+
+      if (obj.api) {
+        if (obj.postTitle) {
+          formData.append('postTitle', obj.postTitle);
+        }
+
+        if (obj.content) {
+          formData.append('content', obj.content);
+        }
+
+        if (obj.alt) {
+          formData.append('altText', obj.alt);
+        }
+
+        if (obj.imageTitle) {
+          formData.append('imageTitle', obj.imageTitle);
+        }
+
+        formData.append('image', this.file);
+        console.log(Object.fromEntries(formData));
+        axios.post(uri + path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+
+          console.log(error);
+        }); // location.reload(); // uzkomentuoti jei norite kad nedingtu image
+      } else {
+        throw 'can not find API';
+      }
+    }
+  }]);
+
+  return Profile_image;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Profile_image);
 
 /***/ }),
 
