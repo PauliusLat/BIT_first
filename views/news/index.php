@@ -106,6 +106,4 @@
         },
         theme: 'snow'
     });
-
-    const editables = document.querySelectorAll("[contenteditable]");
 </script>
