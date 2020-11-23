@@ -1,4 +1,5 @@
 "use strict";
+import Api from './api';
 
 class Profile_image {
 
@@ -57,8 +58,6 @@ class Profile_image {
           }
         } else {
           alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-          //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-          //   currentDiv.appendChild(newContent);
         }
       });
     } else {
@@ -67,47 +66,11 @@ class Profile_image {
   }
 
   sendImageData(obj) {
-    console.log(obj);
-    const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-    const uri = document.location.origin;
+    let image = this.file;
+    obj.image = image;
 
-    let formData = new FormData();
-    if (obj.api) {
-      if (obj.postTitle) {
-        formData.append('postTitle', obj.postTitle);
-      }
-      if (obj.content) {
-        formData.append('content', obj.content);
-      }
-      if (obj.alt) {
-        formData.append('altText', obj.alt);
-      }
-      if (obj.imageTitle) {
-        formData.append('imageTitle', obj.imageTitle);
-      }
-
-      formData.append('image', this.file);
-
-      console.log(Object.fromEntries(formData))
-      axios.post(uri + path + obj.api, formData, {
-
-      }).then(function (response) {
-      }).catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log('Error', error.message);
-        }
-        console.log(error);
-      });
-      // location.reload(); // uzkomentuoti jei norite kad nedingtu image
-    }else{
-      throw 'can not find API';
-    }
+    let sendData = Api();
+    sendData.formDataApi(obj);
   }
 
 }
