@@ -5,6 +5,7 @@ namespace BIT\controllers;
 use BIT\app\View;
 use BIT\app\Attachment;
 use BIT\app\Query;
+use BIT\app\Page;
 use BIT\models\NewsPost;
 use BIT\app\RequestId;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,6 @@ class NewsController
 
     public function index()
     {
-
         return View::adminRender('news.index');
     }
 
@@ -39,17 +39,31 @@ class NewsController
 
     public function store(Request $request)
     {
-        echo "<pre>";
-        var_dump($request->request->get["postTitle"]);
-  
-        $news = new NewsPost;
-        $news->post_title = $request->request->get('post');
-        $news->date = $request->request->get('date');
+        $title = $request->request->get('postTitle');
+        $content = $request->request->get('content');
+        $altText = $request->request->get('altText');
+        $imgTitle = $request->request->get('imageTitle');
+        $file = $request->files->get('image');
+        _dc($file);
 
 
-        // $news->save();
-        // $pic = new Attachment;
-        // $pic->save($request->files->get('newsImg'), $news->ID);
+        $page = new Page();
+        $page->pageState = 'News Page'; 
+        $page->setRoute('news');
+        $page->setTitle($title);
+        $page->save();
+        
+        $news = new NewsPost();
+        $news->post_parent = $page->ID;
+        $news->post_title = $title;
+        $news->news_content = $content;
+        $news->save();
+    
+        $image = new Attachment();
+        $image->setAlt($altText);
+        $image->setCaption($imgTitle);
+        $image->save($file);
+        
 
         return new Response();
     }
@@ -59,10 +73,9 @@ class NewsController
     {
     }
 
-    public function edit(Request $request, NewsPost $newsPost, RequestId $requestId)
-    {
-        while (true) {
-        }
+    public function edit (Request $request, NewsPost $newsPost){
+        return View::adminRender('news.edit');
+
     }
 
     public function update(Request $request, NewsPost $newsPost)
