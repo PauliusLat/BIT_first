@@ -17,7 +17,7 @@ class NewsController
 {
 
     public function index()
-    {
+    {        
         return View::adminRender('news.index');
     }
 
@@ -60,7 +60,7 @@ class NewsController
         $image = new Attachment();
         $image->setAlt($altText);
         $image->setCaption($imgTitle);
-        $image->save($file);
+        $image->save($file, $news->ID);
 
         return new Response();
     }
