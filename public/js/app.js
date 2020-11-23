@@ -191,6 +191,10 @@ var Api = /*#__PURE__*/function () {
           formData.append('imageTitle', obj.imageTitle);
         }
 
+        if (obj.image) {
+          formData.append('image', obj.image);
+        }
+
         console.log(Object.fromEntries(formData));
         axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
           if (error.response) {
@@ -1377,7 +1381,7 @@ var Profile_image = /*#__PURE__*/function () {
     value: function sendImageData(obj) {
       var image = this.file;
       obj.image = image;
-      var sendData = Object(_api__WEBPACK_IMPORTED_MODULE_0__["default"])();
+      var sendData = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
       sendData.formDataApi(obj);
     }
   }]);
@@ -1561,8 +1565,8 @@ function tagDelete(ID, taxonomy) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -84,7 +84,6 @@ class Api {
     formDataApi(obj) {
 
         let formData = new FormData();
-
         if (obj.api) {
             if (obj.postTitle) {
                 formData.append('postTitle', obj.postTitle);
@@ -97,6 +96,9 @@ class Api {
             }
             if (obj.imageTitle) {
                 formData.append('imageTitle', obj.imageTitle);
+            }
+            if (obj.image) {
+                formData.append('image', obj.image);
             }
             console.log(Object.fromEntries(formData))
             axios.post(this.uri + this.path + obj.api, formData, {
