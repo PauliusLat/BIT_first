@@ -26,19 +26,26 @@ class TagController
     public function create(Request $requestJson)
     {
         $request = $this->decodeRequest($requestJson);
-        $limit = 3;
 
-        // if ($request->request->get('pageSelected') != null) {
-        //     $limit = $request->request->get('pageSelected');
-        // } else {
-        //     $limit = 5;
-        // }
+        if ($request->request->get('pageSelected') != null) {
+            $limit = $request->request->get('pageSelected');
+        } else {
+            $limit = 5;
+        }
 
-        if (is_int($request->request->get('pages'))) {
-            $number = $request->request->get('pages');
+        if (is_int($request->request->get('pages')) || $request->request->get('hash') != null) {
+
+            $number = $request->request->get('hash');
+            // _dc($number);
         } else {
             $number = 1;
         }
+
+
+
+
+
+
         $offset = ($number - 1)  * $limit;
         $total = wp_count_terms('hashtag', ['hide_empty' => false]);
         $pages = ceil($total / $limit);

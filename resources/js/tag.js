@@ -12,15 +12,42 @@ function startTag() {
   }
 }
 
-function init(pageNo = 1) {
-  // console.log(pageNo)
-  // // console.log(typeof pageNo)
-  // console.log(pageSelected)
+let pageSelected = 5;
+let hash;
+let hasharr
+let hasarr2
+
+function init(pageNo){
+  console.log(typeof pageNo)
+  
+hash = location.hash
+console.log(typeof hash)
+
+if (typeof pageNo === 'object' && hash == undefined){
+    hash = null
+}
+else if (typeof pageNo === 'object' && hash != undefined){
+  // hash = location.hash
+  hasharr = hash.split('#')
+  console.log(hasharr[1])
+  hasarr2 = hasharr[1].split('%')
+  hash = hasarr2[0]
+  // console.log(hasarr2[0])
+}else if(typeof pageNo === 'string' && hash != null){
+  // hash = location.hash
+  hasharr = hash.split('#')
+  //console.log(hasharr[1])
+  hasarr2 = hasharr[1].split('%')
+  hash = hasarr2[0]
+  // console.log(hasarr2[0])
+}
+ console.log(hash)
+
   axios
     .post(uri + path + "tag_create",{
-      // pageSelected: p,
       pages: parseInt(pageNo),
-     
+      pageSelected: pageSelected,
+      hash: hash
     })
     
     .then(function(response) {
@@ -28,7 +55,6 @@ function init(pageNo = 1) {
       if (response.status == 200 && response.statusText == "OK") {
         const HTML = response.data.html;
         test.innerHTML = HTML;
-
         const submit = document.getElementById("create");
         submit.addEventListener("click", () => {
           const name = document.getElementById("tag-name").value;
@@ -65,44 +91,18 @@ function init(pageNo = 1) {
           );
         }
 
-
-let dropdown = document.querySelector('select');
-console.log(dropdown)
-if (dropdown) dropdown.addEventListener('change', function(event) {
- 
-  let p = event.target.value
-  // init(p)
-    // console.log(p);
-    // axios
-    // .post(uri + path + "tag_create", {
-    //   tagsInPage: p,
-    // })
-    // .then(function(response) {
-    //   console.log(response);
-    // })
-    // .catch((err) => {
-    //   console.log(err instanceof TypeError);
-    // });
-});
-
-
-
         const pageBtn = document.getElementById("selectpage");
-        // console.log(pageBtn);
         const select = document.getElementById("items");
-        console.log(select);
-        const pageSelected = select.options[select.selectedIndex].value;
-        console.log(pageSelected);
         pageBtn.addEventListener(
           "click",
           function() {
-            init(pageSelected);
-            console.log(pageSelected);
+            pageSelected = select.options[select.selectedIndex].value;
+            init(1);
           },
+         
           false
         );
-       
-      
+    
 
         const page = document.querySelectorAll(".paging");
         for (let i = 0; i < page.length; i++){
@@ -110,6 +110,9 @@ if (dropdown) dropdown.addEventListener('change', function(event) {
           page[i].addEventListener(
             "click",
             function() {
+              location.hash = '#' + pageNo
+              hash = location.hash
+              console.log(hash)
               init(pageNo);
             },
             false

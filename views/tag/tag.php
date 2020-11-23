@@ -39,11 +39,12 @@ use BIT\app\App;
             $pageNum = 1;
             for ($page = 1; $page <= $pages; $page++) {
 
-                $nav .= '&nbsp <a class="paging" id = "' . $page . ' ">' . $page . '</a> ';
-                $next = '<a class="paging" id = "' . $nextpage . ' ">>[Next]</a>';
-                $prev = '<a class="paging" id = "' . $prevpage . ' ">[Prev]<</a>';
-                $last = '<a class="paging" id = "' . $lastpage . ' ">[Last]</a>';
-                $first = '<a class="paging" id = "' . $firstpage . ' ">[First]</a>';
+                $nav .= '&nbsp <a href="#' . $page . '" class="paging" id = "' . $page . ' ">' . $page . '</a> ';
+                //$nav .= '&nbsp <a href="#' . $page . '" class="paging" id = "' . $page . ' ">' . $page . '</a> ';
+                $next = '<a href="#' . $nextpage . '" class="paging" id = "' . $nextpage . ' ">>[Next]</a>';
+                $prev = '<a href="#' . $prevpage . '" class="paging" id = "' . $prevpage . ' ">[Prev]<</a>';
+                $last = '<a href="#' . $lastpage . '" class="paging" id = "' . $lastpage . ' ">[Last]</a>';
+                $first = '<a href="#' . $firstpage . '" class="paging" id = "' . $firstpage . ' ">[First]</a>';
             }
 
             ?>
@@ -52,6 +53,8 @@ use BIT\app\App;
                 <select name="items" id="items">
                     <option value="5">5</option>
                     <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="10">10</option>
                 </select>
                 <div class="buttons">
                     <button type="submit" id="selectpage" class="btn-blue">Rinktis</button>

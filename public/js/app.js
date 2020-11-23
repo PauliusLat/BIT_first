@@ -557,10 +557,10 @@ function init() {
         var name = document.getElementById("category-name").value;
         var slug = document.getElementById("category-slug").value;
         var description = document.getElementById("category-description").value;
-        var parent = document.getElementById('cat');
-        console.log(parent);
-        var select = parent.options[parent.selectedIndex].value;
-        console.log(select);
+        var parent = document.getElementById('cat'); // console.log(parent.value)
+
+        var select = parent.options[parent.selectedIndex].value; // console.log(select)
+
         catStore(name, select, slug, description);
       });
       var editBtn = catStrt.querySelectorAll(".category-edit");
@@ -1256,6 +1256,8 @@ __webpack_require__.r(__webpack_exports__);
 /** @format */
 
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
 var tagStrt = document.getElementById("tagStart");
@@ -1266,14 +1268,37 @@ function startTag() {
   }
 }
 
-function init() {
-  var pageNo = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-  // console.log(pageNo)
-  // // console.log(typeof pageNo)
-  // console.log(pageSelected)
+var pageSelected = 5;
+var hash;
+var hasharr;
+var hasarr2;
+
+function init(pageNo) {
+  console.log(_typeof(pageNo));
+  hash = location.hash;
+  console.log(_typeof(hash));
+
+  if (_typeof(pageNo) === 'object' && hash == undefined) {
+    hash = null;
+  } else if (_typeof(pageNo) === 'object' && hash != undefined) {
+    // hash = location.hash
+    hasharr = hash.split('#');
+    console.log(hasharr[1]);
+    hasarr2 = hasharr[1].split('%');
+    hash = hasarr2[0]; // console.log(hasarr2[0])
+  } else if (typeof pageNo === 'string' && hash != null) {
+    // hash = location.hash
+    hasharr = hash.split('#'); //console.log(hasharr[1])
+
+    hasarr2 = hasharr[1].split('%');
+    hash = hasarr2[0]; // console.log(hasarr2[0])
+  }
+
+  console.log(hash);
   axios.post(uri + path + "tag_create", {
-    // pageSelected: p,
-    pages: parseInt(pageNo)
+    pages: parseInt(pageNo),
+    pageSelected: pageSelected,
+    hash: hash
   }).then(function (response) {
     var test = document.querySelector(".test");
 
@@ -1316,31 +1341,11 @@ function init() {
         _loop2(_i);
       }
 
-      var dropdown = document.querySelector('select');
-      console.log(dropdown);
-      if (dropdown) dropdown.addEventListener('change', function (event) {
-        var p = event.target.value; // init(p)
-        // console.log(p);
-        // axios
-        // .post(uri + path + "tag_create", {
-        //   tagsInPage: p,
-        // })
-        // .then(function(response) {
-        //   console.log(response);
-        // })
-        // .catch((err) => {
-        //   console.log(err instanceof TypeError);
-        // });
-      });
-      var pageBtn = document.getElementById("selectpage"); // console.log(pageBtn);
-
+      var pageBtn = document.getElementById("selectpage");
       var select = document.getElementById("items");
-      console.log(select);
-      var pageSelected = select.options[select.selectedIndex].value;
-      console.log(pageSelected);
       pageBtn.addEventListener("click", function () {
-        init(pageSelected);
-        console.log(pageSelected);
+        pageSelected = select.options[select.selectedIndex].value;
+        init(1);
       }, false);
       var page = document.querySelectorAll(".paging");
 
@@ -1348,6 +1353,9 @@ function init() {
         var pageNo = page[_i2].id;
 
         page[_i2].addEventListener("click", function () {
+          location.hash = '#' + pageNo;
+          hash = location.hash;
+          console.log(hash);
           init(pageNo);
         }, false);
       };
