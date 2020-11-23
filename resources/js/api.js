@@ -66,7 +66,6 @@ class Api {
                     content: content,
                 }
             )
-
             .catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);
@@ -98,7 +97,10 @@ class Api {
             if (obj.imageTitle) {
                 formData.append('imageTitle', obj.imageTitle);
             }
-            console.log(Object.fromEntries(formData))
+            if (obj.image) {
+                formData.append('image', obj.image);
+            }
+            // console.log(Object.fromEntries(formData))
             axios.post(this.uri + this.path + obj.api, formData, {
 
             }).then(function (response) {

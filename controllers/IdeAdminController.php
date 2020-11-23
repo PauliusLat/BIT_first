@@ -39,7 +39,7 @@ class IdeAdminController
 		$request = $this->decodeRequest($requestJson);
 
 		$ideaContent = $idea->idea_content = $request->request->get('content');
-		$editId = $idea->ID = $request->request->get('id');
+		$editId = $request->request->get('id');
 
 		$editPost = IdeaPost::get($editId);
 

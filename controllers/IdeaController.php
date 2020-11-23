@@ -61,7 +61,7 @@ class IdeaController
 			$idea->save();
 		} else {
 			$array = [];
-			$like = $idea->idea_like = $request->request->get('idea_like');
+			$like = $request->request->get('idea_like');
 			$idBrowser = $server->getBrowser();
 			$id = $idBrowser['version'];
 			$array[] = $id;
