@@ -28,7 +28,6 @@ class GalleryFrontController
 
 	public function store(Request $request)
 	{
-		var_dump($request->request);
 		$album = new AlbumPost();
 		foreach ($request->request as $key => $a) {
 			if ($key == "album") {

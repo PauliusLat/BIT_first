@@ -32,13 +32,14 @@ class IdeAdminController
 		return $response;
 	}
 
-	public function edit(Request $requestJson, IdeaPost $idea)
+	public function edit(Request $requestJson)
 	{
+		$idea = new IdeaPost;
 
 		$request = $this->decodeRequest($requestJson);
 
-		$ideaContent = $idea->idea_content = $request->request->get('idea');
-		$editId = $idea->ID = $request->request->get('editId');
+		$ideaContent = $idea->idea_content = $request->request->get('content');
+		$editId = $idea->ID = $request->request->get('id');
 
 		$editPost = IdeaPost::get($editId);
 
@@ -56,14 +57,14 @@ class IdeAdminController
 		return $response = new Response;
 	}
 
-	public function create(Request $requestJson, IdeaPost $idea)
+	public function create(Request $requestJson)
 	{
+		$idea = new IdeaPost;
 
 		$request = $this->decodeRequest($requestJson);
 
-
-		$soliutionId = $idea->ID = $request->request->get('solutionId');
-		$soliution = $idea->idea_solution = $request->request->get('soliution');
+		$soliutionId = $idea->ID = $request->request->get('id');
+		$soliution = $idea->idea_solution = $request->request->get('content');
 
 		$soliutionPost = IdeaPost::get($soliutionId);
 

@@ -86,6 +86,138 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/api.js":
+/*!*****************************!*\
+  !*** ./resources/js/api.js ***!
+  \*****************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Api = /*#__PURE__*/function () {
+  function Api() {
+    _classCallCheck(this, Api);
+
+    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+    this.uri = document.location.origin;
+  }
+
+  _createClass(Api, [{
+    key: "delete",
+    value: function _delete(id, api) {
+      axios.post(this.uri + this.path + api + id, {
+        deleteId: id
+      })["catch"](function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+
+        console.log(error);
+      });
+    }
+  }, {
+    key: "save",
+    value: function save(id, api) {
+      axios.post(this.uri + this.path + api, {
+        id: id
+      })["catch"](function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+
+        console.log(error);
+      });
+    }
+  }, {
+    key: "saveContent",
+    value: function saveContent(api, id, content) {
+      axios.post(this.uri + this.path + api, {
+        id: id,
+        content: content
+      })["catch"](function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+
+        console.log(error);
+      });
+    }
+  }, {
+    key: "formDataApi",
+    value: function formDataApi(obj) {
+      var formData = new FormData();
+
+      if (obj.api) {
+        if (obj.postTitle) {
+          formData.append('postTitle', obj.postTitle);
+        }
+
+        if (obj.content) {
+          formData.append('content', obj.content);
+        }
+
+        if (obj.alt) {
+          formData.append('altText', obj.alt);
+        }
+
+        if (obj.imageTitle) {
+          formData.append('imageTitle', obj.imageTitle);
+        }
+
+        console.log(Object.fromEntries(formData));
+        axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+
+          console.log(error);
+        });
+      } else {
+        throw 'can not find API';
+      }
+    }
+  }]);
+
+  return Api;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Api);
+
+/***/ }),
+
 /***/ "./resources/js/calendar.js":
 /*!**********************************!*\
   !*** ./resources/js/calendar.js ***!
@@ -685,7 +817,8 @@ function catDelete(ID, taxonomy) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/** @format */
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+
 
 
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
@@ -705,12 +838,9 @@ function editText(editId) {
 
   if (txt != undefined && txt != null && txt.length >= 0 && txt != "" && txt != NaN) {
     var text = txt.split(/\s+/);
-    axios.post(uri + path + "idea-edit-admin", {
-      idea: text,
-      editId: editId
-    })["catch"](function (err) {
-      console.log(err instanceof TypeError);
-    });
+    var api = "idea-edit-admin";
+    var sendData = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    sendData.saveContent(api, editId, text);
     setTimeout(renderColons, 500);
   }
 }
@@ -719,30 +849,22 @@ function editText(editId) {
 
 function solutionText(sId, i) {
   var txt1 = document.getElementById(i).value;
-  console.log(txt1);
 
   if (txt1 != undefined && txt1 != null && txt1.length >= 0 && txt1 != "" && txt1 != NaN) {
     var text1 = txt1.split(/\s+/);
-    axios.post(uri + path + "idea-create-admin", {
-      soliution: text1,
-      solutionId: sId
-    })["catch"](function (err) {
-      console.log(err instanceof TypeError);
-    });
-    return setTimeout(renderColons, 500);
+    var api = "idea-create-admin";
+    var sendData = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    sendData.saveContent(api, sId, text1);
+    setTimeout(renderColons, 500);
   }
 }
 /*----------------------- delete content axios----------------------------*/
 
 
 function deleteIdea(delId) {
-  console.log(delId);
-  axios.post(uri + path + "idea-delete-admin&id=" + delId, {
-    deleteId: delId
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-    console.log("Problemos su Delete api");
-  });
+  var api = "idea-delete-admin&id=";
+  var sendData = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+  sendData["delete"](delId, api);
   setTimeout(renderColons, 500);
 } //  /*------------------------------render data  axios-----------------------------------------*/
 
@@ -921,137 +1043,12 @@ var News = /*#__PURE__*/function () {
             readImage.sendImageData(obj);
           }
         });
-      } else {
-        throw 'ERROR: header target location was not found.';
       }
     }
   }]);
 
   return News;
-}(); //   storeNews(content, alt, title, file) {
-//     console.log(content, alt, title, file);
-//     axios
-//       .post(
-//         uri + path +
-//         "news-store", {
-//       }
-//       )
-//       .catch((err) => {
-//         console.log(err instanceof TypeError);
-//         console.log("Problemos su StoreNews api");
-//       });
-//   }
-// }
-// const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-// const uri = document.location.origin;
-// const newsStart = document.getElementById("startNewsAdmin");
-// function startNews() {
-//   if (newsStart) {
-// const parentElement = document.querySelector(".news-add");
-// const editor = document.getElementById("editor");
-// const title = document.createElement("input");
-// title.setAttribute('placeholder', 'Pavadinimas');
-// title.className = "titleInput";
-// parentElement.insertBefore(title, editor);
-//     window.addEventListener("load", () => {
-//       if (window.File && window.FileList && window.FileReader) {
-//         let filesInput = document.getElementById("files");
-//         filesInput.addEventListener("change", function (event) {
-//           let file = filesInput.files[0];
-//           const currentDiv = document.getElementById("message");
-//           if (file.size < 1048576 && file.length != 0 && file != undefined && file != null) {
-//             if (file.type.match('image')) {
-//               const picReader = new FileReader();
-//               picReader.addEventListener("load", function (event) {
-//                 const picFile = event.target;
-//                 const output = document.getElementById("result");
-//                 const div = document.createElement("div");
-//                 div.className = "galleryDiv";
-//                 const removeUploade = document.querySelector(".wrapper");
-//                 removeUploade.style.display = "none";
-//                 div.innerHTML = `<img class="uploadeImageGallery" height="200px" width="200px" src=" ${picFile.result} "
-//                             alt=" "/>`;
-//                 output.insertBefore(div, currentDiv);
-//                 const changeImage = document.querySelector(".galleryDiv");
-//                 if (changeImage) {
-//                   changeImage.addEventListener("click", () => {
-//                     removeUploade.style.display = "";
-//                     changeImage.remove();
-//                     filesInput.value = ''
-//                   });
-//                 }
-//               });
-//               picReader.readAsDataURL(file);
-//               const newsPostTitle = document.querySelector(".titleInput");
-//               const editables = document.querySelectorAll("[contenteditable]");
-//               const button = document.getElementById("submit");
-//               const newsImageTitle = document.getElementById("newsName");
-//               const altText = document.getElementById("newsAlt");
-//               button.addEventListener(
-//                 "click",
-//                 () => {
-//                   let content = editables[0].innerHTML;
-//                   let alt = altText.value;
-//                   let imageTitle = newsImageTitle.value;
-//                   let postTitle = newsPostTitle.value;
-//                   storeNews(content, alt, imageTitle, postTitle, file)
-//                 }
-//               );
-//             } else {
-//               alert("Tai nera paveikslelio tipo formatas");
-//             }
-//           } else {
-//             alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-//             //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-//             //   currentDiv.appendChild(newContent);
-//           }
-//         });
-//       } else {
-//         console.log("Your browser does not support File API");
-//       }
-//     });
-//   } else {
-//     throw 'ERROR: header target location was not found.';
-//   }
-// }
-// function storeNews(content, alt, imageTitle, postTitle, file) {
-//   let formData = new FormData();
-//   const album = document.getElementById('albumName');
-//   formData.append('imge', file);
-//   formData.append('content', content);
-//   formData.append('altText', alt);
-//   formData.append('postTitle', postTitle);
-//   formData.append('imageTitle', imageTitle);
-//   // console.log(Object.fromEntries(formData))
-//   axios.post(uri + path + 'news-store', formData, {
-//   }).then(function (response) {
-//   }).catch(function (error) {
-//     if (error.response) {
-//       console.log(error.response.data);
-//       console.log(error.response.status);
-//       console.log(error.response.headers);
-//     } else if (error.request) {
-//       console.log(error.request);
-//     } else {
-//       console.log('Error', error.message);
-//     }
-//     console.log(error);
-//   });
-//   //location.reload(); // uzkomentuoti jei norite kad nedingtu image
-// }
-// storeNews(content, alt, title, file) {
-//   console.log(content, alt, title, file);
-//   axios
-//     .post(
-//       uri + path +
-//       "news-store", {
-//     });
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//       console.log("Problemos su StoreNews api");
-//     });
-// }
-// function editNews(editId) {
+}(); // function editNews(editId) {
 //   axios
 //     .get(
 //       uri + path +
@@ -1311,6 +1308,7 @@ function pageDelete(ID) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1318,6 +1316,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
 
 var Profile_image = /*#__PURE__*/function () {
   function Profile_image() {
@@ -1365,8 +1365,7 @@ var Profile_image = /*#__PURE__*/function () {
               alert("Tai nera paveikslelio tipo formatas");
             }
           } else {
-            alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb"); //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-            //   currentDiv.appendChild(newContent);
+            alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
           }
         });
       } else {
@@ -1376,46 +1375,10 @@ var Profile_image = /*#__PURE__*/function () {
   }, {
     key: "sendImageData",
     value: function sendImageData(obj) {
-      console.log(obj);
-      var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-      var uri = document.location.origin;
-      var formData = new FormData();
-
-      if (obj.api) {
-        if (obj.postTitle) {
-          formData.append('postTitle', obj.postTitle);
-        }
-
-        if (obj.content) {
-          formData.append('content', obj.content);
-        }
-
-        if (obj.alt) {
-          formData.append('altText', obj.alt);
-        }
-
-        if (obj.imageTitle) {
-          formData.append('imageTitle', obj.imageTitle);
-        }
-
-        formData.append('image', this.file);
-        console.log(Object.fromEntries(formData));
-        axios.post(uri + path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log('Error', error.message);
-          }
-
-          console.log(error);
-        }); // location.reload(); // uzkomentuoti jei norite kad nedingtu image
-      } else {
-        throw 'can not find API';
-      }
+      var image = this.file;
+      obj.image = image;
+      var sendData = Object(_api__WEBPACK_IMPORTED_MODULE_0__["default"])();
+      sendData.formDataApi(obj);
     }
   }]);
 
