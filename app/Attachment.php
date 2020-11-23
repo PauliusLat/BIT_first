@@ -90,7 +90,7 @@ class Attachment extends Post{
         return $this->post_excerpt;
     }
 
-    public function setCaption(String $caption){
+    public function setCaption($caption){
         $this->post_excerpt = $caption;
     }
 
@@ -98,7 +98,7 @@ class Attachment extends Post{
         return $this->post_content;
     }
 
-    public function setDescription(String $description){
+    public function setDescription($description){
         $this->post_content = $description;
     }
 
