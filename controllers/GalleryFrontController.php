@@ -19,20 +19,20 @@ class GalleryFrontController
 
 	public function store(Request $request)
 	{
-		foreach ($request->request as $key => $value) {
-			if (strcmp($key,'album')===0) {
-				$page = new Page();
-				$page->pageState = 'Album Page'; 
-				$page->setRoute('all-album');
-				$page->setTitle($value);
-				$page->save();
-				
-				$album = new AlbumPost();
-				$album->post_parent = $page->ID;
-				$album->post_title = $value;
-				$album->save();
-			}
+		$title = $request->request->get('album');
+		if ($title) {
+			$page = new Page();
+			$page->pageState = 'Album Page'; 
+			$page->setRoute('all-album');
+			$page->setTitle($title);
+			$page->save();
+			
+			$album = new AlbumPost();
+			$album->post_parent = $page->ID;
+			$album->post_title = $title;
+			$album->save();
 		}
+		
 		$counter = 0;
 		foreach ($request->files->all() as $index => $file) {
 
