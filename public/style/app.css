@@ -1897,8 +1897,16 @@ table th {
 
 /** @format */
 
+.active {
+  color: maroon;
+}
+
 .pages {
   display: inline-block;
+}
+
+.page > a {
+  text-decoration: none;
 }
 
 .selectPages {
