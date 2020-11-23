@@ -12,19 +12,18 @@ function startTag() {
   }
 }
 
-let pageSelected = 5;
+let pageSelected;
 let hash = location.hash
 let hasharr
 let hasarr2
 
 function init(pageNo){
   
-console.log(typeof hash)
-console.log(hash)
+console.log(typeof pageSelected)
+
 
 if (typeof pageNo == 'object' &&  hash.length !== 0){
   hash = location.hash
-  console.log(typeof hash)
   hasharr = hash.split('#')
   hasarr2 = hasharr[1].split('%')
   hash = hasarr2[0]
@@ -36,7 +35,7 @@ if (typeof pageNo == 'object' &&  hash.length !== 0){
   hash = hasarr2[0]
   
 }
- console.log(hash)
+
 
   axios
     .post(uri + path + "tag_create",{
@@ -88,10 +87,14 @@ if (typeof pageNo == 'object' &&  hash.length !== 0){
 
         const pageBtn = document.getElementById("selectpage");
         const select = document.getElementById("items");
+        if (pageSelected != undefined) {
+          select.value = pageSelected
+        }
         pageBtn.addEventListener(
           "click",
           function() {
             pageSelected = select.options[select.selectedIndex].value;
+            select.value = pageSelected
             init(1);
           },
          
@@ -107,7 +110,6 @@ if (typeof pageNo == 'object' &&  hash.length !== 0){
             function() {
               location.hash = '#' + pageNo
               hash = location.hash
-              console.log(hash)
               init(pageNo);
             },
             false

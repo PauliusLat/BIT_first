@@ -1268,18 +1268,16 @@ function startTag() {
   }
 }
 
-var pageSelected = 5;
+var pageSelected;
 var hash = location.hash;
 var hasharr;
 var hasarr2;
 
 function init(pageNo) {
-  console.log(_typeof(hash));
-  console.log(hash);
+  console.log(_typeof(pageSelected));
 
   if (_typeof(pageNo) == 'object' && hash.length !== 0) {
     hash = location.hash;
-    console.log(_typeof(hash));
     hasharr = hash.split('#');
     hasarr2 = hasharr[1].split('%');
     hash = hasarr2[0];
@@ -1289,7 +1287,6 @@ function init(pageNo) {
     hash = hasarr2[0];
   }
 
-  console.log(hash);
   axios.post(uri + path + "tag_create", {
     pages: parseInt(pageNo),
     pageSelected: pageSelected,
@@ -1338,8 +1335,14 @@ function init(pageNo) {
 
       var pageBtn = document.getElementById("selectpage");
       var select = document.getElementById("items");
+
+      if (pageSelected != undefined) {
+        select.value = pageSelected;
+      }
+
       pageBtn.addEventListener("click", function () {
         pageSelected = select.options[select.selectedIndex].value;
+        select.value = pageSelected;
         init(1);
       }, false);
       var page = document.querySelectorAll(".paging");
@@ -1350,7 +1353,6 @@ function init(pageNo) {
         page[_i2].addEventListener("click", function () {
           location.hash = '#' + pageNo;
           hash = location.hash;
-          console.log(hash);
           init(pageNo);
         }, false);
       };
