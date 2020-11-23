@@ -61,12 +61,12 @@ class IdeaController
 			$idea->save();
 		} else {
 			$array = [];
-			$like = $idea->idea_like = $request->request->get('idea_like');
-			$idBrowser = $server->getBrowser();
-			$id = $idBrowser['version'];
-			$array[] = $id;
+			$like = $request->request->get('idea_like');
+			// $idBrowser = $server->getBrowser();
+			// $id = $idBrowser['version'];
+			// $array[] = $id;
 			$array[] = $like;
-			// $session->set('id', $array);
+			$session->set('id', $array);
 			// var_dump($session->get('id'));
 			// $session->deleteSession();
 			// if ($session->get('id') != $array) {
