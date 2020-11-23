@@ -1,6 +1,5 @@
 <?php
 
-use BIT\models\NewsPost;
 use BIT\app\Page;
 
 ?>
@@ -8,7 +7,7 @@ use BIT\app\Page;
 <div>
 
     <?php foreach ($data as $news) : ?>
-        <a href="<?= Page::get($news->ID)->getLink(); ?>"> <?= $news->post_title; ?></a>
+        <a href="<?= Page::get($news->post_parent)->getLink(); ?>"> <?= $news->post_title; ?></a>
         <div class="1">
             <?= $news->post_date; ?>
         </div>
@@ -17,7 +16,7 @@ use BIT\app\Page;
         </h1>
         <?php $allImages = $news->attachments; ?>
         <?php foreach ($allImages as $image) : ?>
-            <div>
+            <div> 
                 <img src="<?= $image->getUrl(); ?>" alt="<?=$image->getAlt(); ?>">
             </div>
         <?php endforeach; ?>
@@ -27,8 +26,6 @@ use BIT\app\Page;
         <div class="4">
 
         </div>
-        <!-- <div>
-            <a href="http://localhost/wordpress/
-        </div> -->
+      
     <?php endforeach; ?>
 </div>
