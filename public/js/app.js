@@ -193,9 +193,9 @@ var Api = /*#__PURE__*/function () {
 
         if (obj.image) {
           formData.append('image', obj.image);
-        }
+        } // console.log(Object.fromEntries(formData))
 
-        console.log(Object.fromEntries(formData));
+
         axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
           if (error.response) {
             console.log(error.response.data);
@@ -1565,8 +1565,8 @@ function tagDelete(ID, taxonomy) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

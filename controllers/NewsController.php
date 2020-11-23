@@ -23,6 +23,8 @@ class NewsController
 
     public function createPost()
     {
+
+
         // $html = require '/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/views/news/list.php';
         // $news = NewsPost::all()->all();
         $html = View::adminRender('news.post');
@@ -35,8 +37,6 @@ class NewsController
         return View::adminRender('news.create');
     }
 
-
-
     public function store(Request $request)
     {
         $title = $request->request->get('postTitle');
@@ -44,26 +44,23 @@ class NewsController
         $altText = $request->request->get('altText');
         $imgTitle = $request->request->get('imageTitle');
         $file = $request->files->get('image');
-        _dc($file);
-
 
         $page = new Page();
-        $page->pageState = 'News Page'; 
+        $page->pageState = 'News Page';
         $page->setRoute('news');
         $page->setTitle($title);
         $page->save();
-        
+
         $news = new NewsPost();
         $news->post_parent = $page->ID;
         $news->post_title = $title;
         $news->news_content = $content;
         $news->save();
-    
+
         $image = new Attachment();
         $image->setAlt($altText);
         $image->setCaption($imgTitle);
         $image->save($file);
-        
 
         return new Response();
     }
@@ -73,9 +70,23 @@ class NewsController
     {
     }
 
-    public function edit (Request $request, NewsPost $newsPost){
-        return View::adminRender('news.edit');
+    public function edit(Request $request, NewsPost $newsPost)
+    {
+        $allNews = NewsPost::all()->all();
+        // foreach (NewsPost::all()->all() as $news) {
+        //     $pageLink1 = Page::get($news->ID)->getLink();
+        //     $content2 = $news->news_content;
+        //     $title3 = $news->post_title;
+        //     $date4 = $news->post_date;
 
+        //     $allImages = $news->attachments;
+        //     foreach ($allImages as $image) {
+        //         $url5 = $image->getUrl();
+        //         $altText6 = $image->getAlt();
+        //     }
+        // }
+
+        return View::adminRender('news.edit',['data' =>  $allNews]);
     }
 
     public function update(Request $request, NewsPost $newsPost)
