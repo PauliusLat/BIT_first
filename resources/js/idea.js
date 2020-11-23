@@ -1,6 +1,5 @@
-/** @format */
-
 "use strict";
+import Api from './api';
 
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
@@ -24,15 +23,12 @@ function editText(editId) {
     txt != NaN
   ) {
     let text = txt.split(/\s+/);
-    axios
-      .post(uri + path + "idea-edit-admin", {
-        idea: text,
-        editId: editId,
-      })
-      .catch((err) => {
-        console.log(err instanceof TypeError);
-      });
+
+    let api = "idea-edit-admin";
+    let sendData = new Api();
+    sendData.saveContent(api, editId, text)
     setTimeout(renderColons, 500);
+
   }
 }
 
@@ -40,7 +36,6 @@ function editText(editId) {
 
 function solutionText(sId, i) {
   const txt1 = document.getElementById(i).value;
-  console.log(txt1);
 
   if (
     txt1 != undefined &&
@@ -50,36 +45,24 @@ function solutionText(sId, i) {
     txt1 != NaN
   ) {
     let text1 = txt1.split(/\s+/);
-    axios
-      .post(uri + path + "idea-create-admin", {
-        soliution: text1,
-        solutionId: sId,
-      })
-      .catch((err) => {
-        console.log(err instanceof TypeError);
-      });
-    return setTimeout(renderColons, 500);
+
+    let api = "idea-create-admin";
+    let sendData = new Api();
+    sendData.saveContent(api, sId, text1)
+    setTimeout(renderColons, 500);
+
   }
 }
 
 /*----------------------- delete content axios----------------------------*/
 
 function deleteIdea(delId) {
-  console.log(delId);
-  axios
-    .post(
-      uri + path +
-      "idea-delete-admin&id="+delId,
-      {
-        deleteId: delId,
-      }
-    )
 
-    .catch((err) => {
-      console.log(err instanceof TypeError);
-      console.log("Problemos su Delete api");
-    });
+  let api = "idea-delete-admin&id=";
+  let sendData = new Api();
+  sendData.delete(delId, api) 
   setTimeout(renderColons, 500);
+
 }
 
 //  /*------------------------------render data  axios-----------------------------------------*/
@@ -149,6 +132,7 @@ function renderColons(e) {
             "click",
             function() {
               solutionText(sId, i + 1);
+
             },
             false
           );

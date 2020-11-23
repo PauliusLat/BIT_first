@@ -1,5 +1,5 @@
 <div class="lenteles">
-                <form class="forma" method="POST" action="http://localhost:8080/wordpress/wp-content/plugins/BIT_first/api/?route=news_store" enctype="multipart/form-data">
+                <form class="forma" method="POST" action="http://localhost/wordpress/wp-content/plugins/BIT_first/api/?route=news_store" enctype="multipart/form-data">
                     <input type="hidden" name="news_new" value="new news">
                     <div class="form-group">
                         <label class="admin-label">Data</label><br>

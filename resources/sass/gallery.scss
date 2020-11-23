@@ -4,12 +4,7 @@
 }
 
 .galleryContainer {
-    width       : calc(100% - 600px);
-    margin-left : auto;
-    margin-right: auto;
-    max-width   : 1600px;
-
-    height: 300px;
+     height: 30px;
 
     .galleryImage {
         height          : 150px;
@@ -89,14 +84,14 @@
         align-items    : center;
         justify-content: center;
 
-        .file-upload {
+        // .file-upload {
 
 
-            input[type=file] {
-                width : 100px;
-                height: 100px;
-            }
-        }
+        //     input[type=file] {
+        //         width : 100px;
+        //         height: 100px;
+        //     }
+        // }
 
         .file-upload {
 

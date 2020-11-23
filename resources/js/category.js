@@ -135,7 +135,6 @@ function catUpdate(updateId) {
         // console.log(response);
         init();
         // setTimeout(call.init(), 500);
-       
       }
     })
 
