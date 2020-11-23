@@ -33,18 +33,11 @@ class TagController
             $limit = 5;
         }
 
-        if (is_int($request->request->get('pages')) || $request->request->get('hash') != null) {
-
+        if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
             $number = $request->request->get('hash');
-            // _dc($number);
         } else {
             $number = 1;
         }
-
-
-
-
-
 
         $offset = ($number - 1)  * $limit;
         $total = wp_count_terms('hashtag', ['hide_empty' => false]);

@@ -1269,29 +1269,24 @@ function startTag() {
 }
 
 var pageSelected = 5;
-var hash;
+var hash = location.hash;
 var hasharr;
 var hasarr2;
 
 function init(pageNo) {
-  console.log(_typeof(pageNo));
-  hash = location.hash;
   console.log(_typeof(hash));
+  console.log(hash);
 
-  if (_typeof(pageNo) === 'object' && hash == undefined) {
-    hash = null;
-  } else if (_typeof(pageNo) === 'object' && hash != undefined) {
-    // hash = location.hash
+  if (_typeof(pageNo) == 'object' && hash.length !== 0) {
+    hash = location.hash;
+    console.log(_typeof(hash));
     hasharr = hash.split('#');
-    console.log(hasharr[1]);
     hasarr2 = hasharr[1].split('%');
-    hash = hasarr2[0]; // console.log(hasarr2[0])
+    hash = hasarr2[0];
   } else if (typeof pageNo === 'string' && hash != null) {
-    // hash = location.hash
-    hasharr = hash.split('#'); //console.log(hasharr[1])
-
+    hasharr = hash.split('#');
     hasarr2 = hasharr[1].split('%');
-    hash = hasarr2[0]; // console.log(hasarr2[0])
+    hash = hasarr2[0];
   }
 
   console.log(hash);

@@ -13,33 +13,28 @@ function startTag() {
 }
 
 let pageSelected = 5;
-let hash;
+let hash = location.hash
 let hasharr
 let hasarr2
 
 function init(pageNo){
-  console.log(typeof pageNo)
   
-hash = location.hash
 console.log(typeof hash)
+console.log(hash)
 
-if (typeof pageNo === 'object' && hash == undefined){
-    hash = null
-}
-else if (typeof pageNo === 'object' && hash != undefined){
-  // hash = location.hash
+if (typeof pageNo == 'object' &&  hash.length !== 0){
+  hash = location.hash
+  console.log(typeof hash)
   hasharr = hash.split('#')
-  console.log(hasharr[1])
   hasarr2 = hasharr[1].split('%')
   hash = hasarr2[0]
-  // console.log(hasarr2[0])
+
 }else if(typeof pageNo === 'string' && hash != null){
-  // hash = location.hash
+ 
   hasharr = hash.split('#')
-  //console.log(hasharr[1])
   hasarr2 = hasharr[1].split('%')
   hash = hasarr2[0]
-  // console.log(hasarr2[0])
+  
 }
  console.log(hash)
 

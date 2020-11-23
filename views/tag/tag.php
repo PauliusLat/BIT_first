@@ -40,7 +40,6 @@ use BIT\app\App;
             for ($page = 1; $page <= $pages; $page++) {
 
                 $nav .= '&nbsp <a href="#' . $page . '" class="paging" id = "' . $page . ' ">' . $page . '</a> ';
-                //$nav .= '&nbsp <a href="#' . $page . '" class="paging" id = "' . $page . ' ">' . $page . '</a> ';
                 $next = '<a href="#' . $nextpage . '" class="paging" id = "' . $nextpage . ' ">>[Next]</a>';
                 $prev = '<a href="#' . $prevpage . '" class="paging" id = "' . $prevpage . ' ">[Prev]<</a>';
                 $last = '<a href="#' . $lastpage . '" class="paging" id = "' . $lastpage . ' ">[Last]</a>';
