@@ -15,9 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class NewsController {
 
     public function index(){
-
         return View::adminRender('news.index');
-
     }
 
     public function list(){  
@@ -35,7 +33,6 @@ class NewsController {
     }
 
     
-    
     public function store(Request $request) { 
         // _dc($request);
         $news = new NewsPost;
@@ -52,8 +49,9 @@ class NewsController {
 
     public function show (){}
 
-    public function edit (Request $request, NewsPost $newsPost, RequestId $requestId){
-            while(true){}
+    public function edit (Request $request, NewsPost $newsPost){
+        return View::adminRender('news.edit');
+
     }
 
     public function update(Request $request, NewsPost $newsPost)
