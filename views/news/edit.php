@@ -1,18 +1,31 @@
-<div class="lenteles">
-                <form class="forma" method="POST" action="http://localhost:8080/wordpress/wp-content/plugins/BIT_first/api/?route=news_store" enctype="multipart/form-data">
-                    <input type="hidden" name="news_new" value="new news">
-                    <div class="form-group">
-                        <label class="admin-label">Data</label><br>
-                        <input type="text" name="date" value="date" class="admin-input">
-                    </div>
-                    <div class="form-group">
-                        <label class="admin-label">Įrašas</label><br>
-                        <input type="text" name="content" value="content" class="admin-input">
-                    </div>
-</div>
-                    <div class="mygtukai">
-                        <button type="submit" class="admin-button">Pridėti</button>
-                </form>
-                    </div>
+<?php
+
+use BIT\app\Page;
+
+?>
+
+<div>
+
+    <?php foreach ($data as $news) : ?>
+        <a href="<?= Page::get($news->post_parent)->getLink(); ?>"> <?= $news->post_title; ?></a>
+        <div class="1">
+            <?= $news->post_date; ?>
+        </div>
+        <h1 class="2">
+            <?= $news->post_title; ?>
+        </h1>
+        <?php $allImages = $news->attachments; ?>
+        <?php foreach ($allImages as $image) : ?>
+            <div> 
+                <img src="<?= $image->getUrl(); ?>" alt="<?=$image->getAlt(); ?>">
             </div>
-        <br><!-- //nukreipti i update per action-->
+        <?php endforeach; ?>
+        <div class="3">
+            <?= $news->news_content; ?>
+        </div>
+        <div class="4">
+
+        </div>
+      
+    <?php endforeach; ?>
+</div>

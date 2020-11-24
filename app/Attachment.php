@@ -90,7 +90,7 @@ class Attachment extends Post{
         return $this->post_excerpt;
     }
 
-    public function setCaption(String $caption){
+    public function setCaption($caption){
         $this->post_excerpt = $caption;
     }
 
@@ -98,7 +98,7 @@ class Attachment extends Post{
         return $this->post_content;
     }
 
-    public function setDescription(String $description){
+    public function setDescription($description){
         $this->post_content = $description;
     }
 
@@ -111,7 +111,7 @@ class Attachment extends Post{
     // }
 
 
-    public function getURL(){
+    public function getUrl(){
         if(($this->ID) > 0){
             return wp_get_attachment_url($this->ID);
         }
@@ -120,10 +120,10 @@ class Attachment extends Post{
     public function getAttachmentDetails() {
         if(($this->ID) > 0){
             return wp_get_attachment_metadata( $this->ID );
-        }
+        }    
+
     }
-
-
+  
 
 }
 

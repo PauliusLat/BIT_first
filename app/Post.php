@@ -27,12 +27,12 @@ class Post
         if (!is_string($post_id) && !is_integer($post_id)) {
             $post_id = 0;
         }
-        if (strcmp($post_id, '0') === 0) {
+        if ($post_id === 0 || $post_id === '0') {
             foreach (get_object_vars(new \WP_Post(new \stdClass())) as $var => $value) {
                 $this->$var = $value;
             }
             if (isset(static::$type)) $this->post_type = static::$type;
-        } elseif (strcmp($post_id, '0') != 0) {
+        } elseif (strcmp($post_id, '0') !== 0) {
             foreach (get_object_vars(get_post($post_id)) as $var => $value) {
                 $this->$var = $value;
             }
@@ -93,6 +93,7 @@ class Post
         }
         return new Collection($list);
     }
+
 
     // inserts or updates new object to DB 
     public function save()

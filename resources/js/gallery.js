@@ -1,114 +1,115 @@
-"use strict";
+// "use strict";
 
-const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-const uri = document.location.origin;
+// const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+// const uri = document.location.origin;
 
-const gallery = document.getElementById("loadeGallery");
+// const gallery = document.getElementById("loadeGallery");
 
-function startGallery() {
-    if (gallery) {
-        window.addEventListener("load", renderGallery, false);
-    }
-}
+// function startGallery() {
+//     if (gallery) {
+//         window.addEventListener("load", renderGallery, false);
+//     }
+// }
 
-function renderGallery() {
-    //Check File API support
-    if (window.File && window.FileList && window.FileReader) {
+// function renderGallery() {
+//     //Check File API support
 
-        let filesInput = document.getElementById("files");
+//     if (window.File && window.FileList && window.FileReader) {
 
-        filesInput.addEventListener("change", function (event) {
+//         let filesInput = document.getElementById("files");
 
-            let array = filesInput.files[0];
+//         filesInput.addEventListener("change", function (event) {
 
-            renderImages(array, filesInput);
-        });
-    } else {
-        console.log("Your browser does not support File API");
-    }
-}
+//             let array = filesInput.files[0];
+    
+//             renderImages(array, filesInput);
+//         });
+//     } else {
+//         console.log("Your browser does not support File API");
+//     }
+// }
 
-function renderImages(file, filesInput) {
+// function renderImages(file, filesInput) {
 
-    const currentDiv = document.getElementById("message");
+//     const currentDiv = document.getElementById("message");
 
-    if (file.size < 1048576 || file.length != 0 && file != undefined && file != null) {
+//     if (file.size < 1048576 || file.length != 0 && file != undefined && file != null) {
 
-        if (file.type.match('image')) {
+//         if (file.type.match('image')) {
 
-            const picReader = new FileReader();
+//             const picReader = new FileReader();
 
-            picReader.addEventListener("load", function (event) {
+//             picReader.addEventListener("load", function (event) {
 
-                const picFile = event.target;
-                const output = document.getElementById("result");
-                const div = document.createElement("div");
-                div.className = "galleryDiv";
-                const removeUploade = document.querySelector(".wrapper");
-                removeUploade.style.display = "none";
-                div.innerHTML = `<img class="uploadeImageGallery" height="200px" width="200px" src=" ${picFile.result} "
-                      alt=" "/>`;
+//                 const picFile = event.target;
+//                 const output = document.getElementById("result");
+//                 const div = document.createElement("div");
+//                 div.className = "galleryDiv";
+//                 const removeUploade = document.querySelector(".wrapper");
+//                 removeUploade.style.display = "none";
+//                 div.innerHTML = `<img class="uploadeImageGallery" height="200px" width="200px" src=" ${picFile.result} "
+//                       alt=" "/>`;
 
-                output.insertBefore(div, currentDiv);
+//                 output.insertBefore(div, currentDiv);
 
-                const changeImage = document.querySelector(".galleryDiv");
-                if (changeImage) {
-                    changeImage.addEventListener("click", () => {
-                        removeUploade.style.display = "";
-                        changeImage.remove();
-                        filesInput.value = ''
-                    });
-                }
-            });
+//                 const changeImage = document.querySelector(".galleryDiv");
+//                 if (changeImage) {
+//                     changeImage.addEventListener("click", () => {
+//                         removeUploade.style.display = "";
+//                         changeImage.remove();
+//                         filesInput.value = ''
+//                     });
+//                 }
+//             });
 
-            picReader.readAsDataURL(file);
+//             picReader.readAsDataURL(file);
 
-            const uploadeImg = document.getElementById("submitImg");
+//             const uploadeImg = document.getElementById("submitImg");
 
-            uploadeImg.addEventListener('click', function () {
+//             uploadeImg.addEventListener('click', function () {
 
-                sendImageData(file);
+//                 sendImageData(file);
 
-            });
+//             });
 
 
-        } else {
-            alert("Tai nera paveikslelio tipo formatas");
-        }
-    } else {
-        alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-        //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-        //   currentDiv.appendChild(newContent);
-    }
+//         } else {
+//             alert("Tai nera paveikslelio tipo formatas");
+//         }
+//     } else {
+//         alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+//         //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+//         //   currentDiv.appendChild(newContent);
+//     }
 
-}
+// }
 
-function sendImageData(file) {
+// function sendImageData(file) {
 
-    let formData = new FormData();
+//     let formData = new FormData();
 
-    const album = document.getElementById('albumName');
+//     const album = document.getElementById('albumName');
 
-    formData.append('imge', file);
+//     formData.append('imge', file);
 
-    formData.append('album', album.value);
-    console.log(Object.fromEntries(formData))
-    axios.post(uri + path + 'gallery-store-admin', formData, {
+//     formData.append('album', album.value);
+//     console.log(Object.fromEntries(formData))
+//     axios.post(uri + path + 'gallery-store-admin', formData, {
 
-    }).then(function (response) {
-    }).catch(function (error) {
-        if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-        } else if (error.request) {
-            console.log(error.request);
-        } else {
-            console.log('Error', error.message);
-        }
-        console.log(error);
-    });
-    location.reload(); // uzkomentuoti jei norite kad nedingtu image
+//     }).then(function (response) {
+//     }).catch(function (error) {
+//         if (error.response) {
+//             console.log(error.response.data);
+//             console.log(error.response.status);
+//             console.log(error.response.headers);
+//         } else if (error.request) {
+//             console.log(error.request);
+//         } else {
+//             console.log('Error', error.message);
+//         }
+//         console.log(error);
+//     });
+//     location.reload(); // uzkomentuoti jei norite kad nedingtu image
 
-}
-export default startGallery();
+// }
+// export default startGallery();

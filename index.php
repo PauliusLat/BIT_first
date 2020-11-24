@@ -63,24 +63,6 @@ $query = new Query;
 
 add_action('init', function () {
     $session = App::start()->getService('session');
-    $getcount = wp_count_terms('maincat', ['hide_empty' => false]);
-    // _dc($getcount);
-    $terms = get_terms(array(
-        'taxonomy' => 'maincat',
-        'hide_empty' => false,
-    ));
-
-    // $tag = new Tag;
-    // $album = new AlbumPost;
-    // $album->save();
-    // _dc($album);
-    // $attachment->addTag('zaislai');
-    // $album->addTag('naujas tagas');
-    // $album->addTag(['kukukukuku', 'dovanos']);
-
-    // _dc($terms);
-
-    // echo '<pre>';
 
     // $session->delete('message');
     // $session->flash('messkukuku', 'tokiu pavadinimu kategorija jau sukurta');

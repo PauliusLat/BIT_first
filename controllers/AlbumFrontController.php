@@ -20,7 +20,6 @@ class AlbumFrontController
     public function create(AlbumPost $album)
     {
 
-        //7-4:4
         $page = (Page::all())->all();
         foreach ($page as $key => $value) {
             echo '<pre>';

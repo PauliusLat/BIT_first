@@ -30,7 +30,7 @@ return [
 
 	'album-create-admin' => 'AlbumFrontController@create',
 
-	'news-list' => 'NewsController@list',
+	'news-list' => 'NewsController@createPost',
 	'news-store' => 'NewsController@store',
 	'news-update' => 'NewsController@update',
 	'news-destroy' => 'NewsController@destroy',
