@@ -64,6 +64,7 @@ $query = new Query;
 add_action('init', function () {
     $session = App::start()->getService('session');
 
+
     // $session->delete('message');
     // $session->flash('messkukuku', 'tokiu pavadinimu kategorija jau sukurta');
     // var_dump($session->get('messkukuku'));
