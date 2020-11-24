@@ -15,33 +15,68 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
-class TagController {
+class TagController
+{
 
     public function index()
     {
         return View::adminRender('tag.maintag');
     }
 
-    public function create(Request $request)
+    public function create(Request $requestJson)
     {
-        $tag = new Tag;
-        $tags = $tag->getAllTags(); 
-        $output = View::adminRender('tag.tag',  ["tags" => $tags]);
+        $request = $this->decodeRequest($requestJson);
+
+        if ($request->request->get('pageSelected') != null) {
+            $limit = $request->request->get('pageSelected');
+        } else {
+            $limit = 5;
+        }
+
+        if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
+            $number = $request->request->get('hash');
+        } else {
+            $number = 1;
+        }
+
+        $offset = ($number - 1)  * $limit;
+        $total = wp_count_terms('hashtag', ['hide_empty' => false]);
+        $pages = ceil($total / $limit);
+
+        if ($number < $pages) {
+            $nextpage = $number + 1;
+        } else {
+            $nextpage = $number;
+        }
+
+        if ($number > 1) {
+            $prevpage = $number - 1;
+        } else {
+            $prevpage = $number;
+        }
+
+        $lastpage = $pages;
+        $firstpage = 1;
+
+        $tags = get_terms('hashtag', array('number' => $limit, 'hide_empty' => false, 'offset' => $offset));
+        $output = View::adminRender('tag.tag',  ['tags' => $tags, 'nextpage' => $nextpage, 'prevpage' => $prevpage, 'total' => $total, 'limit' => $limit, 'pages' => $pages, 'lastpage' => $lastpage, 'firstpage' => $firstpage]);
         $response = new JsonResponse(['html' => $output]);
         return $response;
     }
 
-    public function store(Request $requestJson){
-		$request = $this->decodeRequest($requestJson);
+    public function store(Request $requestJson)
+    {
+        $request = $this->decodeRequest($requestJson);
         $tag = new Tag;
         $name = $request->request->get('tag_name');
         $slug = $request->request->get('tag_slug');
         $description = $request->request->get('tag_description');
-        $newTag = $tag->addTagtoDB($name, $slug, $description);
-        return $response = new Response;
-    }  
+        $tag->addTagtoDB($name, $slug, $description);
+        return new Response;
+    }
 
-    public function edit(Request $requestJson){
+    public function edit(Request $requestJson)
+    {
         $request = $this->decodeRequest($requestJson);
         $tag = new Tag;
         $id = $request->request->get('editID');
@@ -60,34 +95,34 @@ class TagController {
         $slug = $request->request->get('tag_slug');
         $description = $request->request->get('tag_description');
         $id = $request->request->get('updateId');
-        $updateTag = $tag->updateTag($id, $name, $slug, $description);
-        $tags = $tag->getAllTags(); 
+        $tag->updateTag($id, $name, $slug, $description);
+        $tags = $tag->getAllTags();
         $output = View::adminRender('tag.tag',  ["tags" => $tags]);
         $response = new JsonResponse(['html' => $output]);
         return $response;
     }
 
-    public function destroy(Request $requestJson){
+    public function destroy(Request $requestJson)
+    {
 
         $tag = new Tag;
-        $request = $this->decodeRequest($requestJson);   
-        $tags = $tag->getAllTags(); 
+        $request = $this->decodeRequest($requestJson);
+        $tags = $tag->getAllTags();
         $id = $request->request->get('deleteID');
         $taxonomy_type = $request->request->get('taxonomy_type');
         $tag->deleteTagFromDb($id, $taxonomy_type);
         return $response = new Response;
         $response->prepare($request);
         return $response;
-
     }
 
-    public function decodeRequest($request) {
-		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-			$data = json_decode($request->getContent(), true);
-			$request->request->replace(is_array($data) ? $data : array());
-		}
+    public function decodeRequest($request)
+    {
+        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+            $data = json_decode($request->getContent(), true);
+            $request->request->replace(is_array($data) ? $data : array());
+        }
 
-		return $request;
-	}
-
+        return $request;
+    }
 }

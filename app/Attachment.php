@@ -111,7 +111,7 @@ class Attachment extends Post{
     // }
 
 
-    public function getURL(){
+    public function getUrl(){
         if(($this->ID) > 0){
             return wp_get_attachment_url($this->ID);
         }
@@ -120,10 +120,10 @@ class Attachment extends Post{
     public function getAttachmentDetails() {
         if(($this->ID) > 0){
             return wp_get_attachment_metadata( $this->ID );
-        }
+        }    
+
     }
-
-
+  
 
 }
 

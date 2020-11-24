@@ -41,6 +41,7 @@ return [
 	'tag_update' => 'TagController@update',
 	'tag_destroy' => 'TagController@destroy',
 	'tag_edit' => 'TagController@edit',
+	'tag_paging' => 'TagController@paging',
 
 	'category_create' => 'CategoryController@create',
 	'category_store' => 'CategoryController@store',

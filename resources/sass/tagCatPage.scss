@@ -1,5 +1,38 @@
 /** @format */
 
+.active {
+  color: maroon;
+}
+.pages {
+  display: inline-block;
+}
+
+.page > a {
+  text-decoration: none;
+}
+
+.selectPages {
+  font-size: 16px;
+}
+
+.page {
+  display: flex;
+  margin-top: 20px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.submitLink {
+  background-color: transparent;
+  text-decoration: underline;
+  border: none;
+  color: blue;
+  cursor: pointer;
+}
+submitLink:focus {
+  outline: none;
+}
+
 .label {
   margin-top: 20px;
   margin-bottom: 5px;

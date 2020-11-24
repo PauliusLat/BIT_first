@@ -2,6 +2,10 @@
 <?php
 
 use BIT\app\Category;
+use BIT\app\Query;
+use BIT\models\AlbumPost;
+use BIT\app\Tag;
+use BIT\app\Attachment;
 
 
 
@@ -45,15 +49,21 @@ App::start();
 // _dc($query->postMeta('event_date', 'konkreti data, kurios reikia')->postSort('event_time')->getPost()->all());
 // $getPostType = $query->postSort('date','DESC')->getPost();
 
-// _dc($getPostType);
+$query = new Query;
+// $getcount = wp_count_posts('page');
 
+// echo "<div style = 'font: 20px;padding: 100px;'>'.$getcount.'</div>";
+
+// _dc($getPostType);
 // _dc($app->getService('requestId'));
 // $category = new Category;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 
+
 add_action('init', function () {
     $session = App::start()->getService('session');
+
 
     // $session->delete('message');
     // $session->flash('messkukuku', 'tokiu pavadinimu kategorija jau sukurta');

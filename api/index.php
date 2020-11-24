@@ -12,7 +12,7 @@ if (!defined('PLUGIN_DIR_URL')) {
     define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 }
 
-if (!defined('PLUGIN_DIR_URL')) {
+if (!defined('PLUGIN_DIR_PATH')) {
     define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 }
 
@@ -24,11 +24,6 @@ use BIT\app\ApiRoute;
 // $app = App::start();
 
 $response = ApiRoute::apiRoute(/*$app*/);
-if($response){
+if ($response) {
     $response->send();
 }
-
-
-
-
-
