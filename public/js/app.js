@@ -693,8 +693,10 @@ function init() {
         var name = document.getElementById("category-name").value;
         var slug = document.getElementById("category-slug").value;
         var description = document.getElementById("category-description").value;
-        var parent = document.getElementById('cat');
-        var select = parent.options[parent.selectedIndex].value;
+        var parent = document.getElementById('cat'); // console.log(parent.value)
+
+        var select = parent.options[parent.selectedIndex].value; // console.log(select)
+
         catStore(name, select, slug, description);
       });
       var editBtn = catStrt.querySelectorAll(".category-edit");
@@ -1405,6 +1407,8 @@ __webpack_require__.r(__webpack_exports__);
 /** @format */
 
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
 var tagStrt = document.getElementById("tagStart");
@@ -1415,8 +1419,32 @@ function startTag() {
   }
 }
 
-function init() {
-  axios.post(uri + path + "tag_create", {}).then(function (response) {
+var pageSelected;
+var hash = location.hash;
+var hasharr;
+var hasarr2;
+
+function init(pageNo) {
+  console.log(_typeof(pageSelected));
+
+  if (_typeof(pageNo) == 'object' && hash.length !== 0) {
+    hash = location.hash;
+    hasharr = hash.split('#');
+    hasarr2 = hasharr[1].split('%');
+    hash = hasarr2[0];
+  } else if (typeof pageNo === 'string' && hash.length !== 0) {
+    hasharr = hash.split('#');
+    hasarr2 = hasharr[1].split('%');
+    hash = hasarr2[0];
+  } else {
+    hash = null;
+  }
+
+  axios.post(uri + path + "tag_create", {
+    pages: parseInt(pageNo),
+    pageSelected: pageSelected,
+    hash: hash
+  }).then(function (response) {
     var test = document.querySelector(".test");
 
     if (response.status == 200 && response.statusText == "OK") {
@@ -1456,6 +1484,41 @@ function init() {
 
       for (var _i = 0; _i < deleteBtn.length; _i++) {
         _loop2(_i);
+      }
+
+      var pageBtn = document.getElementById("selectpage");
+      var select = document.getElementById("items");
+
+      if (pageSelected != undefined) {
+        select.value = pageSelected;
+      }
+
+      pageBtn.addEventListener("click", function () {
+        pageSelected = select.options[select.selectedIndex].value;
+        select.value = pageSelected;
+        init(1);
+      }, false);
+      var page = document.querySelectorAll(".paging"); // let active = document
+      //   .querySelector('.paging > active')
+      // console.log(active);
+
+      var _loop3 = function _loop3(_i2) {
+        // document
+        // .querySelector('.paging > active')
+        // page[i].classList.remove("active");
+        // page[i].classList.remove("active")
+        var pageNo = page[_i2].id;
+
+        page[_i2].addEventListener("click", function () {
+          location.hash = '#' + pageNo;
+          hash = location.hash; // page[i].classList.add("active");
+
+          init(pageNo);
+        }, false);
+      };
+
+      for (var _i2 = 0; _i2 < page.length; _i2++) {
+        _loop3(_i2);
       }
     }
   })["catch"](function (error) {

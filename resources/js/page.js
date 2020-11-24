@@ -19,7 +19,6 @@ function init() {
       if (response.status == 200 && response.statusText == "OK") {
         const HTML = response.data.html;
         test.innerHTML = HTML;
-
         const submit = document.getElementById("create");
         submit.addEventListener("click", () => {
           const name = document.getElementById("page-name").value;
