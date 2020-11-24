@@ -28,6 +28,7 @@ class Post
             $post_id = 0;
         }
 
+
         if($post_id === 0 || $post_id === '0'){
             foreach ( get_object_vars( new \WP_Post(new \stdClass())) as $var => $value ) {
                 $this->$var = $value; 
@@ -37,6 +38,7 @@ class Post
         elseif(strcmp($post_id, '0')!==0){
             foreach ( get_object_vars(get_post($post_id)) as $var => $value ) {
                 $this->$var = $value; 
+
             }
             foreach (get_post_meta($post_id) as $var => $value) {
                 $this->$var = $value[0];
@@ -95,6 +97,7 @@ class Post
         }
         return new Collection($list);
     }
+
 
     // inserts or updates new object to DB 
     public function save()
