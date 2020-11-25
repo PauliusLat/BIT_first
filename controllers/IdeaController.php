@@ -30,7 +30,7 @@ class IdeaController
 		$response = new Response;
 		$output = View::render('home.ideja');
 		$response->prepare($request);
-		$response = new JsonResponse(['html' => $output, 'allData' => $data]);
+		$response = new JsonResponse(['data' => $output, 'html' => $data]);
 
 		return $response;
 	}
@@ -66,8 +66,8 @@ class IdeaController
 			// $id = $idBrowser['version'];
 			// $array[] = $id;
 			$array[] = $like;
-			$session->set('id', $array);
-			// var_dump($session->get('id'));
+			// $session->set('ideja', $array);
+			var_dump($session->get('ideja'));
 			// $session->deleteSession();
 			// if ($session->get('id') != $array) {
 			$ideaLike = IdeaPost::get($like);

@@ -77,9 +77,24 @@ use BIT\app\Category;
             }
             ?>
         </table>
+        <div class="categoriImageGrid">
+            <h2 class="catImgTitle">
+                Kategorijos pavaeiklelis
+            </h2>
+            <div class="galleryContainer " id="loadeGallery">
+                <output class="" id='result' />
+                <div id="message">
+                    <div class="wrapper">
+                        <div class="file-upload">
+                            <label for="files"><span>&#43;</span></label>
+                            <input class="galleryImage" type="file" id='files' name="img" accept="image/*">
+                        </div>
+                    </div>
+                    <!-- <div class="galleryUploade">
+                        <input class="btn-grey" type="button" id="submitImg" value='Išsaugoti'>
+                    </div> -->
+                </div>
+            </div>
+        </div>
     </div>
-
-
-
-
 </div>

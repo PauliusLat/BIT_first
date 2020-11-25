@@ -1,4 +1,5 @@
 "use strict";
+import Profile_image from './profile_image';
 
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
@@ -10,6 +11,7 @@ function startCat() {
 }
 
 function init() {
+
   axios
     .post(uri + path + "category_create", {})
     .then(function (response) {
@@ -17,8 +19,12 @@ function init() {
 
 
       if (response.status == 200 && response.statusText == "OK") {
+        
         const HTML = response.data.html;
         test.innerHTML = HTML;
+
+        let readImage = new Profile_image();
+        readImage.image();
 
         const submit = document.getElementById("create");
 
@@ -79,24 +85,22 @@ function init() {
 
 function catStore(name, select, slug, description) {
 
-  axios
-    .post(uri + path + "category_store", {
-      cat_name: name,
-      cat_slug: slug,
-      cat_description: description,
-      cat_parent: select
-    })
-    .then(function (response) {
-      console.log(response);
-      init();
-    })
-    .catch((err) => {
-      console.log(err instanceof TypeError);
-    });
+  let obj = {
+    api:"category_store",
+    title: name,
+    slug: slug,
+    content: description,
+    cat_parent: select
+  }
+  if (obj) {
+    readImage.sendImageData(obj);
+  }
+
   document.getElementById("category-name").value = "";
 }
 
 function catEdit(editID, taxonomy) {
+  
 
   axios
     .post(uri + path + "category_edit", {

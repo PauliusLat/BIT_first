@@ -143,7 +143,6 @@
 
 // }
 
-
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
 const tagStrt = document.getElementById("tagStart");
@@ -161,9 +160,6 @@ let hasarr2
 
 function init(pageNo){
   
-console.log(typeof pageSelected)
-
-
 if (typeof pageNo == 'object' &&  hash.length !== 0){
   // hash = location.hash
   hasharr = hash.split('#')
@@ -192,6 +188,13 @@ if (typeof pageNo == 'object' &&  hash.length !== 0){
       if (response.status == 200 && response.statusText == "OK") {
         const HTML = response.data.html;
         test.innerHTML = HTML;
+
+        if(pageNo >0 && typeof pageNo === 'string' ){
+          let addColor = document.querySelector('.nr-'+pageNo);
+          addColor.classList.add("active");
+        }
+
+
         const submit = document.getElementById("create");
         submit.addEventListener("click", () => {
           const name = document.getElementById("tag-name").value;
@@ -371,3 +374,24 @@ function tagDelete(ID, taxonomy) {
 
 
 export default startTag();
+
+
+// function init(pageNo) {
+//   let api = "tag_create";
+//   let axios = new Api();
+//   let response = axios.getDAta(api);
+//     console.log(response);
+
+  // const test = document.querySelector(".test");
+
+  // const HTML = response.data.html;
+  // console.log(HTML);
+  // test.innerHTML = HTML;
+  // const submit = document.getElementById("create");
+  // submit.addEventListener("click", () => {
+  //   const name = document.getElementById("tag-name").value;
+  //   const slug = document.getElementById("tag-slug").value;
+  //   const description = document.getElementById("tag-description").value;
+  //   tagStore(name, slug, description);
+  // });
+// }

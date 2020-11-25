@@ -72,7 +72,8 @@ function renderColons(e) {
     .get(uri + path + "idea-render-admin", {})
     .then(function(response) {
       if (response.status == 200 && response.statusText == "OK") {
-        const data = response.data.allData;
+        console.log(response);
+        const data = response.data.html;
 
         let keys = [];
 
