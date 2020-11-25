@@ -34,21 +34,31 @@ class CategoryController
         return $response;
     }
 
-    public function store(Request $requestJson)
+    public function store(Request $request)
     {
-        $request = $this->decodeRequest($requestJson);
+        //     $request = $this->decodeRequest($requestJson);
         $category = new Category;
-        $name = $request->request->get('cat_name');
-        $slug = $request->request->get('cat_slug');
-        $description = $request->request->get('cat_description');
+        $name = $request->request->get('title');
+        $slug = $request->request->get('slug');
+        $description = $request->request->get('content');
 
         if ($request->request->get('cat_parent')) {
             $parent_id = $request->request->get('cat_parent');
         } else {
             $parent_id = 0;
         }
-        // $parent = $request->request->get('cat_parent');
+
         $category->addCat($name, $parent_id, $slug,  $description);
+
+        if ($request->files->get('image')) {
+            // _dc($request->files->get('image'));
+            $uploads_dir = wp_upload_dir();
+            $target_file = basename($_FILES["picture"]["name"]); //nuotrauka
+            move_uploaded_file($_FILES["picture"]["tmp_name"], "$uploads_dir/$target_file"); //nuotrauka
+            $picture = $request->files->get('picture')->getClientOriginalName();
+            $catID =  $category->getTermId($name);
+            $category->addImageToCat($catID, "my_term_key", $picture);
+        }
         return new Response;
     }
 
