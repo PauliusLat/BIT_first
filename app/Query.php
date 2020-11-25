@@ -60,10 +60,18 @@ class Query
         return $this;
     }
 
+    public function postTax($post_type, $term, $taxonomy = 'maincat')
+    {
+        $this->args['post_type'] = $post_type;
+        $this->args['tax_query'][0]['terms'] = $term;
+        $this->args['tax_query'][0]['taxonomy'] = $taxonomy;
+        return $this;
+    }
+
+
     public function countPosts()
     {
         $query = new WP_Query($this->args);
-
         $count = $query->found_posts();
         var_dump($count);
         return $count;

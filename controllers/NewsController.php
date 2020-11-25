@@ -17,7 +17,7 @@ class NewsController
 {
 
     public function index()
-    {        
+    {
         return View::adminRender('news.index');
     }
 
@@ -86,7 +86,7 @@ class NewsController
         //     }
         // }
 
-        return View::adminRender('news.edit',['data' =>  $allNews]);
+        return View::adminRender('news.edit', ['data' =>  $allNews]);
     }
 
     public function update(Request $request, NewsPost $newsPost)

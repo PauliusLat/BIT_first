@@ -45,6 +45,33 @@ trait Ttaxonomy
         }
     }
 
+    //attach tag to post type
+    public function attachTag($tag, $taxonomy_type = 'hashtag')
+    {
+        $tag = (array)$tag;
+        foreach ($this->taxonomy as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    if ($this->ID == null) {
+                        throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
+                    } else {
+                        $terms = get_terms(['name' => $tag, 'taxonomy' => $value, 'hide_empty' => false]);
+
+
+                        foreach ($terms as $term) {
+
+                            wp_set_object_terms($this->ID, $term->term_id, $value, $append = false);
+                        }
+                        /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
+                         * so that children with the same names but different parents aren't confused.*/
+                    }
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
     // get tag from DB by ID
     public function getTag($id, $taxonony_type = 'hashtag')
     {
@@ -79,18 +106,24 @@ trait Ttaxonomy
      */
 
     //add tag to db and the post type
-    public function addTag($tag, $taxonomy_type = 'hashtag')
+    public function addTag($tag, $slug = '', $description = '', $taxonomy_type = 'hashtag')
     {
+        $tag = (array)$tag;
         foreach ($this->taxonomy as $value) {
             if ($value == $taxonomy_type) {
                 if (did_action('init')) {
-                    // if (!term_exists( $tag, $this->taxonomy )) {
-                    //     wp_insert_term( $tag, $this->taxonomy, ['slug' => str_replace(' ', '-', $tag)] );                           
-                    // }
+                    $args = ['description' => $description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
+                    foreach ($tag as $key) {
+                        wp_insert_term($key, $value, $args);
+                    }
                     if ($this->ID == null) {
-                        throw new PostIdNotSetException('Error: Call to addTag() function before save()');
+                        throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
                     } else {
-                        wp_set_post_terms($this->ID, $tag, $value, $append = true);
+                        $terms = get_terms(['name' => $tag, 'taxonomy' => $value, 'hide_empty' => false]);
+                        foreach ($terms as $term) {
+
+                            wp_set_object_terms($this->ID, $term->term_id, $value, $append = false);
+                        }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
                          * so that children with the same names but different parents aren't confused.*/
                     }
@@ -170,6 +203,7 @@ trait Ttaxonomy
                     $taxCollection = new TaxCollection();
                     $args = ['taxonomy' => $this->taxonomy, 'hide_empty' => 0,];
                     $terms = get_terms($args);
+
 
                     foreach ($terms as $term) {
                         $taxCollection->addTerm($term);
