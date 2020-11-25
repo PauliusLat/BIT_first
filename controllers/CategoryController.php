@@ -48,8 +48,8 @@ class CategoryController
             $parent_id = 0;
         }
         // $parent = $request->request->get('cat_parent');
-        $newCat = $category->addCat($name, $parent_id, $slug,  $description);
-        return $response = new Response;
+        $category->addCat($name, $parent_id, $slug,  $description);
+        return new Response;
     }
 
     public function edit(Request $requestJson)

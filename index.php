@@ -4,9 +4,10 @@
 use BIT\app\Category;
 use BIT\app\Query;
 use BIT\models\AlbumPost;
+use BIT\models\NewsPost;
 use BIT\app\Tag;
 use BIT\app\Attachment;
-
+use BIT\app\App;
 
 
 /**
@@ -18,7 +19,8 @@ use BIT\app\Attachment;
  * Author URI: http://yourwebsiteurl.com/
  **/
 
-use BIT\app\App;
+
+
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -64,6 +66,101 @@ $query = new Query;
 add_action('init', function () {
     $session = App::start()->getService('session');
 
+    // $news = new NewsPost();
+    // $news->save();
+
+
+    // $news->attachCat('kategorija');
+
+    $query = new Query;
+
+    $args = array(
+        'post_type' => 'news',
+        'taxonomy' => 'zaisliukai'
+        //for example
+        //'resources' => 'videos'
+    );
+
+    //  assigning variables to the loop
+    global $wp_query;
+    $wp_query = new WP_Query($args);
+
+    // starting loop
+    while ($wp_query->have_posts()) : $wp_query->the_post();
+
+        the_title('<h3>', '</h3>');
+
+
+    endwhile;
+
+
+    // 
+    $posts = $query->postTax('news', 63, 'maincat')->getPost();
+    // _dc($posts);
+
+    function get_issues()
+    {
+        $output = array();
+        $hlterms = get_terms('maincat', array('orderby' => 'id', 'order' => 'DESC', 'hide_empty' => false));
+        foreach ($hlterms as $term) {
+            array_push($output, $term->term_id);
+        }
+        return $output;
+    }
+
+    function get_posts_for_current_issue()
+    {
+        $total_issues = get_issues();
+        foreach ($total_issues as $issue_id) {
+            $args = array(
+                'post_type' => 'news',
+                // 'status' => 'publish',
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'maincat',
+                        // 'field' => 'id',
+                        'terms' => $issue_id
+                    )
+                )
+            ); //end of args
+
+            $current_issue_posts = get_posts($args);
+            // _dc($current_issue_posts);
+            if (!is_wp_error($current_issue_posts) && count($current_issue_posts) > 0) {
+                return $current_issue_posts; //will terminate the loop if posts found
+            }
+        } //end of foreach
+    } //end of function
+
+    get_posts_for_current_issue();
+
+
+    function check_term_posts()
+    {
+        $args = array(
+            'post_type' => 'news',
+            // 'status' => 'publish',
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'maincat',
+                    // 'field' => '63',
+                    'terms' => '63'
+                )
+            )
+        );
+
+        return $current_issue_posts = get_posts($args);
+
+        // $term_query =  new WP_Query($args);
+        // $term_posts_count = $term_query->found_posts;
+        // if ($term_posts_count > 0) {
+        //     return "has_posts";
+        // } else {
+        //     return false;
+        // }
+    }
+
+    check_term_posts();
     // $session->delete('message');
     // $session->flash('messkukuku', 'tokiu pavadinimu kategorija jau sukurta');
     // var_dump($session->get('messkukuku'));
@@ -72,7 +169,7 @@ add_action('init', function () {
     // _dc($terms);
 
     // $category = new Category;
-    // $category->addCat('kategorija');
+    // $category->addCat('bbb');
 
     // $terms = $category->getTaxonomyHierarchyArr('maincat');
 
@@ -106,7 +203,7 @@ add_action('init', function () {
     //     foreach ($array as $member) {
     //         if(empty($member->children))
     //         {
-    //             $flattened[] = $member;
+    //   $flattened[] = $member;
     //         } else
     //         {
     //             flattenArray($member->children);

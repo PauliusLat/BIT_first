@@ -163,7 +163,6 @@ function init(pageNo){
   
 console.log(typeof pageSelected)
 
-
 if (typeof pageNo == 'object' &&  hash.length !== 0){
   // hash = location.hash
   hasharr = hash.split('#')
@@ -178,7 +177,6 @@ if (typeof pageNo == 'object' &&  hash.length !== 0){
 }else{
   hash = null
 }
-
 
   axios
     .post(uri + path + "tag_create",{
@@ -281,7 +279,7 @@ if (typeof pageNo == 'object' &&  hash.length !== 0){
       }
       console.log(error);
     });
-  1;
+  ;
 }
 
 

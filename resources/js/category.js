@@ -27,10 +27,13 @@ function init() {
           const slug = document.getElementById("category-slug").value;
           const description = document.getElementById("category-description").value;
           let parent = document.getElementById('cat');
-          // console.log(parent.value)
-          let select = parent.options[parent.selectedIndex].value;
-          
-          // console.log(select)
+          let select;
+          if (parent.options[parent.selectedIndex] != undefined){
+            select = parent.options[parent.selectedIndex].value;
+          }else{
+            select = 0;
+          }
+         
           catStore(name, select, slug, description);
         });
 

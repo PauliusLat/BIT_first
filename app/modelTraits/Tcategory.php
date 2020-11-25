@@ -152,7 +152,7 @@ trait Tcategory
         }
     }
 
-    //removes category form post type
+    //removes category from post type
     private function catDelete(string $cat, $taxonomy_type = 'maincat')
     {
         foreach ($this->cattax as $value) {
@@ -192,11 +192,6 @@ trait Tcategory
         }
     }
 
-    // private function checkChildren($cat, $taxonomy_type = 'maincat'){
-    //     $array = get_term_children($cat, $taxonomy_type);
-    //     return $array;
-
-    // }
 
     /** returns all post cats as Collection */
 
@@ -242,25 +237,6 @@ trait Tcategory
             }
         }
     }
-
-    // public function getTaxonomyHierarchy( $taxonomy = 'maincat', $parent=0) {
-    //     // only 1 taxonomy
-    //     $taxonomy=is_array( $taxonomy) ? array_shift( $taxonomy): $taxonomy;
-    //     $terms=$this->getChildCats($parent, $taxonomy);
-    //     // _dc($terms);
-    //     if (did_action('init')) {
-    //         $taxCollection = new TaxCollection();
-    //         foreach ( $terms as $term) {
-    //             // recurse to get the direct decendants of "this" term
-    //             $term->children = $this->getTaxonomyHierarchy( $taxonomy, $term->term_id);
-
-    //             $taxCollection->addTerm($term);
-    //         }
-    //         return $taxCollection;
-    //     } else {
-    //         throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
-    //     }
-    // }
 
     public function getTaxonomyHierarchy($plevel = 1, $taxonomy = 'maincat', $parent = 0)
     {
@@ -362,10 +338,8 @@ trait Tcategory
             if ($value == $taxonomy_type) {
                 if (did_action('init')) {
                     $taxCollection = new TaxCollection();
-
                     $args = ['taxonomy' => $this->cattax, 'hide_empty' => 0,];
                     $terms = get_terms($args);
-
                     foreach ($terms as $term) {
                         $taxCollection->addTerm($term);
                     }
