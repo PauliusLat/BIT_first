@@ -1552,10 +1552,9 @@ var hasharr;
 var hasarr2;
 
 function init(pageNo) {
-  console.log(_typeof(pageSelected));
+  console.log(pageNo);
 
   if (_typeof(pageNo) == 'object' && hash.length !== 0) {
-    // hash = location.hash
     hasharr = hash.split('#');
     hasarr2 = hasharr[1].split('%');
     hash = hasarr2[0];
@@ -1625,21 +1624,14 @@ function init(pageNo) {
         select.value = pageSelected;
         init(1);
       }, false);
-      var page = document.querySelectorAll(".paging"); // let active = document
-      //   .querySelector('.paging > active')
-      // console.log(active);
+      var page = document.querySelectorAll(".paging");
 
       var _loop3 = function _loop3(_i2) {
-        // document
-        // .querySelector('.paging > active')
-        // page[i].classList.remove("active");
-        // page[i].classList.remove("active")
         var pageNo = page[_i2].id;
 
         page[_i2].addEventListener("click", function () {
           location.hash = '#' + pageNo;
-          hash = location.hash; // page[i].classList.add("active");
-
+          hash = location.hash;
           init(pageNo);
         }, false);
       };

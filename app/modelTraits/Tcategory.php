@@ -42,10 +42,6 @@ trait Tcategory
         foreach ($this->cattax as $value) {
             if ($value == $taxonomy_type) {
                 if (did_action('init')) {
-
-                    // if ($this->ID == null) {
-                    //     throw new PostIdNotSetException('Error: Call to addTag() function before save()');
-                    // } else {
                     $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
                     foreach ($cat as $key) {
                         $categ = get_term_by('name', $key, 'maincat');
@@ -59,7 +55,6 @@ trait Tcategory
 
                         wp_insert_term($key, $value, $args);
                     }
-                    // }
                 } else {
                     throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
                 }
@@ -133,14 +128,10 @@ trait Tcategory
                     if ($this->ID == null) {
                         throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
                     } else {
-                        // $args = ['parent'=>$parent_id];
-                        // foreach ($cat as $key){
-                        //     wp_insert_term($key, $value, $args);
-                        // }
                         $terms = get_terms(['name' => $cat, 'taxonomy' => $value, 'hide_empty' => false]);
-                        // _dc($terms);
+
                         foreach ($terms as $term) {
-                            wp_set_post_terms($this->ID, $term->term_id, $value, $append = true);
+                            wp_set_object_terms($this->ID, $term->term_id, $value, $append = true);
                         }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
                          * so that children with the same names but different parents aren't confused.*/

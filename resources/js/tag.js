@@ -160,17 +160,15 @@ let hasharr
 let hasarr2
 
 function init(pageNo){
-  
-console.log(typeof pageSelected)
+
+  console.log(pageNo)
 
 if (typeof pageNo == 'object' &&  hash.length !== 0){
-  // hash = location.hash
   hasharr = hash.split('#')
   hasarr2 = hasharr[1].split('%')
   hash = hasarr2[0]
 
 }else if(typeof pageNo === 'string' && hash.length !== 0){
- 
   hasharr = hash.split('#')
   hasarr2 = hasharr[1].split('%')
   hash = hasarr2[0]
@@ -244,21 +242,14 @@ if (typeof pageNo == 'object' &&  hash.length !== 0){
     
 
         const page = document.querySelectorAll(".paging");
-        // let active = document
-        //   .querySelector('.paging > active')
-        // console.log(active);
+
         for (let i = 0; i < page.length; i++){
-          // document
-          // .querySelector('.paging > active')
-          // page[i].classList.remove("active");
-          // page[i].classList.remove("active")
           let pageNo = page[i].id;
           page[i].addEventListener(
             "click",
             function() {
               location.hash = '#' + pageNo
               hash = location.hash
-              // page[i].classList.add("active");
               init(pageNo);
             },
             false
