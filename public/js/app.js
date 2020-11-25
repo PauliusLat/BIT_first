@@ -1492,6 +1492,7 @@ __webpack_require__.r(__webpack_exports__);
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
 var catStrt = document.getElementById("catStart");
+var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_0__["default"]();
 
 function startCat() {
   if (catStrt) {
@@ -1506,11 +1507,7 @@ function init() {
     if (response.status == 200 && response.statusText == "OK") {
       var HTML = response.data.html;
       test.innerHTML = HTML;
-
-      var _readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_0__["default"]();
-
-      _readImage.image();
-
+      readImage.image();
       var submit = document.getElementById("create");
       submit.addEventListener("click", function () {
         var name = document.getElementById("category-name").value;
