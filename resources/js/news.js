@@ -41,7 +41,7 @@ class News {
             content: editables[0].innerHTML,
             alt: altText.value,
             imageTitle: newsImageTitle.value,
-            postTitle: newsPostTitle.value
+            title: newsPostTitle.value
           }
           if (obj) {
             readImage.sendImageData(obj);

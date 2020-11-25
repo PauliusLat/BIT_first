@@ -1956,15 +1956,23 @@ table th {
   color: white;
 }
 
-/** @format */
-
-/** @format */
-
-/** @format */
-
-.active {
-  color: maroon;
+.catImgTitle {
+  text-align: center;
+  position: relative;
 }
+
+.categoriImageGrid {
+  position: absolute;
+  top: 40%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+}
+
+/** @format */
+
+/** @format */
+
+/** @format */
 
 .pages {
   display: inline-block;
@@ -2069,5 +2077,10 @@ table th {
   text-align: left;
   background-color: #f3f5f6;
   color: #0071a1;
+}
+
+.tagCreate .page .active {
+  color: #000000;
+  font-size: 20px;
 }
 
