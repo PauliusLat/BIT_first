@@ -4,6 +4,8 @@ import Profile_image from './profile_image';
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
 const catStrt = document.getElementById("catStart");
+const readImage = new Profile_image();
+
 function startCat() {
   if (catStrt) {
     window.addEventListener("load", init, false);
@@ -23,7 +25,7 @@ function init() {
         const HTML = response.data.html;
         test.innerHTML = HTML;
 
-        let readImage = new Profile_image();
+
         readImage.image();
 
         const submit = document.getElementById("create");
