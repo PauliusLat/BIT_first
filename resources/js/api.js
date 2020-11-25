@@ -4,6 +4,7 @@ class Api {
     constructor() {
         this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
         this.uri = document.location.origin;
+        this.html = null;
     }
 
     delete(id, api) {
@@ -16,7 +17,6 @@ class Api {
                     deleteId: id,
                 }
             )
-
             .catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);
@@ -32,28 +32,17 @@ class Api {
 
     }
 
-    save(id, api) {
+    async getDAta(api) {
+        try {
+            let response = await axios.post(this.uri + this.path + api,)
 
-        axios
-            .post(
-                this.uri + this.path + api,
-                {
-                    id: id,
-                }
-            )
-
-            .catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log('Error', error.message);
-                }
-                console.log(error);
-            });
+            if (response.status == 200 && response.statusText == "OK") {
+                return response.data.html;
+            }
+        } catch (e) {
+            console.error(e);
+            console.log("Duomenys is serveverionepasiekiami !!!");
+        }
     }
 
     saveContent(api, id, content) {
@@ -84,8 +73,8 @@ class Api {
 
         let formData = new FormData();
         if (obj.api) {
-            if (obj.postTitle) {
-                formData.append('postTitle', obj.postTitle);
+            if (obj.title) {
+                formData.append('title', obj.title);
             }
             if (obj.content) {
                 formData.append('content', obj.content);
@@ -99,7 +88,13 @@ class Api {
             if (obj.image) {
                 formData.append('image', obj.image);
             }
-            // console.log(Object.fromEntries(formData))
+            if(obj.slug){
+                formData.append('slug', obj.slug);
+            }
+            if(obj.cat_parent){
+                formData.append('cat_parent', obj.cat_parent);
+            }
+            console.log(Object.fromEntries(formData))
             axios.post(this.uri + this.path + obj.api, formData, {
 
             }).then(function (response) {

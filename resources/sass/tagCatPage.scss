@@ -1,13 +1,11 @@
 /** @format */
 
-.active {
-  color: maroon;
-}
+
 .pages {
   display: inline-block;
 }
 
-.page > a {
+.page>a {
   text-decoration: none;
 }
 
@@ -16,25 +14,26 @@
 }
 
 .page {
-  display: flex;
-  margin-top: 20px;
-  font-size: 16px;
+  display      : flex;
+  margin-top   : 20px;
+  font-size    : 16px;
   margin-bottom: 20px;
 }
 
 .submitLink {
   background-color: transparent;
-  text-decoration: underline;
-  border: none;
-  color: blue;
-  cursor: pointer;
+  text-decoration : underline;
+  border          : none;
+  color           : blue;
+  cursor          : pointer;
 }
+
 submitLink:focus {
   outline: none;
 }
 
 .label {
-  margin-top: 20px;
+  margin-top   : 20px;
   margin-bottom: 5px;
 }
 
@@ -43,25 +42,25 @@ submitLink:focus {
 }
 
 .message {
-  color: red;
+  color  : red;
   padding: 20px;
 
-  font-size: 14px;
+  font-size     : 14px;
   text-transform: uppercase;
 }
 
 input[type="text"].tcp-input,
 input[type="datetime-local"].tcp-input,
 textarea.tcp-input {
-  width: 70%;
-  height: 40px;
+  width         : 70%;
+  height        : 40px;
   //   font-size: 12px;
-  font: 12px/12px "Open Sans", sans-serif;
+  font          : 12px/12px "Open Sans", sans-serif;
   letter-spacing: 1px;
-  margin: 10px 0;
-  color: rgb(88, 88, 88);
-  border-color: rgb(189, 189, 189);
-  border-radius: 4px;
+  margin        : 10px 0;
+  color         : rgb(88, 88, 88);
+  border-color  : rgb(189, 189, 189);
+  border-radius : 4px;
 }
 
 input[type="text"].tcp-input:focus,
@@ -72,28 +71,28 @@ textarea.tcp-input:focus {
 
 textarea.tcp-input {
   padding-top: 10px;
-  height: 70px;
+  height     : 70px;
 }
 
 .tcp-label {
-  width: 100%;
-  font-size: 13px;
+  width       : 100%;
+  font-size   : 13px;
   padding-left: 10px;
-  cursor: auto;
+  cursor      : auto;
 }
 
 table {
-  font-family: "Montserrat", sans-serif;
+  font-family    : "Montserrat", sans-serif;
   border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 100px;
+  width          : 100%;
+  margin-bottom  : 100px;
 }
 
 table td,
 table th {
   font-family: "Montserrat", sans-serif;
-  border: 1px solid #ddd;
-  padding: 8px;
+  border     : 1px solid #ddd;
+  padding    : 8px;
 }
 
 table tr:hover {
@@ -101,10 +100,19 @@ table tr:hover {
 }
 
 table th {
-  font-family: "Montserrat", sans-serif;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
+  font-family     : "Montserrat", sans-serif;
+  padding-top     : 12px;
+  padding-bottom  : 12px;
+  text-align      : left;
   background-color: #f3f5f6;
-  color: #0071a1;
+  color           : #0071a1;
+}
+
+.tagCreate {
+  .page {
+    .active {
+      color    : $black;
+      font-size: 20px;
+    }
+  }
 }

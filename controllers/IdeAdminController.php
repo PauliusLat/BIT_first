@@ -2,6 +2,7 @@
 
 namespace BIT\controllers;
 
+use BIT\app\Session;
 use BIT\app\View;
 use BIT\models\IdeaPost;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,9 @@ class IdeAdminController
 
 	public function render(Request $request, IdeaPost $idea)
 	{
-
+		$session = new Session;
+		$session->set('id', '$array');
+					var_dump($session->get('id'));
 		$data = (IdeaPost::all())->pluck('idea_content', 'idea_like', 'post_date', 'idea_solution', 'ID')->all();
 
 		$response = new Response;

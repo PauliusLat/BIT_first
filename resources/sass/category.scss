@@ -1,7 +1,7 @@
 /** @format */
 
 .category-container {
-  width: 100%;
+  width  : 100%;
   display: flex;
 }
 
@@ -10,17 +10,17 @@
 }
 
 table {
-  font-family: "Montserrat", sans-serif;
+  font-family    : "Montserrat", sans-serif;
   border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 100px;
+  width          : 100%;
+  margin-bottom  : 100px;
 }
 
 table td,
 table th {
   font-family: "Montserrat", sans-serif;
-  border: 1px solid #ddd;
-  padding: 8px;
+  border     : 1px solid #ddd;
+  padding    : 8px;
 }
 
 table tr:hover {
@@ -28,10 +28,22 @@ table tr:hover {
 }
 
 table th {
-  font-family: "Montserrat", sans-serif;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
+  font-family     : "Montserrat", sans-serif;
+  padding-top     : 12px;
+  padding-bottom  : 12px;
+  text-align      : left;
   background-color: #f3f5f6;
-  color: white;
+  color           : white;
+}
+
+.catImgTitle {
+  text-align: center;
+  position  : relative;
+}
+
+.categoriImageGrid {
+  position : absolute;
+  top      : 40%;
+  left     : 55%;
+  transform: translate(-50%, -50%);
 }
