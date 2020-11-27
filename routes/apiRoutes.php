@@ -7,6 +7,8 @@ return [
 
 	'calendar-create-front' => 'CalendarFrontController@create',
 
+	// 'category-creat-front' => 'CategoryFrontController@create',
+
 	'calendar-create-admin' => 'CalendarAdminController@create',
 	'calendar-store-admin' => 'CalendarAdminController@store',
 	'calendar-delete-admin' => 'CalendarAdminController@delete',
