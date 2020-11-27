@@ -97,7 +97,7 @@ function catStore(name, select, slug, description) {
   if (obj) {
     readImage.sendImageData(obj);
   }
-
+  setTimeout(init, 500);
   document.getElementById("category-name").value = "";
 }
 

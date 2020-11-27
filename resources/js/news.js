@@ -6,7 +6,6 @@ class News {
 
   constructor(target) {
     this.target = target;
-
     this.getData();
   }
 

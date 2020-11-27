@@ -893,7 +893,7 @@ var Api = /*#__PURE__*/function () {
 
   _createClass(Api, [{
     key: "delete",
-    value: function _delete(id, api) {
+    value: function _delete(api, id) {
       axios.post(this.uri + this.path + api + id, {
         deleteId: id
       })["catch"](function (error) {
@@ -1571,6 +1571,7 @@ function catStore(name, select, slug, description) {
     readImage.sendImageData(obj);
   }
 
+  setTimeout(init, 500);
   document.getElementById("category-name").value = "";
 }
 
@@ -1700,7 +1701,7 @@ function renderColons(e) {
   axios.get(uri + path + "idea-render-admin", {}).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {
       console.log(response);
-      var data = response.data.html;
+      var data = response.data.allData;
       var keys = [];
 
       for (var key in data) {
@@ -1795,6 +1796,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
 /* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
 /* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
+/* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
 /** @format */
  // import startGallery from './gallery.js';
 
@@ -1804,10 +1806,12 @@ __webpack_require__.r(__webpack_exports__);
  // import TextEditor from './text-editor.js'
 
 
+
  // new TextEditor('.news-container')
 
 new _calendar_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.calendar');
 new _news__WEBPACK_IMPORTED_MODULE_5__["default"]('startNewsAdmin');
+new _newsList__WEBPACK_IMPORTED_MODULE_7__["default"]('startNweaList');
 
 /***/ }),
 
@@ -1971,6 +1975,95 @@ var News = /*#__PURE__*/function () {
 
 
 /* harmony default export */ __webpack_exports__["default"] = (News);
+
+/***/ }),
+
+/***/ "./resources/js/newsList.js":
+/*!**********************************!*\
+  !*** ./resources/js/newsList.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var newsList = /*#__PURE__*/function () {
+  function newsList(target) {
+    _classCallCheck(this, newsList);
+
+    this.target = target;
+    this.api = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.init();
+  }
+
+  _createClass(newsList, [{
+    key: "init",
+    value: function init() {
+      var _this = this;
+
+      var DOM = document.getElementById(this.target);
+
+      if (DOM) {
+        (function () {
+          var deleteApi = 'news-destroy&id=';
+          var newsList = document.querySelectorAll(".newsList");
+          var deleteNews = document.querySelectorAll(".deleteNews");
+          var editApi = "news-edit";
+
+          var HTML = _this.api.getDAta(editApi);
+
+          console.log(HTML);
+
+          var _loop = function _loop(i) {
+            var deleteId = deleteNews[i].id;
+            deleteNews[i].addEventListener("click", function () {
+              _this.api["delete"](deleteApi, deleteId);
+
+              setTimeout(location.reload(), 500);
+            });
+          };
+
+          for (var i = 0; i < newsList.length; i++) {
+            _loop(i);
+          }
+        })();
+      }
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      var _this2 = this;
+
+      console.log(deleteNews);
+
+      var _loop2 = function _loop2(i) {
+        var deleteId = deleteNews[i].id;
+        postBtn[i].addEventListener("click", function () {
+          _this2.api["delete"](deleteApi, deleteId);
+        });
+      };
+
+      for (var i = 0; i < deleteNews.length; i++) {
+        _loop2(i);
+      }
+    }
+  }]);
+
+  return newsList;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (newsList);
 
 /***/ }),
 

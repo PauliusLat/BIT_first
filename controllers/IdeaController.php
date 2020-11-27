@@ -30,7 +30,7 @@ class IdeaController
 		$response = new Response;
 		$output = View::render('home.ideja');
 		$response->prepare($request);
-		$response = new JsonResponse(['data' => $output, 'html' => $data]);
+		$response = new JsonResponse(['data' => $output, 'allData' => $data]);
 
 		return $response;
 	}
