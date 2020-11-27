@@ -1513,9 +1513,14 @@ function init() {
         var name = document.getElementById("category-name").value;
         var slug = document.getElementById("category-slug").value;
         var description = document.getElementById("category-description").value;
-        var parent = document.getElementById('cat'); // console.log(parent.value)
+        var parent = document.getElementById('cat');
+        var select;
 
-        var select = parent.options[parent.selectedIndex].value; // console.log(select)
+        if (parent.options[parent.selectedIndex] != undefined) {
+          select = parent.options[parent.selectedIndex].value;
+        } else {
+          select = 0;
+        }
 
         catStore(name, select, slug, description);
       });
@@ -1556,7 +1561,20 @@ function init() {
     console.log(error);
   });
   1;
-}
+} // function catStore(name, select, slug, description) {
+//   let obj = {
+//     api:"category_store",
+//     title: name,
+//     slug: slug,
+//     content: description,
+//     cat_parent: select
+//   }
+//   if (obj) {
+//     readImage.sendImageData(obj);
+//   }
+//   document.getElementById("category-name").value = "";
+// }
+
 
 function catStore(name, select, slug, description) {
   var obj = {
@@ -1571,7 +1589,7 @@ function catStore(name, select, slug, description) {
     readImage.sendImageData(obj);
   }
 
-  setTimeout(init, 500);
+  init();
   document.getElementById("category-name").value = "";
 }
 
@@ -2463,7 +2481,6 @@ var hasarr2;
 
 function init(pageNo) {
   if (_typeof(pageNo) == 'object' && hash.length !== 0) {
-    // hash = location.hash
     hasharr = hash.split('#');
     hasarr2 = hasharr[1].split('%');
     hash = hasarr2[0];
@@ -2539,21 +2556,14 @@ function init(pageNo) {
         select.value = pageSelected;
         init(1);
       }, false);
-      var page = document.querySelectorAll(".paging"); // let active = document
-      //   .querySelector('.paging > active')
-      // console.log(active);
+      var page = document.querySelectorAll(".paging");
 
       var _loop3 = function _loop3(_i2) {
-        // document
-        // .querySelector('.paging > active')
-        // page[i].classList.remove("active");
-        // page[i].classList.remove("active")
         var pageNo = page[_i2].id;
 
         page[_i2].addEventListener("click", function () {
           location.hash = '#' + pageNo;
-          hash = location.hash; // page[i].classList.add("active");
-
+          hash = location.hash;
           init(pageNo);
         }, false);
       };
@@ -2575,7 +2585,7 @@ function init(pageNo) {
 
     console.log(error);
   });
-  1;
+  ;
 }
 
 function tagStore(name, slug, description) {

@@ -35,10 +35,13 @@ function init() {
           const slug = document.getElementById("category-slug").value;
           const description = document.getElementById("category-description").value;
           let parent = document.getElementById('cat');
-          // console.log(parent.value)
-          let select = parent.options[parent.selectedIndex].value;
-          
-          // console.log(select)
+          let select;
+          if (parent.options[parent.selectedIndex] != undefined){
+            select = parent.options[parent.selectedIndex].value;
+          }else{
+            select = 0;
+          }
+         
           catStore(name, select, slug, description);
         });
 
@@ -85,6 +88,22 @@ function init() {
   1;
 }
 
+// function catStore(name, select, slug, description) {
+
+//   let obj = {
+//     api:"category_store",
+//     title: name,
+//     slug: slug,
+//     content: description,
+//     cat_parent: select
+//   }
+//   if (obj) {
+//     readImage.sendImageData(obj);
+//   }
+
+//   document.getElementById("category-name").value = "";
+// }
+
 function catStore(name, select, slug, description) {
 
   let obj = {
@@ -97,9 +116,12 @@ function catStore(name, select, slug, description) {
   if (obj) {
     readImage.sendImageData(obj);
   }
-  setTimeout(init, 500);
+
+  init();
   document.getElementById("category-name").value = "";
 }
+
+
 
 function catEdit(editID, taxonomy) {
   

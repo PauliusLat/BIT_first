@@ -4,9 +4,10 @@
 use BIT\app\Category;
 use BIT\app\Query;
 use BIT\models\AlbumPost;
+use BIT\models\NewsPost;
 use BIT\app\Tag;
 use BIT\app\Attachment;
-
+use BIT\app\App;
 
 
 
@@ -19,7 +20,8 @@ use BIT\app\Attachment;
  * Author URI: http://yourwebsiteurl.com/
  **/
 
-use BIT\app\App;
+
+
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -64,8 +66,10 @@ $query = new Query;
 
 add_action('init', function () {
     $session = App::start()->getService('session');
-
-
+    $news = new NewsPost;
+    $news->save();
+    // $news->attachCat('aauga');
+    $news->addTag('blablabla');
     // $session->delete('message');
     // $session->flash('messkukuku', 'tokiu pavadinimu kategorija jau sukurta');
     // var_dump($session->get('messkukuku'));
@@ -74,7 +78,7 @@ add_action('init', function () {
     // _dc($terms);
 
     // $category = new Category;
-    // $category->addCat('kategorija');
+    // $category->addCat('bbb');
 
     // $terms = $category->getTaxonomyHierarchyArr('maincat');
 
@@ -108,7 +112,7 @@ add_action('init', function () {
     //     foreach ($array as $member) {
     //         if(empty($member->children))
     //         {
-    //             $flattened[] = $member;
+    //   $flattened[] = $member;
     //         } else
     //         {
     //             flattenArray($member->children);

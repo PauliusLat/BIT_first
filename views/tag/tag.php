@@ -62,33 +62,11 @@ use BIT\app\App;
 
 
             <?php
-
             echo '<div class = "page">';
             echo $first . $prev . $nav . $next . $last;
             echo '</div>';
 
-
-            // The "back" link
-            // $prevlink = ($page > 1) ? '<a href="?page=1" title="First page">&laquo;</a> <a href="?page=tag&paged=' . ($page - 1) . '" title="Previous page">&lsaquo;</a>' : '<span class="disabled">&laquo;</span> <span class="disabled">&lsaquo;</span>';
-
-            // // The "forward" link
-            // $nextlink = ($page < $pages) ? '<a class = "paging" id = "' . ($page + 1) . '" href="?page=tag&paged=' . ($page + 1) . '" title="Next page">&rsaquo;</a> <a href="?page=tag&paged=' . $pages . '" title="Last page">&raquo;</a>' : '<span class="disabled">&rsaquo;</span> <span class="disabled">&raquo;</span>';
-
-            // // Display the paging information
-            // echo '<div id="paging"><p>', $prevlink, ' Page', $page, ' of ', $pages, ' pages, displaying', $start, '-', $end, ' of ', $total, ' results', $nextlink, ' </p></div>';
-
-            // echo '<form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=tag&paged=' . ($page + 1) . '" method="post">';
-            // $nextlink = ($page < $pages) ? '<input type = "submit" class = "submitLink" title="Next page">&rsaquo;> <a href="http://localhost:8080/wordpress/wp-admin/admin.php?page=tag&paged=' . $pages . '" title="Last page">&raquo;</a>' : '<span class="disabled">&rsaquo;</span> <span class="disabled">&raquo;</span>';
-            // $prevlink = ($page > 1) ? '<a href="?page=1" title="First page">&laquo;</a> <a href="http://localhost:8080/wordpress/wp-admin/admin.php?page=tag&paged=' . ($page - 1) . '" title="Previous page">&lsaquo;</a>' : '<span class="disabled">&laquo;</span> <span class="disabled">&lsaquo;</span>';
-            // // Display the paging information
-            // echo '<div id="paging"><p>', $prevlink, ' Page', $page, ' of ', $pages, ' pages, displaying', $start, '-', $end, ' of ', $total, ' results', $nextlink, ' </p></div>';
-            // _dc($request = App::start()->getService('request'));
-            // // _dc($request);
-            // echo '</form>';
-
-
             foreach ($tags as $tag) {
-                // _dc($request);
             ?>
                 <tr>
                     <td><?= $tag->name ?></td>
@@ -98,7 +76,6 @@ use BIT\app\App;
                     <td>
                         <button class="tag-edit btn-blue" type="submit" name="tag-name" id="<?= $tag->taxonomy ?>" value="<?= $tag->term_id ?>">Edit</button>
                         <button class="tag-delete btn-red" type="submit" name="tagDelete" id="<?= $tag->taxonomy ?>" value="<?= $tag->term_id ?>">Delete</button>
-
                     </td>
                 </tr>
             <?php
