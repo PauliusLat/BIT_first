@@ -65,7 +65,7 @@ $query = new Query;
 
 
 add_action('init', function () {
-    $session = App::start()->getService('session');
+    // $session = App::start()->getService('session');
     // $news = new NewsPost;
     // $news->save();
     // // $news->attachCat('aauga');
