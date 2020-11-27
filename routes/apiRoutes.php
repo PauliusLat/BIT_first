@@ -32,11 +32,11 @@ return [
 
 	'album-create-admin' => 'AlbumFrontController@create',
 
-	'news-list' => 'NewsController@createPost',
-	'news-store' => 'NewsController@store',
-	'news-update' => 'NewsController@update',
-	'news-destroy' => 'NewsController@destroy',
-	'news-edit' => 'NewsController@edit',
+	'news-list' => 'NewsAdminController@createPost',
+	'news-store' => 'NewsAdminController@store',
+	'news-update' => 'NewsAdminController@update',
+	'news-destroy' => 'NewsAdminController@destroy',
+	'news-edit' => 'NewsAdminController@edit',
 
 	'tag_create' => 'TagController@create',
 	'tag_store' => 'TagController@store',

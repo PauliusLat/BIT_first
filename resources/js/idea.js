@@ -73,7 +73,7 @@ function renderColons(e) {
     .then(function(response) {
       if (response.status == 200 && response.statusText == "OK") {
         console.log(response);
-        const data = response.data.html;
+        const data = response.data.allData;
 
         let keys = [];
 

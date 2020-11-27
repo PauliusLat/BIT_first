@@ -7,8 +7,7 @@ class Api {
         this.html = null;
     }
 
-    delete(id, api) {
-
+    delete(api, id) {
         axios
             .post(
                 this.uri + this.path +
@@ -29,7 +28,6 @@ class Api {
                 }
                 console.log(error);
             });
-
     }
 
     async getDAta(api) {

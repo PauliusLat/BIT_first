@@ -12,5 +12,9 @@ return [
     'idejos' => 'IdeasController@index',
     'kategorija' => 'CategoryFrontController@index',
     'test' => 'TestController@front',
-    'news' => 'NewsController@index',
+
+    'showNews' =>'NewsFrontController@show',
+    'news' =>'NewsFrontController@index',
 ];
+
+

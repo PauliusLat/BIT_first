@@ -24,7 +24,6 @@ class IdeAdminController
 	{
 		$session = new Session;
 		$session->set('id', '$array');
-					var_dump($session->get('id'));
 		$data = (IdeaPost::all())->pluck('idea_content', 'idea_like', 'post_date', 'idea_solution', 'ID')->all();
 
 		$response = new Response;

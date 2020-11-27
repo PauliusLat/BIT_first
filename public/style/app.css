@@ -1599,15 +1599,15 @@ button:focus {
   top: 1px;
 }
 
-.gallerGrid .uploadeImageGallery {
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
 .gallerGrid input[type=text] {
   border: none;
   border-bottom: 2px solid #23344d;
   line-height: 20px;
+}
+
+.uploadeImageGallery {
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 @media (max-width: 600px) {
