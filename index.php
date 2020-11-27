@@ -64,6 +64,7 @@ App::start();
 
 
 
+
 // add_action('init', function () {
     // $session = App::start()->getService('session');
     // $news = new NewsPost;

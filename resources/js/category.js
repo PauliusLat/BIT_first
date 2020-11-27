@@ -113,11 +113,13 @@ function catStore(name, select, slug, description) {
     content: description,
     cat_parent: select
   }
+
+  console.log(obj)
   if (obj) {
     readImage.sendImageData(obj);
   }
 
-  init();
+  setTimeout(init, 500);
   document.getElementById("category-name").value = "";
 }
 
