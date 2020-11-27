@@ -13,6 +13,6 @@ return [
     'idejos' => 'IdeasController@index',
    
     'test' => 'TestController@front',
+    'showNews' =>'NewsFrontController@show',
     'news' =>'NewsFrontController@index',
-    'show' =>'NewsFrontController@show',
 ];
