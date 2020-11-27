@@ -7,7 +7,7 @@ class Page extends Post{
     protected static $type = 'page';
 
     public function setRoute($route) {
-        $this->post_content  = '[front_shortcode route="'.$route.'"]';
+        $this->post_content  = "[front_shortcode route='$route']";
     }
 
     public function setTitle($post_title){
