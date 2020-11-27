@@ -2,8 +2,8 @@
 
 return [
 	'admin' => 'AdminController@index',
-	'news' => 'NewsController@index',
-	'news@' => ['post' => 'NewsController@index', 'edit-posts' => 'NewsController@edit'],
+	'news' => 'NewsAdminController@index',
+	'news@' => ['post' => 'NewsAdminController@index', 'edit-posts' => 'NewsAdminController@edit'],
 
 	'idejos' => 'IdeAdminController@adminIndex',
 	'galerija' => 'GalleryAdminController@adminIndex',

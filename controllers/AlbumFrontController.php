@@ -22,22 +22,24 @@ class AlbumFrontController
 
         $page = (Page::all())->all();
         foreach ($page as $key => $value) {
-            echo '<pre>';
-            var_dump($value->getLink());
+            // echo '<pre>';
+            // var_dump($value->getLink());
             $value->getLink();
         }
         $allImages = [];
         $albumName = [];
         $albumData  = (AlbumPost::all())->all();
-        echo '<pre>';
-        var_dump($page);
+        // echo '<pre>';
+        // var_dump($page);
         foreach ($albumData as $data) {
             $albumName[] = $data->album_title;
             foreach ($data->attachments as $key => $img) {
                 $allImages[] = $img->getUrl();
             }
         }
+        // var_dump($albumName);
         $output = View::adminRender('album.album',  ["album" =>  $albumName]);
+        
         $response = new JsonResponse(['html' => $output]);
 
         return $response;
