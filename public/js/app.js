@@ -941,7 +941,7 @@ var Api = /*#__PURE__*/function () {
                 _context.prev = 8;
                 _context.t0 = _context["catch"](0);
                 console.error(_context.t0);
-                console.log("Duomenys is serveverionepasiekiami !!!");
+                console.log("Duomenys is serveverio nepasiekiami !!!");
 
               case 12:
               case "end":
@@ -2005,8 +2005,16 @@ var News = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2021,43 +2029,83 @@ var newsList = /*#__PURE__*/function () {
     _classCallCheck(this, newsList);
 
     this.target = target;
-    this.api = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.api = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.init();
   }
 
   _createClass(newsList, [{
     key: "init",
-    value: function init() {
-      var _this = this;
+    value: function () {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this = this;
 
-      var DOM = document.getElementById(this.target);
+        var DOM;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                DOM = document.getElementById(this.target);
 
-      if (DOM) {
-        (function () {
-          var deleteApi = 'news-destroy&id=';
-          var newsList = document.querySelectorAll(".newsList");
-          var deleteNews = document.querySelectorAll(".deleteNews");
-          var editApi = "news-edit";
+                if (!DOM) {
+                  _context2.next = 3;
+                  break;
+                }
 
-          var HTML = _this.api.getDAta(editApi);
+                return _context2.delegateYield( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+                  var deleteApi, editApi, HTML, newsList, deleteNews, _loop, i;
 
-          console.log(HTML);
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          deleteApi = 'news-destroy&id=';
+                          editApi = "news-edit";
+                          _context.next = 4;
+                          return _this.api.getDAta(editApi);
 
-          var _loop = function _loop(i) {
-            var deleteId = deleteNews[i].id;
-            deleteNews[i].addEventListener("click", function () {
-              _this.api["delete"](deleteApi, deleteId);
+                        case 4:
+                          HTML = _context.sent;
+                          DOM.innerHTML = HTML;
+                          newsList = document.querySelectorAll(".newsList");
+                          deleteNews = document.querySelectorAll(".deleteNews");
 
-              setTimeout(location.reload(), 500);
-            });
-          };
+                          _loop = function _loop(i) {
+                            var deleteId = deleteNews[i].id;
+                            deleteNews[i].addEventListener("click", function () {
+                              console.log(deleteApi, deleteId);
 
-          for (var i = 0; i < newsList.length; i++) {
-            _loop(i);
+                              _this.api["delete"](deleteApi, deleteId);
+
+                              setTimeout(location.reload(), 500);
+                            });
+                          };
+
+                          for (i = 0; i < newsList.length; i++) {
+                            _loop(i);
+                          }
+
+                        case 10:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }
+                  }, _callee);
+                })(), "t0", 3);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
           }
-        })();
+        }, _callee2, this);
+      }));
+
+      function init() {
+        return _init.apply(this, arguments);
       }
-    }
+
+      return init;
+    }()
   }, {
     key: "delete",
     value: function _delete() {

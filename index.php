@@ -52,7 +52,7 @@ App::start();
 // _dc($query->postMeta('event_date', 'konkreti data, kurios reikia')->postSort('event_time')->getPost()->all());
 // $getPostType = $query->postSort('date','DESC')->getPost();
 
-$query = new Query;
+// $query = new Query;
 // $getcount = wp_count_posts('page');
 
 // echo "<div style = 'font: 20px;padding: 100px;'>'.$getcount.'</div>";
@@ -64,12 +64,12 @@ $query = new Query;
 
 
 
-add_action('init', function () {
-    $session = App::start()->getService('session');
-    $news = new NewsPost;
-    $news->save();
+// add_action('init', function () {
+//     $session = App::start()->getService('session');
+//     $news = new NewsPost;
+//     $news->save();
     // $news->attachCat('aauga');
-    $news->addTag('blablabla');
+    // $news->addTag('blablabla');
     // $session->delete('message');
     // $session->flash('messkukuku', 'tokiu pavadinimu kategorija jau sukurta');
     // var_dump($session->get('messkukuku'));
@@ -131,4 +131,4 @@ add_action('init', function () {
     //     //if(!is_array($array)) return $result;
 
 
-});
+// });

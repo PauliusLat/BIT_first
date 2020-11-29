@@ -34,7 +34,7 @@ return [
 	'news-store' => 'NewsAdminController@store',
 	'news-update' => 'NewsAdminController@update',
 	'news-destroy' => 'NewsAdminController@destroy',
-	'news-edit' => 'NewsAdminController@edit',
+	'news-edit' => 'NewsAdminController@apiEditPost',
 
 	'tag_create' => 'TagController@create',
 	'tag_store' => 'TagController@store',

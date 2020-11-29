@@ -39,7 +39,7 @@ class Api {
             }
         } catch (e) {
             console.error(e);
-            console.log("Duomenys is serveverionepasiekiami !!!");
+            console.log("Duomenys is serveverio nepasiekiami !!!");
         }
     }
 
