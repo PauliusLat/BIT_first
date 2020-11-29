@@ -36,7 +36,7 @@ class NewsAdminController
 
         $page = new Page();
         $page->pageState = 'News Page';
-        $page->setRoute('news');
+        $page->setRoute('showNews');
         $page->setTitle($title);
         $page->save();
 
