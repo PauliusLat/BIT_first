@@ -47,7 +47,7 @@ trait Tcategory
                         $categ = get_term_by('name', $key, 'maincat');
                         if ($categ->name == $key) {
                             echo '<pre>';
-                            var_dump(get_term_by('name', $key, 'maincat'));
+                            // var_dump(get_term_by('name', $key, 'maincat'));
                             $session->flash('alert_message', 'tokiu pavadinimu kategorija jau sukurta');
                             $categ->name != $key;
                         } else {
@@ -133,7 +133,35 @@ trait Tcategory
                         foreach ($terms as $term) {
                             wp_set_object_terms($this->ID, $term->term_id, $value, $append = true);
                         }
-                        /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
+                        /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
+                         * so that children with the same names but different parents aren't confused.*/
+                    }
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
+    public function addCatDbPost($cat, $parent_id = 0, $slug = '', $description = '', $taxonomy_type = 'maincat')
+    {
+        $cat = (array)$cat;
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
+                    foreach ($cat as $key) {
+                        wp_insert_term($key, $value, $args);
+                    }
+                    if ($this->ID == null) {
+                        throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
+                    } else {
+                        $terms = get_terms(['name' => $cat, 'taxonomy' => $value, 'hide_empty' => false]);
+                        foreach ($terms as $term) {
+
+                            wp_set_object_terms($this->ID, $term->term_id, $value, $append = true);
+                        }
+                        /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
                          * so that children with the same names but different parents aren't confused.*/
                     }
                 } else {

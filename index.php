@@ -21,8 +21,6 @@ use BIT\app\App;
  **/
 
 
-
-
 require_once __DIR__ . '/vendor/autoload.php';
 
 define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
@@ -30,56 +28,19 @@ define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 App::start();
 
-// $pages = Page::all()->pageState('Site Page')->all();
-// _dc($pages);
-// _dc($_SERVER);
-// _dc($session->get('333333333333cassdca'));
-// $server = new Server;
-//
-// _dc($app->getService('request')->query->get('route', ''));
-// $my_post = array(
-//     'post_content'   => "My page content",
-//     'post_title'     => 'idea',
-//     'post_name'      => 'idea',
-//     'post_type'      => 'page',  // must be 'page'  to accept the 'page_template' below
-//     'page_template'  => "listing.php",
-//     'post_status'    => "publish"
-// );
-// $ID = wp_insert_post( $my_post );
-// $permalink = get_permalink($ID);
-// echo "<br />ID for new page is $ID, Permalink for new page is $permalink";
-
-// _dc($query->postMeta('event_date', 'konkreti data, kurios reikia')->postSort('event_time')->getPost()->all());
-// $getPostType = $query->postSort('date','DESC')->getPost();
-
-// $query = new Query;
-// $getcount = wp_count_posts('page');
-
-// echo "<div style = 'font: 20px;padding: 100px;'>'.$getcount.'</div>";
-
-// _dc($getPostType);
-// _dc($app->getService('requestId'));
-// $category = new Category;
-// _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
-
-
+// $session = App::start()->getService('session');
+// $session->deleteSession();
 
 
 // add_action('init', function () {
-    // $session = App::start()->getService('session');
-    // $news = new NewsPost;
-    // $news->save();
-    // $news->attachCat('aauga');
-    // $news->addTag('blablabla');
-    // $session->delete('message');
-    // $session->flash('messkukuku', 'tokiu pavadinimu kategorija jau sukurta');
-    // var_dump($session->get('messkukuku'));
-
+  
     // $terms = $category->getTaxonomyHierarchy('maincat');
     // _dc($terms);
+    // $news = new NewsPost;
+    // $news->save();
 
-    // $category = new Category;
-    // $category->addCat('bbb');
+
+    // $news->addCatDbPost('kaledos');
 
     // $terms = $category->getTaxonomyHierarchyArr('maincat');
 

@@ -1011,6 +1011,10 @@ var Api = /*#__PURE__*/function () {
           formData.append('cat_parent', obj.cat_parent);
         }
 
+        if (obj.page) {
+          formData.append('page', obj.page);
+        }
+
         console.log(Object.fromEntries(formData));
         axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
           if (error.response) {
@@ -1488,6 +1492,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
@@ -1522,7 +1528,16 @@ function init() {
           select = 0;
         }
 
-        catStore(name, select, slug, description);
+        var selectedPage;
+
+        if (document.querySelector('[name="catPage"]:checked')) {
+          selectedPage = 1;
+        } else {
+          selectedPage = 0;
+        }
+
+        console.log(selectedPage);
+        catStore(name, select, slug, description, selectedPage);
       });
       var editBtn = catStrt.querySelectorAll(".category-edit");
 
@@ -1576,15 +1591,16 @@ function init() {
 // }
 
 
-function catStore(name, select, slug, description) {
+function catStore(name, select, slug, description, selectedPage) {
+  console.log(_typeof(selectedPage));
   var obj = {
     api: "category_store",
     title: name,
     slug: slug,
+    page: selectedPage,
     content: description,
     cat_parent: select
-  };
-  console.log(obj);
+  }; // console.log(obj)
 
   if (obj) {
     readImage.sendImageData(obj);
@@ -2598,20 +2614,20 @@ var Tag = /*#__PURE__*/function () {
 // let hash = location.hash
 // let hasharr
 // let hasarr2
-// function init(pageNo = 1, hash = 1){
+// function init(pageNo = 1){
 // if (typeof pageNo == 'object' &&  hash.length !== 0){
 //   hasharr = hash.split('#')
 //   hasarr2 = hasharr[1].split('%')
 //   hash = hasarr2[0]
-//   window.addEventListener( "load",
-//   () =>{
+//   // window.addEventListener( "load",
+//   // () =>{
 //     // hasharr = hash.split('#')
 //     // hasarr2 = hasharr[1].split('%')
 //     // hash = hasarr2[0]
-//     hash = location.hash
-//     init(hash);
-//   },
-//   false);
+//     // hash = location.hash
+//     // init(hash);
+//   // },
+//   // false);
 // }else if(typeof pageNo === 'string' && hash.length !== 0){
 //   hasharr = hash.split('#')
 //   hasarr2 = hasharr[1].split('%')
@@ -2791,18 +2807,17 @@ var Tag = /*#__PURE__*/function () {
 //   let axios = new Api();
 //   let response = axios.getDAta(api);
 //     console.log(response);
-// const test = document.querySelector(".test");
-// const HTML = response.data.html;
-// console.log(HTML);
-// test.innerHTML = HTML;
-// const submit = document.getElementById("create");
-// submit.addEventListener("click", () => {
-//   const name = document.getElementById("tag-name").value;
-//   const slug = document.getElementById("tag-slug").value;
-//   const description = document.getElementById("tag-description").value;
-//   tagStore(name, slug, description);
-// });
-// }
+//   const test = document.querySelector(".test");
+//   const HTML = response.data.html;
+//   console.log(HTML);
+//   test.innerHTML = HTML;
+//   const submit = document.getElementById("create");
+//   submit.addEventListener("click", () => {
+//     const name = document.getElementById("tag-name").value;
+//     const slug = document.getElementById("tag-slug").value;
+//     const description = document.getElementById("tag-description").value;
+//     tagStore(name, slug, description);
+//   });
 
 /***/ }),
 

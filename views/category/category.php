@@ -9,8 +9,17 @@ use BIT\app\Category;
     </div>
 
     <div class="sm-1-2">
-        <div class='message'><?= $message ?></div>
-        <div class='success_message'><?= $sucess_message ?></div>
+        <?php
+        if ($message) {
+        ?>
+            <div class='message'><?= $message ?></div>
+        <?php
+        } else {
+        ?>
+            <div class='success_message'><?= $success_message ?></div>
+        <?php
+        } ?>
+
         <h2 class='tcp'>Pridėkite naują kategoriją</h2>
         <div class='label'>
             <label class="tcp-label">Kategorijos pavadinimas</label>
@@ -39,6 +48,10 @@ use BIT\app\Category;
             <?php wp_dropdown_categories($args); ?>
         </ul>
         <br><br>
+
+        <input type="checkbox" id="catPage" name="catPage" value="catPage">
+        <label for="catPage">Sukurti kategorijos puslapį</label><br>
+
 
         <div class='label'>
             <label class="tcp-label">Kategorijos aprašymas</label>

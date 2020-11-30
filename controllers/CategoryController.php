@@ -44,7 +44,10 @@ class CategoryController
 
     public function store(Request $request)
     {
+        echo '<pre>';
+        // var_dump($request);
         $name = $request->request->get('title');
+        // var_dump($name);
         $slug = $request->request->get('slug');
         $description = $request->request->get('content');
         if ($request->request->get('cat_parent')) {
@@ -53,15 +56,24 @@ class CategoryController
             $parent_id = 0;
         }
 
-        $page = new Page();
-        $page->pageState = 'Category Page';
-        $page->setRoute('kategorija');
-        $page->setTitle($name);
-        $page->save();
+        $createPage = $request->request->get('page');
+        // var_dump($createPage);
+        if ($createPage == 1) {
+            $page = new Page();
+            $pageState[] = 'Site Page';
+            $pageState[] = 'Category Page';
+            // var_dump($pageState);
+            // $values = maybe_serialize($pageState);
+            $page->pageState = $pageState;
+            $page->setRoute('kategorija');
+            $page->setTitle($name);
+            $page->save();
+
+            // update_post_meta($page->ID, 'pageState', $pageState);
+        }
 
         $category = new Category;
         $category->addCat($name, $parent_id, $slug,  $description);
-
 
         if ($request->files->get('image')) {
             $uploads_dir = wp_upload_dir();

@@ -41,22 +41,28 @@ function init() {
           }else{
             select = 0;
           }
-         
-          catStore(name, select, slug, description);
+
+          let selectedPage;
+          if (document.querySelector('[name="catPage"]:checked')){
+            selectedPage = 1;
+          }else{
+            selectedPage = 0;
+          }
+
+          console.log(selectedPage)
+
+          catStore(name, select, slug, description, selectedPage);
         });
 
         const editBtn = catStrt.querySelectorAll(".category-edit");
 
-
         for (let i = 0; i < editBtn.length; i++) {
           let ID = editBtn[i].value;
-
           let taxonomy = editBtn[i].id;
           editBtn[i].addEventListener(
             "click",
             function () {
               catEdit(ID, taxonomy);
-
             },
             false
           );
@@ -104,17 +110,20 @@ function init() {
 //   document.getElementById("category-name").value = "";
 // }
 
-function catStore(name, select, slug, description) {
+function catStore(name, select, slug, description, selectedPage) {
+console.log(typeof selectedPage)
 
   let obj = {
     api:"category_store",
     title: name,
     slug: slug,
+    page: selectedPage,
     content: description,
-    cat_parent: select
+    cat_parent: select,
+    
   }
 
-  console.log(obj)
+  // console.log(obj)
   if (obj) {
     readImage.sendImageData(obj);
   }
@@ -124,9 +133,7 @@ function catStore(name, select, slug, description) {
 }
 
 
-
 function catEdit(editID, taxonomy) {
-  
 
   axios
     .post(uri + path + "category_edit", {

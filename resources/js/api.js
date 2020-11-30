@@ -92,6 +92,12 @@ class Api {
             if(obj.cat_parent){
                 formData.append('cat_parent', obj.cat_parent);
             }
+            if(obj.page){
+                formData.append('page', obj.page);
+            }
+
+
+
             console.log(Object.fromEntries(formData))
             axios.post(this.uri + this.path + obj.api, formData, {
 

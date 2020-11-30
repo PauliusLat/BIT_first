@@ -23,9 +23,11 @@ class NewsFrontController
         return View::render('news.news',  ["html" => $output]);
     }
 
-    public function show(Request $reguest){
+    public function show(Request $request)
+    {
 
-        $id = $reguest->reguest->get('id');
+        $id = $request->request->get('id');
+        // var_dump($id);
         $news = NewsPost::get($id);
 
         return View::render('news.show',  ["html" => $news]);
