@@ -8,23 +8,29 @@ class newsList {
         this.target = target;
         this.api = new Api;
         this.init();
+
     }
 
-    init() {
+   async init() {
         const DOM = document.getElementById(this.target);
 
         if (DOM) {
+  
             const deleteApi = 'news-destroy&id=';
+            const editApi = "news-edit";
+            
+            let HTML = await this.api.getDAta(editApi);
+            DOM.innerHTML = HTML;
+
             const newsList = document.querySelectorAll(".newsList");
             const deleteNews = document.querySelectorAll(".deleteNews");
-            const editApi = "news-edit";
-            let HTML = this.api.getDAta(editApi);
-console.log(HTML);
+
             for (let i = 0; i < newsList.length; i++) {
                 let deleteId = deleteNews[i].id;
                 deleteNews[i].addEventListener(
                     "click",
                     () => {
+                        console.log(deleteApi, deleteId);
                         this.api.delete(deleteApi, deleteId);
                         setTimeout(location.reload(), 500);
                     });

@@ -21,15 +21,6 @@ class NewsAdminController
         return View::adminRender('news.index');
     }
 
-    public function createPost()
-    {
-
-
-        // $html = require '/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/views/news/list.php';
-        // $news = NewsPost::all()->all();
-        $html = View::adminRender('news.post');
-    }
-
     public function create(Request $request)
     {
         return View::adminRender('news.create');
@@ -74,28 +65,17 @@ class NewsAdminController
         $news = NewsPost::get($id);
     }
 
-    public function edit(Request $request, NewsPost $newsPost)
+    public function edit()
+    {
+        return View::adminRender('news.edit');
+    }
+
+    public function apiEditPost(Request $request, NewsPost $newsPost)
     {
         $allNews = NewsPost::all()->all();
-        // echo '<pre>';
-        // var_dump ($allNews);
-        // foreach (NewsPost::all()->all() as $news) {
-            // $pageLink1 = Page::get($news->ID)->getLink();
-        //     $content2 = $news->news_content;
-        //     $title3 = $news->post_title;
-        //     $date4 = $news->post_date;
-
-        //     $allImages = $news->attachments;
-
-        //     foreach ($allImages as $image) {
-        //         $url5 = $image->getUrl();
-        //         $altText6 = $image->getAlt();
-        //     }
-        // }
         $output = View::adminRender('news.renderEdit', ['html' =>  $allNews]);
         $response = new JsonResponse(['html' =>  $output]);
         return $response;
-        // return View::adminRender('news.edit', ['html' =>  $allNews]);
     }
 
     public function update(Request $request, NewsPost $newsPost)
