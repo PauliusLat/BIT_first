@@ -4,11 +4,10 @@ namespace BIT\app;
 
 use BIT\app\Transient;
 use BIT\app\Cookie;
+use BIT\app\coreExeptions\SessionArgsExeption;
 
 class Session
 {
-
-    private $name;
     public static $array = [];
     static private $obj;
 
@@ -22,7 +21,11 @@ class Session
         $transient = Transient::start();
         self::$array = $transient->newValue;
         self::$array[$a] = $b;
-        return self::$array;
+        if (is_array(self::$array)) {
+            return self::$array;
+        } else {
+            throw new SessionArgsExeption('Error: session set should be an array');
+        }
     }
 
     public function flash($a, $b)
@@ -31,7 +34,11 @@ class Session
         self::$array = $transient->newValue;
         self::$array[$a] = $b;
         array_push(self::$array, 'autodelete_' . $a);
-        return self::$array;
+        if (is_array(self::$array)) {
+            return self::$array;
+        } else {
+            throw new SessionArgsExeption('Error: session set should be an array');
+        }
     }
 
     public function get($index)
@@ -47,6 +54,20 @@ class Session
             return null;
         }
     }
+
+    // public function get($index)
+    // {
+    //     $transient = Transient::start();
+    //     self::$array = $transient->value;
+    //     if (array_key_exists($index, self::$array)) {
+    //         $indexValue =  self::$array[$index];
+    //         self::$array = $transient->newValue;
+    //         return $indexValue;
+    //     } else {
+    //         self::$array = $transient->newValue;
+    //         return null;
+    //     }
+    // }
 
     public function delete($index)
     {

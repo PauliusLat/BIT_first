@@ -2,19 +2,19 @@
 
 namespace BIT\controllers;
 
-use BIT\app\App;
+// use BIT\app\App;
 use BIT\app\View;
-use BIT\app\Attachment;
-use BIT\models\NewsPost;
-use BIT\models\AlbumPost;
+// use BIT\app\Attachment;
+// use BIT\models\NewsPost;
+// use BIT\models\AlbumPost;
 use BIT\app\Category;
 use BIT\app\Session;
-use BIT\app\Tag;
+// use BIT\app\Tag;
 use BIT\app\Page;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+// use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 require PLUGIN_DIR_PATH . '/../../../wp-load.php';
 require_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -28,9 +28,10 @@ class CategoryController
         return View::adminRender('category.maincat');
     }
 
-    public function create(Request $request, Session $session)
+    public function create(Session $session)
     {
         $category = new Category;
+        // $session = Session::start();
         $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr()));
         $message = $session->get('alert_message');
         $success_message = $session->get('success_message');
@@ -42,12 +43,9 @@ class CategoryController
         return $response;
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Session $session)
     {
-        echo '<pre>';
-        // var_dump($request);
         $name = $request->request->get('title');
-        // var_dump($name);
         $slug = $request->request->get('slug');
         $description = $request->request->get('content');
         if ($request->request->get('cat_parent')) {
@@ -56,23 +54,31 @@ class CategoryController
             $parent_id = 0;
         }
 
+        $categ = get_term_by('name', $name, 'maincat');
+        if ($categ->name == $name) {
+            $session->flash('alert_message', 'tokiu pavadinimu kategorija jau sukurta');
+            $categ->name != $name;
+        } else {
+            $session->flash('success_message', 'kategorija sėkmingai sukurta');
+        }
+
         $createPage = $request->request->get('page');
-        // var_dump($createPage);
         if ($createPage == 1) {
             $page = new Page();
             $pageState[] = 'Site Page';
             $pageState[] = 'Category Page';
+            $pageState[] = 'System Page';
             // var_dump($pageState);
             // $values = maybe_serialize($pageState);
             $page->pageState = $pageState;
             $page->setRoute('kategorija');
             $page->setTitle($name);
             $page->save();
-
             // update_post_meta($page->ID, 'pageState', $pageState);
         }
 
         $category = new Category;
+
         $category->addCat($name, $parent_id, $slug,  $description);
 
         if ($request->files->get('image')) {

@@ -28,17 +28,14 @@ class Post
             $post_id = 0;
         }
 
-
-        if($post_id === 0 || $post_id === '0'){
-            foreach ( get_object_vars( new \WP_Post(new \stdClass())) as $var => $value ) {
-                $this->$var = $value; 
+        if ($post_id === 0 || $post_id === '0') {
+            foreach (get_object_vars(new \WP_Post(new \stdClass())) as $var => $value) {
+                $this->$var = $value;
             }
-            if(isset(static::$type)) $this->post_type = static::$type;
-        }
-        elseif(strcmp($post_id, '0')!==0){
-            foreach ( get_object_vars(get_post($post_id)) as $var => $value ) {
-                $this->$var = $value; 
-
+            if (isset(static::$type)) $this->post_type = static::$type;
+        } elseif (strcmp($post_id, '0') !== 0) {
+            foreach (get_object_vars(get_post($post_id)) as $var => $value) {
+                $this->$var = $value;
             }
             foreach (get_post_meta($post_id) as $var => $value) {
                 $this->$var = $value[0];

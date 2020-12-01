@@ -38,22 +38,12 @@ trait Tcategory
     public function addCat($cat, $parent_id = 0, $description = '',  $slug = '', $taxonomy_type = 'maincat')
     {
         $cat = (array)$cat;
-        $session = App::start()->getService('session');
         foreach ($this->cattax as $value) {
             if ($value == $taxonomy_type) {
                 if (did_action('init')) {
                     $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
                     foreach ($cat as $key) {
-                        $categ = get_term_by('name', $key, 'maincat');
-                        if ($categ->name == $key) {
-                            echo '<pre>';
-                            // var_dump(get_term_by('name', $key, 'maincat'));
-                            $session->flash('alert_message', 'tokiu pavadinimu kategorija jau sukurta');
-                            $categ->name != $key;
-                        } else {
-                            wp_insert_term($key, $value, $args);
-                            $session->flash('success_message', 'kategorija sėkmingai sukurta');
-                        }
+                        wp_insert_term($key, $value, $args);
                     }
                 } else {
                     throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');

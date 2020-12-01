@@ -8,6 +8,8 @@ use BIT\models\NewsPost;
 use BIT\app\Tag;
 use BIT\app\Attachment;
 use BIT\app\App;
+use BIT\app\Session;
+use BIT\app\Transient;
 
 
 
@@ -28,8 +30,20 @@ define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 App::start();
 
-// $session = App::start()->getService('session');
-// $session->deleteSession();
+// $session = Session::start();
+// // $session->deleteSession();
+// $session->set('a', 2);
+// // _dc(Transient::start());
+// $session->set('b', '8');
+// $session->set('c', '8');
+// // // $session->set('d', '8');
+// // // $session->set('e', '8');
+// // // $session->set('0', '8');
+
+// // $session->set('ppppppppp', '8');
+// // $session->set('yyyyyy', '8');
+// // $session->flash('ppppppppp', '8');
+// $session->get('b');
 
 
 // add_action('init', function () {
