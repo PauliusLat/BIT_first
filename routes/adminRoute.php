@@ -6,7 +6,10 @@ return [
 	'news@' => ['post' => 'NewsAdminController@index', 'edit-posts' => 'NewsAdminController@edit'],
 
 	'idejos' => 'IdeAdminController@adminIndex',
+
 	'galerija' => 'GalleryAdminController@adminIndex',
+
+	'kategorija' => 'CategoryFrontController@index',
 
 	'kalendorius' => 'CalendarAdminController@adminIndex',
 
