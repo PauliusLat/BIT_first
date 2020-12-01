@@ -1,12 +1,10 @@
 
 <?php
 
-use BIT\app\Category;
-use BIT\app\Query;
-use BIT\models\AlbumPost;
-use BIT\models\NewsPost;
-use BIT\app\Tag;
-use BIT\app\Attachment;
+// use BIT\app\Category;
+// use BIT\app\Query;
+// use BIT\app\Tag;
+// use BIT\app\Attachment;
 use BIT\app\App;
 
 
@@ -63,9 +61,21 @@ App::start();
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 
-
-
+// use BIT\models\NewsPost;
 // add_action('init', function () {
+// $x = NewsPost::get(1628);
+// _dc($x->masyvas); 
+// _dc($x->masyvas); 
+// $x->save();
+// });
+   
+
+    // foreach ($x as $key => $value) {
+        // if((int)($value->ID) > 400){
+
+        //     $value->delete();
+        // }
+    // }
     // $session = App::start()->getService('session');
     // $news = new NewsPost;
     // $news->save();
