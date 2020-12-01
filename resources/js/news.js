@@ -1,6 +1,7 @@
 "use strict";
 
 import Profile_image from './profile_image';
+import Api from './api';
 
 class News {
 
@@ -31,22 +32,48 @@ class News {
       const button = document.getElementById("submit");
       const newsImageTitle = document.getElementById("newsName");
       const altText = document.getElementById("newsAlt");
+      const category = document.getElementById("catNews");
+      const tag = document.getElementById("tagNews");
+      const newsCat = document.querySelector(".newsCat");
+      const newsCatBtn = document.getElementById("create");
+
+      category.addEventListener("click", () => {
+        newsCat.style.display = "";
+      });
+
+      tag.addEventListener("click", () => {
+        console.log(1111111111);
+      });
+      newsCatBtn.addEventListener("click", () => {
+        newsCat.style.display = "none";
+        }
+      )
 
       button.addEventListener(
-        "click",
-        () => {
+        "click", () => {
+          let parent = document.getElementById('cat');
+          let category;
+          if (parent.options[parent.selectedIndex] != undefined) {
+            category = parent.options[parent.selectedIndex].value;
+          } else {
+            category = 0;
+          }
+
           let obj = {
             api: 'news-store',
             content: editables[0].innerHTML,
             alt: altText.value,
             imageTitle: newsImageTitle.value,
-            title: newsPostTitle.value
+            title: newsPostTitle.value,
+            catTitle: document.getElementById("category-name").value,
+            catContent: document.getElementById("category-description").value,
+            category: category
           }
+
           if (obj) {
             readImage.sendImageData(obj);
           }
-        },
-      );
+        });
     }
   }
 }
