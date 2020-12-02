@@ -1855,7 +1855,7 @@ __webpack_require__.r(__webpack_exports__);
 new _calendar_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.calendar');
 new _news__WEBPACK_IMPORTED_MODULE_5__["default"]('startNewsAdmin');
 new _newsList__WEBPACK_IMPORTED_MODULE_7__["default"]('startNweaList');
-new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('startTag');
+new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
 
 /***/ }),
 
