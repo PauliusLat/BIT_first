@@ -2536,17 +2536,19 @@ var Tag = /*#__PURE__*/function () {
 
           var pageBtn = document.getElementById("selectpage");
           var select = document.getElementById("items");
-          var pageSelected;
-
-          if (select.options[select.selectedIndex] != undefined) {
-            pageSelected = select.options[select.selectedIndex].value;
-          }
-
           pageBtn.addEventListener("click", function () {
+            var pageSelected;
+
+            if (select.options[select.selectedIndex] != undefined) {
+              pageSelected = select.options[select.selectedIndex].value;
+            } else {
+              pageSelected = 0;
+            }
+
             _this.pageSelected = pageSelected;
 
             _this.init(1);
-          }, false);
+          });
           var page = document.querySelectorAll(".paging");
 
           var _loop3 = function _loop3(_i2) {

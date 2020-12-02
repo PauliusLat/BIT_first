@@ -24,7 +24,7 @@ class Tag {
     init(pageNo = 1) {
 
         if (typeof pageNo == 'object' && this.hash.length !== 0) {
-console.log(pageNo);
+            console.log(pageNo);
             this.hasharr = this.hash.split('#')
             this.hasarr2 = this.hasharr[1].split('%')
             this.hash = hasarr2[0]
@@ -101,20 +101,21 @@ console.log(pageNo);
 
                     const pageBtn = document.getElementById("selectpage");
                     const select = document.getElementById("items");
-                    var pageSelected;
 
-                    if (select.options[select.selectedIndex] != undefined) {
-                        pageSelected = select.options[select.selectedIndex].value;
-                    }
                     pageBtn.addEventListener(
                         "click",
                         () => {
+                            var pageSelected;
+
+                            if (select.options[select.selectedIndex] != undefined) {
+                                pageSelected = select.options[select.selectedIndex].value;
+                           
+                            }else {
+                                pageSelected = 0;
+                              }
                             this.pageSelected = pageSelected
                             this.init(1);
-                        },
-
-                        false
-                    );
+                        });
 
 
                     const page = document.querySelectorAll(".paging");
