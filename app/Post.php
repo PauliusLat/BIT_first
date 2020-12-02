@@ -4,7 +4,6 @@ namespace BIT\app;
 
 use BIT\app\coreExeptions\wrongArgsTypeExeption;
 use BIT\app\Attachment;
-use BIT\app\Colection;
 use BIT\models\IdeaPost;
 use BIT\models\EventPost;
 use BIT\models\NewsPost;
@@ -38,7 +37,8 @@ class Post
                 $this->$var = $value;
             }
             foreach (get_post_meta($post_id) as $var => $value) {
-                $this->$var = $value[0];
+         
+                $this->$var = get_post_meta($post_id, $var, true);
             }
             $this->attachments = $this->getAttachments($this->ID);
         }
@@ -113,9 +113,6 @@ class Post
         $post['meta_input'] = $metaVars;
 
         if (isset($this->ID)) {
-            // add_action('init', function() use($post){
-            //     wp_update_post($post);
-            // });
             wp_update_post($post);
         } else {
             $postID = wp_insert_post($post, true);

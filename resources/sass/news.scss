@@ -104,9 +104,11 @@
     top      : 42%;
     left     : 85%;
     transform: translate(-50%, -50%);
-    .galleryUploade{
+
+    .galleryUploade {
         display: none;
     }
+
     .newsImgInputs {
         width : 100%;
         margin: 30px;
@@ -151,4 +153,24 @@
 
 .gallerBtn:hover {
     background-color: #d8d8d8;
+}
+
+.newsCat {
+    position        : absolute;
+    top             : 37%;
+    left            : 10%;
+    transform       : translate(-50%, -50%);
+    background-color: $light-silver-gray;
+    height          : 700px;
+    text-align      : center;
+    border-radius   : 10px;
+}
+
+.newsCatImage {
+    display: block;
+    margin : 0 auto;
+}
+
+.hideCat {
+    display: none;
 }

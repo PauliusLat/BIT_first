@@ -796,7 +796,7 @@ body {
 
 .btn-blue {
   box-shadow: 0px 1px 0px 0px #f0f7fa;
-  background: linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+  background: linear-gradient(to bottom, #5bb9db 5%, #3688a7 100%);
   background-color: #33bdef;
   border-radius: 6px;
   border: 1px solid #057fd0;
@@ -806,13 +806,13 @@ body {
   font-family: Arial;
   font-size: 15px;
   font-weight: bold;
-  padding: 11px 24px;
+  padding: 8px 18px;
   text-decoration: none;
   text-shadow: 0px -1px 0px #5b6178;
 }
 
 .btn-blue:hover {
-  background: linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+  background: linear-gradient(to bottom, #3688a7 5%, #5bb9db 100%);
   background-color: #019ad2;
 }
 
@@ -823,8 +823,8 @@ body {
 
 .btn-red {
   box-shadow: 0px 1px 0px 0px #f0f7fa;
-  background: linear-gradient(to bottom, #eb4934 5%, #cf0902 100%);
-  background-color: #eb4934;
+  background: linear-gradient(to bottom, #df7466 5%, #a31510 100%);
+  background-color: #e45542;
   border-radius: 6px;
   border: 1px solid #057fd0;
   display: inline-block;
@@ -833,14 +833,14 @@ body {
   font-family: Arial;
   font-size: 15px;
   font-weight: bold;
-  padding: 11px 24px;
+  padding: 8px 18px;
   text-decoration: none;
   text-shadow: 0px -1px 0px #5b6178;
 }
 
 .btn-red:hover {
-  background: linear-gradient(to bottom, #cf0902 5%, #eb4934 100%);
-  background-color: #cf0902;
+  background: linear-gradient(to bottom, #bd2a25 5%, #df7466 100%);
+  background-color: #af3531;
 }
 
 .btn-red:active {
@@ -860,7 +860,7 @@ body {
   font-family: Arial;
   font-size: 15px;
   font-weight: bold;
-  padding: 11px 24px;
+  padding: 8px 18px;
   text-decoration: none;
   text-shadow: 0px -1px 0px #5b6178;
 }
@@ -887,7 +887,7 @@ body {
   font-family: Arial;
   font-size: 15px;
   font-weight: bold;
-  padding: 11px 24px;
+  padding: 8px 18px;
   text-decoration: none;
   text-shadow: 0px -1px 0px #2f6627;
 }
@@ -1166,6 +1166,26 @@ body {
 
 .gallerBtn:hover {
   background-color: #d8d8d8;
+}
+
+.newsCat {
+  position: absolute;
+  top: 37%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  background-color: #B4B9BE;
+  height: 700px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.newsCatImage {
+  display: block;
+  margin: 0 auto;
+}
+
+.hideCat {
+  display: none;
 }
 
 /*-----------idejos-----------------*/
