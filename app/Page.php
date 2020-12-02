@@ -5,12 +5,12 @@ namespace BIT\app;
 class Page extends Post
 {
 
-    public $pageState = [];
+    public $pageState = 'Site Page';
     protected static $type = 'page';
 
-    public function setRoute($route)
+    public function setRoute($route, $args = '')
     {
-        $this->post_content  = "[front_shortcode route='$route']";
+        $this->post_content  = "[front_shortcode route='$route' args='$args']";
     }
 
     public function setTitle($post_title)

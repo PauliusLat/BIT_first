@@ -2,15 +2,15 @@
 
 namespace BIT\controllers;
 
-use BIT\app\Cookie;
-use BIT\app\View;
 use BIT\app\Server;
 use BIT\app\Session;
+use BIT\app\View;
 use BIT\models\IdeaPost;
-use BIT\app\App;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use BIT\models\NewsPost;
+
 
 class IdeaController
 {
@@ -20,7 +20,9 @@ class IdeaController
 
 	public function frontIndex()
 	{
-		return View::render('home.ideja');
+		$allNews = NewsPost::all()->all();
+		$output = View::adminRender('news.homeNews', ['html' =>  $allNews]);
+		return View::render('home.ideja', ["html" => $output]);
 	}
 
 	public function render(Request $request)
@@ -39,7 +41,6 @@ class IdeaController
 	public function create(Request $requestJson, Session $session)
 	{
 		$server = new Server;
-		$session = App::start()->getService('session');
 
 		$idea = new IdeaPost;
 
@@ -62,19 +63,16 @@ class IdeaController
 
 			$idea->save();
 		} else {
-			$like = $request->request->get('idea_like');
 			$array = [];
-			// var_dump($like);
-			// // $idBrowser = $server->getBrowser();
-			// // $id = $idBrowser['version'];
+			$like = $request->request->get('idea_like');
+			// $idBrowser = $server->getBrowser();
+			// $id = $idBrowser['version'];
 			// $array[] = $id;
 			$array[] = $like;
-			// var_dump($array);
-			$session->set('ideja', $array);
 			// $session->set('ideja', $array);
-			// $session->get('ideja');
-			// $session->deleteSession();
 			// var_dump($_COOKIE);
+			// var_dump($session->get('ideja'));
+			// $session->deleteSession();
 			// if ($session->get('id') != $array) {
 			$ideaLike = IdeaPost::get($like);
 			$ideaLike->idea_like = $ideaLike->idea_like + 1;
