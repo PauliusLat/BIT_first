@@ -4,27 +4,24 @@ use BIT\app\Page;
 
 ?>
 
-<div>
+<div class="sm-5-8  al wd">
+    <div class="news"> 
+        NAUJIENOS
+    </div>
     <?php foreach ($html as $news) : ?>
-        <form action=""></form>
-        <a href="<?= Page::get($news->post_parent)->getLink(); ?>"> <?= $news->post_title; ?></a>
-        <div class="1">
-            <?= $news->post_date; ?>
-        </div>
-        <h1 class="2">
-            <?= $news->post_title; ?>
-        </h1>
-        <?php $allImages = $news->attachments; ?>
-        <?php foreach ($allImages as $image) : ?>
-            <div>
-                <img src="<?= $image->getUrl(); ?>" alt="<?= $image->getAlt(); ?>">
+        <div class="postConteiner">
+            <h1 class="postTitle">
+                <a href="<?= Page::get($news->post_parent)->getLink(); ?>"> <?= $news->post_title; ?></a>
+            </h1>
+            <?php $allImages = $news->attachments; ?>
+            <?php foreach ($allImages as $image) : ?>
+                <div class="postImage">
+                    <img src="<?= $image->getUrl(); ?>" alt="<?= $image->getAlt(); ?>">
+                </div>
+            <?php endforeach; ?>
+            <div class="postContent">
+                <?= $news->news_content; ?>
             </div>
-        <?php endforeach; ?>
-        <div class="3">
-            <?= $news->news_content; ?>
-        </div>
-        <div class="4">
-
         </div>
     <?php endforeach; ?>
 </div>
