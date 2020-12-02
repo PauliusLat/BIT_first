@@ -31,7 +31,6 @@ class CategoryController
     public function create(Session $session)
     {
         $category = new Category;
-        // $session = Session::start();
         $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr()));
         $message = $session->get('alert_message');
         $success_message = $session->get('success_message');
@@ -68,13 +67,10 @@ class CategoryController
             $pageState[] = 'Site Page';
             $pageState[] = 'Category Page';
             $pageState[] = 'System Page';
-            // var_dump($pageState);
-            // $values = maybe_serialize($pageState);
             $page->pageState = $pageState;
             $page->setRoute('kategorija');
             $page->setTitle($name);
             $page->save();
-            // update_post_meta($page->ID, 'pageState', $pageState);
         }
 
         $category = new Category;

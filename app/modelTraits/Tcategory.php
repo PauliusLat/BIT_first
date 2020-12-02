@@ -3,7 +3,7 @@
 namespace BIT\app\modelTraits;
 
 use BIT\app\TaxCollection;
-use BIT\app\App;
+// use BIT\app\App;
 use BIT\app\coreExeptions\InitHookNotFiredException;
 use BIT\app\coreExeptions\PostIdNotSetException;
 
@@ -14,7 +14,7 @@ trait Tcategory
     {
         if (did_action('init')) {
             $cats = explode(', ', $cat);
-            foreach ($cats as $key => $term) {
+            foreach ($cats as $term) {
                 foreach ($this->getCats() as $post_term) {
                     if ($post_term->name == $term) {
                         $cat_ids[] = $post_term->term_id;
