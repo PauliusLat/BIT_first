@@ -18,7 +18,7 @@ new News('startNewsAdmin');
 
 new newsList('startNweaList');
 
-new Tag('startTag');
+new Tag('tagStart');
 
 
 

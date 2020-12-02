@@ -2092,3 +2092,7 @@ table th {
   height: 210px;
 }
 
+.paging {
+  cursor: pointer;
+}
+

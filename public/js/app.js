@@ -1839,7 +1839,7 @@ __webpack_require__.r(__webpack_exports__);
 new _calendar_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.calendar');
 new _news__WEBPACK_IMPORTED_MODULE_5__["default"]('startNewsAdmin');
 new _newsList__WEBPACK_IMPORTED_MODULE_7__["default"]('startNweaList');
-new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('startTag');
+new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
 
 /***/ }),
 
@@ -2433,23 +2433,26 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var Tag = /*#__PURE__*/function () {
-  function Tag() {
+  function Tag(target) {
     _classCallCheck(this, Tag);
 
     this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
     this.uri = document.location.origin;
-    this.tagStrt = document.getElementById("tagStart");
     this.pageSelected;
     this.hash = location.hash;
     this.hasharr;
     this.hasarr2;
+    this.target = target;
+    this.startTag();
   }
 
   _createClass(Tag, [{
     key: "startTag",
     value: function startTag() {
-      if (this.tagStrt) {
-        window.addEventListener("load", this.init(), false);
+      var DOM = document.getElementById(this.target);
+
+      if (DOM) {
+        this.init();
       }
     }
   }, {
@@ -2460,6 +2463,7 @@ var Tag = /*#__PURE__*/function () {
       var pageNo = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
       if (_typeof(pageNo) == 'object' && this.hash.length !== 0) {
+        console.log(pageNo);
         this.hasharr = this.hash.split('#');
         this.hasarr2 = this.hasharr[1].split('%');
         this.hash = hasarr2[0]; // window.addEventListener( "load",
@@ -2477,9 +2481,9 @@ var Tag = /*#__PURE__*/function () {
         this.hash = null;
       }
 
-      axios.post(uri + path + "tag_create", {
+      axios.post(this.uri + this.path + "tag_create", {
         pages: parseInt(pageNo),
-        pageSelected: pageSelected,
+        pageSelected: this.pageSelected,
         hash: this.hash
       }).then(function (response) {
         var test = document.querySelector(".test");
@@ -2501,7 +2505,7 @@ var Tag = /*#__PURE__*/function () {
 
             _this.tagStore(name, slug, description);
           });
-          var editBtn = tagStrt.querySelectorAll(".tag-edit");
+          var editBtn = document.querySelectorAll(".tag-edit");
 
           var _loop = function _loop(i) {
             var ID = editBtn[i].value;
@@ -2532,23 +2536,26 @@ var Tag = /*#__PURE__*/function () {
 
           var pageBtn = document.getElementById("selectpage");
           var select = document.getElementById("items");
-
-          if (pageSelected != undefined) {
-            select.value = pageSelected;
-          }
-
           pageBtn.addEventListener("click", function () {
-            pageSelected = select.options[select.selectedIndex].value;
-            select.value = pageSelected;
+            var pageSelected;
+
+            if (select.options[select.selectedIndex] != undefined) {
+              pageSelected = select.options[select.selectedIndex].value;
+            } else {
+              pageSelected = 0;
+            }
+
+            _this.pageSelected = pageSelected;
 
             _this.init(1);
-          }, false);
+          });
           var page = document.querySelectorAll(".paging");
 
           var _loop3 = function _loop3(_i2) {
             var pageNo = page[_i2].id;
 
             page[_i2].addEventListener("click", function () {
+              console.log(pageNo);
               location.hash = '#' + pageNo;
               _this.hash = location.hash;
 
@@ -2573,14 +2580,13 @@ var Tag = /*#__PURE__*/function () {
 
         console.log(error);
       });
-      ;
     }
   }, {
     key: "tagStore",
     value: function tagStore(name, slug, description) {
       var _this2 = this;
 
-      axios.post(uri + path + "tag_store", {
+      axios.post(this.uri + this.path + "tag_store", {
         tag_name: name,
         tag_slug: slug,
         tag_description: description
@@ -2598,7 +2604,7 @@ var Tag = /*#__PURE__*/function () {
     value: function tagEdit(editID, taxonomy) {
       var _this3 = this;
 
-      axios.post(uri + path + "tag_edit", {
+      axios.post(this.uri + this.path + "tag_edit", {
         editID: editID,
         taxonomy_type: taxonomy
       }).then(function (response) {
@@ -2627,7 +2633,7 @@ var Tag = /*#__PURE__*/function () {
       var name = document.getElementById("tag_name").value;
       var slug = document.getElementById("tag_slug").value;
       var description = document.getElementById("tag_description").value;
-      axios.post(uri + path + "tag_update", {
+      axios.post(this.uri + this.path + "tag_update", {
         updateId: updateId,
         tag_name: name,
         tag_slug: slug,
@@ -2648,7 +2654,7 @@ var Tag = /*#__PURE__*/function () {
     value: function tagDelete(ID, taxonomy) {
       var _this5 = this;
 
-      axios.post(uri + path + "tag_destroy", {
+      axios.post(this.uri + this.path + "tag_destroy", {
         deleteID: ID,
         taxonomy_type: taxonomy
       }).then(function (response) {
@@ -2668,7 +2674,7 @@ var Tag = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (Tag); // const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-// const uri = document.location.origin;
+// const this.uri = document.location.origin;
 // const tagStrt = document.getElementById("tagStart");
 // function startTag() {
 //   if (tagStrt) {

@@ -2,34 +2,39 @@
 
 class Tag {
 
-    constructor() {
+    constructor(target) {
         this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
         this.uri = document.location.origin;
-        this.tagStrt = document.getElementById("tagStart");
         this.pageSelected;
-        this.hash = location.hash
-        this.hasharr
-        this.hasarr2
+        this.hash = location.hash;
+        this.hasharr;
+        this.hasarr2;
+        this.target = target;
+        this.startTag();
     }
 
     startTag() {
-        if (this.tagStrt) {
-            window.addEventListener("load", this.init(), false);
+        const DOM = document.getElementById(this.target);
+
+        if (DOM) {
+            this.init();
         }
     }
 
     init(pageNo = 1) {
+
         if (typeof pageNo == 'object' && this.hash.length !== 0) {
+            console.log(pageNo);
             this.hasharr = this.hash.split('#')
             this.hasarr2 = this.hasharr[1].split('%')
             this.hash = hasarr2[0]
-                // window.addEventListener( "load",
-                // () =>{
-                // this.hasharr = this.hash.split('#')
-                // this.hasarr2 = this.hasharr[1].split('%')
-                // this.hash = this.hasarr2[0]
-                // this.hash = location.hash
-                // this.init();
+            // window.addEventListener( "load",
+            // () =>{
+            // this.hasharr = this.hash.split('#')
+            // this.hasarr2 = this.hasharr[1].split('%')
+            // this.hash = this.hasarr2[0]
+            // this.hash = location.hash
+            // this.init();
 
         } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
             this.hasharr = this.hash.split('#')
@@ -40,13 +45,13 @@ class Tag {
         }
 
         axios
-            .post(uri + path + "tag_create", {
+            .post(this.uri + this.path + "tag_create", {
                 pages: parseInt(pageNo),
-                pageSelected: pageSelected,
+                pageSelected: this.pageSelected,
                 hash: this.hash
             })
 
-        .then((response) => {
+            .then((response) => {
                 const test = document.querySelector(".test");
                 if (response.status == 200 && response.statusText == "OK") {
                     const HTML = response.data.html;
@@ -66,7 +71,7 @@ class Tag {
                         this.tagStore(name, slug, description);
                     });
 
-                    const editBtn = tagStrt.querySelectorAll(".tag-edit");
+                    const editBtn = document.querySelectorAll(".tag-edit");
 
                     for (let i = 0; i < editBtn.length; i++) {
                         let ID = editBtn[i].value;
@@ -96,19 +101,21 @@ class Tag {
 
                     const pageBtn = document.getElementById("selectpage");
                     const select = document.getElementById("items");
-                    if (pageSelected != undefined) {
-                        select.value = pageSelected
-                    }
+
                     pageBtn.addEventListener(
                         "click",
                         () => {
-                            pageSelected = select.options[select.selectedIndex].value;
-                            select.value = pageSelected
-                            this.init(1);
-                        },
+                            var pageSelected;
 
-                        false
-                    );
+                            if (select.options[select.selectedIndex] != undefined) {
+                                pageSelected = select.options[select.selectedIndex].value;
+                           
+                            }else {
+                                pageSelected = 0;
+                              }
+                            this.pageSelected = pageSelected
+                            this.init(1);
+                        });
 
 
                     const page = document.querySelectorAll(".paging");
@@ -118,6 +125,7 @@ class Tag {
                         page[i].addEventListener(
                             "click",
                             () => {
+                                console.log(pageNo);
                                 location.hash = '#' + pageNo
                                 this.hash = location.hash
                                 this.init(pageNo);
@@ -128,7 +136,7 @@ class Tag {
 
                 }
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);
                     console.log(error.response.status);
@@ -139,13 +147,13 @@ class Tag {
                     console.log("Error", error.message);
                 }
                 console.log(error);
-            });;
+            });
     }
 
 
     tagStore(name, slug, description) {
         axios
-            .post(uri + path + "tag_store", {
+            .post(this.uri + this.path + "tag_store", {
                 tag_name: name,
                 tag_slug: slug,
                 tag_description: description
@@ -162,7 +170,7 @@ class Tag {
 
     tagEdit(editID, taxonomy) {
         axios
-            .post(uri + path + "tag_edit", {
+            .post(this.uri + this.path + "tag_edit", {
                 editID: editID,
                 taxonomy_type: taxonomy,
             })
@@ -189,7 +197,7 @@ class Tag {
         const description = document.getElementById("tag_description").value;
 
         axios
-            .post(uri + path + "tag_update", {
+            .post(this.uri + this.path + "tag_update", {
                 updateId: updateId,
                 tag_name: name,
                 tag_slug: slug,
@@ -204,14 +212,14 @@ class Tag {
                 }
             })
 
-        .catch((err) => {
-            console.log(err instanceof TypeError);
-        });
+            .catch((err) => {
+                console.log(err instanceof TypeError);
+            });
     }
 
     tagDelete(ID, taxonomy) {
         axios
-            .post(uri + path + "tag_destroy", {
+            .post(this.uri + this.path + "tag_destroy", {
                 deleteID: ID,
                 taxonomy_type: taxonomy,
             })
@@ -233,7 +241,7 @@ export default Tag;
 
 
 // const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-// const uri = document.location.origin;
+// const this.uri = document.location.origin;
 // const tagStrt = document.getElementById("tagStart");
 
 // function startTag() {
