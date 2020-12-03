@@ -1,6 +1,6 @@
 <?php
 
-use BIT\app\Category;
+// use BIT\app\Category;
 ?>
 
 <div class='catCreate grid-container'>
@@ -47,11 +47,11 @@ use BIT\app\Category;
         <ul style="display:inline-block">
             <?php wp_dropdown_categories($args); ?>
         </ul>
+
         <br><br>
 
         <input type="checkbox" id="catPage" name="catPage" value="catPage">
         <label for="catPage">Sukurti kategorijos puslapį</label><br>
-
 
         <div class='label'>
             <label class="tcp-label">Kategorijos aprašymas</label>
@@ -92,7 +92,9 @@ use BIT\app\Category;
             <th>Veiksmai</th>
             <?php
             foreach ($categories as $cat) {
-                $cat->image = get_term_meta($cat->term_id, "my_term_key");
+
+                //tvarkyti sita
+                $cat->image = get_term_meta($cat->term_id, "image");
             ?>
                 <tr>
                     <td><?= str_repeat('--', $cat->level) ?><?= $cat->name ?></td>
@@ -101,6 +103,7 @@ use BIT\app\Category;
                     <td><?= $cat->description ?></td>
                     <?php
                     if ($cat->image) {
+
                     ?>
                         <td><?php foreach ($cat->image as $key => $value) {
                                 if ($key == 0) {

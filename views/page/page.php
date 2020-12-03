@@ -5,9 +5,9 @@
     <div class="sm-1-2">
         <h2 class='tcp'>Pridėkite naują puslapį</h2>
         <div class='label'>
-            <label class="tcp-label">Puslapio pavadinimas</label>
+            <label class="tcp-label">Puslapio antraštė</label>
         </div>
-        <input type="text" name="page-name" id="page-name" value="" placeholder="Įrašykite puslapio pavadinimą..." class="tcp-input">
+        <input type="text" name="page_title" id="page_title" value="" placeholder="Įrašykite puslapio pavadinimą..." class="tcp-input">
         <div class='label'>
             <label class="tcp-label">Pasirinkite post'o tipą</label>
         </div>
@@ -30,24 +30,25 @@
 
     <div class="sm-1-2">
         <table>
-            <th>Pavadinimas</th>
+            <th>Antraštė</th>
             <th>Nuoroda</th>
-            <!-- <th>Post name</th> -->
-            <th>Page state</th>
+            <!-- <th>Puslapio pavadinimas</th> -->
+            <th>Puslapio rūšis</th>
             <th>Veiksmai</th>
             <?php
             foreach ($pages as $page) {
             ?>
                 <tr>
                     <td><?= $page->post_title ?></td>
-                    <td><a href='<?= $page->guid ?>'>Eiti į puslapį</a></td>
-                    <!-- <td><?= $page->post_name ?></td> -->
                     <td>
                         <?php
-                        $pageState = get_post_meta($page->ID, 'pageState', true);
-                        // $pageState = $page->pageState;
-                        // var_dump($pageState);
-                        foreach ($pageState as $value) {
+                        $pageLink = $page->getLink();
+                        ?>
+                        <a href="<?= $pageLink ?>"><?= $pageLink ?></a>
+                    </td>
+                    <td>
+                        <?php
+                        foreach ($page->pageState as $value) {
                         ?>
                             <div><?= $value ?></div>
                         <?php

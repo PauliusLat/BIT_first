@@ -23,10 +23,11 @@ class PageController
         return View::adminRender('page.mainpage');
     }
 
-    public function create()
+    public function create(Page $page)
     {
         $pages = Page::all()->all();
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
+        // $pageLink = $page->getLink();
         $output = View::adminRender('page.page', ["pages" => $pages, 'post_types' => $post_types]);
         return new JsonResponse(['html' => $output]);
     }
@@ -45,27 +46,26 @@ class PageController
         return new Response;
     }
 
-    public function edit(Request $requestJson, Page $page)
+    public function edit(Page $page)
     {
-        $request = $this->decodeRequest($requestJson);
-        $request->request->get('editID');
+        // $request = $this->decodeRequest($requestJson);
+        // $request->request->get('editID');
         $output = View::adminRender('page.edit',  ['page' => $page]);
         return new JsonResponse(['html' => $output]);
     }
 
     public function update(Request $requestJson, Page $page)
     {
-
         $request = $this->decodeRequest($requestJson);
         $page->post_title = $request->request->get('page_title');
+        $page->post_name = $request->request->get('page_name');
         $page->save();
-        // $pages = Page::all()->all();
         $output = View::adminRender('page.page');
         $response = new JsonResponse(['html' => $output]);
         return $response;
     }
 
-    public function destroy(Request $requestJson, Page $page)
+    public function destroy(Page $page)
     {
         // $request = $this->decodeRequest($requestJson);
         $page->delete();

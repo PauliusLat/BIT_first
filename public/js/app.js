@@ -1023,6 +1023,10 @@ var Api = /*#__PURE__*/function () {
           formData.append('page', obj.page);
         }
 
+        if (obj.cat_parent) {
+          formData.append('cat_parent', obj.cat_parent);
+        }
+
         console.log(Object.fromEntries(formData));
         axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
           if (error.response) {
@@ -1544,7 +1548,6 @@ function init() {
           selectedPage = 0;
         }
 
-        console.log(selectedPage);
         catStore(name, select, slug, description, selectedPage);
       });
       var editBtn = catStrt.querySelectorAll(".category-edit");
@@ -1619,6 +1622,7 @@ function catStore(name, select, slug, description, selectedPage) {
 }
 
 function catEdit(editID, taxonomy) {
+  console.log(name);
   axios.post(uri + path + "category_edit", {
     editID: editID,
     taxonomy_type: taxonomy
@@ -1642,6 +1646,7 @@ function catEdit(editID, taxonomy) {
 
 function catUpdate(updateId) {
   var name = document.getElementById("category_name").value;
+  console.log(name);
   var slug = document.getElementById("category_slug").value;
   var description = document.getElementById("category_description").value;
   axios.post(uri + path + "category_update", {
@@ -2216,14 +2221,14 @@ function init() {
       test.innerHTML = HTML;
       var submit = document.getElementById("create");
       submit.addEventListener("click", function () {
-        var name = document.getElementById("page-name").value; //   const slug = document.getElementById("post-slug").value;
-        //   const description = document.getElementById("page-description").value;
+        var title = document.getElementById("page_title").value;
+        var name = document.getElementById("page_name").value; //   const description = document.getElementById("page-description").value;
 
         var post = document.getElementById('post'); // console.log(post);
 
         var select = post.options[post.selectedIndex].value; // console.log(select);  
 
-        pageStore(name, select);
+        pageStore(title, select, name);
       });
       var editBtn = pageStrt.querySelectorAll(".page-edit");
 
@@ -2270,10 +2275,10 @@ function init() {
   1;
 }
 
-function pageStore(name, select) {
+function pageStore(title, select, name) {
   axios.post(uri + path + "page_store", {
-    page_title: name,
-    //   page_slug: slug,
+    page_title: title,
+    page_name: name,
     post_type: select
   }).then(function (response) {
     console.log(response);
@@ -2281,7 +2286,7 @@ function pageStore(name, select) {
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
   });
-  document.getElementById("page-name").value = "";
+  document.getElementById("page_name").value = "";
 }
 
 function pageEdit(ID) {
@@ -2306,11 +2311,14 @@ function pageEdit(ID) {
 }
 
 function pageUpdate(updateId) {
-  var title = document.getElementById("page_name").value;
+  var title = document.getElementById("page_title").value;
+  console.log(title);
+  var name = document.getElementById("page_name").value;
+  console.log(name);
   axios.post(uri + path + "page_update&id=" + updateId, {
     updateId: updateId,
-    page_title: title //   page_slug: slug,
-    //   page_description: description
+    page_title: title,
+    page_name: name //   page_description: description
 
   }).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {

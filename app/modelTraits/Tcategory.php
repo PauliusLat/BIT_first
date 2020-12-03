@@ -83,6 +83,12 @@ trait Tcategory
         return $cat;
     }
 
+    //adds page to category
+    public function addPageToCat(int $term_id, string $meta_key, int $page_id)
+    {
+        add_term_meta($term_id, $meta_key, $page_id);
+    }
+
     //adds image to category
     public function addImageToCat(int $term_id, string $meta_key, $image)
     {

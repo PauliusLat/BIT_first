@@ -49,8 +49,6 @@ function init() {
             selectedPage = 0;
           }
 
-          console.log(selectedPage)
-
           catStore(name, select, slug, description, selectedPage);
         });
 
@@ -135,6 +133,7 @@ console.log(typeof selectedPage)
 
 function catEdit(editID, taxonomy) {
 
+  console.log(name)
   axios
     .post(uri + path + "category_edit", {
       editID: editID,
@@ -159,6 +158,7 @@ function catEdit(editID, taxonomy) {
 
 function catUpdate(updateId) {
   const name = document.getElementById("category_name").value;
+  console.log(name)
   const slug = document.getElementById("category_slug").value;
   const description = document.getElementById("category_description").value;
 

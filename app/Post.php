@@ -37,7 +37,7 @@ class Post
                 $this->$var = $value;
             }
             foreach (get_post_meta($post_id) as $var => $value) {
-         
+
                 $this->$var = get_post_meta($post_id, $var, true);
             }
             $this->attachments = $this->getAttachments($this->ID);

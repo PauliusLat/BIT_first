@@ -38,8 +38,7 @@ class CategoryController
         $path = $uploads_dir['url'] . '/';
         $url = $path;
         $output = View::adminRender('category.category',  ['categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'url' => $url]);
-        $response = new JsonResponse(['html' => $output]);
-        return $response;
+        return new JsonResponse(['html' => $output]);
     }
 
     public function store(Request $request, Session $session)
@@ -64,9 +63,13 @@ class CategoryController
         $createPage = $request->request->get('page');
         if ($createPage == 1) {
             $page = new Page();
-            $pageState[] = 'Site Page';
-            $pageState[] = 'Category Page';
-            $pageState[] = 'System Page';
+            $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
+            $pageState = [];
+            foreach ($page_state as $state => $value) {
+                if ($state == 'category' || $state == 'site' || $state == 'system') {
+                    array_push($pageState, $value);
+                }
+            }
             $page->pageState = $pageState;
             $page->setRoute('kategorija');
             $page->setTitle($name);
@@ -74,8 +77,9 @@ class CategoryController
         }
 
         $category = new Category;
-
         $category->addCat($name, $parent_id, $slug,  $description);
+        $catID =  $category->getCatId($name);
+        $category->addPageToCat($catID, 'page', $page->ID);
 
         if ($request->files->get('image')) {
             $uploads_dir = wp_upload_dir();
@@ -84,10 +88,10 @@ class CategoryController
             move_uploaded_file($_FILES["image"]["tmp_name"], "$path/$target_file");
             $picture = $request->files->get('image')->getClientOriginalName();
             $catID =  $category->getCatId($name);
-            $category->addImageToCat($catID, "my_term_key", $picture);
+            $category->addImageToCat($catID, "image", $picture);
         }
 
-        return  new JsonResponse;
+        return new JsonResponse;
     }
 
     public function edit(Request $requestJson)
@@ -98,8 +102,7 @@ class CategoryController
         $taxonomy_type = $request->request->get('taxonomy_type');
         $category = $category->getCat($id, $taxonomy_type);
         $output = View::adminRender('category.edit',  ['category' => $category]);
-        $response = new JsonResponse(['html' => $output]);
-        return $response;
+        return new JsonResponse(['html' => $output]);
     }
 
     public function update(Request $requestJson)
@@ -113,8 +116,7 @@ class CategoryController
         $category->updateCat($id, $name, $slug, $description);
         $categories = $category->getAllCats();
         $output = View::adminRender('category.category',  ["categories" => $categories]);
-        $response = new JsonResponse(['html' => $output]);
-        return $response;
+        return new JsonResponse(['html' => $output]);
     }
 
     public function destroy(Request $requestJson)
