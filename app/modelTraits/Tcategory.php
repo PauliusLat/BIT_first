@@ -43,7 +43,10 @@ trait Tcategory
                 if (did_action('init')) {
                     $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
                     foreach ($cat as $key) {
-                        wp_insert_term($key, $value, $args);
+                        // wp_insert_term($key, $value, $args);
+                        $category = wp_insert_term($key, $value, $args);
+                        $catId = $category['term_id'];
+                        return $catId;
                     }
                 } else {
                     throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
@@ -80,6 +83,12 @@ trait Tcategory
     public function getCat($id, $taxonony_type = 'maincat')
     {
         $cat = get_term_by('id', $id, $taxonony_type);
+        return $cat;
+    }
+
+    public function getCatbyName($name, $taxonony_type = 'maincat')
+    {
+        $cat = get_term_by('name', $name, $taxonony_type);
         return $cat;
     }
 

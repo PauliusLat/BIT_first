@@ -4,7 +4,7 @@ namespace BIT\controllers;
 
 // use BIT\app\App;
 use BIT\app\View;
-// use BIT\app\Attachment;
+use BIT\app\Attachment;
 // use BIT\models\NewsPost;
 // use BIT\models\AlbumPost;
 use BIT\app\Category;
@@ -35,14 +35,14 @@ class CategoryController
         $message = $session->get('alert_message');
         $success_message = $session->get('success_message');
         $uploads_dir = wp_upload_dir();
-        $path = $uploads_dir['url'] . '/';
-        $url = $path;
+        $url = $uploads_dir['url'] . '/';
         $output = View::adminRender('category.category',  ['categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'url' => $url]);
         return new JsonResponse(['html' => $output]);
     }
 
     public function store(Request $request, Session $session)
     {
+        $category = new Category;
         $name = $request->request->get('title');
         $slug = $request->request->get('slug');
         $description = $request->request->get('content');
@@ -52,7 +52,8 @@ class CategoryController
             $parent_id = 0;
         }
 
-        $categ = get_term_by('name', $name, 'maincat');
+        //check if category ex 
+        $categ = $category->getCatbyName($name);
         if ($categ->name == $name) {
             $session->flash('alert_message', 'tokiu pavadinimu kategorija jau sukurta');
             $categ->name != $name;
@@ -60,6 +61,11 @@ class CategoryController
             $session->flash('success_message', 'kategorija sėkmingai sukurta');
         }
 
+        //add category to db and get cat ID
+        $catID = $category->addCat($name, $parent_id, $slug,  $description);
+
+
+        // create category page if selected
         $createPage = $request->request->get('page');
         if ($createPage == 1) {
             $page = new Page();
@@ -74,14 +80,19 @@ class CategoryController
             $page->setRoute('kategorija');
             $page->setTitle($name);
             $page->save();
+            $category->addPageToCat($catID, 'page', $page->ID);
         }
 
-        $category = new Category;
-        $category->addCat($name, $parent_id, $slug,  $description);
-        $catID =  $category->getCatId($name);
-        $category->addPageToCat($catID, 'page', $page->ID);
 
+        //add category image
         if ($request->files->get('image')) {
+            // $file = $request->files->get('image');
+            // $image = new Attachment();
+            // $image->setAlt('');
+            // $image->setCaption('');
+            // $image->save($file, $catID);
+            // _dc($image);
+
             $uploads_dir = wp_upload_dir();
             $path = $uploads_dir['path'] . '/';
             $target_file = basename($_FILES['image']['name']);
@@ -111,11 +122,12 @@ class CategoryController
         $request = $this->decodeRequest($requestJson);
         $name = $request->request->get('cat_name');
         $slug = $request->request->get('cat_slug');
+        // _dc($slug);
         $description = $request->request->get('cat_description');
         $id = $request->request->get('updateId');
         $category->updateCat($id, $name, $slug, $description);
-        $categories = $category->getAllCats();
-        $output = View::adminRender('category.category',  ["categories" => $categories]);
+        // $categories = $category->getAllCats();
+        $output = View::adminRender('category.category');
         return new JsonResponse(['html' => $output]);
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-// use BIT\app\Category;
+use BIT\app\Category;
 // use BIT\app\Query;
 // use BIT\app\Tag;
 // use BIT\app\Attachment;
@@ -64,8 +64,15 @@ App::start();
 
 // use BIT\models\NewsPost;
 // add_action('init', function () {
+    // $args = ['parent' => 0, 'description' => '', 'slug' => '', 'taxonomy_type' => 'maincat'];
+    // $category = new Category;
+    // $cat = $category->addCat('vanduo');
 
+    // _dc($cat);
+    // $category = new Category;
 
+    // $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr()));
+    // _dc($categories);
 
 
     // $x = NewsPost::get(1628);

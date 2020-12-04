@@ -8,6 +8,7 @@ const readImage = new Profile_image();
 
 function startCat() {
   if (catStrt) {
+
     window.addEventListener("load", init, false);
   }
 }
@@ -19,15 +20,12 @@ function init() {
     .then(function (response) {
       const test = document.querySelector(".innercat");
 
-
       if (response.status == 200 && response.statusText == "OK") {
         
         const HTML = response.data.html;
         test.innerHTML = HTML;
 
-
         readImage.image();
-
         const submit = document.getElementById("create");
 
         submit.addEventListener("click", () => {
@@ -92,21 +90,6 @@ function init() {
   1;
 }
 
-// function catStore(name, select, slug, description) {
-
-//   let obj = {
-//     api:"category_store",
-//     title: name,
-//     slug: slug,
-//     content: description,
-//     cat_parent: select
-//   }
-//   if (obj) {
-//     readImage.sendImageData(obj);
-//   }
-
-//   document.getElementById("category-name").value = "";
-// }
 
 function catStore(name, select, slug, description, selectedPage) {
 console.log(typeof selectedPage)
@@ -135,7 +118,7 @@ function catEdit(editID, taxonomy) {
 
   console.log(name)
   axios
-    .post(uri + path + "category_edit", {
+    .post(uri + path + "category_edit&id="+editID,{
       editID: editID,
       taxonomy_type: taxonomy,
     })
@@ -158,10 +141,12 @@ function catEdit(editID, taxonomy) {
 
 function catUpdate(updateId) {
   const name = document.getElementById("category_name").value;
-  console.log(name)
   const slug = document.getElementById("category_slug").value;
   const description = document.getElementById("category_description").value;
 
+  console.log(name)
+  console.log(slug)
+  console.log(description)
   axios
     .post(uri + path + "category_update", {
       updateId: updateId,
@@ -177,7 +162,7 @@ function catUpdate(updateId) {
         // setTimeout(call.init(), 500);
       }
     })
-
+  
     .catch((err) => {
       console.log(err instanceof TypeError);
     });

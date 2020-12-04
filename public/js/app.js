@@ -1587,20 +1587,7 @@ function init() {
     console.log(error);
   });
   1;
-} // function catStore(name, select, slug, description) {
-//   let obj = {
-//     api:"category_store",
-//     title: name,
-//     slug: slug,
-//     content: description,
-//     cat_parent: select
-//   }
-//   if (obj) {
-//     readImage.sendImageData(obj);
-//   }
-//   document.getElementById("category-name").value = "";
-// }
-
+}
 
 function catStore(name, select, slug, description, selectedPage) {
   console.log(_typeof(selectedPage));
@@ -1623,7 +1610,7 @@ function catStore(name, select, slug, description, selectedPage) {
 
 function catEdit(editID, taxonomy) {
   console.log(name);
-  axios.post(uri + path + "category_edit", {
+  axios.post(uri + path + "category_edit&id=" + editID, {
     editID: editID,
     taxonomy_type: taxonomy
   }).then(function (response) {
@@ -1646,9 +1633,11 @@ function catEdit(editID, taxonomy) {
 
 function catUpdate(updateId) {
   var name = document.getElementById("category_name").value;
-  console.log(name);
   var slug = document.getElementById("category_slug").value;
   var description = document.getElementById("category_description").value;
+  console.log(name);
+  console.log(slug);
+  console.log(description);
   axios.post(uri + path + "category_update", {
     updateId: updateId,
     cat_name: name,
