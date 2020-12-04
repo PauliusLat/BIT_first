@@ -78,28 +78,12 @@
         <?php wp_dropdown_categories($args); ?>
     </ul>
     <br><br>
-
+    <div class="showAllSelected">
+    </div>
     <div class=''>
         <label class="tcp-label">Kategorijos aprašymas</label>
     </div>
     <textarea name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="tcp-input"></textarea>
-
-    <div class="categoriImageGrid sm-1">
-        <h2 class="tcp">
-            Kategorijos paveikslėlis
-        </h2>
-        <div class="galleryContainer cat" id="loadeGallery">
-            <output class="" id='result'>
-                <div id="message">
-                    <div class="wrapper cat">
-                        <div class="file-upload newsCatImage">
-                            <label for="files"><span>&#43;</span></label>
-                            <input class="galleryImage" type="file" id='files1' name="img" accept="image/*">
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
 
     <div class="buttons sm-1">
         <button type="submit" id="create" class="btn-blue">Pridėti</button>

@@ -1019,9 +1019,11 @@ var Api = /*#__PURE__*/function () {
           formData.append('catContent', obj.catContent);
         }
 
+
         if (obj.page) {
           formData.append('page', obj.page);
         }
+
 
         if (obj.cat_parent) {
           formData.append('cat_parent', obj.cat_parent);
@@ -1598,6 +1600,7 @@ function catStore(name, select, slug, description, selectedPage) {
     page: selectedPage,
     content: description,
     cat_parent: select
+
   }; // console.log(obj)
 
   if (obj) {
@@ -1908,6 +1911,8 @@ var News = /*#__PURE__*/function () {
         var newsCatBtn = document.getElementById("create");
         category.addEventListener("click", function () {
           newsCat.style.display = "";
+          var selectCat = document.getElementById("cat");
+          selectCat.setAttribute("multiple", "multiple");
         });
         tag.addEventListener("click", function () {
           console.log(1111111111);
@@ -1915,16 +1920,46 @@ var News = /*#__PURE__*/function () {
         newsCatBtn.addEventListener("click", function () {
           newsCat.style.display = "none";
         });
-        button.addEventListener("click", function () {
-          var parent = document.getElementById('cat');
-          var category;
+        var select = document.getElementById('cat');
+        var showAll = document.querySelector(".showAllSelected");
+        var cat = [];
+        var filteredAry = [];
+        var tempCat = [];
 
-          if (parent.options[parent.selectedIndex] != undefined) {
-            category = parent.options[parent.selectedIndex].value;
-          } else {
-            category = 0;
+        select.onchange = function () {
+          var options = select.getElementsByTagName('option'),
+              values;
+          var text;
+
+          for (var i = options.length; i--;) {
+            if (options[i].selected) values = options[i].value;
+            if (options[i].selected) text = options[i].innerText;
           }
 
+          var showCat = document.createElement("div");
+          var span = document.createElement("span");
+          span.className = "closeCat";
+          span.setAttribute("id", values);
+          showCat.className = "selectedCat";
+          span.innerHTML = "X";
+          showCat.innerHTML = text.replace(/\s+/g, "");
+          showAll.appendChild(span);
+          showAll.appendChild(showCat);
+          cat.push(values);
+          var closeCat = document.querySelectorAll(".closeCat");
+          var selectedCat = document.querySelectorAll(".selectedCat");
+          closeCat[closeCat.length - 1].addEventListener("click", function () {
+            tempCat.push(closeCat[closeCat.length - 1].id);
+            filteredAry = cat.filter(function (e) {
+              return e !== closeCat[closeCat.length - 1].id;
+            });
+            cat = filteredAry;
+            closeCat[closeCat.length - 1].remove();
+            selectedCat[closeCat.length - 1].remove();
+          });
+        };
+
+        button.addEventListener("click", function () {
           var obj = {
             api: 'news-store',
             content: editables[0].innerHTML,
@@ -1933,11 +1968,13 @@ var News = /*#__PURE__*/function () {
             title: newsPostTitle.value,
             catTitle: document.getElementById("category-name").value,
             catContent: document.getElementById("category-description").value,
-            category: category
+            category: cat
           };
 
-          if (obj) {
+          if (obj.imageTitle) {
             readImage.sendImageData(obj);
+          } else {
+            alert("Not written the title !!!");
           }
         });
       }
