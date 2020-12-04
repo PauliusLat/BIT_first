@@ -94,7 +94,6 @@
                     float : right;
                 }
             }
-
         }
     }
 }
@@ -164,6 +163,53 @@
     height          : 700px;
     text-align      : center;
     border-radius   : 10px;
+
+    .cat {
+        width: 100%;
+    }
+
+    option {
+        line-height: 20px;
+        font-size  : 16px;
+    }
+
+    option:first-child {
+        pointer-events: none;
+    }
+
+    .showAllSelected {
+        display   : inline-block;
+        text-align: left;
+        margin    : 0 0 20px 0;
+        width     : 100%;
+
+        .selectedCat {
+            border     : 2px solid #cccccc;
+            width      : 40%;
+            margin     : 0 0 0 30%;
+            line-height: 20px;
+            font-size  : 16px;
+        }
+
+        .selectedCat:hover {
+            background-color: $dark-silver-gray;
+        }
+
+        .closeCat {
+            width : 10%;
+            float : right;
+            margin: 3px 24% 0 0;
+        }
+
+        .closeCat:hover {
+            color : $red;
+            cursor: pointer;
+        }
+    }
+
+    option {
+        line-height: 16px;
+    }
 }
 
 .newsCatImage {

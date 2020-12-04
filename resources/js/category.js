@@ -114,7 +114,6 @@ function catStore(name, select, slug, description) {
     cat_parent: select
   }
 
-  console.log(obj)
   if (obj) {
     readImage.sendImageData(obj);
   }
