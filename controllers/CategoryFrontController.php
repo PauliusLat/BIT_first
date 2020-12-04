@@ -18,8 +18,8 @@ class CategoryFrontController
 
 	public function index()
 	{
-		$request = App::start()->getService('request');
-		var_dump($request);
+
+		// var_dump($request);
 		return View::render('catfront.cat');
 		// return View::adminRender('catfront.cat');
 	}

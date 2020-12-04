@@ -2,19 +2,19 @@
 
 namespace BIT\controllers;
 
-use BIT\app\App;
+// use BIT\app\App;
 use BIT\app\View;
 use BIT\app\Attachment;
-use BIT\models\NewsPost;
-use BIT\models\AlbumPost;
+// use BIT\models\NewsPost;
+// use BIT\models\AlbumPost;
 use BIT\app\Category;
 use BIT\app\Session;
-use BIT\app\Tag;
+// use BIT\app\Tag;
 use BIT\app\Page;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+// use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 require PLUGIN_DIR_PATH . '/../../../wp-load.php';
 require_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -28,22 +28,21 @@ class CategoryController
         return View::adminRender('category.maincat');
     }
 
-    public function create(Request $request, Session $session)
+    public function create(Session $session)
     {
         $category = new Category;
         $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr()));
         $message = $session->get('alert_message');
         $success_message = $session->get('success_message');
         $uploads_dir = wp_upload_dir();
-        $path = $uploads_dir['url'] . '/';
-        $url = $path;
+        $url = $uploads_dir['url'] . '/';
         $output = View::adminRender('category.category',  ['categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'url' => $url]);
-        $response = new JsonResponse(['html' => $output]);
-        return $response;
+        return new JsonResponse(['html' => $output]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Session $session)
     {
+        $category = new Category;
         $name = $request->request->get('title');
         $slug = $request->request->get('slug');
         $description = $request->request->get('content');
@@ -53,27 +52,57 @@ class CategoryController
             $parent_id = 0;
         }
 
-        $page = new Page();
-        $page->pageState = 'Category Page';
-        $page->setRoute('kategorija');
-        $page->setTitle($name);
-        $page->save();
+        //check if category ex 
+        $categ = $category->getCatbyName($name);
+        if ($categ->name == $name) {
+            $session->flash('alert_message', 'tokiu pavadinimu kategorija jau sukurta');
+            $categ->name != $name;
+        } else {
+            $session->flash('success_message', 'kategorija sėkmingai sukurta');
+        }
 
-        $category = new Category;
-        $category->addCat($name, $parent_id, $slug,  $description);
+        //add category to db and get cat ID
+        $catID = $category->addCat($name, $parent_id, $slug,  $description);
 
 
+        // create category page if selected
+        $createPage = $request->request->get('page');
+        if ($createPage == 1) {
+            $page = new Page();
+            $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
+            $pageState = [];
+            foreach ($page_state as $state => $value) {
+                if ($state == 'category' || $state == 'site' || $state == 'system') {
+                    array_push($pageState, $value);
+                }
+            }
+            $page->pageState = $pageState;
+            $page->setRoute('kategorija');
+            $page->setTitle($name);
+            $page->save();
+            $category->addPageToCat($catID, 'page', $page->ID);
+        }
+
+
+        //add category image
         if ($request->files->get('image')) {
+            // $file = $request->files->get('image');
+            // $image = new Attachment();
+            // $image->setAlt('');
+            // $image->setCaption('');
+            // $image->save($file, $catID);
+            // _dc($image);
+
             $uploads_dir = wp_upload_dir();
             $path = $uploads_dir['path'] . '/';
             $target_file = basename($_FILES['image']['name']);
             move_uploaded_file($_FILES["image"]["tmp_name"], "$path/$target_file");
             $picture = $request->files->get('image')->getClientOriginalName();
             $catID =  $category->getCatId($name);
-            $category->addImageToCat($catID, "my_term_key", $picture);
+            $category->addImageToCat($catID, "image", $picture);
         }
 
-        return  new JsonResponse;
+        return new JsonResponse;
     }
 
     public function edit(Request $requestJson)
@@ -84,8 +113,7 @@ class CategoryController
         $taxonomy_type = $request->request->get('taxonomy_type');
         $category = $category->getCat($id, $taxonomy_type);
         $output = View::adminRender('category.edit',  ['category' => $category]);
-        $response = new JsonResponse(['html' => $output]);
-        return $response;
+        return new JsonResponse(['html' => $output]);
     }
 
     public function update(Request $requestJson)
@@ -94,13 +122,13 @@ class CategoryController
         $request = $this->decodeRequest($requestJson);
         $name = $request->request->get('cat_name');
         $slug = $request->request->get('cat_slug');
+        // _dc($slug);
         $description = $request->request->get('cat_description');
         $id = $request->request->get('updateId');
         $category->updateCat($id, $name, $slug, $description);
-        $categories = $category->getAllCats();
-        $output = View::adminRender('category.category',  ["categories" => $categories]);
-        $response = new JsonResponse(['html' => $output]);
-        return $response;
+        // $categories = $category->getAllCats();
+        $output = View::adminRender('category.category');
+        return new JsonResponse(['html' => $output]);
     }
 
     public function destroy(Request $requestJson)

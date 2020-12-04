@@ -16,10 +16,12 @@ class IdeaController {
 	public function __construct() {
 	}
 
+
 	public function frontIndex() {
 		$allNews = NewsPost::all()->all();
 		$output = View::adminRender('news.homeNews', ['html' =>  $allNews]);
 		return View::render('home.ideja',["html" => $output]);
+
 	}
 
 	public function render(Request $request) {

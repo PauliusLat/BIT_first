@@ -3,8 +3,9 @@
 namespace BIT\app;
 
 use BIT\app\Cookie;
-use BIT\app\App;
+// use BIT\app\App;
 use BIT\app\Session;
+use BIT\app\coreExeptions\SessionArgsExeption;
 
 // use session
 
@@ -14,7 +15,7 @@ class Transient
     private $name;
     private $value;
     private $newValue;
-    private $setValue;
+    // private $setValue;
 
     public static function start()
     {
@@ -48,6 +49,7 @@ class Transient
         delete_transient($this->name);
     }
 
+
     public function __get($dir)
     {
         return $this->$dir;
@@ -56,6 +58,11 @@ class Transient
     public function __destruct()
     {
         $setValue = Session::$array;
-        set_transient($this->name, $setValue);
+        if ($this->name != 0 && $this->name != null && $this->name != null && $this->name != '' && is_array($setValue)) {
+            // _dc($setValue);
+            set_transient($this->name, $setValue);
+        } else {
+            throw new SessionArgsExeption('Error: session set should be an array and name can not be set');
+        }
     }
 }

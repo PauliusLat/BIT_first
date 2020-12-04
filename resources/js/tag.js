@@ -490,4 +490,3 @@ export default Tag;
 //   const description = document.getElementById("tag-description").value;
 //   tagStore(name, slug, description);
 // });
-// }
