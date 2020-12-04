@@ -1,6 +1,6 @@
 <?php
 
-use BIT\app\Category;
+// use BIT\app\Category;
 ?>
 
 <div class='catCreate grid-container'>
@@ -9,8 +9,17 @@ use BIT\app\Category;
     </div>
 
     <div class="sm-1-2">
-        <div class='message'><?= $message ?></div>
-        <div class='success_message'><?= $sucess_message ?></div>
+        <?php
+        if ($message) {
+        ?>
+            <div class='message'><?= $message ?></div>
+        <?php
+        } else {
+        ?>
+            <div class='success_message'><?= $success_message ?></div>
+        <?php
+        } ?>
+
         <h2 class='tcp'>Pridėkite naują kategoriją</h2>
         <div class='label'>
             <label class="tcp-label">Kategorijos pavadinimas</label>
@@ -38,7 +47,11 @@ use BIT\app\Category;
         <ul style="display:inline-block">
             <?php wp_dropdown_categories($args); ?>
         </ul>
+
         <br><br>
+
+        <input type="checkbox" id="catPage" name="catPage" value="catPage">
+        <label for="catPage">Sukurti kategorijos puslapį</label><br>
 
         <div class='label'>
             <label class="tcp-label">Kategorijos aprašymas</label>
@@ -72,22 +85,26 @@ use BIT\app\Category;
     <div class="sm-1-2">
         <table>
             <th>Pavadinimas</th>
-            <!-- <th>Id</th>
-            <th>Slug</th> -->
+            <th>Id</th>
+            <th>Slug</th>
             <th>Description</th>
             <th>Paveikslėlis</th>
             <th>Veiksmai</th>
             <?php
             foreach ($categories as $cat) {
-                $cat->image = get_term_meta($cat->term_id, "my_term_key");
+                // _dc($cat);
+
+                //tvarkyti sita
+                $cat->image = get_term_meta($cat->term_id, "image");
             ?>
                 <tr>
                     <td><?= str_repeat('--', $cat->level) ?><?= $cat->name ?></td>
-                    <!-- <td><?= $cat->term_id ?></td>
-                    <td><?= $cat->slug ?></td> -->
+                    <td><?= $cat->term_id ?></td>
+                    <td><?= $cat->slug ?></td>
                     <td><?= $cat->description ?></td>
                     <?php
                     if ($cat->image) {
+
                     ?>
                         <td><?php foreach ($cat->image as $key => $value) {
                                 if ($key == 0) {

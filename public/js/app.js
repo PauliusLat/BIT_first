@@ -1019,6 +1019,12 @@ var Api = /*#__PURE__*/function () {
           formData.append('catContent', obj.catContent);
         }
 
+
+        if (obj.page) {
+          formData.append('page', obj.page);
+        }
+
+
         if (obj.cat_parent) {
           formData.append('cat_parent', obj.cat_parent);
         }
@@ -1500,6 +1506,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 
 var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 var uri = document.location.origin;
@@ -1534,7 +1542,15 @@ function init() {
           select = 0;
         }
 
-        catStore(name, select, slug, description);
+        var selectedPage;
+
+        if (document.querySelector('[name="catPage"]:checked')) {
+          selectedPage = 1;
+        } else {
+          selectedPage = 0;
+        }
+
+        catStore(name, select, slug, description, selectedPage);
       });
       var editBtn = catStrt.querySelectorAll(".category-edit");
 
@@ -1573,29 +1589,19 @@ function init() {
     console.log(error);
   });
   1;
-} // function catStore(name, select, slug, description) {
-//   let obj = {
-//     api:"category_store",
-//     title: name,
-//     slug: slug,
-//     content: description,
-//     cat_parent: select
-//   }
-//   if (obj) {
-//     readImage.sendImageData(obj);
-//   }
-//   document.getElementById("category-name").value = "";
-// }
+}
 
-
-function catStore(name, select, slug, description) {
+function catStore(name, select, slug, description, selectedPage) {
+  console.log(_typeof(selectedPage));
   var obj = {
     api: "category_store",
     title: name,
     slug: slug,
+    page: selectedPage,
     content: description,
     cat_parent: select
-  };
+
+  }; // console.log(obj)
 
   if (obj) {
     readImage.sendImageData(obj);
@@ -1606,7 +1612,8 @@ function catStore(name, select, slug, description) {
 }
 
 function catEdit(editID, taxonomy) {
-  axios.post(uri + path + "category_edit", {
+  console.log(name);
+  axios.post(uri + path + "category_edit&id=" + editID, {
     editID: editID,
     taxonomy_type: taxonomy
   }).then(function (response) {
@@ -1631,6 +1638,9 @@ function catUpdate(updateId) {
   var name = document.getElementById("category_name").value;
   var slug = document.getElementById("category_slug").value;
   var description = document.getElementById("category_description").value;
+  console.log(name);
+  console.log(slug);
+  console.log(description);
   axios.post(uri + path + "category_update", {
     updateId: updateId,
     cat_name: name,
@@ -2237,14 +2247,14 @@ function init() {
       test.innerHTML = HTML;
       var submit = document.getElementById("create");
       submit.addEventListener("click", function () {
-        var name = document.getElementById("page-name").value; //   const slug = document.getElementById("post-slug").value;
-        //   const description = document.getElementById("page-description").value;
+        var title = document.getElementById("page_title").value;
+        var name = document.getElementById("page_name").value; //   const description = document.getElementById("page-description").value;
 
         var post = document.getElementById('post'); // console.log(post);
 
         var select = post.options[post.selectedIndex].value; // console.log(select);  
 
-        pageStore(name, select);
+        pageStore(title, select, name);
       });
       var editBtn = pageStrt.querySelectorAll(".page-edit");
 
@@ -2291,10 +2301,10 @@ function init() {
   1;
 }
 
-function pageStore(name, select) {
+function pageStore(title, select, name) {
   axios.post(uri + path + "page_store", {
-    page_title: name,
-    //   page_slug: slug,
+    page_title: title,
+    page_name: name,
     post_type: select
   }).then(function (response) {
     console.log(response);
@@ -2302,7 +2312,7 @@ function pageStore(name, select) {
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
   });
-  document.getElementById("page-name").value = "";
+  document.getElementById("page_name").value = "";
 }
 
 function pageEdit(ID) {
@@ -2327,11 +2337,14 @@ function pageEdit(ID) {
 }
 
 function pageUpdate(updateId) {
-  var title = document.getElementById("page_name").value;
+  var title = document.getElementById("page_title").value;
+  console.log(title);
+  var name = document.getElementById("page_name").value;
+  console.log(name);
   axios.post(uri + path + "page_update&id=" + updateId, {
     updateId: updateId,
-    page_title: title //   page_slug: slug,
-    //   page_description: description
+    page_title: title,
+    page_name: name //   page_description: description
 
   }).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {
@@ -2926,7 +2939,6 @@ var Tag = /*#__PURE__*/function () {
 //   const description = document.getElementById("tag-description").value;
 //   tagStore(name, slug, description);
 // });
-// }
 
 /***/ }),
 
@@ -2948,8 +2960,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
