@@ -23,12 +23,12 @@ class PageController
         return View::adminRender('page.mainpage');
     }
 
-    public function create(Page $page)
+    public function create()
     {
         $pages = Page::all()->all();
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
-        // $pageLink = $page->getLink();
-        $output = View::adminRender('page.page', ["pages" => $pages, 'post_types' => $post_types]);
+        $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
+        $output = View::adminRender('page.page', ["pages" => $pages, 'post_types' => $post_types, 'page_state' => $page_state]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -39,6 +39,18 @@ class PageController
         $name = $request->request->get('page_title');
         // $slug = $request->request->get('page_slug');
         $post = $request->request->get('post_type');
+        $pageState = [];
+        $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
+        foreach ($page_state as $state => $value) {
+            if ($state == 'site') {
+                array_push($pageState, $value);
+            }
+        }
+        if ($request->request->get('page_state') || $request->request->get('page_state') != 'Site_page') {
+            $pageState[] = $request->request->get('page_state');
+        }
+        $page->pageState = $pageState;
+        $pageState = $request->request->get('page_state');
         $page->setRoute($post);
         $page->setTitle($name);
         //update nenaudoti sito metodo
@@ -48,8 +60,6 @@ class PageController
 
     public function edit(Page $page)
     {
-        // $request = $this->decodeRequest($requestJson);
-        // $request->request->get('editID');
         $output = View::adminRender('page.edit',  ['page' => $page]);
         return new JsonResponse(['html' => $output]);
     }
@@ -60,18 +70,15 @@ class PageController
         $page->post_title = $request->request->get('page_title');
         $page->post_name = $request->request->get('page_name');
         $page->save();
-        $output = View::adminRender('page.page');
-        $response = new JsonResponse(['html' => $output]);
-        return $response;
+        // $output = View::adminRender('page.page');
+        // $response = new JsonResponse(['html' => $output]);
+        return $response = new JsonResponse;
     }
 
     public function destroy(Page $page)
     {
-        // $request = $this->decodeRequest($requestJson);
         $page->delete();
         return new Response;
-        // $response->prepare($request);
-        // return $response;
     }
 
     public function decodeRequest($request)

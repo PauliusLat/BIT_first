@@ -56,14 +56,13 @@ class CategoryController
         $categ = $category->getCatbyName($name);
         if ($categ->name == $name) {
             $session->flash('alert_message', 'tokiu pavadinimu kategorija jau sukurta');
-            $categ->name != $name;
+            // $categ->name != $name;
         } else {
             $session->flash('success_message', 'kategorija sėkmingai sukurta');
         }
 
         //add category to db and get cat ID
         $catID = $category->addCat($name, $parent_id, $slug,  $description);
-
 
         // create category page if selected
         $createPage = $request->request->get('page');
@@ -83,7 +82,6 @@ class CategoryController
             $category->addPageToCat($catID, 'page', $page->ID);
         }
 
-
         //add category image
         if ($request->files->get('image')) {
             // $file = $request->files->get('image');
@@ -102,13 +100,15 @@ class CategoryController
             $category->addImageToCat($catID, "image", $picture);
         }
 
+        // $output = View::adminRender('category.category');
+        // return new JsonResponse(['html' => $output]);
         return new JsonResponse;
     }
 
-    public function edit(Request $requestJson)
+    //kategorijos servisas???
+    public function edit(Request $requestJson, Category $category)
     {
         $request = $this->decodeRequest($requestJson);
-        $category = new Category;
         $id = $request->request->get('editID');
         $taxonomy_type = $request->request->get('taxonomy_type');
         $category = $category->getCat($id, $taxonomy_type);
@@ -116,32 +116,32 @@ class CategoryController
         return new JsonResponse(['html' => $output]);
     }
 
-    public function update(Request $requestJson)
+    public function update(Request $requestJson, Category $category)
     {
-        $category = new Category;
         $request = $this->decodeRequest($requestJson);
         $name = $request->request->get('cat_name');
         $slug = $request->request->get('cat_slug');
-        // _dc($slug);
         $description = $request->request->get('cat_description');
         $id = $request->request->get('updateId');
+        // _dc($id);
+        $page = $category->getCatPage($id);
+        if ($page != null || $page != 0 || $page != 'undefined' || $page != '') {
+            $page->post_name = $slug;
+            $page->save();
+        }
         $category->updateCat($id, $name, $slug, $description);
-        // $categories = $category->getAllCats();
-        $output = View::adminRender('category.category');
-        return new JsonResponse(['html' => $output]);
+        // $output = View::adminRender('category.category');
+        // return new JsonResponse(['html' => $output]);
+        return new Response;
     }
 
-    public function destroy(Request $requestJson)
+    public function destroy(Request $requestJson, Category $category)
     {
-        $category = new Category;
         $request = $this->decodeRequest($requestJson);
-        $category->getAllCats();
         $id = $request->request->get('deleteID');
         $taxonomy_type = $request->request->get('taxonomy_type');
         $category->deleteCatFromDb($id, $taxonomy_type);
-        return $response = new Response;
-        $response->prepare($request);
-        return $response;
+        return new Response;
     }
 
     public function decodeRequest($request)
@@ -150,7 +150,6 @@ class CategoryController
             $data = json_decode($request->getContent(), true);
             $request->request->replace(is_array($data) ? $data : array());
         }
-
         return $request;
     }
 }

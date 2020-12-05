@@ -5,6 +5,7 @@ use BIT\app\Category;
 // use BIT\app\Tag;
 // use BIT\app\Attachment;
 use BIT\app\App;
+use BIT\app\Page;
 
 
 
@@ -63,10 +64,16 @@ App::start();
 
 
 // use BIT\models\NewsPost;
-// add_action('init', function () {
+add_action('init', function () {
+    // $page = new Page;
+    // $page = $page->get(162);
+    // _dc($page);
+
+    // $args = ['slug' => 'dovanos-namai'];
+    // wp_update_term(107, 'maincat', $args);
     // $args = ['parent' => 0, 'description' => '', 'slug' => '', 'taxonomy_type' => 'maincat'];
     // $category = new Category;
-    // $cat = $category->addCat('vanduo');
+    // $cat = $category->getCatPage(108);
 
     // _dc($cat);
     // $category = new Category;
@@ -153,5 +160,4 @@ App::start();
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
 
-
-// });
+});

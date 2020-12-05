@@ -56,4 +56,10 @@ return [
 	'page_update' => 'PageController@update',
 	'page_destroy' => 'PageController@destroy',
 	'page_edit' => 'PageController@edit',
+
+	'menu_create' => 'MenuController@create',
+	'menu_store' => 'MenuController@store',
+	'menu_update' => 'MenuController@update',
+	'menu_destroy' => 'MenuController@destroy',
+	'menu_edit' => 'MenuController@edit',
 ];

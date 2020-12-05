@@ -2210,14 +2210,16 @@ function init() {
       test.innerHTML = HTML;
       var submit = document.getElementById("create");
       submit.addEventListener("click", function () {
-        var title = document.getElementById("page_title").value;
-        var name = document.getElementById("page_name").value; //   const description = document.getElementById("page-description").value;
+        var title = document.getElementById("page_title").value; // const name = document.getElementById("page_name").value;
+        //   const description = document.getElementById("page-description").value;
 
         var post = document.getElementById('post'); // console.log(post);
 
-        var select = post.options[post.selectedIndex].value; // console.log(select);  
+        var select = post.options[post.selectedIndex].value;
+        var pageState = document.getElementById('pageState');
+        var selectpageState = pageState.options[pageState.selectedIndex].value; // console.log(select);  
 
-        pageStore(title, select, name);
+        pageStore(title, select, name, selectpageState);
       });
       var editBtn = pageStrt.querySelectorAll(".page-edit");
 
@@ -2264,18 +2266,19 @@ function init() {
   1;
 }
 
-function pageStore(title, select, name) {
+function pageStore(title, select, name, selectpageState) {
   axios.post(uri + path + "page_store", {
     page_title: title,
     page_name: name,
-    post_type: select
+    post_type: select,
+    page_state: selectpageState
   }).then(function (response) {
     console.log(response);
     init();
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
   });
-  document.getElementById("page_name").value = "";
+  document.getElementById("page_title").value = "";
 }
 
 function pageEdit(ID) {

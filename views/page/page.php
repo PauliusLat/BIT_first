@@ -8,6 +8,7 @@
             <label class="tcp-label">Puslapio antraštė</label>
         </div>
         <input type="text" name="page_title" id="page_title" value="" placeholder="Įrašykite puslapio pavadinimą..." class="tcp-input">
+
         <div class='label'>
             <label class="tcp-label">Pasirinkite post'o tipą</label>
         </div>
@@ -18,6 +19,23 @@
                 foreach ($post_types as $post => $args) {
             ?>
                     <option value="<?= $post ?>"><?= $post ?></option>
+            <?php
+                }
+            }
+            ?>
+        </select>
+
+        <div class='label'>
+            <label class="tcp-label">Pasirinkite puslapio rūšį</label>
+        </div>
+
+        <select class="form-control" name="page-state" id="pageState">
+            <?php
+            // $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
+            if ($page_state) {
+                foreach ($page_state as $page => $args) {
+            ?>
+                    <option value="<?= $args ?>"><?= $args ?></option>
             <?php
                 }
             }
