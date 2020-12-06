@@ -39,6 +39,7 @@ class TagController
             $number = 1;
         }
 
+
         $offset = ($number - 1)  * $limit;
         $total = wp_count_terms('hashtag', ['hide_empty' => false]);
         $pages = ceil($total / $limit);
