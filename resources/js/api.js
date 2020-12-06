@@ -43,6 +43,23 @@ class Api {
         }
     }
 
+    async getPostData(api, id) {
+        console.log(api, id);
+        try {
+            let response = await axios.post(this.uri + this.path + api, {
+                id: id
+            })
+
+            if (response.status == 200 && response.statusText == "OK") {
+                console.log(response);
+                return response.data.html;
+            }
+        } catch (e) {
+            console.error(e);
+            console.log("Duomenys is serveverio nepasiekiami !!!");
+        }
+    }
+
     saveContent(api, id, content) {
 
         axios
@@ -98,11 +115,10 @@ class Api {
             if (obj.catContent) {
                 formData.append('catContent', obj.catContent);
             }
-
-            if(obj.page){
+            if (obj.page) {
                 formData.append('page', obj.page);
             }
-            if(obj.cat_parent){
+            if (obj.cat_parent) {
                 formData.append('cat_parent', obj.cat_parent);
             }
 

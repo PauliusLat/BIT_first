@@ -958,6 +958,57 @@ var Api = /*#__PURE__*/function () {
       return getDAta;
     }()
   }, {
+    key: "getPostData",
+    value: function () {
+      var _getPostData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(api, id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                console.log(api, id);
+                _context2.prev = 1;
+                _context2.next = 4;
+                return axios.post(this.uri + this.path + api, {
+                  id: id
+                });
+
+              case 4:
+                response = _context2.sent;
+
+                if (!(response.status == 200 && response.statusText == "OK")) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                console.log(response);
+                return _context2.abrupt("return", response.data.html);
+
+              case 8:
+                _context2.next = 14;
+                break;
+
+              case 10:
+                _context2.prev = 10;
+                _context2.t0 = _context2["catch"](1);
+                console.error(_context2.t0);
+                console.log("Duomenys is serveverio nepasiekiami !!!");
+
+              case 14:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[1, 10]]);
+      }));
+
+      function getPostData(_x2, _x3) {
+        return _getPostData.apply(this, arguments);
+      }
+
+      return getPostData;
+    }()
+  }, {
     key: "saveContent",
     value: function saveContent(api, id, content) {
       axios.post(this.uri + this.path + api, {
@@ -1019,11 +1070,9 @@ var Api = /*#__PURE__*/function () {
           formData.append('catContent', obj.catContent);
         }
 
-
         if (obj.page) {
           formData.append('page', obj.page);
         }
-
 
         if (obj.cat_parent) {
           formData.append('cat_parent', obj.cat_parent);
@@ -1600,8 +1649,7 @@ function catStore(name, select, slug, description, selectedPage) {
     page: selectedPage,
     content: description,
     cat_parent: select
-
-  }; // console.log(obj)
+  };
 
   if (obj) {
     readImage.sendImageData(obj);
@@ -1971,7 +2019,7 @@ var News = /*#__PURE__*/function () {
             category: cat
           };
 
-          if (obj.imageTitle) {
+          if (obj.title) {
             readImage.sendImageData(obj);
           } else {
             alert("Not written the title !!!");
@@ -2136,35 +2184,37 @@ var newsList = /*#__PURE__*/function () {
                 }
 
                 return _context2.delegateYield( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                  var deleteApi, editApi, HTML, newsList, deleteNews, _loop, i;
+                  var deleteApi, listApi, HTML, deleteNews, editNews, _loop, i;
 
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                     while (1) {
                       switch (_context.prev = _context.next) {
                         case 0:
                           deleteApi = 'news-destroy&id=';
-                          editApi = "news-edit";
+                          listApi = "news-list";
                           _context.next = 4;
-                          return _this.api.getDAta(editApi);
+                          return _this.api.getDAta(listApi);
 
                         case 4:
                           HTML = _context.sent;
                           DOM.innerHTML = HTML;
-                          newsList = document.querySelectorAll(".newsList");
                           deleteNews = document.querySelectorAll(".deleteNews");
+                          editNews = document.querySelectorAll(".edit");
 
                           _loop = function _loop(i) {
                             var deleteId = deleteNews[i].id;
                             deleteNews[i].addEventListener("click", function () {
-                              console.log(deleteApi, deleteId);
-
                               _this.api["delete"](deleteApi, deleteId);
 
                               setTimeout(location.reload(), 500);
                             });
+                            var editId = editNews[i].id;
+                            editNews[i].addEventListener("click", function () {
+                              _this.edit(editId);
+                            });
                           };
 
-                          for (i = 0; i < newsList.length; i++) {
+                          for (i = 0; i < deleteNews.length; i++) {
                             _loop(i);
                           }
 
@@ -2191,23 +2241,37 @@ var newsList = /*#__PURE__*/function () {
       return init;
     }()
   }, {
-    key: "delete",
-    value: function _delete() {
-      var _this2 = this;
+    key: "edit",
+    value: function () {
+      var _edit = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(editId) {
+        var edit, editApi, HTML;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                edit = document.querySelector(".editStart");
+                editApi = "news-edit";
+                _context3.next = 4;
+                return this.api.getPostData(editApi, editId);
 
-      console.log(deleteNews);
+              case 4:
+                HTML = _context3.sent;
+                edit.innerHTML = HTML;
 
-      var _loop2 = function _loop2(i) {
-        var deleteId = deleteNews[i].id;
-        postBtn[i].addEventListener("click", function () {
-          _this2.api["delete"](deleteApi, deleteId);
-        });
-      };
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
 
-      for (var i = 0; i < deleteNews.length; i++) {
-        _loop2(i);
+      function edit(_x) {
+        return _edit.apply(this, arguments);
       }
-    }
+
+      return edit;
+    }()
   }]);
 
   return newsList;
@@ -2960,8 +3024,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

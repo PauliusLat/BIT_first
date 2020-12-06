@@ -6,21 +6,19 @@ use BIT\app\Server;
 use BIT\app\Session;
 use BIT\app\View;
 use BIT\models\IdeaPost;
+use BIT\models\NewsPost;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use BIT\models\NewsPost;
-
 
 class IdeaController {
 	public function __construct() {
 	}
 
-
 	public function frontIndex() {
 		$allNews = NewsPost::all()->all();
-		$output = View::adminRender('news.homeNews', ['html' =>  $allNews]);
-		return View::render('home.ideja',["html" => $output]);
+		$output = View::adminRender('news.homeNews', ['html' => $allNews]);
+		return View::render('home.ideja', ["html" => $output]);
 
 	}
 
@@ -66,7 +64,7 @@ class IdeaController {
 			// $id = $idBrowser['version'];
 			// $array[] = $id;
 			$array[] = $like;
-			// $session->set('ideja', $array);
+			$session->set('ideja', $array);
 			// var_dump($_COOKIE);
 			// var_dump($session->get('ideja'));
 			// $session->deleteSession();
