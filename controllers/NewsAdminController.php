@@ -45,7 +45,7 @@ class NewsAdminController
 
         $page = new Page();
         $page->pageState = 'News Page';
-        $page->setRoute('showNews', );
+        $page->setRoute('showNews');
         $page->setTitle($title);
         $page->save();
 
@@ -74,42 +74,32 @@ class NewsAdminController
         $news = NewsPost::get($id);
     }
 
-    public function edit(Request $request, NewsPost $newsPost)
+    public function edit()
     {
-        $allNews = NewsPost::all()->all();
-        // echo '<pre>';
-        // var_dump ($allNews);
-        // foreach (NewsPost::all()->all() as $news) {
-            // $pageLink1 = Page::get($news->ID)->getLink();
-        //     $content2 = $news->news_content;
-        //     $title3 = $news->post_title;
-        //     $date4 = $news->post_date;
-
-        //     $allImages = $news->attachments;
-
-        //     foreach ($allImages as $image) {
-        //         $url5 = $image->getUrl();
-        //         $altText6 = $image->getAlt();
-        //     }
-        // }
-        $output = View::adminRender('news.renderEdit', ['html' =>  $allNews]);
-        $response = new JsonResponse(['html' =>  $output]);
-        return $response;
-        // return View::adminRender('news.edit', ['html' =>  $allNews]);
+        // return View::adminRender('news.renderEdit', ['html' =>  $newsPost]);
+        
     }
 
-    public function update(Request $request, NewsPost $newsPost)
+    public function update(Request $request)
     {
-        $newsPost->news_content = $request->get('news-content');
+        $news = NewsPost::get($request->request->get('id'));
+        $file = $request->files->get('image');
+        $image = null;
+        foreach($news->attachments as $att) {
+            $image = $att;
+        }
 
-        $newsPost->save();
-        $newsPost;
-        $news = NewsPost::all();
-        $response = new Response;
-        $response->prepare($request);
-        $response->setContent(json_encode(['list' => 'hello']));
-        // $response->setContent(json_encode(['list' => View::adminRender('news.list', ['news' => $news])]));
-        return $response;
+        $news->post_title = $request->request->get('title');
+        $news->news_content = $request->request->get('content');
+        $news->save();
+        
+        $image->setAlt($request->request->get('altText'));
+        $image->setCaption($request->request->get('imageTitle'));
+        $image->save($file, $news->ID);
+        
+
+        return $response = new Response();
+
     }
 
     public function destroy(NewsPost $newsPost)

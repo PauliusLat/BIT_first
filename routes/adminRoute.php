@@ -3,7 +3,7 @@
 return [
 	'admin' => 'AdminController@index',
 	'news' => 'NewsAdminController@index',
-	'news@' => ['post' => 'NewsAdminController@index', 'edit-posts' => 'NewsAdminController@edit'],
+	'news@' => ['mindes postai' => 'NewsAdminController@index', 'pataisyk' => 'NewsAdminController@edit'],
 
 	'idejos' => 'IdeAdminController@adminIndex',
 
