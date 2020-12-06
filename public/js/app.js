@@ -1832,12 +1832,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
 /* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
 /* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
-/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
-/* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
-/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
-/* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
+/* harmony import */ var _menu_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./menu.js */ "./resources/js/menu.js");
+/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
+/* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
+/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
+/* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
 /** @format */
  // import startGallery from './gallery.js';
+
+
 
 
 
@@ -1849,10 +1852,306 @@ __webpack_require__.r(__webpack_exports__);
 
  // new TextEditor('.news-container')
 
-new _calendar_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.calendar');
-new _news__WEBPACK_IMPORTED_MODULE_5__["default"]('startNewsAdmin');
-new _newsList__WEBPACK_IMPORTED_MODULE_7__["default"]('startNweaList');
+new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
+new _news__WEBPACK_IMPORTED_MODULE_6__["default"]('startNewsAdmin');
+new _newsList__WEBPACK_IMPORTED_MODULE_8__["default"]('startNweaList');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
+new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
+
+/***/ }),
+
+/***/ "./resources/js/menu.js":
+/*!******************************!*\
+  !*** ./resources/js/menu.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Menu = /*#__PURE__*/function () {
+  function Menu(target) {
+    _classCallCheck(this, Menu);
+
+    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+    this.uri = document.location.origin;
+    this.pageSelected;
+    this.hash = location.hash;
+    this.hasharr;
+    this.hasarr2;
+    this.target = target;
+    this.startMenu();
+  }
+
+  _createClass(Menu, [{
+    key: "startMenu",
+    value: function startMenu() {
+      var DOM = document.getElementById(this.target);
+
+      if (DOM) {
+        this.init();
+      }
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      axios.post(this.uri + this.path + "menu_create", {}).then(function (response) {
+        var test = document.querySelector(".innermenu");
+
+        if (response.status == 200 && response.statusText == "OK") {
+          var HTML = response.data.html;
+          test.innerHTML = HTML; //       const submit = document.getElementById("create");
+          //       submit.addEventListener("click", () => {
+          //         const title = document.getElementById("page_title").value;
+          //         // const name = document.getElementById("page_name").value;
+          //       //   const description = document.getElementById("page-description").value;
+          //         let post = document.getElementById('post');
+          //         // console.log(post);
+          //         let select = post.options[post.selectedIndex].value;
+          //         let pageState = document.getElementById('pageState');
+          //         let selectpageState = pageState.options[pageState.selectedIndex].value;
+          //         // console.log(select);  
+          //       pageStore(title, select, name, selectpageState);
+          //       });
+          //       const editBtn = pageStrt.querySelectorAll(".page-edit");
+          //       for (let i = 0; i < editBtn.length; i++) {
+          //         let ID = editBtn[i].value;
+          //       //   console.log(ID);
+          //       //   let page = editBtn[i].id;
+          //         editBtn[i].addEventListener(
+          //           "click",
+          //           function() {
+          //             pageEdit(ID);
+          //           },
+          //           false
+          //         );
+          //       }
+          //       const deleteBtn = document.querySelectorAll(".page-delete");
+          //       for (let i = 0; i < deleteBtn.length; i++) {
+          //         let ID = deleteBtn[i].value;
+          //         deleteBtn[i].addEventListener(
+          //           "click",
+          //           function() {
+          //             pageDelete(ID);
+          //           },
+          //           false
+          //         );
+          //       }
+        }
+      })["catch"](function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
+
+        console.log(error);
+      });
+      ;
+    } //     if (typeof pageNo == 'object' && this.hash.length !== 0) {
+    //         console.log(pageNo);
+    //         this.hasharr = this.hash.split('#')
+    //         this.hasarr2 = this.hasharr[1].split('%')
+    //         this.hash = hasarr2[0]
+    //         // window.addEventListener( "load",
+    //         // () =>{
+    //         // this.hasharr = this.hash.split('#')
+    //         // this.hasarr2 = this.hasharr[1].split('%')
+    //         // this.hash = this.hasarr2[0]
+    //         // this.hash = location.hash
+    //         // this.init();
+    //     } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
+    //         this.hasharr = this.hash.split('#')
+    //         this.hasarr2 = this.hasharr[1].split('%')
+    //         this.hash = this.hasarr2[0]
+    //     } else {
+    //         this.hash = null
+    //     }
+    //     axios
+    //         .post(this.uri + this.path + "tag_create", {
+    //             pages: parseInt(pageNo),
+    //             pageSelected: this.pageSelected,
+    //             hash: this.hash
+    //         })
+    //         .then((response) => {
+    //             const test = document.querySelector(".test");
+    //             if (response.status == 200 && response.statusText == "OK") {
+    //                 const HTML = response.data.html;
+    //                 test.innerHTML = HTML;
+    //                 if (pageNo > 0 && typeof pageNo === 'string') {
+    //                     let addColor = document.querySelector('.nr-' + pageNo);
+    //                     addColor.classList.add("active");
+    //                 }
+    //                 const submit = document.getElementById("create");
+    //                 submit.addEventListener("click", () => {
+    //                     const name = document.getElementById("tag-name").value;
+    //                     const slug = document.getElementById("tag-slug").value;
+    //                     const description = document.getElementById("tag-description").value;
+    //                     this.tagStore(name, slug, description);
+    //                 });
+    //                 const editBtn = document.querySelectorAll(".tag-edit");
+    //                 for (let i = 0; i < editBtn.length; i++) {
+    //                     let ID = editBtn[i].value;
+    //                     let taxonomy = editBtn[i].id;
+    //                     editBtn[i].addEventListener(
+    //                         "click",
+    //                         () => {
+    //                             this.tagEdit(ID, taxonomy);
+    //                         },
+    //                         false
+    //                     );
+    //                 }
+    //                 const deleteBtn = document.querySelectorAll(".tag-delete");
+    //                 for (let i = 0; i < deleteBtn.length; i++) {
+    //                     let ID = deleteBtn[i].value;
+    //                     let taxonomy = deleteBtn[i].id;
+    //                     deleteBtn[i].addEventListener(
+    //                         "click",
+    //                         () => {
+    //                             this.tagDelete(ID, taxonomy);
+    //                         },
+    //                         false
+    //                     );
+    //                 }
+    //                 const pageBtn = document.getElementById("selectpage");
+    //                 const select = document.getElementById("items");
+    //                 pageBtn.addEventListener(
+    //                     "click",
+    //                     () => {
+    //                         var pageSelected;
+    //                         if (select.options[select.selectedIndex] != undefined) {
+    //                             pageSelected = select.options[select.selectedIndex].value;
+    //                         }else {
+    //                             pageSelected = 0;
+    //                           }
+    //                         this.pageSelected = pageSelected
+    //                         this.init(1);
+    //                     });
+    //                 const page = document.querySelectorAll(".paging");
+    //                 for (let i = 0; i < page.length; i++) {
+    //                     let pageNo = page[i].id;
+    //                     page[i].addEventListener(
+    //                         "click",
+    //                         () => {
+    //                             console.log(pageNo);
+    //                             location.hash = '#' + pageNo
+    //                             this.hash = location.hash
+    //                             this.init(pageNo);
+    //                         },
+    //                         false
+    //                     );
+    //                 }
+    //             }
+    //         })
+    //         .catch(function (error) {
+    //             if (error.response) {
+    //                 console.log(error.response.data);
+    //                 console.log(error.response.status);
+    //                 console.log(error.response.headers);
+    //             } else if (error.request) {
+    //                 console.log(error.request);
+    //             } else {
+    //                 console.log("Error", error.message);
+    //             }
+    //             console.log(error);
+    //         });
+    // }
+    // tagStore(name, slug, description) {
+    //     axios
+    //         .post(this.uri + this.path + "tag_store", {
+    //             tag_name: name,
+    //             tag_slug: slug,
+    //             tag_description: description
+    //         })
+    //         .then((response) => {
+    //             console.log(response);
+    //             this.init();
+    //         })
+    //         .catch((err) => {
+    //             console.log(err instanceof TypeError);
+    //         });
+    //     document.getElementById("tag-name").value = "";
+    // }
+    // tagEdit(editID, taxonomy) {
+    //     axios
+    //         .post(this.uri + this.path + "tag_edit", {
+    //             editID: editID,
+    //             taxonomy_type: taxonomy,
+    //         })
+    //         .then((response) => {
+    //             const test = document.querySelector(".test");
+    //             if (response.status == 200 && response.statusText == "OK") {
+    //                 const HTML = response.data.html;
+    //                 test.innerHTML = HTML;
+    //             }
+    //             const updateBtn = document.getElementById("tagUpdate");
+    //             updateBtn.addEventListener("click", () => {
+    //                 const updateId = updateBtn.value;
+    //                 this.tagUpdate(updateId);
+    //             });
+    //         })
+    //         .catch((err) => {
+    //             console.log(err instanceof TypeError);
+    //         });
+    // }
+    // tagUpdate(updateId) {
+    //     const name = document.getElementById("tag_name").value;
+    //     const slug = document.getElementById("tag_slug").value;
+    //     const description = document.getElementById("tag_description").value;
+    //     axios
+    //         .post(this.uri + this.path + "tag_update", {
+    //             updateId: updateId,
+    //             tag_name: name,
+    //             tag_slug: slug,
+    //             tag_description: description
+    //         })
+    //         .then((response) => {
+    //             if (response.status == 200 && response.statusText == "OK") {
+    //                 console.log(response);
+    //                 this.init();
+    //                 // setTimeout(call.init(), 500);
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log(err instanceof TypeError);
+    //         });
+    // }
+    // tagDelete(ID, taxonomy) {
+    //     axios
+    //         .post(this.uri + this.path + "tag_destroy", {
+    //             deleteID: ID,
+    //             taxonomy_type: taxonomy,
+    //         })
+    //         .then((response) => {
+    //             if (response.status == 200 && response.statusText == "OK") {
+    //                 console.log(response);
+    //                 this.init();
+    //                 // setTimeout(init(), 500);
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log(err instanceof TypeError);
+    //         });
+    //}
+
+  }]);
+
+  return Menu;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Menu);
 
 /***/ }),
 
@@ -2247,14 +2546,16 @@ function init() {
       test.innerHTML = HTML;
       var submit = document.getElementById("create");
       submit.addEventListener("click", function () {
-        var title = document.getElementById("page_title").value;
-        var name = document.getElementById("page_name").value; //   const description = document.getElementById("page-description").value;
+        var title = document.getElementById("page_title").value; // const name = document.getElementById("page_name").value;
+        //   const description = document.getElementById("page-description").value;
 
         var post = document.getElementById('post'); // console.log(post);
 
-        var select = post.options[post.selectedIndex].value; // console.log(select);  
+        var select = post.options[post.selectedIndex].value;
+        var pageState = document.getElementById('pageState');
+        var selectpageState = pageState.options[pageState.selectedIndex].value; // console.log(select);  
 
-        pageStore(title, select, name);
+        pageStore(title, select, name, selectpageState);
       });
       var editBtn = pageStrt.querySelectorAll(".page-edit");
 
@@ -2298,21 +2599,22 @@ function init() {
 
     console.log(error);
   });
-  1;
+  ;
 }
 
-function pageStore(title, select, name) {
+function pageStore(title, select, name, selectpageState) {
   axios.post(uri + path + "page_store", {
     page_title: title,
     page_name: name,
-    post_type: select
+    post_type: select,
+    page_state: selectpageState
   }).then(function (response) {
     console.log(response);
     init();
   })["catch"](function (err) {
     console.log(err instanceof TypeError);
   });
-  document.getElementById("page_name").value = "";
+  document.getElementById("page_title").value = "";
 }
 
 function pageEdit(ID) {

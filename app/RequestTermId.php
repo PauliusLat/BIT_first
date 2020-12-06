@@ -4,13 +4,13 @@ namespace BIT\app;
 
 use Symfony\Component\HttpFoundation\Request;
 
-class RequestId
+class RequestTermId
 {
     public $id;
 
     public function __construct(Request $request)
     {
-        $this->id = $request->query->get('id');
+        $this->id = $request->query->get('term_id');
     }
 
     public function __toString()

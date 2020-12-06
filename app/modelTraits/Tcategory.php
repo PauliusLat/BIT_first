@@ -3,6 +3,7 @@
 namespace BIT\app\modelTraits;
 
 use BIT\app\TaxCollection;
+use BIT\app\Page;
 // use BIT\app\App;
 use BIT\app\coreExeptions\InitHookNotFiredException;
 use BIT\app\coreExeptions\PostIdNotSetException;
@@ -55,7 +56,7 @@ trait Tcategory
         }
     }
 
-    public function updateCat(int $id, string $name, string $description, $parent_id = 0, string $slug = '', $taxonomy_type = 'maincat')
+    public function updateCat(int $id, string $name, string $slug, string $description = '',  $parent_id = 0,  $taxonomy_type = 'maincat')
     {
         if (did_action('init')) {
             $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'name' => $name];
@@ -66,6 +67,25 @@ trait Tcategory
     }
 
     //get category id by name
+    public function getCatPageLink(int $id)
+    {
+        $catPageId = get_term_meta($id, "page")[0];
+        $page = new Page;
+        $page = $page->get($catPageId);
+        $pageLink = $page->getLink();
+        return $pageLink;
+    }
+
+    public function getCatPage(int $id)
+    {
+        $catPageId = get_term_meta($id, "page")[0];
+        $page = new Page;
+        $page = $page->get($catPageId);
+        // $pageLink = $page->getLink();
+        return $page;
+    }
+
+
     public function getCatId($name, $taxonony_type = 'maincat')
     {
         $cat = get_term_by('name', $name, $taxonony_type);

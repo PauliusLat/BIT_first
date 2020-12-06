@@ -22,15 +22,17 @@ function init() {
         const submit = document.getElementById("create");
         submit.addEventListener("click", () => {
           const title = document.getElementById("page_title").value;
-          const name = document.getElementById("page_name").value;
+          // const name = document.getElementById("page_name").value;
         //   const description = document.getElementById("page-description").value;
 
           let post = document.getElementById('post');
           // console.log(post);
           let select = post.options[post.selectedIndex].value;
+          let pageState = document.getElementById('pageState');
+          let selectpageState = pageState.options[pageState.selectedIndex].value;
           // console.log(select);  
  
-        pageStore(title, select, name);
+        pageStore(title, select, name, selectpageState);
          
         });
 
@@ -74,15 +76,16 @@ function init() {
       }
       console.log(error);
     });
-  1;
+  ;
 }
 
-function pageStore(title, select, name) {
+function pageStore(title, select, name, selectpageState) {
   axios
     .post(uri + path + "page_store", {
       page_title: title,
       page_name: name,
-      post_type: select
+      post_type: select,
+      page_state: selectpageState
     })
     .then(function(response) {
       console.log(response);
@@ -91,7 +94,7 @@ function pageStore(title, select, name) {
     .catch((err) => {
       console.log(err instanceof TypeError);
     });
-  document.getElementById("page_name").value = "";
+  document.getElementById("page_title").value = "";
 }
 
 function pageEdit(ID) {

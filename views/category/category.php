@@ -1,6 +1,6 @@
 <?php
 
-// use BIT\app\Category;
+use BIT\app\Category;
 ?>
 
 <div class='catCreate grid-container'>
@@ -85,22 +85,23 @@
     <div class="sm-1-2">
         <table>
             <th>Pavadinimas</th>
-            <th>Id</th>
-            <th>Slug</th>
-            <th>Description</th>
+            <th>Eiti į kategoriją</th>
+            <!-- <th>Slug</th> -->
+            <th>Aprašymas</th>
             <th>Paveikslėlis</th>
             <th>Veiksmai</th>
             <?php
             foreach ($categories as $cat) {
-                // _dc($cat);
-
                 //tvarkyti sita
+                $category = new Category;
+                //bus per attachment
                 $cat->image = get_term_meta($cat->term_id, "image");
+                $pageLink =  $category->getCatPageLink($cat->term_id);
             ?>
                 <tr>
                     <td><?= str_repeat('--', $cat->level) ?><?= $cat->name ?></td>
-                    <td><?= $cat->term_id ?></td>
-                    <td><?= $cat->slug ?></td>
+                    <td><a href="<?= $pageLink ?>"><?= $pageLink ?></a></td>
+                    <!-- <td><?= $cat->slug ?></td> -->
                     <td><?= $cat->description ?></td>
                     <?php
                     if ($cat->image) {
