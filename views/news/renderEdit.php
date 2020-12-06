@@ -2,30 +2,30 @@
 
 use BIT\app\Page;
 
+$counter = 0;
 ?>
-<div id="startNweaList">
-    <?php foreach ($html as $news) : ?>
-        <div class="newsList">
-            <div class="1">
-                <?= $news->post_date; ?>
-            </div>
-            <h1 class="2">
-                <?= $news->post_title; ?>
-            </h1>
-            <?php $allImages = $news->attachments; ?>
-            <?php foreach ($allImages as $image) : ?>
-                <div>
+
+<?php foreach ($html as $news) : ?>
+    <div class="">
+        <?= $counter++ ?>
+        <div class="1">
+            <?= $news->post_date; ?>
+        </div>
+        <h1 class="2">
+            <?= $news->post_title; ?>
+        </h1>
+        <?php $allImages = $news->attachments; ?>
+        <?php foreach ($allImages as $image) : ?>
+            <div class="3">
+                <div class="4">
                     <img src="<?= $image->getUrl(); ?>" alt="<?= $image->getAlt(); ?>">
                 </div>
             <?php endforeach; ?>
-            <div class="3">
+            <div class="5">
                 <?= $news->news_content; ?>
             </div>
-            <div class="4">
-                <div class="btn-red deleteNews" id="<?= $news->ID; ?>">
-                    Trinti
-                </div>
+            <div class="6">
             </div>
-        </div>
-    <?php endforeach; ?>
-</div>
+            </div>
+    </div>
+<?php endforeach; ?>

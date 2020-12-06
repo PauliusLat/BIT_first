@@ -2,110 +2,126 @@
 
 namespace BIT\controllers;
 
-use BIT\app\View;
 use BIT\app\Attachment;
-use BIT\app\Query;
 use BIT\app\Page;
+use BIT\app\View;
 use BIT\models\NewsPost;
-use BIT\app\RequestId;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-
 
 class NewsAdminController
 {
 
-    public function index()
-    {
-        return View::adminRender('news.index');
-    }
+	public function index()
+	{
+		return View::adminRender('news.index');
+	}
 
-    public function create(Request $request)
-    {
-        return View::adminRender('news.create');
-    }
+	public function create(Request $request)
+	{
+		return View::adminRender('news.create');
+	}
 
-    public function store(Request $request)
-    {
-        $title = $request->request->get('title');
-        $content = $request->request->get('content');
-        $altText = $request->request->get('altText');
-        $imgTitle = $request->request->get('imageTitle');
-        $file = $request->files->get('image');
+	public function store(Request $request)
+	{
+		$title = $request->request->get('title');
+		$content = $request->request->get('content');
+		$altText = $request->request->get('altText');
+		$imgTitle = $request->request->get('imageTitle');
+		$file = $request->files->get('image');
 
-        $page = new Page();
-        $page->pageState = 'News Page';
-        $page->setRoute('showNews',);
-        $page->setTitle($title);
-        $page->save();
+		$page = new Page();
+		$page->pageState = 'News Page';
+		$page->setRoute('showNews',);
+		$page->setTitle($title);
+		$page->save();
 
-        $news = new NewsPost();
-        $news->post_parent = $page->ID;
-        $news->post_title = $title;
-        $news->news_content = $content;
-        $news->save();
+		$news = new NewsPost();
+		$news->post_parent = $page->ID;
+		$news->post_title = $title;
+		$news->news_content = $content;
+		$news->save();
 
-        $page->setRoute('showNews', $news->ID);
-        $page->save();
+		$page->setRoute('showNews', $news->ID);
+		$page->save();
 
+		$image = new Attachment();
+		$image->setAlt($altText);
+		$image->setCaption($imgTitle);
+		$image->save($file, $news->ID);
 
-        $image = new Attachment();
-        $image->setAlt($altText);
-        $image->setCaption($imgTitle);
-        $image->save($file, $news->ID);
+		return $response = new Response();
+	}
 
-        return $response = new Response();
-    }
+	public function show(Request $request)
+	{
+		$id = $request->request->get('id');
+		$news = NewsPost::get($id);
+	}
+	public function edit(Request $requestJson)
+	{
+		$request = $this->decodeRequest($requestJson);
+		
+		$id = $request->request->get('id');
 
+		$news = NewsPost::get($id);
 
-    public function show(Request $request)
-    {
-        $id = $request->request->get('id');
-        $news = NewsPost::get($id);
-    }
+		$output = View::adminRender('news.renderEdit', ['html' => $news]);
 
-    public function edit()
-    {
-        return View::adminRender('news.edit');
-    }
+		$response = new JsonResponse(['html' => $output]);
 
-    public function apiEditPost(Request $request, NewsPost $newsPost)
-    {
-        $allNews = NewsPost::all()->all();
-        $output = View::adminRender('news.renderEdit', ['html' =>  $allNews]);
-        $response = new JsonResponse(['html' =>  $output]);
-        return $response;
-    }
+		return $response;
+	}
+	public function list()
+	{
+		return View::adminRender('news.list');
+	}
 
-    public function update(Request $request, NewsPost $newsPost)
-    {
-        $newsPost->news_content = $request->get('news-content');
+	public function listPost(Request $request)
+	{
+		$allNews = NewsPost::all()->all();
+		$output = View::adminRender('news.renderList', ['html' => $allNews]);
+		$response = new JsonResponse(['html' => $output]);
 
-        $newsPost->save();
-        $newsPost;
-        $news = NewsPost::all();
-        $response = new Response;
-        $response->prepare($request);
-        $response->setContent(json_encode(['list' => 'hello']));
-        // $response->setContent(json_encode(['list' => View::adminRender('news.list', ['news' => $news])]));
-        return $response;
-    }
+		return $response;
+	}
 
-    public function destroy(NewsPost $newsPost)
-    {
-        $newsPost->delete();
-        return new Response;
-    }
+	public function update(Request $request)
+	{
+		$news = NewsPost::get($request->request->get('id'));
+		$file = $request->files->get('image');
+		$image = null;
+		foreach ($news->attachments as $att) {
+			$image = $att;
+		}
+		$news->post_title = $request->request->get('title');
+		$news->news_content = $request->request->get('content');
+		$news->save();
+		$image->setAlt($request->request->get('altText'));
+		$image->setCaption($request->request->get('imageTitle'));
+		if (!$file) {
+			$image->save();
+		} else {
+			$image->save($file, $news->ID);
+		}
+		return new Response();
+	}
 
-    protected function decodeRequest($request)
-    {
+	public function destroy(NewsPost $newsPost)
+	{
+		$newsPost->delete();
+		return new Response;
+	}
 
-        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-            $data = json_decode($request->getContent(), true);
-            $request->request->replace(is_array($data) ? $data : array());
-        }
+	protected function decodeRequest($request)
+	{
 
-        return $request;
-    }
+		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+			$data = json_decode($request->getContent(), true);
+			$request->request->replace(is_array($data) ? $data : array());
+		}
+
+		return $request;
+	}
 }

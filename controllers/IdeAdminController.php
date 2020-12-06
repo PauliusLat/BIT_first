@@ -20,15 +20,12 @@ class IdeAdminController
 		return View::adminRender('idea.idejos');
 	}
 
-	public function render(Request $request, IdeaPost $idea)
+	public function render()
 	{
-		$session = new Session;
-		$session->set('id', '$array');
 		$data = (IdeaPost::all())->pluck('idea_content', 'idea_like', 'post_date', 'idea_solution', 'ID')->all();
 
 		$response = new Response;
 		$output = View::adminRender('idea.idejos');
-		$response->prepare($request);
 		$response = new JsonResponse(['html' => $output, 'allData' => $data]);
 
 		return $response;
@@ -56,7 +53,7 @@ class IdeAdminController
 			$editPost->idea_content = $txt;
 			$editPost->save();
 		}
-		return $response = new Response;
+		return new Response;
 	}
 
 	public function create(Request $requestJson)

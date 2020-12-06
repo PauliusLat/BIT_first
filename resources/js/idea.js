@@ -68,6 +68,7 @@ function deleteIdea(delId) {
 //  /*------------------------------render data  axios-----------------------------------------*/
 
 function renderColons(e) {
+
   axios
     .get(uri + path + "idea-render-admin", {})
     .then(function (response) {

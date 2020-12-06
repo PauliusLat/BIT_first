@@ -17,11 +17,10 @@ import newsList from './newsList';
 // new TextEditor('.news-container')
 new Calendar('.calendar');
 new News('startNewsAdmin');
-
 new newsList('startNweaList');
-
 new Tag('tagStart');
 new Menu('menuStart');
+
 
 
 
