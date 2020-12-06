@@ -39,7 +39,24 @@ class Api {
             }
         } catch (e) {
             console.error(e);
-            console.log("Duomenys is serveverionepasiekiami !!!");
+            console.log("Duomenys is serveverio nepasiekiami !!!");
+        }
+    }
+
+    async getPostData(api, id) {
+        console.log(api, id);
+        try {
+            let response = await axios.post(this.uri + this.path + api, {
+                id: id
+            })
+
+            if (response.status == 200 && response.statusText == "OK") {
+                console.log(response);
+                return response.data.html;
+            }
+        } catch (e) {
+            console.error(e);
+            console.log("Duomenys is serveverio nepasiekiami !!!");
         }
     }
 
@@ -86,12 +103,25 @@ class Api {
             if (obj.image) {
                 formData.append('image', obj.image);
             }
-            if(obj.slug){
+            if (obj.slug) {
                 formData.append('slug', obj.slug);
             }
-            if(obj.cat_parent){
+            if (obj.category) {
+                formData.append('category', obj.category);
+            }
+            if (obj.catTitle) {
+                formData.append('catTitle', obj.catTitle);
+            }
+            if (obj.catContent) {
+                formData.append('catContent', obj.catContent);
+            }
+            if (obj.page) {
+                formData.append('page', obj.page);
+            }
+            if (obj.cat_parent) {
                 formData.append('cat_parent', obj.cat_parent);
             }
+
             console.log(Object.fromEntries(formData))
             axios.post(this.uri + this.path + obj.api, formData, {
 

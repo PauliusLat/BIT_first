@@ -5,6 +5,7 @@ namespace BIT\controllers;
 // use BIT\app\App;
 use BIT\app\Page;
 use BIT\app\View;
+use BIT\app\FrontMenu;
 // use BIT\app\Attachment;
 // use BIT\models\NewsPost;
 // use BIT\models\AlbumPost;
@@ -15,20 +16,20 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 // use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
-class PageController
+class FrontMenuController
 {
 
     public function index()
     {
-        return View::adminRender('page.mainpage');
+        return View::adminRender('frontmenu.mainmenu');
     }
 
     public function create()
     {
-        $pages = Page::all()->all();
-        $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
-        $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
-        $output = View::adminRender('page.page', ["pages" => $pages, 'post_types' => $post_types, 'page_state' => $page_state]);
+        // $pages = Page::all()->all();
+        // $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
+        // $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
+        $output = View::adminRender('frontmenu.menucreate', ["pages" => $pages, 'post_types' => $post_types, 'page_state' => $page_state]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -72,7 +73,7 @@ class PageController
         $page->save();
         // $output = View::adminRender('page.page');
         // $response = new JsonResponse(['html' => $output]);
-        return new JsonResponse;
+        return $response = new JsonResponse;
     }
 
     public function destroy(Page $page)

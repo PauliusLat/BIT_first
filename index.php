@@ -1,11 +1,11 @@
-
 <?php
 
-// use BIT\app\Category;
+use BIT\app\Category;
 // use BIT\app\Query;
 // use BIT\app\Tag;
 // use BIT\app\Attachment;
 use BIT\app\App;
+use BIT\app\Page;
 
 
 
@@ -30,6 +30,8 @@ App::start();
 
 // $pages = Page::all()->pageState('Site Page')->all();
 // _dc($pages);
+// $session = App::start()->getService('session');
+// $session->set(2, 8);
 // _dc($_SERVER);
 // _dc($session->get('333333333333cassdca'));
 // $server = new Server;
@@ -63,18 +65,35 @@ App::start();
 
 // use BIT\models\NewsPost;
 // add_action('init', function () {
-// $x = NewsPost::get(1628);
-// _dc($x->masyvas); 
-// _dc($x->masyvas); 
-// $x->save();
-// });
-   
+    // $page = new Page;
+    // $page = $page->get(162);
+    // _dc($page);
+
+    // $args = ['slug' => 'dovanos-namai'];
+    // wp_update_term(107, 'maincat', $args);
+    // $args = ['parent' => 0, 'description' => '', 'slug' => '', 'taxonomy_type' => 'maincat'];
+    // $category = new Category;
+    // $cat = $category->getCatPage(108);
+
+    // _dc($cat);
+    // $category = new Category;
+
+    // $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr()));
+    // _dc($categories);
+
+
+    // $x = NewsPost::get(1628);
+    // _dc($x->masyvas); 
+    // _dc($x->masyvas); 
+    // $x->save();
+    // });
+
 
     // foreach ($x as $key => $value) {
-        // if((int)($value->ID) > 400){
+    // if((int)($value->ID) > 400){
 
-        //     $value->delete();
-        // }
+    //     $value->delete();
+    // }
     // }
     // $session = App::start()->getService('session');
     // $news = new NewsPost;
@@ -140,6 +159,5 @@ App::start();
     // function flattenWithKeys(array $array, $childPrefix = '.', $root = '', $result = array()) {
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
-
 
 // });

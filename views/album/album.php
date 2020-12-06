@@ -1,11 +1,9 @@
-<div>
-    <?php foreach ($album as $key => $value) : ?>
-        <div>
- 
-            <a href="http://localhost/wordpress/<?=$value?>"><?=$value?></a>
+<div class="gallerGrid">
+    <?php foreach ($data as $value): ?>
+        <div class="">
+        <?php foreach ($value->attachments as $key => $img): ?>
+            <img class="uploadeImageGallery" src="<?=$img->getUrl();?>" alt="">
+        <?php endforeach;?>
         </div>
-    <?php endforeach; ?>
+    <?php endforeach;?>
 </div>
-
-
-

@@ -23,10 +23,21 @@ class NewsFrontController
         return View::render('news.news',  ["html" => $output]);
     }
 
+
     public function show(String $id){
 
+
         $news = NewsPost::get($id);
-        return View::render('news.show',  ["html" => $news]);
+        $title = $news->post_title;
+        $content = $news->news_content;
+        $date = $news->post_date;
+        $image = null;
+        foreach($news->attachments as $value){
+            $image = $value->getUrl();
+           // $alt = $value->getAtl();
+        }
+
+        return View::render('news.show',  ["content" => $content, "date" => $date, "image" => $image, "title" => $title]);
     }
 
     protected function decodeRequest($request)

@@ -3,7 +3,8 @@
 namespace BIT\app\modelTraits;
 
 use BIT\app\TaxCollection;
-use BIT\app\App;
+use BIT\app\Page;
+// use BIT\app\App;
 use BIT\app\coreExeptions\InitHookNotFiredException;
 use BIT\app\coreExeptions\PostIdNotSetException;
 
@@ -14,7 +15,7 @@ trait Tcategory
     {
         if (did_action('init')) {
             $cats = explode(', ', $cat);
-            foreach ($cats as $key => $term) {
+            foreach ($cats as $term) {
                 foreach ($this->getCats() as $post_term) {
                     if ($post_term->name == $term) {
                         $cat_ids[] = $post_term->term_id;
@@ -38,22 +39,15 @@ trait Tcategory
     public function addCat($cat, $parent_id = 0, $description = '',  $slug = '', $taxonomy_type = 'maincat')
     {
         $cat = (array)$cat;
-        $session = App::start()->getService('session');
         foreach ($this->cattax as $value) {
             if ($value == $taxonomy_type) {
                 if (did_action('init')) {
                     $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
                     foreach ($cat as $key) {
-                        $categ = get_term_by('name', $key, 'maincat');
-                        if ($categ->name == $key) {
-                            echo '<pre>';
-                            var_dump(get_term_by('name', $key, 'maincat'));
-                            $session->flash('alert_message', 'tokiu pavadinimu kategorija jau sukurta');
-                            $categ->name != $key;
-                        } else {
-                            wp_insert_term($key, $value, $args);
-                            $session->flash('success_message', 'kategorija sėkmingai sukurta');
-                        }
+                        // wp_insert_term($key, $value, $args);
+                        $category = wp_insert_term($key, $value, $args);
+                        $catId = $category['term_id'];
+                        return $catId;
                     }
                 } else {
                     throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
@@ -62,7 +56,7 @@ trait Tcategory
         }
     }
 
-    public function updateCat(int $id, string $name, string $description, $parent_id = 0, string $slug = '', $taxonomy_type = 'maincat')
+    public function updateCat(int $id, string $name, string $slug, string $description = '',  $parent_id = 0,  $taxonomy_type = 'maincat')
     {
         if (did_action('init')) {
             $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'name' => $name];
@@ -73,6 +67,25 @@ trait Tcategory
     }
 
     //get category id by name
+    public function getCatPageLink(int $id)
+    {
+        $catPageId = get_term_meta($id, "page")[0];
+        $page = new Page;
+        $page = $page->get($catPageId);
+        $pageLink = $page->getLink();
+        return $pageLink;
+    }
+
+    public function getCatPage(int $id)
+    {
+        $catPageId = get_term_meta($id, "page")[0];
+        $page = new Page;
+        $page = $page->get($catPageId);
+        // $pageLink = $page->getLink();
+        return $page;
+    }
+
+
     public function getCatId($name, $taxonony_type = 'maincat')
     {
         $cat = get_term_by('name', $name, $taxonony_type);
@@ -91,6 +104,18 @@ trait Tcategory
     {
         $cat = get_term_by('id', $id, $taxonony_type);
         return $cat;
+    }
+
+    public function getCatbyName($name, $taxonony_type = 'maincat')
+    {
+        $cat = get_term_by('name', $name, $taxonony_type);
+        return $cat;
+    }
+
+    //adds page to category
+    public function addPageToCat(int $term_id, string $meta_key, int $page_id)
+    {
+        add_term_meta($term_id, $meta_key, $page_id);
     }
 
     //adds image to category
@@ -133,7 +158,35 @@ trait Tcategory
                         foreach ($terms as $term) {
                             wp_set_object_terms($this->ID, $term->term_id, $value, $append = true);
                         }
-                        /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
+                        /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
+                         * so that children with the same names but different parents aren't confused.*/
+                    }
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
+    public function addCatDbPost($cat, $parent_id = 0, $slug = '', $description = '', $taxonomy_type = 'maincat')
+    {
+        $cat = (array)$cat;
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
+                    foreach ($cat as $key) {
+                        wp_insert_term($key, $value, $args);
+                    }
+                    if ($this->ID == null) {
+                        throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
+                    } else {
+                        $terms = get_terms(['name' => $cat, 'taxonomy' => $value, 'hide_empty' => false]);
+                        foreach ($terms as $term) {
+
+                            wp_set_object_terms($this->ID, $term->term_id, $value, $append = true);
+                        }
+                        /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
                          * so that children with the same names but different parents aren't confused.*/
                     }
                 } else {

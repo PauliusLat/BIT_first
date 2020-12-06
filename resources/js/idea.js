@@ -46,7 +46,7 @@ function solutionText(sId, i) {
   ) {
     let text1 = txt1.split(/\s+/);
 
-    let api = "idea-create-admin";
+    let api = 'idea-create-admin';
     let sendData = new Api();
     sendData.saveContent(api, sId, text1)
     setTimeout(renderColons, 500);
@@ -60,7 +60,7 @@ function deleteIdea(delId) {
 
   let api = "idea-delete-admin&id=";
   let sendData = new Api();
-  sendData.delete(delId, api) 
+  sendData.delete(api, delId)
   setTimeout(renderColons, 500);
 
 }
@@ -68,11 +68,11 @@ function deleteIdea(delId) {
 //  /*------------------------------render data  axios-----------------------------------------*/
 
 function renderColons(e) {
+
   axios
     .get(uri + path + "idea-render-admin", {})
-    .then(function(response) {
+    .then(function (response) {
       if (response.status == 200 && response.statusText == "OK") {
-        console.log(response);
         const data = response.data.allData;
 
         let keys = [];
@@ -131,7 +131,7 @@ function renderColons(e) {
           let sId = postBtn[i].id;
           postBtn[i].addEventListener(
             "click",
-            function() {
+            function () {
               solutionText(sId, i + 1);
 
             },
@@ -143,7 +143,7 @@ function renderColons(e) {
 
           editBtn[i].addEventListener(
             "click",
-            function() {
+            function () {
               editText(editId);
             },
             false
@@ -153,7 +153,7 @@ function renderColons(e) {
           let delId = deletetBtn[i].id;
           deletetBtn[i].addEventListener(
             "click",
-            function() {
+            function () {
               deleteIdea(delId);
             },
             false
@@ -163,7 +163,7 @@ function renderColons(e) {
 
       return response;
     })
-    .catch(function(error) {
+    .catch(function (error) {
       if (error.response) {
         console.log(error.response.data);
         console.log(error.response.status);

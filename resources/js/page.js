@@ -21,16 +21,18 @@ function init() {
         test.innerHTML = HTML;
         const submit = document.getElementById("create");
         submit.addEventListener("click", () => {
-          const name = document.getElementById("page-name").value;
-        //   const slug = document.getElementById("post-slug").value;
+          const title = document.getElementById("page_title").value;
+          // const name = document.getElementById("page_name").value;
         //   const description = document.getElementById("page-description").value;
 
           let post = document.getElementById('post');
           // console.log(post);
           let select = post.options[post.selectedIndex].value;
+          let pageState = document.getElementById('pageState');
+          let selectpageState = pageState.options[pageState.selectedIndex].value;
           // console.log(select);  
  
-        pageStore(name, select);
+        pageStore(title, select, name, selectpageState);
          
         });
 
@@ -74,15 +76,16 @@ function init() {
       }
       console.log(error);
     });
-  1;
+  ;
 }
 
-function pageStore(name, select) {
+function pageStore(title, select, name, selectpageState) {
   axios
     .post(uri + path + "page_store", {
-      page_title: name,
-    //   page_slug: slug,
-      post_type: select
+      page_title: title,
+      page_name: name,
+      post_type: select,
+      page_state: selectpageState
     })
     .then(function(response) {
       console.log(response);
@@ -91,13 +94,14 @@ function pageStore(name, select) {
     .catch((err) => {
       console.log(err instanceof TypeError);
     });
-  document.getElementById("page-name").value = "";
+  document.getElementById("page_title").value = "";
 }
 
 function pageEdit(ID) {
   axios
     .post(uri + path + "page_edit&id="+ID, {
       editID: ID,
+
     })
     .then(function(response) {
       const test = document.querySelector(".innerpage");
@@ -108,6 +112,7 @@ function pageEdit(ID) {
       const updateBtn = document.getElementById("pageUpdate");
       updateBtn.addEventListener("click", () => {
         const updateId = updateBtn.value;
+
         pageUpdate(updateId);
       });
     })
@@ -117,12 +122,16 @@ function pageEdit(ID) {
 }
 
 function pageUpdate(updateId) {
-  const title = document.getElementById("page_name").value;
+  const title = document.getElementById("page_title").value;
+  console.log(title);
+  const name = document.getElementById("page_name").value;
+  console.log(name);
+
   axios
     .post(uri + path + "page_update&id="+updateId, {
       updateId: updateId,
       page_title: title,
-    //   page_slug: slug,
+      page_name: name,
     //   page_description: description
 
     })
