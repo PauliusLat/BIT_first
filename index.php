@@ -64,7 +64,7 @@ App::start();
 
 
 // use BIT\models\NewsPost;
-add_action('init', function () {
+// add_action('init', function () {
     // $page = new Page;
     // $page = $page->get(162);
     // _dc($page);
@@ -160,4 +160,4 @@ add_action('init', function () {
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
 
-});
+// });

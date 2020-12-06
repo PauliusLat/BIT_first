@@ -76,7 +76,7 @@ function init() {
       }
       console.log(error);
     });
-  1;
+  ;
 }
 
 function pageStore(title, select, name, selectpageState) {
