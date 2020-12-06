@@ -1179,6 +1179,53 @@ body {
   border-radius: 10px;
 }
 
+.newsCat .cat {
+  width: 100%;
+}
+
+.newsCat option {
+  line-height: 20px;
+  font-size: 16px;
+}
+
+.newsCat option:first-child {
+  pointer-events: none;
+}
+
+.newsCat .showAllSelected {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 20px 0;
+  width: 100%;
+}
+
+.newsCat .showAllSelected .selectedCat {
+  border: 2px solid #cccccc;
+  width: 40%;
+  margin: 0 0 0 30%;
+  line-height: 20px;
+  font-size: 16px;
+}
+
+.newsCat .showAllSelected .selectedCat:hover {
+  background-color: #82878C;
+}
+
+.newsCat .showAllSelected .closeCat {
+  width: 10%;
+  float: right;
+  margin: 3px 24% 0 0;
+}
+
+.newsCat .showAllSelected .closeCat:hover {
+  color: #DC3232;
+  cursor: pointer;
+}
+
+.newsCat option {
+  line-height: 16px;
+}
+
 .newsCatImage {
   display: block;
   margin: 0 auto;

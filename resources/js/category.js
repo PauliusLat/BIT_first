@@ -104,7 +104,7 @@ console.log(typeof selectedPage)
     
   }
 
-  // console.log(obj)
+
   if (obj) {
     readImage.sendImageData(obj);
   }

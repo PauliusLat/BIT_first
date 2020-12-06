@@ -98,6 +98,7 @@ class Api {
             if (obj.catContent) {
                 formData.append('catContent', obj.catContent);
             }
+
             if(obj.page){
                 formData.append('page', obj.page);
             }
