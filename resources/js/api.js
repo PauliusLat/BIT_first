@@ -86,6 +86,10 @@ class Api {
 
         let formData = new FormData();
         if (obj.api) {
+
+            if (obj.id) {
+                formData.append('id', obj.id);
+            }
             if (obj.title) {
                 formData.append('title', obj.title);
             }
