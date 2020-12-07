@@ -92,11 +92,10 @@ class Api {
             if (obj.content) {
                 formData.append('content', obj.content);
             }
-            
             if (typeof obj.altText === 'string') {
                 formData.append('altText', obj.altText);
             }
-            if (typeof obj.imageTitle  === 'string') {
+            if (typeof obj.imageTitle === 'string') {
                 formData.append('imageTitle', obj.imageTitle);
             }
             if (obj.image) {
