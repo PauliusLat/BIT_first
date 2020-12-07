@@ -2208,3 +2208,7 @@ table th {
   cursor: pointer;
 }
 
+.hiden {
+  display: none;
+}
+

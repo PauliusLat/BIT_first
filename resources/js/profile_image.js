@@ -68,8 +68,10 @@ class Profile_image {
   sendImageData(obj) {
 
     let image = this.file;
-
-    obj.image = image;
+    if(image){
+      obj.image = image;
+    }
+   
     let sendData = new Api();
     sendData.formDataApi(obj);
   }
