@@ -66,13 +66,13 @@ class NewsAdminController
 
 	public function list()
 	{
-
+        _d(admin_url('admin.php?page=edit'));
 		return View::adminRender('news.list');
 	}
 
 	public function listPost(Request $request)
-	{
-		$uri= $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'];
+	{   
+		$uri= admin_url('admin.php?page=edit');
 
 		$allNews = NewsPost::all()->all();
 		$output = View::adminRender('news.renderList', ['html' => $allNews,  'uri' => $uri]);
@@ -89,17 +89,16 @@ class NewsAdminController
 		$image = null;
 		foreach ($news->attachments as $att) {
 			$image = $att;
-		}
+        }
+        _d($request->request);
 		$news->post_title = $request->request->get('title');
 		$news->news_content = $request->request->get('content');
-		$news->save();
+        $news->save();
+        
 		$image->setAlt($request->request->get('altText'));
 		$image->setCaption($request->request->get('imageTitle'));
-		if (!$file) {
-			$image->save();
-		} else {
-			$image->save($file, $news->ID);
-		}
+		$image->save($file, $news->ID);
+		
 		return new Response();
 	}
 

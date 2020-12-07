@@ -1,8 +1,4 @@
-<?php
 
-use BIT\app\Page;
-
-?>
 <?php foreach ($html as $news) : ?>
     <div class="newsList">
         <div class="1">
@@ -25,7 +21,7 @@ use BIT\app\Page;
                 <div class="btn-red btnNews deleteNews" id="<?= $news->ID; ?>">
                     Trinti
                 </div>
-                <form action=" <?= $uri ?>/wordpress/wp-admin/admin.php?page=edit&id=<?= $news->ID; ?>" method="post">
+                <form action=" <?= $uri ?>&id=<?= $news->ID; ?>" method="post">
                     <button class="btn-blue btnNews edit" type="submit" name="edit" value="<?= $news->ID ?>">
                         Redaguoti
                     </button>
