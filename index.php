@@ -6,6 +6,8 @@ use BIT\app\Category;
 // use BIT\app\Attachment;
 use BIT\app\App;
 use BIT\app\Page;
+use BIT\app\Pagination;
+use BIT\app\Session;
 
 
 
@@ -64,10 +66,17 @@ App::start();
 
 
 // use BIT\models\NewsPost;
-// add_action('init', function () {
-    // $page = new Page;
+add_action('init', function () {
+    // $session = new Session;
+    // // // $session->deleteSession();
+    // $session->flash('ooo', 5);
+    // _dc($session->get('ooo'));
+    // _dc($_COOKIE['Bit']);
+    //$page = new Page;
     // $page = $page->get(162);
     // _dc($page);
+    // $pagination = new Pagination(2, 5);
+    // _dc($pagination->offset);
 
     // $args = ['slug' => 'dovanos-namai'];
     // wp_update_term(107, 'maincat', $args);
@@ -75,8 +84,9 @@ App::start();
     // $category = new Category;
     // $cat = $category->getCatPage(108);
 
-    // _dc($cat);
+    // // _dc($cat);
     // $category = new Category;
+    // $category->deleteCatFromDb(135);
 
     // $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr()));
     // _dc($categories);
@@ -160,4 +170,4 @@ App::start();
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
 
-// });
+});

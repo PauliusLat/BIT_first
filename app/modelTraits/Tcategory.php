@@ -61,6 +61,11 @@ trait Tcategory
         if (did_action('init')) {
             $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'name' => $name];
             wp_update_term($id, $taxonomy_type, $args);
+            $page = $this->getCatPage($id);
+            if ($page != null || $page != 0 || $page != 'undefined' || $page != '') {
+                $page->post_name = $slug;
+                $page->save();
+            }
         } else {
             throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
         }
@@ -113,10 +118,25 @@ trait Tcategory
     }
 
     //adds page to category
-    public function addPageToCat(int $term_id, string $meta_key, int $page_id)
+    // public function addPageToCat(string $name)
+    public function addPageToCat(string $name, int $term_id, string $meta_key)
     {
-        add_term_meta($term_id, $meta_key, $page_id);
+        $page = new Page();
+        $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
+        $pageState = [];
+        foreach ($page_state as $state => $value) {
+            if ($state == 'category' || $state == 'site' || $state == 'system') {
+                array_push($pageState, $value);
+            }
+        }
+        $page->pageState = $pageState;
+        $page->setRoute('kategorija');
+        $page->setTitle($name);
+        $page->save();
+        add_term_meta($term_id, $meta_key, $page->ID);
     }
+
+
 
     //adds image to category
     public function addImageToCat(int $term_id, string $meta_key, $image)
@@ -140,7 +160,14 @@ trait Tcategory
     //deletes category from db
     public function deleteCatFromDb(int $id, $taxonomy_type = 'maincat')
     {
+
+        $page = $this->getCatPage($id);
+        // _dc($page->ID);
         wp_delete_term($id, $taxonomy_type);
+
+        if ($page->ID != null && $page->ID != 0 && $page->ID != 'undefined' && $page->ID != '') {
+            wp_delete_post($page->ID);
+        }
     }
 
     //attach category to post type
