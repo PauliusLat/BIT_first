@@ -59,29 +59,24 @@ class NewsAdminController
 		$id = $request->request->get('id');
 		$news = NewsPost::get($id);
 	}
-	public function edit(Request $requestJson)
+	public function edit(NewsPost $news)
 	{
-		$request = $this->decodeRequest($requestJson);
-		
-		$id = $request->request->get('id');
-
-		$news = NewsPost::get($id);
-
-		$output = View::adminRender('news.renderEdit', ['html' => $news]);
-
-		$response = new JsonResponse(['html' => $output]);
-
-		return $response;
+		return View::adminRender('news.edit', ['data' => $news]);
 	}
+
 	public function list()
 	{
+
 		return View::adminRender('news.list');
 	}
 
 	public function listPost(Request $request)
 	{
+		$uri= $_SERVER['REQUEST_SCHEME']."://".$_SERVER['SERVER_NAME'];
+
 		$allNews = NewsPost::all()->all();
-		$output = View::adminRender('news.renderList', ['html' => $allNews]);
+		$output = View::adminRender('news.renderList', ['html' => $allNews,  'uri' => $uri]);
+
 		$response = new JsonResponse(['html' => $output]);
 
 		return $response;

@@ -1,10 +1,8 @@
-
 <?php
 
 use BIT\app\Page;
 
 ?>
-
 <?php foreach ($html as $news) : ?>
     <div class="newsList">
         <div class="1">
@@ -15,10 +13,10 @@ use BIT\app\Page;
         </h1>
         <?php $allImages = $news->attachments; ?>
         <?php foreach ($allImages as $image) : ?>
-        <div class="parentNews">
-            <div class="imageNews">
-                <img src="<?= $image->getUrl(); ?>" alt="<?= $image->getAlt(); ?>">
-            </div>
+            <div class="parentNews">
+                <div class="imageNews">
+                    <img src="<?= $image->getUrl(); ?>" alt="<?= $image->getAlt(); ?>">
+                </div>
             <?php endforeach; ?>
             <div class="contentNews">
                 <?= $news->news_content; ?>
@@ -27,15 +25,12 @@ use BIT\app\Page;
                 <div class="btn-red btnNews deleteNews" id="<?= $news->ID; ?>">
                     Trinti
                 </div>
-                <div class="btn-blue btnNews edit" id="<?= $news->ID; ?>">
-                    Redaguoti
-                </div>
-                <div class="btn-green btnNews save" id="<?= $news->ID; ?>">
-                    Saugoti
-                </div>
+                <form action=" <?= $uri ?>/wordpress/wp-admin/admin.php?page=edit&id=<?= $news->ID; ?>" method="post">
+                    <button class="btn-blue btnNews edit" type="submit" name="edit" value="<?= $news->ID ?>">
+                        Redaguoti
+                    </button>
+                </form>
             </div>
-        </div>
+            </div>
     </div>
 <?php endforeach; ?>
-<div class="editStart">
-</div>
