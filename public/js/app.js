@@ -1032,6 +1032,10 @@ var Api = /*#__PURE__*/function () {
       var formData = new FormData();
 
       if (obj.api) {
+        if (obj.id) {
+          formData.append('id', obj.id);
+        }
+
         if (obj.title) {
           formData.append('title', obj.title);
         }
@@ -1773,6 +1777,7 @@ var EditPost = /*#__PURE__*/function () {
         var content = document.querySelectorAll("[contenteditable]");
         var api = "news-update";
         var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_1__["default"]();
+        window.location.hash;
         imageDiv.addEventListener("click", function () {
           image.remove();
           imgBlock.classList.remove("hiden");
@@ -1784,7 +1789,8 @@ var EditPost = /*#__PURE__*/function () {
             title: title.value,
             content: content[0].innerHTML,
             imageTitle: "",
-            altText: ""
+            altText: "",
+            id: window.location.search.slice(14)
           };
           readImage.sendImageData(obj);
         });
