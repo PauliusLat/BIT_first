@@ -39,9 +39,7 @@ class EditPost {
                     imageTitle:"",
                     altText:""                
                 }
-
                 readImage.sendImageData(obj);
-
             })
         }
     }

@@ -2212,3 +2212,24 @@ table th {
   display: none;
 }
 
+.innermenu .menu {
+  text-align: center;
+}
+
+.innermenu .container {
+  background-color: #333;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.innermenu .container .draggable {
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid black;
+  cursor: move;
+}
+
+.innermenu .container .draggable.dragging {
+  opacity: 0.5;
+}
+
