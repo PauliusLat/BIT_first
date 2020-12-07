@@ -44,14 +44,12 @@ class Api {
     }
 
     async getPostData(api, id) {
-        console.log(api, id);
         try {
             let response = await axios.post(this.uri + this.path + api, {
                 id: id
             })
 
             if (response.status == 200 && response.statusText == "OK") {
-                console.log(response);
                 return response.data.html;
             }
         } catch (e) {
@@ -94,14 +92,18 @@ class Api {
             if (obj.content) {
                 formData.append('content', obj.content);
             }
-            if (obj.alt) {
-                formData.append('altText', obj.alt);
+            
+            if (typeof obj.altText === 'string') {
+                formData.append('altText', obj.altText);
             }
-            if (obj.imageTitle) {
+            if (typeof obj.imageTitle  === 'string') {
                 formData.append('imageTitle', obj.imageTitle);
             }
             if (obj.image) {
                 formData.append('image', obj.image);
+            }
+            if (obj.tag) {
+                formData.append('tag', obj.tag);
             }
             if (obj.slug) {
                 formData.append('slug', obj.slug);

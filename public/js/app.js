@@ -966,40 +966,38 @@ var Api = /*#__PURE__*/function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log(api, id);
-                _context2.prev = 1;
-                _context2.next = 4;
+                _context2.prev = 0;
+                _context2.next = 3;
                 return axios.post(this.uri + this.path + api, {
                   id: id
                 });
 
-              case 4:
+              case 3:
                 response = _context2.sent;
 
                 if (!(response.status == 200 && response.statusText == "OK")) {
-                  _context2.next = 8;
+                  _context2.next = 6;
                   break;
                 }
 
-                console.log(response);
                 return _context2.abrupt("return", response.data.html);
 
-              case 8:
-                _context2.next = 14;
+              case 6:
+                _context2.next = 12;
                 break;
 
-              case 10:
-                _context2.prev = 10;
-                _context2.t0 = _context2["catch"](1);
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
                 console.error(_context2.t0);
                 console.log("Duomenys is serveverio nepasiekiami !!!");
 
-              case 14:
+              case 12:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[1, 10]]);
+        }, _callee2, this, [[0, 8]]);
       }));
 
       function getPostData(_x2, _x3) {
@@ -1042,16 +1040,20 @@ var Api = /*#__PURE__*/function () {
           formData.append('content', obj.content);
         }
 
-        if (obj.alt) {
-          formData.append('altText', obj.alt);
+        if (typeof obj.altText === 'string') {
+          formData.append('altText', obj.altText);
         }
 
-        if (obj.imageTitle) {
+        if (typeof obj.imageTitle === 'string') {
           formData.append('imageTitle', obj.imageTitle);
         }
 
         if (obj.image) {
           formData.append('image', obj.image);
+        }
+
+        if (obj.tag) {
+          formData.append('tag', obj.tag);
         }
 
         if (obj.slug) {
@@ -1724,6 +1726,79 @@ function catDelete(ID, taxonomy) {
 
 /***/ }),
 
+/***/ "./resources/js/editPost.js":
+/*!**********************************!*\
+  !*** ./resources/js/editPost.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var EditPost = /*#__PURE__*/function () {
+  function EditPost(target) {
+    _classCallCheck(this, EditPost);
+
+    this.target = target;
+    this.api = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.init();
+  }
+
+  _createClass(EditPost, [{
+    key: "init",
+    value: function init() {
+      var DOM = document.querySelector(this.target);
+
+      if (DOM) {
+        var deleteApi = 'news-destroy&id=';
+        var listApi = "news-list";
+        var image = document.getElementById('image');
+        var imageDiv = document.querySelector('.imageDiv');
+        var imgBlock = document.querySelector('.galleryContainer');
+        var save = document.querySelector('.save');
+        var title = document.querySelector('.title');
+        var content = document.querySelectorAll("[contenteditable]");
+        var api = "news-update";
+        var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_1__["default"]();
+        imageDiv.addEventListener("click", function () {
+          image.remove();
+          imgBlock.classList.remove("hiden");
+          readImage.image();
+        });
+        save.addEventListener("click", function () {
+          var obj = {
+            api: api,
+            title: title.value,
+            content: content[0].innerHTML,
+            imageTitle: "",
+            altText: ""
+          };
+          readImage.sendImageData(obj);
+        });
+      }
+    }
+  }]);
+
+  return EditPost;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (EditPost);
+
+/***/ }),
+
 /***/ "./resources/js/idea.js":
 /*!******************************!*\
   !*** ./resources/js/idea.js ***!
@@ -1885,6 +1960,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
 /* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 /* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
+/* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
 /** @format */
  // import startGallery from './gallery.js';
 
@@ -1898,11 +1974,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
  // new TextEditor('.news-container')
 
 new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
 new _news__WEBPACK_IMPORTED_MODULE_6__["default"]('startNewsAdmin');
 new _newsList__WEBPACK_IMPORTED_MODULE_8__["default"]('startNweaList');
+new _editPost__WEBPACK_IMPORTED_MODULE_9__["default"]('.editStart');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
 new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
 
@@ -2455,16 +2533,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var newsList = /*#__PURE__*/function () {
-  function newsList(target) {
-    _classCallCheck(this, newsList);
+var NewsList = /*#__PURE__*/function () {
+  function NewsList(target) {
+    _classCallCheck(this, NewsList);
 
     this.target = target;
     this.api = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.init();
   }
 
-  _createClass(newsList, [{
+  _createClass(NewsList, [{
     key: "init",
     value: function () {
       var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -2507,10 +2585,6 @@ var newsList = /*#__PURE__*/function () {
 
                               setTimeout(location.reload(), 500);
                             });
-                            var editId = editNews[i].id;
-                            editNews[i].addEventListener("click", function () {
-                              _this.edit(editId);
-                            });
                           };
 
                           for (i = 0; i < deleteNews.length; i++) {
@@ -2539,44 +2613,12 @@ var newsList = /*#__PURE__*/function () {
 
       return init;
     }()
-  }, {
-    key: "edit",
-    value: function () {
-      var _edit = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(editId) {
-        var edit, editApi, HTML;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                edit = document.querySelector(".editStart");
-                editApi = "news-edit";
-                _context3.next = 4;
-                return this.api.getPostData(editApi, editId);
-
-              case 4:
-                HTML = _context3.sent;
-                edit.innerHTML = HTML;
-
-              case 6:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this);
-      }));
-
-      function edit(_x) {
-        return _edit.apply(this, arguments);
-      }
-
-      return edit;
-    }()
   }]);
 
-  return newsList;
+  return NewsList;
 }();
 
-/* harmony default export */ __webpack_exports__["default"] = (newsList);
+/* harmony default export */ __webpack_exports__["default"] = (NewsList);
 
 /***/ }),
 
@@ -2816,7 +2858,11 @@ var Profile_image = /*#__PURE__*/function () {
     key: "sendImageData",
     value: function sendImageData(obj) {
       var image = this.file;
-      obj.image = image;
+
+      if (image) {
+        obj.image = image;
+      }
+
       var sendData = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
       sendData.formDataApi(obj);
     }
