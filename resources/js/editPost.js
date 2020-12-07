@@ -25,7 +25,7 @@ class EditPost {
             const api = "news-update";
 
             var readImage = new Profile_image();
-
+            window.location.hash
             imageDiv.addEventListener("click", () => {
                 image.remove();
                 imgBlock.classList.remove("hiden");                
@@ -37,11 +37,10 @@ class EditPost {
                     title: title.value,
                     content: content[0].innerHTML,
                     imageTitle:"",
-                    altText:""                
+                    altText:"",
+                    id:window.location.search.slice(14)               
                 }
-
                 readImage.sendImageData(obj);
-
             })
         }
     }

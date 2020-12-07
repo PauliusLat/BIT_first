@@ -86,17 +86,20 @@ class Api {
 
         let formData = new FormData();
         if (obj.api) {
+
+            if (obj.id) {
+                formData.append('id', obj.id);
+            }
             if (obj.title) {
                 formData.append('title', obj.title);
             }
             if (obj.content) {
                 formData.append('content', obj.content);
             }
-            
             if (typeof obj.altText === 'string') {
                 formData.append('altText', obj.altText);
             }
-            if (typeof obj.imageTitle  === 'string') {
+            if (typeof obj.imageTitle === 'string') {
                 formData.append('imageTitle', obj.imageTitle);
             }
             if (obj.image) {

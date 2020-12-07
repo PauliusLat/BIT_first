@@ -27,6 +27,6 @@
                     </button>
                 </form>
             </div>
-            </div>
+        </div>
     </div>
 <?php endforeach; ?>

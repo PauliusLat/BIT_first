@@ -1032,6 +1032,10 @@ var Api = /*#__PURE__*/function () {
       var formData = new FormData();
 
       if (obj.api) {
+        if (obj.id) {
+          formData.append('id', obj.id);
+        }
+
         if (obj.title) {
           formData.append('title', obj.title);
         }
@@ -1773,6 +1777,7 @@ var EditPost = /*#__PURE__*/function () {
         var content = document.querySelectorAll("[contenteditable]");
         var api = "news-update";
         var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_1__["default"]();
+        window.location.hash;
         imageDiv.addEventListener("click", function () {
           image.remove();
           imgBlock.classList.remove("hiden");
@@ -1784,7 +1789,8 @@ var EditPost = /*#__PURE__*/function () {
             title: title.value,
             content: content[0].innerHTML,
             imageTitle: "",
-            altText: ""
+            altText: "",
+            id: window.location.search.slice(14)
           };
           readImage.sendImageData(obj);
         });
@@ -1995,7 +2001,20 @@ new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+ // import Api from './api';
+// import Profile_image from './profile_image';
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2007,271 +2026,61 @@ var Menu = /*#__PURE__*/function () {
   function Menu(target) {
     _classCallCheck(this, Menu);
 
-    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-    this.uri = document.location.origin;
-    this.pageSelected;
-    this.hash = location.hash;
-    this.hasharr;
-    this.hasarr2;
     this.target = target;
-    this.startMenu();
+    this.init();
   }
 
   _createClass(Menu, [{
-    key: "startMenu",
-    value: function startMenu() {
+    key: "init",
+    value: function init() {
       var DOM = document.getElementById(this.target);
 
       if (DOM) {
-        this.init();
+        var getDragAfterElement = function getDragAfterElement(container, y) {
+          var draggableElements = _toConsumableArray(container.querySelectorAll('.draggable:not(.dragging)'));
+
+          return draggableElements.reduce(function (closest, child) {
+            var box = child.getBoundingClientRect();
+            var offset = y - box.top - box.height / 2;
+
+            if (offset < 0 && offset > closest.offset) {
+              return {
+                offset: offset,
+                element: child
+              };
+            } else {
+              return closest;
+            }
+          }, {
+            offset: Number.NEGATIVE_INFINITY
+          }).element;
+        };
+
+        var draggables = document.querySelectorAll('.draggable');
+        var containers = document.querySelectorAll('.container');
+        draggables.forEach(function (draggable) {
+          draggable.addEventListener('dragstart', function () {
+            draggable.classList.add('dragging');
+          });
+          draggable.addEventListener('dragend', function () {
+            draggable.classList.remove('dragging');
+          });
+        });
+        containers.forEach(function (container) {
+          container.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            var afterElement = getDragAfterElement(container, e.clientY);
+            var draggable = document.querySelector('.dragging');
+
+            if (afterElement == null) {
+              container.appendChild(draggable);
+            } else {
+              container.insertBefore(draggable, afterElement);
+            }
+          });
+        });
       }
     }
-  }, {
-    key: "init",
-    value: function init() {
-      axios.post(this.uri + this.path + "menu_create", {}).then(function (response) {
-        var test = document.querySelector(".innermenu");
-
-        if (response.status == 200 && response.statusText == "OK") {
-          var HTML = response.data.html;
-          test.innerHTML = HTML; //       const submit = document.getElementById("create");
-          //       submit.addEventListener("click", () => {
-          //         const title = document.getElementById("page_title").value;
-          //         // const name = document.getElementById("page_name").value;
-          //       //   const description = document.getElementById("page-description").value;
-          //         let post = document.getElementById('post');
-          //         // console.log(post);
-          //         let select = post.options[post.selectedIndex].value;
-          //         let pageState = document.getElementById('pageState');
-          //         let selectpageState = pageState.options[pageState.selectedIndex].value;
-          //         // console.log(select);  
-          //       pageStore(title, select, name, selectpageState);
-          //       });
-          //       const editBtn = pageStrt.querySelectorAll(".page-edit");
-          //       for (let i = 0; i < editBtn.length; i++) {
-          //         let ID = editBtn[i].value;
-          //       //   console.log(ID);
-          //       //   let page = editBtn[i].id;
-          //         editBtn[i].addEventListener(
-          //           "click",
-          //           function() {
-          //             pageEdit(ID);
-          //           },
-          //           false
-          //         );
-          //       }
-          //       const deleteBtn = document.querySelectorAll(".page-delete");
-          //       for (let i = 0; i < deleteBtn.length; i++) {
-          //         let ID = deleteBtn[i].value;
-          //         deleteBtn[i].addEventListener(
-          //           "click",
-          //           function() {
-          //             pageDelete(ID);
-          //           },
-          //           false
-          //         );
-          //       }
-        }
-      })["catch"](function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
-
-        console.log(error);
-      });
-      ;
-    } //     if (typeof pageNo == 'object' && this.hash.length !== 0) {
-    //         console.log(pageNo);
-    //         this.hasharr = this.hash.split('#')
-    //         this.hasarr2 = this.hasharr[1].split('%')
-    //         this.hash = hasarr2[0]
-    //         // window.addEventListener( "load",
-    //         // () =>{
-    //         // this.hasharr = this.hash.split('#')
-    //         // this.hasarr2 = this.hasharr[1].split('%')
-    //         // this.hash = this.hasarr2[0]
-    //         // this.hash = location.hash
-    //         // this.init();
-    //     } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
-    //         this.hasharr = this.hash.split('#')
-    //         this.hasarr2 = this.hasharr[1].split('%')
-    //         this.hash = this.hasarr2[0]
-    //     } else {
-    //         this.hash = null
-    //     }
-    //     axios
-    //         .post(this.uri + this.path + "tag_create", {
-    //             pages: parseInt(pageNo),
-    //             pageSelected: this.pageSelected,
-    //             hash: this.hash
-    //         })
-    //         .then((response) => {
-    //             const test = document.querySelector(".test");
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 const HTML = response.data.html;
-    //                 test.innerHTML = HTML;
-    //                 if (pageNo > 0 && typeof pageNo === 'string') {
-    //                     let addColor = document.querySelector('.nr-' + pageNo);
-    //                     addColor.classList.add("active");
-    //                 }
-    //                 const submit = document.getElementById("create");
-    //                 submit.addEventListener("click", () => {
-    //                     const name = document.getElementById("tag-name").value;
-    //                     const slug = document.getElementById("tag-slug").value;
-    //                     const description = document.getElementById("tag-description").value;
-    //                     this.tagStore(name, slug, description);
-    //                 });
-    //                 const editBtn = document.querySelectorAll(".tag-edit");
-    //                 for (let i = 0; i < editBtn.length; i++) {
-    //                     let ID = editBtn[i].value;
-    //                     let taxonomy = editBtn[i].id;
-    //                     editBtn[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             this.tagEdit(ID, taxonomy);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-    //                 const deleteBtn = document.querySelectorAll(".tag-delete");
-    //                 for (let i = 0; i < deleteBtn.length; i++) {
-    //                     let ID = deleteBtn[i].value;
-    //                     let taxonomy = deleteBtn[i].id;
-    //                     deleteBtn[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             this.tagDelete(ID, taxonomy);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-    //                 const pageBtn = document.getElementById("selectpage");
-    //                 const select = document.getElementById("items");
-    //                 pageBtn.addEventListener(
-    //                     "click",
-    //                     () => {
-    //                         var pageSelected;
-    //                         if (select.options[select.selectedIndex] != undefined) {
-    //                             pageSelected = select.options[select.selectedIndex].value;
-    //                         }else {
-    //                             pageSelected = 0;
-    //                           }
-    //                         this.pageSelected = pageSelected
-    //                         this.init(1);
-    //                     });
-    //                 const page = document.querySelectorAll(".paging");
-    //                 for (let i = 0; i < page.length; i++) {
-    //                     let pageNo = page[i].id;
-    //                     page[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             console.log(pageNo);
-    //                             location.hash = '#' + pageNo
-    //                             this.hash = location.hash
-    //                             this.init(pageNo);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-    //             }
-    //         })
-    //         .catch(function (error) {
-    //             if (error.response) {
-    //                 console.log(error.response.data);
-    //                 console.log(error.response.status);
-    //                 console.log(error.response.headers);
-    //             } else if (error.request) {
-    //                 console.log(error.request);
-    //             } else {
-    //                 console.log("Error", error.message);
-    //             }
-    //             console.log(error);
-    //         });
-    // }
-    // tagStore(name, slug, description) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_store", {
-    //             tag_name: name,
-    //             tag_slug: slug,
-    //             tag_description: description
-    //         })
-    //         .then((response) => {
-    //             console.log(response);
-    //             this.init();
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    //     document.getElementById("tag-name").value = "";
-    // }
-    // tagEdit(editID, taxonomy) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_edit", {
-    //             editID: editID,
-    //             taxonomy_type: taxonomy,
-    //         })
-    //         .then((response) => {
-    //             const test = document.querySelector(".test");
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 const HTML = response.data.html;
-    //                 test.innerHTML = HTML;
-    //             }
-    //             const updateBtn = document.getElementById("tagUpdate");
-    //             updateBtn.addEventListener("click", () => {
-    //                 const updateId = updateBtn.value;
-    //                 this.tagUpdate(updateId);
-    //             });
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    // }
-    // tagUpdate(updateId) {
-    //     const name = document.getElementById("tag_name").value;
-    //     const slug = document.getElementById("tag_slug").value;
-    //     const description = document.getElementById("tag_description").value;
-    //     axios
-    //         .post(this.uri + this.path + "tag_update", {
-    //             updateId: updateId,
-    //             tag_name: name,
-    //             tag_slug: slug,
-    //             tag_description: description
-    //         })
-    //         .then((response) => {
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 console.log(response);
-    //                 this.init();
-    //                 // setTimeout(call.init(), 500);
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    // }
-    // tagDelete(ID, taxonomy) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_destroy", {
-    //             deleteID: ID,
-    //             taxonomy_type: taxonomy,
-    //         })
-    //         .then((response) => {
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 console.log(response);
-    //                 this.init();
-    //                 // setTimeout(init(), 500);
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    //}
-
   }]);
 
   return Menu;
