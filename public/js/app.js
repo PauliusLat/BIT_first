@@ -2035,6 +2035,7 @@ var Menu = /*#__PURE__*/function () {
     this.target = target;
     this.read = true;
     this.init();
+    this.index = 0;
   }
 
   _createClass(Menu, [{
@@ -2069,8 +2070,8 @@ var Menu = /*#__PURE__*/function () {
         var draggables = document.querySelectorAll('.draggable');
         var container = document.querySelector('.container');
         var add = document.querySelector(".addNew");
-
         this.save();
+        this["delete"](draggables);
 
         var newBlock = function newBlock() {
           _this.addNew();
@@ -2079,7 +2080,6 @@ var Menu = /*#__PURE__*/function () {
         };
 
         add.addEventListener("click", newBlock);
-
         draggables.forEach(function (draggable) {
           draggable.addEventListener('dragstart', function () {
             draggable.classList.add('dragging');
@@ -2116,8 +2116,25 @@ var Menu = /*#__PURE__*/function () {
       this.init();
     }
   }, {
+    key: "delete",
+    value: function _delete(draggables) {
+      var deleted = document.querySelectorAll(".manuDelete");
+
+      var _loop = function _loop(i) {
+        deleted[i].addEventListener("click", function () {
+          draggables[i].remove();
+        });
+      };
+
+      for (var i = 0; i < draggables.length; i++) {
+        _loop(i);
+      }
+    }
+  }, {
     key: "save",
     value: function save() {
+      var _this2 = this;
+
       var store = document.querySelector(".save");
       var api = "menu-store";
 
@@ -2131,17 +2148,15 @@ var Menu = /*#__PURE__*/function () {
           var values = [];
           ;
 
-          for (var j = 0; j < selectBox.length; j++) {
-            var options = selectBox[j].getElementsByTagName('option');
+          for (_this2.index = 0; _this2.index < selectBox.length; _this2.index++) {
+            var options = selectBox[_this2.index].getElementsByTagName('option');
 
             for (var i = options.length; i--;) {
               if (options[i].selected) values.push(options[i].value); // if (options[i].selected) text = (options[i].innerText)
             }
-          }
 
-          for (var _i = 0; _i < menuText.length; _i++) {
-            text.push(menuText[_i].value);
-            link.push(menuLink[_i].value);
+            text.push(menuText[_this2.index].value);
+            link.push(menuLink[_this2.index].value);
           }
 
           var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
@@ -3165,8 +3180,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

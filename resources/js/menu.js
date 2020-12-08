@@ -8,6 +8,7 @@ class Menu {
     this.target = target;
     this.read = true;
     this.init();
+    this.index = 0;
   }
 
   init() {
@@ -18,6 +19,7 @@ class Menu {
       const container = document.querySelector('.container')
       const add = document.querySelector(".addNew");
       this.save();
+      this.delete(draggables);
 
       var newBlock = () => {
         this.addNew();
@@ -136,6 +138,16 @@ class Menu {
     this.init();
   }
 
+  delete(draggables) {
+    var deleted = document.querySelectorAll(".manuDelete");
+
+    for (let i = 0; i < draggables.length; i++) {
+      deleted[i].addEventListener("click", () => {
+        draggables[i].remove();
+      })
+    }
+  }
+
   save() {
     const store = document.querySelector(".save");
     const api = "menu-store";
@@ -150,25 +162,23 @@ class Menu {
         var link = [];
         var values = [];;
 
-        for (let j = 0; j < selectBox.length; j++) {
-          var options = selectBox[j].getElementsByTagName('option');
+        for (this.index = 0; this.index < selectBox.length; this.index++) {
+          var options = selectBox[this.index].getElementsByTagName('option');
           for (var i = options.length; i--;) {
             if (options[i].selected) values.push(options[i].value)
             // if (options[i].selected) text = (options[i].innerText)
           }
+          text.push(menuText[this.index].value)
+          link.push(menuLink[this.index].value)
         }
 
-        for (let i = 0; i < menuText.length; i++) {
-          text.push(menuText[i].value)
-          link.push(menuLink[i].value)
-        }
         var axios = new Api();
 
         var obj = {
-          category:values,
-          various:link,
-          content:text,
-          api:api
+          category: values,
+          various: link,
+          content: text,
+          api: api
         }
         axios.formDataApi(obj);
       }
