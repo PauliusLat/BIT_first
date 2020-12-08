@@ -83,7 +83,9 @@
     <div class=''>
         <label class="tcp-label">Kategorijos aprašymas</label>
     </div>
-    <textarea name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="tcp-input"></textarea>
+    <textarea name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="tcp-input">
+        
+    </textarea>
 
     <div class="buttons sm-1">
         <button type="submit" id="create" class="btn-blue">Pridėti</button>

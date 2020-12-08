@@ -43,6 +43,21 @@ class Api {
         }
     }
 
+    async getPostData(api, id) {
+        try {
+            let response = await axios.post(this.uri + this.path + api, {
+                id: id
+            })
+
+            if (response.status == 200 && response.statusText == "OK") {
+                return response.data.html;
+            }
+        } catch (e) {
+            console.error(e);
+            console.log("Duomenys is serveverio nepasiekiami !!!");
+        }
+    }
+
     saveContent(api, id, content) {
 
         axios
@@ -71,20 +86,26 @@ class Api {
 
         let formData = new FormData();
         if (obj.api) {
+            if (obj.id) {
+                formData.append('id', obj.id);
+            }
             if (obj.title) {
                 formData.append('title', obj.title);
             }
             if (obj.content) {
                 formData.append('content', obj.content);
             }
-            if (obj.alt) {
-                formData.append('altText', obj.alt);
+            if (typeof obj.altText === 'string') {
+                formData.append('altText', obj.altText);
             }
-            if (obj.imageTitle) {
+            if (typeof obj.imageTitle === 'string') {
                 formData.append('imageTitle', obj.imageTitle);
             }
             if (obj.image) {
                 formData.append('image', obj.image);
+            }
+            if (obj.tag) {
+                formData.append('tag', obj.tag);
             }
             if (obj.slug) {
                 formData.append('slug', obj.slug);
@@ -98,11 +119,10 @@ class Api {
             if (obj.catContent) {
                 formData.append('catContent', obj.catContent);
             }
-
-            if(obj.page){
+            if (obj.page) {
                 formData.append('page', obj.page);
             }
-            if(obj.cat_parent){
+            if (obj.cat_parent) {
                 formData.append('cat_parent', obj.cat_parent);
             }
 

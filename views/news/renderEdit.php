@@ -1,31 +1,25 @@
-<?php
 
-use BIT\app\Page;
 
-?>
-<div id="startNweaList">
-    <?php foreach ($html as $news) : ?>
-        <div class="newsList">
-            <div class="1">
-                <?= $news->post_date; ?>
-            </div>
-            <h1 class="2">
-                <?= $news->post_title; ?>
-            </h1>
-            <?php $allImages = $news->attachments; ?>
-            <?php foreach ($allImages as $image) : ?>
-                <div>
-                    <img src="<?= $image->getUrl(); ?>" alt="<?= $image->getAlt(); ?>">
-                </div>
-            <?php endforeach; ?>
-            <div class="3">
-                <?= $news->news_content; ?>
-            </div>
+<div class="0">
+    <div class="1">
+        <?= $data->post_date; ?>
+    </div>
+    <h1 class="2">
+        <?= $data->post_title; ?>
+    </h1>
+    <?php $allImages = $data->attachments; ?>
+    <?php foreach ($allImages as $image) : ?>
+        <div class="3">
             <div class="4">
-                <div class="btn-red deleteNews" id="<?= $news->ID; ?>">
-                    Trinti
-                </div>
+                <img src="<?= $image->getUrl(); ?>" alt="<?= $image->getAlt(); ?>">
             </div>
         </div>
     <?php endforeach; ?>
+    <div id="editor" name="newsEditor">
+        <?= $data->news_content; ?>
+    </div>
+    <div class="btn-green btnNews save" id="<?= $news->ID; ?>">
+        Saugoti
+    </div>
 </div>
+

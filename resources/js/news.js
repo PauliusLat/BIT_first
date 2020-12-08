@@ -110,7 +110,7 @@ class News {
             category: cat
           }
 
-          if (obj.imageTitle) {
+          if (obj.title) {
             readImage.sendImageData(obj);
           } else {
             alert("Not written the title !!!");

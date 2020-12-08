@@ -1,305 +1,129 @@
 "use strict";
 
+import Api from './api';
+
 class Menu {
 
-    constructor(target) {
-        this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-        this.uri = document.location.origin;
-        this.pageSelected;
-        this.hash = location.hash;
-        this.hasharr;
-        this.hasarr2;
-        this.target = target;
-        this.startMenu();
-    }
+  constructor(target) {
+    this.target = target;
+    this.init();
+  }
 
-    startMenu() {
-        const DOM = document.getElementById(this.target);
-        if (DOM) {
-            this.init();
+  init() {
+    const DOM = document.getElementById(this.target);
+
+    if (DOM) {
+      const draggables = document.querySelectorAll('.draggable')
+      const container = document.querySelector('.container')
+      const add = document.querySelector(".addNew");
+      const lastElemet = document.querySelector(".container");
+      // var lastChild = document.getElementById("addDrag").lastChild;
+
+      add.addEventListener('click', () => {
+        const HTML = `<div class="menuDiv">
+            <label for="">
+                kazkas4
+            </label>
+            <input type="text">
+        </div>
+
+        <div class="menuSelect">
+            <label for="standard-select">Standard Select</label>
+
+            <select class="select-css" id="standard-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="menuLink">
+            <label for="">
+                kazkas2
+            </label>
+            <input type="text">
+        </div>
+
+        <div class="manuDelete">
+            <svg height="35" version="1.1" viewBox="0 0 295 295" width="40">
+                <title />
+                <desc />
+                <defs />
+                <g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
+                    <g fill-rule="nonzero" id="close">
+                        <path d="M147.421,0 C66.133,0 0,66.133 0,147.421 C0,228.709 66.133,294.842 147.421,294.842 C185.708,294.842 221.988,280.233 249.58,253.706 C251.969,251.41 252.044,247.611 249.747,245.223 C247.452,242.835 243.654,242.759 241.264,245.056 C215.919,269.423 182.592,282.842 147.422,282.842 C72.75,282.843 12,222.093 12,147.421 C12,72.749 72.75,12 147.421,12 C222.092,12 282.842,72.75 282.842,147.421 C282.842,164.263 279.79,180.694 273.771,196.256 C272.576,199.347 274.112,202.821 277.203,204.017 C280.295,205.21 283.768,203.676 284.964,200.585 C291.519,183.636 294.843,165.749 294.843,147.42 C294.843,66.133 228.71,0 147.421,0 Z" fill="#000000" id="Shape" />
+                        <path d="M167.619,160.134 C165.249,157.815 161.451,157.857 159.134,160.224 C156.816,162.592 156.857,166.391 159.224,168.709 L206.46,214.945 C207.628,216.088 209.143,216.657 210.657,216.657 C212.214,216.657 213.77,216.054 214.945,214.854 C217.263,212.486 217.222,208.687 214.855,206.369 L167.619,160.134 Z" fill="#FB4A5E" id="Shape" />
+                        <path d="M125.178,133.663 C126.349,134.834 127.885,135.42 129.421,135.42 C130.957,135.42 132.492,134.834 133.664,133.663 C136.007,131.32 136.007,127.521 133.664,125.178 L88.428,79.942 C86.085,77.599 82.285,77.599 79.943,79.942 C77.6,82.285 77.6,86.084 79.943,88.427 L125.178,133.663 Z" fill="#FB4A5E" id="Shape" />
+                        <path d="M214.9,79.942 C212.557,77.599 208.757,77.599 206.415,79.942 L79.942,206.415 C77.599,208.758 77.599,212.557 79.942,214.9 C81.113,216.071 82.649,216.657 84.185,216.657 C85.721,216.657 87.256,216.071 88.428,214.9 L214.9,88.428 C217.243,86.084 217.243,82.286 214.9,79.942 Z" fill="#FB4A5E" id="Shape" />
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <div class="menuDrag">
+            <svg data-name="Layer 1" id="Layer_1" height="35" width="40" viewBox="0 0 32 32">
+                <defs>
+                    <style>
+                        .cls-1 {
+                            fill: #515151;
+                        }
+                    </style>
+                </defs>
+                <title />
+                <path class="cls-1" d="M16,9a3,3,0,1,0-3-3A3,3,0,0,0,16,9Zm0-4.46A1.46,1.46,0,1,1,14.54,6,1.46,1.46,0,0,1,16,4.54Z" />
+                <path class="cls-1" d="M16,19a3,3,0,1,0-3-3A3,3,0,0,0,16,19Zm0-4.46A1.46,1.46,0,1,1,14.54,16,1.46,1.46,0,0,1,16,14.54Z" />
+                <path class="cls-1" d="M16,29a3,3,0,1,0-3-3A3,3,0,0,0,16,29Zm0-4.46A1.46,1.46,0,1,1,14.54,26,1.46,1.46,0,0,1,16,24.54Z" />
+            </svg>
+        </div> `;
+        // let lastElemet = draggables[draggables.length - 1];
+        var node = document.createElement("div");
+        node.classList.add("draggable");
+        node.setAttribute('id', "addDrag");
+        node.setAttribute('draggable', true);
+        node.innerHTML = HTML;
+        lastElemet.appendChild(node)
+        // insertAfter(node, lastChild);
+      })
+
+      draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', () => {
+          draggable.classList.add('dragging')
+        })
+
+        draggable.addEventListener('dragend', () => {
+          draggable.classList.remove('dragging')
+        })
+      })
+
+      // containers.forEach(container => {
+      container.addEventListener('dragover', e => {
+        e.preventDefault()
+        const afterElement = getDragAfterElement(container, e.clientY)
+        const draggable = document.querySelector('.dragging')
+        if (afterElement == null) {
+          container.appendChild(draggable)
+        } else {
+          container.insertBefore(draggable, afterElement)
         }
-    }
+      })
+      // })
 
-     init() {
-        axios
-          .post(this.uri + this.path + "menu_create", {})
-          .then((response) =>{
-            const test = document.querySelector(".innermenu");
-            if (response.status == 200 && response.statusText == "OK") {
-              const HTML = response.data.html;
-              test.innerHTML = HTML;
-        //       const submit = document.getElementById("create");
-        //       submit.addEventListener("click", () => {
-        //         const title = document.getElementById("page_title").value;
-        //         // const name = document.getElementById("page_name").value;
-        //       //   const description = document.getElementById("page-description").value;
-      
-        //         let post = document.getElementById('post');
-        //         // console.log(post);
-        //         let select = post.options[post.selectedIndex].value;
-        //         let pageState = document.getElementById('pageState');
-        //         let selectpageState = pageState.options[pageState.selectedIndex].value;
-        //         // console.log(select);  
-       
-        //       pageStore(title, select, name, selectpageState);
-               
-        //       });
-      
-        //       const editBtn = pageStrt.querySelectorAll(".page-edit");
-      
-        //       for (let i = 0; i < editBtn.length; i++) {
-        //         let ID = editBtn[i].value;
-        //       //   console.log(ID);
-        //       //   let page = editBtn[i].id;
-        //         editBtn[i].addEventListener(
-        //           "click",
-        //           function() {
-        //             pageEdit(ID);
-        //           },
-        //           false
-        //         );
-        //       }
-      
-        //       const deleteBtn = document.querySelectorAll(".page-delete");
-        //       for (let i = 0; i < deleteBtn.length; i++) {
-        //         let ID = deleteBtn[i].value;
-        //         deleteBtn[i].addEventListener(
-        //           "click",
-        //           function() {
-        //             pageDelete(ID);
-        //           },
-        //           false
-        //         );
-        //       }
-            }
-         })
-          .catch(function(error) {
-            if (error.response) {
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-            } else if (error.request) {
-              console.log(error.request);
-            } else {
-              console.log("Error", error.message);
-            }
-            console.log(error);
-          });
-        ;
+      function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
+
+        return draggableElements.reduce((closest, child) => {
+          const box = child.getBoundingClientRect()
+          const offset = y - box.top - box.height / 2
+          if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child }
+          } else {
+            return closest
+          }
+        }, { offset: Number.NEGATIVE_INFINITY }).element
       }
-
-    //     if (typeof pageNo == 'object' && this.hash.length !== 0) {
-    //         console.log(pageNo);
-    //         this.hasharr = this.hash.split('#')
-    //         this.hasarr2 = this.hasharr[1].split('%')
-    //         this.hash = hasarr2[0]
-    //         // window.addEventListener( "load",
-    //         // () =>{
-    //         // this.hasharr = this.hash.split('#')
-    //         // this.hasarr2 = this.hasharr[1].split('%')
-    //         // this.hash = this.hasarr2[0]
-    //         // this.hash = location.hash
-    //         // this.init();
-
-    //     } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
-    //         this.hasharr = this.hash.split('#')
-    //         this.hasarr2 = this.hasharr[1].split('%')
-    //         this.hash = this.hasarr2[0]
-    //     } else {
-    //         this.hash = null
-    //     }
-
-    //     axios
-    //         .post(this.uri + this.path + "tag_create", {
-    //             pages: parseInt(pageNo),
-    //             pageSelected: this.pageSelected,
-    //             hash: this.hash
-    //         })
-
-    //         .then((response) => {
-    //             const test = document.querySelector(".test");
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 const HTML = response.data.html;
-    //                 test.innerHTML = HTML;
-
-    //                 if (pageNo > 0 && typeof pageNo === 'string') {
-    //                     let addColor = document.querySelector('.nr-' + pageNo);
-    //                     addColor.classList.add("active");
-    //                 }
-
-
-    //                 const submit = document.getElementById("create");
-    //                 submit.addEventListener("click", () => {
-    //                     const name = document.getElementById("tag-name").value;
-    //                     const slug = document.getElementById("tag-slug").value;
-    //                     const description = document.getElementById("tag-description").value;
-    //                     this.tagStore(name, slug, description);
-    //                 });
-
-    //                 const editBtn = document.querySelectorAll(".tag-edit");
-
-    //                 for (let i = 0; i < editBtn.length; i++) {
-    //                     let ID = editBtn[i].value;
-    //                     let taxonomy = editBtn[i].id;
-    //                     editBtn[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             this.tagEdit(ID, taxonomy);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-
-
-    //                 const deleteBtn = document.querySelectorAll(".tag-delete");
-    //                 for (let i = 0; i < deleteBtn.length; i++) {
-    //                     let ID = deleteBtn[i].value;
-    //                     let taxonomy = deleteBtn[i].id;
-    //                     deleteBtn[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             this.tagDelete(ID, taxonomy);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-
-    //                 const pageBtn = document.getElementById("selectpage");
-    //                 const select = document.getElementById("items");
-
-    //                 pageBtn.addEventListener(
-    //                     "click",
-    //                     () => {
-    //                         var pageSelected;
-
-    //                         if (select.options[select.selectedIndex] != undefined) {
-    //                             pageSelected = select.options[select.selectedIndex].value;
-                           
-    //                         }else {
-    //                             pageSelected = 0;
-    //                           }
-    //                         this.pageSelected = pageSelected
-    //                         this.init(1);
-    //                     });
-
-
-    //                 const page = document.querySelectorAll(".paging");
-
-    //                 for (let i = 0; i < page.length; i++) {
-    //                     let pageNo = page[i].id;
-    //                     page[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             console.log(pageNo);
-    //                             location.hash = '#' + pageNo
-    //                             this.hash = location.hash
-    //                             this.init(pageNo);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-
-    //             }
-    //         })
-    //         .catch(function (error) {
-    //             if (error.response) {
-    //                 console.log(error.response.data);
-    //                 console.log(error.response.status);
-    //                 console.log(error.response.headers);
-    //             } else if (error.request) {
-    //                 console.log(error.request);
-    //             } else {
-    //                 console.log("Error", error.message);
-    //             }
-    //             console.log(error);
-    //         });
-    // }
-
-
-    // tagStore(name, slug, description) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_store", {
-    //             tag_name: name,
-    //             tag_slug: slug,
-    //             tag_description: description
-    //         })
-    //         .then((response) => {
-    //             console.log(response);
-    //             this.init();
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    //     document.getElementById("tag-name").value = "";
-    // }
-
-    // tagEdit(editID, taxonomy) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_edit", {
-    //             editID: editID,
-    //             taxonomy_type: taxonomy,
-    //         })
-    //         .then((response) => {
-    //             const test = document.querySelector(".test");
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 const HTML = response.data.html;
-    //                 test.innerHTML = HTML;
-    //             }
-    //             const updateBtn = document.getElementById("tagUpdate");
-    //             updateBtn.addEventListener("click", () => {
-    //                 const updateId = updateBtn.value;
-    //                 this.tagUpdate(updateId);
-    //             });
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    // }
-
-    // tagUpdate(updateId) {
-    //     const name = document.getElementById("tag_name").value;
-    //     const slug = document.getElementById("tag_slug").value;
-    //     const description = document.getElementById("tag_description").value;
-
-    //     axios
-    //         .post(this.uri + this.path + "tag_update", {
-    //             updateId: updateId,
-    //             tag_name: name,
-    //             tag_slug: slug,
-    //             tag_description: description
-
-    //         })
-    //         .then((response) => {
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 console.log(response);
-    //                 this.init();
-    //                 // setTimeout(call.init(), 500);
-    //             }
-    //         })
-
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    // }
-
-    // tagDelete(ID, taxonomy) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_destroy", {
-    //             deleteID: ID,
-    //             taxonomy_type: taxonomy,
-    //         })
-    //         .then((response) => {
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 console.log(response);
-    //                 this.init();
-    //                 // setTimeout(init(), 500);
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-
-    //}
+    }
+  }
 }
+
 
 export default Menu;

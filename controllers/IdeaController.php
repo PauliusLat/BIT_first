@@ -17,11 +17,13 @@ class IdeaController
 	{
 	}
 
-	public function frontIndex()
-	{
+
+	public function frontIndex() {
 		$allNews = NewsPost::all()->all();
 		$output = View::adminRender('news.homeNews', ['html' => $allNews]);
 		return View::render('home.ideja', ["html" => $output]);
+
+
 	}
 
 	public function render(Request $request)

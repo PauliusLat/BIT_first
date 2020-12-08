@@ -12,16 +12,17 @@ import Calendar from './calendar.js';
 // import TextEditor from './text-editor.js'
 import News from './news';
 import Profile_image from './profile_image';
-import newsList from './newsList';
+import NewsList from './newsList';
+import EditPost from './editPost';
 
 // new TextEditor('.news-container')
 new Calendar('.calendar');
 new News('startNewsAdmin');
-
-new newsList('startNweaList');
-
+new NewsList('startNweaList');
+new EditPost('.editStart');
 new Tag('tagStart');
 new Menu('menuStart');
+
 
 
 
