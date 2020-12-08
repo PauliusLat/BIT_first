@@ -2034,6 +2034,7 @@ var Menu = /*#__PURE__*/function () {
     this.target = target;
     this.read = true;
     this.init();
+    this.index = 0;
   }
 
   _createClass(Menu, [{
@@ -2068,12 +2069,8 @@ var Menu = /*#__PURE__*/function () {
         var draggables = document.querySelectorAll('.draggable');
         var container = document.querySelector('.container');
         var add = document.querySelector(".addNew");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> afd6f7fa05db307c792713c2af9c797857e7ed65
         this.save();
+        this["delete"](draggables);
 
         var newBlock = function newBlock() {
           _this.addNew();
@@ -2082,24 +2079,6 @@ var Menu = /*#__PURE__*/function () {
         };
 
         add.addEventListener("click", newBlock);
-<<<<<<< HEAD
-=======
-        var lastElemet = document.querySelector(".container"); // var lastChild = document.getElementById("addDrag").lastChild;
-
-        add.addEventListener('click', function () {
-          var HTML = "<div class=\"menuDiv\">\n            <label for=\"\">\n                kazkas4\n            </label>\n            <input type=\"text\">\n        </div>\n\n        <div class=\"menuSelect\">\n            <label for=\"standard-select\">Standard Select</label>\n\n            <select class=\"select-css\" id=\"standard-select\">\n                <option value=\"1\">1</option>\n                <option value=\"2\">2</option>\n                <option value=\"3\">3</option>\n                <option value=\"4\">4</option>\n                <option value=\"5\">5</option>\n            </select>\n        </div>\n        <div class=\"menuLink\">\n            <label for=\"\">\n                kazkas2\n            </label>\n            <input type=\"text\">\n        </div>\n\n        <div class=\"manuDelete\">\n            <svg height=\"35\" version=\"1.1\" viewBox=\"0 0 295 295\" width=\"40\">\n                <title />\n                <desc />\n                <defs />\n                <g fill=\"none\" fill-rule=\"evenodd\" id=\"Page-1\" stroke=\"none\" stroke-width=\"1\">\n                    <g fill-rule=\"nonzero\" id=\"close\">\n                        <path d=\"M147.421,0 C66.133,0 0,66.133 0,147.421 C0,228.709 66.133,294.842 147.421,294.842 C185.708,294.842 221.988,280.233 249.58,253.706 C251.969,251.41 252.044,247.611 249.747,245.223 C247.452,242.835 243.654,242.759 241.264,245.056 C215.919,269.423 182.592,282.842 147.422,282.842 C72.75,282.843 12,222.093 12,147.421 C12,72.749 72.75,12 147.421,12 C222.092,12 282.842,72.75 282.842,147.421 C282.842,164.263 279.79,180.694 273.771,196.256 C272.576,199.347 274.112,202.821 277.203,204.017 C280.295,205.21 283.768,203.676 284.964,200.585 C291.519,183.636 294.843,165.749 294.843,147.42 C294.843,66.133 228.71,0 147.421,0 Z\" fill=\"#000000\" id=\"Shape\" />\n                        <path d=\"M167.619,160.134 C165.249,157.815 161.451,157.857 159.134,160.224 C156.816,162.592 156.857,166.391 159.224,168.709 L206.46,214.945 C207.628,216.088 209.143,216.657 210.657,216.657 C212.214,216.657 213.77,216.054 214.945,214.854 C217.263,212.486 217.222,208.687 214.855,206.369 L167.619,160.134 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                        <path d=\"M125.178,133.663 C126.349,134.834 127.885,135.42 129.421,135.42 C130.957,135.42 132.492,134.834 133.664,133.663 C136.007,131.32 136.007,127.521 133.664,125.178 L88.428,79.942 C86.085,77.599 82.285,77.599 79.943,79.942 C77.6,82.285 77.6,86.084 79.943,88.427 L125.178,133.663 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                        <path d=\"M214.9,79.942 C212.557,77.599 208.757,77.599 206.415,79.942 L79.942,206.415 C77.599,208.758 77.599,212.557 79.942,214.9 C81.113,216.071 82.649,216.657 84.185,216.657 C85.721,216.657 87.256,216.071 88.428,214.9 L214.9,88.428 C217.243,86.084 217.243,82.286 214.9,79.942 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                    </g>\n                </g>\n            </svg>\n        </div>\n        <div class=\"menuDrag\">\n            <svg data-name=\"Layer 1\" id=\"Layer_1\" height=\"35\" width=\"40\" viewBox=\"0 0 32 32\">\n                <defs>\n                    <style>\n                        .cls-1 {\n                            fill: #515151;\n                        }\n                    </style>\n                </defs>\n                <title />\n                <path class=\"cls-1\" d=\"M16,9a3,3,0,1,0-3-3A3,3,0,0,0,16,9Zm0-4.46A1.46,1.46,0,1,1,14.54,6,1.46,1.46,0,0,1,16,4.54Z\" />\n                <path class=\"cls-1\" d=\"M16,19a3,3,0,1,0-3-3A3,3,0,0,0,16,19Zm0-4.46A1.46,1.46,0,1,1,14.54,16,1.46,1.46,0,0,1,16,14.54Z\" />\n                <path class=\"cls-1\" d=\"M16,29a3,3,0,1,0-3-3A3,3,0,0,0,16,29Zm0-4.46A1.46,1.46,0,1,1,14.54,26,1.46,1.46,0,0,1,16,24.54Z\" />\n            </svg>\n        </div> "; // let lastElemet = draggables[draggables.length - 1];
-
-          var node = document.createElement("div");
-          node.classList.add("draggable");
-          node.setAttribute('id', "addDrag");
-          node.setAttribute('draggable', true);
-          node.innerHTML = HTML;
-          lastElemet.appendChild(node); // insertAfter(node, lastChild);
-        });
->>>>>>> main
-=======
-
->>>>>>> afd6f7fa05db307c792713c2af9c797857e7ed65
         draggables.forEach(function (draggable) {
           draggable.addEventListener('dragstart', function () {
             draggable.classList.add('dragging');
@@ -2136,8 +2115,25 @@ var Menu = /*#__PURE__*/function () {
       this.init();
     }
   }, {
+    key: "delete",
+    value: function _delete(draggables) {
+      var deleted = document.querySelectorAll(".manuDelete");
+
+      var _loop = function _loop(i) {
+        deleted[i].addEventListener("click", function () {
+          draggables[i].remove();
+        });
+      };
+
+      for (var i = 0; i < draggables.length; i++) {
+        _loop(i);
+      }
+    }
+  }, {
     key: "save",
     value: function save() {
+      var _this2 = this;
+
       var store = document.querySelector(".save");
       var api = "menu-store";
 
@@ -2151,17 +2147,15 @@ var Menu = /*#__PURE__*/function () {
           var values = [];
           ;
 
-          for (var j = 0; j < selectBox.length; j++) {
-            var options = selectBox[j].getElementsByTagName('option');
+          for (_this2.index = 0; _this2.index < selectBox.length; _this2.index++) {
+            var options = selectBox[_this2.index].getElementsByTagName('option');
 
             for (var i = options.length; i--;) {
               if (options[i].selected) values.push(options[i].value); // if (options[i].selected) text = (options[i].innerText)
             }
-          }
 
-          for (var _i = 0; _i < menuText.length; _i++) {
-            text.push(menuText[_i].value);
-            link.push(menuLink[_i].value);
+            text.push(menuText[_this2.index].value);
+            link.push(menuLink[_this2.index].value);
           }
 
           var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
@@ -3185,8 +3179,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
