@@ -7,6 +7,7 @@ use BIT\app\Category;
 use BIT\app\App;
 use BIT\app\Page;
 use BIT\app\Pagination;
+use BIT\app\FrontMenu;
 use BIT\app\Session;
 
 
@@ -72,11 +73,11 @@ add_action('init', function () {
     // $session->flash('ooo', 5);
     // _dc($session->get('ooo'));
     // _dc($_COOKIE['Bit']);
-    //$page = new Page;
-    // $page = $page->get(162);
-    // _dc($page);
-    // $pagination = new Pagination(2, 5);
-    // _dc($pagination->offset);
+    // $page = new Page;
+    // // $page = $page->get(162);
+    // // _dc($page);
+    // $menu = new FrontMenu;
+    // _dc($menu);
 
     // $args = ['slug' => 'dovanos-namai'];
     // wp_update_term(107, 'maincat', $args);

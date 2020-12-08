@@ -4,12 +4,12 @@ namespace BIT\app;
 
 class Pagination
 {
-    public $offset;
-    public $pages;
-    public $nextpage;
-    public $prevpage;
-    public $lastpage;
-    public $firstpage;
+    private $offset;
+    private $pages;
+    private $nextpage;
+    private $prevpage;
+    private $lastpage;
+    private $firstpage;
     // private static $obj;
 
     // public static function start()

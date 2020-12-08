@@ -118,25 +118,21 @@ trait Tcategory
     }
 
     //adds page to category
-    // public function addPageToCat(string $name)
     public function addPageToCat(string $name, int $term_id, string $meta_key)
     {
         $page = new Page();
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
-        $pageState = [];
         foreach ($page_state as $state => $value) {
-            if ($state == 'category' || $state == 'site' || $state == 'system') {
-                array_push($pageState, $value);
+            if ($state == 'category' || $state == 'system') {
+                array_push($page->pageState, $value);
             }
         }
-        $page->pageState = $pageState;
+        // $page->pageState = $pageState;
         $page->setRoute('kategorija');
         $page->setTitle($name);
         $page->save();
         add_term_meta($term_id, $meta_key, $page->ID);
     }
-
-
 
     //adds image to category
     public function addImageToCat(int $term_id, string $meta_key, $image)
@@ -160,7 +156,6 @@ trait Tcategory
     //deletes category from db
     public function deleteCatFromDb(int $id, $taxonomy_type = 'maincat')
     {
-
         $page = $this->getCatPage($id);
         // _dc($page->ID);
         wp_delete_term($id, $taxonomy_type);
@@ -181,7 +176,6 @@ trait Tcategory
                         throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
                     } else {
                         $terms = get_terms(['name' => $cat, 'taxonomy' => $value, 'hide_empty' => false]);
-
                         foreach ($terms as $term) {
                             wp_set_object_terms($this->ID, $term->term_id, $value, $append = true);
                         }
@@ -210,7 +204,6 @@ trait Tcategory
                     } else {
                         $terms = get_terms(['name' => $cat, 'taxonomy' => $value, 'hide_empty' => false]);
                         foreach ($terms as $term) {
-
                             wp_set_object_terms($this->ID, $term->term_id, $value, $append = true);
                         }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
@@ -252,7 +245,6 @@ trait Tcategory
 
     public function removeCat($cat, $taxonomy_type = 'maincat')
     {
-
         if (is_string($cat)) {
             $this->catDelete($cat, $taxonomy_type);
         }

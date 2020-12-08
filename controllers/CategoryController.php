@@ -80,8 +80,6 @@ class CategoryController
             $category->addImageToCat($catID, "image", $picture);
         }
 
-        // $output = View::adminRender('category.category');
-        // return new JsonResponse(['html' => $output]);
         return new JsonResponse;
     }
 
@@ -95,7 +93,7 @@ class CategoryController
         return new JsonResponse(['html' => $output]);
     }
 
-    public function update(Request $requestJson, Category $category)
+    public function update(Request $requestJson, Category $category, Session $session)
     {
         $request = $this->decodeRequest($requestJson);
         $name = $request->request->get('cat_name');
@@ -104,17 +102,18 @@ class CategoryController
         $id = $request->request->get('updateId');
         //update cat and cat page
         $category->updateCat($id, $name, $slug, $description);
+        $session->flash('success_message', 'kategorija sėkmingai pakoreguota');
         return new Response;
     }
 
-    public function destroy(Request $requestJson, Category $category)
+    public function destroy(Request $requestJson, Category $category, Session $session)
     {
         $request = $this->decodeRequest($requestJson);
         $id = $request->request->get('deleteID');
-        // _dc($id);
         $taxonomy_type = $request->request->get('taxonomy_type');
         //delete cat and cat page
         $category->deleteCatFromDb($id, $taxonomy_type);
+        $session->flash('success_message', 'kategorija sėkmingai ištrinta');
         return new Response;
     }
 
