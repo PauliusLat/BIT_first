@@ -2216,13 +2216,14 @@ table th {
   text-align: center;
 }
 
-.innermenu .container {
+.innermenu .cont {
   background-color: #333;
   padding: 1rem;
   margin-top: 1rem;
+  height: 100%;
 }
 
-.innermenu .container .draggable {
+.innermenu .cont .draggable {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -2230,6 +2231,7 @@ table th {
   background-color: white;
   border: 1px solid black;
   cursor: move;
+  background-color: #B4B9BE;
   /* Hide arrow icon in IE browsers */
   /* Hover style */
   /* Focus style */
@@ -2238,22 +2240,49 @@ table th {
   /* Disabled styles */
 }
 
-.innermenu .container .draggable .menuLink input[type=text] {
-  padding: 0 8px;
-  line-height: 2;
-  min-height: 30px;
+.innermenu .cont .draggable .menuLinkAdd {
+  width: 30%;
+  font-size: 16px;
+  line-height: 1.3;
+  font-family: sans-serif;
+  margin-left: 1%;
 }
 
-.innermenu .container .draggable .select-css {
-  display: block;
+.innermenu .cont .draggable .menuLinkAdd input[type=text] {
+  font-size: 16px;
+}
+
+.innermenu .cont .draggable .menuName {
+  width: 30%;
+  font-size: 16px;
+  line-height: 1.3;
+  font-family: sans-serif;
+  margin-right: 1%;
+}
+
+.innermenu .cont .draggable .menuName input[type=text] {
+  font-size: 16px;
+}
+
+.innermenu .cont .draggable .menuSelect {
+  width: 30%;
+  font-size: 16px;
+  font-family: sans-serif;
+}
+
+.innermenu .cont .draggable .menuDiv {
+  width: 30%;
+}
+
+.innermenu .cont .draggable .select-css {
   font-size: 16px;
   font-family: sans-serif;
   font-weight: 700;
   color: #444;
-  line-height: 1.3;
+  line-height: 1;
   padding: 0.6em 1.4em 0.5em 0.8em;
-  width: 20%;
-  max-width: 20%;
+  width: 100%;
+  max-width: 90%;
   /* useful when width is set to anything other than 100% */
   box-sizing: border-box;
   margin: 0;
@@ -2276,15 +2305,15 @@ table th {
   background-size: 0.65em auto, 100%;
 }
 
-.innermenu .container .draggable .select-css::-ms-expand {
+.innermenu .cont .draggable .select-css::-ms-expand {
   display: none;
 }
 
-.innermenu .container .draggable .select-css:hover {
+.innermenu .cont .draggable .select-css:hover {
   border-color: #888;
 }
 
-.innermenu .container .draggable .select-css:focus {
+.innermenu .cont .draggable .select-css:focus {
   border-color: #aaa;
   /* It'd be nice to use -webkit-focus-ring-color here but it doesn't work on box-shadow */
   box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
@@ -2293,41 +2322,58 @@ table th {
   outline: none;
 }
 
-.innermenu .container .draggable .select-css option {
+.innermenu .cont .draggable .select-css option {
   font-weight: normal;
 }
 
-.innermenu .container .draggable *[dir=rtl] .select-css,
-.innermenu .container .draggable :root:lang(ar) .select-css,
-.innermenu .container .draggable :root:lang(iw) .select-css {
+.innermenu .cont .draggable *[dir=rtl] .select-css,
+.innermenu .cont .draggable :root:lang(ar) .select-css,
+.innermenu .cont .draggable :root:lang(iw) .select-css {
   background-position: left 0.7em top 50%, 0 0;
   padding: 0.6em 0.8em 0.5em 1.4em;
 }
 
-.innermenu .container .draggable .select-css:disabled,
-.innermenu .container .draggable .select-css[aria-disabled=true] {
+.innermenu .cont .draggable .select-css:disabled,
+.innermenu .cont .draggable .select-css[aria-disabled=true] {
   color: graytext;
   background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22graytext%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"), linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
 }
 
-.innermenu .container .draggable .select-css:disabled:hover,
-.innermenu .container .draggable .select-css[aria-disabled=true] {
+.innermenu .cont .draggable .select-css:disabled:hover,
+.innermenu .cont .draggable .select-css[aria-disabled=true] {
   border-color: #aaa;
 }
 
-.innermenu .container .draggable .menuDrag {
-  display: flex;
-  flex: 1;
-  justify-content: flex-end;
+.innermenu .cont .draggable .menuDrag {
+  width: 4%;
 }
 
-.innermenu .container .draggable .manuDelete {
-  display: flex;
-  flex: 5;
-  justify-content: flex-end;
+.innermenu .cont .draggable .manuDelete {
+  width: 4%;
+  cursor: pointer;
 }
 
-.innermenu .container .draggable.dragging {
+.innermenu .cont .draggable.dragging {
   opacity: 0.5;
+}
+
+.menuBtn {
+  display: flex;
+}
+
+.menuBtn .addNew {
+  margin: 20px 0 0 3%;
+  width: 7%;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.menuBtn .save {
+  display: flex;
+  margin: 20px 3% 0 0;
+  justify-content: flex-end;
+  width: 93%;
+  z-index: 1;
+  cursor: pointer;
 }
 
