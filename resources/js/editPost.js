@@ -14,35 +14,36 @@ class EditPost {
     init() {
         const DOM = document.querySelector(this.target);
         if (DOM) {
-            const deleteApi = 'news-destroy&id=';
-            const listApi = "news-list";
+            const id = document.querySelector('.save').id;
             const image = document.getElementById('image');
             const imageDiv = document.querySelector('.imageDiv');
             const imgBlock = document.querySelector('.galleryContainer');
             const save = document.querySelector('.save');
             const title = document.querySelector('.title');
             const content = document.querySelectorAll("[contenteditable]");
+
             const api = "news-update";
 
             var readImage = new Profile_image();
             window.location.hash
             imageDiv.addEventListener("click", () => {
                 image.remove();
-                imgBlock.classList.remove("hiden");                
+                imgBlock.classList.remove("hiden");
                 readImage.image();
             });
             save.addEventListener("click", () => {
                 let obj = {
-                    api:api,
+                    api: api,
                     title: title.value,
                     content: content[0].innerHTML,
-                    imageTitle:"",
-                    altText:"",
-                    id:window.location.search.slice(14)               
+                    imageTitle: "",
+                    altText: "",
+                    id: id
                 }
                 readImage.sendImageData(obj);
             })
         }
+
     }
 }
 
