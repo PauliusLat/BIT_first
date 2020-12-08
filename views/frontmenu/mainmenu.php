@@ -8,7 +8,7 @@
             <label for="">
                 kazkas1
             </label>
-            <input type="text">
+            <input name="menu" class="menuText" type="text">
             <label for="standard-select">Standard Select</label>
             <div class="select">
                 <select id="standard-select">
@@ -22,13 +22,13 @@
             <label for="">
                 kazkas2
             </label>
-            <input type="text">
+            <input class="menuLink" type="text">
         </div>
         <div class="draggable" id="addDrag" draggable="true">
             <label for="">
                 kazkas2
             </label>
-            <input type="text">
+            <input name="menu" class="menuText" type="text">
             <label for="standard-select">Standard Select</label>
             <div class="select">
                 <select id="standard-select">
@@ -42,13 +42,13 @@
             <label for="">
                 kazkas2
             </label>
-            <input type="text">
+            <input class="menuLink" type="text">
         </div>
         <div class="draggable" id="addDrag" draggable="true">
             <label for="">
                 kazkas3
             </label>
-            <input type="text">
+            <input name="menu" class="menuText" type="text">
             <label for="standard-select">Standard Select</label>
             <div class="select">
                 <select id="standard-select">
@@ -62,14 +62,14 @@
             <label for="">
                 kazkas2
             </label>
-            <input type="text">
+            <input class="menuLink" type="text">
         </div>
         <div class="draggable" id="addDrag" draggable="true">
             <div class="menuDiv">
                 <label for="">
                     kazkas4
                 </label>
-                <input type="text">
+                <input name="menu" class="menuText" type="text">
             </div>
 
             <div class="menuSelect">
@@ -83,11 +83,11 @@
                     <option value="5">5</option>
                 </select>
             </div>
-            <div class="menuLink">
+            <div>
                 <label for="">
                     kazkas2
                 </label>
-                <input type="text">
+                <input class="menuLink" type="text">
             </div>
 
             <div class="manuDelete">
@@ -123,6 +123,9 @@
         </div>
     </div>
 </div>
-<div class="addNew">
-    prideti nauja spausti cia
+<div class="addNew btn-blue">
+    prideti
+</div>
+<div class="btn-green save">
+    saugoti
 </div>
