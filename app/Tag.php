@@ -1,9 +1,14 @@
 <?php
-namespace BIT\app;
-use BIT\app\modelTraits\Ttaxonomy;
 
-class Tag {
+namespace BIT\app;
+
+use BIT\app\modelTraits\Ttaxonomy;
+use BIT\controllers\controllerTraits\Tpagination;
+
+class Tag
+{
     use Ttaxonomy;
+    use Tpagination;
     private $taxonomy = ['hashtag', 'ideatag'];
     static private $obj;
 
@@ -11,7 +16,4 @@ class Tag {
     {
         return self::$obj ?? self::$obj = new self;
     }
-
-   
-   
 }
