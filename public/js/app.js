@@ -2069,6 +2069,10 @@ var Menu = /*#__PURE__*/function () {
         var container = document.querySelector('.container');
         var add = document.querySelector(".addNew");
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> afd6f7fa05db307c792713c2af9c797857e7ed65
         this.save();
 
         var newBlock = function newBlock() {
@@ -2078,6 +2082,7 @@ var Menu = /*#__PURE__*/function () {
         };
 
         add.addEventListener("click", newBlock);
+<<<<<<< HEAD
 =======
         var lastElemet = document.querySelector(".container"); // var lastChild = document.getElementById("addDrag").lastChild;
 
@@ -2092,6 +2097,9 @@ var Menu = /*#__PURE__*/function () {
           lastElemet.appendChild(node); // insertAfter(node, lastChild);
         });
 >>>>>>> main
+=======
+
+>>>>>>> afd6f7fa05db307c792713c2af9c797857e7ed65
         draggables.forEach(function (draggable) {
           draggable.addEventListener('dragstart', function () {
             draggable.classList.add('dragging');
