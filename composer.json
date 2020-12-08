@@ -7,7 +7,7 @@
     "symfony/dependency-injection": "^4.4",
     "symfony/config": "^4.4",
     "symfony/yaml": "^4.4",
-    "ramsey/uuid": "^3.9"
+    "ramsey/uuid": "^4.1"
   },
   "autoload": {
     "psr-4": {

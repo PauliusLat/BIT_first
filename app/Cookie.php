@@ -11,7 +11,7 @@ class Cookie
     {
         self::$uuid = rand(1000, 2000);
         if (!isset($_COOKIE['Bit'])) {
-            setcookie("Bit", self::$uuid);
+            setcookie('Bit', self::$uuid);
         }
         self::$uuid = $_COOKIE['Bit'];
         return self::$uuid;
