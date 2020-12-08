@@ -9,6 +9,8 @@ use BIT\models\NewsPost;
 use BIT\models\AlbumPost;
 use BIT\app\Category;
 use BIT\app\Tag;
+use BIT\app\Pagination;
+use BIT\app\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,7 +28,8 @@ class TagController
     public function create(Request $requestJson)
     {
         $request = $this->decodeRequest($requestJson);
-
+        $session = new Session;
+        $session->set('0', 5);
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
@@ -38,29 +41,49 @@ class TagController
         } else {
             $number = 1;
         }
+        // $offset = ($number - 1)  * $limit;
+        // $total = wp_count_terms('hashtag', ['hide_empty' => false]);
+        // $pages = ceil($total / $limit);
+        // if ($number < $pages) {
+        //     $nextpage = $number + 1;
+        // } else {
+        //     $nextpage = $number;
+        // }
+        // if ($number > 1) {
+        //     $prevpage = $number - 1;
+        // } else {
+        //     $prevpage = $number;
+        // }
+        // $lastpage = $pages;
+        // $firstpage = 1;
 
+        // $tag = new Tag;
+        // $pageArr = $tag->setPage($limit, $number);
+        // foreach ($pageArr as $key => $value) {
+        //     if ($key == 'offset') {
+        //         $offset = $value;
+        //     }
+        //     if ($key == 'nextpage') {
+        //         $nextpage = $value;
+        //     }
+        //     if ($key == 'prevpage') {
+        //         $prevpage = $value;
+        //     }
+        //     if ($key == 'pages') {
+        //         $pages = $value;
+        //     }
+        //     if ($key == 'lastpage') {
+        //         $lastpage = $value;
+        //     }
+        //     if ($key == 'firstpage') {
+        //         $firstpage = $value;
+        //     }
+        // }
 
-        $offset = ($number - 1)  * $limit;
-        $total = wp_count_terms('hashtag', ['hide_empty' => false]);
-        $pages = ceil($total / $limit);
+        $pagination = new Pagination($limit, $number);
 
-        if ($number < $pages) {
-            $nextpage = $number + 1;
-        } else {
-            $nextpage = $number;
-        }
-
-        if ($number > 1) {
-            $prevpage = $number - 1;
-        } else {
-            $prevpage = $number;
-        }
-
-        $lastpage = $pages;
-        $firstpage = 1;
-
-        $tags = get_terms('hashtag', array('number' => $limit, 'hide_empty' => false, 'offset' => $offset));
-        $output = View::adminRender('tag.tag',  ['tags' => $tags, 'nextpage' => $nextpage, 'prevpage' => $prevpage, 'total' => $total, 'limit' => $limit, 'pages' => $pages, 'lastpage' => $lastpage, 'firstpage' => $firstpage]);
+        $tags = get_terms('hashtag', array('number' => $limit, 'hide_empty' => false, 'offset' => $pagination->offset));
+        $output = View::adminRender('tag.tag',  ['tags' => $tags, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
         $response = new JsonResponse(['html' => $output]);
         return $response;
     }

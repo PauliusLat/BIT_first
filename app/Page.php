@@ -6,7 +6,7 @@ class Page extends Post
 {
 
     protected static $type = 'page';
-    public $pageState = [];
+    public $pageState = ['Site_page'];
 
 
     public function setRoute($route, $args = '')

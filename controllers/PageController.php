@@ -37,20 +37,12 @@ class PageController
         $request = $this->decodeRequest($requestJson);
         $page = new Page;
         $name = $request->request->get('page_title');
-        // $slug = $request->request->get('page_slug');
         $post = $request->request->get('post_type');
-        $pageState = [];
-        $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
-        foreach ($page_state as $state => $value) {
-            if ($state == 'site') {
-                array_push($pageState, $value);
-            }
+
+        if ($request->request->get('page_state') && $request->request->get('page_state') != 'Site_page') {
+            array_push($page->pageState, $request->request->get('page_state'));
         }
-        if ($request->request->get('page_state') || $request->request->get('page_state') != 'Site_page') {
-            $pageState[] = $request->request->get('page_state');
-        }
-        $page->pageState = $pageState;
-        $pageState = $request->request->get('page_state');
+
         $page->setRoute($post);
         $page->setTitle($name);
         //update nenaudoti sito metodo
