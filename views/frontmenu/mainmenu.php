@@ -129,7 +129,6 @@
                 </label>
                 <input name="menu" class="menuText" placeholder="Pavadinimas" type="text">
             </div>
-
             <div class="menuSelect">
                 <label for="standard-select">
 
@@ -149,7 +148,6 @@
                 </label>
                 <input class="menuLink" placeholder="Prideti nuoroda" type="text">
             </div>
-
             <div class="manuDelete">
                 <svg height="35" version="1.1" viewBox="0 0 295 295" width="40">
                     <title />
