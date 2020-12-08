@@ -6,11 +6,10 @@ use BIT\app\Server;
 use BIT\app\Session;
 use BIT\app\View;
 use BIT\models\IdeaPost;
+use BIT\models\NewsPost;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use BIT\models\NewsPost;
-
 
 class IdeaController
 {
@@ -18,11 +17,10 @@ class IdeaController
 	{
 	}
 
-
 	public function frontIndex()
 	{
 		$allNews = NewsPost::all()->all();
-		$output = View::adminRender('news.homeNews', ['html' =>  $allNews]);
+		$output = View::adminRender('news.homeNews', ['html' => $allNews]);
 		return View::render('home.ideja', ["html" => $output]);
 	}
 
