@@ -3,13 +3,13 @@
         Menu
     </h1>
     <div class="container">
-
     <div class="draggable" id="addDrag" draggable="true">
             <div class="menuDiv">
                 <label for="">
                     kazkas4
                 </label>
                 <input name="menu" class="menuText" type="text">
+
             </div>
 
             <div class="menuSelect">
@@ -125,10 +125,8 @@
                 </label>
                 <input name="menu" class="menuText" type="text">
             </div>
-
             <div class="menuSelect">
                 <label for="standard-select">Standard Select</label>
-
                 <select class="select-css" id="standard-select">
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -143,7 +141,6 @@
                 </label>
                 <input class="menuLink" type="text">
             </div>
-
             <div class="manuDelete">
                 <svg height="35" version="1.1" viewBox="0 0 295 295" width="40">
                     <title />
