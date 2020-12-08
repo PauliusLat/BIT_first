@@ -125,6 +125,9 @@ class Api {
             if (obj.cat_parent) {
                 formData.append('cat_parent', obj.cat_parent);
             }
+            if (obj.various) {
+                formData.append('various', obj.various);
+            }
 
             console.log(Object.fromEntries(formData))
             axios.post(this.uri + this.path + obj.api, formData, {
