@@ -21,7 +21,7 @@
     <div id="editor" name="newsEditor">
         <?= $data->news_content; ?>
     </div>
-    <div class="btn-green btnNews save" id="<?= $news->ID; ?>">
+    <div class="btn-green btnNews save" id="<?= $data->ID; ?>">
         Saugoti
     </div>
 </div>
