@@ -2071,7 +2071,6 @@ var Menu = /*#__PURE__*/function () {
           node.setAttribute('id', "addDrag");
           node.setAttribute('draggable', true);
           node.innerHTML = HTML;
-          console.log(lastElemet);
           lastElemet.appendChild(node); // insertAfter(node, lastChild);
         });
         draggables.forEach(function (draggable) {
@@ -3196,8 +3195,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

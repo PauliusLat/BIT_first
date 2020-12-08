@@ -1,8 +1,4 @@
-<?php
 
-use BIT\app\Page;
-
-?>
 <?php foreach ($html as $news) : ?>
     <div class="newsList">
         <div class="1">

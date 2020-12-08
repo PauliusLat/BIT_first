@@ -23,7 +23,6 @@ class EditPost {
             const content = document.querySelectorAll("[contenteditable]");
 
             const api = "news-update";
-
             var readImage = new Profile_image();
             window.location.hash
             imageDiv.addEventListener("click", () => {
