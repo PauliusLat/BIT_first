@@ -86,7 +86,6 @@ class Api {
 
         let formData = new FormData();
         if (obj.api) {
-
             if (obj.id) {
                 formData.append('id', obj.id);
             }
