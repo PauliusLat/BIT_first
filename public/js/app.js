@@ -1767,8 +1767,8 @@ var EditPost = /*#__PURE__*/function () {
       var DOM = document.querySelector(this.target);
 
       if (DOM) {
-        var deleteApi = 'news-destroy&id=';
-        var listApi = "news-list";
+        var id = document.querySelector('.save').id;
+        console.log(id);
         var image = document.getElementById('image');
         var imageDiv = document.querySelector('.imageDiv');
         var imgBlock = document.querySelector('.galleryContainer');
@@ -1790,7 +1790,7 @@ var EditPost = /*#__PURE__*/function () {
             content: content[0].innerHTML,
             imageTitle: "",
             altText: "",
-            id: window.location.search.slice(14)
+            id: id
           };
           readImage.sendImageData(obj);
         });
@@ -3181,8 +3181,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

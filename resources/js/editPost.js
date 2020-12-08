@@ -14,8 +14,8 @@ class EditPost {
     init() {
         const DOM = document.querySelector(this.target);
         if (DOM) {
-            const deleteApi = 'news-destroy&id=';
-            const listApi = "news-list";
+            const id = document.querySelector('.save').id;
+            console.log(id);
             const image = document.getElementById('image');
             const imageDiv = document.querySelector('.imageDiv');
             const imgBlock = document.querySelector('.galleryContainer');
@@ -23,7 +23,6 @@ class EditPost {
             const title = document.querySelector('.title');
             const content = document.querySelectorAll("[contenteditable]");
             const api = "news-update";
-
             var readImage = new Profile_image();
             window.location.hash
             imageDiv.addEventListener("click", () => {
@@ -38,7 +37,7 @@ class EditPost {
                     content: content[0].innerHTML,
                     imageTitle:"",
                     altText:"",
-                    id:window.location.search.slice(14)               
+                    id:id               
                 }
                 readImage.sendImageData(obj);
             })

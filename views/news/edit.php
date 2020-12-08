@@ -1,9 +1,6 @@
-
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-
 <div class="editStart">
-    
     <div class="1">
         <?= $data->post_date; ?>
     </div>
@@ -21,7 +18,7 @@
     <div id="editor" name="newsEditor">
         <?= $data->news_content; ?>
     </div>
-    <div class="btn-green btnNews save" id="<?= $news->ID; ?>">
+    <div class="btn-green btnNews save" id="<?= $data->ID; ?>">
         Saugoti
     </div>
 </div>
@@ -46,12 +43,10 @@
         </div> -->
     </div>
 </div>
-
 <script>
     var toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'], // toggled buttons
         ['blockquote', 'code-block'],
-
         [{
             'header': 1
         }, {
@@ -62,7 +57,6 @@
         }, {
             'list': 'bullet'
         }],
-
         [{
             'indent': '-1'
         }, {
@@ -71,11 +65,9 @@
         [{
             'direction': 'rtl'
         }], // text direction
-
         [{
             'header': [1, 2, 3, 4, 5, 6, false]
         }],
-
         [{
             'color': []
         }, {
@@ -87,10 +79,8 @@
         [{
             'align': []
         }],
-
         ['clean'] // remove formatting button
     ];
-
     var quill = new Quill('#editor', {
         modules: {
             toolbar: toolbarOptions

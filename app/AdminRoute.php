@@ -23,7 +23,7 @@ class AdminRoute
                             add_submenu_page($parentPath, ucfirst($subPath), ucfirst($subPath), 'manage_options', $parentPath);
                         } else {
                             add_submenu_page(
-                                $parentPath,
+                                (strpos($subPath, '0') === 0) ? null : $parentPath,
                                 ucfirst($subPath),
                                 ucfirst($subPath),
                                 'manage_options',

@@ -18,7 +18,7 @@ class NewsAdminController
 		return View::adminRender('news.index');
 	}
 
-	public function create(Request $request)
+	public function create()
 	{
 		return View::adminRender('news.create');
 	}
@@ -66,13 +66,12 @@ class NewsAdminController
 
 	public function list()
 	{
-        _d(admin_url('admin.php?page=edit'));
 		return View::adminRender('news.list');
 	}
 
 	public function listPost(Request $request)
 	{
-		$uri = admin_url('admin.php?page=edit');
+		$uri = admin_url('admin.php?page=0edit');
 
 		$allNews = NewsPost::all()->all();
 		$output = View::adminRender('news.renderList', ['html' => $allNews,  'uri' => $uri]);
@@ -86,11 +85,11 @@ class NewsAdminController
 	{
 		$news = NewsPost::get($request->request->get('id'));
 		$file = $request->files->get('image');
-		$image = null;
+        $image = null;
+        var_dump($request->request->get('id'));
 		foreach ($news->attachments as $att) {
 			$image = $att;
         }
-        _d($request->request);
 		$news->post_title = $request->request->get('title');
 		$news->news_content = $request->request->get('content');
         $news->save();
@@ -104,7 +103,12 @@ class NewsAdminController
 
 	public function destroy(NewsPost $newsPost)
 	{
-		$newsPost->delete();
+        $newsPost->delete();
+        $page = Page::get($newsPost->post_parent);
+        $page->delete(true);
+        foreach ($newsPost->attachments as $img) {
+            $img->delete();
+        }
 		return new Response;
 	}
 
