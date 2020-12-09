@@ -36,8 +36,8 @@ class TagController
             $limit = 5;
         }
 
-        if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
-            $number = $request->request->get('hash');
+        if (strlen($request->request->get('id')) != 0) {
+            $number = $request->request->get('id');
         } else {
             $number = 1;
         }
