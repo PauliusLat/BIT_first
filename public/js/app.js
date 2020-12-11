@@ -1,4 +1,3 @@
-
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -959,6 +958,55 @@ var Api = /*#__PURE__*/function () {
       return getDAta;
     }()
   }, {
+    key: "getPostData",
+    value: function () {
+      var _getPostData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(api, id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.post(this.uri + this.path + api, {
+                  id: id
+                });
+
+              case 3:
+                response = _context2.sent;
+
+                if (!(response.status == 200 && response.statusText == "OK")) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                return _context2.abrupt("return", response.data.html);
+
+              case 6:
+                _context2.next = 12;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+                console.error(_context2.t0);
+                console.log("Duomenys is serveverio nepasiekiami !!!");
+
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 8]]);
+      }));
+
+      function getPostData(_x2, _x3) {
+        return _getPostData.apply(this, arguments);
+      }
+
+      return getPostData;
+    }()
+  }, {
     key: "saveContent",
     value: function saveContent(api, id, content) {
       axios.post(this.uri + this.path + api, {
@@ -1006,64 +1054,6 @@ var Api = /*#__PURE__*/function () {
         throw 'can not find API';
       }
     }
-  }, {
-    key: "getPostData",
-    value: function () {
-      var _getPostData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(obj) {
-        var formData, key, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (!obj.api) {
-                  _context2.next = 15;
-                  break;
-                }
-
-                _context2.prev = 1;
-                formData = new FormData();
-
-                for (key in obj) {
-                  formData.append(key, obj[key]);
-                }
-
-                _context2.next = 6;
-                return axios.post(this.uri + this.path + obj.api, formData, {});
-
-              case 6:
-                response = _context2.sent;
-
-                if (!(response.status == 200 && response.statusText == "OK")) {
-                  _context2.next = 9;
-                  break;
-                }
-
-                return _context2.abrupt("return", response.data.html);
-
-              case 9:
-                _context2.next = 15;
-                break;
-
-              case 11:
-                _context2.prev = 11;
-                _context2.t0 = _context2["catch"](1);
-                console.error(_context2.t0);
-                console.log("Duomenys is serveverio nepasiekiami !!!");
-
-              case 15:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this, [[1, 11]]);
-      }));
-
-      function getPostData(_x2) {
-        return _getPostData.apply(this, arguments);
-      }
-
-      return getPostData;
-    }()
   }]);
 
   return Api;
@@ -2026,7 +2016,8 @@ var Menu = /*#__PURE__*/function () {
         var draggables = document.querySelectorAll('.draggable');
         var container = document.querySelector('.cont');
         var add = document.querySelector(".addNew");
-        this.save();
+        this.save(); // this.update();
+
         this["delete"](draggables);
 
         var newBlock = function newBlock() {
@@ -2090,7 +2081,10 @@ var Menu = /*#__PURE__*/function () {
     key: "save",
     value: function save() {
       var store = document.querySelector(".save");
-      var api = "menu-store";
+      var menuId = document.getElementById("menuID").value; // const pageLink = document.getElementById("menuID").value;
+      // console.log(menuId);
+
+      var api = "menu_store";
 
       if (this.read) {
         var data = function data() {
@@ -2100,23 +2094,31 @@ var Menu = /*#__PURE__*/function () {
           var text = [];
           var link = [];
           var values = [];
-          ;
+          var pageLinks = [];
 
           for (i = 0; i < selectBox.length; i++) {
             var options = selectBox[i].getElementsByTagName('option');
 
             for (var i = options.length; i--;) {
-              if (options[i].selected) values.push(options[i].value); // if (options[i].selected) text = (options[i].innerText)
+              if (options[i].selected) {
+                values.push(options[i].text);
+                pageLinks.push(options[i].value);
+                console.log(options[i].value);
+              } // if (options[i].selected) text = (options[i].innerText)
+
             }
 
             text.push(menuText[i].value);
             link.push(menuLink[i].value);
-          }
+          } // console.log(text);
+          // console.log(values);
+
 
           var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
           var obj = {
-            page: values,
-            various: link,
+            category: values,
+            id: menuId,
+            pageLinks: pageLinks,
             content: text,
             api: api
           };
@@ -2127,7 +2129,43 @@ var Menu = /*#__PURE__*/function () {
       }
 
       this.read = false;
-    }
+    } // update() {
+    //   const update = document.querySelector(".update");
+    //   console.log(update);
+    //   let api = "menu_update";
+    //   if (this.read) {
+    //     var data = () => {
+    //       const menuText = document.getElementsByName("menu");
+    //       const menuLink = document.querySelectorAll(".menuLink");
+    //       var selectBox = document.getElementsByTagName("select");
+    //       var text = [];
+    //       var link = [];
+    //       var values = [];
+    //       for (this.index = 0; this.index < selectBox.length; this.index++) {
+    //         var options = selectBox[this.index].getElementsByTagName('option');
+    //         for (var i = options.length; i--;) {
+    //           if (options[i].selected) values.push(options[i].value)
+    //           // if (options[i].selected) text = (options[i].innerText)
+    //         }
+    //         text.push(menuText[this.index].value)
+    //         link.push(menuLink[this.index].value)
+    //       }
+    //       console.log(text);
+    //       console.log(values);
+    //       var axios = new Api();
+    //       var obj = {
+    //         category: values,
+    //         various: link,
+    //         content: text,
+    //         api: api
+    //       }
+    //       axios.formDataApi(obj);
+    //     }
+    //     update.addEventListener("click", data);
+    //   }
+    //   this.read = false;
+    // }
+
   }]);
 
   return Menu;
@@ -3048,7 +3086,7 @@ var Tag = /*#__PURE__*/function () {
         if (response.status == 200 && response.statusText == "OK") {
           console.log(response);
 
-          _this5.init(); // setTimeout(call.init(), 500);
+          _this5.init();
 
         }
       })["catch"](function (err) {
@@ -3265,7 +3303,7 @@ var Tag = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (Tag); // const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-// const this.uri = document.location.origin;
+// const uri = document.location.origin;
 // const tagStrt = document.getElementById("tagStart");
 // function startTag() {
 //   if (tagStrt) {
@@ -3276,20 +3314,11 @@ var Tag = /*#__PURE__*/function () {
 // let hash = location.hash
 // let hasharr
 // let hasarr2
-// function init(pageNo = 1, hash = 1){
+// function init(pageNo){
 // if (typeof pageNo == 'object' &&  hash.length !== 0){
 //   hasharr = hash.split('#')
 //   hasarr2 = hasharr[1].split('%')
 //   hash = hasarr2[0]
-//   window.addEventListener( "load",
-//   () =>{
-//     // hasharr = hash.split('#')
-//     // hasarr2 = hasharr[1].split('%')
-//     // hash = hasarr2[0]
-//     hash = location.hash
-//     init(hash);
-//   },
-//   false);
 // }else if(typeof pageNo === 'string' && hash.length !== 0){
 //   hasharr = hash.split('#')
 //   hasarr2 = hasharr[1].split('%')
@@ -3464,22 +3493,6 @@ var Tag = /*#__PURE__*/function () {
 //     });
 // }
 // export default startTag();
-// async init(pageNo) {
-//   let api = "tag_create";
-//   let axios = new Api();
-//   let response = awayt axios.getDAta(api);
-//     console.log(response);
-// const test = document.querySelector(".test");
-// const HTML = response.data.html;
-// console.log(HTML);
-// test.innerHTML = HTML;
-// const submit = document.getElementById("create");
-// submit.addEventListener("click", () => {
-//   const name = document.getElementById("tag-name").value;
-//   const slug = document.getElementById("tag-slug").value;
-//   const description = document.getElementById("tag-description").value;
-//   tagStore(name, slug, description);
-// });
 
 /***/ }),
 
@@ -3501,11 +3514,10 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
 
 /******/ });
-
