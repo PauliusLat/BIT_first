@@ -12,6 +12,7 @@ use BIT\app\Cookie;
 use BIT\app\Session;
 use BIT\app\Category;
 use BIT\app\Page;
+use BIT\app\FrontMenu;
 
 return function (ContainerConfigurator $configurator) {
 
@@ -37,6 +38,10 @@ return function (ContainerConfigurator $configurator) {
     $services->set('Category', Category::class)
         ->args([ref(RequestId::class)]);
     $services->alias(Category::class, 'category');
+
+    $services->set('menu', FrontMenu::class)
+        ->args([ref(RequestId::class)]);
+    $services->alias(FrontMenu::class, 'menu');
 
     $services->set('newsPost', NewsPost::class)
         ->args([ref(RequestId::class)]);

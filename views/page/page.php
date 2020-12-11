@@ -32,8 +32,8 @@
         <select class="form-control" name="page-state" id="pageState">
             <?php
             // $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
-            if ($page_state) {
-                foreach ($page_state as $page => $args) {
+            if ($menu_page_state) {
+                foreach ($menu_page_state as $page => $args) {
             ?>
                     <option value="<?= $args ?>"><?= $args ?></option>
             <?php
