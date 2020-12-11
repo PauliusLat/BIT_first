@@ -958,55 +958,6 @@ var Api = /*#__PURE__*/function () {
       return getDAta;
     }()
   }, {
-    key: "getPostData",
-    value: function () {
-      var _getPostData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(api, id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return axios.post(this.uri + this.path + api, {
-                  id: id
-                });
-
-              case 3:
-                response = _context2.sent;
-
-                if (!(response.status == 200 && response.statusText == "OK")) {
-                  _context2.next = 6;
-                  break;
-                }
-
-                return _context2.abrupt("return", response.data.html);
-
-              case 6:
-                _context2.next = 12;
-                break;
-
-              case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](0);
-                console.error(_context2.t0);
-                console.log("Duomenys is serveverio nepasiekiami !!!");
-
-              case 12:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this, [[0, 8]]);
-      }));
-
-      function getPostData(_x2, _x3) {
-        return _getPostData.apply(this, arguments);
-      }
-
-      return getPostData;
-    }()
-  }, {
     key: "saveContent",
     value: function saveContent(api, id, content) {
       axios.post(this.uri + this.path + api, {
@@ -1032,60 +983,8 @@ var Api = /*#__PURE__*/function () {
       var formData = new FormData();
 
       if (obj.api) {
-        if (obj.id) {
-          formData.append('id', obj.id);
-        }
-
-        if (obj.title) {
-          formData.append('title', obj.title);
-        }
-
-        if (obj.content) {
-          formData.append('content', obj.content);
-        }
-
-        if (typeof obj.altText === 'string') {
-          formData.append('altText', obj.altText);
-        }
-
-        if (typeof obj.imageTitle === 'string') {
-          formData.append('imageTitle', obj.imageTitle);
-        }
-
-        if (obj.image) {
-          formData.append('image', obj.image);
-        }
-
-        if (obj.tag) {
-          formData.append('tag', obj.tag);
-        }
-
-        if (obj.slug) {
-          formData.append('slug', obj.slug);
-        }
-
-        if (obj.category) {
-          formData.append('category', obj.category);
-        }
-
-        if (obj.catTitle) {
-          formData.append('catTitle', obj.catTitle);
-        }
-
-        if (obj.catContent) {
-          formData.append('catContent', obj.catContent);
-        }
-
-        if (obj.page) {
-          formData.append('page', obj.page);
-        }
-
-        if (obj.cat_parent) {
-          formData.append('cat_parent', obj.cat_parent);
-        }
-
-        if (obj.various) {
-          formData.append('various', obj.various);
+        for (var key in obj) {
+          formData.append(key, obj[key]);
         }
 
         console.log(Object.fromEntries(formData));
@@ -1106,6 +1005,64 @@ var Api = /*#__PURE__*/function () {
         throw 'can not find API';
       }
     }
+  }, {
+    key: "getPostData",
+    value: function () {
+      var _getPostData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(obj) {
+        var formData, key, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!obj.api) {
+                  _context2.next = 15;
+                  break;
+                }
+
+                _context2.prev = 1;
+                formData = new FormData();
+
+                for (key in obj) {
+                  formData.append(key, obj[key]);
+                }
+
+                _context2.next = 6;
+                return axios.post(this.uri + this.path + obj.api, formData, {});
+
+              case 6:
+                response = _context2.sent;
+
+                if (!(response.status == 200 && response.statusText == "OK")) {
+                  _context2.next = 9;
+                  break;
+                }
+
+                return _context2.abrupt("return", response.data.html);
+
+              case 9:
+                _context2.next = 15;
+                break;
+
+              case 11:
+                _context2.prev = 11;
+                _context2.t0 = _context2["catch"](1);
+                console.error(_context2.t0);
+                console.log("Duomenys is serveverio nepasiekiami !!!");
+
+              case 15:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[1, 11]]);
+      }));
+
+      function getPostData(_x2) {
+        return _getPostData.apply(this, arguments);
+      }
+
+      return getPostData;
+    }()
   }]);
 
   return Api;
@@ -2619,6 +2576,8 @@ var Pagination = /*#__PURE__*/function () {
     this.uri = document.location.origin;
     this.pageSelected;
     this.api = api;
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.hash;
   }
 
   _createClass(Pagination, [{
@@ -2626,27 +2585,29 @@ var Pagination = /*#__PURE__*/function () {
     value: function () {
       var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var hash,
-            hash1,
             test,
             axios,
-            api,
+            obj,
             _args = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 hash = _args.length > 0 && _args[0] !== undefined ? _args[0] : null;
-                hash1 = hash;
+                this.hash = hash;
 
-                if (hash1 === null) {
-                  hash1 = location.hash.slice(1, 2);
+                if (this.hash === null) {
+                  this.hash = location.hash.slice(1, 2);
                 }
 
                 test = document.querySelector(".test");
                 axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
-                api = this.api;
+                obj = {
+                  api: this.api,
+                  hash: this.hash
+                };
                 _context.next = 8;
-                return axios.getPostData(api, hash1);
+                return this.axios.getPostData(obj);
 
               case 8:
                 return _context.abrupt("return", _context.sent);
@@ -2670,24 +2631,61 @@ var Pagination = /*#__PURE__*/function () {
     value: function paging() {
       var page = document.querySelectorAll(".paging");
 
-      var _loop = function _loop(i) {
-        var id = page[i].id;
-
-        if (i >= 2 && i < page.length - 2) {
-          page[i].addEventListener("click", function () {
+      if (page.length) {
+        var _loop = function _loop(i) {
+          var id = page[i].id;
+          page[i].addEventListener('click', function () {
             location.hash = '#' + id;
-          }); // }else if(i == 0){
-          //     console.log(i);
-          //     location.hash = '#' + 1;
-          // }else if( page.length-1){
-          //     location.hash = '#' +  page.length-1;
-        }
-      };
+          });
+        };
 
-      for (var i = 0; i < page.length; i++) {
-        _loop(i);
+        for (var i = 0; i < page.length; i++) {
+          _loop(i);
+        }
       }
     }
+  }, {
+    key: "select",
+    value: function () {
+      var _select = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var hash,
+            pages,
+            select,
+            obj,
+            _args2 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
+                pages = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : 5;
+                select = document.getElementById("items");
+                obj = {
+                  api: this.api,
+                  pageSelected: pages,
+                  hash: hash
+                };
+                console.log(obj);
+                _context2.next = 7;
+                return this.axios.getPostData(obj);
+
+              case 7:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function select() {
+        return _select.apply(this, arguments);
+      }
+
+      return select;
+    }()
   }]);
 
   return Pagination;
@@ -2826,9 +2824,11 @@ var Tag = /*#__PURE__*/function () {
     // this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
     // this.uri = document.location.origin;
     // this.pageSelected;
-    // this.hash;
+    var api = "tag_create";
     this.start = true;
     this.target = target;
+    this.pages;
+    this.page = new _pagination__WEBPACK_IMPORTED_MODULE_1__["default"](api);
     this.init();
   }
 
@@ -2841,44 +2841,47 @@ var Tag = /*#__PURE__*/function () {
         var hash,
             HTML,
             DOM,
-            api,
             test,
-            page,
             addColor,
-            cahges,
+            chages,
+            option,
             _args2 = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
-                HTML = _args2.length > 1 ? _args2[1] : undefined;
+                HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
                 DOM = document.getElementById(this.target);
 
                 if (!DOM) {
-                  _context2.next = 18;
+                  _context2.next = 22;
                   break;
                 }
 
-                api = "tag_create";
                 test = document.querySelector(".test");
-                page = new _pagination__WEBPACK_IMPORTED_MODULE_1__["default"](api);
 
-                if (!this.start) {
-                  _context2.next = 11;
+                if (!(this.start && HTML == null)) {
+                  _context2.next = 12;
                   break;
                 }
 
-                _context2.next = 10;
-                return page.init();
+                _context2.next = 8;
+                return this.page.init();
 
-              case 10:
+              case 8:
                 HTML = _context2.sent;
-
-              case 11:
-                this.start = false;
                 test.innerHTML = HTML;
-                page.paging();
+                _context2.next = 13;
+                break;
+
+              case 12:
+                test.innerHTML = HTML;
+
+              case 13:
+                this.start = false;
+                this.page.paging();
+                HTML = "";
 
                 if (hash != null) {
                   addColor = document.querySelector('.nr-' + hash);
@@ -2887,8 +2890,9 @@ var Tag = /*#__PURE__*/function () {
 
                 HTML = "";
 
-                cahges = /*#__PURE__*/function () {
+                chages = /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+                    var pages;
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
                         switch (_context.prev = _context.next) {
@@ -2896,21 +2900,39 @@ var Tag = /*#__PURE__*/function () {
                             hash = location.hash.slice(1, 2);
 
                             if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN)) {
-                              _context.next = 7;
+                              _context.next = 15;
                               break;
                             }
 
-                            _context.next = 4;
-                            return page.init(hash);
+                            pages = _this.pages;
 
-                          case 4:
-                            HTML = _context.sent;
+                            if (!pages) {
+                              _context.next = 10;
+                              break;
+                            }
 
-                            _this.init(hash, HTML);
-
-                            window.removeEventListener('hashchange', cahges);
+                            hash = 1;
+                            _context.next = 7;
+                            return _this.page.select(hash, pages);
 
                           case 7:
+                            HTML = _context.sent;
+                            _context.next = 13;
+                            break;
+
+                          case 10:
+                            _context.next = 12;
+                            return _this.page.select(hash, pages);
+
+                          case 12:
+                            HTML = _context.sent;
+
+                          case 13:
+                            _this.init(hash, HTML);
+
+                            window.removeEventListener('hashchange', chages);
+
+                          case 15:
                           case "end":
                             return _context.stop();
                         }
@@ -2918,14 +2940,19 @@ var Tag = /*#__PURE__*/function () {
                     }, _callee);
                   }));
 
-                  return function cahges() {
+                  return function chages() {
                     return _ref.apply(this, arguments);
                   };
                 }();
 
-                window.addEventListener('hashchange', cahges);
+                window.addEventListener('hashchange', chages);
+                option = document.getElementById("items");
+                option.addEventListener('change', function () {
+                  _this.pages = option.value;
+                  chages();
+                });
 
-              case 18:
+              case 22:
               case "end":
                 return _context2.stop();
             }

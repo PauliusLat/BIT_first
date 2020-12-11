@@ -74,7 +74,7 @@
         'hierarchical' => true,
     );
     ?>
-    <ul style="display:inline-block">
+    <ul>
         <?php wp_dropdown_categories($args); ?>
     </ul>
     <br><br>
@@ -84,7 +84,7 @@
         <label class="tcp-label">Kategorijos aprašymas</label>
     </div>
     <textarea name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="tcp-input">
-        
+
     </textarea>
 
     <div class="buttons sm-1">

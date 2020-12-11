@@ -43,21 +43,6 @@ class Api {
         }
     }
 
-    async getPostData(api, id) {
-        try {
-            let response = await axios.post(this.uri + this.path + api, {
-                id: id
-            })
-
-            if (response.status == 200 && response.statusText == "OK") {
-                return response.data.html;
-            }
-        } catch (e) {
-            console.error(e);
-            console.log("Duomenys is serveverio nepasiekiami !!!");
-        }
-    }
-
     saveContent(api, id, content) {
 
         axios
@@ -86,49 +71,9 @@ class Api {
 
         let formData = new FormData();
         if (obj.api) {
-            if (obj.id) {
-                formData.append('id', obj.id);
+            for (var key in obj) {
+                formData.append(key, obj[key])
             }
-            if (obj.title) {
-                formData.append('title', obj.title);
-            }
-            if (obj.content) {
-                formData.append('content', obj.content);
-            }
-            if (typeof obj.altText === 'string') {
-                formData.append('altText', obj.altText);
-            }
-            if (typeof obj.imageTitle === 'string') {
-                formData.append('imageTitle', obj.imageTitle);
-            }
-            if (obj.image) {
-                formData.append('image', obj.image);
-            }
-            if (obj.tag) {
-                formData.append('tag', obj.tag);
-            }
-            if (obj.slug) {
-                formData.append('slug', obj.slug);
-            }
-            if (obj.category) {
-                formData.append('category', obj.category);
-            }
-            if (obj.catTitle) {
-                formData.append('catTitle', obj.catTitle);
-            }
-            if (obj.catContent) {
-                formData.append('catContent', obj.catContent);
-            }
-            if (obj.page) {
-                formData.append('page', obj.page);
-            }
-            if (obj.cat_parent) {
-                formData.append('cat_parent', obj.cat_parent);
-            }
-            if (obj.various) {
-                formData.append('various', obj.various);
-            }
-
             console.log(Object.fromEntries(formData))
             axios.post(this.uri + this.path + obj.api, formData, {
 
@@ -148,7 +93,28 @@ class Api {
         } else {
             throw 'can not find API';
         }
+    }
 
+
+    async getPostData(obj) {
+        if (obj.api) {
+            try {
+                let formData = new FormData();
+
+                for (var key in obj) {
+                    formData.append(key, obj[key])
+                }
+                let response = await axios.post(this.uri + this.path + obj.api, formData, {});
+
+                if (response.status == 200 && response.statusText == "OK") {
+                    return response.data.html;
+                }
+
+            } catch (e) {
+                console.error(e);
+                console.log("Duomenys is serveverio nepasiekiami !!!");
+            }
+        }
     }
 }
 
