@@ -8,32 +8,33 @@ class Tag {
         // this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
         // this.uri = document.location.origin;
         // this.pageSelected;
-        // this.hash;
+
+        const api = "tag_create";
         this.start = true;
         this.target = target;
+        this.pages;
+        this.page = new Pagination(api);
         this.init();
     }
 
-    async init(hash = null, HTML) {
+    async init(hash = null, HTML = null) {
 
         const DOM = document.getElementById(this.target);
 
         if (DOM) {
 
-            const api = "tag_create";
             const test = document.querySelector(".test");
 
-            let page = new Pagination(api);
-
-            if (this.start) {
-                HTML = await page.init();
+            if (this.start && HTML == null) {
+                HTML = await this.page.init();
+                test.innerHTML = HTML;
+            } else {
+                test.innerHTML = HTML;
             }
             this.start = false;
+            this.page.paging();
 
-
-
-            test.innerHTML = HTML;
-            page.paging();
+            HTML = "";
 
             if (hash != null) {
                 let addColor = document.querySelector('.nr-' + hash);
@@ -42,21 +43,88 @@ class Tag {
 
             HTML = "";
 
-            var cahges = async () => {
+            var chages = async () => {
                 hash = location.hash.slice(1, 2);
                 if (hash != undefined &&
                     hash != null &&
                     hash > 0 &&
                     hash != "" &&
                     hash != NaN) {
-                    HTML = await page.init(hash);
+                    let pages = this.pages;
+                    if (pages) {
+                        hash = 1;
+                        HTML = await this.page.select(hash, pages);
+                    } else {
+                        HTML = await this.page.select(hash, pages);
+                    }
                     this.init(hash, HTML);
-                    window.removeEventListener('hashchange', cahges);
+                    window.removeEventListener('hashchange', chages);
                 }
             }
-            window.addEventListener('hashchange', cahges);
+            window.addEventListener('hashchange', chages);
+
+            const option = document.getElementById("items");
+            option.addEventListener('change', () => {
+                this.pages = option.value;
+                chages();
+            });
         }
     }
+
+
+    edit() {
+        const editBtn = document.querySelectorAll(".tag-edit");
+
+        for (let i = 0; i < editBtn.length; i++) {
+            let ID = editBtn[i].value;
+            let taxonomy = editBtn[i].id;
+            editBtn[i].addEventListener(
+                "click",
+                () => {
+                    this.tagEdit(ID, taxonomy);
+                });
+        }
+
+        const deleteBtn = document.querySelectorAll(".tag-delete");
+        for (let i = 0; i < deleteBtn.length; i++) {
+            let ID = deleteBtn[i].value;
+            let taxonomy = deleteBtn[i].id;
+            deleteBtn[i].addEventListener(
+                "click",
+                () => {
+                    this.tagDelete(ID, taxonomy);
+                });
+        }
+
+    }
+
+    tagUpdate(updateId) {
+        const name = document.getElementById("tag_name").value;
+        const slug = document.getElementById("tag_slug").value;
+        const description = document.getElementById("tag_description").value;
+
+        axios
+            .post(this.uri + this.path + "tag_update", {
+                updateId: updateId,
+                tag_name: name,
+                tag_slug: slug,
+                tag_description: description
+
+            })
+            .then((response) => {
+                if (response.status == 200 && response.statusText == "OK") {
+                    console.log(response);
+                    this.init();
+                    // setTimeout(call.init(), 500);
+                }
+            })
+
+            .catch((err) => {
+                console.log(err instanceof TypeError);
+            });
+    }
+
+
     // this.init();
 
 

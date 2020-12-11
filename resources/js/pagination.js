@@ -7,44 +7,61 @@ class Pagination {
         this.uri = document.location.origin;
         this.pageSelected;
         this.api = api;
+        this.axios = new Api();
+        this.hash;  
     }
 
     async init(hash = null) {
 
-        let hash1 = hash;
+        this.hash = hash;
 
-        if (hash1 === null) {
-            hash1 = location.hash.slice(1, 2);
+        if (this.hash === null) {
+            this.hash = location.hash.slice(1, 2);
         }
 
         const test = document.querySelector(".test");
 
         let axios = new Api();
 
-        let api = this.api;
-
-        return await axios.getPostData(api, hash1);
+        let obj = {
+            api: this.api,
+            hash: this.hash
+        }
+        return await  this.axios.getPostData(obj);
 
     }
 
     paging() {
+
         const page = document.querySelectorAll(".paging");
 
-        for (let i = 0; i < page.length; i++) {
-            let id = page[i].id;
-            if (i >= 2 && i < page.length - 2) {
-                page[i].addEventListener("click", () => {
-                    location.hash = '#' + id;
-                })
-            // }else if(i == 0){
-            //     console.log(i);
-            //     location.hash = '#' + 1;
-            // }else if( page.length-1){
-            //     location.hash = '#' +  page.length-1;
-            }
+        if (page.length) {
 
+            for (let i = 0; i < page.length; i++) {
+
+                let id = page[i].id;
+
+                page[i].addEventListener('click', () => {
+                    location.hash = '#' + id;
+                });
+            }
         }
     }
+
+    async select(hash=1,  pages=5) {
+
+        const select = document.getElementById("items");
+
+        let obj = {
+            api: this.api,
+            pageSelected: pages,
+            hash:hash
+        }
+console.log(obj);
+        return await  this.axios.getPostData(obj);
+
+    }
 }
+
 
 export default Pagination;
