@@ -22,7 +22,6 @@ class Tag {
         const DOM = document.getElementById(this.target);
         if (DOM) {
 
-
             const test = document.querySelector(".test");
 
             if (this.start && HTML == null) {
@@ -33,7 +32,7 @@ class Tag {
             }
             this.start = false;
             let lenght = this.page.paging();
-            console.log(lenght);
+     
             HTML = "";
 
             if (hash != null) {
@@ -66,13 +65,16 @@ class Tag {
             const option = document.getElementById("items");
 
             option.addEventListener('change', () => {
+              
                 this.pages = option.value;
+                location.hash = 1;
                 chages();
+                
             });
         }
     }
 
-
+/*-------------------------------------*/
     tagStore(name, slug, description) {
         axios
             .post(this.uri + this.path + "tag_store", {

@@ -1,4 +1,3 @@
-
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -986,9 +985,9 @@ var Api = /*#__PURE__*/function () {
       if (obj.api) {
         for (var key in obj) {
           formData.append(key, obj[key]);
-        }
+        } // console.log(Object.fromEntries(formData))
 
-        console.log(Object.fromEntries(formData));
+
         axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
           if (error.response) {
             console.log(error.response.data);
@@ -1016,7 +1015,7 @@ var Api = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!obj.api) {
-                  _context2.next = 15;
+                  _context2.next = 17;
                   break;
                 }
 
@@ -1025,7 +1024,8 @@ var Api = /*#__PURE__*/function () {
 
                 for (key in obj) {
                   formData.append(key, obj[key]);
-                }
+                } // console.log(Object.fromEntries(formData))
+
 
                 _context2.next = 6;
                 return axios.post(this.uri + this.path + obj.api, formData, {});
@@ -1034,28 +1034,32 @@ var Api = /*#__PURE__*/function () {
                 response = _context2.sent;
 
                 if (!(response.status == 200 && response.statusText == "OK")) {
-                  _context2.next = 9;
+                  _context2.next = 11;
                   break;
                 }
 
-                return _context2.abrupt("return", response.data.html);
+                _context2.next = 10;
+                return response.data.html;
 
-              case 9:
-                _context2.next = 15;
-                break;
+              case 10:
+                return _context2.abrupt("return", _context2.sent);
 
               case 11:
-                _context2.prev = 11;
+                _context2.next = 17;
+                break;
+
+              case 13:
+                _context2.prev = 13;
                 _context2.t0 = _context2["catch"](1);
                 console.error(_context2.t0);
                 console.log("Duomenys is serveverio nepasiekiami !!!");
 
-              case 15:
+              case 17:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[1, 11]]);
+        }, _callee2, this, [[1, 13]]);
       }));
 
       function getPostData(_x2) {
@@ -2026,7 +2030,8 @@ var Menu = /*#__PURE__*/function () {
         var draggables = document.querySelectorAll('.draggable');
         var container = document.querySelector('.cont');
         var add = document.querySelector(".addNew");
-        this.save();
+        this.save(); // this.update();
+
         this["delete"](draggables);
 
         var newBlock = function newBlock() {
@@ -2090,7 +2095,10 @@ var Menu = /*#__PURE__*/function () {
     key: "save",
     value: function save() {
       var store = document.querySelector(".save");
-      var api = "menu-store";
+      var menuId = document.getElementById("menuID").value; // const pageLink = document.getElementById("menuID").value;
+      // console.log(menuId);
+
+      var api = "menu_store";
 
       if (this.read) {
         var data = function data() {
@@ -2100,23 +2108,31 @@ var Menu = /*#__PURE__*/function () {
           var text = [];
           var link = [];
           var values = [];
-          ;
+          var pageLinks = [];
 
           for (i = 0; i < selectBox.length; i++) {
             var options = selectBox[i].getElementsByTagName('option');
 
             for (var i = options.length; i--;) {
-              if (options[i].selected) values.push(options[i].value); // if (options[i].selected) text = (options[i].innerText)
+              if (options[i].selected) {
+                values.push(options[i].text);
+                pageLinks.push(options[i].value);
+                console.log(options[i].value);
+              } // if (options[i].selected) text = (options[i].innerText)
+
             }
 
             text.push(menuText[i].value);
             link.push(menuLink[i].value);
-          }
+          } // console.log(text);
+          // console.log(values);
+
 
           var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
           var obj = {
-            page: values,
-            various: link,
+            category: values,
+            id: menuId,
+            pageLinks: pageLinks,
             content: text,
             api: api
           };
@@ -2127,7 +2143,43 @@ var Menu = /*#__PURE__*/function () {
       }
 
       this.read = false;
-    }
+    } // update() {
+    //   const update = document.querySelector(".update");
+    //   console.log(update);
+    //   let api = "menu_update";
+    //   if (this.read) {
+    //     var data = () => {
+    //       const menuText = document.getElementsByName("menu");
+    //       const menuLink = document.querySelectorAll(".menuLink");
+    //       var selectBox = document.getElementsByTagName("select");
+    //       var text = [];
+    //       var link = [];
+    //       var values = [];
+    //       for (this.index = 0; this.index < selectBox.length; this.index++) {
+    //         var options = selectBox[this.index].getElementsByTagName('option');
+    //         for (var i = options.length; i--;) {
+    //           if (options[i].selected) values.push(options[i].value)
+    //           // if (options[i].selected) text = (options[i].innerText)
+    //         }
+    //         text.push(menuText[this.index].value)
+    //         link.push(menuLink[this.index].value)
+    //       }
+    //       console.log(text);
+    //       console.log(values);
+    //       var axios = new Api();
+    //       var obj = {
+    //         category: values,
+    //         various: link,
+    //         content: text,
+    //         api: api
+    //       }
+    //       axios.formDataApi(obj);
+    //     }
+    //     update.addEventListener("click", data);
+    //   }
+    //   this.read = false;
+    // }
+
   }]);
 
   return Menu;
@@ -2661,12 +2713,12 @@ var Pagination = /*#__PURE__*/function () {
                 hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
                 pages = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : 5;
                 lenght = _args2.length > 2 ? _args2[2] : undefined;
-                console.log(lenght);
                 obj = {
                   api: this.api,
                   pageSelected: pages,
                   hash: hash
                 };
+                console.log(obj);
                 _context2.next = 7;
                 return this.axios.getPostData(obj);
 
@@ -2857,7 +2909,7 @@ var Tag = /*#__PURE__*/function () {
                 DOM = document.getElementById(this.target);
 
                 if (!DOM) {
-                  _context2.next = 23;
+                  _context2.next = 22;
                   break;
                 }
 
@@ -2883,7 +2935,6 @@ var Tag = /*#__PURE__*/function () {
               case 13:
                 this.start = false;
                 lenght = this.page.paging();
-                console.log(lenght);
                 HTML = "";
 
                 if (hash != null) {
@@ -2951,10 +3002,11 @@ var Tag = /*#__PURE__*/function () {
                 option = document.getElementById("items");
                 option.addEventListener('change', function () {
                   _this.pages = option.value;
+                  location.hash = 1;
                   chages();
                 });
 
-              case 23:
+              case 22:
               case "end":
                 return _context2.stop();
             }
@@ -2968,6 +3020,8 @@ var Tag = /*#__PURE__*/function () {
 
       return init;
     }()
+    /*-------------------------------------*/
+
   }, {
     key: "tagStore",
     value: function tagStore(name, slug, description) {
@@ -3048,8 +3102,7 @@ var Tag = /*#__PURE__*/function () {
         if (response.status == 200 && response.statusText == "OK") {
           console.log(response);
 
-          _this5.init(); // setTimeout(call.init(), 500);
-
+          _this5.init();
         }
       })["catch"](function (err) {
         console.log(err instanceof TypeError);
@@ -3265,7 +3318,7 @@ var Tag = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (Tag); // const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-// const this.uri = document.location.origin;
+// const uri = document.location.origin;
 // const tagStrt = document.getElementById("tagStart");
 // function startTag() {
 //   if (tagStrt) {
@@ -3276,20 +3329,11 @@ var Tag = /*#__PURE__*/function () {
 // let hash = location.hash
 // let hasharr
 // let hasarr2
-// function init(pageNo = 1, hash = 1){
+// function init(pageNo){
 // if (typeof pageNo == 'object' &&  hash.length !== 0){
 //   hasharr = hash.split('#')
 //   hasarr2 = hasharr[1].split('%')
 //   hash = hasarr2[0]
-//   window.addEventListener( "load",
-//   () =>{
-//     // hasharr = hash.split('#')
-//     // hasarr2 = hasharr[1].split('%')
-//     // hash = hasarr2[0]
-//     hash = location.hash
-//     init(hash);
-//   },
-//   false);
 // }else if(typeof pageNo === 'string' && hash.length !== 0){
 //   hasharr = hash.split('#')
 //   hasarr2 = hasharr[1].split('%')
@@ -3464,22 +3508,6 @@ var Tag = /*#__PURE__*/function () {
 //     });
 // }
 // export default startTag();
-// async init(pageNo) {
-//   let api = "tag_create";
-//   let axios = new Api();
-//   let response = awayt axios.getDAta(api);
-//     console.log(response);
-// const test = document.querySelector(".test");
-// const HTML = response.data.html;
-// console.log(HTML);
-// test.innerHTML = HTML;
-// const submit = document.getElementById("create");
-// submit.addEventListener("click", () => {
-//   const name = document.getElementById("tag-name").value;
-//   const slug = document.getElementById("tag-slug").value;
-//   const description = document.getElementById("tag-description").value;
-//   tagStore(name, slug, description);
-// });
 
 /***/ }),
 
@@ -3508,4 +3536,3 @@ module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\pl
 /***/ })
 
 /******/ });
-

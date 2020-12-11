@@ -48,12 +48,13 @@ class Pagination {
     }
 
     async select(hash = 1, pages = 5, lenght) {
-        console.log(lenght);
+       
         let obj = {
             api: this.api,
             pageSelected: pages,
             hash: hash
         }
+        console.log(obj);
         return await this.axios.getPostData(obj);
 
     }

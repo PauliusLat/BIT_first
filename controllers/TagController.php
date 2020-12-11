@@ -28,8 +28,6 @@ class TagController
     public function create(Request $request)
     {
 
-        $request = $this->decodeRequest($requestJson);
-
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
