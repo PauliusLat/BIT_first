@@ -150,6 +150,7 @@ class Menu {
   save() {
     const store = document.querySelector(".save");
     const menuId = document.getElementById("menuID").value;
+    // const pageLink = document.getElementById("menuID").value;
     // console.log(menuId);
     let api = "menu_store";
 
@@ -162,11 +163,16 @@ class Menu {
         var text = [];
         var link = [];
         var values = [];
+        var pageLinks = [];
 
         for (this.index = 0; this.index < selectBox.length; this.index++) {
           var options = selectBox[this.index].getElementsByTagName('option');
           for (var i = options.length; i--;) {
-            if (options[i].selected) values.push(options[i].value)
+            if (options[i].selected) {
+              values.push(options[i].text)
+              pageLinks.push(options[i].value)
+              console.log(options[i].value)
+            }
             // if (options[i].selected) text = (options[i].innerText)
           }
           text.push(menuText[this.index].value)
@@ -181,7 +187,7 @@ class Menu {
         var obj = {
           category: values,
           id: menuId,
-          various: link,
+          pageLinks: pageLinks,
           content: text,
           api: api
         }

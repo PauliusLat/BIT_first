@@ -27,16 +27,16 @@ class Query
     }
 
     //gauti postus pagal title
-    public function postTitle(string $post_title)
-    {
-        $this->args['post_title'] = $post_title;
-        return $this;
-    }
+    // public function postTitle(string $post_title)
+    // {
+    //     $this->args['title'] = $post_title;
+    //     return $this;
+    // }
 
     //gauti postus pagal pavadinima
     public function postName(string $post_name)
     {
-        $this->args['post_name'] = $post_name;
+        $this->args['name'] = $post_name;
         return $this;
     }
 

@@ -2084,7 +2084,8 @@ var Menu = /*#__PURE__*/function () {
       var _this2 = this;
 
       var store = document.querySelector(".save");
-      var menuId = document.getElementById("menuID").value; // console.log(menuId);
+      var menuId = document.getElementById("menuID").value; // const pageLink = document.getElementById("menuID").value;
+      // console.log(menuId);
 
       var api = "menu_store";
 
@@ -2096,12 +2097,18 @@ var Menu = /*#__PURE__*/function () {
           var text = [];
           var link = [];
           var values = [];
+          var pageLinks = [];
 
           for (_this2.index = 0; _this2.index < selectBox.length; _this2.index++) {
             var options = selectBox[_this2.index].getElementsByTagName('option');
 
             for (var i = options.length; i--;) {
-              if (options[i].selected) values.push(options[i].value); // if (options[i].selected) text = (options[i].innerText)
+              if (options[i].selected) {
+                values.push(options[i].text);
+                pageLinks.push(options[i].value);
+                console.log(options[i].value);
+              } // if (options[i].selected) text = (options[i].innerText)
+
             }
 
             text.push(menuText[_this2.index].value);
@@ -2114,7 +2121,7 @@ var Menu = /*#__PURE__*/function () {
           var obj = {
             category: values,
             id: menuId,
-            various: link,
+            pageLinks: pageLinks,
             content: text,
             api: api
           };

@@ -9,21 +9,8 @@ use Ramsey\Uuid\Uuid;
 class FrontMenu extends Post
 {
     protected static $type = 'menu';
-    // private static $obj;
-
-    // public static function start()
-    // {
-    //     return self::$obj ?? self::$obj = new self;
-    // }
-
-    // public $index = [];
     public $names = [];
     public $pages = [];
+    public $pageLinks = [];
     public $links = [];
-
-
-    // public function __get($dir)
-    // {
-    //     return $this->$dir;
-    // }
 }

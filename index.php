@@ -8,6 +8,7 @@ use BIT\app\App;
 use BIT\app\Query;
 // use WP_Query;
 use BIT\app\Page;
+use BIT\app\Post;
 use BIT\app\Pagination;
 use BIT\app\FrontMenu;
 use BIT\app\Session;
@@ -67,12 +68,19 @@ App::start();
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 
+
+
 // use BIT\models\NewresPost;
 add_action('init', function () {
-    $query = new Query;
+    // $query = new Query;
+    // // $page = $query->postName('namai')->getPost()->all();
+    // // _dc($query->postType('page')->getPost()->all());
+    // $post = new Page;
+    // $page = get_page_by_title('namai', 'OBJECT', 'page');
+    // $page = $post->get($page->ID);
+    // _dc($page);
     // $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
-    // _dc($pages);
-
+    // _dc($page);
     // $args = array(
     //     'post_type'  => 'page',
     //     'meta_key'   => 'pageState',

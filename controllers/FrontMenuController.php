@@ -26,8 +26,8 @@ class FrontMenuController
         $menus = $query->postType('menu')->getPost()->all();
         $menu = $menus[0];
         $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
-        // _dc($pages);
-        return View::adminRender('frontmenu.mainmenu', ['menu' => $menu, 'pages' => $pages]);
+        $page = new Page;
+        return View::adminRender('frontmenu.mainmenu', ['menu' => $menu, 'pages' => $pages, 'page' => $page]);
     }
 
     public function create()
@@ -36,8 +36,6 @@ class FrontMenuController
         $menus = $query->postType('menu')->getPost()->all();
         $menu = $menus[0];
         $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
-
-        // $output = View::adminRender('frontmenu.menucreate');
         return new JsonResponse(['menu' => $menu, 'pages' => $pages]);
     }
 
@@ -50,56 +48,52 @@ class FrontMenuController
             $menuPost = $menu->get($id);
         }
 
-        // _dc($menuPost);
-        //$menu = new FrontMenu;
         $title = $request->request->get('content');
-        // _dc($title);
         $menuPost->names = explode(',', $title);
-        // _dc($titles);
         $page = $request->request->get('category');
-        // _dc($page);
         $menuPost->pages = explode(',', $page);
-        // $menu->links = explode(',', $page);
+        $links = $request->request->get('pageLinks');
+        $menuPost->pageLinks = explode(',', $links);
         $menuPost->save();
-        // _dc($menu);
+        // _dc($menuPost);
         return new Response;
     }
 
-    public function update(Request $request, FrontMenu $menu)
-    {
-        // _dc($request);
+    // public function update(Request $request, FrontMenu $menu)
+    // {
+    //     // _dc($request);
 
-        $title = $request->request->get('content');
-        $menu->names = explode(',', $title);
-        // _dc($titles);
-        $page = $request->request->get('category');
-        $menu->pages = explode(',', $page);
-        // $menu->links = explode(',', $page);
+    //     $title = $request->request->get('content');
+    //     $menu->names = explode(',', $title);
+    //     // _dc($titles);
+    //     $page = $request->request->get('category');
+    //     $menu->pages = explode(',', $page);
+    //     // $menu->links = explode(',', $page);
 
-        $menu->save();
-        // _dc($menu);
-        return new Response;
-    }
+    //     $menu->save();
+    //     // _dc($menu);
+    //     return new Response;
+    // }
 
-    public function edit(Page $page)
-    {
-        // $output = View::adminRender('page.edit',  ['page' => $page]);
-        // return new JsonResponse(['html' => $output]);
-    }
+    // public function edit(Page $page)
+    // {
+    //     // $output = View::adminRender('page.edit',  ['page' => $page]);
+    //     // return new JsonResponse(['html' => $output]);
+    // }
 
 
-    public function destroy(Page $page)
-    {
-        $page->delete();
-        return new Response;
-    }
+    // public function destroy(Page $page)
+    // {
+    //     $page->delete();
+    //     return new Response;
+    // }
 
-    public function decodeRequest($request)
-    {
-        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-            $data = json_decode($request->getContent(), true);
-            $request->request->replace(is_array($data) ? $data : array());
-        }
-        return $request;
-    }
+    // public function decodeRequest($request)
+    // {
+    //     if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+    //         $data = json_decode($request->getContent(), true);
+    //         $request->request->replace(is_array($data) ? $data : array());
+    //     }
+    //     return $request;
+    // }
 }
