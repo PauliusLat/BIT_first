@@ -27,16 +27,16 @@ class Query
     }
 
     //gauti postus pagal title
-    public function postTitle(string $post_title)
-    {
-        $this->args['post_title'] = $post_title;
-        return $this;
-    }
+    // public function postTitle(string $post_title)
+    // {
+    //     $this->args['title'] = $post_title;
+    //     return $this;
+    // }
 
     //gauti postus pagal pavadinima
     public function postName(string $post_name)
     {
-        $this->args['post_name'] = $post_name;
+        $this->args['name'] = $post_name;
         return $this;
     }
 
@@ -53,10 +53,19 @@ class Query
     }
 
     //gauti reikmems is post_meta lenteles. Paduodama meta_key ir meta_value
-    function postMeta(string $key, string $value)
+    function postMeta(string $key, $value)
     {
         $this->args['meta_key'] = $key;
         $this->args['meta_value'] = $value;
+        return $this;
+    }
+
+    public function postMetaArr(string $post_type, string $key, $value)
+    {
+        $this->args['post_type'] = $post_type;
+        $this->args['meta_query'][0]['key'] = $key;
+        $this->args['meta_query'][0]['value'] = $value;
+        $this->args['meta_query'][0]['compare'] = 'LIKE';
         return $this;
     }
 

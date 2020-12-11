@@ -51,7 +51,7 @@ class NewsAdminController
 		$image->setCaption($imgTitle);
 		$image->save($file, $news->ID);
 
-		return $response = new Response();
+		return new Response();
 	}
 
 	public function show(Request $request)

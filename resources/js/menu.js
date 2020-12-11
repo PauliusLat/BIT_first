@@ -18,6 +18,7 @@ class Menu {
       const container = document.querySelector('.cont')
       const add = document.querySelector(".addNew");
       this.save();
+      // this.update();
       this.delete(draggables);
 
       var newBlock = () => {
@@ -138,7 +139,6 @@ class Menu {
 
   delete(draggables) {
     var deleted = document.querySelectorAll(".manuDelete");
-
     for (let i = 0; i < draggables.length; i++) {
       deleted[i].addEventListener("click", () => {
         draggables[i].remove();
@@ -148,7 +148,10 @@ class Menu {
 
   save() {
     const store = document.querySelector(".save");
-    const api = "menu-store";
+    const menuId = document.getElementById("menuID").value;
+    // const pageLink = document.getElementById("menuID").value;
+    // console.log(menuId);
+    let api = "menu_store";
 
     if (this.read) {
       var data = () => {
@@ -158,23 +161,34 @@ class Menu {
 
         var text = [];
         var link = [];
-        var values = [];;
+        var values = [];
+        var pageLinks = [];
 
         for (i = 0; i < selectBox.length; i++) {
           var options = selectBox[i].getElementsByTagName('option');
           for (var i = options.length; i--;) {
-            if (options[i].selected) values.push(options[i].value)
+            if (options[i].selected) {
+              values.push(options[i].text)
+              pageLinks.push(options[i].value)
+              console.log(options[i].value)
+            }
             // if (options[i].selected) text = (options[i].innerText)
           }
           text.push(menuText[i].value)
           link.push(menuLink[i].value)
         }
 
+        // console.log(text);
+        // console.log(values);
+
         var axios = new Api();
 
         var obj = {
-          page: values,
-          various: link,
+
+          category: values,
+          id: menuId,
+          pageLinks: pageLinks,
+
           content: text,
           api: api
         }
@@ -184,6 +198,50 @@ class Menu {
     }
     this.read = false;
   }
+
+  // update() {
+  //   const update = document.querySelector(".update");
+  //   console.log(update);
+
+  //   let api = "menu_update";
+
+  //   if (this.read) {
+  //     var data = () => {
+  //       const menuText = document.getElementsByName("menu");
+  //       const menuLink = document.querySelectorAll(".menuLink");
+  //       var selectBox = document.getElementsByTagName("select");
+
+  //       var text = [];
+  //       var link = [];
+  //       var values = [];
+
+  //       for (this.index = 0; this.index < selectBox.length; this.index++) {
+  //         var options = selectBox[this.index].getElementsByTagName('option');
+  //         for (var i = options.length; i--;) {
+  //           if (options[i].selected) values.push(options[i].value)
+  //           // if (options[i].selected) text = (options[i].innerText)
+  //         }
+  //         text.push(menuText[this.index].value)
+  //         link.push(menuLink[this.index].value)
+  //       }
+
+  //       console.log(text);
+  //       console.log(values);
+
+  //       var axios = new Api();
+
+  //       var obj = {
+  //         category: values,
+  //         various: link,
+  //         content: text,
+  //         api: api
+  //       }
+  //       axios.formDataApi(obj);
+  //     }
+  //     update.addEventListener("click", data);
+  //   }
+  //   this.read = false;
+  // }
 }
 
 

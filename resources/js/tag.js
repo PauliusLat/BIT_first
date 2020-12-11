@@ -20,8 +20,8 @@ class Tag {
     async init(hash = null, HTML = null) {
 
         const DOM = document.getElementById(this.target);
-
         if (DOM) {
+
 
             const test = document.querySelector(".test");
 
@@ -59,6 +59,7 @@ class Tag {
                     }
                     this.init(hash, HTML);
                     window.removeEventListener('hashchange', chages);
+
                 }
             }
             window.addEventListener('hashchange', chages);
@@ -115,7 +116,6 @@ class Tag {
                 if (response.status == 200 && response.statusText == "OK") {
                     console.log(response);
                     this.init();
-                    // setTimeout(call.init(), 500);
                 }
             })
 
@@ -370,7 +370,7 @@ export default Tag;
 
 
 // const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-// const this.uri = document.location.origin;
+// const uri = document.location.origin;
 // const tagStrt = document.getElementById("tagStart");
 
 // function startTag() {
@@ -384,21 +384,13 @@ export default Tag;
 // let hasharr
 // let hasarr2
 
-// function init(pageNo = 1, hash = 1){
+// function init(pageNo){
 
 // if (typeof pageNo == 'object' &&  hash.length !== 0){
 //   hasharr = hash.split('#')
 //   hasarr2 = hasharr[1].split('%')
 //   hash = hasarr2[0]
-//   window.addEventListener( "load",
-//   () =>{
-//     // hasharr = hash.split('#')
-//     // hasarr2 = hasharr[1].split('%')
-//     // hash = hasarr2[0]
-//     hash = location.hash
-//     init(hash);
-//   },
-//   false);
+
 
 // }else if(typeof pageNo === 'string' && hash.length !== 0){
 //   hasharr = hash.split('#')
@@ -481,7 +473,6 @@ export default Tag;
 
 
 //         const page = document.querySelectorAll(".paging");
-
 //         for (let i = 0; i < page.length; i++){
 //           let pageNo = page[i].id;
 //           page[i].addEventListener(
@@ -600,22 +591,3 @@ export default Tag;
 
 // export default startTag();
 
-
-// async init(pageNo) {
-//   let api = "tag_create";
-//   let axios = new Api();
-//   let response = awayt axios.getDAta(api);
-//     console.log(response);
-
-// const test = document.querySelector(".test");
-
-// const HTML = response.data.html;
-// console.log(HTML);
-// test.innerHTML = HTML;
-// const submit = document.getElementById("create");
-// submit.addEventListener("click", () => {
-//   const name = document.getElementById("tag-name").value;
-//   const slug = document.getElementById("tag-slug").value;
-//   const description = document.getElementById("tag-description").value;
-//   tagStore(name, slug, description);
-// });
