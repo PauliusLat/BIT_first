@@ -1,4 +1,3 @@
-
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -959,6 +958,55 @@ var Api = /*#__PURE__*/function () {
       return getDAta;
     }()
   }, {
+    key: "getPostData",
+    value: function () {
+      var _getPostData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(api, id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.post(this.uri + this.path + api, {
+                  id: id
+                });
+
+              case 3:
+                response = _context2.sent;
+
+                if (!(response.status == 200 && response.statusText == "OK")) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                return _context2.abrupt("return", response.data.html);
+
+              case 6:
+                _context2.next = 12;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+                console.error(_context2.t0);
+                console.log("Duomenys is serveverio nepasiekiami !!!");
+
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 8]]);
+      }));
+
+      function getPostData(_x2, _x3) {
+        return _getPostData.apply(this, arguments);
+      }
+
+      return getPostData;
+    }()
+  }, {
     key: "saveContent",
     value: function saveContent(api, id, content) {
       axios.post(this.uri + this.path + api, {
@@ -1006,64 +1054,6 @@ var Api = /*#__PURE__*/function () {
         throw 'can not find API';
       }
     }
-  }, {
-    key: "getPostData",
-    value: function () {
-      var _getPostData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(obj) {
-        var formData, key, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (!obj.api) {
-                  _context2.next = 15;
-                  break;
-                }
-
-                _context2.prev = 1;
-                formData = new FormData();
-
-                for (key in obj) {
-                  formData.append(key, obj[key]);
-                }
-
-                _context2.next = 6;
-                return axios.post(this.uri + this.path + obj.api, formData, {});
-
-              case 6:
-                response = _context2.sent;
-
-                if (!(response.status == 200 && response.statusText == "OK")) {
-                  _context2.next = 9;
-                  break;
-                }
-
-                return _context2.abrupt("return", response.data.html);
-
-              case 9:
-                _context2.next = 15;
-                break;
-
-              case 11:
-                _context2.prev = 11;
-                _context2.t0 = _context2["catch"](1);
-                console.error(_context2.t0);
-                console.log("Duomenys is serveverio nepasiekiami !!!");
-
-              case 15:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this, [[1, 11]]);
-      }));
-
-      function getPostData(_x2) {
-        return _getPostData.apply(this, arguments);
-      }
-
-      return getPostData;
-    }()
   }]);
 
   return Api;
@@ -1934,7 +1924,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+ // import Tag from './tag.js';
 
 
  // import TextEditor from './text-editor.js'
@@ -1947,8 +1937,8 @@ __webpack_require__.r(__webpack_exports__);
 new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
 new _news__WEBPACK_IMPORTED_MODULE_6__["default"]('startNewsAdmin');
 new _newsList__WEBPACK_IMPORTED_MODULE_8__["default"]('startNweaList');
-new _editPost__WEBPACK_IMPORTED_MODULE_9__["default"]('.editStart');
-new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
+new _editPost__WEBPACK_IMPORTED_MODULE_9__["default"]('.editStart'); // new Tag('tagStart');
+
 new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
 
 /***/ }),
@@ -2026,7 +2016,8 @@ var Menu = /*#__PURE__*/function () {
         var draggables = document.querySelectorAll('.draggable');
         var container = document.querySelector('.cont');
         var add = document.querySelector(".addNew");
-        this.save();
+        this.save(); // this.update();
+
         this["delete"](draggables);
 
         var newBlock = function newBlock() {
@@ -2090,7 +2081,10 @@ var Menu = /*#__PURE__*/function () {
     key: "save",
     value: function save() {
       var store = document.querySelector(".save");
-      var api = "menu-store";
+      var menuId = document.getElementById("menuID").value; // const pageLink = document.getElementById("menuID").value;
+      // console.log(menuId);
+
+      var api = "menu_store";
 
       if (this.read) {
         var data = function data() {
@@ -2100,23 +2094,31 @@ var Menu = /*#__PURE__*/function () {
           var text = [];
           var link = [];
           var values = [];
-          ;
+          var pageLinks = [];
 
           for (i = 0; i < selectBox.length; i++) {
             var options = selectBox[i].getElementsByTagName('option');
 
             for (var i = options.length; i--;) {
-              if (options[i].selected) values.push(options[i].value); // if (options[i].selected) text = (options[i].innerText)
+              if (options[i].selected) {
+                values.push(options[i].text);
+                pageLinks.push(options[i].value);
+                console.log(options[i].value);
+              } // if (options[i].selected) text = (options[i].innerText)
+
             }
 
             text.push(menuText[i].value);
             link.push(menuLink[i].value);
-          }
+          } // console.log(text);
+          // console.log(values);
+
 
           var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
           var obj = {
-            page: values,
-            various: link,
+            category: values,
+            id: menuId,
+            pageLinks: pageLinks,
             content: text,
             api: api
           };
@@ -2127,7 +2129,43 @@ var Menu = /*#__PURE__*/function () {
       }
 
       this.read = false;
-    }
+    } // update() {
+    //   const update = document.querySelector(".update");
+    //   console.log(update);
+    //   let api = "menu_update";
+    //   if (this.read) {
+    //     var data = () => {
+    //       const menuText = document.getElementsByName("menu");
+    //       const menuLink = document.querySelectorAll(".menuLink");
+    //       var selectBox = document.getElementsByTagName("select");
+    //       var text = [];
+    //       var link = [];
+    //       var values = [];
+    //       for (this.index = 0; this.index < selectBox.length; this.index++) {
+    //         var options = selectBox[this.index].getElementsByTagName('option');
+    //         for (var i = options.length; i--;) {
+    //           if (options[i].selected) values.push(options[i].value)
+    //           // if (options[i].selected) text = (options[i].innerText)
+    //         }
+    //         text.push(menuText[this.index].value)
+    //         link.push(menuLink[this.index].value)
+    //       }
+    //       console.log(text);
+    //       console.log(values);
+    //       var axios = new Api();
+    //       var obj = {
+    //         category: values,
+    //         various: link,
+    //         content: text,
+    //         api: api
+    //       }
+    //       axios.formDataApi(obj);
+    //     }
+    //     update.addEventListener("click", data);
+    //   }
+    //   this.read = false;
+    // }
+
   }]);
 
   return Menu;
@@ -2543,159 +2581,6 @@ function pageDelete(ID) {
 
 /***/ }),
 
-/***/ "./resources/js/pagination.js":
-/*!************************************!*\
-  !*** ./resources/js/pagination.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Pagination = /*#__PURE__*/function () {
-  function Pagination(api) {
-    _classCallCheck(this, Pagination);
-
-    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-    this.uri = document.location.origin;
-    this.pageSelected;
-    this.api = api;
-    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
-    this.hash;
-  }
-
-  _createClass(Pagination, [{
-    key: "init",
-    value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var hash,
-            test,
-            axios,
-            obj,
-            _args = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                hash = _args.length > 0 && _args[0] !== undefined ? _args[0] : null;
-                this.hash = hash;
-
-                if (this.hash === null) {
-                  this.hash = location.hash.slice(1, 2);
-                }
-
-                test = document.querySelector(".test");
-                axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
-                obj = {
-                  api: this.api,
-                  hash: this.hash
-                };
-                _context.next = 8;
-                return this.axios.getPostData(obj);
-
-              case 8:
-                return _context.abrupt("return", _context.sent);
-
-              case 9:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function init() {
-        return _init.apply(this, arguments);
-      }
-
-      return init;
-    }()
-  }, {
-    key: "paging",
-    value: function paging() {
-      var page = document.querySelectorAll(".paging");
-
-      if (page.length) {
-        var _loop = function _loop(i) {
-          var id = page[i].id;
-          page[i].addEventListener('click', function () {
-            location.hash = '#' + id;
-          });
-        };
-
-        for (var i = 0; i < page.length; i++) {
-          _loop(i);
-        }
-      }
-    }
-  }, {
-    key: "select",
-    value: function () {
-      var _select = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var hash,
-            pages,
-            select,
-            obj,
-            _args2 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
-                pages = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : 5;
-                select = document.getElementById("items");
-                obj = {
-                  api: this.api,
-                  pageSelected: pages,
-                  hash: hash
-                };
-                console.log(obj);
-                _context2.next = 7;
-                return this.axios.getPostData(obj);
-
-              case 7:
-                return _context2.abrupt("return", _context2.sent);
-
-              case 8:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function select() {
-        return _select.apply(this, arguments);
-      }
-
-      return select;
-    }()
-  }]);
-
-  return Pagination;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Pagination);
-
-/***/ }),
-
 /***/ "./resources/js/profile_image.js":
 /*!***************************************!*\
   !*** ./resources/js/profile_image.js ***!
@@ -2799,599 +2684,509 @@ var Profile_image = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
-
-
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Tag = /*#__PURE__*/function () {
-  function Tag(target) {
-    _classCallCheck(this, Tag);
-
-    // this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-    // this.uri = document.location.origin;
-    // this.pageSelected;
-    var api = "tag_create";
-    this.start = true;
-    this.target = target;
-    this.pages;
-    this.page = new _pagination__WEBPACK_IMPORTED_MODULE_1__["default"](api);
-    this.init();
-  }
-
-  _createClass(Tag, [{
-    key: "init",
-    value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _this = this;
-
-        var hash,
-            HTML,
-            DOM,
-            test,
-            addColor,
-            chages,
-            option,
-            _args2 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
-                HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
-                DOM = document.getElementById(this.target);
-
-                if (!DOM) {
-                  _context2.next = 22;
-                  break;
-                }
-
-                test = document.querySelector(".test");
-
-                if (!(this.start && HTML == null)) {
-                  _context2.next = 12;
-                  break;
-                }
-
-                _context2.next = 8;
-                return this.page.init();
-
-              case 8:
-                HTML = _context2.sent;
-                test.innerHTML = HTML;
-                _context2.next = 13;
-                break;
-
-              case 12:
-                test.innerHTML = HTML;
-
-              case 13:
-                this.start = false;
-                this.page.paging();
-                HTML = "";
-
-                if (hash != null) {
-                  addColor = document.querySelector('.nr-' + hash);
-                  addColor.classList.add("active");
-                }
-
-                HTML = "";
-
-                chages = /*#__PURE__*/function () {
-                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                    var pages;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-                      while (1) {
-                        switch (_context.prev = _context.next) {
-                          case 0:
-                            hash = location.hash.slice(1, 2);
-
-                            if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN)) {
-                              _context.next = 15;
-                              break;
-                            }
-
-                            pages = _this.pages;
-
-                            if (!pages) {
-                              _context.next = 10;
-                              break;
-                            }
-
-                            hash = 1;
-                            _context.next = 7;
-                            return _this.page.select(hash, pages);
-
-                          case 7:
-                            HTML = _context.sent;
-                            _context.next = 13;
-                            break;
-
-                          case 10:
-                            _context.next = 12;
-                            return _this.page.select(hash, pages);
-
-                          case 12:
-                            HTML = _context.sent;
-
-                          case 13:
-                            _this.init(hash, HTML);
-
-                            window.removeEventListener('hashchange', chages);
-
-                          case 15:
-                          case "end":
-                            return _context.stop();
-                        }
-                      }
-                    }, _callee);
-                  }));
-
-                  return function chages() {
-                    return _ref.apply(this, arguments);
-                  };
-                }();
-
-                window.addEventListener('hashchange', chages);
-                option = document.getElementById("items");
-                option.addEventListener('change', function () {
-                  _this.pages = option.value;
-                  chages();
-                });
-
-              case 22:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function init() {
-        return _init.apply(this, arguments);
-      }
-
-      return init;
-    }() // this.init();
-    // let hash1 = hash;
-    // if (hash1 === null) {
-    //     hash1 = location.hash.slice(1, 2);
-    //     console.log(hash1);
-    // }
-    // const api = "tag_create";
-    // 
-    // let response = await this.axios.getPostData(api, hash1);
-    // test.innerHTML = response;
-    // const submit = document.getElementById("create");
-    // submit.addEventListener("click", () => {
-    //     const name = document.getElementById("tag-name").value;
-    //     const slug = document.getElementById("tag-slug").value;
-    //     const description = document.getElementById("tag-description").value;
-    //     tagStore(name, slug, description);
-    // });
-    // this.paging();
-    // init1(pageNo = 1) {
-    //     if (typeof pageNo == 'object' && this.hash.length !== 0) {
-    //         console.log(pageNo);
-    //         this.hasharr = this.hash.split('#')
-    //         this.hasarr2 = this.hasharr[1].split('%')
-    //         this.hash = hasarr2[0]
-    //         // window.addEventListener( "load",
-    //         // () =>{
-    //         // this.hasharr = this.hash.split('#')
-    //         // this.hasarr2 = this.hasharr[1].split('%')
-    //         // this.hash = this.hasarr2[0]
-    //         // this.hash = location.hash
-    //         // this.init();
-    //     } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
-    //         this.hasharr = this.hash.split('#')
-    //         this.hasarr2 = this.hasharr[1].split('%')
-    //         this.hash = this.hasarr2[0]
-    //     } else {
-    //         this.hash = null
-    //     }
-    //     axios
-    //         .post(this.uri + this.path + "tag_create", {
-    //             pages: parseInt(pageNo),
-    //             pageSelected: this.pageSelected,
-    //             hash: this.hash
-    //         })
-    //         .then((response) => {
-    //             const test = document.querySelector(".test");
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 const HTML = response.data.html;
-    //                 test.innerHTML = HTML;
-    //                 if (pageNo > 0 && typeof pageNo === 'string') {
-    //                     let addColor = document.querySelector('.nr-' + pageNo);
-    //                     addColor.classList.add("active");
-    //                 }
-    //                 const submit = document.getElementById("create");
-    //                 submit.addEventListener("click", () => {
-    //                     const name = document.getElementById("tag-name").value;
-    //                     const slug = document.getElementById("tag-slug").value;
-    //                     const description = document.getElementById("tag-description").value;
-    //                     this.tagStore(name, slug, description);
-    //                 });
-    //                 const editBtn = document.querySelectorAll(".tag-edit");
-    //                 for (let i = 0; i < editBtn.length; i++) {
-    //                     let ID = editBtn[i].value;
-    //                     let taxonomy = editBtn[i].id;
-    //                     editBtn[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             this.tagEdit(ID, taxonomy);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-    //                 const deleteBtn = document.querySelectorAll(".tag-delete");
-    //                 for (let i = 0; i < deleteBtn.length; i++) {
-    //                     let ID = deleteBtn[i].value;
-    //                     let taxonomy = deleteBtn[i].id;
-    //                     deleteBtn[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             this.tagDelete(ID, taxonomy);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-    //                 const pageBtn = document.getElementById("selectpage");
-    //                 const select = document.getElementById("items");
-    //                 pageBtn.addEventListener(
-    //                     "click",
-    //                     () => {
-    //                         var pageSelected;
-    //                         if (select.options[select.selectedIndex] != undefined) {
-    //                             pageSelected = select.options[select.selectedIndex].value;
-    //                         } else {
-    //                             pageSelected = 0;
-    //                         }
-    //                         this.pageSelected = pageSelected
-    //                         this.init(1);
-    //                     });
-    //                 const page = document.querySelectorAll(".paging");
-    //                 for (let i = 0; i < page.length; i++) {
-    //                     let pageNo = page[i].id;
-    //                     page[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             console.log(pageNo);
-    //                             location.hash = '#' + pageNo
-    //                             this.hash = location.hash
-    //                             this.init(pageNo);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-    //             }
-    //         })
-    //         .catch(function (error) {
-    //             if (error.response) {
-    //                 console.log(error.response.data);
-    //                 console.log(error.response.status);
-    //                 console.log(error.response.headers);
-    //             } else if (error.request) {
-    //                 console.log(error.request);
-    //             } else {
-    //                 console.log("Error", error.message);
-    //             }
-    //             console.log(error);
-    //         });
-    // }
-    // tagStore(name, slug, description) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_store", {
-    //             tag_name: name,
-    //             tag_slug: slug,
-    //             tag_description: description
-    //         })
-    //         .then((response) => {
-    //             console.log(response);
-    //             this.init();
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    //     document.getElementById("tag-name").value = "";
-    // }
-    // tagEdit(editID, taxonomy) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_edit", {
-    //             editID: editID,
-    //             taxonomy_type: taxonomy,
-    //         })
-    //         .then((response) => {
-    //             const test = document.querySelector(".test");
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 const HTML = response.data.html;
-    //                 test.innerHTML = HTML;
-    //             }
-    //             const updateBtn = document.getElementById("tagUpdate");
-    //             updateBtn.addEventListener("click", () => {
-    //                 const updateId = updateBtn.value;
-    //                 this.tagUpdate(updateId);
-    //             });
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    // }
-    // tagUpdate(updateId) {
-    //     const name = document.getElementById("tag_name").value;
-    //     const slug = document.getElementById("tag_slug").value;
-    //     const description = document.getElementById("tag_description").value;
-    //     axios
-    //         .post(this.uri + this.path + "tag_update", {
-    //             updateId: updateId,
-    //             tag_name: name,
-    //             tag_slug: slug,
-    //             tag_description: description
-    //         })
-    //         .then((response) => {
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 console.log(response);
-    //                 this.init();
-    //                 // setTimeout(call.init(), 500);
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    // }
-    // tagDelete(ID, taxonomy) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_destroy", {
-    //             deleteID: ID,
-    //             taxonomy_type: taxonomy,
-    //         })
-    //         .then((response) => {
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 console.log(response);
-    //                 this.init();
-    //                 // setTimeout(init(), 500);
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    // }
-
-  }]);
-
-  return Tag;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Tag); // const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-// const this.uri = document.location.origin;
-// const tagStrt = document.getElementById("tagStart");
-// function startTag() {
-//   if (tagStrt) {
-//     window.addEventListener("load", init, false);
-//   }
-// }
-// let pageSelected;
-// let hash = location.hash
-// let hasharr
-// let hasarr2
-// function init(pageNo = 1, hash = 1){
-// if (typeof pageNo == 'object' &&  hash.length !== 0){
-//   hasharr = hash.split('#')
-//   hasarr2 = hasharr[1].split('%')
-//   hash = hasarr2[0]
-//   window.addEventListener( "load",
-//   () =>{
-//     // hasharr = hash.split('#')
-//     // hasarr2 = hasharr[1].split('%')
-//     // hash = hasarr2[0]
-//     hash = location.hash
-//     init(hash);
-//   },
-//   false);
-// }else if(typeof pageNo === 'string' && hash.length !== 0){
-//   hasharr = hash.split('#')
-//   hasarr2 = hasharr[1].split('%')
-//   hash = hasarr2[0]
-// }else{
-//   hash = null
-// }
-//   axios
-//     .post(uri + path + "tag_create",{
-//       pages: parseInt(pageNo),
-//       pageSelected: pageSelected,
-//       hash: hash
-//     })
-//     .then((response)=> {
-//       const test = document.querySelector(".test");
-//       if (response.status == 200 && response.statusText == "OK") {
-//         const HTML = response.data.html;
-//         test.innerHTML = HTML;
-//         if(pageNo >0 && typeof pageNo === 'string' ){
-//           let addColor = document.querySelector('.nr-'+pageNo);
-//           addColor.classList.add("active");
+ // import Pagination from './pagination';
+// class Tag {
+//     constructor(target) {
+//         // this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+//         // this.uri = document.location.origin;
+//         // this.pageSelected;
+//         const api = "tag_create";
+//         this.start = true;
+//         this.target = target;
+//         this.pages;
+//         this.page = new Pagination(api);
+//         this.init();
+//     }
+//     async init(hash = null, HTML = null) {
+//         const DOM = document.getElementById(this.target);
+//         if (DOM) {
+//             const test = document.querySelector(".test");
+//             if (this.start && HTML == null) {
+//                 HTML = await this.page.init();
+//                 test.innerHTML = HTML;
+//             } else {
+//                 test.innerHTML = HTML;
+//             }
+//             this.start = false;
+//             this.page.paging();
+//             HTML = "";
+//             if (hash != null) {
+//                 let addColor = document.querySelector('.nr-' + hash);
+//                 addColor.classList.add("active");
+//             }
+//             HTML = "";
+//             var chages = async () => {
+//                 hash = location.hash.slice(1, 2);
+//                 if (hash != undefined &&
+//                     hash != null &&
+//                     hash > 0 &&
+//                     hash != "" &&
+//                     hash != NaN) {
+//                     let pages = this.pages;
+//                     if (pages) {
+//                         hash = 1;
+//                         HTML = await this.page.select(hash, pages);
+//                     } else {
+//                         HTML = await this.page.select(hash, pages);
+//                     }
+//                     this.init(hash, HTML);
+//                     window.removeEventListener('hashchange', chages);
+//                 }
+//             }
+//             window.addEventListener('hashchange', chages);
+//             const option = document.getElementById("items");
+//             option.addEventListener('change', () => {
+//                 this.pages = option.value;
+//                 chages();
+//             });
 //         }
-//         const submit = document.getElementById("create");
-//         submit.addEventListener("click", () => {
-//           const name = document.getElementById("tag-name").value;
-//           const slug = document.getElementById("tag-slug").value;
-//           const description = document.getElementById("tag-description").value;
-//           tagStore(name, slug, description);
-//         });
-//         const editBtn = tagStrt.querySelectorAll(".tag-edit");
+//     }
+//     edit() {
+//         const editBtn = document.querySelectorAll(".tag-edit");
 //         for (let i = 0; i < editBtn.length; i++) {
-//           let ID = editBtn[i].value;
-//           let taxonomy = editBtn[i].id;
-//           editBtn[i].addEventListener(
-//             "click",
-//             () =>{
-//               tagEdit(ID, taxonomy);
-//             },
-//             false
-//           );
+//             let ID = editBtn[i].value;
+//             let taxonomy = editBtn[i].id;
+//             editBtn[i].addEventListener(
+//                 "click",
+//                 () => {
+//                     this.tagEdit(ID, taxonomy);
+//                 });
 //         }
 //         const deleteBtn = document.querySelectorAll(".tag-delete");
 //         for (let i = 0; i < deleteBtn.length; i++) {
-//           let ID = deleteBtn[i].value;
-//           let taxonomy = deleteBtn[i].id;
-//           deleteBtn[i].addEventListener(
-//             "click",
-//             ()=> {
-//               tagDelete(ID, taxonomy);
-//             },
-//             false
-//           );
+//             let ID = deleteBtn[i].value;
+//             let taxonomy = deleteBtn[i].id;
+//             deleteBtn[i].addEventListener(
+//                 "click",
+//                 () => {
+//                     this.tagDelete(ID, taxonomy);
+//                 });
 //         }
-//         const pageBtn = document.getElementById("selectpage");
-//         const select = document.getElementById("items");
-//         if (pageSelected != undefined) {
-//           select.value = pageSelected
-//         }
-//         pageBtn.addEventListener(
-//           "click",
-//           ()=> {
-//             pageSelected = select.options[select.selectedIndex].value;
-//             select.value = pageSelected
-//             init(1);
-//           },
-//           false
-//         );
-//         const page = document.querySelectorAll(".paging");
-//         for (let i = 0; i < page.length; i++){
-//           let pageNo = page[i].id;
-//           page[i].addEventListener(
-//             "click",
-//             ()=> {
-//               location.hash = '#' + pageNo
-//               hash = location.hash
-//               init(pageNo);
-//             },
-//             false
-//           );
-//         }
-//       }
-//     })
-//     .catch(function(error) {
-//       if (error.response) {
-//         console.log(error.response.data);
-//         console.log(error.response.status);
-//         console.log(error.response.headers);
-//       } else if (error.request) {
-//         console.log(error.request);
-//       } else {
-//         console.log("Error", error.message);
-//       }
-//       console.log(error);
-//     });
-//   ;
+//     }
+//     tagUpdate(updateId) {
+//         const name = document.getElementById("tag_name").value;
+//         const slug = document.getElementById("tag_slug").value;
+//         const description = document.getElementById("tag_description").value;
+//         axios
+//             .post(this.uri + this.path + "tag_update", {
+//                 updateId: updateId,
+//                 tag_name: name,
+//                 tag_slug: slug,
+//                 tag_description: description
+//             })
+//             .then((response) => {
+//                 if (response.status == 200 && response.statusText == "OK") {
+//                     console.log(response);
+//                     this.init();
+//                 }
+//             })
+//             .catch((err) => {
+//                 console.log(err instanceof TypeError);
+//             });
+//     }
+//     // this.init();
+//     // let hash1 = hash;
+//     // if (hash1 === null) {
+//     //     hash1 = location.hash.slice(1, 2);
+//     //     console.log(hash1);
+//     // }
+//     // const api = "tag_create";
+//     // 
+//     // let response = await this.axios.getPostData(api, hash1);
+//     // test.innerHTML = response;
+//     // const submit = document.getElementById("create");
+//     // submit.addEventListener("click", () => {
+//     //     const name = document.getElementById("tag-name").value;
+//     //     const slug = document.getElementById("tag-slug").value;
+//     //     const description = document.getElementById("tag-description").value;
+//     //     tagStore(name, slug, description);
+//     // });
+//     // this.paging();
+//     // init1(pageNo = 1) {
+//     //     if (typeof pageNo == 'object' && this.hash.length !== 0) {
+//     //         console.log(pageNo);
+//     //         this.hasharr = this.hash.split('#')
+//     //         this.hasarr2 = this.hasharr[1].split('%')
+//     //         this.hash = hasarr2[0]
+//     //         // window.addEventListener( "load",
+//     //         // () =>{
+//     //         // this.hasharr = this.hash.split('#')
+//     //         // this.hasarr2 = this.hasharr[1].split('%')
+//     //         // this.hash = this.hasarr2[0]
+//     //         // this.hash = location.hash
+//     //         // this.init();
+//     //     } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
+//     //         this.hasharr = this.hash.split('#')
+//     //         this.hasarr2 = this.hasharr[1].split('%')
+//     //         this.hash = this.hasarr2[0]
+//     //     } else {
+//     //         this.hash = null
+//     //     }
+//     //     axios
+//     //         .post(this.uri + this.path + "tag_create", {
+//     //             pages: parseInt(pageNo),
+//     //             pageSelected: this.pageSelected,
+//     //             hash: this.hash
+//     //         })
+//     //         .then((response) => {
+//     //             const test = document.querySelector(".test");
+//     //             if (response.status == 200 && response.statusText == "OK") {
+//     //                 const HTML = response.data.html;
+//     //                 test.innerHTML = HTML;
+//     //                 if (pageNo > 0 && typeof pageNo === 'string') {
+//     //                     let addColor = document.querySelector('.nr-' + pageNo);
+//     //                     addColor.classList.add("active");
+//     //                 }
+//     //                 const submit = document.getElementById("create");
+//     //                 submit.addEventListener("click", () => {
+//     //                     const name = document.getElementById("tag-name").value;
+//     //                     const slug = document.getElementById("tag-slug").value;
+//     //                     const description = document.getElementById("tag-description").value;
+//     //                     this.tagStore(name, slug, description);
+//     //                 });
+//     //                 const editBtn = document.querySelectorAll(".tag-edit");
+//     //                 for (let i = 0; i < editBtn.length; i++) {
+//     //                     let ID = editBtn[i].value;
+//     //                     let taxonomy = editBtn[i].id;
+//     //                     editBtn[i].addEventListener(
+//     //                         "click",
+//     //                         () => {
+//     //                             this.tagEdit(ID, taxonomy);
+//     //                         },
+//     //                         false
+//     //                     );
+//     //                 }
+//     //                 const deleteBtn = document.querySelectorAll(".tag-delete");
+//     //                 for (let i = 0; i < deleteBtn.length; i++) {
+//     //                     let ID = deleteBtn[i].value;
+//     //                     let taxonomy = deleteBtn[i].id;
+//     //                     deleteBtn[i].addEventListener(
+//     //                         "click",
+//     //                         () => {
+//     //                             this.tagDelete(ID, taxonomy);
+//     //                         },
+//     //                         false
+//     //                     );
+//     //                 }
+//     //                 const pageBtn = document.getElementById("selectpage");
+//     //                 const select = document.getElementById("items");
+//     //                 pageBtn.addEventListener(
+//     //                     "click",
+//     //                     () => {
+//     //                         var pageSelected;
+//     //                         if (select.options[select.selectedIndex] != undefined) {
+//     //                             pageSelected = select.options[select.selectedIndex].value;
+//     //                         } else {
+//     //                             pageSelected = 0;
+//     //                         }
+//     //                         this.pageSelected = pageSelected
+//     //                         this.init(1);
+//     //                     });
+//     //                 const page = document.querySelectorAll(".paging");
+//     //                 for (let i = 0; i < page.length; i++) {
+//     //                     let pageNo = page[i].id;
+//     //                     page[i].addEventListener(
+//     //                         "click",
+//     //                         () => {
+//     //                             console.log(pageNo);
+//     //                             location.hash = '#' + pageNo
+//     //                             this.hash = location.hash
+//     //                             this.init(pageNo);
+//     //                         },
+//     //                         false
+//     //                     );
+//     //                 }
+//     //             }
+//     //         })
+//     //         .catch(function (error) {
+//     //             if (error.response) {
+//     //                 console.log(error.response.data);
+//     //                 console.log(error.response.status);
+//     //                 console.log(error.response.headers);
+//     //             } else if (error.request) {
+//     //                 console.log(error.request);
+//     //             } else {
+//     //                 console.log("Error", error.message);
+//     //             }
+//     //             console.log(error);
+//     //         });
+//     // }
+//     // tagStore(name, slug, description) {
+//     //     axios
+//     //         .post(this.uri + this.path + "tag_store", {
+//     //             tag_name: name,
+//     //             tag_slug: slug,
+//     //             tag_description: description
+//     //         })
+//     //         .then((response) => {
+//     //             console.log(response);
+//     //             this.init();
+//     //         })
+//     //         .catch((err) => {
+//     //             console.log(err instanceof TypeError);
+//     //         });
+//     //     document.getElementById("tag-name").value = "";
+//     // }
+//     // tagEdit(editID, taxonomy) {
+//     //     axios
+//     //         .post(this.uri + this.path + "tag_edit", {
+//     //             editID: editID,
+//     //             taxonomy_type: taxonomy,
+//     //         })
+//     //         .then((response) => {
+//     //             const test = document.querySelector(".test");
+//     //             if (response.status == 200 && response.statusText == "OK") {
+//     //                 const HTML = response.data.html;
+//     //                 test.innerHTML = HTML;
+//     //             }
+//     //             const updateBtn = document.getElementById("tagUpdate");
+//     //             updateBtn.addEventListener("click", () => {
+//     //                 const updateId = updateBtn.value;
+//     //                 this.tagUpdate(updateId);
+//     //             });
+//     //         })
+//     //         .catch((err) => {
+//     //             console.log(err instanceof TypeError);
+//     //         });
+//     // }
+//     // tagUpdate(updateId) {
+//     //     const name = document.getElementById("tag_name").value;
+//     //     const slug = document.getElementById("tag_slug").value;
+//     //     const description = document.getElementById("tag_description").value;
+//     //     axios
+//     //         .post(this.uri + this.path + "tag_update", {
+//     //             updateId: updateId,
+//     //             tag_name: name,
+//     //             tag_slug: slug,
+//     //             tag_description: description
+//     //         })
+//     //         .then((response) => {
+//     //             if (response.status == 200 && response.statusText == "OK") {
+//     //                 console.log(response);
+//     //                 this.init();
+//     //                 // setTimeout(call.init(), 500);
+//     //             }
+//     //         })
+//     //         .catch((err) => {
+//     //             console.log(err instanceof TypeError);
+//     //         });
+//     // }
+//     // tagDelete(ID, taxonomy) {
+//     //     axios
+//     //         .post(this.uri + this.path + "tag_destroy", {
+//     //             deleteID: ID,
+//     //             taxonomy_type: taxonomy,
+//     //         })
+//     //         .then((response) => {
+//     //             if (response.status == 200 && response.statusText == "OK") {
+//     //                 console.log(response);
+//     //                 this.init();
+//     //                 // setTimeout(init(), 500);
+//     //             }
+//     //         })
+//     //         .catch((err) => {
+//     //             console.log(err instanceof TypeError);
+//     //         });
+//     // }
 // }
-// function tagStore(name, slug, description) {
-//   axios
-//     .post(uri + path + "tag_store", {
-//       tag_name: name,
-//       tag_slug: slug,
-//       tag_description: description
-//     })
-//     .then((response) => {
-//       console.log(response);
-//       init();
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-//   document.getElementById("tag-name").value = "";
-// }
-// function tagEdit(editID, taxonomy) {
-//   axios
-//     .post(uri + path + "tag_edit", {
-//       editID: editID,
-//       taxonomy_type: taxonomy,
-//     })
-//     .then((response)=> {
-//       const test = document.querySelector(".test");
-//       if (response.status == 200 && response.statusText == "OK") {
-//         const HTML = response.data.html;
-//         test.innerHTML = HTML;
-//       }
-//       const updateBtn = document.getElementById("tagUpdate");
-//       updateBtn.addEventListener("click", () => {
-//         const updateId = updateBtn.value;
-//         tagUpdate(updateId);
-//       });
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
-// function tagUpdate(updateId) {
-//   const name = document.getElementById("tag_name").value;
-//   const slug = document.getElementById("tag_slug").value;
-//   const description = document.getElementById("tag_description").value;
-//   axios
-//     .post(uri + path + "tag_update", {
-//       updateId: updateId,
-//       tag_name: name,
-//       tag_slug: slug,
-//       tag_description: description
-//     })
-//     .then((response)=> {
-//       if (response.status == 200 && response.statusText == "OK") {
-//         console.log(response);
-//         init();
-//         // setTimeout(call.init(), 500);
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
-// function tagDelete(ID, taxonomy) {
-//   axios
-//     .post(uri + path + "tag_destroy", {
-//       deleteID: ID,
-//       taxonomy_type: taxonomy,
-//     })
-//     .then((response)=> {
-//       if (response.status == 200 && response.statusText == "OK") {
-//         console.log(response);
-//         init();
-//         // setTimeout(init(), 500);
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
-// export default startTag();
-// async init(pageNo) {
-//   let api = "tag_create";
-//   let axios = new Api();
-//   let response = awayt axios.getDAta(api);
-//     console.log(response);
-// const test = document.querySelector(".test");
-// const HTML = response.data.html;
-// console.log(HTML);
-// test.innerHTML = HTML;
-// const submit = document.getElementById("create");
-// submit.addEventListener("click", () => {
-//   const name = document.getElementById("tag-name").value;
-//   const slug = document.getElementById("tag-slug").value;
-//   const description = document.getElementById("tag-description").value;
-//   tagStore(name, slug, description);
-// });
+// export default Tag;
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var tagStrt = document.getElementById("tagStart");
+
+function startTag() {
+  if (tagStrt) {
+    window.addEventListener("load", init, false);
+  }
+}
+
+var pageSelected;
+var hash = location.hash;
+var hasharr;
+var hasarr2;
+
+function init(pageNo) {
+  if (_typeof(pageNo) == 'object' && hash.length !== 0) {
+    hasharr = hash.split('#');
+    hasarr2 = hasharr[1].split('%');
+    hash = hasarr2[0];
+  } else if (typeof pageNo === 'string' && hash.length !== 0) {
+    hasharr = hash.split('#');
+    hasarr2 = hasharr[1].split('%');
+    hash = hasarr2[0];
+  } else {
+    hash = null;
+  }
+
+  axios.post(uri + path + "tag_create", {
+    pages: parseInt(pageNo),
+    pageSelected: pageSelected,
+    hash: hash
+  }).then(function (response) {
+    var test = document.querySelector(".test");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+
+      if (pageNo > 0 && typeof pageNo === 'string') {
+        var addColor = document.querySelector('.nr-' + pageNo);
+        addColor.classList.add("active");
+      }
+
+      var submit = document.getElementById("create");
+      submit.addEventListener("click", function () {
+        var name = document.getElementById("tag-name").value;
+        var slug = document.getElementById("tag-slug").value;
+        var description = document.getElementById("tag-description").value;
+        tagStore(name, slug, description);
+      });
+      var editBtn = tagStrt.querySelectorAll(".tag-edit");
+
+      var _loop = function _loop(i) {
+        var ID = editBtn[i].value;
+        var taxonomy = editBtn[i].id;
+        editBtn[i].addEventListener("click", function () {
+          tagEdit(ID, taxonomy);
+        }, false);
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
+      }
+
+      var deleteBtn = document.querySelectorAll(".tag-delete");
+
+      var _loop2 = function _loop2(_i) {
+        var ID = deleteBtn[_i].value;
+        var taxonomy = deleteBtn[_i].id;
+
+        deleteBtn[_i].addEventListener("click", function () {
+          tagDelete(ID, taxonomy);
+        }, false);
+      };
+
+      for (var _i = 0; _i < deleteBtn.length; _i++) {
+        _loop2(_i);
+      }
+
+      var pageBtn = document.getElementById("selectpage");
+      var select = document.getElementById("items");
+
+      if (pageSelected != undefined) {
+        select.value = pageSelected;
+      }
+
+      pageBtn.addEventListener("click", function () {
+        pageSelected = select.options[select.selectedIndex].value;
+        select.value = pageSelected;
+        init(1);
+      }, false);
+      var page = document.querySelectorAll(".paging");
+
+      var _loop3 = function _loop3(_i2) {
+        var pageNo = page[_i2].id;
+
+        page[_i2].addEventListener("click", function () {
+          location.hash = '#' + pageNo;
+          hash = location.hash;
+          init(pageNo);
+        }, false);
+      };
+
+      for (var _i2 = 0; _i2 < page.length; _i2++) {
+        _loop3(_i2);
+      }
+    }
+  })["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
+    }
+
+    console.log(error);
+  });
+  ;
+}
+
+function tagStore(name, slug, description) {
+  axios.post(uri + path + "tag_store", {
+    tag_name: name,
+    tag_slug: slug,
+    tag_description: description
+  }).then(function (response) {
+    console.log(response);
+    init();
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+  document.getElementById("tag-name").value = "";
+}
+
+function tagEdit(editID, taxonomy) {
+  axios.post(uri + path + "tag_edit", {
+    editID: editID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    var test = document.querySelector(".test");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+    }
+
+    var updateBtn = document.getElementById("tagUpdate");
+    updateBtn.addEventListener("click", function () {
+      var updateId = updateBtn.value;
+      tagUpdate(updateId);
+    });
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function tagUpdate(updateId) {
+  var name = document.getElementById("tag_name").value;
+  var slug = document.getElementById("tag_slug").value;
+  var description = document.getElementById("tag_description").value;
+  axios.post(uri + path + "tag_update", {
+    updateId: updateId,
+    tag_name: name,
+    tag_slug: slug,
+    tag_description: description
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(call.init(), 500);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function tagDelete(ID, taxonomy) {
+  axios.post(uri + path + "tag_destroy", {
+    deleteID: ID,
+    taxonomy_type: taxonomy
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init(); // setTimeout(init(), 500);
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startTag());
 
 /***/ }),
 
@@ -3413,11 +3208,10 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
 
 /******/ });
-
