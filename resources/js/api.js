@@ -43,21 +43,6 @@ class Api {
         }
     }
 
-    async getPostData(api, id) {
-        try {
-            let response = await axios.post(this.uri + this.path + api, {
-                id: id
-            })
-
-            if (response.status == 200 && response.statusText == "OK") {
-                return response.data.html;
-            }
-        } catch (e) {
-            console.error(e);
-            console.log("Duomenys is serveverio nepasiekiami !!!");
-        }
-    }
-
     saveContent(api, id, content) {
 
         axios
@@ -81,11 +66,29 @@ class Api {
                 console.log(error);
             });
     }
-        formDataApi(obj) {
-            let formData = new FormData();
-            if (obj.api) {
-                for (var key in obj) {
-                    formData.append(key, obj[key])
+
+
+    formDataApi(obj) {
+
+        let formData = new FormData();
+        if (obj.api) {
+            for (var key in obj) {
+                formData.append(key, obj[key])
+            }
+            console.log(Object.fromEntries(formData))
+            axios.post(this.uri + this.path + obj.api, formData, {
+
+            }).then(function (response) {
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+
                 }
                 console.log(Object.fromEntries(formData))
                 axios.post(this.uri + this.path + obj.api, formData, {
@@ -106,7 +109,30 @@ class Api {
                 throw 'can not find API';
             }
         }
-    
-}
+
+    }
+
+
+    async getPostData(obj) {
+        if (obj.api) {
+            try {
+                let formData = new FormData();
+
+                for (var key in obj) {
+                    formData.append(key, obj[key])
+                }
+                let response = await axios.post(this.uri + this.path + obj.api, formData, {});
+
+                if (response.status == 200 && response.statusText == "OK") {
+                    return response.data.html;
+                }
+
+            } catch (e) {
+                console.error(e);
+                console.log("Duomenys is serveverio nepasiekiami !!!");
+            }
+        }
+    }
+
 
 export default Api;

@@ -25,18 +25,18 @@ class TagController
         return View::adminRender('tag.maintag');
     }
 
-    public function create(Request $requestJson)
+    public function create(Request $request)
     {
+
         $request = $this->decodeRequest($requestJson);
-        // $session = new Session;
-        // $session->set('0', 5);
+
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
             $limit = 5;
         }
 
-        if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
+        if (strlen($request->request->get('hash')) != 0) {
             $number = $request->request->get('hash');
         } else {
             $number = 1;
