@@ -163,6 +163,10 @@ class Post
                 return NewsPost::get($post->ID);
             case 'event':
                 return EventPost::get($post->ID);
+            case 'page':
+                return Page::get($post->ID);
+            case 'menu':
+                return FrontMenu::get($post->ID);
 
             default:
                 return null;

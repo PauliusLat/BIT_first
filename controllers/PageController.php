@@ -27,8 +27,11 @@ class PageController
     {
         $pages = Page::all()->all();
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
+
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
-        $output = View::adminRender('page.page', ["pages" => $pages, 'post_types' => $post_types, 'page_state' => $page_state]);
+        $menu_page_state = $page_state['main'];
+
+        $output = View::adminRender('page.page', ["pages" => $pages, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state]);
         return new JsonResponse(['html' => $output]);
     }
 

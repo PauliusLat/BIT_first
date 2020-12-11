@@ -5,7 +5,10 @@ use BIT\app\Category;
 // use BIT\app\Tag;
 // use BIT\app\Attachment;
 use BIT\app\App;
+use BIT\app\Query;
+// use WP_Query;
 use BIT\app\Page;
+use BIT\app\Post;
 use BIT\app\Pagination;
 use BIT\app\FrontMenu;
 use BIT\app\Session;
@@ -65,8 +68,40 @@ App::start();
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 
-// use BIT\models\NewsPost;
+
+
+// use BIT\models\NewresPost;
 add_action('init', function () {
+    // $query = new Query;
+    // // $page = $query->postName('namai')->getPost()->all();
+    // // _dc($query->postType('page')->getPost()->all());
+    // $post = new Page;
+    // $page = get_page_by_title('namai', 'OBJECT', 'page');
+    // $page = $post->get($page->ID);
+    // _dc($page);
+    // $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
+    // _dc($page);
+    // $args = array(
+    //     'post_type'  => 'page',
+    //     'meta_key'   => 'pageState',
+    //     // 'orderby'    => 'meta_value_num',
+    //     // 'order'      => 'ASC',
+    //     'meta_query' => array(
+    //         array(
+    //             'key'     => 'pageState',
+    //             'value'   => ['Site_page', 'Menu_page'],
+    //             // 'compare' => 'IN',
+    //         ),
+    //     ),
+    // );
+    // $query = new WP_Query($args);
+    // _dc($query);
+    // 
+    // $pages = $query->postType('page')->postMeta('pageState', 'Menu_page')->getPost()->all();
+    // $pages = $query->postType('page')->getPost()->all();
+    // _dc($pages);
+
+
     // $session = new Session;
     // // // $session->deleteSession();
     // $session->flash('ooo', 5);
@@ -74,7 +109,7 @@ add_action('init', function () {
     // _dc($_COOKIE['Bit']);
     // $page = new Page;
     // // $page = $page->get(162);
-    // // _dc($page);
+    // // // _dc($page);
     // $menu = new FrontMenu;
     // _dc($menu);
 
