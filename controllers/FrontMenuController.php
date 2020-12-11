@@ -6,6 +6,7 @@ namespace BIT\controllers;
 use BIT\app\Page;
 use BIT\app\View;
 use BIT\app\FrontMenu;
+use BIT\app\Query;
 // use BIT\app\Attachment;
 // use BIT\models\NewsPost;
 // use BIT\models\AlbumPost;
@@ -21,29 +22,62 @@ class FrontMenuController
 
     public function index()
     {
-        return View::adminRender('frontmenu.mainmenu');
+        $query = new Query;
+        $menus = $query->postType('menu')->getPost()->all();
+        $menu = $menus[0];
+        $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
+        // _dc($pages);
+        return View::adminRender('frontmenu.mainmenu', ['menu' => $menu, 'pages' => $pages]);
     }
 
     public function create()
     {
-        // $pages = Page::all()->all();
-        // $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
-        // $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
-        $output = View::adminRender('frontmenu.menucreate');
-        return new JsonResponse(['html' => $output]);
+        $query = new Query;
+        $menus = $query->postType('menu')->getPost()->all();
+        $menu = $menus[0];
+        $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
+
+        // $output = View::adminRender('frontmenu.menucreate');
+        return new JsonResponse(['menu' => $menu, 'pages' => $pages]);
     }
 
-    public function store(Request $requestJson)
+    public function store(Request $request, FrontMenu $menu)
     {
-        $request = $this->decodeRequest($requestJson);
-        $menu = new FrontMenu;
-        if ($request->request->get('item_name')) {
-            array_push($name, $request->request->get('item_name'));
-            array_push($index, $menu->getItemUuid());
+        $id = $request->request->get('id');
+        if ($id == 0 || $id == 'undefined' || !isset($id) || $id == null || $id == '') {
+            $menuPost = new FrontMenu;
+        } else {
+            $menuPost = $menu->get($id);
         }
-        if ($request->request->get('item_page')) {
-            array_push($page, $request->request->get('item_page'));
-        }
+
+        // _dc($menuPost);
+        //$menu = new FrontMenu;
+        $title = $request->request->get('content');
+        // _dc($title);
+        $menuPost->names = explode(',', $title);
+        // _dc($titles);
+        $page = $request->request->get('category');
+        // _dc($page);
+        $menuPost->pages = explode(',', $page);
+        // $menu->links = explode(',', $page);
+        $menuPost->save();
+        // _dc($menu);
+        return new Response;
+    }
+
+    public function update(Request $request, FrontMenu $menu)
+    {
+        // _dc($request);
+
+        $title = $request->request->get('content');
+        $menu->names = explode(',', $title);
+        // _dc($titles);
+        $page = $request->request->get('category');
+        $menu->pages = explode(',', $page);
+        // $menu->links = explode(',', $page);
+
+        $menu->save();
+        // _dc($menu);
         return new Response;
     }
 
@@ -53,16 +87,6 @@ class FrontMenuController
         // return new JsonResponse(['html' => $output]);
     }
 
-    public function update(Request $requestJson, Page $page)
-    {
-        $request = $this->decodeRequest($requestJson);
-        $page->post_title = $request->request->get('page_title');
-        $page->post_name = $request->request->get('page_name');
-        $page->save();
-        // $output = View::adminRender('page.page');
-        // $response = new JsonResponse(['html' => $output]);
-        return new JsonResponse;
-    }
 
     public function destroy(Page $page)
     {

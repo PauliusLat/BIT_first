@@ -53,10 +53,19 @@ class Query
     }
 
     //gauti reikmems is post_meta lenteles. Paduodama meta_key ir meta_value
-    function postMeta(string $key, string $value)
+    function postMeta(string $key, $value)
     {
         $this->args['meta_key'] = $key;
         $this->args['meta_value'] = $value;
+        return $this;
+    }
+
+    public function postMetaArr(string $post_type, string $key, $value)
+    {
+        $this->args['post_type'] = $post_type;
+        $this->args['meta_query'][0]['key'] = $key;
+        $this->args['meta_query'][0]['value'] = $value;
+        $this->args['meta_query'][0]['compare'] = 'LIKE';
         return $this;
     }
 

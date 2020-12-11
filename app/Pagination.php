@@ -10,12 +10,7 @@ class Pagination
     private $prevpage;
     private $lastpage;
     private $firstpage;
-    // private static $obj;
 
-    // public static function start()
-    // {
-    //     return self::$obj ?? self::$obj = new self;
-    // }
 
     public function __construct($limit, $number)
     {

@@ -1,475 +1,467 @@
 "use strict";
 
-class Tag {
+// class Tag {
 
-    constructor(target) {
-        this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-        this.uri = document.location.origin;
-        this.pageSelected;
-        this.hash = location.hash;
-        this.hasharr;
-        this.hasarr2;
-        this.target = target;
-        this.startTag();
-    }
+//     constructor(target) {
+//         this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+//         this.uri = document.location.origin;
+//         this.pageSelected;
+//         this.hash = location.hash;
+//         this.hasharr;
+//         this.hasarr2;
+//         this.target = target;
+//         this.startTag();
+//     }
 
-    startTag() {
-        const DOM = document.getElementById(this.target);
+//     startTag() {
+//         const DOM = document.getElementById(this.target);
 
-        if (DOM) {
-            this.init();
-        }
-    }
+//         if (DOM) {
+//             this.init();
+//         }
+//     }
 
-    init(pageNo = 1) {
+//     init(pageNo = 1) {
 
-        if (typeof pageNo == 'object' && this.hash.length !== 0) {
-            console.log(pageNo);
-            this.hasharr = this.hash.split('#')
-            this.hasarr2 = this.hasharr[1].split('%')
-            this.hash = hasarr2[0]
-            // window.addEventListener( "load",
-            // () =>{
-            // this.hasharr = this.hash.split('#')
-            // this.hasarr2 = this.hasharr[1].split('%')
-            // this.hash = this.hasarr2[0]
-            // this.hash = location.hash
-            // this.init();
+//         if (typeof pageNo == 'object' && this.hash.length !== 0) {
+//             console.log(pageNo);
+//             this.hasharr = this.hash.split('#')
+//             this.hasarr2 = this.hasharr[1].split('%')
+//             this.hash = hasarr2[0]
+//             // window.addEventListener( "load",
+//             // () =>{
+//             // this.hasharr = this.hash.split('#')
+//             // this.hasarr2 = this.hasharr[1].split('%')
+//             // this.hash = this.hasarr2[0]
+//             // this.hash = location.hash
+//             // this.init();
 
-        } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
-            this.hasharr = this.hash.split('#')
-            this.hasarr2 = this.hasharr[1].split('%')
-            this.hash = this.hasarr2[0]
-        } else {
-            this.hash = null
-        }
+//         } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
+//             this.hasharr = this.hash.split('#')
+//             this.hasarr2 = this.hasharr[1].split('%')
+//             this.hash = this.hasarr2[0]
+//         } else {
+//             this.hash = null
+//         }
 
-        axios
-            .post(this.uri + this.path + "tag_create", {
-                pages: parseInt(pageNo),
-                pageSelected: this.pageSelected,
-                hash: this.hash
-            })
+//         axios
+//             .post(this.uri + this.path + "tag_create", {
+//                 pages: parseInt(pageNo),
+//                 pageSelected: this.pageSelected,
+//                 hash: this.hash
+//             })
 
-            .then((response) => {
-                const test = document.querySelector(".test");
-                if (response.status == 200 && response.statusText == "OK") {
-                    const HTML = response.data.html;
-                    test.innerHTML = HTML;
+//             .then((response) => {
+//                 const test = document.querySelector(".test");
+//                 if (response.status == 200 && response.statusText == "OK") {
+//                     const HTML = response.data.html;
+//                     test.innerHTML = HTML;
 
-                    if (pageNo > 0 && typeof pageNo === 'string') {
-                        let addColor = document.querySelector('.nr-' + pageNo);
-                        addColor.classList.add("active");
-                    }
-
-
-                    const submit = document.getElementById("create");
-                    submit.addEventListener("click", () => {
-                        const name = document.getElementById("tag-name").value;
-                        const slug = document.getElementById("tag-slug").value;
-                        const description = document.getElementById("tag-description").value;
-                        this.tagStore(name, slug, description);
-                    });
-
-                    const editBtn = document.querySelectorAll(".tag-edit");
-
-                    for (let i = 0; i < editBtn.length; i++) {
-                        let ID = editBtn[i].value;
-                        let taxonomy = editBtn[i].id;
-                        editBtn[i].addEventListener(
-                            "click",
-                            () => {
-                                this.tagEdit(ID, taxonomy);
-                            },
-                            false
-                        );
-                    }
+//                     if (pageNo > 0 && typeof pageNo === 'string') {
+//                         let addColor = document.querySelector('.nr-' + pageNo);
+//                         addColor.classList.add("active");
+//                     }
 
 
-                    const deleteBtn = document.querySelectorAll(".tag-delete");
-                    for (let i = 0; i < deleteBtn.length; i++) {
-                        let ID = deleteBtn[i].value;
-                        let taxonomy = deleteBtn[i].id;
-                        deleteBtn[i].addEventListener(
-                            "click",
-                            () => {
-                                this.tagDelete(ID, taxonomy);
-                            },
-                            false
-                        );
-                    }
+//                     const submit = document.getElementById("create");
+//                     submit.addEventListener("click", () => {
+//                         const name = document.getElementById("tag-name").value;
+//                         const slug = document.getElementById("tag-slug").value;
+//                         const description = document.getElementById("tag-description").value;
+//                         this.tagStore(name, slug, description);
+//                     });
 
-                    const pageBtn = document.getElementById("selectpage");
-                    const select = document.getElementById("items");
+//                     const editBtn = document.querySelectorAll(".tag-edit");
 
-                    pageBtn.addEventListener(
-                        "click",
-                        () => {
-                            var pageSelected;
+//                     for (let i = 0; i < editBtn.length; i++) {
+//                         let ID = editBtn[i].value;
+//                         let taxonomy = editBtn[i].id;
+//                         editBtn[i].addEventListener(
+//                             "click",
+//                             () => {
+//                                 this.tagEdit(ID, taxonomy);
+//                             },
+//                             false
+//                         );
+//                     }
 
-                            if (select.options[select.selectedIndex] != undefined) {
-                                pageSelected = select.options[select.selectedIndex].value;
+
+//                     const deleteBtn = document.querySelectorAll(".tag-delete");
+//                     for (let i = 0; i < deleteBtn.length; i++) {
+//                         let ID = deleteBtn[i].value;
+//                         let taxonomy = deleteBtn[i].id;
+//                         deleteBtn[i].addEventListener(
+//                             "click",
+//                             () => {
+//                                 this.tagDelete(ID, taxonomy);
+//                             },
+//                             false
+//                         );
+//                     }
+
+//                     const pageBtn = document.getElementById("selectpage");
+//                     const select = document.getElementById("items");
+
+//                     pageBtn.addEventListener(
+//                         "click",
+//                         () => {
+//                             var pageSelected;
+
+//                             if (select.options[select.selectedIndex] != undefined) {
+//                                 pageSelected = select.options[select.selectedIndex].value;
                            
-                            }else {
-                                pageSelected = 0;
-                              }
-                            this.pageSelected = pageSelected
-                            this.init(1);
-                        });
+//                             }else {
+//                                 pageSelected = 0;
+//                               }
+//                             this.pageSelected = pageSelected
+//                             this.init(1);
+//                         });
 
 
-                    const page = document.querySelectorAll(".paging");
+//                     const page = document.querySelectorAll(".paging");
 
-                    for (let i = 0; i < page.length; i++) {
-                        let pageNo = page[i].id;
-                        page[i].addEventListener(
-                            "click",
-                            () => {
-                                console.log(pageNo);
-                                location.hash = '#' + pageNo
-                                this.hash = location.hash
-                                this.init(pageNo);
-                            },
-                            false
-                        );
-                    }
+//                     for (let i = 0; i < page.length; i++) {
+//                         let pageNo = page[i].id;
+//                         page[i].addEventListener(
+//                             "click",
+//                             () => {
+//                                 // console.log(pageNo);
+//                                 location.hash = '#' + pageNo
+//                                 this.hash = location.hash
+//                                 this.init(pageNo);
+//                             },
+//                             false
+//                         );
+//                     }
 
-                }
-            })
-            .catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log("Error", error.message);
-                }
-                console.log(error);
-            });
-    }
+//                 }
+//             })
+//             .catch(function (error) {
+//                 if (error.response) {
+//                     console.log(error.response.data);
+//                     console.log(error.response.status);
+//                     console.log(error.response.headers);
+//                 } else if (error.request) {
+//                     console.log(error.request);
+//                 } else {
+//                     console.log("Error", error.message);
+//                 }
+//                 console.log(error);
+//             });
+//     }
 
 
-    tagStore(name, slug, description) {
-        axios
-            .post(this.uri + this.path + "tag_store", {
-                tag_name: name,
-                tag_slug: slug,
-                tag_description: description
-            })
-            .then((response) => {
-                console.log(response);
-                this.init();
-            })
-            .catch((err) => {
-                console.log(err instanceof TypeError);
-            });
-        document.getElementById("tag-name").value = "";
-    }
+//     tagStore(name, slug, description) {
+//         axios
+//             .post(this.uri + this.path + "tag_store", {
+//                 tag_name: name,
+//                 tag_slug: slug,
+//                 tag_description: description
+//             })
+//             .then((response) => {
+//                 console.log(response);
+//                 this.init();
+//             })
+//             .catch((err) => {
+//                 console.log(err instanceof TypeError);
+//             });
+//         document.getElementById("tag-name").value = "";
+//     }
 
-    tagEdit(editID, taxonomy) {
-        axios
-            .post(this.uri + this.path + "tag_edit", {
-                editID: editID,
-                taxonomy_type: taxonomy,
-            })
-            .then((response) => {
-                const test = document.querySelector(".test");
-                if (response.status == 200 && response.statusText == "OK") {
-                    const HTML = response.data.html;
-                    test.innerHTML = HTML;
-                }
-                const updateBtn = document.getElementById("tagUpdate");
-                updateBtn.addEventListener("click", () => {
-                    const updateId = updateBtn.value;
-                    this.tagUpdate(updateId);
-                });
-            })
-            .catch((err) => {
-                console.log(err instanceof TypeError);
-            });
-    }
+//     tagEdit(editID, taxonomy) {
+//         axios
+//             .post(this.uri + this.path + "tag_edit", {
+//                 editID: editID,
+//                 taxonomy_type: taxonomy,
+//             })
+//             .then((response) => {
+//                 const test = document.querySelector(".test");
+//                 if (response.status == 200 && response.statusText == "OK") {
+//                     const HTML = response.data.html;
+//                     test.innerHTML = HTML;
+//                 }
+//                 const updateBtn = document.getElementById("tagUpdate");
+//                 updateBtn.addEventListener("click", () => {
+//                     const updateId = updateBtn.value;
+//                     this.tagUpdate(updateId);
+//                 });
+//             })
+//             .catch((err) => {
+//                 console.log(err instanceof TypeError);
+//             });
+//     }
 
-    tagUpdate(updateId) {
-        const name = document.getElementById("tag_name").value;
-        const slug = document.getElementById("tag_slug").value;
-        const description = document.getElementById("tag_description").value;
+//     tagUpdate(updateId) {
+//         const name = document.getElementById("tag_name").value;
+//         const slug = document.getElementById("tag_slug").value;
+//         const description = document.getElementById("tag_description").value;
 
-        axios
-            .post(this.uri + this.path + "tag_update", {
-                updateId: updateId,
-                tag_name: name,
-                tag_slug: slug,
-                tag_description: description
+//         axios
+//             .post(this.uri + this.path + "tag_update", {
+//                 updateId: updateId,
+//                 tag_name: name,
+//                 tag_slug: slug,
+//                 tag_description: description
 
-            })
-            .then((response) => {
-                if (response.status == 200 && response.statusText == "OK") {
-                    console.log(response);
-                    this.init();
-                    // setTimeout(call.init(), 500);
-                }
-            })
+//             })
+//             .then((response) => {
+//                 if (response.status == 200 && response.statusText == "OK") {
+//                     console.log(response);
+//                     this.init();
+//                     // setTimeout(call.init(), 500);
+//                 }
+//             })
 
-            .catch((err) => {
-                console.log(err instanceof TypeError);
-            });
-    }
+//             .catch((err) => {
+//                 console.log(err instanceof TypeError);
+//             });
+//     }
 
-    tagDelete(ID, taxonomy) {
-        axios
-            .post(this.uri + this.path + "tag_destroy", {
-                deleteID: ID,
-                taxonomy_type: taxonomy,
-            })
-            .then((response) => {
-                if (response.status == 200 && response.statusText == "OK") {
-                    console.log(response);
-                    this.init();
-                    // setTimeout(init(), 500);
-                }
-            })
-            .catch((err) => {
-                console.log(err instanceof TypeError);
-            });
+//     tagDelete(ID, taxonomy) {
+//         axios
+//             .post(this.uri + this.path + "tag_destroy", {
+//                 deleteID: ID,
+//                 taxonomy_type: taxonomy,
+//             })
+//             .then((response) => {
+//                 if (response.status == 200 && response.statusText == "OK") {
+//                     console.log(response);
+//                     this.init();
+//                     // setTimeout(init(), 500);
+//                 }
+//             })
+//             .catch((err) => {
+//                 console.log(err instanceof TypeError);
+//             });
 
-    }
+//     }
+// }
+
+// export default Tag;
+
+
+const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+const uri = document.location.origin;
+const tagStrt = document.getElementById("tagStart");
+
+function startTag() {
+  if (tagStrt) {
+    window.addEventListener("load", init, false);
+  }
 }
 
-export default Tag;
+let pageSelected;
+let hash = location.hash
+let hasharr
+let hasarr2
+
+function init(pageNo){
+
+if (typeof pageNo == 'object' &&  hash.length !== 0){
+  hasharr = hash.split('#')
+  hasarr2 = hasharr[1].split('%')
+  hash = hasarr2[0]
 
 
-// const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-// const this.uri = document.location.origin;
-// const tagStrt = document.getElementById("tagStart");
+}else if(typeof pageNo === 'string' && hash.length !== 0){
+  hasharr = hash.split('#')
+  hasarr2 = hasharr[1].split('%')
+  hash = hasarr2[0]
+}else{
+  hash = null
+}
 
-// function startTag() {
-//   if (tagStrt) {
-//     window.addEventListener("load", init, false);
-//   }
-// }
+  axios
+    .post(uri + path + "tag_create",{
+      pages: parseInt(pageNo),
+      pageSelected: pageSelected,
+      hash: hash
+    })
 
-// let pageSelected;
-// let hash = location.hash
-// let hasharr
-// let hasarr2
+    .then((response)=> {
+      const test = document.querySelector(".test");
+      if (response.status == 200 && response.statusText == "OK") {
+        const HTML = response.data.html;
+        test.innerHTML = HTML;
 
-// function init(pageNo = 1, hash = 1){
-
-// if (typeof pageNo == 'object' &&  hash.length !== 0){
-//   hasharr = hash.split('#')
-//   hasarr2 = hasharr[1].split('%')
-//   hash = hasarr2[0]
-//   window.addEventListener( "load",
-//   () =>{
-//     // hasharr = hash.split('#')
-//     // hasarr2 = hasharr[1].split('%')
-//     // hash = hasarr2[0]
-//     hash = location.hash
-//     init(hash);
-//   },
-//   false);
-
-// }else if(typeof pageNo === 'string' && hash.length !== 0){
-//   hasharr = hash.split('#')
-//   hasarr2 = hasharr[1].split('%')
-//   hash = hasarr2[0]
-// }else{
-//   hash = null
-// }
-
-//   axios
-//     .post(uri + path + "tag_create",{
-//       pages: parseInt(pageNo),
-//       pageSelected: pageSelected,
-//       hash: hash
-//     })
-
-//     .then((response)=> {
-//       const test = document.querySelector(".test");
-//       if (response.status == 200 && response.statusText == "OK") {
-//         const HTML = response.data.html;
-//         test.innerHTML = HTML;
-
-//         if(pageNo >0 && typeof pageNo === 'string' ){
-//           let addColor = document.querySelector('.nr-'+pageNo);
-//           addColor.classList.add("active");
-//         }
+        if(pageNo >0 && typeof pageNo === 'string' ){
+          let addColor = document.querySelector('.nr-'+pageNo);
+          addColor.classList.add("active");
+        }
 
 
-//         const submit = document.getElementById("create");
-//         submit.addEventListener("click", () => {
-//           const name = document.getElementById("tag-name").value;
-//           const slug = document.getElementById("tag-slug").value;
-//           const description = document.getElementById("tag-description").value;
-//           tagStore(name, slug, description);
-//         });
+        const submit = document.getElementById("create");
+        submit.addEventListener("click", () => {
+          const name = document.getElementById("tag-name").value;
+          const slug = document.getElementById("tag-slug").value;
+          const description = document.getElementById("tag-description").value;
+          tagStore(name, slug, description);
+        });
 
-//         const editBtn = tagStrt.querySelectorAll(".tag-edit");
+        const editBtn = tagStrt.querySelectorAll(".tag-edit");
 
-//         for (let i = 0; i < editBtn.length; i++) {
-//           let ID = editBtn[i].value;
-//           let taxonomy = editBtn[i].id;
-//           editBtn[i].addEventListener(
-//             "click",
-//             () =>{
-//               tagEdit(ID, taxonomy);
-//             },
-//             false
-//           );
-//         }
-
-
-//         const deleteBtn = document.querySelectorAll(".tag-delete");
-//         for (let i = 0; i < deleteBtn.length; i++) {
-//           let ID = deleteBtn[i].value;
-//           let taxonomy = deleteBtn[i].id;
-//           deleteBtn[i].addEventListener(
-//             "click",
-//             ()=> {
-//               tagDelete(ID, taxonomy);
-//             },
-//             false
-//           );
-//         }
-
-//         const pageBtn = document.getElementById("selectpage");
-//         const select = document.getElementById("items");
-//         if (pageSelected != undefined) {
-//           select.value = pageSelected
-//         }
-//         pageBtn.addEventListener(
-//           "click",
-//           ()=> {
-//             pageSelected = select.options[select.selectedIndex].value;
-//             select.value = pageSelected
-//             init(1);
-//           },
-
-//           false
-//         );
+        for (let i = 0; i < editBtn.length; i++) {
+          let ID = editBtn[i].value;
+          let taxonomy = editBtn[i].id;
+          editBtn[i].addEventListener(
+            "click",
+            () =>{
+              tagEdit(ID, taxonomy);
+            },
+            false
+          );
+        }
 
 
-//         const page = document.querySelectorAll(".paging");
+        const deleteBtn = document.querySelectorAll(".tag-delete");
+        for (let i = 0; i < deleteBtn.length; i++) {
+          let ID = deleteBtn[i].value;
+          let taxonomy = deleteBtn[i].id;
+          deleteBtn[i].addEventListener(
+            "click",
+            ()=> {
+              tagDelete(ID, taxonomy);
+            },
+            false
+          );
+        }
 
-//         for (let i = 0; i < page.length; i++){
-//           let pageNo = page[i].id;
-//           page[i].addEventListener(
-//             "click",
-//             ()=> {
-//               location.hash = '#' + pageNo
-//               hash = location.hash
-//               init(pageNo);
-//             },
-//             false
-//           );
-//         }
+        const pageBtn = document.getElementById("selectpage");
+        const select = document.getElementById("items");
+        if (pageSelected != undefined) {
+          select.value = pageSelected
+        }
+        pageBtn.addEventListener(
+          "click",
+          ()=> {
+            pageSelected = select.options[select.selectedIndex].value;
+            select.value = pageSelected
+            init(1);
+          },
 
-//       }
-//     })
-//     .catch(function(error) {
-//       if (error.response) {
-//         console.log(error.response.data);
-//         console.log(error.response.status);
-//         console.log(error.response.headers);
-//       } else if (error.request) {
-//         console.log(error.request);
-//       } else {
-//         console.log("Error", error.message);
-//       }
-//       console.log(error);
-//     });
-//   ;
-// }
+          false
+        );
 
 
-// function tagStore(name, slug, description) {
-//   axios
-//     .post(uri + path + "tag_store", {
-//       tag_name: name,
-//       tag_slug: slug,
-//       tag_description: description
-//     })
-//     .then((response) => {
-//       console.log(response);
-//       init();
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-//   document.getElementById("tag-name").value = "";
-// }
+        const page = document.querySelectorAll(".paging");
 
-// function tagEdit(editID, taxonomy) {
-//   axios
-//     .post(uri + path + "tag_edit", {
-//       editID: editID,
-//       taxonomy_type: taxonomy,
-//     })
-//     .then((response)=> {
-//       const test = document.querySelector(".test");
-//       if (response.status == 200 && response.statusText == "OK") {
-//         const HTML = response.data.html;
-//         test.innerHTML = HTML;
-//       }
-//       const updateBtn = document.getElementById("tagUpdate");
-//       updateBtn.addEventListener("click", () => {
-//         const updateId = updateBtn.value;
-//         tagUpdate(updateId);
-//       });
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
+        for (let i = 0; i < page.length; i++){
+          let pageNo = page[i].id;
+          page[i].addEventListener(
+            "click",
+            ()=> {
+              location.hash = '#' + pageNo
+              hash = location.hash
+              init(pageNo);
+            },
+            false
+          );
+        }
 
-// function tagUpdate(updateId) {
-//   const name = document.getElementById("tag_name").value;
-//   const slug = document.getElementById("tag_slug").value;
-//   const description = document.getElementById("tag_description").value;
-
-//   axios
-//     .post(uri + path + "tag_update", {
-//       updateId: updateId,
-//       tag_name: name,
-//       tag_slug: slug,
-//       tag_description: description
-
-//     })
-//     .then((response)=> {
-//       if (response.status == 200 && response.statusText == "OK") {
-//         console.log(response);
-//         init();
-//         // setTimeout(call.init(), 500);
-//       }
-//     })
-
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
-
-// function tagDelete(ID, taxonomy) {
-//   axios
-//     .post(uri + path + "tag_destroy", {
-//       deleteID: ID,
-//       taxonomy_type: taxonomy,
-//     })
-//     .then((response)=> {
-//       if (response.status == 200 && response.statusText == "OK") {
-//         console.log(response);
-//         init();
-//         // setTimeout(init(), 500);
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
+      }
+    })
+    .catch(function(error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log("Error", error.message);
+      }
+      console.log(error);
+    });
+  ;
+}
 
 
-// export default startTag();
+function tagStore(name, slug, description) {
+  axios
+    .post(uri + path + "tag_store", {
+      tag_name: name,
+      tag_slug: slug,
+      tag_description: description
+    })
+    .then((response) => {
+      console.log(response);
+      init();
+    })
+    .catch((err) => {
+      console.log(err instanceof TypeError);
+    });
+  document.getElementById("tag-name").value = "";
+}
+
+function tagEdit(editID, taxonomy) {
+  axios
+    .post(uri + path + "tag_edit", {
+      editID: editID,
+      taxonomy_type: taxonomy,
+    })
+    .then((response)=> {
+      const test = document.querySelector(".test");
+      if (response.status == 200 && response.statusText == "OK") {
+        const HTML = response.data.html;
+        test.innerHTML = HTML;
+      }
+      const updateBtn = document.getElementById("tagUpdate");
+      updateBtn.addEventListener("click", () => {
+        const updateId = updateBtn.value;
+        tagUpdate(updateId);
+      });
+    })
+    .catch((err) => {
+      console.log(err instanceof TypeError);
+    });
+}
+
+function tagUpdate(updateId) {
+  const name = document.getElementById("tag_name").value;
+  const slug = document.getElementById("tag_slug").value;
+  const description = document.getElementById("tag_description").value;
+
+  axios
+    .post(uri + path + "tag_update", {
+      updateId: updateId,
+      tag_name: name,
+      tag_slug: slug,
+      tag_description: description
+
+    })
+    .then((response)=> {
+      if (response.status == 200 && response.statusText == "OK") {
+        console.log(response);
+        init();
+        // setTimeout(call.init(), 500);
+      }
+    })
+
+    .catch((err) => {
+      console.log(err instanceof TypeError);
+    });
+}
+
+function tagDelete(ID, taxonomy) {
+  axios
+    .post(uri + path + "tag_destroy", {
+      deleteID: ID,
+      taxonomy_type: taxonomy,
+    })
+    .then((response)=> {
+      if (response.status == 200 && response.statusText == "OK") {
+        console.log(response);
+        init();
+        // setTimeout(init(), 500);
+      }
+    })
+    .catch((err) => {
+      console.log(err instanceof TypeError);
+    });
+}
+
+
+export default startTag();
 
 
 // async init(pageNo) {

@@ -122,8 +122,9 @@ trait Tcategory
     {
         $page = new Page();
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
-        foreach ($page_state as $state => $value) {
-            if ($state == 'category' || $state == 'system') {
+        $menu_page_state = $page_state['main'];
+        foreach ($menu_page_state as $state => $value) {
+            if ($state == 'menu' || $state == 'category') {
                 array_push($page->pageState, $value);
             }
         }
