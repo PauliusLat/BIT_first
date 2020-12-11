@@ -2586,7 +2586,6 @@ var Pagination = /*#__PURE__*/function () {
     value: function () {
       var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var hash,
-            test,
             axios,
             obj,
             _args = arguments;
@@ -2601,19 +2600,18 @@ var Pagination = /*#__PURE__*/function () {
                   this.hash = location.hash.slice(1, 2);
                 }
 
-                test = document.querySelector(".test");
                 axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
                 obj = {
                   api: this.api,
                   hash: this.hash
                 };
-                _context.next = 8;
+                _context.next = 7;
                 return this.axios.getPostData(obj);
 
-              case 8:
+              case 7:
                 return _context.abrupt("return", _context.sent);
 
-              case 9:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -2644,6 +2642,8 @@ var Pagination = /*#__PURE__*/function () {
           _loop(i);
         }
       }
+
+      return page.length - 4;
     }
   }, {
     key: "select",
@@ -2651,7 +2651,7 @@ var Pagination = /*#__PURE__*/function () {
       var _select = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var hash,
             pages,
-            select,
+            lenght,
             obj,
             _args2 = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
@@ -2660,13 +2660,13 @@ var Pagination = /*#__PURE__*/function () {
               case 0:
                 hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
                 pages = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : 5;
-                select = document.getElementById("items");
+                lenght = _args2.length > 2 ? _args2[2] : undefined;
+                console.log(lenght);
                 obj = {
                   api: this.api,
                   pageSelected: pages,
                   hash: hash
                 };
-                console.log(obj);
                 _context2.next = 7;
                 return this.axios.getPostData(obj);
 
@@ -2843,6 +2843,7 @@ var Tag = /*#__PURE__*/function () {
             HTML,
             DOM,
             test,
+            lenght,
             addColor,
             chages,
             option,
@@ -2856,7 +2857,7 @@ var Tag = /*#__PURE__*/function () {
                 DOM = document.getElementById(this.target);
 
                 if (!DOM) {
-                  _context2.next = 22;
+                  _context2.next = 23;
                   break;
                 }
 
@@ -2881,7 +2882,8 @@ var Tag = /*#__PURE__*/function () {
 
               case 13:
                 this.start = false;
-                this.page.paging();
+                lenght = this.page.paging();
+                console.log(lenght);
                 HTML = "";
 
                 if (hash != null) {
@@ -2901,39 +2903,38 @@ var Tag = /*#__PURE__*/function () {
                             hash = location.hash.slice(1, 2);
 
                             if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN)) {
-                              _context.next = 15;
+                              _context.next = 14;
                               break;
                             }
 
                             pages = _this.pages;
 
                             if (!pages) {
-                              _context.next = 10;
+                              _context.next = 9;
                               break;
                             }
 
-                            hash = 1;
-                            _context.next = 7;
-                            return _this.page.select(hash, pages);
+                            _context.next = 6;
+                            return _this.page.select(hash, pages, lenght);
 
-                          case 7:
+                          case 6:
                             HTML = _context.sent;
-                            _context.next = 13;
+                            _context.next = 12;
                             break;
 
-                          case 10:
-                            _context.next = 12;
-                            return _this.page.select(hash, pages);
+                          case 9:
+                            _context.next = 11;
+                            return _this.page.select(hash, pages, lenght);
 
-                          case 12:
+                          case 11:
                             HTML = _context.sent;
 
-                          case 13:
+                          case 12:
                             _this.init(hash, HTML);
 
                             window.removeEventListener('hashchange', chages);
 
-                          case 15:
+                          case 14:
                           case "end":
                             return _context.stop();
                         }
@@ -2953,7 +2954,7 @@ var Tag = /*#__PURE__*/function () {
                   chages();
                 });
 
-              case 22:
+              case 23:
               case "end":
                 return _context2.stop();
             }
@@ -2966,7 +2967,94 @@ var Tag = /*#__PURE__*/function () {
       }
 
       return init;
-    }() // this.init();
+    }()
+  }, {
+    key: "tagStore",
+    value: function tagStore(name, slug, description) {
+      var _this2 = this;
+
+      axios.post(this.uri + this.path + "tag_store", {
+        tag_name: name,
+        tag_slug: slug,
+        tag_description: description
+      }).then(function (response) {
+        console.log(response);
+
+        _this2.init();
+      })["catch"](function (err) {
+        console.log(err instanceof TypeError);
+      });
+      document.getElementById("tag-name").value = "";
+    }
+  }, {
+    key: "tagEdit",
+    value: function tagEdit(editID, taxonomy) {
+      var _this3 = this;
+
+      axios.post(this.uri + this.path + "tag_edit", {
+        editID: editID,
+        taxonomy_type: taxonomy
+      }).then(function (response) {
+        var test = document.querySelector(".test");
+
+        if (response.status == 200 && response.statusText == "OK") {
+          var HTML = response.data.html;
+          test.innerHTML = HTML;
+        }
+
+        var updateBtn = document.getElementById("tagUpdate");
+        updateBtn.addEventListener("click", function () {
+          var updateId = updateBtn.value;
+
+          _this3.tagUpdate(updateId);
+        });
+      })["catch"](function (err) {
+        console.log(err instanceof TypeError);
+      });
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      var _this4 = this;
+
+      var deleteBtn = document.querySelectorAll(".tag-delete");
+
+      var _loop = function _loop(i) {
+        var ID = deleteBtn[i].value;
+        var taxonomy = deleteBtn[i].id;
+        deleteBtn[i].addEventListener("click", function () {
+          _this4.tagDelete(ID, taxonomy);
+        });
+      };
+
+      for (var i = 0; i < deleteBtn.length; i++) {
+        _loop(i);
+      }
+    }
+  }, {
+    key: "tagUpdate",
+    value: function tagUpdate(updateId) {
+      var _this5 = this;
+
+      var name = document.getElementById("tag_name").value;
+      var slug = document.getElementById("tag_slug").value;
+      var description = document.getElementById("tag_description").value;
+      axios.post(this.uri + this.path + "tag_update", {
+        updateId: updateId,
+        tag_name: name,
+        tag_slug: slug,
+        tag_description: description
+      }).then(function (response) {
+        if (response.status == 200 && response.statusText == "OK") {
+          console.log(response);
+
+          _this5.init(); // setTimeout(call.init(), 500);
+
+        }
+      })["catch"](function (err) {
+        console.log(err instanceof TypeError);
+      });
+    } // this.init();
     // let hash1 = hash;
     // if (hash1 === null) {
     //     hash1 = location.hash.slice(1, 2);

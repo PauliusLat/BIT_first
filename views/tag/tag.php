@@ -75,7 +75,7 @@ use BIT\app\App;
             foreach ($tags as $tag) {
             ?>
                 <tr>
-                    <td><?= $tag->name ?></td>
+                    <td class="count" ><?= $tag->name ?></td>
                     <td><?= $tag->term_id ?></td>
                     <td><?= $tag->slug ?></td>
                     <td><?= $tag->description ?></td>

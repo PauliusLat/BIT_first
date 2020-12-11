@@ -32,8 +32,8 @@ class Tag {
                 test.innerHTML = HTML;
             }
             this.start = false;
-            this.page.paging();
-
+            let lenght = this.page.paging();
+            console.log(lenght);
             HTML = "";
 
             if (hash != null) {
@@ -52,10 +52,9 @@ class Tag {
                     hash != NaN) {
                     let pages = this.pages;
                     if (pages) {
-                        hash = 1;
-                        HTML = await this.page.select(hash, pages);
+                        HTML = await this.page.select(hash, pages, lenght);
                     } else {
-                        HTML = await this.page.select(hash, pages);
+                        HTML = await this.page.select(hash, pages, lenght);
                     }
                     this.init(hash, HTML);
                     window.removeEventListener('hashchange', chages);
@@ -65,6 +64,7 @@ class Tag {
             window.addEventListener('hashchange', chages);
 
             const option = document.getElementById("items");
+
             option.addEventListener('change', () => {
                 this.pages = option.value;
                 chages();
@@ -73,18 +73,48 @@ class Tag {
     }
 
 
-    edit() {
-        const editBtn = document.querySelectorAll(".tag-edit");
+    tagStore(name, slug, description) {
+        axios
+            .post(this.uri + this.path + "tag_store", {
+                tag_name: name,
+                tag_slug: slug,
+                tag_description: description
+            })
+            .then((response) => {
+                console.log(response);
+                this.init();
+            })
+            .catch((err) => {
+                console.log(err instanceof TypeError);
+            });
+        document.getElementById("tag-name").value = "";
+    }
 
-        for (let i = 0; i < editBtn.length; i++) {
-            let ID = editBtn[i].value;
-            let taxonomy = editBtn[i].id;
-            editBtn[i].addEventListener(
-                "click",
-                () => {
-                    this.tagEdit(ID, taxonomy);
+    tagEdit(editID, taxonomy) {
+        axios
+            .post(this.uri + this.path + "tag_edit", {
+                editID: editID,
+                taxonomy_type: taxonomy,
+            })
+            .then((response) => {
+                const test = document.querySelector(".test");
+                if (response.status == 200 && response.statusText == "OK") {
+                    const HTML = response.data.html;
+                    test.innerHTML = HTML;
+                }
+                const updateBtn = document.getElementById("tagUpdate");
+                updateBtn.addEventListener("click", () => {
+                    const updateId = updateBtn.value;
+                    this.tagUpdate(updateId);
                 });
-        }
+            })
+            .catch((err) => {
+                console.log(err instanceof TypeError);
+            });
+    }
+
+    delete() {
+
 
         const deleteBtn = document.querySelectorAll(".tag-delete");
         for (let i = 0; i < deleteBtn.length; i++) {

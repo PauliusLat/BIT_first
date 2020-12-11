@@ -8,7 +8,7 @@ class Pagination {
         this.pageSelected;
         this.api = api;
         this.axios = new Api();
-        this.hash;  
+        this.hash;
     }
 
     async init(hash = null) {
@@ -19,15 +19,13 @@ class Pagination {
             this.hash = location.hash.slice(1, 2);
         }
 
-        const test = document.querySelector(".test");
-
         let axios = new Api();
 
         let obj = {
             api: this.api,
             hash: this.hash
         }
-        return await  this.axios.getPostData(obj);
+        return await this.axios.getPostData(obj);
 
     }
 
@@ -46,22 +44,19 @@ class Pagination {
                 });
             }
         }
+        return page.length - 4;
     }
 
-    async select(hash=1,  pages=5) {
-
-        const select = document.getElementById("items");
-
+    async select(hash = 1, pages = 5, lenght) {
+        console.log(lenght);
         let obj = {
             api: this.api,
             pageSelected: pages,
-            hash:hash
+            hash: hash
         }
-console.log(obj);
-        return await  this.axios.getPostData(obj);
+        return await this.axios.getPostData(obj);
 
     }
 }
-
 
 export default Pagination;
