@@ -8,7 +8,7 @@ class Pagination {
         this.pageSelected;
         this.api = api;
         this.axios = new Api();
-        this.hash;  
+        this.hash;
     }
 
     async init(hash = null) {
@@ -27,7 +27,7 @@ class Pagination {
             api: this.api,
             hash: this.hash
         }
-        return await  this.axios.getPostData(obj);
+        return await this.axios.getPostData(obj);
 
     }
 
@@ -46,19 +46,19 @@ class Pagination {
                 });
             }
         }
+
     }
 
-    async select(hash=1,  pages=5) {
+    async select(hash = 1, pages = 5) {
 
         const select = document.getElementById("items");
 
         let obj = {
             api: this.api,
             pageSelected: pages,
-            hash:hash
+            hash: hash
         }
-console.log(obj);
-        return await  this.axios.getPostData(obj);
+        return await this.axios.getPostData(obj);
 
     }
 }
