@@ -32,9 +32,8 @@ class Tag {
                 test.innerHTML = HTML;
             }
             this.start = false;
-            this.page.paging();
-            const page = document.querySelectorAll(".paging");
-            let leght = page.lenght-4;
+            let lenght = this.page.paging();
+            console.log(lenght);
             HTML = "";
 
             if (hash != null) {
@@ -53,9 +52,9 @@ class Tag {
                     hash != NaN) {
                     let pages = this.pages;
                     if (pages) {
-                        HTML = await this.page.select(hash, pages, leght);
+                        HTML = await this.page.select(hash, pages, lenght);
                     } else {
-                        HTML = await this.page.select(hash, pages, leght);
+                        HTML = await this.page.select(hash, pages, lenght);
                     }
                     this.init(hash, HTML);
                     window.removeEventListener('hashchange', chages);

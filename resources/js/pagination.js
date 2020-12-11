@@ -19,8 +19,6 @@ class Pagination {
             this.hash = location.hash.slice(1, 2);
         }
 
-        const test = document.querySelector(".test");
-
         let axios = new Api();
 
         let obj = {
@@ -46,13 +44,11 @@ class Pagination {
                 });
             }
         }
-
+        return page.length - 4;
     }
 
-    async select(hash = 1, pages = 5) {
-
-        const select = document.getElementById("items");
-
+    async select(hash = 1, pages = 5, lenght) {
+        console.log(lenght);
         let obj = {
             api: this.api,
             pageSelected: pages,
@@ -62,6 +58,5 @@ class Pagination {
 
     }
 }
-
 
 export default Pagination;

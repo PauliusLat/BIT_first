@@ -2585,7 +2585,6 @@ var Pagination = /*#__PURE__*/function () {
     value: function () {
       var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var hash,
-            test,
             axios,
             obj,
             _args = arguments;
@@ -2600,19 +2599,18 @@ var Pagination = /*#__PURE__*/function () {
                   this.hash = location.hash.slice(1, 2);
                 }
 
-                test = document.querySelector(".test");
                 axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
                 obj = {
                   api: this.api,
                   hash: this.hash
                 };
-                _context.next = 8;
+                _context.next = 7;
                 return this.axios.getPostData(obj);
 
-              case 8:
+              case 7:
                 return _context.abrupt("return", _context.sent);
 
-              case 9:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -2643,6 +2641,8 @@ var Pagination = /*#__PURE__*/function () {
           _loop(i);
         }
       }
+
+      return page.length - 4;
     }
   }, {
     key: "select",
@@ -2650,7 +2650,7 @@ var Pagination = /*#__PURE__*/function () {
       var _select = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var hash,
             pages,
-            select,
+            lenght,
             obj,
             _args2 = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
@@ -2659,19 +2659,20 @@ var Pagination = /*#__PURE__*/function () {
               case 0:
                 hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
                 pages = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : 5;
-                select = document.getElementById("items");
+                lenght = _args2.length > 2 ? _args2[2] : undefined;
+                console.log(lenght);
                 obj = {
                   api: this.api,
                   pageSelected: pages,
                   hash: hash
                 };
-                _context2.next = 6;
+                _context2.next = 7;
                 return this.axios.getPostData(obj);
 
-              case 6:
+              case 7:
                 return _context2.abrupt("return", _context2.sent);
 
-              case 7:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -2841,8 +2842,7 @@ var Tag = /*#__PURE__*/function () {
             HTML,
             DOM,
             test,
-            page,
-            leght,
+            lenght,
             addColor,
             chages,
             option,
@@ -2856,7 +2856,7 @@ var Tag = /*#__PURE__*/function () {
                 DOM = document.getElementById(this.target);
 
                 if (!DOM) {
-                  _context2.next = 24;
+                  _context2.next = 23;
                   break;
                 }
 
@@ -2881,9 +2881,8 @@ var Tag = /*#__PURE__*/function () {
 
               case 13:
                 this.start = false;
-                this.page.paging();
-                page = document.querySelectorAll(".paging");
-                leght = page.lenght - 4;
+                lenght = this.page.paging();
+                console.log(lenght);
                 HTML = "";
 
                 if (hash != null) {
@@ -2915,7 +2914,7 @@ var Tag = /*#__PURE__*/function () {
                             }
 
                             _context.next = 6;
-                            return _this.page.select(hash, pages, leght);
+                            return _this.page.select(hash, pages, lenght);
 
                           case 6:
                             HTML = _context.sent;
@@ -2924,7 +2923,7 @@ var Tag = /*#__PURE__*/function () {
 
                           case 9:
                             _context.next = 11;
-                            return _this.page.select(hash, pages, leght);
+                            return _this.page.select(hash, pages, lenght);
 
                           case 11:
                             HTML = _context.sent;
@@ -2954,7 +2953,7 @@ var Tag = /*#__PURE__*/function () {
                   chages();
                 });
 
-              case 24:
+              case 23:
               case "end":
                 return _context2.stop();
             }
