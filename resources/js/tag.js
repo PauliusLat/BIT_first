@@ -1,38 +1,41 @@
 "use strict";
 
+import Api from './api';
 import Pagination from './pagination';
 
 class Tag {
 
     constructor(target) {
-        // this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-        // this.uri = document.location.origin;
-        // this.pageSelected;
 
         const api = "tag_create";
         this.start = true;
         this.target = target;
-        this.pages;
+        this.pages = 5;
         this.page = new Pagination(api);
+        this.axios = new Api;
         this.init();
+
     }
 
     async init(hash = null, HTML = null) {
 
         const DOM = document.getElementById(this.target);
+        const test = document.querySelector(".test");
+
         if (DOM) {
 
-            const test = document.querySelector(".test");
+            let pages;
 
             if (this.start && HTML == null) {
-                HTML = await this.page.init();
+                HTML = await this.page.start();
                 test.innerHTML = HTML;
             } else {
                 test.innerHTML = HTML;
             }
             this.start = false;
-            let lenght = this.page.paging();
-     
+
+            this.page.paging();
+
             HTML = "";
 
             if (hash != null) {
@@ -40,9 +43,8 @@ class Tag {
                 addColor.classList.add("active");
             }
 
-            HTML = "";
-
             var chages = async () => {
+
                 hash = location.hash.slice(1, 2);
                 if (hash != undefined &&
                     hash != null &&
@@ -50,112 +52,129 @@ class Tag {
                     hash != "" &&
                     hash != NaN) {
                     let pages = this.pages;
-                    if (pages) {
-                        HTML = await this.page.select(hash, pages, lenght);
-                    } else {
-                        HTML = await this.page.select(hash, pages, lenght);
-                    }
+                    HTML = await this.page.select(hash, pages);
                     this.init(hash, HTML);
                     window.removeEventListener('hashchange', chages);
-
                 }
             }
             window.addEventListener('hashchange', chages);
 
             const option = document.getElementById("items");
+            option.value = this.pages;
 
             option.addEventListener('change', () => {
-              
+
                 this.pages = option.value;
+
                 location.hash = 1;
                 chages();
-                
+
             });
         }
+
+        this.delete();
+        this.create();
+        this.tagEdit(test);
     }
 
-/*-------------------------------------*/
-    tagStore(name, slug, description) {
-        axios
-            .post(this.uri + this.path + "tag_store", {
-                tag_name: name,
-                tag_slug: slug,
-                tag_description: description
-            })
-            .then((response) => {
-                console.log(response);
-                this.init();
-            })
-            .catch((err) => {
-                console.log(err instanceof TypeError);
-            });
-        document.getElementById("tag-name").value = "";
-    }
+    create() {
 
-    tagEdit(editID, taxonomy) {
-        axios
-            .post(this.uri + this.path + "tag_edit", {
-                editID: editID,
-                taxonomy_type: taxonomy,
-            })
-            .then((response) => {
-                const test = document.querySelector(".test");
-                if (response.status == 200 && response.statusText == "OK") {
-                    const HTML = response.data.html;
-                    test.innerHTML = HTML;
-                }
-                const updateBtn = document.getElementById("tagUpdate");
-                updateBtn.addEventListener("click", () => {
-                    const updateId = updateBtn.value;
-                    this.tagUpdate(updateId);
-                });
-            })
-            .catch((err) => {
-                console.log(err instanceof TypeError);
-            });
+        const name = document.getElementById("tag-name")
+        const slug = document.getElementById("tag-slug");
+        const description = document.getElementById("tag-description");
+        const submit = document.getElementById("create");
+        const api = "tag_store";
+
+
+        submit.addEventListener("click", () => {
+            let obj = {
+                api: "tag_store",
+                tag_name: name.value,
+                tag_slug: slug.value,
+                tag_description: description.value
+            }
+            this.axios.formDataApi(obj);
+            this.start = true;
+
+            name.value = ""
+            slug.value = ""
+            description.value = ""
+
+            return setTimeout(() => { this.init() }, (300))
+        });
     }
 
     delete() {
-
-
+        const api = "tag_destroy";
         const deleteBtn = document.querySelectorAll(".tag-delete");
-        for (let i = 0; i < deleteBtn.length; i++) {
-            let ID = deleteBtn[i].value;
-            let taxonomy = deleteBtn[i].id;
-            deleteBtn[i].addEventListener(
+        if (deleteBtn) {
+            for (let i = 0; i < deleteBtn.length; i++) {
+                let ID = deleteBtn[i].value;
+                let taxonomy = deleteBtn[i].id;
+                deleteBtn[i].addEventListener(
+                    "click",
+                    () => {
+                        let obj = {
+                            api: api,
+                            deleteID: ID,
+                            taxonomy_type: taxonomy
+                        }
+                        this.axios.formDataApi(obj);
+                        this.start = true;
+
+                        return setTimeout(() => { this.init() }, (300))
+                    });
+            }
+        }
+    }
+
+    tagEdit(test) {
+
+        const editBtn = document.querySelectorAll(".tag-edit");
+
+        for (let i = 0; i < editBtn.length; i++) {
+            let ID = editBtn[i].value;
+            let taxonomy = editBtn[i].id;
+            editBtn[i].addEventListener(
                 "click",
-                () => {
-                    this.tagDelete(ID, taxonomy);
+                async () => {
+                    const api = "tag_edit";
+                    let obj = {
+                        api: api,
+                        editID: ID,
+                        taxonomy_type: taxonomy,
+                    }
+                    let HTML = await this.axios.getPostData(obj);
+                    test.innerHTML = HTML;
+
+                    const name = document.getElementById("tag_name");
+                    const slug = document.getElementById("tag_slug");
+                    const description = document.getElementById("tag_description");
+                    const updateBtn = document.getElementById("tagUpdate");
+
+
+                    updateBtn.addEventListener("click", async () => {
+                        const api = "tag_update";
+
+                        let obj = {
+                            api: api,
+                            updateId: updateBtn.value,
+                            tag_name: name.value,
+                            tag_slug: slug.value,
+                            tag_description: description.value
+                        }
+                        this.axios.formDataApi(obj);
+                        this.start = true;
+
+                        description.value = "";
+                        slug.value = "";
+                        name.value = "";
+                       
+                        return setTimeout(() => { this.init() }, (300))
+                    });
                 });
         }
-
     }
-
-    tagUpdate(updateId) {
-        const name = document.getElementById("tag_name").value;
-        const slug = document.getElementById("tag_slug").value;
-        const description = document.getElementById("tag_description").value;
-
-        axios
-            .post(this.uri + this.path + "tag_update", {
-                updateId: updateId,
-                tag_name: name,
-                tag_slug: slug,
-                tag_description: description
-
-            })
-            .then((response) => {
-                if (response.status == 200 && response.statusText == "OK") {
-                    console.log(response);
-                    this.init();
-                }
-            })
-
-            .catch((err) => {
-                console.log(err instanceof TypeError);
-            });
-    }
-
 
     // this.init();
 

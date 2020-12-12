@@ -2634,9 +2634,9 @@ var Pagination = /*#__PURE__*/function () {
   }
 
   _createClass(Pagination, [{
-    key: "init",
+    key: "start",
     value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var _start = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var hash,
             axios,
             obj,
@@ -2671,11 +2671,11 @@ var Pagination = /*#__PURE__*/function () {
         }, _callee, this);
       }));
 
-      function init() {
-        return _init.apply(this, arguments);
+      function start() {
+        return _start.apply(this, arguments);
       }
 
-      return init;
+      return start;
     }()
   }, {
     key: "paging",
@@ -2703,7 +2703,6 @@ var Pagination = /*#__PURE__*/function () {
       var _select = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var hash,
             pages,
-            lenght,
             obj,
             _args2 = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
@@ -2711,21 +2710,19 @@ var Pagination = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
-                pages = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : 5;
-                lenght = _args2.length > 2 ? _args2[2] : undefined;
+                pages = _args2.length > 1 ? _args2[1] : undefined;
                 obj = {
                   api: this.api,
                   pageSelected: pages,
                   hash: hash
                 };
-                console.log(obj);
-                _context2.next = 7;
+                _context2.next = 5;
                 return this.axios.getPostData(obj);
 
-              case 7:
+              case 5:
                 return _context2.abrupt("return", _context2.sent);
 
-              case 8:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -2853,7 +2850,8 @@ var Profile_image = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
 
 
 
@@ -2870,18 +2868,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
 var Tag = /*#__PURE__*/function () {
   function Tag(target) {
     _classCallCheck(this, Tag);
 
-    // this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-    // this.uri = document.location.origin;
-    // this.pageSelected;
     var api = "tag_create";
     this.start = true;
     this.target = target;
-    this.pages;
-    this.page = new _pagination__WEBPACK_IMPORTED_MODULE_1__["default"](api);
+    this.pages = 5;
+    this.page = new _pagination__WEBPACK_IMPORTED_MODULE_2__["default"](api);
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.init();
   }
 
@@ -2895,7 +2892,7 @@ var Tag = /*#__PURE__*/function () {
             HTML,
             DOM,
             test,
-            lenght,
+            pages,
             addColor,
             chages,
             option,
@@ -2907,13 +2904,12 @@ var Tag = /*#__PURE__*/function () {
                 hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
                 HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
                 DOM = document.getElementById(this.target);
+                test = document.querySelector(".test");
 
                 if (!DOM) {
                   _context2.next = 22;
                   break;
                 }
-
-                test = document.querySelector(".test");
 
                 if (!(this.start && HTML == null)) {
                   _context2.next = 12;
@@ -2921,7 +2917,7 @@ var Tag = /*#__PURE__*/function () {
                 }
 
                 _context2.next = 8;
-                return this.page.init();
+                return this.page.start();
 
               case 8:
                 HTML = _context2.sent;
@@ -2934,7 +2930,7 @@ var Tag = /*#__PURE__*/function () {
 
               case 13:
                 this.start = false;
-                lenght = this.page.paging();
+                this.page.paging();
                 HTML = "";
 
                 if (hash != null) {
@@ -2942,11 +2938,10 @@ var Tag = /*#__PURE__*/function () {
                   addColor.classList.add("active");
                 }
 
-                HTML = "";
-
                 chages = /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                    var pages;
+                    var _pages;
+
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
                         switch (_context.prev = _context.next) {
@@ -2954,38 +2949,22 @@ var Tag = /*#__PURE__*/function () {
                             hash = location.hash.slice(1, 2);
 
                             if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN)) {
-                              _context.next = 14;
+                              _context.next = 8;
                               break;
                             }
 
-                            pages = _this.pages;
+                            _pages = _this.pages;
+                            _context.next = 5;
+                            return _this.page.select(hash, _pages);
 
-                            if (!pages) {
-                              _context.next = 9;
-                              break;
-                            }
-
-                            _context.next = 6;
-                            return _this.page.select(hash, pages, lenght);
-
-                          case 6:
-                            HTML = _context.sent;
-                            _context.next = 12;
-                            break;
-
-                          case 9:
-                            _context.next = 11;
-                            return _this.page.select(hash, pages, lenght);
-
-                          case 11:
+                          case 5:
                             HTML = _context.sent;
 
-                          case 12:
                             _this.init(hash, HTML);
 
                             window.removeEventListener('hashchange', chages);
 
-                          case 14:
+                          case 8:
                           case "end":
                             return _context.stop();
                         }
@@ -3000,6 +2979,7 @@ var Tag = /*#__PURE__*/function () {
 
                 window.addEventListener('hashchange', chages);
                 option = document.getElementById("items");
+                option.value = this.pages;
                 option.addEventListener('change', function () {
                   _this.pages = option.value;
                   location.hash = 1;
@@ -3007,6 +2987,11 @@ var Tag = /*#__PURE__*/function () {
                 });
 
               case 22:
+                this["delete"]();
+                this.create();
+                this.tagEdit(test);
+
+              case 25:
               case "end":
                 return _context2.stop();
             }
@@ -3020,93 +3005,145 @@ var Tag = /*#__PURE__*/function () {
 
       return init;
     }()
-    /*-------------------------------------*/
-
   }, {
-    key: "tagStore",
-    value: function tagStore(name, slug, description) {
+    key: "create",
+    value: function create() {
       var _this2 = this;
 
-      axios.post(this.uri + this.path + "tag_store", {
-        tag_name: name,
-        tag_slug: slug,
-        tag_description: description
-      }).then(function (response) {
-        console.log(response);
+      var name = document.getElementById("tag-name");
+      var slug = document.getElementById("tag-slug");
+      var description = document.getElementById("tag-description");
+      var submit = document.getElementById("create");
+      var api = "tag_store";
+      submit.addEventListener("click", function () {
+        var obj = {
+          api: "tag_store",
+          tag_name: name.value,
+          tag_slug: slug.value,
+          tag_description: description.value
+        };
 
-        _this2.init();
-      })["catch"](function (err) {
-        console.log(err instanceof TypeError);
-      });
-      document.getElementById("tag-name").value = "";
-    }
-  }, {
-    key: "tagEdit",
-    value: function tagEdit(editID, taxonomy) {
-      var _this3 = this;
+        _this2.axios.formDataApi(obj);
 
-      axios.post(this.uri + this.path + "tag_edit", {
-        editID: editID,
-        taxonomy_type: taxonomy
-      }).then(function (response) {
-        var test = document.querySelector(".test");
-
-        if (response.status == 200 && response.statusText == "OK") {
-          var HTML = response.data.html;
-          test.innerHTML = HTML;
-        }
-
-        var updateBtn = document.getElementById("tagUpdate");
-        updateBtn.addEventListener("click", function () {
-          var updateId = updateBtn.value;
-
-          _this3.tagUpdate(updateId);
-        });
-      })["catch"](function (err) {
-        console.log(err instanceof TypeError);
+        _this2.start = true;
+        name.value = "";
+        slug.value = "";
+        description.value = "";
+        return setTimeout(function () {
+          _this2.init();
+        }, 300);
       });
     }
   }, {
     key: "delete",
     value: function _delete() {
-      var _this4 = this;
+      var _this3 = this;
 
+      var api = "tag_destroy";
       var deleteBtn = document.querySelectorAll(".tag-delete");
 
-      var _loop = function _loop(i) {
-        var ID = deleteBtn[i].value;
-        var taxonomy = deleteBtn[i].id;
-        deleteBtn[i].addEventListener("click", function () {
-          _this4.tagDelete(ID, taxonomy);
-        });
-      };
+      if (deleteBtn) {
+        var _loop = function _loop(i) {
+          var ID = deleteBtn[i].value;
+          var taxonomy = deleteBtn[i].id;
+          deleteBtn[i].addEventListener("click", function () {
+            var obj = {
+              api: api,
+              deleteID: ID,
+              taxonomy_type: taxonomy
+            };
 
-      for (var i = 0; i < deleteBtn.length; i++) {
-        _loop(i);
+            _this3.axios.formDataApi(obj);
+
+            _this3.start = true;
+            return setTimeout(function () {
+              _this3.init();
+            }, 300);
+          });
+        };
+
+        for (var i = 0; i < deleteBtn.length; i++) {
+          _loop(i);
+        }
       }
     }
   }, {
-    key: "tagUpdate",
-    value: function tagUpdate(updateId) {
-      var _this5 = this;
+    key: "tagEdit",
+    value: function tagEdit(test) {
+      var _this4 = this;
 
-      var name = document.getElementById("tag_name").value;
-      var slug = document.getElementById("tag_slug").value;
-      var description = document.getElementById("tag_description").value;
-      axios.post(this.uri + this.path + "tag_update", {
-        updateId: updateId,
-        tag_name: name,
-        tag_slug: slug,
-        tag_description: description
-      }).then(function (response) {
-        if (response.status == 200 && response.statusText == "OK") {
-          console.log(response);
+      var editBtn = document.querySelectorAll(".tag-edit");
 
-          _this5.init();
-        }
-      })["catch"](function (err) {
-        console.log(err instanceof TypeError);
-      });
+      var _loop2 = function _loop2(i) {
+        var ID = editBtn[i].value;
+        var taxonomy = editBtn[i].id;
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          var api, obj, HTML, name, slug, description, updateBtn;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  api = "tag_edit";
+                  obj = {
+                    api: api,
+                    editID: ID,
+                    taxonomy_type: taxonomy
+                  };
+                  _context4.next = 4;
+                  return _this4.axios.getPostData(obj);
+
+                case 4:
+                  HTML = _context4.sent;
+                  test.innerHTML = HTML;
+                  name = document.getElementById("tag_name");
+                  slug = document.getElementById("tag_slug");
+                  description = document.getElementById("tag_description");
+                  updateBtn = document.getElementById("tagUpdate");
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+                    var api, obj;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            api = "tag_update";
+                            obj = {
+                              api: api,
+                              updateId: updateBtn.value,
+                              tag_name: name.value,
+                              tag_slug: slug.value,
+                              tag_description: description.value
+                            };
+
+                            _this4.axios.formDataApi(obj);
+
+                            _this4.start = true;
+                            description.value = "";
+                            slug.value = "";
+                            name.value = "";
+                            return _context3.abrupt("return", setTimeout(function () {
+                              _this4.init();
+                            }, 300));
+
+                          case 8:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  })));
+
+                case 11:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4);
+        })));
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop2(i);
+      }
     } // this.init();
     // let hash1 = hash;
     // if (hash1 === null) {

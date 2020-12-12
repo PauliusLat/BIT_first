@@ -123,17 +123,18 @@ class TagController
         return $response;
     }
 
-    public function destroy(Request $requestJson)
+    public function destroy(Request $request)
     {
 
         $tag = new Tag;
-        $request = $this->decodeRequest($requestJson);
         $tags = $tag->getAllTags();
         $id = $request->request->get('deleteID');
         $taxonomy_type = $request->request->get('taxonomy_type');
         $tag->deleteTagFromDb($id, $taxonomy_type);
         return $response = new Response;
         $response->prepare($request);
+        echo "<pre>";
+        var_dump($response);
         return $response;
     }
 

@@ -93,6 +93,7 @@ class Api {
     }
 
     async getPostData(obj) {
+
         if (obj.api) {
             try {
                 let formData = new FormData();
