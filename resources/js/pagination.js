@@ -11,7 +11,7 @@ class Pagination {
         this.hash;
     }
 
-    async init(hash = null) {
+    async start(hash = null) {
 
         this.hash = hash;
 
@@ -47,8 +47,8 @@ class Pagination {
         return page.length - 4;
     }
 
-    async select(hash = 1, pages = 5, lenght) {
-        console.log(lenght);
+    async select(hash = 1, pages) {
+       
         let obj = {
             api: this.api,
             pageSelected: pages,
