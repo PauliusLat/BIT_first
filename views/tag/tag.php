@@ -39,12 +39,6 @@ use BIT\app\App;
             $pageNum = 1;
             for ($page = 1; $page <= $pages; $page++) {
 
-                // $nav .= '&nbsp <a href="#' . $page . '" class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
-                // $next = '&nbsp<a href="#' . $nextpage . '" class="paging" id = "' . $nextpage . ' ">></a>';
-                // $prev = '<a href="#' . $prevpage . '" class="paging" id = "' . $prevpage . ' "><</a>';
-                // $last = '<a href="#' . $lastpage . '" class="paging" id = "' . $lastpage . ' "> &nbsp>> </a>';
-                // $first = '<a href="#' . $firstpage . '" class="paging" id = "' . $firstpage . ' "><<&nbsp</a>';
-
                 $nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
                 $next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';
                 $prev = '<a class="paging" id = "' . $prevpage . ' "><</a>';
@@ -75,7 +69,7 @@ use BIT\app\App;
             foreach ($tags as $tag) {
             ?>
                 <tr>
-                    <td class="count" ><?= $tag->name ?></td>
+                    <td class="count"><?= $tag->name ?></td>
                     <td><?= $tag->term_id ?></td>
                     <td><?= $tag->slug ?></td>
                     <td><?= $tag->description ?></td>

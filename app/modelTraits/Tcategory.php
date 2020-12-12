@@ -277,7 +277,7 @@ trait Tcategory
         }
     }
 
-    public function getChildCats($parent_id, $taxonomy_type = 'maincat')
+    public function getChildCats($number, $offset, $parent_id, $taxonomy_type = 'maincat')
     {
         $parent_id = (array)$parent_id;
         foreach ($this->cattax as $value) {
@@ -286,7 +286,7 @@ trait Tcategory
                     $taxCollection = new TaxCollection();
                     foreach ($parent_id as $id) {
                         if (isset($this->ID)) {
-                            $terms = get_terms(['taxonomy' => $value, 'object_ids' => $this->ID, 'parent' => $id, 'hide_empty' => false]);
+                            $terms = get_terms(['number' => $number, 'offset' => $offset, 'taxonomy' => $value, 'object_ids' => $this->ID, 'parent' => $id, 'hide_empty' => false]);
                         } else {
                             $terms = get_terms(['taxonomy' => $value, 'parent' => $id, 'hide_empty' => false]);
                         }
@@ -302,11 +302,11 @@ trait Tcategory
         }
     }
 
-    public function getTaxonomyHierarchy($plevel = 1, $taxonomy = 'maincat', $parent = 0)
+    public function getTaxonomyHierarchy($number, $offset, $plevel = 1, $taxonomy = 'maincat', $parent = 0)
     {
         // only 1 taxonomy
         $taxonomy = is_array($taxonomy) ? array_shift($taxonomy) : $taxonomy;
-        $terms = $this->getChildCats($parent, $taxonomy);
+        $terms = $this->getChildCats($number, $offset, $parent, $taxonomy);
         // _dc($terms);
         if (did_action('init')) {
             $taxCollection = new TaxCollection();

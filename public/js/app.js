@@ -3087,7 +3087,6 @@ var Tag = /*#__PURE__*/function () {
           console.log(response);
 
           _this5.init();
-
         }
       })["catch"](function (err) {
         console.log(err instanceof TypeError);
