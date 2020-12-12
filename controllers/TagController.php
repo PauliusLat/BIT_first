@@ -25,7 +25,7 @@ class TagController
         return View::adminRender('tag.maintag');
     }
 
-    public function create(Request $request)
+    public function create(Request $requestJson)
     {
 
         if ($request->request->get('pageSelected') != null) {
@@ -34,7 +34,7 @@ class TagController
             $limit = 5;
         }
 
-        if (strlen($request->request->get('hash')) != 0) {
+        if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
             $number = $request->request->get('hash');
         } else {
             $number = 1;
