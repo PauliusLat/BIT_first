@@ -1027,6 +1027,8 @@ body {
   min-height: 100px;
 }
 
+/** @format */
+
 .editor {
   border: solid 1px #ccc;
   padding: 20px;
@@ -1085,7 +1087,7 @@ body {
 
 .main_news_container .news-container .active-content .newHeight .titleInput {
   width: 100%;
-  border: solid 1px #CCCCCC;
+  border: solid 1px #cccccc;
   height: 50px;
   text-align: center;
   margin: 0;

@@ -59,7 +59,6 @@ trait Ttaxonomy
 
 
                         foreach ($terms as $term) {
-
                             wp_set_object_terms($this->ID, $term->term_id, $value, $append = false);
                         }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 

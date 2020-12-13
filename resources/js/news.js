@@ -36,7 +36,6 @@ class News {
       const newsCat = document.querySelector(".newsCat");
       const newsCatBtn = document.getElementById("create");
 
-
       category.addEventListener("click", () => {
         newsCat.style.display = "";
         const selectCat = document.getElementById("cat");
@@ -108,6 +107,8 @@ class News {
             catContent: document.getElementById("category-description").value,
             category: cat
           }
+
+          console.log(cat)
 
           if (obj.title) {
             readImage.sendImageData(obj);
