@@ -958,6 +958,55 @@ var Api = /*#__PURE__*/function () {
       return getDAta;
     }()
   }, {
+    key: "getPostData",
+    value: function () {
+      var _getPostData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(api, id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.post(this.uri + this.path + api, {
+                  id: id
+                });
+
+              case 3:
+                response = _context2.sent;
+
+                if (!(response.status == 200 && response.statusText == "OK")) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                return _context2.abrupt("return", response.data.html);
+
+              case 6:
+                _context2.next = 12;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+                console.error(_context2.t0);
+                console.log("Duomenys is serveverio nepasiekiami !!!");
+
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 8]]);
+      }));
+
+      function getPostData(_x2, _x3) {
+        return _getPostData.apply(this, arguments);
+      }
+
+      return getPostData;
+    }()
+  }, {
     key: "saveContent",
     value: function saveContent(api, id, content) {
       axios.post(this.uri + this.path + api, {
@@ -1008,18 +1057,18 @@ var Api = /*#__PURE__*/function () {
   }, {
     key: "getPostData",
     value: function () {
-      var _getPostData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(obj) {
+      var _getPostData2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(obj) {
         var formData, key, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 if (!obj.api) {
-                  _context2.next = 17;
+                  _context3.next = 17;
                   break;
                 }
 
-                _context2.prev = 1;
+                _context3.prev = 1;
                 formData = new FormData();
 
                 for (key in obj) {
@@ -1027,43 +1076,43 @@ var Api = /*#__PURE__*/function () {
                 } // console.log(Object.fromEntries(formData))
 
 
-                _context2.next = 6;
+                _context3.next = 6;
                 return axios.post(this.uri + this.path + obj.api, formData, {});
 
               case 6:
-                response = _context2.sent;
+                response = _context3.sent;
 
                 if (!(response.status == 200 && response.statusText == "OK")) {
-                  _context2.next = 11;
+                  _context3.next = 11;
                   break;
                 }
 
-                _context2.next = 10;
+                _context3.next = 10;
                 return response.data.html;
 
               case 10:
-                return _context2.abrupt("return", _context2.sent);
+                return _context3.abrupt("return", _context3.sent);
 
               case 11:
-                _context2.next = 17;
+                _context3.next = 17;
                 break;
 
               case 13:
-                _context2.prev = 13;
-                _context2.t0 = _context2["catch"](1);
-                console.error(_context2.t0);
+                _context3.prev = 13;
+                _context3.t0 = _context3["catch"](1);
+                console.error(_context3.t0);
                 console.log("Duomenys is serveverio nepasiekiami !!!");
 
               case 17:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[1, 13]]);
+        }, _callee3, this, [[1, 13]]);
       }));
 
-      function getPostData(_x2) {
-        return _getPostData.apply(this, arguments);
+      function getPostData(_x4) {
+        return _getPostData2.apply(this, arguments);
       }
 
       return getPostData;
