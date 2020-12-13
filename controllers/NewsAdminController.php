@@ -43,6 +43,14 @@ class NewsAdminController
 		$news->news_content = $content;
 		$news->save();
 
+		$cat = $request->request->get('category');
+		// $catArr = explode(',', $cat);
+		$catInt = array_map('intval', explode(',', $cat));
+		$news->attachCat($catInt);
+		echo '<pre>';
+		var_dump($catInt);
+		// _dc($catArr);
+
 		$page->setRoute('showNews', $news->ID);
 		$page->save();
 
@@ -50,7 +58,6 @@ class NewsAdminController
 		$image->setAlt($altText);
 		$image->setCaption($imgTitle);
 		$image->save($file, $news->ID);
-
 		return new Response();
 	}
 

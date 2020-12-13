@@ -3,7 +3,7 @@
 use BIT\app\Category;
 // use BIT\app\Query;
 // use BIT\app\Tag;
-// use BIT\app\Attachment;
+use BIT\models\NewsPost;
 use BIT\app\App;
 use BIT\app\Query;
 // use WP_Query;
@@ -36,7 +36,7 @@ App::start();
 // $pages = Page::all()->pageState('Site Page')->all();
 // _dc($pages);
 // $session = App::start()->getService('session');
-// $session->set(2, 8);
+// $session->set('oooo', 8);
 // _dc($_SERVER);
 // _dc($session->get('333333333333cassdca'));
 // $server = new Server;
@@ -143,7 +143,7 @@ add_action('init', function () {
     // $session = App::start()->getService('session');
     // $news = new NewsPost;
     // $news->save();
-    // $news->attachCat('aauga');
+    // $news->attachCat('164');
     // $news->addTag('blablabla');
     // $session->delete('message');
     // $session->flash('messkukuku', 'tokiu pavadinimu kategorija jau sukurta');

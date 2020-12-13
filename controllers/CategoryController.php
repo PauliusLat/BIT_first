@@ -9,6 +9,7 @@ use BIT\app\Attachment;
 // use BIT\models\AlbumPost;
 use BIT\app\Category;
 use BIT\app\Session;
+use BIT\app\Pagination;
 // use BIT\app\Tag;
 use BIT\app\Page;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 require PLUGIN_DIR_PATH . '/../../../wp-load.php';
 require_once(ABSPATH . 'wp-admin/includes/image.php');
 
-
 class CategoryController
 {
 
@@ -28,15 +28,30 @@ class CategoryController
         return View::adminRender('category.maincat');
     }
 
-    public function create(Session $session)
+    public function create(Request $requestJson, Session $session)
     {
+        $request = $this->decodeRequest($requestJson);
+
+        if ($request->request->get('pageSelected') != null) {
+            $limit = $request->request->get('pageSelected');
+        } else {
+            $limit = 5;
+        }
+
+        if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
+            $number = $request->request->get('hash');
+        } else {
+            $number = 1;
+        }
+
+        $pagination = new Pagination($limit, $number);
         $category = new Category;
-        $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr()));
+        $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr($limit, $pagination->offset)));
         $message = $session->get('alert_message');
         $success_message = $session->get('success_message');
         $uploads_dir = wp_upload_dir();
         $url = $uploads_dir['url'] . '/';
-        $output = View::adminRender('category.category',  ['categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'url' => $url]);
+        $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'url' => $url]);
         return new JsonResponse(['html' => $output]);
     }
 
