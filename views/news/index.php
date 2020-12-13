@@ -53,34 +53,10 @@
     </div>
 </div>
 
-<div class="md-1-5 newsCat" style="display: none;">
-    <div>tralialia</div>
-    <h2 class='tcp'>Pridėkite naują kategoriją</h2>
-    <div class=''>
-        <label class="tcp-label">Kategorijos pavadinimas</label>
-    </div>
-    <input type="text" name="category-name" id="category-name" value="" placeholder="Įrašykite kategorijos pavadinimą..." class="tcp-input">
-    <div class=''>
-        <label class="tcp-label">Priskirkite 'tėvinę' kategoriją</label>
-    </div>
+<div class="md-1-5 newsCat">
+    <h2 class='tcp'>Pridėkite aaaaaaaaaaaaa naują kategoriją</h2>
+    <div>11111111111111111111111</div>
 
-    <?php
-    $args1 = array(
-        'taxonomy'     => 'maincat',
-        'show_option_all' => 'pasirinkite tėvinę kategoriją',
-        'orderby'      => 'name',
-        'hide_empty'   => false,
-        'show_count'   => false,
-        'pad_counts'   => false,
-        'hierarchical' => true,
-    );
-    ?>
-    <ul>
-        <?php wp_dropdown_categories($args1); ?>
-    </ul>
-    <br><br>
-
-    <h2 class='tcp'>Pridėkite naują kategoriją</h2>
     <div class=''>
         <label class="tcp-label">Kategorijos pavadinimas</label>
     </div>

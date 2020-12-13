@@ -87,6 +87,7 @@ class Api {
         if (obj.api) {
             try {
                 let formData = new FormData();
+
                 for (var key in obj) {
                     formData.append(key, obj[key])
                 }
