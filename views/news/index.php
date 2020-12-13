@@ -53,8 +53,10 @@
     </div>
 </div>
 
-<div class="md-1-5 newsCat" style="display: none;">
-    <h2 class='tcp'>Pridėkite naują kategoriją</h2>
+<div class="md-1-5 newsCat">
+    <h2 class='tcp'>Pridėkite aaaaaaaaaaaaa naują kategoriją</h2>
+    <div>11111111111111111111111</div>
+
     <div class=''>
         <label class="tcp-label">Kategorijos pavadinimas</label>
     </div>
@@ -74,7 +76,7 @@
         'hierarchical' => true,
     );
     ?>
-    <ul style="display:inline-block">
+    <ul>
         <?php wp_dropdown_categories($args); ?>
     </ul>
     <br><br>
@@ -84,7 +86,7 @@
         <label class="tcp-label">Kategorijos aprašymas</label>
     </div>
     <textarea name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="tcp-input">
-        
+
     </textarea>
 
     <div class="buttons sm-1">

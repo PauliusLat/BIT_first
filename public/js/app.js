@@ -1032,59 +1032,11 @@ var Api = /*#__PURE__*/function () {
       var formData = new FormData();
 
       if (obj.api) {
-        if (obj.id) {
-          formData.append('id', obj.id);
-        }
+        for (var key in obj) {
+          formData.append(key, obj[key]);
+        } // console.log(Object.fromEntries(formData))
 
-        if (obj.title) {
-          formData.append('title', obj.title);
-        }
 
-        if (obj.content) {
-          formData.append('content', obj.content);
-        }
-
-        if (typeof obj.altText === 'string') {
-          formData.append('altText', obj.altText);
-        }
-
-        if (typeof obj.imageTitle === 'string') {
-          formData.append('imageTitle', obj.imageTitle);
-        }
-
-        if (obj.image) {
-          formData.append('image', obj.image);
-        }
-
-        if (obj.tag) {
-          formData.append('tag', obj.tag);
-        }
-
-        if (obj.slug) {
-          formData.append('slug', obj.slug);
-        }
-
-        if (obj.category) {
-          formData.append('category', obj.category);
-        }
-
-        if (obj.catTitle) {
-          formData.append('catTitle', obj.catTitle);
-        }
-
-        if (obj.catContent) {
-          formData.append('catContent', obj.catContent);
-        }
-
-        if (obj.page) {
-          formData.append('page', obj.page);
-        }
-
-        if (obj.cat_parent) {
-          formData.append('cat_parent', obj.cat_parent);
-        }
-
-        console.log(Object.fromEntries(formData));
         axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
           if (error.response) {
             console.log(error.response.data);
@@ -1102,6 +1054,69 @@ var Api = /*#__PURE__*/function () {
         throw 'can not find API';
       }
     }
+  }, {
+    key: "getPostData",
+    value: function () {
+      var _getPostData2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(obj) {
+        var formData, key, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!obj.api) {
+                  _context3.next = 17;
+                  break;
+                }
+
+                _context3.prev = 1;
+                formData = new FormData();
+
+                for (key in obj) {
+                  formData.append(key, obj[key]);
+                } // console.log(Object.fromEntries(formData))
+
+
+                _context3.next = 6;
+                return axios.post(this.uri + this.path + obj.api, formData, {});
+
+              case 6:
+                response = _context3.sent;
+
+                if (!(response.status == 200 && response.statusText == "OK")) {
+                  _context3.next = 11;
+                  break;
+                }
+
+                _context3.next = 10;
+                return response.data.html;
+
+              case 10:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 11:
+                _context3.next = 17;
+                break;
+
+              case 13:
+                _context3.prev = 13;
+                _context3.t0 = _context3["catch"](1);
+                console.error(_context3.t0);
+                console.log("Duomenys is serveverio nepasiekiami !!!");
+
+              case 17:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[1, 13]]);
+      }));
+
+      function getPostData(_x4) {
+        return _getPostData2.apply(this, arguments);
+      }
+
+      return getPostData;
+    }()
   }]);
 
   return Api;
@@ -2028,12 +2043,15 @@ var Menu = /*#__PURE__*/function () {
     _classCallCheck(this, Menu);
 
     this.target = target;
+    this.read = true;
     this.init();
   }
 
   _createClass(Menu, [{
     key: "init",
     value: function init() {
+      var _this = this;
+
       var DOM = document.getElementById(this.target);
 
       if (DOM) {
@@ -2059,20 +2077,19 @@ var Menu = /*#__PURE__*/function () {
         };
 
         var draggables = document.querySelectorAll('.draggable');
-        var container = document.querySelector('.container');
+        var container = document.querySelector('.cont');
         var add = document.querySelector(".addNew");
-        var lastElemet = document.querySelector(".container"); // var lastChild = document.getElementById("addDrag").lastChild;
+        this.save(); // this.update();
 
-        add.addEventListener('click', function () {
-          var HTML = "<div class=\"menuDiv\">\n            <label for=\"\">\n                kazkas4\n            </label>\n            <input type=\"text\">\n        </div>\n\n        <div class=\"menuSelect\">\n            <label for=\"standard-select\">Standard Select</label>\n\n            <select class=\"select-css\" id=\"standard-select\">\n                <option value=\"1\">1</option>\n                <option value=\"2\">2</option>\n                <option value=\"3\">3</option>\n                <option value=\"4\">4</option>\n                <option value=\"5\">5</option>\n            </select>\n        </div>\n        <div class=\"menuLink\">\n            <label for=\"\">\n                kazkas2\n            </label>\n            <input type=\"text\">\n        </div>\n\n        <div class=\"manuDelete\">\n            <svg height=\"35\" version=\"1.1\" viewBox=\"0 0 295 295\" width=\"40\">\n                <title />\n                <desc />\n                <defs />\n                <g fill=\"none\" fill-rule=\"evenodd\" id=\"Page-1\" stroke=\"none\" stroke-width=\"1\">\n                    <g fill-rule=\"nonzero\" id=\"close\">\n                        <path d=\"M147.421,0 C66.133,0 0,66.133 0,147.421 C0,228.709 66.133,294.842 147.421,294.842 C185.708,294.842 221.988,280.233 249.58,253.706 C251.969,251.41 252.044,247.611 249.747,245.223 C247.452,242.835 243.654,242.759 241.264,245.056 C215.919,269.423 182.592,282.842 147.422,282.842 C72.75,282.843 12,222.093 12,147.421 C12,72.749 72.75,12 147.421,12 C222.092,12 282.842,72.75 282.842,147.421 C282.842,164.263 279.79,180.694 273.771,196.256 C272.576,199.347 274.112,202.821 277.203,204.017 C280.295,205.21 283.768,203.676 284.964,200.585 C291.519,183.636 294.843,165.749 294.843,147.42 C294.843,66.133 228.71,0 147.421,0 Z\" fill=\"#000000\" id=\"Shape\" />\n                        <path d=\"M167.619,160.134 C165.249,157.815 161.451,157.857 159.134,160.224 C156.816,162.592 156.857,166.391 159.224,168.709 L206.46,214.945 C207.628,216.088 209.143,216.657 210.657,216.657 C212.214,216.657 213.77,216.054 214.945,214.854 C217.263,212.486 217.222,208.687 214.855,206.369 L167.619,160.134 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                        <path d=\"M125.178,133.663 C126.349,134.834 127.885,135.42 129.421,135.42 C130.957,135.42 132.492,134.834 133.664,133.663 C136.007,131.32 136.007,127.521 133.664,125.178 L88.428,79.942 C86.085,77.599 82.285,77.599 79.943,79.942 C77.6,82.285 77.6,86.084 79.943,88.427 L125.178,133.663 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                        <path d=\"M214.9,79.942 C212.557,77.599 208.757,77.599 206.415,79.942 L79.942,206.415 C77.599,208.758 77.599,212.557 79.942,214.9 C81.113,216.071 82.649,216.657 84.185,216.657 C85.721,216.657 87.256,216.071 88.428,214.9 L214.9,88.428 C217.243,86.084 217.243,82.286 214.9,79.942 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                    </g>\n                </g>\n            </svg>\n        </div>\n        <div class=\"menuDrag\">\n            <svg data-name=\"Layer 1\" id=\"Layer_1\" height=\"35\" width=\"40\" viewBox=\"0 0 32 32\">\n                <defs>\n                    <style>\n                        .cls-1 {\n                            fill: #515151;\n                        }\n                    </style>\n                </defs>\n                <title />\n                <path class=\"cls-1\" d=\"M16,9a3,3,0,1,0-3-3A3,3,0,0,0,16,9Zm0-4.46A1.46,1.46,0,1,1,14.54,6,1.46,1.46,0,0,1,16,4.54Z\" />\n                <path class=\"cls-1\" d=\"M16,19a3,3,0,1,0-3-3A3,3,0,0,0,16,19Zm0-4.46A1.46,1.46,0,1,1,14.54,16,1.46,1.46,0,0,1,16,14.54Z\" />\n                <path class=\"cls-1\" d=\"M16,29a3,3,0,1,0-3-3A3,3,0,0,0,16,29Zm0-4.46A1.46,1.46,0,1,1,14.54,26,1.46,1.46,0,0,1,16,24.54Z\" />\n            </svg>\n        </div> "; // let lastElemet = draggables[draggables.length - 1];
+        this["delete"](draggables);
 
-          var node = document.createElement("div");
-          node.classList.add("draggable");
-          node.setAttribute('id', "addDrag");
-          node.setAttribute('draggable', true);
-          node.innerHTML = HTML;
-          lastElemet.appendChild(node); // insertAfter(node, lastChild);
-        });
+        var newBlock = function newBlock() {
+          _this.addNew();
+
+          add.removeEventListener("click", newBlock);
+        };
+
+        add.addEventListener("click", newBlock);
         draggables.forEach(function (draggable) {
           draggable.addEventListener('dragstart', function () {
             draggable.classList.add('dragging');
@@ -2095,6 +2112,123 @@ var Menu = /*#__PURE__*/function () {
         });
       }
     }
+  }, {
+    key: "addNew",
+    value: function addNew() {
+      var lastElemet = document.querySelector(".cont");
+      var HTML = "<div class=\"menuName\">\n          <label for=\"\">\n\n          </label>\n          <input name=\"menu\" class=\"menuText\" placeholder=\"Pavadinimas\" type=\"text\">\n      </div>\n\n      <div class=\"menuSelect\">\n          <label for=\"standard-select\">\n\n          </label>\n\n          <select class=\"select-css\" id=\"standard-select\">\n              <option value=\"1\">Pasirinkti puslapi</option>\n              <option value=\"2\">2</option>\n              <option value=\"3\">3</option>\n              <option value=\"4\">4</option>\n              <option value=\"5\">5</option>\n          </select>\n      </div>\n      <div class=\"menuLinkAdd\">\n          <label for=\"link\">\n\n          </label>\n          <input class=\"menuLink\" placeholder=\"Prideti nuoroda\" type=\"text\">\n      </div>\n\n      <div class=\"manuDelete\">\n          <svg height=\"35\" version=\"1.1\" viewBox=\"0 0 295 295\" width=\"40\">\n              <title />\n              <desc />\n              <defs />\n              <g fill=\"none\" fill-rule=\"evenodd\" id=\"Page-1\" stroke=\"none\" stroke-width=\"1\">\n                  <g fill-rule=\"nonzero\" id=\"close\">\n                      <path d=\"M147.421,0 C66.133,0 0,66.133 0,147.421 C0,228.709 66.133,294.842 147.421,294.842 C185.708,294.842 221.988,280.233 249.58,253.706 C251.969,251.41 252.044,247.611 249.747,245.223 C247.452,242.835 243.654,242.759 241.264,245.056 C215.919,269.423 182.592,282.842 147.422,282.842 C72.75,282.843 12,222.093 12,147.421 C12,72.749 72.75,12 147.421,12 C222.092,12 282.842,72.75 282.842,147.421 C282.842,164.263 279.79,180.694 273.771,196.256 C272.576,199.347 274.112,202.821 277.203,204.017 C280.295,205.21 283.768,203.676 284.964,200.585 C291.519,183.636 294.843,165.749 294.843,147.42 C294.843,66.133 228.71,0 147.421,0 Z\" fill=\"#000000\" id=\"Shape\" />\n                      <path d=\"M167.619,160.134 C165.249,157.815 161.451,157.857 159.134,160.224 C156.816,162.592 156.857,166.391 159.224,168.709 L206.46,214.945 C207.628,216.088 209.143,216.657 210.657,216.657 C212.214,216.657 213.77,216.054 214.945,214.854 C217.263,212.486 217.222,208.687 214.855,206.369 L167.619,160.134 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                      <path d=\"M125.178,133.663 C126.349,134.834 127.885,135.42 129.421,135.42 C130.957,135.42 132.492,134.834 133.664,133.663 C136.007,131.32 136.007,127.521 133.664,125.178 L88.428,79.942 C86.085,77.599 82.285,77.599 79.943,79.942 C77.6,82.285 77.6,86.084 79.943,88.427 L125.178,133.663 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                      <path d=\"M214.9,79.942 C212.557,77.599 208.757,77.599 206.415,79.942 L79.942,206.415 C77.599,208.758 77.599,212.557 79.942,214.9 C81.113,216.071 82.649,216.657 84.185,216.657 C85.721,216.657 87.256,216.071 88.428,214.9 L214.9,88.428 C217.243,86.084 217.243,82.286 214.9,79.942 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                  </g>\n              </g>\n          </svg>\n      </div>\n      <div class=\"menuDrag\">\n          <svg data-name=\"Layer 1\" id=\"Layer_1\" height=\"35\" width=\"40\" viewBox=\"0 0 32 32\">\n              <defs>\n                  <style>\n                      .cls-1 {\n                          fill: #515151;\n                      }\n                  </style>\n              </defs>\n              <title />\n              <path class=\"cls-1\" d=\"M16,9a3,3,0,1,0-3-3A3,3,0,0,0,16,9Zm0-4.46A1.46,1.46,0,1,1,14.54,6,1.46,1.46,0,0,1,16,4.54Z\" />\n              <path class=\"cls-1\" d=\"M16,19a3,3,0,1,0-3-3A3,3,0,0,0,16,19Zm0-4.46A1.46,1.46,0,1,1,14.54,16,1.46,1.46,0,0,1,16,14.54Z\" />\n              <path class=\"cls-1\" d=\"M16,29a3,3,0,1,0-3-3A3,3,0,0,0,16,29Zm0-4.46A1.46,1.46,0,1,1,14.54,26,1.46,1.46,0,0,1,16,24.54Z\" />\n          </svg>\n      </div>";
+      var node = document.createElement("div");
+      node.classList.add("draggable");
+      node.setAttribute('id', "addDrag");
+      node.setAttribute('draggable', true);
+      node.innerHTML = HTML;
+      lastElemet.appendChild(node);
+      this.init();
+    }
+  }, {
+    key: "delete",
+    value: function _delete(draggables) {
+      var deleted = document.querySelectorAll(".manuDelete");
+
+      var _loop = function _loop(i) {
+        deleted[i].addEventListener("click", function () {
+          draggables[i].remove();
+        });
+      };
+
+      for (var i = 0; i < draggables.length; i++) {
+        _loop(i);
+      }
+    }
+  }, {
+    key: "save",
+    value: function save() {
+      var store = document.querySelector(".save");
+      var menuId = document.getElementById("menuID").value; // const pageLink = document.getElementById("menuID").value;
+      // console.log(menuId);
+
+      var api = "menu_store";
+
+      if (this.read) {
+        var data = function data() {
+          var menuText = document.getElementsByName("menu");
+          var menuLink = document.querySelectorAll(".menuLink");
+          var selectBox = document.getElementsByTagName("select");
+          var text = [];
+          var link = [];
+          var values = [];
+          var pageLinks = [];
+
+          for (i = 0; i < selectBox.length; i++) {
+            var options = selectBox[i].getElementsByTagName('option');
+
+            for (var i = options.length; i--;) {
+              if (options[i].selected) {
+                values.push(options[i].text);
+                pageLinks.push(options[i].value);
+                console.log(options[i].value);
+              } // if (options[i].selected) text = (options[i].innerText)
+
+            }
+
+            text.push(menuText[i].value);
+            link.push(menuLink[i].value);
+          } // console.log(text);
+          // console.log(values);
+
+
+          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+          var obj = {
+            category: values,
+            id: menuId,
+            pageLinks: pageLinks,
+            content: text,
+            api: api
+          };
+          axios.formDataApi(obj);
+        };
+
+        store.addEventListener("click", data);
+      }
+
+      this.read = false;
+    } // update() {
+    //   const update = document.querySelector(".update");
+    //   console.log(update);
+    //   let api = "menu_update";
+    //   if (this.read) {
+    //     var data = () => {
+    //       const menuText = document.getElementsByName("menu");
+    //       const menuLink = document.querySelectorAll(".menuLink");
+    //       var selectBox = document.getElementsByTagName("select");
+    //       var text = [];
+    //       var link = [];
+    //       var values = [];
+    //       for (this.index = 0; this.index < selectBox.length; this.index++) {
+    //         var options = selectBox[this.index].getElementsByTagName('option');
+    //         for (var i = options.length; i--;) {
+    //           if (options[i].selected) values.push(options[i].value)
+    //           // if (options[i].selected) text = (options[i].innerText)
+    //         }
+    //         text.push(menuText[this.index].value)
+    //         link.push(menuLink[this.index].value)
+    //       }
+    //       console.log(text);
+    //       console.log(values);
+    //       var axios = new Api();
+    //       var obj = {
+    //         category: values,
+    //         various: link,
+    //         content: text,
+    //         api: api
+    //       }
+    //       axios.formDataApi(obj);
+    //     }
+    //     update.addEventListener("click", data);
+    //   }
+    //   this.read = false;
+    // }
+
   }]);
 
   return Menu;
@@ -2114,7 +2248,6 @@ var Menu = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2122,7 +2255,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 
 
 
@@ -2230,99 +2362,7 @@ var News = /*#__PURE__*/function () {
   }]);
 
   return News;
-}(); // function editNews(editId) {
-//   axios
-//     .get(
-//       uri + path +
-//       "news-edit-admin",
-//       {
-//         editId: editId
-//       }
-//     )
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-//   setTimeout(renderNews, 300);
-// }
-// function deleteNews(delId) {
-//   axios
-//     .post(
-//       uri + path +
-//       "news-destroy&id=" + delId
-//     )
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//       console.log("Problemos su DeleteNews api");
-//     });
-//   setTimeout(renderNews, 100);
-// }
-// function collapseNews() {
-//   var coll = document.getElementsByClassName("collapsible");
-//   var i;
-//   for (i = 0; i < coll.length; i++) {
-//     coll[i].addEventListener("click", function (event) {
-//       this.classList.toggle("active");
-//       var content = this.nextElementSibling;
-//       if (content.style.display === "block") {
-//         content.style.display = "none";
-//         event.target.innerHTML = 'SUKURTI NAUJIENĄ';
-//       } else {
-//         content.style.display = "block";
-//         event.target.innerHTML = 'PASLĖPTI';
-//       }
-//     });
-//   }
-// }
-// function renderNews() {
-//   axios
-//     .get(
-//       uri + path +
-//       "news-list",
-//       {}
-//     )
-//     .then(function (response) {
-//       if (response.status == 200 && response.statusText == "OK") {
-//         const dom = document.getElementById("renderNewsList");
-//         let HTMLString = response.data.htmlString;
-//         dom.innerHTML = HTMLString;
-//         const editBtn = document.querySelectorAll(".editBtnNews");
-//         const deletetBtn = document.querySelectorAll(".deleteBtnNews");
-//         for (let i = 0; i < editBtn.length; i++) {
-//           let editId = editBtn[i].id;
-//           editBtn[i].addEventListener(
-//             "click", function () {
-//               editNews(editId);
-//             },
-//             false
-//           );
-//         }
-//         for (let i = 0; i < deletetBtn.length; i++) {
-//           let delId = deletetBtn[i].id;
-//           deletetBtn[i].addEventListener(
-//             "click",
-//             function () {
-//               deleteNews(delId);
-//             },
-//             false
-//           );
-//         }
-//       }
-//       return response;
-//     })
-//     .catch(function (error) {
-//       if (error.response) {
-//         console.log(error.response.data);
-//         console.log(error.response.status);
-//         console.log(error.response.headers);
-//       } else if (error.request) {
-//         console.log(error.request);
-//       } else {
-//         console.log("Error", error.message);
-//       }
-//       console.log(error);
-//     });
-// }
-
+}();
 
 /* harmony default export */ __webpack_exports__["default"] = (News);
 
@@ -2604,6 +2644,129 @@ function pageDelete(ID) {
 
 /***/ }),
 
+/***/ "./resources/js/pagination.js":
+/*!************************************!*\
+  !*** ./resources/js/pagination.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Pagination = /*#__PURE__*/function () {
+  function Pagination(api) {
+    _classCallCheck(this, Pagination);
+
+    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+    this.uri = document.location.origin;
+    this.lenght;
+    this.api = api;
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.hash;
+  }
+
+  _createClass(Pagination, [{
+    key: "paging",
+    value: function paging() {
+      var page = document.querySelectorAll(".paging");
+      var hash = window.location.hash.replace(/^#!?/, '').slice(0, 1);
+
+      if (page.length) {
+        var _nextPage;
+
+        var _loop = function _loop(i) {
+          _nextPage = function nextPage() {
+            var id = page[i].id;
+            location.hash = '#' + id;
+            page[i].removeEventListener("click", _nextPage);
+          };
+
+          page[i].addEventListener('click', _nextPage);
+        };
+
+        for (var i = 0; i < page.length; i++) {
+          _loop(i);
+        }
+      }
+
+      this.lenght = page.length - 4;
+    }
+  }, {
+    key: "select",
+    value: function () {
+      var _select = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var hash,
+            pages,
+            obj,
+            _args = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                hash = _args.length > 0 && _args[0] !== undefined ? _args[0] : 1;
+                pages = _args.length > 1 ? _args[1] : undefined;
+
+                if (!(this.lenght < hash)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                hash = 1;
+                _context.next = 10;
+                break;
+
+              case 6:
+                obj = {
+                  api: this.api,
+                  pageSelected: pages,
+                  hash: hash
+                };
+                _context.next = 9;
+                return this.axios.getPostData(obj);
+
+              case 9:
+                return _context.abrupt("return", _context.sent);
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function select() {
+        return _select.apply(this, arguments);
+      }
+
+      return select;
+    }()
+  }]);
+
+  return Pagination;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Pagination);
+
+/***/ }),
+
 /***/ "./resources/js/profile_image.js":
 /*!***************************************!*\
   !*** ./resources/js/profile_image.js ***!
@@ -2707,9 +2870,17 @@ var Profile_image = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
 
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2717,249 +2888,513 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+
+
+
 var Tag = /*#__PURE__*/function () {
   function Tag(target) {
     _classCallCheck(this, Tag);
 
-    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-    this.uri = document.location.origin;
-    this.pageSelected;
-    this.hash = location.hash;
-    this.hasharr;
-    this.hasarr2;
+    var api = "tag_create";
+    this.api = api;
+    this.start = true;
     this.target = target;
-    this.startTag();
+    this.pages = 5;
+    this.page = new _pagination__WEBPACK_IMPORTED_MODULE_2__["default"](api);
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.init();
   }
 
   _createClass(Tag, [{
-    key: "startTag",
-    value: function startTag() {
-      var DOM = document.getElementById(this.target);
-
-      if (DOM) {
-        this.init();
-      }
-    }
-  }, {
     key: "init",
-    value: function init() {
-      var _this = this;
+    value: function () {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this = this;
 
-      var pageNo = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+        var hash,
+            HTML,
+            DOM,
+            test,
+            obj,
+            chechHash,
+            addColor,
+            chages,
+            option,
+            selected,
+            _args2 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
+                HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
+                DOM = document.getElementById(this.target);
+                test = document.querySelector(".test");
 
-      if (_typeof(pageNo) == 'object' && this.hash.length !== 0) {
-        console.log(pageNo);
-        this.hasharr = this.hash.split('#');
-        this.hasarr2 = this.hasharr[1].split('%');
-        this.hash = hasarr2[0]; // window.addEventListener( "load",
-        // () =>{
-        // this.hasharr = this.hash.split('#')
-        // this.hasarr2 = this.hasharr[1].split('%')
-        // this.hash = this.hasarr2[0]
-        // this.hash = location.hash
-        // this.init();
-      } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
-        this.hasharr = this.hash.split('#');
-        this.hasarr2 = this.hasharr[1].split('%');
-        this.hash = this.hasarr2[0];
-      } else {
-        this.hash = null;
+                if (!DOM) {
+                  _context2.next = 28;
+                  break;
+                }
+
+                if (!this.start) {
+                  _context2.next = 17;
+                  break;
+                }
+
+                if (!(HTML == null)) {
+                  _context2.next = 15;
+                  break;
+                }
+
+                location.hash = 1;
+                obj = {
+                  api: this.api,
+                  hash: 1
+                };
+                _context2.next = 11;
+                return this.axios.getPostData(obj);
+
+              case 11:
+                HTML = _context2.sent;
+                test.innerHTML = HTML;
+                _context2.next = 17;
+                break;
+
+              case 15:
+                test.innerHTML = HTML;
+                console.log('naujas html 11111111111');
+
+              case 17:
+                this.start = false;
+                chechHash = this.page.paging();
+                HTML = "";
+                addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
+                addColor.classList.add("active");
+
+                chages = /*#__PURE__*/function () {
+                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+                    var pages;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            console.log('hash stebejimas 2222222222222');
+                            hash = location.hash.slice(1, 2);
+
+                            if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN)) {
+                              _context.next = 10;
+                              break;
+                            }
+
+                            pages = _this.pages;
+                            _context.next = 6;
+                            return _this.page.select(hash, pages);
+
+                          case 6:
+                            HTML = _context.sent;
+                            _this.start = true;
+
+                            _this.init(hash, HTML);
+
+                            window.removeEventListener('hashchange', chages);
+
+                          case 10:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee);
+                  }));
+
+                  return function chages() {
+                    return _ref.apply(this, arguments);
+                  };
+                }();
+
+                window.addEventListener('hashchange', chages); //prikabina kruva addEventListener
+
+                option = document.getElementById("items");
+                option.value = this.pages;
+
+                selected = function selected() {
+                  _this.pages = option.value;
+                  location.hash = 1;
+                  chages();
+                  option.removeEventListener('change', selected);
+                };
+
+                option.addEventListener('change', selected);
+
+              case 28:
+                this["delete"]();
+                this.create();
+                this.tagEdit(test);
+
+              case 31:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function init() {
+        return _init.apply(this, arguments);
       }
 
-      axios.post(this.uri + this.path + "tag_create", {
-        pages: parseInt(pageNo),
-        pageSelected: this.pageSelected,
-        hash: this.hash
-      }).then(function (response) {
-        var test = document.querySelector(".test");
-
-        if (response.status == 200 && response.statusText == "OK") {
-          var HTML = response.data.html;
-          test.innerHTML = HTML;
-
-          if (pageNo > 0 && typeof pageNo === 'string') {
-            var addColor = document.querySelector('.nr-' + pageNo);
-            addColor.classList.add("active");
-          }
-
-          var submit = document.getElementById("create");
-          submit.addEventListener("click", function () {
-            var name = document.getElementById("tag-name").value;
-            var slug = document.getElementById("tag-slug").value;
-            var description = document.getElementById("tag-description").value;
-
-            _this.tagStore(name, slug, description);
-          });
-          var editBtn = document.querySelectorAll(".tag-edit");
-
-          var _loop = function _loop(i) {
-            var ID = editBtn[i].value;
-            var taxonomy = editBtn[i].id;
-            editBtn[i].addEventListener("click", function () {
-              _this.tagEdit(ID, taxonomy);
-            }, false);
-          };
-
-          for (var i = 0; i < editBtn.length; i++) {
-            _loop(i);
-          }
-
-          var deleteBtn = document.querySelectorAll(".tag-delete");
-
-          var _loop2 = function _loop2(_i) {
-            var ID = deleteBtn[_i].value;
-            var taxonomy = deleteBtn[_i].id;
-
-            deleteBtn[_i].addEventListener("click", function () {
-              _this.tagDelete(ID, taxonomy);
-            }, false);
-          };
-
-          for (var _i = 0; _i < deleteBtn.length; _i++) {
-            _loop2(_i);
-          }
-
-          var pageBtn = document.getElementById("selectpage");
-          var select = document.getElementById("items");
-          pageBtn.addEventListener("click", function () {
-            var pageSelected;
-
-            if (select.options[select.selectedIndex] != undefined) {
-              pageSelected = select.options[select.selectedIndex].value;
-            } else {
-              pageSelected = 0;
-            }
-
-            _this.pageSelected = pageSelected;
-
-            _this.init(1);
-          });
-          var page = document.querySelectorAll(".paging");
-
-          var _loop3 = function _loop3(_i2) {
-            var pageNo = page[_i2].id;
-
-            page[_i2].addEventListener("click", function () {
-              console.log(pageNo);
-              location.hash = '#' + pageNo;
-              _this.hash = location.hash;
-
-              _this.init(pageNo);
-            }, false);
-          };
-
-          for (var _i2 = 0; _i2 < page.length; _i2++) {
-            _loop3(_i2);
-          }
-        }
-      })["catch"](function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log("Error", error.message);
-        }
-
-        console.log(error);
-      });
-    }
+      return init;
+    }()
   }, {
-    key: "tagStore",
-    value: function tagStore(name, slug, description) {
+    key: "create",
+    value: function create() {
       var _this2 = this;
 
-      axios.post(this.uri + this.path + "tag_store", {
-        tag_name: name,
-        tag_slug: slug,
-        tag_description: description
-      }).then(function (response) {
-        console.log(response);
+      var name = document.getElementById("tag-name");
+      var slug = document.getElementById("tag-slug");
+      var description = document.getElementById("tag-description");
+      var submit = document.getElementById("create");
+      var api = "tag_store";
+      submit.addEventListener("click", function () {
+        var obj = {
+          api: "tag_store",
+          tag_name: name.value,
+          tag_slug: slug.value,
+          tag_description: description.value
+        };
 
-        _this2.init();
-      })["catch"](function (err) {
-        console.log(err instanceof TypeError);
+        _this2.axios.formDataApi(obj);
+
+        _this2.start = true;
+        name.value = "";
+        slug.value = "";
+        description.value = "";
+        return setTimeout(function () {
+          _this2.init();
+        }, 300);
       });
-      document.getElementById("tag-name").value = "";
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      var _this3 = this;
+
+      var api = "tag_destroy";
+      var deleteBtn = document.querySelectorAll(".tag-delete");
+
+      if (deleteBtn) {
+        var _loop = function _loop(i) {
+          var ID = deleteBtn[i].value;
+          var taxonomy = deleteBtn[i].id;
+          deleteBtn[i].addEventListener("click", function () {
+            var obj = {
+              api: api,
+              deleteID: ID,
+              taxonomy_type: taxonomy
+            };
+
+            _this3.axios.formDataApi(obj);
+
+            _this3.start = true;
+            return setTimeout(function () {
+              _this3.init();
+            }, 300);
+          });
+        };
+
+        for (var i = 0; i < deleteBtn.length; i++) {
+          _loop(i);
+        }
+      }
     }
   }, {
     key: "tagEdit",
-    value: function tagEdit(editID, taxonomy) {
-      var _this3 = this;
-
-      axios.post(this.uri + this.path + "tag_edit", {
-        editID: editID,
-        taxonomy_type: taxonomy
-      }).then(function (response) {
-        var test = document.querySelector(".test");
-
-        if (response.status == 200 && response.statusText == "OK") {
-          var HTML = response.data.html;
-          test.innerHTML = HTML;
-        }
-
-        var updateBtn = document.getElementById("tagUpdate");
-        updateBtn.addEventListener("click", function () {
-          var updateId = updateBtn.value;
-
-          _this3.tagUpdate(updateId);
-        });
-      })["catch"](function (err) {
-        console.log(err instanceof TypeError);
-      });
-    }
-  }, {
-    key: "tagUpdate",
-    value: function tagUpdate(updateId) {
+    value: function tagEdit(test) {
       var _this4 = this;
 
-      var name = document.getElementById("tag_name").value;
-      var slug = document.getElementById("tag_slug").value;
-      var description = document.getElementById("tag_description").value;
-      axios.post(this.uri + this.path + "tag_update", {
-        updateId: updateId,
-        tag_name: name,
-        tag_slug: slug,
-        tag_description: description
-      }).then(function (response) {
-        if (response.status == 200 && response.statusText == "OK") {
-          console.log(response);
+      var editBtn = document.querySelectorAll(".tag-edit");
 
-          _this4.init(); // setTimeout(call.init(), 500);
+      var _loop2 = function _loop2(i) {
+        var ID = editBtn[i].value;
+        var taxonomy = editBtn[i].id;
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          var api, obj, HTML, name, slug, description, updateBtn;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  api = "tag_edit";
+                  obj = {
+                    api: api,
+                    editID: ID,
+                    taxonomy_type: taxonomy
+                  };
+                  _context4.next = 4;
+                  return _this4.axios.getPostData(obj);
 
-        }
-      })["catch"](function (err) {
-        console.log(err instanceof TypeError);
-      });
-    }
-  }, {
-    key: "tagDelete",
-    value: function tagDelete(ID, taxonomy) {
-      var _this5 = this;
+                case 4:
+                  HTML = _context4.sent;
+                  test.innerHTML = HTML;
+                  name = document.getElementById("tag_name");
+                  slug = document.getElementById("tag_slug");
+                  description = document.getElementById("tag_description");
+                  updateBtn = document.getElementById("tagUpdate");
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+                    var api, obj;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            api = "tag_update";
+                            obj = {
+                              api: api,
+                              updateId: updateBtn.value,
+                              tag_name: name.value,
+                              tag_slug: slug.value,
+                              tag_description: description.value
+                            };
 
-      axios.post(this.uri + this.path + "tag_destroy", {
-        deleteID: ID,
-        taxonomy_type: taxonomy
-      }).then(function (response) {
-        if (response.status == 200 && response.statusText == "OK") {
-          console.log(response);
+                            _this4.axios.formDataApi(obj);
 
-          _this5.init(); // setTimeout(init(), 500);
+                            _this4.start = true;
+                            description.value = "";
+                            slug.value = "";
+                            name.value = "";
+                            return _context3.abrupt("return", setTimeout(function () {
+                              _this4.init();
+                            }, 300));
 
-        }
-      })["catch"](function (err) {
-        console.log(err instanceof TypeError);
-      });
-    }
+                          case 8:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  })));
+
+                case 11:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4);
+        })));
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop2(i);
+      }
+    } // this.init();
+    // let hash1 = hash;
+    // if (hash1 === null) {
+    //     hash1 = location.hash.slice(1, 2);
+    //     console.log(hash1);
+    // }
+    // const api = "tag_create";
+    // 
+    // let response = await this.axios.getPostData(api, hash1);
+    // test.innerHTML = response;
+    // const submit = document.getElementById("create");
+    // submit.addEventListener("click", () => {
+    //     const name = document.getElementById("tag-name").value;
+    //     const slug = document.getElementById("tag-slug").value;
+    //     const description = document.getElementById("tag-description").value;
+    //     tagStore(name, slug, description);
+    // });
+    // this.paging();
+    // init1(pageNo = 1) {
+    //     if (typeof pageNo == 'object' && this.hash.length !== 0) {
+    //         console.log(pageNo);
+    //         this.hasharr = this.hash.split('#')
+    //         this.hasarr2 = this.hasharr[1].split('%')
+    //         this.hash = hasarr2[0]
+    //         // window.addEventListener( "load",
+    //         // () =>{
+    //         // this.hasharr = this.hash.split('#')
+    //         // this.hasarr2 = this.hasharr[1].split('%')
+    //         // this.hash = this.hasarr2[0]
+    //         // this.hash = location.hash
+    //         // this.init();
+    //     } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
+    //         this.hasharr = this.hash.split('#')
+    //         this.hasarr2 = this.hasharr[1].split('%')
+    //         this.hash = this.hasarr2[0]
+    //     } else {
+    //         this.hash = null
+    //     }
+    //     axios
+    //         .post(this.uri + this.path + "tag_create", {
+    //             pages: parseInt(pageNo),
+    //             pageSelected: this.pageSelected,
+    //             hash: this.hash
+    //         })
+    //         .then((response) => {
+    //             const test = document.querySelector(".test");
+    //             if (response.status == 200 && response.statusText == "OK") {
+    //                 const HTML = response.data.html;
+    //                 test.innerHTML = HTML;
+    //                 if (pageNo > 0 && typeof pageNo === 'string') {
+    //                     let addColor = document.querySelector('.nr-' + pageNo);
+    //                     addColor.classList.add("active");
+    //                 }
+    //                 const submit = document.getElementById("create");
+    //                 submit.addEventListener("click", () => {
+    //                     const name = document.getElementById("tag-name").value;
+    //                     const slug = document.getElementById("tag-slug").value;
+    //                     const description = document.getElementById("tag-description").value;
+    //                     this.tagStore(name, slug, description);
+    //                 });
+    //                 const editBtn = document.querySelectorAll(".tag-edit");
+    //                 for (let i = 0; i < editBtn.length; i++) {
+    //                     let ID = editBtn[i].value;
+    //                     let taxonomy = editBtn[i].id;
+    //                     editBtn[i].addEventListener(
+    //                         "click",
+    //                         () => {
+    //                             this.tagEdit(ID, taxonomy);
+    //                         },
+    //                         false
+    //                     );
+    //                 }
+    //                 const deleteBtn = document.querySelectorAll(".tag-delete");
+    //                 for (let i = 0; i < deleteBtn.length; i++) {
+    //                     let ID = deleteBtn[i].value;
+    //                     let taxonomy = deleteBtn[i].id;
+    //                     deleteBtn[i].addEventListener(
+    //                         "click",
+    //                         () => {
+    //                             this.tagDelete(ID, taxonomy);
+    //                         },
+    //                         false
+    //                     );
+    //                 }
+    //                 const pageBtn = document.getElementById("selectpage");
+    //                 const select = document.getElementById("items");
+    //                 pageBtn.addEventListener(
+    //                     "click",
+    //                     () => {
+    //                         var pageSelected;
+    //                         if (select.options[select.selectedIndex] != undefined) {
+    //                             pageSelected = select.options[select.selectedIndex].value;
+    //                         } else {
+    //                             pageSelected = 0;
+    //                         }
+    //                         this.pageSelected = pageSelected
+    //                         this.init(1);
+    //                     });
+    //                 const page = document.querySelectorAll(".paging");
+    //                 for (let i = 0; i < page.length; i++) {
+    //                     let pageNo = page[i].id;
+    //                     page[i].addEventListener(
+    //                         "click",
+    //                         () => {
+    //                             console.log(pageNo);
+    //                             location.hash = '#' + pageNo
+    //                             this.hash = location.hash
+    //                             this.init(pageNo);
+    //                         },
+    //                         false
+    //                     );
+    //                 }
+    //             }
+    //         })
+    //         .catch(function (error) {
+    //             if (error.response) {
+    //                 console.log(error.response.data);
+    //                 console.log(error.response.status);
+    //                 console.log(error.response.headers);
+    //             } else if (error.request) {
+    //                 console.log(error.request);
+    //             } else {
+    //                 console.log("Error", error.message);
+    //             }
+    //             console.log(error);
+    //         });
+    // }
+    // tagStore(name, slug, description) {
+    //     axios
+    //         .post(this.uri + this.path + "tag_store", {
+    //             tag_name: name,
+    //             tag_slug: slug,
+    //             tag_description: description
+    //         })
+    //         .then((response) => {
+    //             console.log(response);
+    //             this.init();
+    //         })
+    //         .catch((err) => {
+    //             console.log(err instanceof TypeError);
+    //         });
+    //     document.getElementById("tag-name").value = "";
+    // }
+    // tagEdit(editID, taxonomy) {
+    //     axios
+    //         .post(this.uri + this.path + "tag_edit", {
+    //             editID: editID,
+    //             taxonomy_type: taxonomy,
+    //         })
+    //         .then((response) => {
+    //             const test = document.querySelector(".test");
+    //             if (response.status == 200 && response.statusText == "OK") {
+    //                 const HTML = response.data.html;
+    //                 test.innerHTML = HTML;
+    //             }
+    //             const updateBtn = document.getElementById("tagUpdate");
+    //             updateBtn.addEventListener("click", () => {
+    //                 const updateId = updateBtn.value;
+    //                 this.tagUpdate(updateId);
+    //             });
+    //         })
+    //         .catch((err) => {
+    //             console.log(err instanceof TypeError);
+    //         });
+    // }
+    // tagUpdate(updateId) {
+    //     const name = document.getElementById("tag_name").value;
+    //     const slug = document.getElementById("tag_slug").value;
+    //     const description = document.getElementById("tag_description").value;
+    //     axios
+    //         .post(this.uri + this.path + "tag_update", {
+    //             updateId: updateId,
+    //             tag_name: name,
+    //             tag_slug: slug,
+    //             tag_description: description
+    //         })
+    //         .then((response) => {
+    //             if (response.status == 200 && response.statusText == "OK") {
+    //                 console.log(response);
+    //                 this.init();
+    //                 // setTimeout(call.init(), 500);
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log(err instanceof TypeError);
+    //         });
+    // }
+    // tagDelete(ID, taxonomy) {
+    //     axios
+    //         .post(this.uri + this.path + "tag_destroy", {
+    //             deleteID: ID,
+    //             taxonomy_type: taxonomy,
+    //         })
+    //         .then((response) => {
+    //             if (response.status == 200 && response.statusText == "OK") {
+    //                 console.log(response);
+    //                 this.init();
+    //                 // setTimeout(init(), 500);
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log(err instanceof TypeError);
+    //         });
+    // }
+
   }]);
 
   return Tag;
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (Tag); // const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-// const this.uri = document.location.origin;
+// const uri = document.location.origin;
 // const tagStrt = document.getElementById("tagStart");
 // function startTag() {
 //   if (tagStrt) {
@@ -2970,20 +3405,11 @@ var Tag = /*#__PURE__*/function () {
 // let hash = location.hash
 // let hasharr
 // let hasarr2
-// function init(pageNo = 1, hash = 1){
+// function init(pageNo){
 // if (typeof pageNo == 'object' &&  hash.length !== 0){
 //   hasharr = hash.split('#')
 //   hasarr2 = hasharr[1].split('%')
 //   hash = hasarr2[0]
-//   window.addEventListener( "load",
-//   () =>{
-//     // hasharr = hash.split('#')
-//     // hasarr2 = hasharr[1].split('%')
-//     // hash = hasarr2[0]
-//     hash = location.hash
-//     init(hash);
-//   },
-//   false);
 // }else if(typeof pageNo === 'string' && hash.length !== 0){
 //   hasharr = hash.split('#')
 //   hasarr2 = hasharr[1].split('%')
@@ -3158,22 +3584,6 @@ var Tag = /*#__PURE__*/function () {
 //     });
 // }
 // export default startTag();
-// async init(pageNo) {
-//   let api = "tag_create";
-//   let axios = new Api();
-//   let response = awayt axios.getDAta(api);
-//     console.log(response);
-// const test = document.querySelector(".test");
-// const HTML = response.data.html;
-// console.log(HTML);
-// test.innerHTML = HTML;
-// const submit = document.getElementById("create");
-// submit.addEventListener("click", () => {
-//   const name = document.getElementById("tag-name").value;
-//   const slug = document.getElementById("tag-slug").value;
-//   const description = document.getElementById("tag-description").value;
-//   tagStore(name, slug, description);
-// });
 
 /***/ }),
 
@@ -3195,8 +3605,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

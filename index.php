@@ -3,9 +3,15 @@
 use BIT\app\Category;
 // use BIT\app\Query;
 // use BIT\app\Tag;
-// use BIT\app\Attachment;
+use BIT\models\NewsPost;
 use BIT\app\App;
+use BIT\app\Query;
+// use WP_Query;
 use BIT\app\Page;
+use BIT\app\Post;
+use BIT\app\Pagination;
+use BIT\app\FrontMenu;
+use BIT\app\Session;
 
 
 
@@ -30,7 +36,7 @@ App::start();
 // $pages = Page::all()->pageState('Site Page')->all();
 // _dc($pages);
 // $session = App::start()->getService('session');
-// $session->set(2, 8);
+// $session->set('oooo', 8);
 // _dc($_SERVER);
 // _dc($session->get('333333333333cassdca'));
 // $server = new Server;
@@ -62,11 +68,50 @@ App::start();
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 
-// use BIT\models\NewsPost;
-// add_action('init', function () {
-    // $page = new Page;
-    // $page = $page->get(162);
+
+
+// use BIT\models\NewresPost;
+add_action('init', function () {
+    // $query = new Query;
+    // // $page = $query->postName('namai')->getPost()->all();
+    // // _dc($query->postType('page')->getPost()->all());
+    // $post = new Page;
+    // $page = get_page_by_title('namai', 'OBJECT', 'page');
+    // $page = $post->get($page->ID);
     // _dc($page);
+    // $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
+    // _dc($page);
+    // $args = array(
+    //     'post_type'  => 'page',
+    //     'meta_key'   => 'pageState',
+    //     // 'orderby'    => 'meta_value_num',
+    //     // 'order'      => 'ASC',
+    //     'meta_query' => array(
+    //         array(
+    //             'key'     => 'pageState',
+    //             'value'   => ['Site_page', 'Menu_page'],
+    //             // 'compare' => 'IN',
+    //         ),
+    //     ),
+    // );
+    // $query = new WP_Query($args);
+    // _dc($query);
+    // 
+    // $pages = $query->postType('page')->postMeta('pageState', 'Menu_page')->getPost()->all();
+    // $pages = $query->postType('page')->getPost()->all();
+    // _dc($pages);
+
+
+    // $session = new Session;
+    // // // $session->deleteSession();
+    // $session->flash('ooo', 5);
+    // _dc($session->get('ooo'));
+    // _dc($_COOKIE['Bit']);
+    // $page = new Page;
+    // // $page = $page->get(162);
+    // // // _dc($page);
+    // $menu = new FrontMenu;
+    // _dc($menu);
 
     // $args = ['slug' => 'dovanos-namai'];
     // wp_update_term(107, 'maincat', $args);
@@ -74,8 +119,9 @@ App::start();
     // $category = new Category;
     // $cat = $category->getCatPage(108);
 
-    // _dc($cat);
+    // // _dc($cat);
     // $category = new Category;
+    // $category->deleteCatFromDb(135);
 
     // $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr()));
     // _dc($categories);
@@ -97,7 +143,7 @@ App::start();
     // $session = App::start()->getService('session');
     // $news = new NewsPost;
     // $news->save();
-    // $news->attachCat('aauga');
+    // $news->attachCat('164');
     // $news->addTag('blablabla');
     // $session->delete('message');
     // $session->flash('messkukuku', 'tokiu pavadinimu kategorija jau sukurta');
@@ -159,4 +205,4 @@ App::start();
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
 
-// });
+});

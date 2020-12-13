@@ -9,6 +9,8 @@ use BIT\models\NewsPost;
 use BIT\models\AlbumPost;
 use BIT\app\Category;
 use BIT\app\Tag;
+use BIT\app\Pagination;
+use BIT\app\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,9 +25,8 @@ class TagController
         return View::adminRender('tag.maintag');
     }
 
-    public function create(Request $requestJson)
+    public function create(Request $request)
     {
-        $request = $this->decodeRequest($requestJson);
 
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
@@ -39,30 +40,11 @@ class TagController
             $number = 1;
         }
 
-
-        $offset = ($number - 1)  * $limit;
-        $total = wp_count_terms('hashtag', ['hide_empty' => false]);
-        $pages = ceil($total / $limit);
-
-        if ($number < $pages) {
-            $nextpage = $number + 1;
-        } else {
-            $nextpage = $number;
-        }
-
-        if ($number > 1) {
-            $prevpage = $number - 1;
-        } else {
-            $prevpage = $number;
-        }
-
-        $lastpage = $pages;
-        $firstpage = 1;
-
-        $tags = get_terms('hashtag', array('number' => $limit, 'hide_empty' => false, 'offset' => $offset));
-        $output = View::adminRender('tag.tag',  ['tags' => $tags, 'nextpage' => $nextpage, 'prevpage' => $prevpage, 'total' => $total, 'limit' => $limit, 'pages' => $pages, 'lastpage' => $lastpage, 'firstpage' => $firstpage]);
-        $response = new JsonResponse(['html' => $output]);
-        return $response;
+        $pagination = new Pagination($limit, $number);
+        $tags = get_terms('hashtag', array('number' => $limit, 'hide_empty' => false, 'offset' => $pagination->offset));
+        $output = View::adminRender('tag.tag',  ['tags' => $tags, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
+        // $response = new JsonResponse(['html' => $output]);
+        return new JsonResponse(['html' => $output]);
     }
 
     public function store(Request $requestJson)
@@ -103,17 +85,18 @@ class TagController
         return $response;
     }
 
-    public function destroy(Request $requestJson)
+    public function destroy(Request $request)
     {
 
         $tag = new Tag;
-        $request = $this->decodeRequest($requestJson);
         $tags = $tag->getAllTags();
         $id = $request->request->get('deleteID');
         $taxonomy_type = $request->request->get('taxonomy_type');
         $tag->deleteTagFromDb($id, $taxonomy_type);
         return $response = new Response;
         $response->prepare($request);
+        echo "<pre>";
+        var_dump($response);
         return $response;
     }
 

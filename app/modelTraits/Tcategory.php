@@ -61,6 +61,11 @@ trait Tcategory
         if (did_action('init')) {
             $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'name' => $name];
             wp_update_term($id, $taxonomy_type, $args);
+            $page = $this->getCatPage($id);
+            if ($page != null || $page != 0 || $page != 'undefined' || $page != '') {
+                $page->post_name = $slug;
+                $page->save();
+            }
         } else {
             throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
         }
@@ -113,9 +118,21 @@ trait Tcategory
     }
 
     //adds page to category
-    public function addPageToCat(int $term_id, string $meta_key, int $page_id)
+    public function addPageToCat(string $name, int $term_id, string $meta_key)
     {
-        add_term_meta($term_id, $meta_key, $page_id);
+        $page = new Page();
+        $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
+        $menu_page_state = $page_state['main'];
+        foreach ($menu_page_state as $state => $value) {
+            if ($state == 'menu' || $state == 'category') {
+                array_push($page->pageState, $value);
+            }
+        }
+        // $page->pageState = $pageState;
+        $page->setRoute('kategorija');
+        $page->setTitle($name);
+        $page->save();
+        add_term_meta($term_id, $meta_key, $page->ID);
     }
 
     //adds image to category
@@ -140,7 +157,13 @@ trait Tcategory
     //deletes category from db
     public function deleteCatFromDb(int $id, $taxonomy_type = 'maincat')
     {
+        $page = $this->getCatPage($id);
+        // _dc($page->ID);
         wp_delete_term($id, $taxonomy_type);
+
+        if ($page->ID != null && $page->ID != 0 && $page->ID != 'undefined' && $page->ID != '') {
+            wp_delete_post($page->ID);
+        }
     }
 
     //attach category to post type
@@ -153,11 +176,15 @@ trait Tcategory
                     if ($this->ID == null) {
                         throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
                     } else {
-                        $terms = get_terms(['name' => $cat, 'taxonomy' => $value, 'hide_empty' => false]);
+                        // foreach ($cat as $id) {
+                        // $id = (int)$id;
+                        // $term = get_term_by(['id', $id, $taxonomy_type]);
+                        wp_set_object_terms($this->ID, $cat, $value);
+                        // }
 
-                        foreach ($terms as $term) {
-                            wp_set_object_terms($this->ID, $term->term_id, $value, $append = true);
-                        }
+                        // foreach ($terms as $term) {
+
+                        // }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
                          * so that children with the same names but different parents aren't confused.*/
                     }
@@ -183,7 +210,6 @@ trait Tcategory
                     } else {
                         $terms = get_terms(['name' => $cat, 'taxonomy' => $value, 'hide_empty' => false]);
                         foreach ($terms as $term) {
-
                             wp_set_object_terms($this->ID, $term->term_id, $value, $append = true);
                         }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
@@ -225,7 +251,6 @@ trait Tcategory
 
     public function removeCat($cat, $taxonomy_type = 'maincat')
     {
-
         if (is_string($cat)) {
             $this->catDelete($cat, $taxonomy_type);
         }
@@ -257,7 +282,7 @@ trait Tcategory
         }
     }
 
-    public function getChildCats($parent_id, $taxonomy_type = 'maincat')
+    public function getChildCats($number, $offset, $parent_id, $taxonomy_type = 'maincat')
     {
         $parent_id = (array)$parent_id;
         foreach ($this->cattax as $value) {
@@ -266,7 +291,7 @@ trait Tcategory
                     $taxCollection = new TaxCollection();
                     foreach ($parent_id as $id) {
                         if (isset($this->ID)) {
-                            $terms = get_terms(['taxonomy' => $value, 'object_ids' => $this->ID, 'parent' => $id, 'hide_empty' => false]);
+                            $terms = get_terms(['number' => $number, 'offset' => $offset, 'taxonomy' => $value, 'object_ids' => $this->ID, 'parent' => $id, 'hide_empty' => false]);
                         } else {
                             $terms = get_terms(['taxonomy' => $value, 'parent' => $id, 'hide_empty' => false]);
                         }
@@ -282,11 +307,11 @@ trait Tcategory
         }
     }
 
-    public function getTaxonomyHierarchy($plevel = 1, $taxonomy = 'maincat', $parent = 0)
+    public function getTaxonomyHierarchy($number, $offset, $plevel = 1, $taxonomy = 'maincat', $parent = 0)
     {
         // only 1 taxonomy
         $taxonomy = is_array($taxonomy) ? array_shift($taxonomy) : $taxonomy;
-        $terms = $this->getChildCats($parent, $taxonomy);
+        $terms = $this->getChildCats($number, $offset, $parent, $taxonomy);
         // _dc($terms);
         if (did_action('init')) {
             $taxCollection = new TaxCollection();

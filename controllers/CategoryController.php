@@ -9,6 +9,7 @@ use BIT\app\Attachment;
 // use BIT\models\AlbumPost;
 use BIT\app\Category;
 use BIT\app\Session;
+use BIT\app\Pagination;
 // use BIT\app\Tag;
 use BIT\app\Page;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 require PLUGIN_DIR_PATH . '/../../../wp-load.php';
 require_once(ABSPATH . 'wp-admin/includes/image.php');
 
-
 class CategoryController
 {
 
@@ -28,15 +28,30 @@ class CategoryController
         return View::adminRender('category.maincat');
     }
 
-    public function create(Session $session)
+    public function create(Request $requestJson, Session $session)
     {
+        $request = $this->decodeRequest($requestJson);
+
+        if ($request->request->get('pageSelected') != null) {
+            $limit = $request->request->get('pageSelected');
+        } else {
+            $limit = 5;
+        }
+
+        if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
+            $number = $request->request->get('hash');
+        } else {
+            $number = 1;
+        }
+
+        $pagination = new Pagination($limit, $number);
         $category = new Category;
-        $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr()));
+        $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr($limit, $pagination->offset)));
         $message = $session->get('alert_message');
         $success_message = $session->get('success_message');
         $uploads_dir = wp_upload_dir();
         $url = $uploads_dir['url'] . '/';
-        $output = View::adminRender('category.category',  ['categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'url' => $url]);
+        $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'url' => $url]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -53,44 +68,24 @@ class CategoryController
         }
 
         //check if category ex 
-        $categ = $category->getCatbyName($name);
+        $categ = get_term_by('name', $name, 'maincat');
         if ($categ->name == $name) {
             $session->flash('alert_message', 'tokiu pavadinimu kategorija jau sukurta');
-            // $categ->name != $name;
+            $categ->name != $name;
         } else {
+            //add category to db and get cat ID
+            $term_id = $category->addCat($name, $parent_id, $slug,  $description);
             $session->flash('success_message', 'kategorija sėkmingai sukurta');
         }
-
-        //add category to db and get cat ID
-        $catID = $category->addCat($name, $parent_id, $slug,  $description);
 
         // create category page if selected
         $createPage = $request->request->get('page');
         if ($createPage == 1) {
-            $page = new Page();
-            $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
-            $pageState = [];
-            foreach ($page_state as $state => $value) {
-                if ($state == 'category' || $state == 'site' || $state == 'system') {
-                    array_push($pageState, $value);
-                }
-            }
-            $page->pageState = $pageState;
-            $page->setRoute('kategorija');
-            $page->setTitle($name);
-            $page->save();
-            $category->addPageToCat($catID, 'page', $page->ID);
+            $category->addPageToCat($name, $term_id, 'page');
         }
 
         //add category image
         if ($request->files->get('image')) {
-            // $file = $request->files->get('image');
-            // $image = new Attachment();
-            // $image->setAlt('');
-            // $image->setCaption('');
-            // $image->save($file, $catID);
-            // _dc($image);
-
             $uploads_dir = wp_upload_dir();
             $path = $uploads_dir['path'] . '/';
             $target_file = basename($_FILES['image']['name']);
@@ -100,12 +95,9 @@ class CategoryController
             $category->addImageToCat($catID, "image", $picture);
         }
 
-        // $output = View::adminRender('category.category');
-        // return new JsonResponse(['html' => $output]);
         return new JsonResponse;
     }
 
-    //kategorijos servisas???
     public function edit(Request $requestJson, Category $category)
     {
         $request = $this->decodeRequest($requestJson);
@@ -116,31 +108,27 @@ class CategoryController
         return new JsonResponse(['html' => $output]);
     }
 
-    public function update(Request $requestJson, Category $category)
+    public function update(Request $requestJson, Category $category, Session $session)
     {
         $request = $this->decodeRequest($requestJson);
         $name = $request->request->get('cat_name');
         $slug = $request->request->get('cat_slug');
         $description = $request->request->get('cat_description');
         $id = $request->request->get('updateId');
-        // _dc($id);
-        $page = $category->getCatPage($id);
-        if ($page != null || $page != 0 || $page != 'undefined' || $page != '') {
-            $page->post_name = $slug;
-            $page->save();
-        }
+        //update cat and cat page
         $category->updateCat($id, $name, $slug, $description);
-        // $output = View::adminRender('category.category');
-        // return new JsonResponse(['html' => $output]);
+        $session->flash('success_message', 'kategorija sėkmingai pakoreguota');
         return new Response;
     }
 
-    public function destroy(Request $requestJson, Category $category)
+    public function destroy(Request $requestJson, Category $category, Session $session)
     {
         $request = $this->decodeRequest($requestJson);
         $id = $request->request->get('deleteID');
         $taxonomy_type = $request->request->get('taxonomy_type');
+        //delete cat and cat page
         $category->deleteCatFromDb($id, $taxonomy_type);
+        $session->flash('success_message', 'kategorija sėkmingai ištrinta');
         return new Response;
     }
 

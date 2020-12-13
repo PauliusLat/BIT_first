@@ -27,8 +27,11 @@ class PageController
     {
         $pages = Page::all()->all();
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
+
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
-        $output = View::adminRender('page.page', ["pages" => $pages, 'post_types' => $post_types, 'page_state' => $page_state]);
+        $menu_page_state = $page_state['main'];
+
+        $output = View::adminRender('page.page', ["pages" => $pages, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -37,20 +40,12 @@ class PageController
         $request = $this->decodeRequest($requestJson);
         $page = new Page;
         $name = $request->request->get('page_title');
-        // $slug = $request->request->get('page_slug');
         $post = $request->request->get('post_type');
-        $pageState = [];
-        $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
-        foreach ($page_state as $state => $value) {
-            if ($state == 'site') {
-                array_push($pageState, $value);
-            }
+
+        if ($request->request->get('page_state') && $request->request->get('page_state') != 'Site_page') {
+            array_push($page->pageState, $request->request->get('page_state'));
         }
-        if ($request->request->get('page_state') || $request->request->get('page_state') != 'Site_page') {
-            $pageState[] = $request->request->get('page_state');
-        }
-        $page->pageState = $pageState;
-        $pageState = $request->request->get('page_state');
+
         $page->setRoute($post);
         $page->setTitle($name);
         //update nenaudoti sito metodo
