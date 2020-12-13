@@ -7,13 +7,17 @@
     "symfony/dependency-injection": "^4.4",
     "symfony/config": "^4.4",
     "symfony/yaml": "^4.4",
-    "ramsey/uuid": "^3.9"
+    "ramsey/uuid": "^3.9",
+    "symfony/event-dispatcher": "^5.2"
   },
   "autoload": {
     "psr-4": {
       "BIT\\app\\": "app/",
       "BIT\\models\\": "models/",
-      "BIT\\controllers\\": "controllers/"
+      "BIT\\controllers\\": "controllers/",
+      "BIT\\cache\\": "cache/",
+      "BIT\\events\\": "events/"
+
     }
   },
   "license": "MIT"

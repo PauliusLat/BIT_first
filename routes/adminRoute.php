@@ -1,9 +1,13 @@
 <?php
+// array works like submenus;
+// '0' in front of KEY makes submenu Hidden;
 
 return [
 	'admin' => 'AdminController@index',
 	'news' => 'NewsAdminController@create',
-	'news@' => ['add new' => 'NewsAdminController@create', 'list' => 'NewsAdminController@list', '0edit' => 'NewsAdminController@edit'],
+	'news@' => ['add new' => 'NewsAdminController@create', 
+				'list' => 'NewsAdminController@list', 
+				'0edit' => 'NewsAdminController@edit'],
 
 	'idejos' => 'IdeAdminController@adminIndex',
 

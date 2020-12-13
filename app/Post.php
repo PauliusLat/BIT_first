@@ -2,8 +2,11 @@
 
 namespace BIT\app;
 
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use BIT\app\coreExeptions\wrongArgsTypeExeption;
 use BIT\app\Attachment;
+use BIT\events\PostSaveEvent;
+use BIT\events\PostSaveSubscriber;
 use BIT\models\IdeaPost;
 use BIT\models\EventPost;
 use BIT\models\NewsPost;
@@ -118,6 +121,13 @@ class Post
             $postID = wp_insert_post($post, true);
             $this->ID = $postID;
         }
+
+// dispachinam
+        $dispatcher = new EventDispatcher();
+        $event = new PostSaveEvent($this->ID);
+        // $dispatcher->addSubscriber(new PostSaveSubscriber());
+        $dispatcher->dispatch($event, PostSaveEvent::NAME);
+// end dispach
     }
 
     public function delete($force_delete = false)
