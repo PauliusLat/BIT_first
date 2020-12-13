@@ -58,8 +58,7 @@ class Transient
     public function __destruct()
     {
         $setValue = Session::$array;
-        if ($this->name != 0 && $this->name != null && $this->name != null && $this->name != '' && is_array($setValue)) {
-            // _dc($setValue);
+        if ($this->name != 0 && $this->name != null && $this->name != null && $this->name != '' && is_array($setValue) && isset($_COOKIE['Bit'])) {
             set_transient($this->name, $setValue);
         } else {
             throw new SessionArgsExeption('Error: session set should be an array and name can not be set');

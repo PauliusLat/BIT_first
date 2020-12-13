@@ -25,7 +25,7 @@ class TagController
         return View::adminRender('tag.maintag');
     }
 
-    public function create(Request $requestJson)
+    public function create(Request $request)
     {
 
         if ($request->request->get('pageSelected') != null) {

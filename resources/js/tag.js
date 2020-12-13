@@ -24,7 +24,6 @@ class Tag {
         const test = document.querySelector(".test");
 
         if (DOM) {
-
             if (this.start) {
                 if (HTML == null) {
                     location.hash = 1;
@@ -77,23 +76,23 @@ class Tag {
                 option.removeEventListener('change', selected);
             }
             option.addEventListener('change', selected);
+
+            this.delete();
+            this.createTag();
+            this.tagEdit(test);
         }
-
-        this.delete();
-        this.create();
-        this.tagEdit(test);
     }
+    
 
-    create() {
+    createTag() {
 
         const name = document.getElementById("tag-name")
         const slug = document.getElementById("tag-slug");
         const description = document.getElementById("tag-description");
-        const submit = document.getElementById("create");
+        const storeTag = document.getElementById("create");
         const api = "tag_store";
 
-
-        submit.addEventListener("click", () => {
+        storeTag.addEventListener("click", () => {
             let obj = {
                 api: "tag_store",
                 tag_name: name.value,

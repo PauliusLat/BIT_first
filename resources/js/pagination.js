@@ -24,7 +24,6 @@ class Pagination {
             for (let i = 0; i < page.length; i++) {
                 nextPage = () => {
                     let id = page[i].id;
-
                     location.hash = '#' + id;
                     page[i].removeEventListener("click", nextPage);
                 }

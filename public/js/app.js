@@ -2932,7 +2932,7 @@ var Tag = /*#__PURE__*/function () {
                 test = document.querySelector(".test");
 
                 if (!DOM) {
-                  _context2.next = 28;
+                  _context2.next = 31;
                   break;
                 }
 
@@ -3024,10 +3024,8 @@ var Tag = /*#__PURE__*/function () {
                 };
 
                 option.addEventListener('change', selected);
-
-              case 28:
                 this["delete"]();
-                this.create();
+                this.createTag();
                 this.tagEdit(test);
 
               case 31:
@@ -3045,16 +3043,16 @@ var Tag = /*#__PURE__*/function () {
       return init;
     }()
   }, {
-    key: "create",
-    value: function create() {
+    key: "createTag",
+    value: function createTag() {
       var _this2 = this;
 
       var name = document.getElementById("tag-name");
       var slug = document.getElementById("tag-slug");
       var description = document.getElementById("tag-description");
-      var submit = document.getElementById("create");
+      var storeTag = document.getElementById("create");
       var api = "tag_store";
-      submit.addEventListener("click", function () {
+      storeTag.addEventListener("click", function () {
         var obj = {
           api: "tag_store",
           tag_name: name.value,
