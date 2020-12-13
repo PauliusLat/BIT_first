@@ -53,8 +53,9 @@
     </div>
 </div>
 
-<div class="md-1-5 newsCat" style="display: none;">
-    <h2 class='tcp'>Pridėkite naują kategoriją</h2>
+<div class="md-1-5 newsCat">
+    <h2 class='tcp'>Pridėkite aaaaaaaaaaaaa naują kategoriją</h2>
+    <div>11111111111111111111111</div>
     <div class=''>
         <label class="tcp-label">Kategorijos pavadinimas</label>
     </div>

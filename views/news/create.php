@@ -74,7 +74,7 @@
         'hierarchical' => true,
     );
     ?>
-    <ul style="display:inline-block">
+    <ul>
         <?php wp_dropdown_categories($args); ?>
     </ul>
     <br><br>

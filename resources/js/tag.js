@@ -8,6 +8,7 @@ class Tag {
     constructor(target) {
 
         const api = "tag_create";
+        this.api = api;
         this.start = true;
         this.target = target;
         this.pages = 5;
@@ -24,28 +25,34 @@ class Tag {
 
         if (DOM) {
 
-            let pages;
-
-            if (this.start && HTML == null) {
-                HTML = await this.page.start();
-                test.innerHTML = HTML;
-            } else {
-                test.innerHTML = HTML;
+            if (this.start) {
+                if (HTML == null) {
+                    location.hash = 1;
+                    let obj = {
+                        api: this.api,
+                        hash: 1
+                    }
+                    HTML = await this.axios.getPostData(obj);
+                    test.innerHTML = HTML;
+                } else {
+                    test.innerHTML = HTML;
+                    console.log('naujas html 11111111111');
+                }
             }
+
             this.start = false;
 
-            this.page.paging();
+            let chechHash = this.page.paging();
 
             HTML = "";
 
-            if (hash != null) {
-                let addColor = document.querySelector('.nr-' + hash);
-                addColor.classList.add("active");
-            }
+            let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
+            addColor.classList.add("active");
 
             var chages = async () => {
-
+                console.log('hash stebejimas 2222222222222');
                 hash = location.hash.slice(1, 2);
+
                 if (hash != undefined &&
                     hash != null &&
                     hash > 0 &&
@@ -53,23 +60,23 @@ class Tag {
                     hash != NaN) {
                     let pages = this.pages;
                     HTML = await this.page.select(hash, pages);
+                    this.start = true;
                     this.init(hash, HTML);
                     window.removeEventListener('hashchange', chages);
                 }
             }
-            window.addEventListener('hashchange', chages);
+            window.addEventListener('hashchange', chages); //prikabina kruva addEventListener
 
             const option = document.getElementById("items");
             option.value = this.pages;
 
-            option.addEventListener('change', () => {
-
+            var selected = () => {
                 this.pages = option.value;
-
                 location.hash = 1;
                 chages();
-
-            });
+                option.removeEventListener('change', selected);
+            }
+            option.addEventListener('change', selected);
         }
 
         this.delete();
@@ -169,7 +176,7 @@ class Tag {
                         description.value = "";
                         slug.value = "";
                         name.value = "";
-                       
+
                         return setTimeout(() => { this.init() }, (300))
                     });
                 });
