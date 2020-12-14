@@ -1077,6 +1077,19 @@ body {
   text-decoration: underline;
 }
 
+.main_news_container {
+  position: relative;
+}
+
+.main_news_container .catPropNews {
+  width: 10%;
+  position: absolute;
+  top: 95%;
+  left: 95%;
+  transform: translate(-50%, -50%);
+  text-align: right;
+}
+
 .main_news_container .news-title {
   margin: 10px;
 }
@@ -1179,14 +1192,22 @@ body {
 }
 
 .newsCat {
-  position: absolute;
-  top: 37%;
-  left: 10%;
+  position: fixed;
+  top: 50%;
+  left: 90%;
   transform: translate(-50%, -50%);
   background-color: #B4B9BE;
-  height: 700px;
+  height: 100%;
   text-align: center;
   border-radius: 10px;
+}
+
+.newsCat .tcp {
+  margin: 14% 0 0 0;
+}
+
+.newsCat selected {
+  font-size: 16px;
 }
 
 .newsCat .cat {
@@ -1212,7 +1233,7 @@ body {
 .newsCat .showAllSelected .selectedCat {
   border: 2px solid #cccccc;
   width: 40%;
-  margin: 0 0 0 30%;
+  margin: 0 0 0 33%;
   line-height: 20px;
   font-size: 16px;
 }

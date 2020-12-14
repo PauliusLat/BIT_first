@@ -29,10 +29,8 @@ class Pagination {
                 }
                 page[i].addEventListener('click', nextPage);
             }
-
         }
         this.lenght = page.length - 4;
-
     }
 
     async select(hash = 1, pages) {
@@ -46,8 +44,6 @@ class Pagination {
             }
             return await this.axios.getPostData(obj);
         }
-
-
 
     }
 }
