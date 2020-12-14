@@ -21,16 +21,17 @@ class EditPost {
             const save = document.querySelector('.save');
             const title = document.querySelector('.title');
             const content = document.querySelectorAll("[contenteditable]");
+            const getImage = document.querySelector('.getImage');
 
             const api = "news-update";
             var readImage = new Profile_image();
-            window.location.hash
-            imageDiv.addEventListener("click", () => {
+
+            var read = () => {
                 image.remove();
                 imgBlock.classList.remove("hiden");
-                readImage.image();
-            });
-            save.addEventListener("click", () => {
+            }
+
+            var data = () => {
                 let obj = {
                     api: api,
                     title: title.value,
@@ -40,7 +41,21 @@ class EditPost {
                     id: id
                 }
                 readImage.sendImageData(obj);
-            })
+            }
+
+            if (getImage) {
+                imageDiv.addEventListener("click", read);
+                save.addEventListener("click", data)
+                readImage.image();
+            } else {
+                imgBlock.classList.remove("hiden");
+                readImage.image();
+                save.addEventListener("click", data)
+            }
+
+
+
+
         }
 
     }
