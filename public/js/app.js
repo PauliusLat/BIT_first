@@ -1642,6 +1642,7 @@ function catEdit(editID, taxonomy) {
     if (response.status == 200 && response.statusText == "OK") {
       var HTML = response.data.html;
       test.innerHTML = HTML;
+      readImage.image();
     }
 
     var updateBtn = document.getElementById("catUpdate");
@@ -1658,22 +1659,16 @@ function catUpdate(updateId) {
   var name = document.getElementById("category_name").value;
   var slug = document.getElementById("category_slug").value;
   var description = document.getElementById("category_description").value;
-  console.log(name);
-  console.log(slug);
-  console.log(description);
-  axios.post(uri + path + "category_update", {
+  var api = "category_update";
+  var obj = {
+    api: api,
     updateId: updateId,
     cat_name: name,
     cat_slug: slug,
     cat_description: description
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      // console.log(response);
-      init(); // setTimeout(call.init(), 500);
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
+  };
+  readImage.sendImageData(obj);
+  setTimeout(init, 500); //klausti Arvido ka naudoti timesetout ar async ????????
 }
 
 function catDelete(ID, taxonomy) {
@@ -1750,7 +1745,6 @@ var EditPost = /*#__PURE__*/function () {
         };
 
         var data = function data() {
-          console.log(33333);
           var obj = {
             api: api,
             title: title.value,

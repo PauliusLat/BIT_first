@@ -52,12 +52,7 @@ class EditPost {
                 readImage.image();
                 save.addEventListener("click", data)
             }
-
-
-
-
         }
-
     }
 }
 
