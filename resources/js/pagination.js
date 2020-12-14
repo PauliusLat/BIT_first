@@ -24,16 +24,13 @@ class Pagination {
             for (let i = 0; i < page.length; i++) {
                 nextPage = () => {
                     let id = page[i].id;
-
                     location.hash = '#' + id;
                     page[i].removeEventListener("click", nextPage);
                 }
                 page[i].addEventListener('click', nextPage);
             }
-
         }
         this.lenght = page.length - 4;
-
     }
 
     async select(hash = 1, pages) {
@@ -47,8 +44,6 @@ class Pagination {
             }
             return await this.axios.getPostData(obj);
         }
-
-
 
     }
 }
