@@ -985,9 +985,9 @@ var Api = /*#__PURE__*/function () {
       if (obj.api) {
         for (var key in obj) {
           formData.append(key, obj[key]);
-        } // console.log(Object.fromEntries(formData))
+        }
 
-
+        console.log(Object.fromEntries(formData));
         axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
           if (error.response) {
             console.log(error.response.data);
@@ -1740,15 +1740,17 @@ var EditPost = /*#__PURE__*/function () {
         var save = document.querySelector('.save');
         var title = document.querySelector('.title');
         var content = document.querySelectorAll("[contenteditable]");
+        var getImage = document.querySelector('.getImage');
         var api = "news-update";
         var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_1__["default"]();
-        window.location.hash;
-        imageDiv.addEventListener("click", function () {
+
+        var read = function read() {
           image.remove();
           imgBlock.classList.remove("hiden");
-          readImage.image();
-        });
-        save.addEventListener("click", function () {
+        };
+
+        var data = function data() {
+          console.log(33333);
           var obj = {
             api: api,
             title: title.value,
@@ -1758,7 +1760,17 @@ var EditPost = /*#__PURE__*/function () {
             id: id
           };
           readImage.sendImageData(obj);
-        });
+        };
+
+        if (getImage) {
+          imageDiv.addEventListener("click", read);
+          save.addEventListener("click", data);
+          readImage.image();
+        } else {
+          imgBlock.classList.remove("hiden");
+          readImage.image();
+          save.addEventListener("click", data);
+        }
       }
     }
   }]);
@@ -2094,9 +2106,7 @@ var Menu = /*#__PURE__*/function () {
     key: "save",
     value: function save() {
       var store = document.querySelector(".save");
-      var menuId = document.getElementById("menuID").value; // const pageLink = document.getElementById("menuID").value;
-      // console.log(menuId);
-
+      var menuId = document.getElementById("menuID").value;
       var api = "menu_store";
 
       if (this.read) {
@@ -2117,15 +2127,12 @@ var Menu = /*#__PURE__*/function () {
                 values.push(options[i].text);
                 pageLinks.push(options[i].value);
                 console.log(options[i].value);
-              } // if (options[i].selected) text = (options[i].innerText)
-
+              }
             }
 
             text.push(menuText[i].value);
             link.push(menuLink[i].value);
-          } // console.log(text);
-          // console.log(values);
-
+          }
 
           var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
           var obj = {
@@ -2142,43 +2149,7 @@ var Menu = /*#__PURE__*/function () {
       }
 
       this.read = false;
-    } // update() {
-    //   const update = document.querySelector(".update");
-    //   console.log(update);
-    //   let api = "menu_update";
-    //   if (this.read) {
-    //     var data = () => {
-    //       const menuText = document.getElementsByName("menu");
-    //       const menuLink = document.querySelectorAll(".menuLink");
-    //       var selectBox = document.getElementsByTagName("select");
-    //       var text = [];
-    //       var link = [];
-    //       var values = [];
-    //       for (this.index = 0; this.index < selectBox.length; this.index++) {
-    //         var options = selectBox[this.index].getElementsByTagName('option');
-    //         for (var i = options.length; i--;) {
-    //           if (options[i].selected) values.push(options[i].value)
-    //           // if (options[i].selected) text = (options[i].innerText)
-    //         }
-    //         text.push(menuText[this.index].value)
-    //         link.push(menuLink[this.index].value)
-    //       }
-    //       console.log(text);
-    //       console.log(values);
-    //       var axios = new Api();
-    //       var obj = {
-    //         category: values,
-    //         various: link,
-    //         content: text,
-    //         api: api
-    //       }
-    //       axios.formDataApi(obj);
-    //     }
-    //     update.addEventListener("click", data);
-    //   }
-    //   this.read = false;
-    // }
-
+    }
   }]);
 
   return Menu;

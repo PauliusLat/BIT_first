@@ -9,7 +9,7 @@
     </textarea>
     <?php $allImages = $data->attachments; ?>
     <?php foreach ($allImages as $image) : ?>
-        <div class="3">
+        <div class="getImage">
             <div class="imageDiv">
                 <img id="image" src="<?= $image->getUrl(); ?>" alt="<?= $image->getAlt(); ?>">
             </div>
