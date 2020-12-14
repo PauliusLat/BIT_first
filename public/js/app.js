@@ -958,55 +958,6 @@ var Api = /*#__PURE__*/function () {
       return getDAta;
     }()
   }, {
-    key: "getPostData",
-    value: function () {
-      var _getPostData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(api, id) {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return axios.post(this.uri + this.path + api, {
-                  id: id
-                });
-
-              case 3:
-                response = _context2.sent;
-
-                if (!(response.status == 200 && response.statusText == "OK")) {
-                  _context2.next = 6;
-                  break;
-                }
-
-                return _context2.abrupt("return", response.data.html);
-
-              case 6:
-                _context2.next = 12;
-                break;
-
-              case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](0);
-                console.error(_context2.t0);
-                console.log("Duomenys is serveverio nepasiekiami !!!");
-
-              case 12:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this, [[0, 8]]);
-      }));
-
-      function getPostData(_x2, _x3) {
-        return _getPostData.apply(this, arguments);
-      }
-
-      return getPostData;
-    }()
-  }, {
     key: "saveContent",
     value: function saveContent(api, id, content) {
       axios.post(this.uri + this.path + api, {
@@ -1057,18 +1008,18 @@ var Api = /*#__PURE__*/function () {
   }, {
     key: "getPostData",
     value: function () {
-      var _getPostData2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(obj) {
+      var _getPostData = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(obj) {
         var formData, key, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 if (!obj.api) {
-                  _context3.next = 17;
+                  _context2.next = 17;
                   break;
                 }
 
-                _context3.prev = 1;
+                _context2.prev = 1;
                 formData = new FormData();
 
                 for (key in obj) {
@@ -1076,43 +1027,43 @@ var Api = /*#__PURE__*/function () {
                 } // console.log(Object.fromEntries(formData))
 
 
-                _context3.next = 6;
+                _context2.next = 6;
                 return axios.post(this.uri + this.path + obj.api, formData, {});
 
               case 6:
-                response = _context3.sent;
+                response = _context2.sent;
 
                 if (!(response.status == 200 && response.statusText == "OK")) {
-                  _context3.next = 11;
+                  _context2.next = 11;
                   break;
                 }
 
-                _context3.next = 10;
+                _context2.next = 10;
                 return response.data.html;
 
               case 10:
-                return _context3.abrupt("return", _context3.sent);
+                return _context2.abrupt("return", _context2.sent);
 
               case 11:
-                _context3.next = 17;
+                _context2.next = 17;
                 break;
 
               case 13:
-                _context3.prev = 13;
-                _context3.t0 = _context3["catch"](1);
-                console.error(_context3.t0);
+                _context2.prev = 13;
+                _context2.t0 = _context2["catch"](1);
+                console.error(_context2.t0);
                 console.log("Duomenys is serveverio nepasiekiami !!!");
 
               case 17:
               case "end":
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3, this, [[1, 13]]);
+        }, _callee2, this, [[1, 13]]);
       }));
 
-      function getPostData(_x4) {
-        return _getPostData2.apply(this, arguments);
+      function getPostData(_x2) {
+        return _getPostData.apply(this, arguments);
       }
 
       return getPostData;
@@ -2079,8 +2030,7 @@ var Menu = /*#__PURE__*/function () {
         var draggables = document.querySelectorAll('.draggable');
         var container = document.querySelector('.cont');
         var add = document.querySelector(".addNew");
-        this.save(); // this.update();
-
+        this.save();
         this["delete"](draggables);
 
         var newBlock = function newBlock() {
@@ -2350,6 +2300,7 @@ var News = /*#__PURE__*/function () {
             catContent: document.getElementById("category-description").value,
             category: cat
           };
+          console.log(cat);
 
           if (obj.title) {
             readImage.sendImageData(obj);
@@ -2897,11 +2848,11 @@ var Tag = /*#__PURE__*/function () {
 
     var api = "tag_create";
     this.api = api;
-    this.start = true;
     this.target = target;
     this.pages = 5;
     this.page = new _pagination__WEBPACK_IMPORTED_MODULE_2__["default"](api);
     this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.changes;
     this.init();
   }
 
@@ -2916,9 +2867,8 @@ var Tag = /*#__PURE__*/function () {
             DOM,
             test,
             obj,
-            chechHash,
             addColor,
-            chages,
+            changes,
             option,
             selected,
             _args2 = arguments;
@@ -2932,17 +2882,12 @@ var Tag = /*#__PURE__*/function () {
                 test = document.querySelector(".test");
 
                 if (!DOM) {
-                  _context2.next = 28;
-                  break;
-                }
-
-                if (!this.start) {
-                  _context2.next = 17;
+                  _context2.next = 30;
                   break;
                 }
 
                 if (!(HTML == null)) {
-                  _context2.next = 15;
+                  _context2.next = 14;
                   break;
                 }
 
@@ -2951,54 +2896,50 @@ var Tag = /*#__PURE__*/function () {
                   api: this.api,
                   hash: 1
                 };
-                _context2.next = 11;
+                _context2.next = 10;
                 return this.axios.getPostData(obj);
 
-              case 11:
+              case 10:
                 HTML = _context2.sent;
                 test.innerHTML = HTML;
-                _context2.next = 17;
+                _context2.next = 16;
                 break;
 
-              case 15:
+              case 14:
                 test.innerHTML = HTML;
-                console.log('naujas html 11111111111');
+                console.log('naujas html 33333333');
 
-              case 17:
-                this.start = false;
-                chechHash = this.page.paging();
+              case 16:
+                this.page.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
                 addColor.classList.add("active");
 
-                chages = /*#__PURE__*/function () {
+                changes = /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
                     var pages;
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
                         switch (_context.prev = _context.next) {
                           case 0:
-                            console.log('hash stebejimas 2222222222222');
                             hash = location.hash.slice(1, 2);
 
-                            if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN)) {
-                              _context.next = 10;
+                            if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
+                              _context.next = 8;
                               break;
                             }
 
                             pages = _this.pages;
-                            _context.next = 6;
+                            _context.next = 5;
                             return _this.page.select(hash, pages);
 
-                          case 6:
+                          case 5:
                             HTML = _context.sent;
-                            _this.start = true;
+                            window.removeEventListener('hashchange', changes);
 
                             _this.init(hash, HTML);
 
-                            window.removeEventListener('hashchange', chages);
-
-                          case 10:
+                          case 8:
                           case "end":
                             return _context.stop();
                         }
@@ -3006,31 +2947,30 @@ var Tag = /*#__PURE__*/function () {
                     }, _callee);
                   }));
 
-                  return function chages() {
+                  return function changes() {
                     return _ref.apply(this, arguments);
                   };
                 }();
 
-                window.addEventListener('hashchange', chages); //prikabina kruva addEventListener
-
+                window.addEventListener('hashchange', changes);
+                this.changes = changes;
                 option = document.getElementById("items");
                 option.value = this.pages;
 
                 selected = function selected() {
                   _this.pages = option.value;
                   location.hash = 1;
-                  chages();
+                  window.removeEventListener('hashchange', changes);
+                  changes();
                   option.removeEventListener('change', selected);
                 };
 
                 option.addEventListener('change', selected);
-
-              case 28:
                 this["delete"]();
-                this.create();
+                this.createTag();
                 this.tagEdit(test);
 
-              case 31:
+              case 30:
               case "end":
                 return _context2.stop();
             }
@@ -3045,16 +2985,16 @@ var Tag = /*#__PURE__*/function () {
       return init;
     }()
   }, {
-    key: "create",
-    value: function create() {
+    key: "createTag",
+    value: function createTag() {
       var _this2 = this;
 
       var name = document.getElementById("tag-name");
       var slug = document.getElementById("tag-slug");
       var description = document.getElementById("tag-description");
-      var submit = document.getElementById("create");
+      var storeTag = document.getElementById("create");
       var api = "tag_store";
-      submit.addEventListener("click", function () {
+      storeTag.addEventListener("click", function () {
         var obj = {
           api: "tag_store",
           tag_name: name.value,
@@ -3064,7 +3004,8 @@ var Tag = /*#__PURE__*/function () {
 
         _this2.axios.formDataApi(obj);
 
-        _this2.start = true;
+        var changes = _this2.changes;
+        window.removeEventListener('hashchange', changes);
         name.value = "";
         slug.value = "";
         description.value = "";
@@ -3094,7 +3035,8 @@ var Tag = /*#__PURE__*/function () {
 
             _this3.axios.formDataApi(obj);
 
-            _this3.start = true;
+            var changes = _this3.changes;
+            window.removeEventListener('hashchange', changes);
             return setTimeout(function () {
               _this3.init();
             }, 300);
@@ -3139,7 +3081,7 @@ var Tag = /*#__PURE__*/function () {
                   description = document.getElementById("tag_description");
                   updateBtn = document.getElementById("tagUpdate");
                   updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-                    var api, obj;
+                    var api, obj, changes;
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                       while (1) {
                         switch (_context3.prev = _context3.next) {
@@ -3155,7 +3097,8 @@ var Tag = /*#__PURE__*/function () {
 
                             _this4.axios.formDataApi(obj);
 
-                            _this4.start = true;
+                            changes = _this4.changes;
+                            window.removeEventListener('hashchange', changes);
                             description.value = "";
                             slug.value = "";
                             name.value = "";
@@ -3163,7 +3106,7 @@ var Tag = /*#__PURE__*/function () {
                               _this4.init();
                             }, 300));
 
-                          case 8:
+                          case 9:
                           case "end":
                             return _context3.stop();
                         }
@@ -3183,217 +3126,216 @@ var Tag = /*#__PURE__*/function () {
       for (var i = 0; i < editBtn.length; i++) {
         _loop2(i);
       }
-    } // this.init();
-    // let hash1 = hash;
-    // if (hash1 === null) {
-    //     hash1 = location.hash.slice(1, 2);
-    //     console.log(hash1);
-    // }
-    // const api = "tag_create";
-    // 
-    // let response = await this.axios.getPostData(api, hash1);
-    // test.innerHTML = response;
-    // const submit = document.getElementById("create");
-    // submit.addEventListener("click", () => {
-    //     const name = document.getElementById("tag-name").value;
-    //     const slug = document.getElementById("tag-slug").value;
-    //     const description = document.getElementById("tag-description").value;
-    //     tagStore(name, slug, description);
-    // });
-    // this.paging();
-    // init1(pageNo = 1) {
-    //     if (typeof pageNo == 'object' && this.hash.length !== 0) {
-    //         console.log(pageNo);
-    //         this.hasharr = this.hash.split('#')
-    //         this.hasarr2 = this.hasharr[1].split('%')
-    //         this.hash = hasarr2[0]
-    //         // window.addEventListener( "load",
-    //         // () =>{
-    //         // this.hasharr = this.hash.split('#')
-    //         // this.hasarr2 = this.hasharr[1].split('%')
-    //         // this.hash = this.hasarr2[0]
-    //         // this.hash = location.hash
-    //         // this.init();
-    //     } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
-    //         this.hasharr = this.hash.split('#')
-    //         this.hasarr2 = this.hasharr[1].split('%')
-    //         this.hash = this.hasarr2[0]
-    //     } else {
-    //         this.hash = null
-    //     }
-    //     axios
-    //         .post(this.uri + this.path + "tag_create", {
-    //             pages: parseInt(pageNo),
-    //             pageSelected: this.pageSelected,
-    //             hash: this.hash
-    //         })
-    //         .then((response) => {
-    //             const test = document.querySelector(".test");
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 const HTML = response.data.html;
-    //                 test.innerHTML = HTML;
-    //                 if (pageNo > 0 && typeof pageNo === 'string') {
-    //                     let addColor = document.querySelector('.nr-' + pageNo);
-    //                     addColor.classList.add("active");
-    //                 }
-    //                 const submit = document.getElementById("create");
-    //                 submit.addEventListener("click", () => {
-    //                     const name = document.getElementById("tag-name").value;
-    //                     const slug = document.getElementById("tag-slug").value;
-    //                     const description = document.getElementById("tag-description").value;
-    //                     this.tagStore(name, slug, description);
-    //                 });
-    //                 const editBtn = document.querySelectorAll(".tag-edit");
-    //                 for (let i = 0; i < editBtn.length; i++) {
-    //                     let ID = editBtn[i].value;
-    //                     let taxonomy = editBtn[i].id;
-    //                     editBtn[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             this.tagEdit(ID, taxonomy);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-    //                 const deleteBtn = document.querySelectorAll(".tag-delete");
-    //                 for (let i = 0; i < deleteBtn.length; i++) {
-    //                     let ID = deleteBtn[i].value;
-    //                     let taxonomy = deleteBtn[i].id;
-    //                     deleteBtn[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             this.tagDelete(ID, taxonomy);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-    //                 const pageBtn = document.getElementById("selectpage");
-    //                 const select = document.getElementById("items");
-    //                 pageBtn.addEventListener(
-    //                     "click",
-    //                     () => {
-    //                         var pageSelected;
-    //                         if (select.options[select.selectedIndex] != undefined) {
-    //                             pageSelected = select.options[select.selectedIndex].value;
-    //                         } else {
-    //                             pageSelected = 0;
-    //                         }
-    //                         this.pageSelected = pageSelected
-    //                         this.init(1);
-    //                     });
-    //                 const page = document.querySelectorAll(".paging");
-    //                 for (let i = 0; i < page.length; i++) {
-    //                     let pageNo = page[i].id;
-    //                     page[i].addEventListener(
-    //                         "click",
-    //                         () => {
-    //                             console.log(pageNo);
-    //                             location.hash = '#' + pageNo
-    //                             this.hash = location.hash
-    //                             this.init(pageNo);
-    //                         },
-    //                         false
-    //                     );
-    //                 }
-    //             }
-    //         })
-    //         .catch(function (error) {
-    //             if (error.response) {
-    //                 console.log(error.response.data);
-    //                 console.log(error.response.status);
-    //                 console.log(error.response.headers);
-    //             } else if (error.request) {
-    //                 console.log(error.request);
-    //             } else {
-    //                 console.log("Error", error.message);
-    //             }
-    //             console.log(error);
-    //         });
-    // }
-    // tagStore(name, slug, description) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_store", {
-    //             tag_name: name,
-    //             tag_slug: slug,
-    //             tag_description: description
-    //         })
-    //         .then((response) => {
-    //             console.log(response);
-    //             this.init();
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    //     document.getElementById("tag-name").value = "";
-    // }
-    // tagEdit(editID, taxonomy) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_edit", {
-    //             editID: editID,
-    //             taxonomy_type: taxonomy,
-    //         })
-    //         .then((response) => {
-    //             const test = document.querySelector(".test");
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 const HTML = response.data.html;
-    //                 test.innerHTML = HTML;
-    //             }
-    //             const updateBtn = document.getElementById("tagUpdate");
-    //             updateBtn.addEventListener("click", () => {
-    //                 const updateId = updateBtn.value;
-    //                 this.tagUpdate(updateId);
-    //             });
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    // }
-    // tagUpdate(updateId) {
-    //     const name = document.getElementById("tag_name").value;
-    //     const slug = document.getElementById("tag_slug").value;
-    //     const description = document.getElementById("tag_description").value;
-    //     axios
-    //         .post(this.uri + this.path + "tag_update", {
-    //             updateId: updateId,
-    //             tag_name: name,
-    //             tag_slug: slug,
-    //             tag_description: description
-    //         })
-    //         .then((response) => {
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 console.log(response);
-    //                 this.init();
-    //                 // setTimeout(call.init(), 500);
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    // }
-    // tagDelete(ID, taxonomy) {
-    //     axios
-    //         .post(this.uri + this.path + "tag_destroy", {
-    //             deleteID: ID,
-    //             taxonomy_type: taxonomy,
-    //         })
-    //         .then((response) => {
-    //             if (response.status == 200 && response.statusText == "OK") {
-    //                 console.log(response);
-    //                 this.init();
-    //                 // setTimeout(init(), 500);
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log(err instanceof TypeError);
-    //         });
-    // }
-
+    }
   }]);
 
   return Tag;
 }();
 
-/* harmony default export */ __webpack_exports__["default"] = (Tag); // const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+/* harmony default export */ __webpack_exports__["default"] = (Tag); // let hash1 = hash;
+// if (hash1 === null) {
+//     hash1 = location.hash.slice(1, 2);
+//     console.log(hash1);
+// }
+// const api = "tag_create";
+// 
+// let response = await this.axios.getPostData(api, hash1);
+// test.innerHTML = response;
+// const submit = document.getElementById("create");
+// submit.addEventListener("click", () => {
+//     const name = document.getElementById("tag-name").value;
+//     const slug = document.getElementById("tag-slug").value;
+//     const description = document.getElementById("tag-description").value;
+//     tagStore(name, slug, description);
+// });
+// this.paging();
+// init1(pageNo = 1) {
+//     if (typeof pageNo == 'object' && this.hash.length !== 0) {
+//         console.log(pageNo);
+//         this.hasharr = this.hash.split('#')
+//         this.hasarr2 = this.hasharr[1].split('%')
+//         this.hash = hasarr2[0]
+//         // window.addEventListener( "load",
+//         // () =>{
+//         // this.hasharr = this.hash.split('#')
+//         // this.hasarr2 = this.hasharr[1].split('%')
+//         // this.hash = this.hasarr2[0]
+//         // this.hash = location.hash
+//         // this.init();
+//     } else if (typeof pageNo === 'string' && this.hash.length !== 0) {
+//         this.hasharr = this.hash.split('#')
+//         this.hasarr2 = this.hasharr[1].split('%')
+//         this.hash = this.hasarr2[0]
+//     } else {
+//         this.hash = null
+//     }
+//     axios
+//         .post(this.uri + this.path + "tag_create", {
+//             pages: parseInt(pageNo),
+//             pageSelected: this.pageSelected,
+//             hash: this.hash
+//         })
+//         .then((response) => {
+//             const test = document.querySelector(".test");
+//             if (response.status == 200 && response.statusText == "OK") {
+//                 const HTML = response.data.html;
+//                 test.innerHTML = HTML;
+//                 if (pageNo > 0 && typeof pageNo === 'string') {
+//                     let addColor = document.querySelector('.nr-' + pageNo);
+//                     addColor.classList.add("active");
+//                 }
+//                 const submit = document.getElementById("create");
+//                 submit.addEventListener("click", () => {
+//                     const name = document.getElementById("tag-name").value;
+//                     const slug = document.getElementById("tag-slug").value;
+//                     const description = document.getElementById("tag-description").value;
+//                     this.tagStore(name, slug, description);
+//                 });
+//                 const editBtn = document.querySelectorAll(".tag-edit");
+//                 for (let i = 0; i < editBtn.length; i++) {
+//                     let ID = editBtn[i].value;
+//                     let taxonomy = editBtn[i].id;
+//                     editBtn[i].addEventListener(
+//                         "click",
+//                         () => {
+//                             this.tagEdit(ID, taxonomy);
+//                         },
+//                         false
+//                     );
+//                 }
+//                 const deleteBtn = document.querySelectorAll(".tag-delete");
+//                 for (let i = 0; i < deleteBtn.length; i++) {
+//                     let ID = deleteBtn[i].value;
+//                     let taxonomy = deleteBtn[i].id;
+//                     deleteBtn[i].addEventListener(
+//                         "click",
+//                         () => {
+//                             this.tagDelete(ID, taxonomy);
+//                         },
+//                         false
+//                     );
+//                 }
+//                 const pageBtn = document.getElementById("selectpage");
+//                 const select = document.getElementById("items");
+//                 pageBtn.addEventListener(
+//                     "click",
+//                     () => {
+//                         var pageSelected;
+//                         if (select.options[select.selectedIndex] != undefined) {
+//                             pageSelected = select.options[select.selectedIndex].value;
+//                         } else {
+//                             pageSelected = 0;
+//                         }
+//                         this.pageSelected = pageSelected
+//                         this.init(1);
+//                     });
+//                 const page = document.querySelectorAll(".paging");
+//                 for (let i = 0; i < page.length; i++) {
+//                     let pageNo = page[i].id;
+//                     page[i].addEventListener(
+//                         "click",
+//                         () => {
+//                             console.log(pageNo);
+//                             location.hash = '#' + pageNo
+//                             this.hash = location.hash
+//                             this.init(pageNo);
+//                         },
+//                         false
+//                     );
+//                 }
+//             }
+//         })
+//         .catch(function (error) {
+//             if (error.response) {
+//                 console.log(error.response.data);
+//                 console.log(error.response.status);
+//                 console.log(error.response.headers);
+//             } else if (error.request) {
+//                 console.log(error.request);
+//             } else {
+//                 console.log("Error", error.message);
+//             }
+//             console.log(error);
+//         });
+// }
+// tagStore(name, slug, description) {
+//     axios
+//         .post(this.uri + this.path + "tag_store", {
+//             tag_name: name,
+//             tag_slug: slug,
+//             tag_description: description
+//         })
+//         .then((response) => {
+//             console.log(response);
+//             this.init();
+//         })
+//         .catch((err) => {
+//             console.log(err instanceof TypeError);
+//         });
+//     document.getElementById("tag-name").value = "";
+// }
+// tagEdit(editID, taxonomy) {
+//     axios
+//         .post(this.uri + this.path + "tag_edit", {
+//             editID: editID,
+//             taxonomy_type: taxonomy,
+//         })
+//         .then((response) => {
+//             const test = document.querySelector(".test");
+//             if (response.status == 200 && response.statusText == "OK") {
+//                 const HTML = response.data.html;
+//                 test.innerHTML = HTML;
+//             }
+//             const updateBtn = document.getElementById("tagUpdate");
+//             updateBtn.addEventListener("click", () => {
+//                 const updateId = updateBtn.value;
+//                 this.tagUpdate(updateId);
+//             });
+//         })
+//         .catch((err) => {
+//             console.log(err instanceof TypeError);
+//         });
+// }
+// tagUpdate(updateId) {
+//     const name = document.getElementById("tag_name").value;
+//     const slug = document.getElementById("tag_slug").value;
+//     const description = document.getElementById("tag_description").value;
+//     axios
+//         .post(this.uri + this.path + "tag_update", {
+//             updateId: updateId,
+//             tag_name: name,
+//             tag_slug: slug,
+//             tag_description: description
+//         })
+//         .then((response) => {
+//             if (response.status == 200 && response.statusText == "OK") {
+//                 console.log(response);
+//                 this.init();
+//                 // setTimeout(call.init(), 500);
+//             }
+//         })
+//         .catch((err) => {
+//             console.log(err instanceof TypeError);
+//         });
+// }
+// tagDelete(ID, taxonomy) {
+//     axios
+//         .post(this.uri + this.path + "tag_destroy", {
+//             deleteID: ID,
+//             taxonomy_type: taxonomy,
+//         })
+//         .then((response) => {
+//             if (response.status == 200 && response.statusText == "OK") {
+//                 console.log(response);
+//                 this.init();
+//                 // setTimeout(init(), 500);
+//             }
+//         })
+//         .catch((err) => {
+//             console.log(err instanceof TypeError);
+//         });
+// }
+// const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 // const uri = document.location.origin;
 // const tagStrt = document.getElementById("tagStart");
 // function startTag() {

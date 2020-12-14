@@ -18,7 +18,7 @@ class Menu {
       const container = document.querySelector('.cont')
       const add = document.querySelector(".addNew");
       this.save();
-      // this.update();
+
       this.delete(draggables);
 
       var newBlock = () => {
@@ -69,6 +69,7 @@ class Menu {
   addNew() {
 
     const lastElemet = document.querySelector(".cont");
+
 
     const HTML = `<div class="menuName">
           <label for="">
@@ -188,7 +189,6 @@ class Menu {
           category: values,
           id: menuId,
           pageLinks: pageLinks,
-
           content: text,
           api: api
         }
