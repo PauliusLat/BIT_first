@@ -1,6 +1,7 @@
 <?php
 
 namespace BIT\models;
+use BIT\app\Attachment;
 use BIT\app\modelTraits\Talbum;
 use BIT\app\modelTraits\Ttaxonomy;
 use BIT\app\modelTraits\Tcategory;

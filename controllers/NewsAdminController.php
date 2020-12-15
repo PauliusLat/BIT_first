@@ -98,8 +98,13 @@ class NewsAdminController
 		$file = $request->files->get('image');
 		$image = null;
 		var_dump($request->request->get('id'));
-		foreach ($news->attachments as $att) {
+		if($attachments = $news->attachments){
+			foreach ($attachments as $att) {
 			$image = $att;
+			}
+		}
+		elseif(!$attachments && $file){
+			$image = new Attachment;
 		}
 		$news->post_title = $request->request->get('title');
 		$news->news_content = $request->request->get('content');
