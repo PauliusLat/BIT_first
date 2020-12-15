@@ -10,7 +10,7 @@ trait Talbum{
     public $profileImgId = 0;
 
     public function getProfileImage(){
-        Attachment::get($this->profileImgId);
-    }
+		return Attachment::get($this->profileImgId);
+	}
 
 }

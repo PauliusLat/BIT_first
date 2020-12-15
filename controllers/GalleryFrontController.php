@@ -30,7 +30,6 @@ class GalleryFrontController
 			$album = new AlbumPost();
 			$album->post_parent = $page->ID;
 			$album->post_title = $title;
-			$album->profileImgId = 
 			$album->save();
 		}
 		
