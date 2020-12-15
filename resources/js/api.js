@@ -27,6 +27,7 @@ class Api {
                 console.log(error);
             });
     }
+    
     async getDAta(api) {
       
         try {
@@ -43,7 +44,6 @@ class Api {
             console.log("Duomenys is serveverio nepasiekiami !!!");
         }
     }
-    
     saveContent(api, id, content) {
         axios
             .post(
@@ -66,13 +66,14 @@ class Api {
                 console.log(error);
             });
     }
+
     formDataApi(obj) {
         let formData = new FormData();
         if (obj.api) {
             for (var key in obj) {
                 formData.append(key, obj[key])
             }
-            // console.log(Object.fromEntries(formData))
+            console.log(Object.fromEntries(formData))
             axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) { }).catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);
@@ -89,10 +90,12 @@ class Api {
             throw 'can not find API';
         }
     }
+
     async getPostData(obj) {
         if (obj.api) {
             try {
                 let formData = new FormData();
+
                 for (var key in obj) {
                     formData.append(key, obj[key])
                 }

@@ -19,7 +19,7 @@ class Menu {
       const container = document.querySelector('.cont')
       const add = document.querySelector(".addNew");
       this.save();
-      // this.update();
+
       this.delete(draggables);
 
       var newBlock = () => {
@@ -71,6 +71,7 @@ class Menu {
     let api = "menu_create";
     let htm = await this.axios.getDAta(api);
     const lastElemet = document.querySelector(".cont");
+
 
     const HTML = `<div class="menuName">
     <label for="">
@@ -149,8 +150,7 @@ class Menu {
   save() {
     const store = document.querySelector(".save");
     const menuId = document.getElementById("menuID").value;
-    // const pageLink = document.getElementById("menuID").value;
-    // console.log(menuId);
+
     let api = "menu_store";
 
     if (this.read) {
@@ -172,14 +172,10 @@ class Menu {
               pageLinks.push(options[i].value)
               console.log(options[i].value)
             }
-            // if (options[i].selected) text = (options[i].innerText)
           }
           text.push(menuText[i].value)
           link.push(menuLink[i].value)
         }
-
-        // console.log(text);
-        // console.log(values);
 
         var axios = new Api();
 
@@ -188,7 +184,6 @@ class Menu {
           category: values,
           id: menuId,
           pageLinks: pageLinks,
-
           content: text,
           api: api
         }

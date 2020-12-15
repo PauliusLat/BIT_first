@@ -33,6 +33,7 @@ define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 App::start();
 
+
 // $pages = Page::all()->pageState('Site Page')->all();
 // _dc($pages);
 // $session = App::start()->getService('session');

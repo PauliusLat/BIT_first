@@ -9,7 +9,6 @@ class Tag {
 
         const api = "tag_create";
         this.api = api;
-        this.start = true;
         this.target = target;
         this.pages = 5;
         this.page = new Pagination(api);
@@ -25,22 +24,19 @@ class Tag {
         const test = document.querySelector(".test");
 
         if (DOM) {
-            if (this.start) {
-                if (HTML == null) {
-                    location.hash = 1;
-                    let obj = {
-                        api: this.api,
-                        hash: 1
-                    }
-                    HTML = await this.axios.getPostData(obj);
-                    test.innerHTML = HTML;
-                } else {
-                    test.innerHTML = HTML;
-                    console.log('naujas html 33333333');
-                }
-            }
 
-            this.start = false;
+            if (HTML == null) {
+                location.hash = 1;
+                let obj = {
+                    api: this.api,
+                    hash: 1
+                }
+                HTML = await this.axios.getPostData(obj);
+                test.innerHTML = HTML;
+            } else {
+                test.innerHTML = HTML;
+                console.log('naujas html 33333333');
+            }
 
             this.page.paging();
 
@@ -49,7 +45,7 @@ class Tag {
             let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
             addColor.classList.add("active");
 
-            //kodel nenuiima seno po edit ar naujo ????
+            var changes = async () => {
 
             var chages = async () => {
                
@@ -59,17 +55,17 @@ class Tag {
                     hash != null &&
                     hash > 0 &&
                     hash != "" &&
-                    hash != NaN) {
+                    hash != NaN &&
+                    hash != Infinity) {
                     let pages = this.pages;
                     HTML = await this.page.select(hash, pages);
-                    this.start = true;
-                    window.removeEventListener('hashchange', chages);
+                    window.removeEventListener('hashchange', changes);
                     this.init(hash, HTML);
                 }
             }
-            window.addEventListener('hashchange', chages); //prikabina kruva addEventListener
+            window.addEventListener('hashchange', changes);
 
-            this.changes = chages;
+            this.changes = changes;
 
             const option = document.getElementById("items");
             option.value = this.pages;
@@ -77,17 +73,18 @@ class Tag {
             var selected = () => {
                 this.pages = option.value;
                 location.hash = 1;
-                window.removeEventListener('hashchange', chages);
-                chages();
+                window.removeEventListener('hashchange', changes);
+                changes();
                 option.removeEventListener('change', selected);
             }
-            option.addEventListener('change', selected);//sitas dadenauja  window.addEventListener('hashchange', chages);
+            option.addEventListener('change', selected);
 
             this.delete();
             this.createTag();
             this.tagEdit(test);
         }
     }
+}
 
 
     createTag() {
@@ -106,7 +103,8 @@ class Tag {
                 tag_description: description.value
             }
             this.axios.formDataApi(obj);
-            this.start = true;
+            let changes = this.changes;
+            window.removeEventListener('hashchange', changes);
 
             name.value = ""
             slug.value = ""
@@ -132,10 +130,8 @@ class Tag {
                             taxonomy_type: taxonomy
                         }
                         this.axios.formDataApi(obj);
-                        this.start = true;
-                        let chages = this.changes;
-                        console.log(chages);
-                        window.removeEventListener('hashchange', chages);
+                        let changes = this.changes;
+                        window.removeEventListener('hashchange', changes);
                         return setTimeout(() => { this.init() }, (300))
                     });
             }
@@ -178,7 +174,8 @@ class Tag {
                             tag_description: description.value
                         }
                         this.axios.formDataApi(obj);
-                        this.start = true;
+                        let changes = this.changes;
+                        window.removeEventListener('hashchange', changes);
 
                         description.value = "";
                         slug.value = "";
@@ -190,7 +187,9 @@ class Tag {
         }
     }
 
-    // this.init();
+}
+
+export default Tag;
 
 
     // let hash1 = hash;
@@ -429,9 +428,7 @@ class Tag {
     //         });
 
     // }
-}
 
-export default Tag;
 
 
 // const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";

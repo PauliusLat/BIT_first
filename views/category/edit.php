@@ -18,3 +18,14 @@
         </div>
     </div>
 </div>
+<div class="galleryContainer" id="loadeGallery">
+    <output class="gallerGrid" id='result' />
+    <div id="message">
+        <div class="wrapper">
+            <div class="file-upload">
+                <label for="files"><span>&#43;</span></label>
+                <input class="galleryImage" type="file" id='files' name="img" accept="image/*">
+            </div>
+        </div>
+    </div>
+</div>

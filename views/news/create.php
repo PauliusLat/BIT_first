@@ -31,17 +31,6 @@
             <h1 class="news-title">
                 SUKURTI NAUJIENA
             </h1>
-            <div>
-                <div class="gallerBtn" id="catNews">
-                    kategorija
-                </div>
-                <div class="gallerBtn" id="tagNews">
-                    tag
-                </div>
-                <div class="gallerBtn" id="setningNews">
-                    nustatymai
-                </div>
-            </div>
             <div class="news-add md-2-3 newHeight">
                 <div id="editor" name="newsEditor">
                 </div>
@@ -51,45 +40,29 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="md-1-5 newsCat" style="display: none;">
-    <h2 class='tcp'>Pasirinkite kategoriją</h2>
-    <?php
-    $args1 = array(
-        'taxonomy'     => 'maincat',
-        // 'show_option_all' => 'pasirinkite tėvinę kategoriją',
-        'orderby'      => 'name',
-        'hide_empty'   => false,
-        'show_count'   => false,
-        'pad_counts'   => false,
-        'hierarchical' => true,
-    );
-    ?>
-    <ul style="display:inline-block">
-        <?php wp_dropdown_categories($args1); ?>
-    </ul>
-    <br><br>
-    <div class="showAllSelected">
-    </div>
-    <div class="buttons sm-1">
-        <button type="submit" id="addCat" class="btn-blue">Pridėti</button>
-    </div>
-
-    <div class='newCat'>
-        <h2 class='tcp'>Pridėkite naują kategoriją</h2>
-        <div class=''>
-            <label class="tcp-label">Kategorijos pavadinimas</label>
+    <div class="catPropNews">
+        <div class="gallerBtn" id="catNews">
+            kategorija
         </div>
-        <input type="text" name="category-name" id="category-name" value="" placeholder="Įrašykite kategorijos pavadinimą..." class="tcp-input">
-        <div class=''>
-            <label class="tcp-label">Priskirkite 'tėvinę' kategoriją</label>
+        <div class="gallerBtn" id="tagNews">
+            tag
         </div>
+        <div class="gallerBtn" id="setningNews">
+            nustatymai
+        </div>
+    </div>
+    <div class="md-1-5 newsCat" style="display: none;">
 
+        <!-- <div class=''>
+        <label class="tcp-label">Priskirkite 'tėvinę' kategoriją</label>
+    </div> -->
+        <h2 class='tcp'>
+            Pasirinkite kategoriją
+        </h2>
         <?php
-        $args = array(
+        $args1 = array(
             'taxonomy'     => 'maincat',
-            'show_option_all' => 'pasirinkite tėvinę kategoriją',
+            'show_option_all' => 'pasirinkite kategoriją',
             'orderby'      => 'name',
             'hide_empty'   => false,
             'show_count'   => false,
@@ -98,24 +71,49 @@
         );
         ?>
         <ul style="display:inline-block">
-            <?php wp_dropdown_categories($args); ?>
+            <?php wp_dropdown_categories($args1); ?>
         </ul>
-        <br><br>
         <div class="showAllSelected">
         </div>
-
-        <input type="checkbox" id="catPage" name="catPage" value="catPage">
-        <label for="catPage">Sukurti kategorijos puslapį</label><br>
-        <div class=''>
-            <label class="tcp-label">Kategorijos aprašymas</label>
+        <h2 class='tcp'>
+            Pridėkite naują kategoriją
+        </h2>
+        <input type="text" name="category-name" id="category-name" value="" placeholder="Kategorijos pavadinimas" class="tcp-input">
+        <?php
+        $args = array(
+            'taxonomy'     => 'maincat',
+            'show_option_all' => 'Pasirinkite tėvinę kategoriją',
+            'orderby'      => 'name',
+            'hide_empty'   => false,
+            'show_count'   => false,
+            'pad_counts'   => false,
+            'hierarchical' => true,
+        );
+        ?>
+        <ul>
+            <?php wp_dropdown_categories($args); ?>
+        </ul>
+        <div class='tcp'>
+            <label class="tcp-label">
+                Kategorijos aprašymas
+            </label>
         </div>
         <textarea name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="tcp-input">
-        </textarea>
+    </textarea>
+        <h2 class='tcp'>
+            Irasyti tag
+        </h2>
+        <input type="text" name="tag-name" id="tag-name" value="" placeholder="Įrašykite tag" class="tcp-input">
+
         <div class="buttons sm-1">
-            <button type="submit" id="catCreate" class="btn-blue">Pridėti</button>
+            <button type="submit" id="create" class="btn-blue">
+                Pridėti
+            </button>
         </div>
     </div>
+
 </div>
+
 
 <script>
     var toolbarOptions = [
