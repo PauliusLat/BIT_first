@@ -27,6 +27,7 @@ class AlbumFrontController
         // $allImages = [];
         // $albumName = [];
         $albumData  = (AlbumPost::all())->all();
+   
         // echo '<pre>';
         // var_dump($page);
         // foreach ($albumData as $data) {
@@ -37,10 +38,7 @@ class AlbumFrontController
         // }
         // var_dump($albumName);
         $output = View::adminRender('album.album',  ["data" => $albumData]);
-
-        $response = new JsonResponse(['html' => $output]);
-
-        return $response;
+        return View::render('gallery.all-album', ['data' => $output]);
     }
 }
 

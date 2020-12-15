@@ -36,8 +36,10 @@ class CalendarAdminController
 		$event->event_time = $request->request->get('time');
 		$event->event_date = $request->request->get('date');
 		$event->save();
+		$response = new Response;
 
-		return $response = new Response;
+
+		return $response;
 	}
 
 	public function delete(EventPost $event)

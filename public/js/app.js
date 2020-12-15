@@ -1086,6 +1086,7 @@ var Api = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 /** @format */
 
 
@@ -1095,11 +1096,14 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+
+
 var Calendar = /*#__PURE__*/function () {
   function Calendar(target) {
     _classCallCheck(this, Calendar);
 
     this.target = target;
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
     this.DOM = null;
     this.date = new Date();
     this.y = this.date.getFullYear(), this.m = this.date.getMonth(), this.d = this.date.getDay();
@@ -1333,13 +1337,16 @@ var Calendar = /*#__PURE__*/function () {
         var time = document.getElementById('appt').value;
 
         if (sendE.length != 0) {
-          axios.post(_this3.uri + _this3.path + "calendar-store-admin", {
+          var api = "calendar-store-admin";
+          var obj = {
+            api: api,
             date: action,
             event: sendE,
             time: time
-          })["catch"](function (err) {
-            console.log(err instanceof TypeError);
-          });
+          };
+
+          _this3.axios.formDataApi(obj);
+
           setTimeout(function () {
             _this3.getData(action);
           }, 400);
@@ -1926,19 +1933,19 @@ function renderColons(e) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-document.getElementById("clickme").addEventListener("click", function () {
-  document.getElementById("lightbox").className = "open";
-});
-document.getElementById("close").addEventListener("click", function () {
-  document.getElementById("lightbox").className = "";
-});
-var i = 0;
-document.getElementById("lightbox").addEventListener("click", function (e) {
-  if (e.target.id + i == "lightbox" + i) {
-    console.log(e.target.id + i);
-    document.getElementById("lightbox").className = "";
-  }
-});
+// document.getElementById("clickme").addEventListener("click", function() {
+//     document.getElementById("lightbox").className = "open";
+//   });
+//   document.getElementById("close").addEventListener("click", function() {
+//     document.getElementById("lightbox").className = "";
+//   });
+//   var i = 0;
+//   document.getElementById("lightbox").addEventListener("click", function(e) {
+//     if (e.target.id+i == "lightbox"+i) {
+//         console.log(e.target.id+i);
+//       document.getElementById("lightbox").className = "";
+//     }
+//   });
 
 /***/ }),
 
@@ -2892,7 +2899,7 @@ var Tag = /*#__PURE__*/function () {
   _createClass(Tag, [{
     key: "init",
     value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var _this = this;
 
         var hash,
@@ -2902,25 +2909,25 @@ var Tag = /*#__PURE__*/function () {
             obj,
             addColor,
             changes,
-            _args3 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+            option,
+            selected,
+            _args2 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                hash = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : null;
-                HTML = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : null;
+                hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
+                HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
                 DOM = document.getElementById(this.target);
                 test = document.querySelector(".test");
 
                 if (!DOM) {
-
                   _context2.next = 29;
-
                   break;
                 }
 
                 if (!(HTML == null)) {
-                  _context3.next = 14;
+                  _context2.next = 14;
                   break;
                 }
 
@@ -2929,15 +2936,13 @@ var Tag = /*#__PURE__*/function () {
                   api: this.api,
                   hash: 1
                 };
-                _context3.next = 10;
+                _context2.next = 10;
                 return this.axios.getPostData(obj);
 
               case 10:
-                HTML = _context3.sent;
+                HTML = _context2.sent;
                 test.innerHTML = HTML;
-
                 _context2.next = 15;
-
                 break;
 
               case 14:
@@ -2950,83 +2955,41 @@ var Tag = /*#__PURE__*/function () {
                 addColor.classList.add("active");
 
                 changes = /*#__PURE__*/function () {
-                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-                    var chages, option, selected;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+                    var pages;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
-                        switch (_context2.prev = _context2.next) {
+                        switch (_context.prev = _context.next) {
                           case 0:
-                            chages = /*#__PURE__*/function () {
-                              var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                                var pages;
-                                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-                                  while (1) {
-                                    switch (_context.prev = _context.next) {
-                                      case 0:
-                                        hash = location.hash.slice(1, 2);
+                            hash = location.hash.slice(1, 2);
 
-                                        if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
-                                          _context.next = 8;
-                                          break;
-                                        }
+                            if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
+                              _context.next = 8;
+                              break;
+                            }
 
-                                        pages = _this.pages;
-                                        _context.next = 5;
-                                        return _this.page.select(hash, pages);
+                            pages = _this.pages;
+                            _context.next = 5;
+                            return _this.page.select(hash, pages);
 
-                                      case 5:
-                                        HTML = _context.sent;
-                                        window.removeEventListener('hashchange', changes);
+                          case 5:
+                            HTML = _context.sent;
+                            window.removeEventListener('hashchange', changes);
 
-                                        _this.init(hash, HTML);
+                            _this.init(hash, HTML);
 
-                                      case 8:
-                                      case "end":
-                                        return _context.stop();
-                                    }
-                                  }
-                                }, _callee);
-                              }));
-
-                              return function chages() {
-                                return _ref2.apply(this, arguments);
-                              };
-                            }();
-
-                            window.addEventListener('hashchange', changes);
-                            _this.changes = changes;
-                            option = document.getElementById("items");
-                            option.value = _this.pages;
-
-                            selected = function selected() {
-                              _this.pages = option.value;
-                              location.hash = 1;
-                              window.removeEventListener('hashchange', changes);
-                              changes();
-                              option.removeEventListener('change', selected);
-                            };
-
-                            option.addEventListener('change', selected);
-
-                            _this["delete"]();
-
-                            _this.createTag();
-
-                            _this.tagEdit(test);
-
-                          case 10:
+                          case 8:
                           case "end":
-                            return _context2.stop();
+                            return _context.stop();
                         }
                       }
-                    }, _callee2);
+                    }, _callee);
                   }));
 
                   return function changes() {
                     return _ref.apply(this, arguments);
                   };
                 }();
-
 
                 window.addEventListener('hashchange', changes);
                 this.changes = changes;
@@ -3047,14 +3010,11 @@ var Tag = /*#__PURE__*/function () {
                 this.tagEdit(test);
 
               case 29:
-
-              case 21:
-
               case "end":
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee2, this);
       }));
 
       function init() {
@@ -3137,11 +3097,11 @@ var Tag = /*#__PURE__*/function () {
       var _loop2 = function _loop2(i) {
         var ID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
-        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
           var api, obj, HTML, name, slug, description, updateBtn;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
-              switch (_context5.prev = _context5.next) {
+              switch (_context4.prev = _context4.next) {
                 case 0:
                   api = "tag_edit";
                   obj = {
@@ -3149,21 +3109,21 @@ var Tag = /*#__PURE__*/function () {
                     editID: ID,
                     taxonomy_type: taxonomy
                   };
-                  _context5.next = 4;
+                  _context4.next = 4;
                   return _this4.axios.getPostData(obj);
 
                 case 4:
-                  HTML = _context5.sent;
+                  HTML = _context4.sent;
                   test.innerHTML = HTML;
                   name = document.getElementById("tag_name");
                   slug = document.getElementById("tag_slug");
                   description = document.getElementById("tag_description");
                   updateBtn = document.getElementById("tagUpdate");
-                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
                     var api, obj, changes;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                       while (1) {
-                        switch (_context4.prev = _context4.next) {
+                        switch (_context3.prev = _context3.next) {
                           case 0:
                             api = "tag_update";
                             obj = {
@@ -3181,24 +3141,24 @@ var Tag = /*#__PURE__*/function () {
                             description.value = "";
                             slug.value = "";
                             name.value = "";
-                            return _context4.abrupt("return", setTimeout(function () {
+                            return _context3.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));
 
                           case 9:
                           case "end":
-                            return _context4.stop();
+                            return _context3.stop();
                         }
                       }
-                    }, _callee4);
+                    }, _callee3);
                   })));
 
                 case 11:
                 case "end":
-                  return _context5.stop();
+                  return _context4.stop();
               }
             }
-          }, _callee5);
+          }, _callee4);
         })));
       };
 
@@ -3626,8 +3586,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
