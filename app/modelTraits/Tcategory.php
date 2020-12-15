@@ -202,7 +202,7 @@ trait Tcategory
                     } else {
                         $terms = get_terms(['name' => $cat, 'taxonomy' => $value, 'hide_empty' => false]);
                         foreach ($terms as $term) {
-                            wp_set_object_terms($this->ID, $term->term_id, $value, $append = true);
+                            wp_set_object_terms($this->ID, $term->term_id, $value);
                         }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
                          * so that children with the same names but different parents aren't confused.*/
