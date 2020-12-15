@@ -9,8 +9,10 @@ trait Talbum{
     private $cattax = ['maincat'];
     public $profileImgId = 0;
 
-    public function getProfileImage(){
+    public function getProfileImage()
+    {
 		return Attachment::get($this->profileImgId);
-	}
+    }
+
 
 }
