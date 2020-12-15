@@ -73,6 +73,12 @@ App::start();
 
 // use BIT\models\NewresPost;
 add_action('init', function () {
+
+
+    // wp_set_object_terms(328, 154, 'maincat');
+    // $news = new NewsPost;
+    // $postCats = $news->getCats(328);
+    // _dc($postCats);
     // $query = new Query;
     // // $page = $query->postName('namai')->getPost()->all();
     // // _dc($query->postType('page')->getPost()->all());
