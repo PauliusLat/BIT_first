@@ -75,7 +75,6 @@ class Profile_image {
     let sendData = new Api();
     sendData.formDataApi(obj);
   }
-
 }
 
 export default Profile_image;

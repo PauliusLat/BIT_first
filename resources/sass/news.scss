@@ -1,10 +1,10 @@
 /** @format */
 
 .editor {
-  border: solid 1px #ccc;
-  padding: 20px;
+  border    : solid 1px #ccc;
+  padding   : 20px;
   min-height: 400px;
-  width: 60%;
+  width     : 60%;
 
   b,
   strong {
@@ -13,11 +13,11 @@
 }
 
 .sample-toolbar {
-  border: solid 1px #ddd;
-  background: #f4f4f4;
-  padding: 10px 0 0 0;
+  border       : solid 1px #ddd;
+  background   : #f4f4f4;
+  padding      : 10px 0 0 0;
   border-radius: 3px;
-  width: 60%;
+  width        : 60%;
 
   a {
     text-decoration: none;
@@ -40,15 +40,26 @@
   }
 }
 
-.sample-toolbar > span {
+.sample-toolbar>span {
   cursor: pointer;
 }
 
-.sample-toolbar > span:hover {
+.sample-toolbar>span:hover {
   text-decoration: underline;
 }
 
 .main_news_container {
+  position: relative;
+
+  .catPropNews {
+    width     : 10%;
+    position  : absolute;
+    top       : 95%;
+    left      : 95%;
+    transform : translate(-50%, -50%);
+    text-align: right;
+  }
+
   .news-title {
     margin: 10px;
   }
@@ -59,13 +70,13 @@
         height: 400px;
 
         .titleInput {
-          width: 100%;
-          border: solid 1px #cccccc;
-          height: 50px;
+          width     : 100%;
+          border    : solid 1px #cccccc;
+          height    : 50px;
           text-align: center;
-          margin: 0;
-          font-size: 35px;
-          outline: none;
+          margin    : 0;
+          font-size : 35px;
+          outline   : none;
         }
 
         .titleInput:placeholder-shown {
@@ -79,7 +90,7 @@
         .ql-container {
           .ql-editor {
             p {
-              font-size: 20px;
+              font-size  : 20px;
               font-weight: 200;
             }
           }
@@ -88,11 +99,11 @@
 
       .widthNews {
         display: inline-block;
-        width: 100%;
+        width  : 100%;
 
         .newsBtnSend {
           margin: 10px;
-          float: right;
+          float : right;
         }
       }
     }
@@ -100,9 +111,9 @@
 }
 
 .newsImg {
-  position: absolute;
-  top: 42%;
-  left: 85%;
+  position : absolute;
+  top      : 42%;
+  left     : 85%;
   transform: translate(-50%, -50%);
 
   .galleryUploade {
@@ -110,44 +121,44 @@
   }
 
   .newsImgInputs {
-    width: 100%;
+    width : 100%;
     margin: 30px;
 
     .newsImgInput {
-      width: 200px;
+      width : 200px;
       margin: 10px;
     }
   }
 
   .galleryDiv {
-    display: flex;
-    align-items: center;
+    display        : flex;
+    align-items    : center;
     justify-content: center;
   }
 
   .uploadeImageGallery {
-    background: no-repeat center center fixed;
+    background             : no-repeat center center fixed;
     -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    -moz-background-size   : cover;
+    -o-background-size     : cover;
+    background-size        : cover;
   }
 }
 
 .gallerBtn {
   background-color: transparent;
-  border-radius: 6px 6px 0 0;
-  border: 2px solid #cccccc;
-  display: inline-block;
-  cursor: pointer;
-  color: #050505;
-  font-family: Arial;
-  font-size: 16px;
-  padding: 6px 20px;
-  text-decoration: none;
-  text-shadow: 0px 0px 0px #292929;
-  border-bottom: none;
-  margin: 20px 0 0 10px;
+  border-radius   : 6px 6px 0 0;
+  border          : 2px solid #cccccc;
+  display         : inline-block;
+  cursor          : pointer;
+  color           : #050505;
+  font-family     : Arial;
+  font-size       : 16px;
+  padding         : 6px 20px;
+  text-decoration : none;
+  text-shadow     : 0px 0px 0px #292929;
+  border-bottom   : none;
+  margin          : 20px 0 0 10px;
 }
 
 .gallerBtn:hover {
@@ -155,22 +166,30 @@
 }
 
 .newsCat {
-  position: absolute;
-  top: 37%;
-  left: 10%;
-  transform: translate(-50%, -50%);
+  position        : fixed;
+  top             : 50%;
+  left            : 90%;
+  transform       : translate(-50%, -50%);
   background-color: $light-silver-gray;
-  height: 700px;
-  text-align: center;
-  border-radius: 10px;
+  height          : 100%;
+  text-align      : center;
+  border-radius   : 10px;
 
+  .tcp {
+    margin: 14% 0 0 0;
+  }
+  selected {
+    font-size: 16px;
+  }
   .cat {
-    width: 100%;
+ 
+
+    width : 100%;
   }
 
   option {
     line-height: 20px;
-    font-size: 16px;
+    font-size  : 16px;
   }
 
   option:first-child {
@@ -178,17 +197,17 @@
   }
 
   .showAllSelected {
-    display: inline-block;
+    display   : inline-block;
     text-align: left;
-    margin: 0 0 20px 0;
-    width: 100%;
+    margin    : 0 0 20px 0;
+    width     : 100%;
 
     .selectedCat {
-      border: 2px solid #cccccc;
-      width: 40%;
-      margin: 0 0 0 30%;
+      border     : 2px solid #cccccc;
+      width      : 40%;
+      margin     : 0 0 0 33%;
       line-height: 20px;
-      font-size: 16px;
+      font-size  : 16px;
     }
 
     .selectedCat:hover {
@@ -196,13 +215,13 @@
     }
 
     .closeCat {
-      width: 10%;
-      float: right;
+      width : 10%;
+      float : right;
       margin: 3px 24% 0 0;
     }
 
     .closeCat:hover {
-      color: $red;
+      color : $red;
       cursor: pointer;
     }
   }
@@ -214,7 +233,7 @@
 
 .newsCatImage {
   display: block;
-  margin: 0 auto;
+  margin : 0 auto;
 }
 
 .hideCat {
@@ -228,12 +247,12 @@
     }
 
     .parentNews {
-      display: grid;
+      display              : grid;
       grid-template-columns: 2fr 5fr 2fr;
-      grid-template-rows: 1fr;
-      grid-column-gap: 0px;
-      grid-row-gap: 0px;
-      border-bottom: 1px solid black;
+      grid-template-rows   : 1fr;
+      grid-column-gap      : 0px;
+      grid-row-gap         : 0px;
+      border-bottom        : 1px solid black;
 
       div:nth-last-child(3) {
         grid-area: 1 / 1 / 2 / 2;
@@ -248,29 +267,29 @@
       }
 
       .imageNews {
-        width: 15%;
-        float: left;
+        width : 15%;
+        float : left;
         margin: 0 10px 0 0;
 
         img {
-          height: 150px;
-          width: 150px;
+          height    : 150px;
+          width     : 150px;
           object-fit: cover;
-          margin: 10px 0 0 0;
+          margin    : 10px 0 0 0;
         }
       }
 
       .contentNews {
-        display: inline-block;
-        width: 58%;
-        height: 150px;
+        display : inline-block;
+        width   : 58%;
+        height  : 150px;
         overflow: hidden;
-        margin: 0 0 30px 0;
+        margin  : 0 0 30px 0;
       }
 
       .newsButtons {
-        float: right;
-        width: 25%;
+        float : right;
+        width : 25%;
         margin: 10px 0 0 0;
 
         .btnNews {

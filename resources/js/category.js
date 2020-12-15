@@ -21,7 +21,7 @@ function init() {
       const test = document.querySelector(".innercat");
 
       if (response.status == 200 && response.statusText == "OK") {
-        
+
         const HTML = response.data.html;
         test.innerHTML = HTML;
 
@@ -34,16 +34,16 @@ function init() {
           const description = document.getElementById("category-description").value;
           let parent = document.getElementById('cat');
           let select;
-          if (parent.options[parent.selectedIndex] != undefined){
+          if (parent.options[parent.selectedIndex] != undefined) {
             select = parent.options[parent.selectedIndex].value;
-          }else{
+          } else {
             select = 0;
           }
 
           let selectedPage;
-          if (document.querySelector('[name="catPage"]:checked')){
+          if (document.querySelector('[name="catPage"]:checked')) {
             selectedPage = 1;
-          }else{
+          } else {
             selectedPage = 0;
           }
 
@@ -92,16 +92,16 @@ function init() {
 
 
 function catStore(name, select, slug, description, selectedPage) {
-console.log(typeof selectedPage)
+  console.log(typeof selectedPage)
 
   let obj = {
-    api:"category_store",
+    api: "category_store",
     title: name,
     slug: slug,
     page: selectedPage,
     content: description,
     cat_parent: select,
-    
+
   }
 
 
@@ -118,15 +118,17 @@ function catEdit(editID, taxonomy) {
 
   console.log(name)
   axios
-    .post(uri + path + "category_edit&id="+editID,{
+    .post(uri + path + "category_edit&id=" + editID, {
       editID: editID,
       taxonomy_type: taxonomy,
     })
-    .then(function (response) {
+    .then((response) => {
       const test = document.querySelector(".innercat");
       if (response.status == 200 && response.statusText == "OK") {
         const HTML = response.data.html;
         test.innerHTML = HTML;
+        readImage.image();
+
       }
       const updateBtn = document.getElementById("catUpdate");
       updateBtn.addEventListener("click", () => {
@@ -143,29 +145,20 @@ function catUpdate(updateId) {
   const name = document.getElementById("category_name").value;
   const slug = document.getElementById("category_slug").value;
   const description = document.getElementById("category_description").value;
+  const api = "category_update";
 
-  console.log(name)
-  console.log(slug)
-  console.log(description)
-  axios
-    .post(uri + path + "category_update", {
-      updateId: updateId,
-      cat_name: name,
-      cat_slug: slug,
-      cat_description: description
+  let obj = {
+    api: api,
+    updateId: updateId,
+    cat_name: name,
+    cat_slug: slug,
+    cat_description: description
+  }
 
-    })
-    .then(function (response) {
-      if (response.status == 200 && response.statusText == "OK") {
-        // console.log(response);
-        init();
-        // setTimeout(call.init(), 500);
-      }
-    })
-  
-    .catch((err) => {
-      console.log(err instanceof TypeError);
-    });
+  readImage.sendImageData(obj);
+
+  setTimeout(init, 500); //klausti Arvido ka naudoti timesetout ar async ????????
+
 }
 
 function catDelete(ID, taxonomy) {
