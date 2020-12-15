@@ -28,16 +28,22 @@ class Api {
             });
     }
     async getDAta(api) {
+      
         try {
+           
             let response = await axios.post(this.uri + this.path + api,)
+          
             if (response.status == 200 && response.statusText == "OK") {
+                
                 return response.data.html;
             }
+
         } catch (e) {
             console.error(e);
             console.log("Duomenys is serveverio nepasiekiami !!!");
         }
     }
+    
     saveContent(api, id, content) {
         axios
             .post(

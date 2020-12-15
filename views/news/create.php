@@ -55,11 +55,6 @@
 
 <div class="md-1-5 newsCat" style="display: none;">
     <h2 class='tcp'>Pasirinkite kategoriją</h2>
-    <!-- <input type="text" name="category-name" id="category-name" value="" placeholder="Įrašykite kategorijos pavadinimą..." class="tcp-input"> -->
-    <!-- <div class=''>
-        <label class="tcp-label">Priskirkite 'tėvinę' kategoriją</label>
-    </div> -->
-
     <?php
     $args1 = array(
         'taxonomy'     => 'maincat',
@@ -77,53 +72,48 @@
     <br><br>
     <div class="showAllSelected">
     </div>
-    <!-- <div class=''>
-        <label class="tcp-label">Kategorijos aprašymas</label>
-    </div>
-    <textarea name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="tcp-input">
-
-    </textarea> -->
-
     <div class="buttons sm-1">
         <button type="submit" id="addCat" class="btn-blue">Pridėti</button>
     </div>
 
+    <div class='newCat'>
+        <h2 class='tcp'>Pridėkite naują kategoriją</h2>
+        <div class=''>
+            <label class="tcp-label">Kategorijos pavadinimas</label>
+        </div>
+        <input type="text" name="category-name" id="category-name" value="" placeholder="Įrašykite kategorijos pavadinimą..." class="tcp-input">
+        <div class=''>
+            <label class="tcp-label">Priskirkite 'tėvinę' kategoriją</label>
+        </div>
 
-    <h2 class='tcp'>Pridėkite naują kategoriją</h2>
-    <div class=''>
-        <label class="tcp-label">Kategorijos pavadinimas</label>
-    </div>
-    <input type="text" name="category-name" id="category-name" value="" placeholder="Įrašykite kategorijos pavadinimą..." class="tcp-input">
-    <div class=''>
-        <label class="tcp-label">Priskirkite 'tėvinę' kategoriją</label>
-    </div>
+        <?php
+        $args = array(
+            'taxonomy'     => 'maincat',
+            'show_option_all' => 'pasirinkite tėvinę kategoriją',
+            'orderby'      => 'name',
+            'hide_empty'   => false,
+            'show_count'   => false,
+            'pad_counts'   => false,
+            'hierarchical' => true,
+        );
+        ?>
+        <ul style="display:inline-block">
+            <?php wp_dropdown_categories($args); ?>
+        </ul>
+        <br><br>
+        <div class="showAllSelected">
+        </div>
 
-    <?php
-    $args = array(
-        'taxonomy'     => 'maincat',
-        'show_option_all' => 'pasirinkite tėvinę kategoriją',
-        'orderby'      => 'name',
-        'hide_empty'   => false,
-        'show_count'   => false,
-        'pad_counts'   => false,
-        'hierarchical' => true,
-    );
-    ?>
-    <ul style="display:inline-block">
-        <?php wp_dropdown_categories($args); ?>
-    </ul>
-    <br><br>
-    <div class="showAllSelected">
-    </div>
-    <div class=''>
-        <label class="tcp-label">Kategorijos aprašymas</label>
-    </div>
-    <textarea name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="tcp-input">
-
-    </textarea>
-
-    <div class="buttons sm-1">
-        <button type="submit" id="create" class="btn-blue">Pridėti</button>
+        <input type="checkbox" id="catPage" name="catPage" value="catPage">
+        <label for="catPage">Sukurti kategorijos puslapį</label><br>
+        <div class=''>
+            <label class="tcp-label">Kategorijos aprašymas</label>
+        </div>
+        <textarea name="category-description" id="category-description" value="" placeholder="Įrašykite kategorijos aprašymą..." class="tcp-input">
+        </textarea>
+        <div class="buttons sm-1">
+            <button type="submit" id="catCreate" class="btn-blue">Pridėti</button>
+        </div>
     </div>
 </div>
 

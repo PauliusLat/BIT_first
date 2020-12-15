@@ -55,12 +55,10 @@ trait Ttaxonomy
                     if ($this->ID == null) {
                         throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
                     } else {
-                        $terms = get_terms(['name' => $tag, 'taxonomy' => $value, 'hide_empty' => false]);
-
-
-                        foreach ($terms as $term) {
-                            wp_set_object_terms($this->ID, $term->term_id, $value, $append = false);
-                        }
+                        // $terms = get_terms(['name' => $tag, 'taxonomy' => $value, 'hide_empty' => false]);
+                        // foreach ($terms as $term) {
+                        wp_set_object_terms($this->ID, $tag, $value);
+                        // }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
                          * so that children with the same names but different parents aren't confused.*/
                     }

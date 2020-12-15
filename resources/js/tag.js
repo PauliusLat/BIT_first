@@ -8,11 +8,13 @@ class Tag {
     constructor(target) {
 
         const api = "tag_create";
+        this.api = api;
         this.start = true;
         this.target = target;
         this.pages = 5;
         this.page = new Pagination(api);
         this.axios = new Api;
+        this.changes;
         this.init();
 
     }
@@ -23,29 +25,36 @@ class Tag {
         const test = document.querySelector(".test");
 
         if (DOM) {
-
-            let pages;
-
-            if (this.start && HTML == null) {
-                HTML = await this.page.start();
-                test.innerHTML = HTML;
-            } else {
-                test.innerHTML = HTML;
+            if (this.start) {
+                if (HTML == null) {
+                    location.hash = 1;
+                    let obj = {
+                        api: this.api,
+                        hash: 1
+                    }
+                    HTML = await this.axios.getPostData(obj);
+                    test.innerHTML = HTML;
+                } else {
+                    test.innerHTML = HTML;
+                    console.log('naujas html 33333333');
+                }
             }
+
             this.start = false;
 
             this.page.paging();
 
             HTML = "";
 
-            if (hash != null) {
-                let addColor = document.querySelector('.nr-' + hash);
-                addColor.classList.add("active");
-            }
+            let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
+            addColor.classList.add("active");
+
+            //kodel nenuiima seno po edit ar naujo ????
 
             var chages = async () => {
-
+               
                 hash = location.hash.slice(1, 2);
+
                 if (hash != undefined &&
                     hash != null &&
                     hash > 0 &&
@@ -53,40 +62,43 @@ class Tag {
                     hash != NaN) {
                     let pages = this.pages;
                     HTML = await this.page.select(hash, pages);
-                    this.init(hash, HTML);
+                    this.start = true;
                     window.removeEventListener('hashchange', chages);
+                    this.init(hash, HTML);
                 }
             }
-            window.addEventListener('hashchange', chages);
+            window.addEventListener('hashchange', chages); //prikabina kruva addEventListener
+
+            this.changes = chages;
 
             const option = document.getElementById("items");
             option.value = this.pages;
 
-            option.addEventListener('change', () => {
-
+            var selected = () => {
                 this.pages = option.value;
-
                 location.hash = 1;
+                window.removeEventListener('hashchange', chages);
                 chages();
+                option.removeEventListener('change', selected);
+            }
+            option.addEventListener('change', selected);//sitas dadenauja  window.addEventListener('hashchange', chages);
 
-            });
+            this.delete();
+            this.createTag();
+            this.tagEdit(test);
         }
-
-        this.delete();
-        this.create();
-        this.tagEdit(test);
     }
 
-    create() {
+
+    createTag() {
 
         const name = document.getElementById("tag-name")
         const slug = document.getElementById("tag-slug");
         const description = document.getElementById("tag-description");
-        const submit = document.getElementById("create");
+        const storeTag = document.getElementById("create");
         const api = "tag_store";
 
-
-        submit.addEventListener("click", () => {
+        storeTag.addEventListener("click", () => {
             let obj = {
                 api: "tag_store",
                 tag_name: name.value,
@@ -121,7 +133,9 @@ class Tag {
                         }
                         this.axios.formDataApi(obj);
                         this.start = true;
-
+                        let chages = this.changes;
+                        console.log(chages);
+                        window.removeEventListener('hashchange', chages);
                         return setTimeout(() => { this.init() }, (300))
                     });
             }
@@ -169,7 +183,7 @@ class Tag {
                         description.value = "";
                         slug.value = "";
                         name.value = "";
-                       
+
                         return setTimeout(() => { this.init() }, (300))
                     });
                 });

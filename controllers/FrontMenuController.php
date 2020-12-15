@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 // use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-
 class FrontMenuController
 {
 
@@ -36,7 +35,7 @@ class FrontMenuController
         $menus = $query->postType('menu')->getPost()->all();
         $menu = $menus[0];
         $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
-        return new JsonResponse(['menu' => $menu, 'pages' => $pages]);
+        return new JsonResponse(['html' => $pages]);
     }
 
     public function store(Request $request, FrontMenu $menu)

@@ -6,6 +6,7 @@ use BIT\app\Attachment;
 use BIT\app\Page;
 use BIT\app\View;
 use BIT\models\NewsPost;
+use BIT\app\Category;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,13 +44,15 @@ class NewsAdminController
 		$news->news_content = $content;
 		$news->save();
 
+		//add category tp post
 		$cat = $request->request->get('category');
-		// $catArr = explode(',', $cat);
 		$catInt = array_map('intval', explode(',', $cat));
 		$news->attachCat($catInt);
-		echo '<pre>';
-		var_dump($catInt);
-		// _dc($catArr);
+
+		//add tag to post
+		$tag = $request->request->get('tag');
+		$tagInt = array_map('intval', explode(',', $tag));
+		$news->attachTag($tagInt);
 
 		$page->setRoute('showNews', $news->ID);
 		$page->save();
@@ -68,7 +71,16 @@ class NewsAdminController
 	}
 	public function edit(NewsPost $news)
 	{
+
 		return View::adminRender('news.edit', ['data' => $news]);
+	}
+
+	public function editCat(Request $request)
+	{
+		$news = new NewsPost;
+		$newsID = $request->request->get('id');
+		$postCats = $news->getCats($newsID);
+		return View::adminRender('news.edit', ['html' => $postCats]);
 	}
 
 	public function list()
@@ -82,7 +94,6 @@ class NewsAdminController
 
 		$allNews = NewsPost::all()->all();
 		$output = View::adminRender('news.renderList', ['html' => $allNews,  'uri' => $uri]);
-
 		$response = new JsonResponse(['html' => $output]);
 
 		return $response;
