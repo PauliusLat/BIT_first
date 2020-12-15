@@ -69,18 +69,13 @@ class NewsAdminController
 		$id = $request->request->get('id');
 		$news = NewsPost::get($id);
 	}
-	public function edit(NewsPost $news)
+	public function edit(Request $request)
 	{
-
-		return View::adminRender('news.edit', ['data' => $news]);
-	}
-
-	public function editCat(Request $request)
-	{
-		$news = new NewsPost;
-		$newsID = $request->request->get('id');
-		$postCats = $news->getCats($newsID);
-		return View::adminRender('news.edit', ['html' => $postCats]);
+		$news = NewsPost::get($request->request->get('id'));
+		$id = $request->request->get('id');
+		$postCats = $news->getCats($id);
+		$postTags = $news->getTags($id);
+		return View::adminRender('news.edit', ['data' => $news, 'postCats' => $postCats, 'postTags' => $postTags,]);
 	}
 
 	public function list()
@@ -91,11 +86,9 @@ class NewsAdminController
 	public function listPost(Request $request)
 	{
 		$uri = admin_url('admin.php?page=0edit');
-
 		$allNews = NewsPost::all()->all();
 		$output = View::adminRender('news.renderList', ['html' => $allNews,  'uri' => $uri]);
 		$response = new JsonResponse(['html' => $output]);
-
 		return $response;
 	}
 
@@ -111,6 +104,17 @@ class NewsAdminController
 		$news->post_title = $request->request->get('title');
 		$news->news_content = $request->request->get('content');
 		$news->save();
+
+		//update post category
+		$cat = $request->request->get('category');
+		$catInt = array_map('intval', explode(',', $cat));
+		$news->attachCat($catInt);
+
+		//update post tag
+		$tag = $request->request->get('tag');
+		$tagInt = array_map('intval', explode(',', $tag));
+		$news->attachTag($tagInt);
+
 
 		$image->setAlt($request->request->get('altText'));
 		$image->setCaption($request->request->get('imageTitle'));
