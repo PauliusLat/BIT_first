@@ -14,10 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 class NewsAdminController
 {
 
-	public function index()
-	{
-		return View::adminRender('news.index');
-	}
+	// public function index()
+	// {
+	// 	return View::adminRender('news.index');
+	// }
 
 	public function create()
 	{

@@ -1,4 +1,5 @@
 <div class="gallerGrid">
+
     <?php foreach ($data as $album): ?>
         <div class="">
        
@@ -8,6 +9,7 @@
 
 
             
+
         </div>
     <?php endforeach;?>
 </div>
