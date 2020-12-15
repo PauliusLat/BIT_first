@@ -5,7 +5,7 @@
        
             
             <img src="<?= $album->getProfileImage()->getUrl(); ?>" alt="<?= $album->getProfileImage()->getAlt(); ?>">
-            <a href="<?= $album->getLink();?>"><?= $album->post_title;?></a>
+            <a href="<?= $album->getpage()->getLink();?>"><?= $album->post_title;?></a>
 
 
             
