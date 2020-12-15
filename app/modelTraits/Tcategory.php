@@ -11,12 +11,12 @@ use BIT\app\coreExeptions\PostIdNotSetException;
 trait Tcategory
 {
 
-    public function checkMulticat(string $cat)
+    public function checkMulticat(string $cat, $postId)
     {
         if (did_action('init')) {
             $cats = explode(', ', $cat);
             foreach ($cats as $term) {
-                foreach ($this->getCats() as $post_term) {
+                foreach ($this->getCats($postId) as $post_term) {
                     if ($post_term->name == $term) {
                         $cat_ids[] = $post_term->term_id;
                     }
@@ -56,12 +56,12 @@ trait Tcategory
         }
     }
 
-    public function updateCat(int $id, string $name, string $slug, string $description = '',  $parent_id = 0,  $taxonomy_type = 'maincat')
+    public static function updateCat(int $id, string $name, string $slug, string $description = '',  $parent_id = 0,  $taxonomy_type = 'maincat')
     {
         if (did_action('init')) {
             $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'name' => $name];
             wp_update_term($id, $taxonomy_type, $args);
-            $page = $this->getCatPage($id);
+            $page = self::getCatPage($id);
             if ($page != null || $page != 0 || $page != 'undefined' || $page != '') {
                 $page->post_name = $slug;
                 $page->save();
@@ -75,17 +75,17 @@ trait Tcategory
     public function getCatPageLink(int $id)
     {
         $catPageId = get_term_meta($id, "page")[0];
-        $page = new Page;
-        $page = $page->get($catPageId);
+        // $page = new Page;
+        $page = Page::get($catPageId);
         $pageLink = $page->getLink();
         return $pageLink;
     }
 
-    public function getCatPage(int $id)
+    public static function getCatPage(int $id)
     {
         $catPageId = get_term_meta($id, "page")[0];
-        $page = new Page;
-        $page = $page->get($catPageId);
+        // $page = new Page;
+        $page = Page::get($catPageId);
         // $pageLink = $page->getLink();
         return $page;
     }
@@ -105,7 +105,7 @@ trait Tcategory
     }
 
     //get category by id
-    public function getCat($id, $taxonony_type = 'maincat')
+    public static function getCat($id, $taxonony_type = 'maincat')
     {
         $cat = get_term_by('id', $id, $taxonony_type);
         return $cat;
@@ -155,9 +155,9 @@ trait Tcategory
     }
 
     //deletes category from db
-    public function deleteCatFromDb(int $id, $taxonomy_type = 'maincat')
+    public static function deleteCatFromDb(int $id, $taxonomy_type = 'maincat')
     {
-        $page = $this->getCatPage($id);
+        $page = self::getCatPage($id);
         // _dc($page->ID);
         wp_delete_term($id, $taxonomy_type);
 
