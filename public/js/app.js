@@ -1919,6 +1919,29 @@ function renderColons(e) {
 
 /***/ }),
 
+/***/ "./resources/js/light_box.js":
+/*!***********************************!*\
+  !*** ./resources/js/light_box.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+document.getElementById("clickme").addEventListener("click", function () {
+  document.getElementById("lightbox").className = "open";
+});
+document.getElementById("close").addEventListener("click", function () {
+  document.getElementById("lightbox").className = "";
+});
+var i = 0;
+document.getElementById("lightbox").addEventListener("click", function (e) {
+  if (e.target.id + i == "lightbox" + i) {
+    console.log(e.target.id + i);
+    document.getElementById("lightbox").className = "";
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/main.js":
 /*!******************************!*\
   !*** ./resources/js/main.js ***!
@@ -1938,6 +1961,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 /* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
 /* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
+/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./light_box */ "./resources/js/light_box.js");
+/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_light_box__WEBPACK_IMPORTED_MODULE_10__);
 /** @format */
  // import startGallery from './gallery.js';
 
@@ -1948,6 +1973,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
  // import TextEditor from './text-editor.js'
+
 
 
 
@@ -2887,7 +2913,9 @@ var Tag = /*#__PURE__*/function () {
                 test = document.querySelector(".test");
 
                 if (!DOM) {
-                  _context3.next = 21;
+
+                  _context2.next = 29;
+
                   break;
                 }
 
@@ -2907,14 +2935,15 @@ var Tag = /*#__PURE__*/function () {
               case 10:
                 HTML = _context3.sent;
                 test.innerHTML = HTML;
-                _context3.next = 16;
+
+                _context2.next = 15;
+
                 break;
 
               case 14:
                 test.innerHTML = HTML;
-                console.log('naujas html 33333333');
 
-              case 16:
+              case 15:
                 this.page.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
@@ -2998,7 +3027,29 @@ var Tag = /*#__PURE__*/function () {
                   };
                 }();
 
+
+                window.addEventListener('hashchange', changes);
+                this.changes = changes;
+                option = document.getElementById("items");
+                option.value = this.pages;
+
+                selected = function selected() {
+                  _this.pages = option.value;
+                  location.hash = 1;
+                  window.removeEventListener('hashchange', changes);
+                  changes();
+                  option.removeEventListener('change', selected);
+                };
+
+                option.addEventListener('change', selected);
+                this["delete"]();
+                this.createTag();
+                this.tagEdit(test);
+
+              case 29:
+
               case 21:
+
               case "end":
                 return _context3.stop();
             }
