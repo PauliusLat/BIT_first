@@ -178,13 +178,13 @@
   .tcp {
     margin: 14% 0 0 0;
   }
+
   selected {
     font-size: 16px;
   }
-  .cat {
- 
 
-    width : 100%;
+  .cat {
+    width: 100%;
   }
 
   option {
@@ -298,4 +298,9 @@
       }
     }
   }
+}
+
+.newsImage {
+  border: 1px solid red;
+  cursor: pointer;
 }

@@ -13,10 +13,14 @@
             <div class="imageDiv">
                 <img id="image" src="<?= $image->getUrl(); ?>" alt="<?= $image->getAlt(); ?>">
             </div>
+            <label for="alt">Alt tekstas</label>
+            <input type="text" id="alt" value=" <?= $image->getAlt(); ?>"/>
+            <label for="pavTtitle">Pav. title</label>
+            <input type="text" id="pavTtitle" value=" <?= $image->post_title; ?>"/>
         </div>
     <?php endforeach; ?>
     <div id="editor" name="newsEditor">
-        <?= $data->news_content; ?>
+        <?= $data->news_content; ?>       
     </div>
     <div class="btn-green btnNews save" id="<?= $data->ID; ?>">
         Saugoti

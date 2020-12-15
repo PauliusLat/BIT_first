@@ -35,7 +35,6 @@ class Tag {
                 test.innerHTML = HTML;
             } else {
                 test.innerHTML = HTML;
-                console.log('naujas html 33333333');
             }
 
             this.page.paging();

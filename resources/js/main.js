@@ -14,6 +14,7 @@ import News from './news';
 import Profile_image from './profile_image';
 import NewsList from './newsList';
 import EditPost from './editPost';
+import lightbox from './light_box';
 
 // new TextEditor('.news-container')
 new Calendar('.calendar');
