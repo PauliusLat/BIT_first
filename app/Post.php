@@ -186,6 +186,13 @@ class Post
     {
         return get_permalink($this->ID);
     }
+// returns post Page
+    public function getPage()
+    {
+        if($this->post_parent){
+            return Page::get($this->post_parent);
+        }
+    }
 }
 
 
