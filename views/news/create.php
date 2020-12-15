@@ -47,8 +47,10 @@
         <div class="gallerBtn" id="tagNews">
             tag
         </div>
+
     </div>
     <div class="md-1-5 newsCat" style="display: none;">
+
         <h2 class='tcp'>
             Pasirinkite kategoriją
         </h2>
@@ -63,6 +65,7 @@
             'hierarchical' => true,
         );
         ?>
+
         <ul>
             <?php wp_dropdown_categories($args1); ?>
         </ul>
@@ -73,12 +76,15 @@
                 Pridėti
             </button>
         </div>
+
     </div>
     <div class='tcp newsCat'  style="display: none;">
         Irasyti tag
         <input type="text" name="tag-name" id="tag-name" value="" placeholder="Įrašykite tag" class="tcp-input">
     </div>
    
+
+
 </div>
 
 

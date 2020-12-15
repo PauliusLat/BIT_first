@@ -1998,8 +1998,16 @@ new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -2028,6 +2036,7 @@ var Menu = /*#__PURE__*/function () {
     this.target = target;
     this.read = true;
     this.init();
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
   }
 
   _createClass(Menu, [{
@@ -2038,7 +2047,6 @@ var Menu = /*#__PURE__*/function () {
       var DOM = document.getElementById(this.target);
 
       if (DOM) {
-        // })
         var getDragAfterElement = function getDragAfterElement(container, y) {
           var draggableElements = _toConsumableArray(container.querySelectorAll('.draggable:not(.dragging)'));
 
@@ -2096,17 +2104,51 @@ var Menu = /*#__PURE__*/function () {
     }
   }, {
     key: "addNew",
-    value: function addNew() {
-      var lastElemet = document.querySelector(".cont");
-      var HTML = "<div class=\"menuName\">\n          <label for=\"\">\n\n          </label>\n          <input name=\"menu\" class=\"menuText\" placeholder=\"Pavadinimas\" type=\"text\">\n      </div>\n\n      <div class=\"menuSelect\">\n          <label for=\"standard-select\">\n\n          </label>\n\n          <select class=\"select-css\" id=\"standard-select\">\n              <option value=\"1\">Pasirinkti puslapi</option>\n              <option value=\"2\">2</option>\n              <option value=\"3\">3</option>\n              <option value=\"4\">4</option>\n              <option value=\"5\">5</option>\n          </select>\n      </div>\n      <div class=\"menuLinkAdd\">\n          <label for=\"link\">\n\n          </label>\n          <input class=\"menuLink\" placeholder=\"Prideti nuoroda\" type=\"text\">\n      </div>\n\n      <div class=\"manuDelete\">\n          <svg height=\"35\" version=\"1.1\" viewBox=\"0 0 295 295\" width=\"40\">\n              <title />\n              <desc />\n              <defs />\n              <g fill=\"none\" fill-rule=\"evenodd\" id=\"Page-1\" stroke=\"none\" stroke-width=\"1\">\n                  <g fill-rule=\"nonzero\" id=\"close\">\n                      <path d=\"M147.421,0 C66.133,0 0,66.133 0,147.421 C0,228.709 66.133,294.842 147.421,294.842 C185.708,294.842 221.988,280.233 249.58,253.706 C251.969,251.41 252.044,247.611 249.747,245.223 C247.452,242.835 243.654,242.759 241.264,245.056 C215.919,269.423 182.592,282.842 147.422,282.842 C72.75,282.843 12,222.093 12,147.421 C12,72.749 72.75,12 147.421,12 C222.092,12 282.842,72.75 282.842,147.421 C282.842,164.263 279.79,180.694 273.771,196.256 C272.576,199.347 274.112,202.821 277.203,204.017 C280.295,205.21 283.768,203.676 284.964,200.585 C291.519,183.636 294.843,165.749 294.843,147.42 C294.843,66.133 228.71,0 147.421,0 Z\" fill=\"#000000\" id=\"Shape\" />\n                      <path d=\"M167.619,160.134 C165.249,157.815 161.451,157.857 159.134,160.224 C156.816,162.592 156.857,166.391 159.224,168.709 L206.46,214.945 C207.628,216.088 209.143,216.657 210.657,216.657 C212.214,216.657 213.77,216.054 214.945,214.854 C217.263,212.486 217.222,208.687 214.855,206.369 L167.619,160.134 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                      <path d=\"M125.178,133.663 C126.349,134.834 127.885,135.42 129.421,135.42 C130.957,135.42 132.492,134.834 133.664,133.663 C136.007,131.32 136.007,127.521 133.664,125.178 L88.428,79.942 C86.085,77.599 82.285,77.599 79.943,79.942 C77.6,82.285 77.6,86.084 79.943,88.427 L125.178,133.663 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                      <path d=\"M214.9,79.942 C212.557,77.599 208.757,77.599 206.415,79.942 L79.942,206.415 C77.599,208.758 77.599,212.557 79.942,214.9 C81.113,216.071 82.649,216.657 84.185,216.657 C85.721,216.657 87.256,216.071 88.428,214.9 L214.9,88.428 C217.243,86.084 217.243,82.286 214.9,79.942 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                  </g>\n              </g>\n          </svg>\n      </div>\n      <div class=\"menuDrag\">\n          <svg data-name=\"Layer 1\" id=\"Layer_1\" height=\"35\" width=\"40\" viewBox=\"0 0 32 32\">\n              <defs>\n                  <style>\n                      .cls-1 {\n                          fill: #515151;\n                      }\n                  </style>\n              </defs>\n              <title />\n              <path class=\"cls-1\" d=\"M16,9a3,3,0,1,0-3-3A3,3,0,0,0,16,9Zm0-4.46A1.46,1.46,0,1,1,14.54,6,1.46,1.46,0,0,1,16,4.54Z\" />\n              <path class=\"cls-1\" d=\"M16,19a3,3,0,1,0-3-3A3,3,0,0,0,16,19Zm0-4.46A1.46,1.46,0,1,1,14.54,16,1.46,1.46,0,0,1,16,14.54Z\" />\n              <path class=\"cls-1\" d=\"M16,29a3,3,0,1,0-3-3A3,3,0,0,0,16,29Zm0-4.46A1.46,1.46,0,1,1,14.54,26,1.46,1.46,0,0,1,16,24.54Z\" />\n          </svg>\n      </div>";
-      var node = document.createElement("div");
-      node.classList.add("draggable");
-      node.setAttribute('id', "addDrag");
-      node.setAttribute('draggable', true);
-      node.innerHTML = HTML;
-      lastElemet.appendChild(node);
-      this.init();
-    }
+    value: function () {
+      var _addNew = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var api, htm, lastElemet, HTML, node, select, myFunction;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                myFunction = function _myFunction(item) {
+                  select.innerHTML += "<option>".concat(item.post_title, "</option>");
+                  console.log(item.post_title);
+                };
+
+                api = "menu_create";
+                _context.next = 4;
+                return this.axios.getDAta(api);
+
+              case 4:
+                htm = _context.sent;
+                lastElemet = document.querySelector(".cont");
+                HTML = "<div class=\"menuName\">\n    <label for=\"\">\n    </label>\n    <input name=\"menu\" class=\"menuText\" placeholder=\"Pavadinimas\" type=\"text\">\n</div>\n<div class=\"menuSelect\">\n    <label for=\"standard-select\">\n    </label>\n    <select class=\"select-css add\" id=\"standard-select\">\n  \n    </select>\n</div>\n<div class=\"menuLinkAdd\">\n    <label for=\"link\">\n    </label>\n    <input class=\"menuLink\" placeholder=\"Prideti nuoroda\" type=\"text\">\n</div>\n<div class=\"manuDelete\">\n    <svg height=\"35\" version=\"1.1\" viewBox=\"0 0 295 295\" width=\"40\">\n        <title />\n        <desc />\n        <defs />\n        <g fill=\"none\" fill-rule=\"evenodd\" id=\"Page-1\" stroke=\"none\" stroke-width=\"1\">\n            <g fill-rule=\"nonzero\" id=\"close\">\n                <path d=\"M147.421,0 C66.133,0 0,66.133 0,147.421 C0,228.709 66.133,294.842 147.421,294.842 C185.708,294.842 221.988,280.233 249.58,253.706 C251.969,251.41 252.044,247.611 249.747,245.223 C247.452,242.835 243.654,242.759 241.264,245.056 C215.919,269.423 182.592,282.842 147.422,282.842 C72.75,282.843 12,222.093 12,147.421 C12,72.749 72.75,12 147.421,12 C222.092,12 282.842,72.75 282.842,147.421 C282.842,164.263 279.79,180.694 273.771,196.256 C272.576,199.347 274.112,202.821 277.203,204.017 C280.295,205.21 283.768,203.676 284.964,200.585 C291.519,183.636 294.843,165.749 294.843,147.42 C294.843,66.133 228.71,0 147.421,0 Z\" fill=\"#000000\" id=\"Shape\" />\n                <path d=\"M167.619,160.134 C165.249,157.815 161.451,157.857 159.134,160.224 C156.816,162.592 156.857,166.391 159.224,168.709 L206.46,214.945 C207.628,216.088 209.143,216.657 210.657,216.657 C212.214,216.657 213.77,216.054 214.945,214.854 C217.263,212.486 217.222,208.687 214.855,206.369 L167.619,160.134 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                <path d=\"M125.178,133.663 C126.349,134.834 127.885,135.42 129.421,135.42 C130.957,135.42 132.492,134.834 133.664,133.663 C136.007,131.32 136.007,127.521 133.664,125.178 L88.428,79.942 C86.085,77.599 82.285,77.599 79.943,79.942 C77.6,82.285 77.6,86.084 79.943,88.427 L125.178,133.663 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n                <path d=\"M214.9,79.942 C212.557,77.599 208.757,77.599 206.415,79.942 L79.942,206.415 C77.599,208.758 77.599,212.557 79.942,214.9 C81.113,216.071 82.649,216.657 84.185,216.657 C85.721,216.657 87.256,216.071 88.428,214.9 L214.9,88.428 C217.243,86.084 217.243,82.286 214.9,79.942 Z\" fill=\"#FB4A5E\" id=\"Shape\" />\n            </g>\n        </g>\n    </svg>\n</div>\n<div class=\"menuDrag\">\n    <svg data-name=\"Layer 1\" id=\"Layer_1\" height=\"35\" width=\"40\" viewBox=\"0 0 32 32\">\n        <defs>\n            <style>\n                .cls-1 {\n                    fill: #515151;\n                }\n            </style>\n        </defs>\n        <title />\n        <path class=\"cls-1\" d=\"M16,9a3,3,0,1,0-3-3A3,3,0,0,0,16,9Zm0-4.46A1.46,1.46,0,1,1,14.54,6,1.46,1.46,0,0,1,16,4.54Z\" />\n        <path class=\"cls-1\" d=\"M16,19a3,3,0,1,0-3-3A3,3,0,0,0,16,19Zm0-4.46A1.46,1.46,0,1,1,14.54,16,1.46,1.46,0,0,1,16,14.54Z\" />\n        <path class=\"cls-1\" d=\"M16,29a3,3,0,1,0-3-3A3,3,0,0,0,16,29Zm0-4.46A1.46,1.46,0,1,1,14.54,26,1.46,1.46,0,0,1,16,24.54Z\" />\n    </svg>\n</div>";
+                node = document.createElement("div");
+                node.classList.add("draggable");
+                node.setAttribute('id', "addDrag");
+                node.setAttribute('draggable', true);
+                node.innerHTML = HTML;
+                lastElemet.appendChild(node);
+                select = document.querySelector(".add");
+                console.log(select);
+                htm.forEach(myFunction);
+                this.init();
+
+              case 17:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function addNew() {
+        return _addNew.apply(this, arguments);
+      }
+
+      return addNew;
+    }()
   }, {
     key: "delete",
     value: function _delete(draggables) {
@@ -2154,7 +2196,7 @@ var Menu = /*#__PURE__*/function () {
             link.push(menuLink[i].value);
           }
 
-          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+          var axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
           var obj = {
             category: values,
             id: menuId,
@@ -2850,7 +2892,7 @@ var Tag = /*#__PURE__*/function () {
   _createClass(Tag, [{
     key: "init",
     value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var _this = this;
 
         var hash,
@@ -2860,25 +2902,25 @@ var Tag = /*#__PURE__*/function () {
             obj,
             addColor,
             changes,
-            option,
-            selected,
-            _args2 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            _args3 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
-                HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
+                hash = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : null;
+                HTML = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : null;
                 DOM = document.getElementById(this.target);
                 test = document.querySelector(".test");
 
                 if (!DOM) {
+
                   _context2.next = 29;
+
                   break;
                 }
 
                 if (!(HTML == null)) {
-                  _context2.next = 14;
+                  _context3.next = 14;
                   break;
                 }
 
@@ -2887,13 +2929,15 @@ var Tag = /*#__PURE__*/function () {
                   api: this.api,
                   hash: 1
                 };
-                _context2.next = 10;
+                _context3.next = 10;
                 return this.axios.getPostData(obj);
 
               case 10:
-                HTML = _context2.sent;
+                HTML = _context3.sent;
                 test.innerHTML = HTML;
+
                 _context2.next = 15;
+
                 break;
 
               case 14:
@@ -2906,41 +2950,83 @@ var Tag = /*#__PURE__*/function () {
                 addColor.classList.add("active");
 
                 changes = /*#__PURE__*/function () {
-                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                    var pages;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+                    var chages, option, selected;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
                       while (1) {
-                        switch (_context.prev = _context.next) {
+                        switch (_context2.prev = _context2.next) {
                           case 0:
-                            hash = location.hash.slice(1, 2);
+                            chages = /*#__PURE__*/function () {
+                              var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+                                var pages;
+                                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                                  while (1) {
+                                    switch (_context.prev = _context.next) {
+                                      case 0:
+                                        hash = location.hash.slice(1, 2);
 
-                            if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
-                              _context.next = 8;
-                              break;
-                            }
+                                        if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
+                                          _context.next = 8;
+                                          break;
+                                        }
 
-                            pages = _this.pages;
-                            _context.next = 5;
-                            return _this.page.select(hash, pages);
+                                        pages = _this.pages;
+                                        _context.next = 5;
+                                        return _this.page.select(hash, pages);
 
-                          case 5:
-                            HTML = _context.sent;
-                            window.removeEventListener('hashchange', changes);
+                                      case 5:
+                                        HTML = _context.sent;
+                                        window.removeEventListener('hashchange', changes);
 
-                            _this.init(hash, HTML);
+                                        _this.init(hash, HTML);
 
-                          case 8:
+                                      case 8:
+                                      case "end":
+                                        return _context.stop();
+                                    }
+                                  }
+                                }, _callee);
+                              }));
+
+                              return function chages() {
+                                return _ref2.apply(this, arguments);
+                              };
+                            }();
+
+                            window.addEventListener('hashchange', changes);
+                            _this.changes = changes;
+                            option = document.getElementById("items");
+                            option.value = _this.pages;
+
+                            selected = function selected() {
+                              _this.pages = option.value;
+                              location.hash = 1;
+                              window.removeEventListener('hashchange', changes);
+                              changes();
+                              option.removeEventListener('change', selected);
+                            };
+
+                            option.addEventListener('change', selected);
+
+                            _this["delete"]();
+
+                            _this.createTag();
+
+                            _this.tagEdit(test);
+
+                          case 10:
                           case "end":
-                            return _context.stop();
+                            return _context2.stop();
                         }
                       }
-                    }, _callee);
+                    }, _callee2);
                   }));
 
                   return function changes() {
                     return _ref.apply(this, arguments);
                   };
                 }();
+
 
                 window.addEventListener('hashchange', changes);
                 this.changes = changes;
@@ -2961,11 +3047,14 @@ var Tag = /*#__PURE__*/function () {
                 this.tagEdit(test);
 
               case 29:
+
+              case 21:
+
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function init() {
@@ -3048,11 +3137,11 @@ var Tag = /*#__PURE__*/function () {
       var _loop2 = function _loop2(i) {
         var ID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
-        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
           var api, obj, HTML, name, slug, description, updateBtn;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
             while (1) {
-              switch (_context4.prev = _context4.next) {
+              switch (_context5.prev = _context5.next) {
                 case 0:
                   api = "tag_edit";
                   obj = {
@@ -3060,21 +3149,21 @@ var Tag = /*#__PURE__*/function () {
                     editID: ID,
                     taxonomy_type: taxonomy
                   };
-                  _context4.next = 4;
+                  _context5.next = 4;
                   return _this4.axios.getPostData(obj);
 
                 case 4:
-                  HTML = _context4.sent;
+                  HTML = _context5.sent;
                   test.innerHTML = HTML;
                   name = document.getElementById("tag_name");
                   slug = document.getElementById("tag_slug");
                   description = document.getElementById("tag_description");
                   updateBtn = document.getElementById("tagUpdate");
-                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
                     var api, obj, changes;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
                       while (1) {
-                        switch (_context3.prev = _context3.next) {
+                        switch (_context4.prev = _context4.next) {
                           case 0:
                             api = "tag_update";
                             obj = {
@@ -3092,24 +3181,24 @@ var Tag = /*#__PURE__*/function () {
                             description.value = "";
                             slug.value = "";
                             name.value = "";
-                            return _context3.abrupt("return", setTimeout(function () {
+                            return _context4.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));
 
                           case 9:
                           case "end":
-                            return _context3.stop();
+                            return _context4.stop();
                         }
                       }
-                    }, _callee3);
+                    }, _callee4);
                   })));
 
                 case 11:
                 case "end":
-                  return _context4.stop();
+                  return _context5.stop();
               }
             }
-          }, _callee4);
+          }, _callee5);
         })));
       };
 
@@ -3537,8 +3626,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -32,6 +32,7 @@ class News {
       const newsImageTitle = document.getElementById("newsName");
       const altText = document.getElementById("newsAlt");
       const category = document.getElementById("catNews");
+    
       const tag = document.getElementById("tagNews");
       const newsCat = document.querySelector(".newsCat");
       const newsCatBtn = document.getElementById("create");

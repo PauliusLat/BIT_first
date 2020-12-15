@@ -55,12 +55,10 @@ trait Ttaxonomy
                     if ($this->ID == null) {
                         throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
                     } else {
-                        $terms = get_terms(['name' => $tag, 'taxonomy' => $value, 'hide_empty' => false]);
-
-
-                        foreach ($terms as $term) {
-                            wp_set_object_terms($this->ID, $term->term_id, $value, $append = false);
-                        }
+                        // $terms = get_terms(['name' => $tag, 'taxonomy' => $value, 'hide_empty' => false]);
+                        // foreach ($terms as $term) {
+                        wp_set_object_terms($this->ID, $tag, $value);
+                        // }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
                          * so that children with the same names but different parents aren't confused.*/
                     }
@@ -173,14 +171,14 @@ trait Ttaxonomy
     }
 
     /** returns all post tags as Collection */
-    public function getTags($taxonomy_type = 'hashtag')
+    public function getTags($postId, $taxonomy_type = 'hashtag')
     {
         foreach ($this->taxonomy as $value) {
 
             if ($value == $taxonomy_type) {
                 if (did_action('init')) {
                     $taxCollection = new TaxCollection();
-                    $terms = get_terms(['taxonomy' => $value, 'object_ids' => $this->ID,  'hide_empty' => false]);  //perdaryti i get_terms ir kategorijose
+                    $terms = get_terms(['taxonomy' => $value, 'object_ids' => $postId,  'hide_empty' => false]);  //perdaryti i get_terms ir kategorijose
 
                     foreach ($terms as $term) {
                         $taxCollection->addTerm($term);

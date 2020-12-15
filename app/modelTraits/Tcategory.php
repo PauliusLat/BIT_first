@@ -176,15 +176,7 @@ trait Tcategory
                     if ($this->ID == null) {
                         throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
                     } else {
-                        // foreach ($cat as $id) {
-                        // $id = (int)$id;
-                        // $term = get_term_by(['id', $id, $taxonomy_type]);
                         wp_set_object_terms($this->ID, $cat, $value);
-                        // }
-
-                        // foreach ($terms as $term) {
-
-                        // }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
                          * so that children with the same names but different parents aren't confused.*/
                     }
@@ -210,7 +202,7 @@ trait Tcategory
                     } else {
                         $terms = get_terms(['name' => $cat, 'taxonomy' => $value, 'hide_empty' => false]);
                         foreach ($terms as $term) {
-                            wp_set_object_terms($this->ID, $term->term_id, $value, $append = true);
+                            wp_set_object_terms($this->ID, $term->term_id, $value);
                         }
                         /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
                          * so that children with the same names but different parents aren't confused.*/
@@ -264,13 +256,13 @@ trait Tcategory
 
     /** returns all post cats as Collection */
 
-    public function getCats($taxonomy_type = 'maincat')
+    public function getCats($postId, $taxonomy_type = 'maincat')
     {
         foreach ($this->cattax as $value) {
             if ($value == $taxonomy_type) {
                 if (did_action('init')) {
                     $taxCollection = new TaxCollection();
-                    $terms = get_terms(['taxonomy' => $value, 'object_ids' => $this->ID, 'hide_empty' => false]);
+                    $terms = get_terms(['taxonomy' => $value, 'object_ids' => $postId, 'hide_empty' => false]);
                     foreach ($terms as $term) {
                         $taxCollection->addTerm($term);
                     }

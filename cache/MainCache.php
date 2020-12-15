@@ -1,3 +1,9 @@
 <?php
+namespace BIT\cache;
 
-// require './index.php';
+class MainCache{
+    public function __construct(){
+        
+    }
+    
+}
