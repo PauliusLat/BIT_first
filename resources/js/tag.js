@@ -46,8 +46,6 @@ class Tag {
 
             var changes = async () => {
 
-            var chages = async () => {
-               
                 hash = location.hash.slice(1, 2);
 
                 if (hash != undefined &&
@@ -83,8 +81,6 @@ class Tag {
             this.tagEdit(test);
         }
     }
-}
-
 
     createTag() {
 

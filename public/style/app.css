@@ -1029,10 +1029,14 @@ body {
 
 /** @format */
 
+.main_news_container {
+  height: 100%;
+}
+
 .editor {
   border: solid 1px #ccc;
   padding: 20px;
-  min-height: 400px;
+  min-height: 70%;
   width: 60%;
 }
 
@@ -1081,50 +1085,52 @@ body {
   position: relative;
 }
 
-.main_news_container .catPropNews {
-  width: 10%;
-  position: absolute;
-  top: 95%;
-  left: 95%;
-  transform: translate(-50%, -50%);
-  text-align: right;
-}
-
 .main_news_container .news-title {
   margin: 10px;
 }
 
-.main_news_container .news-container .active-content .newHeight {
-  height: 400px;
+.main_news_container .news-container .active-content .newsBoredr {
+  padding: 1rem 1rem;
+  box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12), 0 10px 10px rgba(90, 97, 105, 0.06), 0 7px 70px rgba(90, 97, 105, 0.1);
+  height: 525px;
+  border-radius: 0.625rem;
 }
 
-.main_news_container .news-container .active-content .newHeight .titleInput {
+.main_news_container .news-container .active-content .newsBoredr .newHeight {
+  height: 100%;
+}
+
+.main_news_container .news-container .active-content .newsBoredr .newHeight .titleInput {
   width: 100%;
   border: solid 1px #cccccc;
-  height: 50px;
+  height: 10%;
   text-align: center;
   margin: 0;
   font-size: 35px;
   outline: none;
 }
 
-.main_news_container .news-container .active-content .newHeight .titleInput:-moz-placeholder-shown {
+.main_news_container .news-container .active-content .newsBoredr .newHeight .titleInput:-moz-placeholder-shown {
   font-size: 35px;
 }
 
-.main_news_container .news-container .active-content .newHeight .titleInput:-ms-input-placeholder {
+.main_news_container .news-container .active-content .newsBoredr .newHeight .titleInput:-ms-input-placeholder {
   font-size: 35px;
 }
 
-.main_news_container .news-container .active-content .newHeight .titleInput:placeholder-shown {
+.main_news_container .news-container .active-content .newsBoredr .newHeight .titleInput:placeholder-shown {
   font-size: 35px;
 }
 
-.main_news_container .news-container .active-content .newHeight .titleInput:placeholder {
+.main_news_container .news-container .active-content .newsBoredr .newHeight .titleInput:placeholder {
   font-size: 35px;
 }
 
-.main_news_container .news-container .active-content .newHeight .ql-container .ql-editor p {
+.main_news_container .news-container .active-content .newsBoredr .newHeight .ql-container {
+  height: 80%;
+}
+
+.main_news_container .news-container .active-content .newsBoredr .newHeight .ql-container .ql-editor p {
   font-size: 20px;
   font-weight: 200;
 }
@@ -1141,7 +1147,7 @@ body {
 
 .newsImg {
   position: absolute;
-  top: 42%;
+  top: 15%;
   left: 85%;
   transform: translate(-50%, -50%);
 }
@@ -1171,24 +1177,29 @@ body {
   background-size: cover;
 }
 
-.gallerBtn {
-  background-color: transparent;
-  border-radius: 6px 6px 0 0;
-  border: 2px solid #cccccc;
-  display: inline-block;
-  cursor: pointer;
-  color: #050505;
-  font-family: Arial;
-  font-size: 16px;
-  padding: 6px 20px;
-  text-decoration: none;
-  text-shadow: 0px 0px 0px #292929;
-  border-bottom: none;
-  margin: 20px 0 0 10px;
+.catPropNews {
+  position: absolute;
+  top: 42%;
+  left: 85%;
+  transform: translate(-50%, -50%);
 }
 
-.gallerBtn:hover {
-  background-color: #d8d8d8;
+.catPropNews .newsStatus {
+  width: 100%;
+  border-radius: 0.625rem 0.625rem 0 0;
+  box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12), 0 10px 10px rgba(90, 97, 105, 0.06), 0 7px 70px rgba(90, 97, 105, 0.1);
+}
+
+.catPropNews .newsCatAdd {
+  width: 100%;
+  border-radius: 0.625rem 0.625rem 0 0;
+  box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12), 0 10px 10px rgba(90, 97, 105, 0.06), 0 7px 70px rgba(90, 97, 105, 0.1);
+}
+
+.catPropNews .nesTag {
+  width: 100%;
+  border-radius: 0.625rem 0.625rem 0 0;
+  box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12), 0 10px 10px rgba(90, 97, 105, 0.06), 0 7px 70px rgba(90, 97, 105, 0.1);
 }
 
 .newsCat {
@@ -1324,8 +1335,25 @@ body {
 }
 
 .newsImage {
-  border: 1px solid red;
-  cursor: pointer;
+  font-size: 20px;
+  line-height: 25px;
+  position: absolute;
+  top: -70%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  border-radius: 0.625rem 0.625rem 0 0;
+}
+
+.galleryContainer .resizeImageNews .newaWrap {
+  box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12), 0 10px 10px rgba(90, 97, 105, 0.06), 0 7px 70px rgba(90, 97, 105, 0.1);
+  padding: 10px;
+  border-radius: 0.625rem 0.625rem 0 0;
+}
+
+.galleryContainer .resizeImageNews .newaWrap .imgeNewsUp {
+  width: 70px;
+  height: 70px;
 }
 
 /*-----------idejos-----------------*/

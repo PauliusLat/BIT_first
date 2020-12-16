@@ -27,6 +27,7 @@ class AlbumFrontController
         // $allImages = [];
         // $albumName = [];
         $albumData  = (AlbumPost::all())->all();
+   
         // echo '<pre>';
         // var_dump($page);
         // foreach ($albumData as $data) {
