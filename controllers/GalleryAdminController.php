@@ -37,7 +37,7 @@ class GalleryAdminController {
 		foreach ($request->request as $value) {
 			$tags[] = trim($value);
 		}
-		var_dump($request);
+		// var_dump($request);
 		foreach ($request->files->all() as $key => $filesArr) {
 			if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
 				$count++;

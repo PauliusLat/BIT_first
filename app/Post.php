@@ -123,10 +123,10 @@ class Post
         }
 
 // dispachinam
-        $dispatcher = new EventDispatcher();
-        $event = new PostSaveEvent($this->ID);
-        // $dispatcher->addSubscriber(new PostSaveSubscriber());
-        $dispatcher->dispatch($event, PostSaveEvent::NAME);
+        // $dispatcher = new EventDispatcher();
+        // $event = new PostSaveEvent($this->ID);
+        // // $dispatcher->addSubscriber(new PostSaveSubscriber());
+        // $dispatcher->dispatch($event, PostSaveEvent::NAME);
 // end dispach
     }
 
