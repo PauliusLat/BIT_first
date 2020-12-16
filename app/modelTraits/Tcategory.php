@@ -4,6 +4,7 @@ namespace BIT\app\modelTraits;
 
 use BIT\app\TaxCollection;
 use BIT\app\Page;
+use BIT\app\Attachment;
 // use BIT\app\App;
 use BIT\app\coreExeptions\InitHookNotFiredException;
 use BIT\app\coreExeptions\PostIdNotSetException;
@@ -142,10 +143,11 @@ trait Tcategory
     }
 
     //gets category image from db
-    public function getCatImage(int $term_id, string $meta_key)
+    public function getCatImage(int $term_id, string $meta_key = 'image')
     {
-        $image = get_term_meta($term_id, $meta_key);
-        return $image;
+        $imageID = get_term_meta($term_id, $meta_key)[0];
+        // _dc($imageID);
+        return Attachment::get($imageID);
     }
 
     //deletes category image from db

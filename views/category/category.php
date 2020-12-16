@@ -123,7 +123,8 @@ use BIT\app\Category;
                 //tvarkyti sita
                 $category = new Category;
                 //bus per attachment
-                $cat->image = get_term_meta($cat->term_id, "image");
+                $catImage = $category->getCatImage($cat->term_id);
+                $urlImg = $catImage->getUrl();
                 $pageLink =  $category->getCatPageLink($cat->term_id);
             ?>
                 <tr>
@@ -132,13 +133,15 @@ use BIT\app\Category;
                     <!-- <td><?= $cat->slug ?></td> -->
                     <td><?= $cat->description ?></td>
                     <?php
-                    if ($cat->image) {
+                    if ($catImage) {
                     ?>
-                        <td><?php foreach ($cat->image as $key => $value) {
-                                if ($key == 0) {
-                                    echo '<img style = "width: 100px; height: 100px; object-fit: cover;" src="' . $url . $value . '">';
-                                }
-                            }
+                        <td>
+                            <?php
+                            // foreach ($cat->image as $key => $value) {
+                            // if ($key == 0) { -->
+                            echo '<img style = "width: 100px; height: 100px; object-fit: cover;" src="' . $urlImg . '">';
+                            //     }
+                            // }
                             ?>
                         </td>
                     <?php

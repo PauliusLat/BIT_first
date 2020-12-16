@@ -73,7 +73,9 @@ App::start();
 
 // use BIT\models\NewresPost;
 add_action('init', function () {
-
+    $category = new Category;
+    $catImage = $category->getCatImage(192, 'image');
+    // _dc($catImage);
 
     // wp_set_object_terms(328, 154, 'maincat');
     // $news = new NewsPost;

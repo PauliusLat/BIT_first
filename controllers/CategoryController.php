@@ -86,13 +86,20 @@ class CategoryController
 
         //add category image
         if ($request->files->get('image')) {
-            $uploads_dir = wp_upload_dir();
-            $path = $uploads_dir['path'] . '/';
-            $target_file = basename($_FILES['image']['name']);
-            move_uploaded_file($_FILES["image"]["tmp_name"], "$path/$target_file");
-            $picture = $request->files->get('image')->getClientOriginalName();
-            $catID =  $category->getCatId($name);
-            $category->addImageToCat($catID, "image", $picture);
+            $file = $request->files->get('image');
+            $image = new Attachment();
+
+            // $image->setAlt($altText);
+            // $image->setCaption($imgTitle);
+            $image->save($file);
+            _dc($image);
+            // $uploads_dir = wp_upload_dir();
+            // $path = $uploads_dir['path'] . '/';
+            // $target_file = basename($_FILES['image']['name']);
+            // move_uploaded_file($_FILES["image"]["tmp_name"], "$path/$target_file");
+            // $picture = $request->files->get('image')->getClientOriginalName();
+            // $catID =  $category->getCatId($name);
+            $category->addImageToCat($term_id, "image", $image->ID);
         }
         return new JsonResponse;
     }
