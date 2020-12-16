@@ -38,7 +38,10 @@ class AlbumFrontController
         // }
         // var_dump($albumName);
         $output = View::adminRender('album.album',  ["data" => $albumData]);
-        return View::render('gallery.all-album', ['data' => $output]);
+
+        $response = new JsonResponse(['html' => $output]);
+
+        return $response;
     }
 }
 
