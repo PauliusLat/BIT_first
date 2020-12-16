@@ -47,11 +47,17 @@ class CategoryController
         $pagination = new Pagination($limit, $number);
         $category = new Category;
         $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr($limit, $pagination->offset)));
+        // foreach ($categories as $cat) {
+        //     $category = new Category;
+        //     $catImage = $category->getCatImage($cat->term_id);
+        //     $urlImg = $catImage->getUrl();
+        //     $pageLink =  $category->getCatPageLink($cat->term_id);
+        // }
         $message = $session->get('alert_message');
         $success_message = $session->get('success_message');
-        $uploads_dir = wp_upload_dir();
-        $url = $uploads_dir['url'] . '/';
-        $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'url' => $url]);
+        // $uploads_dir = wp_upload_dir();
+        // $url = $uploads_dir['url'] . '/';
+        $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'category' => $category]);
         return new JsonResponse(['html' => $output]);
     }
 

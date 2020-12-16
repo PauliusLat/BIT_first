@@ -1,6 +1,6 @@
 <?php
 
-use BIT\app\Category;
+// use BIT\app\Category;
 ?>
 
 <div class='catCreate grid-container'>
@@ -119,10 +119,7 @@ use BIT\app\Category;
             echo $first . $prev . $nav . $next . $last;
             echo '</div>';
             foreach ($categories as $cat) {
-
-                //tvarkyti sita
-                $category = new Category;
-                //bus per attachment
+                // $category = new Category;
                 $catImage = $category->getCatImage($cat->term_id);
                 $urlImg = $catImage->getUrl();
                 $pageLink =  $category->getCatPageLink($cat->term_id);
@@ -137,11 +134,7 @@ use BIT\app\Category;
                     ?>
                         <td>
                             <?php
-                            // foreach ($cat->image as $key => $value) {
-                            // if ($key == 0) { -->
                             echo '<img style = "width: 100px; height: 100px; object-fit: cover;" src="' . $urlImg . '">';
-                            //     }
-                            // }
                             ?>
                         </td>
                     <?php
