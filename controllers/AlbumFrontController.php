@@ -27,18 +27,23 @@ class AlbumFrontController
         // $allImages = [];
         // $albumName = [];
         $albumData  = (AlbumPost::all())->all();
-   
+
         // echo '<pre>';
         // var_dump($page);
-        // foreach ($albumData as $data) {
+        foreach ($albumData as $data) {
+            
+            // echo "<pre>";
+            // var_dump($data->profileImgId);
         //     $albumName[] = $data->album_title;
         //     foreach ($data->attachments as $key => $img) {
         //         $allImages[] = $img->getUrl();
         //     }
-        // }
+        }
         // var_dump($albumName);
+        // $output = View::adminRender('album.album',  ["data" => $albumData]);
+        // return View::render('gallery.all-album', ['data' => $output]);
         $output = View::adminRender('album.album',  ["data" => $albumData]);
-
+        // var_dump( $output) ;
         $response = new JsonResponse(['html' => $output]);
 
         return $response;
