@@ -2284,9 +2284,7 @@ var News = /*#__PURE__*/function () {
           var selectCat = document.getElementById("cat");
           selectCat.setAttribute("multiple", "multiple");
         });
-        tag.addEventListener("click", function () {
-          console.log(1111111111);
-        });
+        tag.addEventListener("click", function () {});
         newsCatBtn.addEventListener("click", function () {
           newsCat.style.display = "none";
         });
@@ -3585,8 +3583,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
