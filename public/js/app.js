@@ -2415,7 +2415,7 @@ var NewsList = /*#__PURE__*/function () {
                 }
 
                 return _context2.delegateYield( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                  var deleteApi, listApi, HTML, deleteNews, editNews, _loop, i;
+                  var deleteApi, listApi, HTML, deleteNews, _loop, i;
 
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                     while (1) {
@@ -2430,7 +2430,6 @@ var NewsList = /*#__PURE__*/function () {
                           HTML = _context.sent;
                           DOM.innerHTML = HTML;
                           deleteNews = document.querySelectorAll(".deleteNews");
-                          editNews = document.querySelectorAll(".edit");
 
                           _loop = function _loop(i) {
                             var deleteId = deleteNews[i].id;
@@ -2445,7 +2444,7 @@ var NewsList = /*#__PURE__*/function () {
                             _loop(i);
                           }
 
-                        case 10:
+                        case 9:
                         case "end":
                           return _context.stop();
                       }
