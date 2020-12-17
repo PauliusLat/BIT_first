@@ -69,10 +69,12 @@ class NewsAdminController
 		$id = $request->request->get('id');
 		$news = NewsPost::get($id);
 	}
-	public function edit(Request $request)
+	public function edit(Request $request, NewsPost $news)
 	{
-		$news = NewsPost::get($request->request->get('id'));
-		$id = $request->request->get('id');
+		// $news = NewsPost::get($request->request->get('id'));
+		// _d('EDIT metodas');
+		// _d($request);
+		// $id = $request->request->get('id');
 		$postCats = $news->getCats($id);
 		$postTags = $news->getTags($id);
 		return View::adminRender('news.edit', ['data' => $news, 'postCats' => $postCats, 'postTags' => $postTags,]);

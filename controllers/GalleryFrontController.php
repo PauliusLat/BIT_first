@@ -20,7 +20,8 @@ class GalleryFrontController
 	public function store(Request $request)
 	{
 		$title = $request->request->get('album');
-		if ($title) {
+		$files = $request->files->all();
+		if ($title && $files) {
 			$page = new Page();
 			$page->pageState = 'Album Page'; 
 			$page->setRoute('all-album');
@@ -31,44 +32,39 @@ class GalleryFrontController
 			$album->post_parent = $page->ID;
 			$album->post_title = $title;
 			$album->save();
-		}
-		
-		$counter = 0;
-		foreach ($request->files->all() as $index => $file) {
-
-			if ($file instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
-				$image = new Attachment();
-				$image->save($file, $album->ID);
-				if(isset($request->request->all()['tag'.$counter])){
-					$tags = explode(' ', $request->request->all()['tag'.$counter]);
-					foreach ($tags as $tag) {
-						$image->addTag($tag);
+			
+			
+			$counter = 0;
+			$firstProfile = true;
+			foreach ($files as $index => $file) {
+				
+				if ($file instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+					$image = new Attachment();
+					
+					$image->save($file, $album->ID);
+					if(isset($request->request->all()['tag'.$counter])){
+						$tags = explode(' ', $request->request->all()['tag'.$counter]);
+						foreach ($tags as $tag) {
+							$image->addTag($tag);
+						}
+					}
+					if($firstProfile){
+						
+						$album->profileImgId = $image->ID;
+						$firstProfile = false;
+						$album->save();
+						
+					}
+					if(strcmp($request->request->all()['album'.$counter], 'true') === 0){
+						$album->profileImgId = $image->ID;
+						$album->save();
 					}
 				}
-	// _dc($image->getTags());
-				if($request->request->all()['album'.$counter]){
-					$album->profileImgId = $image->ID;
-					$album->save();
-				}
+				$counter++;
 			}
-			$counter++;
 		}
-		return new Response();
+			return new Response();
 	}
-
-	// private function getFilesFromRequest(Request $request){
-	// 	foreach($request->files->all() as $filesArr) {
-	// 		if($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile){
-	// 			$image = new Attachment();
-	// 			$image->save($filesArr);
-	// 		}elseif(is_array($filesArr)){
-	// 			foreach ($filesArr as $file) {
-	// 				$image = new Attachment();
-	// 				$image->save($file);
-	// 			}
-	// 		}
-	// 	}
-	// }
 
 	private function decodeRequest($request)
 	{

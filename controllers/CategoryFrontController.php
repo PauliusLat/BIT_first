@@ -20,7 +20,7 @@ class CategoryFrontController
 	{
 
 		// var_dump($request);
-		return View::render('catfront.cat');
+		// return View::render('catfront.cat');
 		// return View::adminRender('catfront.cat');
 	}
 
