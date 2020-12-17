@@ -15,8 +15,6 @@ trait Talbum
   {
     if ($this->profileImgId) {
       return Attachment::get($this->profileImgId);
-    }else{
-      var_dump("sikana");
     }
   }
 }

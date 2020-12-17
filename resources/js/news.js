@@ -44,7 +44,6 @@ class News {
       });
 
       tag.addEventListener("click", () => {
-        console.log(1111111111);
       });
 
       newsCatBtn.addEventListener("click", () => {
