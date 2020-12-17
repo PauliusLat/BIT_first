@@ -72,7 +72,7 @@ App::start();
 
 
 // use BIT\models\NewresPost;
-add_action('init', function () {
+// add_action('init', function () {
 
 
     // wp_set_object_terms(328, 154, 'maincat');
@@ -212,4 +212,4 @@ add_action('init', function () {
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
 
-});
+// });
