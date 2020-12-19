@@ -1,7 +1,5 @@
 <?php
-
 namespace BIT\app\modelTraits;
-
 use BIT\app\Attachment;
 
 trait Talbum

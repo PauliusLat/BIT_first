@@ -23,7 +23,7 @@ class IdeasController {
 		$response = new Response;
 		$output = View::render('ideas.idejos');
 		$response->prepare($request);
-		$response = new JsonResponse(['html' => $output, 'allData' => $data]);
+		$response = new JsonResponse(['allData' => $data]);
 
 		return $response;
 	}
