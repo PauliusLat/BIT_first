@@ -1,21 +1,17 @@
 <?php
-
 namespace BIT\controllers;
-
 use BIT\app\Attachment;
-use BIT\app\View;
 use BIT\app\Page;
+use BIT\app\View;
 use BIT\models\AlbumPost;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GalleryFrontController
-{
-
-	public function uploadeIndex()
-	{
+class GalleryFrontController {
+	public function uploadeIndex() {
 		return View::render('gallery.uploade-images');
 	}
+	public function store(Request $request) {
 
 	public function store(Request $request)
 	{	
@@ -28,9 +24,9 @@ class GalleryFrontController
 			$page = new Page();
 			$page->pageState = 'Album Page'; 
 			$page->setRoute('showAlbum');
+
 			$page->setTitle($title);
 			$page->save();
-			
 			$album = new AlbumPost();
 			$album->post_parent = $page->ID;
 			$album->post_title = $title;
@@ -94,7 +90,6 @@ class GalleryFrontController
 			$data = json_decode($request->getContent(), true);
 			$request->request->replace(is_array($data) ? $data : array());
 		}
-
 		return $request;
 	}
 }

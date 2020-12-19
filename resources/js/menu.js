@@ -49,6 +49,7 @@ class Menu {
           container.insertBefore(draggable, afterElement)
         }
       })
+    // }
 
       function getDragAfterElement(container, y) {
         const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
