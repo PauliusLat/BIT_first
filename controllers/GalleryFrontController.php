@@ -12,6 +12,7 @@ class GalleryFrontController {
 		return View::render('gallery.uploade-images');
 	}
 	public function store(Request $request) {
+
 		$title = $request->request->get('album');
 		$files = $request->files->all();
 		if ($title && $files) {

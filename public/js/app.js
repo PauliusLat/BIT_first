@@ -2054,6 +2054,7 @@ var Menu = /*#__PURE__*/function () {
       var DOM = document.getElementById(this.target);
 
       if (DOM) {
+        // }
         var getDragAfterElement = function getDragAfterElement(container, y) {
           var draggableElements = _toConsumableArray(container.querySelectorAll('.draggable:not(.dragging)'));
 
@@ -2287,45 +2288,40 @@ var News = /*#__PURE__*/function () {
         tag.addEventListener("click", function () {});
         newsCatBtn.addEventListener("click", function () {
           newsCat.style.display = "none";
-        });
-        var select = document.getElementById('cat');
+        }); // var select = document.getElementById('cat');
+
         var showAll = document.querySelector(".showAllSelected");
         var cat = [];
         var filteredAry = [];
-        var tempCat = [];
-
-        select.onchange = function () {
-          var options = select.getElementsByTagName('option'),
-              values;
-          var text;
-
-          for (var i = options.length; i--;) {
-            if (options[i].selected) values = options[i].value;
-            if (options[i].selected) text = options[i].innerText;
-          }
-
-          var showCat = document.createElement("div");
-          var span = document.createElement("span");
-          span.className = "closeCat";
-          span.setAttribute("id", values);
-          showCat.className = "selectedCat";
-          span.innerHTML = "X";
-          showCat.innerHTML = text.replace(/\s+/g, "");
-          showAll.appendChild(span);
-          showAll.appendChild(showCat);
-          cat.push(values);
-          var closeCat = document.querySelectorAll(".closeCat");
-          var selectedCat = document.querySelectorAll(".selectedCat");
-          closeCat[closeCat.length - 1].addEventListener("click", function () {
-            tempCat.push(closeCat[closeCat.length - 1].id);
-            filteredAry = cat.filter(function (e) {
-              return e !== closeCat[closeCat.length - 1].id;
-            });
-            cat = filteredAry;
-            closeCat[closeCat.length - 1].remove();
-            selectedCat[closeCat.length - 1].remove();
-          });
-        };
+        var tempCat = []; // select.onchange = () => {
+        //   var options = select.getElementsByTagName('option'),
+        //     values;
+        //   var text;
+        //   for (var i = options.length; i--;) {
+        //     if (options[i].selected) values = (options[i].value)
+        //     if (options[i].selected) text = (options[i].innerText)
+        //   }
+        //   const showCat = document.createElement("div");
+        //   const span = document.createElement("span");
+        //   span.className = "closeCat";
+        //   span.setAttribute("id", values);
+        //   showCat.className = "selectedCat";
+        //   span.innerHTML = "X";
+        //   showCat.innerHTML = text.replace(/\s+/g, "");
+        //   showAll.appendChild(span);
+        //   showAll.appendChild(showCat);
+        //   cat.push(values);
+        //   const closeCat = document.querySelectorAll(".closeCat");
+        //   const selectedCat = document.querySelectorAll(".selectedCat")
+        //   closeCat[closeCat.length - 1].addEventListener(
+        //     "click", () => {
+        //       tempCat.push(closeCat[closeCat.length - 1].id)
+        //       filteredAry = cat.filter(e => e !== closeCat[closeCat.length - 1].id)
+        //       cat = filteredAry;
+        //       closeCat[closeCat.length - 1].remove();
+        //       selectedCat[closeCat.length - 1].remove();
+        //     });
+        // }
 
         button.addEventListener("click", function () {
           var obj = {
@@ -2333,10 +2329,10 @@ var News = /*#__PURE__*/function () {
             content: editables[0].innerHTML,
             alt: altText.value,
             imageTitle: newsImageTitle.value,
-            title: newsPostTitle.value,
-            catTitle: document.getElementById("category-name").value,
-            catContent: document.getElementById("category-description").value,
-            category: cat
+            title: newsPostTitle.value // catTitle: document.getElementById("category-name").value,
+            // catContent: document.getElementById("category-description").value,
+            // category: cat
+
           };
           console.log(cat);
 
@@ -2803,7 +2799,7 @@ var Profile_image = /*#__PURE__*/function () {
                 div.className = "galleryDiv";
                 var removeUploade = document.querySelector(".wrapper");
                 removeUploade.style.display = "none";
-                div.innerHTML = "<img class=\"uploadeImageGallery\" height=\"200px\" width=\"200px\" src=\"".concat(picFile.result, "\" alt=\" \"/>");
+                div.innerHTML = "<img class=\"uploadeImageGallery\" src=\"".concat(picFile.result, "\" alt=\" \"/>");
                 output.insertBefore(div, currentDiv);
                 var changeImage = document.querySelector(".galleryDiv");
 
@@ -3583,8 +3579,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

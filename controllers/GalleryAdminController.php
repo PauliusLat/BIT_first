@@ -31,7 +31,7 @@ class GalleryAdminController {
 				$album->save();
 			}
 		}
-
+		var_dump($request->file);
 		$count = 0;
 		$tags = [];
 		foreach ($request->request as $value) {
