@@ -13,51 +13,75 @@ class GalleryFrontController {
 	}
 	public function store(Request $request) {
 
-		$title = $request->request->get('album');
-		$files = $request->files->all();
+	public function store(Request $request)
+	{	
+		$title = $request->request->get('albumTitle');
+		$files = $request->files->all()['image'];
+		$profileImg = explode(',', $request->request->get('album'));
+		$imgTags = explode(',', $request->request->get('tag'));
+	
 		if ($title && $files) {
 			$page = new Page();
-			$page->pageState = 'Album Page';
-			$page->setRoute('all-album');
+			$page->pageState = 'Album Page'; 
+			$page->setRoute('showAlbum');
+
 			$page->setTitle($title);
 			$page->save();
 			$album = new AlbumPost();
 			$album->post_parent = $page->ID;
 			$album->post_title = $title;
 			$album->save();
+
+			//add category tp post
+			$cat = $request->request->get('category');
+			$catInt = array_map('intval', explode(',', $cat));
+			$album->attachCat($catInt);
+
+			//add tag to post
+			$tag = $request->request->get('tag');
+			$tagInt = array_map('intval', explode(',', $tag));
+			$album->attachTag($tagInt);
+
+			$page->setRoute('showAlbum', $album->ID);
+			$page->save();
 			
 			
-			$counter = 0;
 			$firstProfile = true;
-			foreach ($files as $index => $file) {
-				
-				if ($file instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+			for($i = 0; $i < count($files); $i++) {
+				if ($files[$i] instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
 					$image = new Attachment();
-					
-					$image->save($file, $album->ID);
-					if(isset($request->request->all()['tag'.$counter])){
-						$tags = explode(' ', $request->request->all()['tag'.$counter]);
-						foreach ($tags as $tag) {
-							$image->addTag($tag);
+					$image->save($files[$i], $album->ID);
+
+					if(isset($imgTags[$i])){
+						$iTags = explode('# ', $imgTags[$i]);
+						foreach ($iTags as $itag) {
+							$image->addTag($itag);
 						}
 					}
 					if($firstProfile){
-						
 						$album->profileImgId = $image->ID;
 						$firstProfile = false;
 						$album->save();
-						
 					}
-					if(strcmp($request->request->all()['album'.$counter], 'true') === 0){
+					if(strcmp($profileImg[$i], 'true') === 0){
 						$album->profileImgId = $image->ID;
 						$album->save();
 					}
 				}
-				$counter++;
 			}
 		}
 			return new Response();
 	}
+
+	public function show(String $id){
+
+        $album = AlbumPost::get($id);
+        $title = $album->post_title;
+        $images = $album->attachments ?? [];
+       
+
+        return View::render('gallery.show',  ["images" => $images, "title" => $title]);
+    }
 
 	private function decodeRequest($request)
 	{

@@ -26,6 +26,7 @@ class NewsAdminController
 
 	public function store(Request $request)
 	{
+		_d($request);
 		$title = $request->request->get('title');
 		$content = $request->request->get('content');
 		$altText = $request->request->get('altText');
@@ -34,7 +35,7 @@ class NewsAdminController
 
 		$page = new Page();
 		$page->pageState = 'News Page';
-		$page->setRoute('showNews',);
+		$page->setRoute('showNews');
 		$page->setTitle($title);
 		$page->save();
 
