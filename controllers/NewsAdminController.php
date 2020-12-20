@@ -26,7 +26,7 @@ class NewsAdminController
 
 	public function store(Request $request)
 	{
-		_d($request);
+		// _d($request);
 		$title = $request->request->get('title');
 		$content = $request->request->get('content');
 		$altText = $request->request->get('altText');
@@ -72,12 +72,10 @@ class NewsAdminController
 	}
 	public function edit(Request $request, NewsPost $news)
 	{
-		// $news = NewsPost::get($request->request->get('id'));
-		// _d('EDIT metodas');
-		// _d($request);
-		// $id = $request->request->get('id');
-		$postCats = $news->getCats($id);
-		$postTags = $news->getTags($id);
+		$postCats = $news->getCats($news->ID);
+		
+		$postTags = $news->getTags($news->ID);
+
 		return View::adminRender('news.edit', ['data' => $news, 'postCats' => $postCats, 'postTags' => $postTags,]);
 	}
 

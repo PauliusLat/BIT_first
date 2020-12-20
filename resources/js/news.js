@@ -31,84 +31,41 @@ class News {
       const button = document.getElementById("submit");
       const newsImageTitle = document.getElementById("newsName");
       const altText = document.getElementById("newsAlt");
-      const category = document.getElementById("catNews");
-    
-      const tag = document.getElementById("tagNews");
+      const catDown = document.querySelector(".catDown");
+      const catUp = document.querySelector(".catUp")
+
+      const tag = document.getElementById("newsTagInput");
       const newsCat = document.querySelector(".newsCat");
-      const newsCatBtn = document.getElementById("create");
 
-      category.addEventListener("click", () => {
-        newsCat.style.display = "";
-        const selectCat = document.getElementById("cat");
-        selectCat.setAttribute("multiple", "multiple");
+      catDown.addEventListener("click", () => {
+        catUp.classList.remove("hiden");
+        catDown.classList.add("hiden");
+        newsCat.classList.remove("hiden");
       });
 
-      tag.addEventListener("click", () => {
+      catUp.addEventListener("click", () => {
+        catUp.classList.add("hiden");
+        catDown.classList.remove("hiden");
+        newsCat.classList.add("hiden");
       });
 
-      newsCatBtn.addEventListener("click", () => {
-        newsCat.style.display = "none";
-      });
-
-      // var select = document.getElementById('cat');
-      const showAll = document.querySelector(".showAllSelected");
-
-      var cat = [];
-      var filteredAry = [];
-      var tempCat = [];
-
-      // select.onchange = () => {
-      //   var options = select.getElementsByTagName('option'),
-      //     values;
-      //   var text;
-
-      //   for (var i = options.length; i--;) {
-
-      //     if (options[i].selected) values = (options[i].value)
-      //     if (options[i].selected) text = (options[i].innerText)
-      //   }
-      //   const showCat = document.createElement("div");
-      //   const span = document.createElement("span");
-
-      //   span.className = "closeCat";
-      //   span.setAttribute("id", values);
-      //   showCat.className = "selectedCat";
-      //   span.innerHTML = "X";
-      //   showCat.innerHTML = text.replace(/\s+/g, "");
-
-      //   showAll.appendChild(span);
-      //   showAll.appendChild(showCat);
-      //   cat.push(values);
-
-
-      //   const closeCat = document.querySelectorAll(".closeCat");
-      //   const selectedCat = document.querySelectorAll(".selectedCat")
-
-      //   closeCat[closeCat.length - 1].addEventListener(
-      //     "click", () => {
-      //       tempCat.push(closeCat[closeCat.length - 1].id)
-      //       filteredAry = cat.filter(e => e !== closeCat[closeCat.length - 1].id)
-      //       cat = filteredAry;
-      //       closeCat[closeCat.length - 1].remove();
-      //       selectedCat[closeCat.length - 1].remove();
-      //     });
-      // }
+      function getCheckedValues() {
+        return Array.from(document.querySelectorAll('input[type="checkbox"]'))
+          .filter((checkbox) => checkbox.checked)
+          .map((checkbox) => checkbox.value);
+      }
 
       button.addEventListener(
-
         "click", () => {
           let obj = {
+            title: newsPostTitle.value,
+            tag: tag.value,
             api: 'news-store',
             content: editables[0].innerHTML,
+            category: getCheckedValues(),
             alt: altText.value,
-            imageTitle: newsImageTitle.value,
-            title: newsPostTitle.value,
-            // catTitle: document.getElementById("category-name").value,
-            // catContent: document.getElementById("category-description").value,
-            // category: cat
+            imageTitle: newsImageTitle.value
           }
-
-          console.log(cat)
 
           if (obj.title) {
             readImage.sendImageData(obj);
