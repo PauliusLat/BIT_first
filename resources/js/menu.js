@@ -18,22 +18,28 @@ class Menu {
       const draggables = document.querySelectorAll('.draggable')
       const container = document.querySelector('.cont')
       const add = document.querySelector(".addNew");
-      add.setAttribute('onclick', 'cloning()');
-      // cloning() = this.cloning();
-      console.log(add);
+     add.addEventListener(
+       'click',
+       () => {
+        // console.log(pageNo);
+        this.cloning()
+    },
+     )
 
-  this.cloning()
-   
+     const storeinit = document.querySelector(".initsave");
+     if (storeinit != null){
+      this.store();
+     }else{
+      this.update();
+     }
       
-      this.save();
+    this.delete(draggables);
 
-      this.delete(draggables);
-
-      var newBlock = () => {
-        this.addNew();
-        add.removeEventListener("click", newBlock);
-      }
-      add.addEventListener("click", newBlock);
+      // var newBlock = () => {
+      //   this.addNew();
+      //   add.removeEventListener("click", newBlock);
+      // }
+      // add.addEventListener("click", newBlock);
 
       draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', () => {
@@ -59,7 +65,6 @@ class Menu {
 
       function getDragAfterElement(container, y) {
         const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
-
         return draggableElements.reduce((closest, child) => {
           const box = child.getBoundingClientRect()
           const offset = y - box.top - box.height / 2
@@ -73,19 +78,21 @@ class Menu {
     }
   }
 
-  cloning(){
-    var elmnt = document.querySelector(".draggable");
-    console.log(elmnt)
-
-  }
-  async addNew() {
+    cloning(){
+      let insert = document.querySelector(".cont");
+      let elmnt = document.querySelector(".draggable");
+      let cln = elmnt.cloneNode(true);
+      console.log(cln)
+      insert.appendChild(cln);
+      // this.init();
+    }
+ 
+  // async addNew() {
    
-    let api = "menu_create";
-    let htm = await this.axios.getDAta(api);
-    const lastElemet = document.querySelector(".cont");
-   
+  //   let api = "menu_create";
+  //   let htm = await this.axios.getDAta(api);
+  //   const lastElemet = document.querySelector(".cont");
   
-   
 //     const HTML = `<div class="menuName">
 //     <label for="">
 //     </label>
@@ -134,24 +141,24 @@ class Menu {
 //     </svg>
 // </div>`;
     
-    HTML = document.querySelector();
-    let node = document.createElement("div");
-    node.classList.add("draggable");
-    node.setAttribute('id', "addDrag");
-    node.setAttribute('draggable', true);
-    node.innerHTML = HTML;
-    lastElemet.appendChild(node)
+  //   HTML = document.querySelector();
+  //   let node = document.createElement("div");
+  //   node.classList.add("draggable");
+  //   node.setAttribute('id', "addDrag");
+  //   node.setAttribute('draggable', true);
+  //   node.innerHTML = HTML;
+  //   lastElemet.appendChild(node)
 
-    // let select = document.querySelector(".add");
-    // console.log(select)
-    // htm.forEach(myFunction)
-    // function myFunction(item){ 
-    //   select.innerHTML += `<option>${item.post_title}</option>` 
-    //    console.log(item.post_title)
-    // }
+  //   // let select = document.querySelector(".add");
+  //   // console.log(select)
+  //   // htm.forEach(myFunction)
+  //   // function myFunction(item){ 
+  //   //   select.innerHTML += `<option>${item.post_title}</option>` 
+  //   //    console.log(item.post_title)
+  //   // }
 
-    this.init();
-  }
+  //   this.init();
+  // }
 
   delete(draggables) {
     var deleted = document.querySelectorAll(".manuDelete");
@@ -162,44 +169,97 @@ class Menu {
     }
   }
 
-  save() {
+  store() {
+    let store = document.querySelector(".initsave");
+      if (this.read) {
+        let api = "menu_store";
+      var data = () => {
+        const menuText = document.getElementsByName("menu");
+        const extmenuLink = document.querySelectorAll(".menuLink");
+        var selectBox = document.getElementsByTagName("select");
+      
+        let names = [];
+        let pages = [];
+        let pageLinks = [];
+        let extlinks = [];
+
+        for ( let i = 0; i < selectBox.length; i++) {
+       
+          var options = selectBox[i].getElementsByTagName('option');
+          // console.log(options)
+          console.log( options.length)
+          for (let j = 0; j< options.length; j++) {
+            // console.log(111111)
+            if (options[j].selected) {
+              pages.push(options[j].text)
+              pageLinks.push(options[j].value)
+              console.log(options[j].value)
+            }
+          }
+          names.push(menuText[i].value)
+          extlinks.push(extmenuLink)
+        }
+
+        console.log(pages)
+        console.log(pageLinks)
+        console.log(names)
+
+        var axios = new Api();
+        var obj = {
+          names: names,
+          pages: pages,
+          pageLinks: pageLinks,
+          // extlinks: extlinks,
+          api: api
+        }
+        axios.formDataApi(obj);
+        this.init();
+      }
+      store.addEventListener("click", data);
+    
+    }
+    this.read = false;
+  }
+
+  update() {
     const store = document.querySelector(".save");
     const menuId = document.getElementById("menuID").value;
-
     let api = "menu_store";
 
     if (this.read) {
       var data = () => {
         const menuText = document.getElementsByName("menu");
-        const menuLink = document.querySelectorAll(".menuLink");
-        var selectBox = document.getElementsByTagName("select");
+        const extmenuLink= document.querySelectorAll(".menuLink");
+        const selectBox = document.getElementsByTagName("select");
 
-        var text = [];
-        var link = [];
-        var values = [];
-        var pageLinks = [];
+        let names = [];
+        let pages = [];
+        let pageLinks = [];
+        let extlinks = [];
 
-        for (i = 0; i < selectBox.length; i++) {
+        for ( let i = 0; i < selectBox.length; i++) {
           var options = selectBox[i].getElementsByTagName('option');
-          for (var i = options.length; i--;) {
-            if (options[i].selected) {
-              values.push(options[i].text)
-              pageLinks.push(options[i].value)
-              console.log(options[i].value)
+          console.log( options.length)
+          for (let j = 0; j< options.length; j++) {
+            if (options[j].selected) {
+              pages.push(options[j].text)
+              pageLinks.push(options[j].value)
+              console.log(options[j].value)
             }
           }
-          text.push(menuText[i].value)
-          link.push(menuLink[i].value)
+          names.push(menuText[i].value)
+          extlinks.push(extmenuLink[i])
         }
 
+        console.log(pages)
+        console.log(pageLinks)
+        console.log(names)
+
         var axios = new Api();
-
         var obj = {
-
-          category: values,
-          id: menuId,
+          names: names,
+          pages: pages,
           pageLinks: pageLinks,
-          content: text,
           api: api
         }
         axios.formDataApi(obj);
@@ -207,6 +267,7 @@ class Menu {
       store.addEventListener("click", data);
     }
     this.read = false;
+    // this.init();
   }
 
   

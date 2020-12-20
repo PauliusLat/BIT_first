@@ -47,16 +47,8 @@ class CategoryController
         $pagination = new Pagination($limit, $number);
         $category = new Category;
         $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr($limit, $pagination->offset)));
-        // foreach ($categories as $cat) {
-        //     $category = new Category;
-        //     $catImage = $category->getCatImage($cat->term_id);
-        //     $urlImg = $catImage->getUrl();
-        //     $pageLink =  $category->getCatPageLink($cat->term_id);
-        // }
         $message = $session->get('alert_message');
         $success_message = $session->get('success_message');
-        // $uploads_dir = wp_upload_dir();
-        // $url = $uploads_dir['url'] . '/';
         $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'category' => $category]);
         return new JsonResponse(['html' => $output]);
     }
@@ -94,17 +86,9 @@ class CategoryController
         if ($request->files->get('image')) {
             $file = $request->files->get('image');
             $image = new Attachment();
-
             // $image->setAlt($altText);
             // $image->setCaption($imgTitle);
             $image->save($file);
-            _dc($image);
-            // $uploads_dir = wp_upload_dir();
-            // $path = $uploads_dir['path'] . '/';
-            // $target_file = basename($_FILES['image']['name']);
-            // move_uploaded_file($_FILES["image"]["tmp_name"], "$path/$target_file");
-            // $picture = $request->files->get('image')->getClientOriginalName();
-            // $catID =  $category->getCatId($name);
             $category->addImageToCat($term_id, "image", $image->ID);
         }
         return new JsonResponse;
@@ -115,8 +99,12 @@ class CategoryController
         $request = $this->decodeRequest($requestJson);
         $id = $request->request->get('editID');
         $taxonomy_type = $request->request->get('taxonomy_type');
-        $category = Category::getCat($id, $taxonomy_type);
-        $output = View::adminRender('category.edit',  ['category' => $category]);
+        $cat = new Category;
+        $category = $cat->getCat($id, $taxonomy_type);
+        $catImage = $cat->getCatImage($category->term_id);
+        $urlImg = $catImage->getUrl();
+        $pageLink = $cat->getCatPageLink($category->term_id);
+        $output = View::adminRender('category.edit',  ['category' => $category, 'urlImg' =>  $urlImg, 'pageLink' => $pageLink, 'catImage' => $catImage]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -128,7 +116,17 @@ class CategoryController
         $description = $request->request->get('cat_description');
         $id = $request->request->get('updateId');
         //update cat and cat page
-        Category::updateCat($id, $name, $slug, $description);
+        $category = new Category;
+        $category->updateCat($id, $name, $slug, $description);
+        if ($request->files->get('image')) {
+            $category->deleteCatImage($id);
+            $file = $request->files->get('image');
+            $image = new Attachment();
+            // $image->setAlt($altText);
+            // $image->setCaption($imgTitle);
+            $image->save($file);
+            $category->addImageToCat($id, "image", $image->ID);
+        }
         $session->flash('success_message', 'kategorija sėkmingai pakoreguota');
         return new Response;
     }

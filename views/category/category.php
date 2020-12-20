@@ -1,5 +1,7 @@
 <?php
-
+if (!function_exists('wp_terms_checklist')) {
+    include ABSPATH . 'wp-admin/includes/template.php';
+}
 // use BIT\app\Category;
 ?>
 
@@ -47,6 +49,22 @@
         <ul style="display:inline-block">
             <?php wp_dropdown_categories($args); ?>
         </ul>
+
+        <?php
+        $args1 = array(
+            'taxonomy' => 'maincat',
+            'descendants_and_self' => 0,
+            'selected_cats' => false,
+            'popular_cats' => false,
+            // 'walker' => is a Walker_Category_Checklist instance, 
+
+            'checked_ontop' => true
+        );
+
+        // NOTICE! Understand what this does before running. 
+        $result = wp_terms_checklist($post_id = 0, $args1);
+        // _dc($result);
+        ?>
 
         <br><br>
 
@@ -119,9 +137,10 @@
             echo $first . $prev . $nav . $next . $last;
             echo '</div>';
             foreach ($categories as $cat) {
-                // $category = new Category;
                 $catImage = $category->getCatImage($cat->term_id);
+                // _dc($catImage);
                 $urlImg = $catImage->getUrl();
+                // _dc($urlImg);
                 $pageLink =  $category->getCatPageLink($cat->term_id);
             ?>
                 <tr>
@@ -130,17 +149,22 @@
                     <!-- <td><?= $cat->slug ?></td> -->
                     <td><?= $cat->description ?></td>
                     <?php
-                    if ($catImage) {
+
+                    if ($catImage->ID != 0 && $catImage->ID != null && $catImage->ID != 'undefined' && $catImage->ID != '') {
                     ?>
                         <td>
                             <?php
-                            echo '<img style = "width: 100px; height: 100px; object-fit: cover;" src="' . $urlImg . '">';
+                            echo '<img class = "cat" src="' . $urlImg . '">';
                             ?>
                         </td>
                     <?php
                     } else {
                     ?>
-                        <td></td>
+                        <td>
+                            <?php
+                            echo '';
+                            ?>
+                        </td>
                     <?php
                     }
                     ?>

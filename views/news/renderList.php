@@ -1,4 +1,3 @@
-
 <?php foreach ($html as $news) : ?>
     <div class="newsList">
         <div class="1">
@@ -21,12 +20,12 @@
                 <div class="btn-red btnNews deleteNews" id="<?= $news->ID; ?>">
                     Trinti
                 </div>
-                <form action=" <?= $uri ?>&id=<?= $news->ID; ?>" method="post">
+                <form action=" <?= $uri ?>&id=<?= $news->ID ?>" method="post">
                     <button class="btn-blue btnNews edit" type="submit" name="edit" value="<?= $news->ID ?>">
                         Redaguoti
                     </button>
                 </form>
             </div>
-        </div>
+            </div>
     </div>
 <?php endforeach; ?>

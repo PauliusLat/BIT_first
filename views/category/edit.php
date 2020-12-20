@@ -23,7 +23,30 @@
     <div id="message">
         <div class="wrapper">
             <div class="file-upload">
-                <label for="files"><span>&#43;</span></label>
+                <label for="files">
+                    <!-- <span>&#43;</span> -->
+                    <?php
+                    if ($catImage->ID != 0 && $catImage->ID != null && $catImage->ID != 'undefined' && $catImage->ID != '') {
+                    ?>
+                        <td>
+                            <?php
+                            echo '<img class = "catImgEdit" src="' . $urlImg . '">';
+                            ?>
+                        </td>
+                    <?php
+                    } else {
+                    ?>
+                        <td>
+                            <?php
+                            echo '<span>&#43;</span>';
+                            ?>
+                        </td>
+                    <?php
+                    }
+                    ?>
+                    <!-- <img class='catImgEdit' src="<?= $urlImg ?>"> -->
+                </label>
+
                 <input class="galleryImage" type="file" id='files' name="img" accept="image/*">
             </div>
         </div>

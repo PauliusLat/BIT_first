@@ -9,7 +9,7 @@ return [
 
 	'galerija' => 'GalleryAdminController@adminIndex',
 
-	'kategorija' => 'CategoryFrontController@index',
+	// 'kategorija' => 'CategoryFrontController@index',
 
 	'kalendorius' => 'CalendarAdminController@adminIndex',
 

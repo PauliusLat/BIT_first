@@ -57,12 +57,12 @@ trait Tcategory
         }
     }
 
-    public static function updateCat(int $id, string $name, string $slug, string $description = '',  $parent_id = 0,  $taxonomy_type = 'maincat')
+    public function updateCat(int $id, string $name, string $slug, string $description = '',  $parent_id = 0,  $taxonomy_type = 'maincat')
     {
         if (did_action('init')) {
             $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'name' => $name];
             wp_update_term($id, $taxonomy_type, $args);
-            $page = self::getCatPage($id);
+            $page = $this->getCatPage($id);
             if ($page != null || $page != 0 || $page != 'undefined' || $page != '') {
                 $page->post_name = $slug;
                 $page->save();
@@ -82,7 +82,7 @@ trait Tcategory
         return $pageLink;
     }
 
-    public static function getCatPage(int $id)
+    public function getCatPage(int $id)
     {
         $catPageId = get_term_meta($id, "page")[0];
         // $page = new Page;
@@ -106,7 +106,7 @@ trait Tcategory
     }
 
     //get category by id
-    public static function getCat($id, $taxonony_type = 'maincat')
+    public function getCat($id, $taxonony_type = 'maincat')
     {
         $cat = get_term_by('id', $id, $taxonony_type);
         return $cat;
@@ -151,7 +151,7 @@ trait Tcategory
     }
 
     //deletes category image from db
-    public function deleteCatImage(int $term_id, string $meta_key, $meta_value = '')
+    public function deleteCatImage(int $term_id, string $meta_key = 'image', $meta_value = '')
     {
         delete_metadata('term', $term_id, $meta_key, $meta_value);
     }

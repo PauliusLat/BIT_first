@@ -2184,6 +2184,20 @@ table th {
   padding: 8px;
 }
 
+table td .cat {
+  width: 100px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.file-upload .catImgEdit {
+  width: 200px;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 table tr:hover {
   background-color: #ddd;
 }

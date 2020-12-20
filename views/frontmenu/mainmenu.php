@@ -1,25 +1,28 @@
 <div class="innermenu" id="menuStart">
     <h1 class="menu">
-        Menu
+        Koreguokite pagrindinį Meniu
     </h1>
     <div class="cont sm-17-24">
         <?php
+        // _dc($menu);
         foreach (range(0, (count($menu->names) - 1)) as $index) {
         ?>
             <div class="draggable" id="addDrag" draggable="true">
                 <?php
                 $wpPage = get_page_by_title($menu->pages[$index], 'OBJECT', 'page');
                 $pagePost = $page->get($wpPage->ID);
+                $link = $pagePost->getLink();
+                $name = $menu->names[$index];
                 ?>
 
                 <div class="menuName">
                     <label for="">
                     </label>
-                    <input name="menu" class="menuText" placeholder="Pavadinimas" type="text" value="<?= $menu->names[$index] ?>">
+                    <input name="menu" class="menuText" placeholder="Pavadinimas" type="text" value="<?= $name ?>">
                     <input name="menuhid" id="menuID" type="hidden" value="<?= $menu->ID ?>">
                 </div>
 
-                <div class=" menuSelect">
+                <div class="menuSelect">
                     <label for="standard-select">
                     </label>
                     <select class="select-css" id="standard-select">
@@ -36,7 +39,7 @@
                 <div class="menuLinkAdd">
                     <label for="link">
                     </label>
-                    <input class="menuLink" placeholder="Prideti nuoroda" type="text">
+                    <input class="menuLink" placeholder="Prideti išorinę nuoroda" type="text">
                 </div>
 
                 <div class="manuDelete">

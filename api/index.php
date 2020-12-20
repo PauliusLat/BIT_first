@@ -21,7 +21,7 @@ if (!defined('PLUGIN_DIR_PATH')) {
 // use BIT\app\App;
 use BIT\app\ApiRoute;
 
-// $app = App::start();
+//$app = App::start();
 
 $response = ApiRoute::apiRoute(/*$app*/);
 if ($response) {

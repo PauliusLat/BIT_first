@@ -1972,16 +1972,8 @@ new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 
-
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -2010,7 +2002,7 @@ var Menu = /*#__PURE__*/function () {
     this.target = target;
     this.read = true;
     this.init();
-    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
   }
 
   _createClass(Menu, [{
@@ -2044,20 +2036,24 @@ var Menu = /*#__PURE__*/function () {
         var draggables = document.querySelectorAll('.draggable');
         var container = document.querySelector('.cont');
         var add = document.querySelector(".addNew");
-        add.setAttribute('onclick', 'cloning()'); // cloning() = this.cloning();
+        add.addEventListener('click', function () {
+          // console.log(pageNo);
+          _this.cloning();
+        });
+        var storeinit = document.querySelector(".initsave");
 
-        console.log(add);
-        this.cloning();
-        this.save();
-        this["delete"](draggables);
+        if (storeinit != null) {
+          this.store();
+        } else {
+          this.update();
+        }
 
-        var newBlock = function newBlock() {
-          _this.addNew();
+        this["delete"](draggables); // var newBlock = () => {
+        //   this.addNew();
+        //   add.removeEventListener("click", newBlock);
+        // }
+        // add.addEventListener("click", newBlock);
 
-          add.removeEventListener("click", newBlock);
-        };
-
-        add.addEventListener("click", newBlock);
         draggables.forEach(function (draggable) {
           draggable.addEventListener('dragstart', function () {
             draggable.classList.add('dragging');
@@ -2083,101 +2079,78 @@ var Menu = /*#__PURE__*/function () {
   }, {
     key: "cloning",
     value: function cloning() {
+      var insert = document.querySelector(".cont");
       var elmnt = document.querySelector(".draggable");
-      console.log(elmnt);
-    }
-  }, {
-    key: "addNew",
-    value: function () {
-      var _addNew = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var api, htm, lastElemet, node;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                api = "menu_create";
-                _context.next = 3;
-                return this.axios.getDAta(api);
+      var cln = elmnt.cloneNode(true);
+      console.log(cln);
+      insert.appendChild(cln); // this.init();
+    } // async addNew() {
+    //   let api = "menu_create";
+    //   let htm = await this.axios.getDAta(api);
+    //   const lastElemet = document.querySelector(".cont");
+    //     const HTML = `<div class="menuName">
+    //     <label for="">
+    //     </label>
+    //     <input name="menu" class="menuText" placeholder="Pavadinimas" type="text">
+    // </div>
+    // <div class="menuSelect">
+    //     <label for="standard-select">
+    //     </label>
+    //     <select class="select-css add" id="standard-select">
+    //     </select>
+    // </div>
+    // <div class="menuLinkAdd">
+    //     <label for="link">
+    //     </label>
+    //     <input class="menuLink" placeholder="Prideti nuoroda" type="text">
+    // </div>
+    // <div class="manuDelete">
+    //     <svg height="35" version="1.1" viewBox="0 0 295 295" width="40">
+    //         <title />
+    //         <desc />
+    //         <defs />
+    //         <g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
+    //             <g fill-rule="nonzero" id="close">
+    //                 <path d="M147.421,0 C66.133,0 0,66.133 0,147.421 C0,228.709 66.133,294.842 147.421,294.842 C185.708,294.842 221.988,280.233 249.58,253.706 C251.969,251.41 252.044,247.611 249.747,245.223 C247.452,242.835 243.654,242.759 241.264,245.056 C215.919,269.423 182.592,282.842 147.422,282.842 C72.75,282.843 12,222.093 12,147.421 C12,72.749 72.75,12 147.421,12 C222.092,12 282.842,72.75 282.842,147.421 C282.842,164.263 279.79,180.694 273.771,196.256 C272.576,199.347 274.112,202.821 277.203,204.017 C280.295,205.21 283.768,203.676 284.964,200.585 C291.519,183.636 294.843,165.749 294.843,147.42 C294.843,66.133 228.71,0 147.421,0 Z" fill="#000000" id="Shape" />
+    //                 <path d="M167.619,160.134 C165.249,157.815 161.451,157.857 159.134,160.224 C156.816,162.592 156.857,166.391 159.224,168.709 L206.46,214.945 C207.628,216.088 209.143,216.657 210.657,216.657 C212.214,216.657 213.77,216.054 214.945,214.854 C217.263,212.486 217.222,208.687 214.855,206.369 L167.619,160.134 Z" fill="#FB4A5E" id="Shape" />
+    //                 <path d="M125.178,133.663 C126.349,134.834 127.885,135.42 129.421,135.42 C130.957,135.42 132.492,134.834 133.664,133.663 C136.007,131.32 136.007,127.521 133.664,125.178 L88.428,79.942 C86.085,77.599 82.285,77.599 79.943,79.942 C77.6,82.285 77.6,86.084 79.943,88.427 L125.178,133.663 Z" fill="#FB4A5E" id="Shape" />
+    //                 <path d="M214.9,79.942 C212.557,77.599 208.757,77.599 206.415,79.942 L79.942,206.415 C77.599,208.758 77.599,212.557 79.942,214.9 C81.113,216.071 82.649,216.657 84.185,216.657 C85.721,216.657 87.256,216.071 88.428,214.9 L214.9,88.428 C217.243,86.084 217.243,82.286 214.9,79.942 Z" fill="#FB4A5E" id="Shape" />
+    //             </g>
+    //         </g>
+    //     </svg>
+    // </div>
+    // <div class="menuDrag">
+    //     <svg data-name="Layer 1" id="Layer_1" height="35" width="40" viewBox="0 0 32 32">
+    //         <defs>
+    //             <style>
+    //                 .cls-1 {
+    //                     fill: #515151;
+    //                 }
+    //             </style>
+    //         </defs>
+    //         <title />
+    //         <path class="cls-1" d="M16,9a3,3,0,1,0-3-3A3,3,0,0,0,16,9Zm0-4.46A1.46,1.46,0,1,1,14.54,6,1.46,1.46,0,0,1,16,4.54Z" />
+    //         <path class="cls-1" d="M16,19a3,3,0,1,0-3-3A3,3,0,0,0,16,19Zm0-4.46A1.46,1.46,0,1,1,14.54,16,1.46,1.46,0,0,1,16,14.54Z" />
+    //         <path class="cls-1" d="M16,29a3,3,0,1,0-3-3A3,3,0,0,0,16,29Zm0-4.46A1.46,1.46,0,1,1,14.54,26,1.46,1.46,0,0,1,16,24.54Z" />
+    //     </svg>
+    // </div>`;
+    //   HTML = document.querySelector();
+    //   let node = document.createElement("div");
+    //   node.classList.add("draggable");
+    //   node.setAttribute('id', "addDrag");
+    //   node.setAttribute('draggable', true);
+    //   node.innerHTML = HTML;
+    //   lastElemet.appendChild(node)
+    //   // let select = document.querySelector(".add");
+    //   // console.log(select)
+    //   // htm.forEach(myFunction)
+    //   // function myFunction(item){ 
+    //   //   select.innerHTML += `<option>${item.post_title}</option>` 
+    //   //    console.log(item.post_title)
+    //   // }
+    //   this.init();
+    // }
 
-              case 3:
-                htm = _context.sent;
-                lastElemet = document.querySelector(".cont"); //     const HTML = `<div class="menuName">
-                //     <label for="">
-                //     </label>
-                //     <input name="menu" class="menuText" placeholder="Pavadinimas" type="text">
-                // </div>
-                // <div class="menuSelect">
-                //     <label for="standard-select">
-                //     </label>
-                //     <select class="select-css add" id="standard-select">
-                //     </select>
-                // </div>
-                // <div class="menuLinkAdd">
-                //     <label for="link">
-                //     </label>
-                //     <input class="menuLink" placeholder="Prideti nuoroda" type="text">
-                // </div>
-                // <div class="manuDelete">
-                //     <svg height="35" version="1.1" viewBox="0 0 295 295" width="40">
-                //         <title />
-                //         <desc />
-                //         <defs />
-                //         <g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
-                //             <g fill-rule="nonzero" id="close">
-                //                 <path d="M147.421,0 C66.133,0 0,66.133 0,147.421 C0,228.709 66.133,294.842 147.421,294.842 C185.708,294.842 221.988,280.233 249.58,253.706 C251.969,251.41 252.044,247.611 249.747,245.223 C247.452,242.835 243.654,242.759 241.264,245.056 C215.919,269.423 182.592,282.842 147.422,282.842 C72.75,282.843 12,222.093 12,147.421 C12,72.749 72.75,12 147.421,12 C222.092,12 282.842,72.75 282.842,147.421 C282.842,164.263 279.79,180.694 273.771,196.256 C272.576,199.347 274.112,202.821 277.203,204.017 C280.295,205.21 283.768,203.676 284.964,200.585 C291.519,183.636 294.843,165.749 294.843,147.42 C294.843,66.133 228.71,0 147.421,0 Z" fill="#000000" id="Shape" />
-                //                 <path d="M167.619,160.134 C165.249,157.815 161.451,157.857 159.134,160.224 C156.816,162.592 156.857,166.391 159.224,168.709 L206.46,214.945 C207.628,216.088 209.143,216.657 210.657,216.657 C212.214,216.657 213.77,216.054 214.945,214.854 C217.263,212.486 217.222,208.687 214.855,206.369 L167.619,160.134 Z" fill="#FB4A5E" id="Shape" />
-                //                 <path d="M125.178,133.663 C126.349,134.834 127.885,135.42 129.421,135.42 C130.957,135.42 132.492,134.834 133.664,133.663 C136.007,131.32 136.007,127.521 133.664,125.178 L88.428,79.942 C86.085,77.599 82.285,77.599 79.943,79.942 C77.6,82.285 77.6,86.084 79.943,88.427 L125.178,133.663 Z" fill="#FB4A5E" id="Shape" />
-                //                 <path d="M214.9,79.942 C212.557,77.599 208.757,77.599 206.415,79.942 L79.942,206.415 C77.599,208.758 77.599,212.557 79.942,214.9 C81.113,216.071 82.649,216.657 84.185,216.657 C85.721,216.657 87.256,216.071 88.428,214.9 L214.9,88.428 C217.243,86.084 217.243,82.286 214.9,79.942 Z" fill="#FB4A5E" id="Shape" />
-                //             </g>
-                //         </g>
-                //     </svg>
-                // </div>
-                // <div class="menuDrag">
-                //     <svg data-name="Layer 1" id="Layer_1" height="35" width="40" viewBox="0 0 32 32">
-                //         <defs>
-                //             <style>
-                //                 .cls-1 {
-                //                     fill: #515151;
-                //                 }
-                //             </style>
-                //         </defs>
-                //         <title />
-                //         <path class="cls-1" d="M16,9a3,3,0,1,0-3-3A3,3,0,0,0,16,9Zm0-4.46A1.46,1.46,0,1,1,14.54,6,1.46,1.46,0,0,1,16,4.54Z" />
-                //         <path class="cls-1" d="M16,19a3,3,0,1,0-3-3A3,3,0,0,0,16,19Zm0-4.46A1.46,1.46,0,1,1,14.54,16,1.46,1.46,0,0,1,16,14.54Z" />
-                //         <path class="cls-1" d="M16,29a3,3,0,1,0-3-3A3,3,0,0,0,16,29Zm0-4.46A1.46,1.46,0,1,1,14.54,26,1.46,1.46,0,0,1,16,24.54Z" />
-                //     </svg>
-                // </div>`;
-
-                HTML = document.querySelector();
-                node = document.createElement("div");
-                node.classList.add("draggable");
-                node.setAttribute('id', "addDrag");
-                node.setAttribute('draggable', true);
-                node.innerHTML = HTML;
-                lastElemet.appendChild(node); // let select = document.querySelector(".add");
-                // console.log(select)
-                // htm.forEach(myFunction)
-                // function myFunction(item){ 
-                //   select.innerHTML += `<option>${item.post_title}</option>` 
-                //    console.log(item.post_title)
-                // }
-
-                this.init();
-
-              case 13:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function addNew() {
-        return _addNew.apply(this, arguments);
-      }
-
-      return addNew;
-    }()
   }, {
     key: "delete",
     value: function _delete(draggables) {
@@ -2194,8 +2167,66 @@ var Menu = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "save",
-    value: function save() {
+    key: "store",
+    value: function store() {
+      var _this2 = this;
+
+      var store = document.querySelector(".initsave");
+
+      if (this.read) {
+        var api = "menu_store";
+
+        var data = function data() {
+          var menuText = document.getElementsByName("menu");
+          var extmenuLink = document.querySelectorAll(".menuLink");
+          var selectBox = document.getElementsByTagName("select");
+          var names = [];
+          var pages = [];
+          var pageLinks = [];
+          var extlinks = [];
+
+          for (var i = 0; i < selectBox.length; i++) {
+            var options = selectBox[i].getElementsByTagName('option'); // console.log(options)
+
+            console.log(options.length);
+
+            for (var j = 0; j < options.length; j++) {
+              // console.log(111111)
+              if (options[j].selected) {
+                pages.push(options[j].text);
+                pageLinks.push(options[j].value);
+                console.log(options[j].value);
+              }
+            }
+
+            names.push(menuText[i].value);
+            extlinks.push(extmenuLink);
+          }
+
+          console.log(pages);
+          console.log(pageLinks);
+          console.log(names);
+          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+          var obj = {
+            names: names,
+            pages: pages,
+            pageLinks: pageLinks,
+            // extlinks: extlinks,
+            api: api
+          };
+          axios.formDataApi(obj);
+
+          _this2.init();
+        };
+
+        store.addEventListener("click", data);
+      }
+
+      this.read = false;
+    }
+  }, {
+    key: "update",
+    value: function update() {
       var store = document.querySelector(".save");
       var menuId = document.getElementById("menuID").value;
       var api = "menu_store";
@@ -2203,34 +2234,37 @@ var Menu = /*#__PURE__*/function () {
       if (this.read) {
         var data = function data() {
           var menuText = document.getElementsByName("menu");
-          var menuLink = document.querySelectorAll(".menuLink");
+          var extmenuLink = document.querySelectorAll(".menuLink");
           var selectBox = document.getElementsByTagName("select");
-          var text = [];
-          var link = [];
-          var values = [];
+          var names = [];
+          var pages = [];
           var pageLinks = [];
+          var extlinks = [];
 
-          for (i = 0; i < selectBox.length; i++) {
+          for (var i = 0; i < selectBox.length; i++) {
             var options = selectBox[i].getElementsByTagName('option');
+            console.log(options.length);
 
-            for (var i = options.length; i--;) {
-              if (options[i].selected) {
-                values.push(options[i].text);
-                pageLinks.push(options[i].value);
-                console.log(options[i].value);
+            for (var j = 0; j < options.length; j++) {
+              if (options[j].selected) {
+                pages.push(options[j].text);
+                pageLinks.push(options[j].value);
+                console.log(options[j].value);
               }
             }
 
-            text.push(menuText[i].value);
-            link.push(menuLink[i].value);
+            names.push(menuText[i].value);
+            extlinks.push(extmenuLink[i]);
           }
 
-          var axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+          console.log(pages);
+          console.log(pageLinks);
+          console.log(names);
+          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
           var obj = {
-            category: values,
-            id: menuId,
+            names: names,
+            pages: pages,
             pageLinks: pageLinks,
-            content: text,
             api: api
           };
           axios.formDataApi(obj);
@@ -2239,7 +2273,7 @@ var Menu = /*#__PURE__*/function () {
         store.addEventListener("click", data);
       }
 
-      this.read = false;
+      this.read = false; // this.init();
     }
   }]);
 

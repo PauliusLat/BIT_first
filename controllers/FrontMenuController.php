@@ -23,10 +23,17 @@ class FrontMenuController
     {
         $query = new Query;
         $menus = $query->postType('menu')->getPost()->all();
-        $menu = $menus[0];
-        $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
-        $page = new Page;
-        return View::adminRender('frontmenu.mainmenu', ['menu' => $menu, 'pages' => $pages, 'page' => $page]);
+        // _dc($menus);
+        if ($menus) {
+            $menu = $menus[0];
+            $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
+            $page = new Page;
+            return View::adminRender('frontmenu.mainmenu', ['menu' => $menu, 'pages' => $pages, 'page' => $page]);
+        } else {
+            $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
+            $page = new Page;
+            return View::adminRender('frontmenu.initmenu', ['pages' => $pages, 'page' => $page]);
+        }
     }
 
     public function create()
@@ -47,9 +54,9 @@ class FrontMenuController
             $menuPost = $menu->get($id);
         }
 
-        $title = $request->request->get('content');
+        $title = $request->request->get('names');
         $menuPost->names = explode(',', $title);
-        $page = $request->request->get('category');
+        $page = $request->request->get('pages');
         $menuPost->pages = explode(',', $page);
         $links = $request->request->get('pageLinks');
         $menuPost->pageLinks = explode(',', $links);
