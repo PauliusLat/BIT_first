@@ -14,10 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 class NewsAdminController
 {
 
-	public function index()
-	{
-		return View::adminRender('news.index');
-	}
+	// public function index()
+	// {
+	// 	return View::adminRender('news.index');
+	// }
 
 	public function create()
 	{
@@ -26,6 +26,7 @@ class NewsAdminController
 
 	public function store(Request $request)
 	{
+		_d($request);
 		$title = $request->request->get('title');
 		$content = $request->request->get('content');
 		$altText = $request->request->get('altText');
@@ -34,7 +35,7 @@ class NewsAdminController
 
 		$page = new Page();
 		$page->pageState = 'News Page';
-		$page->setRoute('showNews',);
+		$page->setRoute('showNews');
 		$page->setTitle($title);
 		$page->save();
 
@@ -69,10 +70,12 @@ class NewsAdminController
 		$id = $request->request->get('id');
 		$news = NewsPost::get($id);
 	}
-	public function edit(Request $request)
+	public function edit(Request $request, NewsPost $news)
 	{
-		$news = NewsPost::get($request->request->get('id'));
-		$id = $request->request->get('id');
+		// $news = NewsPost::get($request->request->get('id'));
+		// _d('EDIT metodas');
+		// _d($request);
+		// $id = $request->request->get('id');
 		$postCats = $news->getCats($id);
 		$postTags = $news->getTags($id);
 		return View::adminRender('news.edit', ['data' => $news, 'postCats' => $postCats, 'postTags' => $postTags,]);
@@ -98,8 +101,13 @@ class NewsAdminController
 		$file = $request->files->get('image');
 		$image = null;
 		var_dump($request->request->get('id'));
-		foreach ($news->attachments as $att) {
+		if($attachments = $news->attachments){
+			foreach ($attachments as $att) {
 			$image = $att;
+			}
+		}
+		elseif(!$attachments && $file){
+			$image = new Attachment;
 		}
 		$news->post_title = $request->request->get('title');
 		$news->news_content = $request->request->get('content');

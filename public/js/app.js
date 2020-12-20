@@ -1086,6 +1086,7 @@ var Api = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 /** @format */
 
 
@@ -1095,11 +1096,14 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+
+
 var Calendar = /*#__PURE__*/function () {
   function Calendar(target) {
     _classCallCheck(this, Calendar);
 
     this.target = target;
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
     this.DOM = null;
     this.date = new Date();
     this.y = this.date.getFullYear(), this.m = this.date.getMonth(), this.d = this.date.getDay();
@@ -1333,13 +1337,16 @@ var Calendar = /*#__PURE__*/function () {
         var time = document.getElementById('appt').value;
 
         if (sendE.length != 0) {
-          axios.post(_this3.uri + _this3.path + "calendar-store-admin", {
+          var api = "calendar-store-admin";
+          var obj = {
+            api: api,
             date: action,
             event: sendE,
             time: time
-          })["catch"](function (err) {
-            console.log(err instanceof TypeError);
-          });
+          };
+
+          _this3.axios.formDataApi(obj);
+
           setTimeout(function () {
             _this3.getData(action);
           }, 400);
@@ -1919,6 +1926,29 @@ function renderColons(e) {
 
 /***/ }),
 
+/***/ "./resources/js/light_box.js":
+/*!***********************************!*\
+  !*** ./resources/js/light_box.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// document.getElementById("clickme").addEventListener("click", function() {
+//     document.getElementById("lightbox").className = "open";
+//   });
+//   document.getElementById("close").addEventListener("click", function() {
+//     document.getElementById("lightbox").className = "";
+//   });
+//   var i = 0;
+//   document.getElementById("lightbox").addEventListener("click", function(e) {
+//     if (e.target.id+i == "lightbox"+i) {
+//         console.log(e.target.id+i);
+//       document.getElementById("lightbox").className = "";
+//     }
+//   });
+
+/***/ }),
+
 /***/ "./resources/js/main.js":
 /*!******************************!*\
   !*** ./resources/js/main.js ***!
@@ -1938,6 +1968,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 /* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
 /* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
+/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./light_box */ "./resources/js/light_box.js");
+/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_light_box__WEBPACK_IMPORTED_MODULE_10__);
 /** @format */
  // import startGallery from './gallery.js';
 
@@ -1948,6 +1980,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
  // import TextEditor from './text-editor.js'
+
 
 
 
@@ -2013,6 +2046,7 @@ var Menu = /*#__PURE__*/function () {
       var DOM = document.getElementById(this.target);
 
       if (DOM) {
+        // }
         var getDragAfterElement = function getDragAfterElement(container, y) {
           var draggableElements = _toConsumableArray(container.querySelectorAll('.draggable:not(.dragging)'));
 
@@ -2340,50 +2374,43 @@ var News = /*#__PURE__*/function () {
           var selectCat = document.getElementById("cat");
           selectCat.setAttribute("multiple", "multiple");
         });
-        tag.addEventListener("click", function () {
-          console.log(1111111111);
-        });
+        tag.addEventListener("click", function () {});
         newsCatBtn.addEventListener("click", function () {
           newsCat.style.display = "none";
-        });
-        var select = document.getElementById('cat');
+        }); // var select = document.getElementById('cat');
+
         var showAll = document.querySelector(".showAllSelected");
         var cat = [];
         var filteredAry = [];
-        var tempCat = [];
-
-        select.onchange = function () {
-          var options = select.getElementsByTagName('option'),
-              values;
-          var text;
-
-          for (var i = options.length; i--;) {
-            if (options[i].selected) values = options[i].value;
-            if (options[i].selected) text = options[i].innerText;
-          }
-
-          var showCat = document.createElement("div");
-          var span = document.createElement("span");
-          span.className = "closeCat";
-          span.setAttribute("id", values);
-          showCat.className = "selectedCat";
-          span.innerHTML = "X";
-          showCat.innerHTML = text.replace(/\s+/g, "");
-          showAll.appendChild(span);
-          showAll.appendChild(showCat);
-          cat.push(values);
-          var closeCat = document.querySelectorAll(".closeCat");
-          var selectedCat = document.querySelectorAll(".selectedCat");
-          closeCat[closeCat.length - 1].addEventListener("click", function () {
-            tempCat.push(closeCat[closeCat.length - 1].id);
-            filteredAry = cat.filter(function (e) {
-              return e !== closeCat[closeCat.length - 1].id;
-            });
-            cat = filteredAry;
-            closeCat[closeCat.length - 1].remove();
-            selectedCat[closeCat.length - 1].remove();
-          });
-        };
+        var tempCat = []; // select.onchange = () => {
+        //   var options = select.getElementsByTagName('option'),
+        //     values;
+        //   var text;
+        //   for (var i = options.length; i--;) {
+        //     if (options[i].selected) values = (options[i].value)
+        //     if (options[i].selected) text = (options[i].innerText)
+        //   }
+        //   const showCat = document.createElement("div");
+        //   const span = document.createElement("span");
+        //   span.className = "closeCat";
+        //   span.setAttribute("id", values);
+        //   showCat.className = "selectedCat";
+        //   span.innerHTML = "X";
+        //   showCat.innerHTML = text.replace(/\s+/g, "");
+        //   showAll.appendChild(span);
+        //   showAll.appendChild(showCat);
+        //   cat.push(values);
+        //   const closeCat = document.querySelectorAll(".closeCat");
+        //   const selectedCat = document.querySelectorAll(".selectedCat")
+        //   closeCat[closeCat.length - 1].addEventListener(
+        //     "click", () => {
+        //       tempCat.push(closeCat[closeCat.length - 1].id)
+        //       filteredAry = cat.filter(e => e !== closeCat[closeCat.length - 1].id)
+        //       cat = filteredAry;
+        //       closeCat[closeCat.length - 1].remove();
+        //       selectedCat[closeCat.length - 1].remove();
+        //     });
+        // }
 
         button.addEventListener("click", function () {
           var obj = {
@@ -2391,10 +2418,10 @@ var News = /*#__PURE__*/function () {
             content: editables[0].innerHTML,
             alt: altText.value,
             imageTitle: newsImageTitle.value,
-            title: newsPostTitle.value,
-            catTitle: document.getElementById("category-name").value,
-            catContent: document.getElementById("category-description").value,
-            category: cat
+            title: newsPostTitle.value // catTitle: document.getElementById("category-name").value,
+            // catContent: document.getElementById("category-description").value,
+            // category: cat
+
           };
           console.log(cat);
 
@@ -2471,7 +2498,7 @@ var NewsList = /*#__PURE__*/function () {
                 }
 
                 return _context2.delegateYield( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                  var deleteApi, listApi, HTML, deleteNews, editNews, _loop, i;
+                  var deleteApi, listApi, HTML, deleteNews, _loop, i;
 
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                     while (1) {
@@ -2486,7 +2513,6 @@ var NewsList = /*#__PURE__*/function () {
                           HTML = _context.sent;
                           DOM.innerHTML = HTML;
                           deleteNews = document.querySelectorAll(".deleteNews");
-                          editNews = document.querySelectorAll(".edit");
 
                           _loop = function _loop(i) {
                             var deleteId = deleteNews[i].id;
@@ -2501,7 +2527,7 @@ var NewsList = /*#__PURE__*/function () {
                             _loop(i);
                           }
 
-                        case 10:
+                        case 9:
                         case "end":
                           return _context.stop();
                       }
@@ -2862,7 +2888,7 @@ var Profile_image = /*#__PURE__*/function () {
                 div.className = "galleryDiv";
                 var removeUploade = document.querySelector(".wrapper");
                 removeUploade.style.display = "none";
-                div.innerHTML = "<img class=\"uploadeImageGallery\" height=\"200px\" width=\"200px\" src=\"".concat(picFile.result, "\" alt=\" \"/>");
+                div.innerHTML = "<img class=\"uploadeImageGallery\" src=\"".concat(picFile.result, "\" alt=\" \"/>");
                 output.insertBefore(div, currentDiv);
                 var changeImage = document.querySelector(".galleryDiv");
 

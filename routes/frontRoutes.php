@@ -7,6 +7,7 @@ return [
     'events' => 'EventController@index',
     'uploade-images' => 'GalleryFrontController@uploadeIndex',
     'all-album' => 'AlbumFrontController@index',
+    'showAlbum' => 'GalleryFrontController@show',
     'kalendorius' => 'CalendarFrontController@index',
     'ideja' => 'IdeaController@frontIndex',
     'idejos' => 'IdeasController@index',

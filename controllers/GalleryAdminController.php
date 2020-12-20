@@ -31,13 +31,13 @@ class GalleryAdminController {
 				$album->save();
 			}
 		}
-
+		var_dump($request->file);
 		$count = 0;
 		$tags = [];
 		foreach ($request->request as $value) {
 			$tags[] = trim($value);
 		}
-		var_dump($request);
+		// var_dump($request);
 		foreach ($request->files->all() as $key => $filesArr) {
 			if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
 				$count++;

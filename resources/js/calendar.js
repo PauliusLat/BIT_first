@@ -1,11 +1,14 @@
 /** @format */
-
 "use strict";
+
+import Api from './api';
+
 class Calendar {
 
     constructor(target) {
 
         this.target = target;
+        this.axios = new Api;
         this.DOM = null;
         this.date = new Date();
         this.y = this.date.getFullYear(), this.m = this.date.getMonth(), this.d = this.date.getDay();
@@ -235,17 +238,15 @@ class Calendar {
                 const sendE = document.getElementById('sendText').value;
                 const time = document.getElementById('appt').value;
                 if (sendE.length != 0) {
-                    axios
-                        .post(
-                            this.uri + this.path +
-                            "calendar-store-admin", {
-                            date: action,
-                            event: sendE,
-                            time: time,
-                        })
-                        .catch((err) => {
-                            console.log(err instanceof TypeError);
-                        });
+                    const api = "calendar-store-admin";
+                    let obj = {
+                        api: api,
+                        date: action,
+                        event: sendE,
+                        time: time
+                    }
+                    this.axios.formDataApi(obj);
+      
                     setTimeout(() => { this.getData(action); }, 400);
                     setTimeout(() => { this.renderEvents(action); }, 500);
                 }

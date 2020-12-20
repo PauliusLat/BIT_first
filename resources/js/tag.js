@@ -31,7 +31,10 @@ class Tag {
             HTML = "";
             let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
             addColor.classList.add("active");
+            
+
             var changes = async () => {
+
                 hash = location.hash.slice(1, 2);
                 if (hash != undefined &&
                     hash != null &&

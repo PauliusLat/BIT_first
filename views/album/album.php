@@ -1,9 +1,9 @@
 <div class="gallerGrid">
-    <?php foreach ($data as $value): ?>
-        <div class="">
-        <?php foreach ($value->attachments as $key => $img): ?>
-            <img class="uploadeImageGallery" src="<?=$img->getUrl();?>" alt="">
-        <?php endforeach;?>
+    <?php foreach ($data as $album): ?>
+        <div class="">       
+            <img src="<?= $album->getProfileImage() ? $album->getProfileImage()->getUrl() : ''?>"
+            alt="<?= $album->getProfileImage() ? $album->getProfileImage()->getAlt() : ''?>">
+            <a href="<?= $album->getpage()->getLink();?>"><?= $album->post_title;?></a>
         </div>
     <?php endforeach;?>
 </div>

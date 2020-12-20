@@ -44,56 +44,55 @@ class News {
       });
 
       tag.addEventListener("click", () => {
-        console.log(1111111111);
       });
 
       newsCatBtn.addEventListener("click", () => {
         newsCat.style.display = "none";
       });
 
-      var select = document.getElementById('cat');
+      // var select = document.getElementById('cat');
       const showAll = document.querySelector(".showAllSelected");
 
       var cat = [];
       var filteredAry = [];
       var tempCat = [];
 
-      select.onchange = () => {
-        var options = select.getElementsByTagName('option'),
-          values;
-        var text;
+      // select.onchange = () => {
+      //   var options = select.getElementsByTagName('option'),
+      //     values;
+      //   var text;
 
-        for (var i = options.length; i--;) {
+      //   for (var i = options.length; i--;) {
 
-          if (options[i].selected) values = (options[i].value)
-          if (options[i].selected) text = (options[i].innerText)
-        }
-        const showCat = document.createElement("div");
-        const span = document.createElement("span");
+      //     if (options[i].selected) values = (options[i].value)
+      //     if (options[i].selected) text = (options[i].innerText)
+      //   }
+      //   const showCat = document.createElement("div");
+      //   const span = document.createElement("span");
 
-        span.className = "closeCat";
-        span.setAttribute("id", values);
-        showCat.className = "selectedCat";
-        span.innerHTML = "X";
-        showCat.innerHTML = text.replace(/\s+/g, "");
+      //   span.className = "closeCat";
+      //   span.setAttribute("id", values);
+      //   showCat.className = "selectedCat";
+      //   span.innerHTML = "X";
+      //   showCat.innerHTML = text.replace(/\s+/g, "");
 
-        showAll.appendChild(span);
-        showAll.appendChild(showCat);
-        cat.push(values);
+      //   showAll.appendChild(span);
+      //   showAll.appendChild(showCat);
+      //   cat.push(values);
 
 
-        const closeCat = document.querySelectorAll(".closeCat");
-        const selectedCat = document.querySelectorAll(".selectedCat")
+      //   const closeCat = document.querySelectorAll(".closeCat");
+      //   const selectedCat = document.querySelectorAll(".selectedCat")
 
-        closeCat[closeCat.length - 1].addEventListener(
-          "click", () => {
-            tempCat.push(closeCat[closeCat.length - 1].id)
-            filteredAry = cat.filter(e => e !== closeCat[closeCat.length - 1].id)
-            cat = filteredAry;
-            closeCat[closeCat.length - 1].remove();
-            selectedCat[closeCat.length - 1].remove();
-          });
-      }
+      //   closeCat[closeCat.length - 1].addEventListener(
+      //     "click", () => {
+      //       tempCat.push(closeCat[closeCat.length - 1].id)
+      //       filteredAry = cat.filter(e => e !== closeCat[closeCat.length - 1].id)
+      //       cat = filteredAry;
+      //       closeCat[closeCat.length - 1].remove();
+      //       selectedCat[closeCat.length - 1].remove();
+      //     });
+      // }
 
       button.addEventListener(
 
@@ -104,9 +103,9 @@ class News {
             alt: altText.value,
             imageTitle: newsImageTitle.value,
             title: newsPostTitle.value,
-            catTitle: document.getElementById("category-name").value,
-            catContent: document.getElementById("category-description").value,
-            category: cat
+            // catTitle: document.getElementById("category-name").value,
+            // catContent: document.getElementById("category-description").value,
+            // category: cat
           }
 
           console.log(cat)
