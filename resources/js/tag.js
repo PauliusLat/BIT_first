@@ -29,9 +29,11 @@ class Tag {
             }
             this.page.paging();
             HTML = "";
+
             let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
-            addColor.classList.add("active");
-            
+            if(addColor){
+                addColor.classList.add("active");
+            }         
 
             var changes = async () => {
 

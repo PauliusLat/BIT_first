@@ -14,13 +14,13 @@
                 <img id="image" src="<?= $image->getUrl(); ?>" alt="<?= $image->getAlt(); ?>">
             </div>
             <label for="alt">Alt tekstas</label>
-            <input type="text" id="alt" value=" <?= $image->getAlt(); ?>"/>
+            <input type="text" id="alt" value=" <?= $image->getAlt(); ?>" />
             <label for="pavTtitle">Pav. title</label>
-            <input type="text" id="pavTtitle" value=" <?= $image->post_title; ?>"/>
+            <input type="text" id="pavTtitle" value=" <?= $image->post_title; ?>" />
         </div>
     <?php endforeach; ?>
     <div id="editor" name="newsEditor">
-        <?= $data->news_content; ?>       
+        <?= $data->news_content; ?>
     </div>
     <div class="btn-green btnNews save" id="<?= $data->ID; ?>">
         Saugoti
@@ -37,6 +37,19 @@
         </div>
     </div>
 </div>
+<?php
+$args1 = array(
+    'taxonomy' => 'maincat',
+    'descendants_and_self' => 0,
+    'selected_cats' => false,
+    'popular_cats' => false,
+    'checked_ontop' => false,
+    'selected_cats' => $postCats
+);
+?>
+<ul>
+    <?php wp_terms_checklist($post_id = 0, $args1); ?>
+</ul>
 <script>
     var toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'], // toggled buttons
