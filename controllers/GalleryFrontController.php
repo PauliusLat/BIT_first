@@ -11,7 +11,6 @@ class GalleryFrontController {
 	public function uploadeIndex() {
 		return View::render('gallery.uploade-images');
 	}
-	public function store(Request $request) {
 
 	public function store(Request $request)
 	{	
