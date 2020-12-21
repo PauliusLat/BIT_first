@@ -73,8 +73,14 @@ App::start();
 
 // use BIT\models\NewresPost;
 add_action('init', function () {
-    // $news = NewsPost::get(374);
-    // $news->attachCat([197, 196, 195]);
+
+
+    // $news = new NewsPost;
+    // $news->save();
+    // $arr = explode('#', '#oras#astrus#naujas');
+    // // array_shift($arr);
+    // // _dc($arr);
+    // $news->addTag($arr);
     // $arr = $news->getCatsId(374);
     // _dc($arr);
 

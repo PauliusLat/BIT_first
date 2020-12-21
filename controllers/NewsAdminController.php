@@ -51,8 +51,10 @@ class NewsAdminController
 
 		//add tag to post
 		$tag = $request->request->get('tag');
-		$tagInt = array_map('intval', explode(',', $tag));
-		$news->attachTag($tagInt);
+		if (isset($tag)) {
+			$tagsArr = explode('#', $tag);
+			$news->addTag($tagsArr);
+		}
 
 		$page->setRoute('showNews', $news->ID);
 		$page->save();
@@ -69,10 +71,10 @@ class NewsAdminController
 		$id = $request->request->get('id');
 		$news = NewsPost::get($id);
 	}
-	public function edit(Request $request, NewsPost $news)
+	public function edit(NewsPost $news)
 	{
 
-		$postCats = $news->getCats($news->ID);
+		$postCats = $news->getCatsId($news->ID);
 		$postTags = $news->getTags($news->ID);
 
 		return View::adminRender('news.edit', ['data' => $news, 'postCats' => $postCats, 'postTags' => $postTags,]);
