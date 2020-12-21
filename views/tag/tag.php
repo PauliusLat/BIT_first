@@ -37,6 +37,7 @@ use BIT\app\App;
             <?php
 
             $pageNum = 1;
+            $nav = '';
             for ($page = 1; $page <= $pages; $page++) {
 
                 $nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';

@@ -43,13 +43,11 @@ class TagController
         $pagination = new Pagination($limit, $number);
         $tags = get_terms('hashtag', array('number' => $limit, 'hide_empty' => false, 'offset' => $pagination->offset));
         $output = View::adminRender('tag.tag',  ['tags' => $tags, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
-        // $response = new JsonResponse(['html' => $output]);
         return new JsonResponse(['html' => $output]);
     }
 
-    public function store(Request $requestJson)
+    public function store(Request $request)
     {
-        $request = $this->decodeRequest($requestJson);
         $tag = new Tag;
         $name = $request->request->get('tag_name');
         $slug = $request->request->get('tag_slug');
@@ -58,55 +56,30 @@ class TagController
         return new Response;
     }
 
-    public function edit(Request $requestJson)
+    public function edit(Request $request)
     {
-        $request = $this->decodeRequest($requestJson);
-        $tag = new Tag;
         $id = $request->request->get('editID');
         $taxonomy_type = $request->request->get('taxonomy_type');
-        $tag = $tag->getTag($id, $taxonomy_type);
+        $tag = Tag::getTag($id, $taxonomy_type);
         $output = View::adminRender('tag.edit',  ['tag' => $tag]);
-        $response = new JsonResponse(['html' => $output]);
-        return $response;
+        return new JsonResponse(['html' => $output]);
     }
 
-    public function update(Request $requestJson)
+    public function update(Request $request)
     {
-        $tag = new Tag;
-        $request = $this->decodeRequest($requestJson);
         $name = $request->request->get('tag_name');
         $slug = $request->request->get('tag_slug');
         $description = $request->request->get('tag_description');
         $id = $request->request->get('updateId');
-        $tag->updateTag($id, $name, $slug, $description);
-        $tags = $tag->getAllTags();
-        $output = View::adminRender('tag.tag',  ["tags" => $tags]);
-        $response = new JsonResponse(['html' => $output]);
-        return $response;
+        Tag::updateTag($id, $name, $slug, $description);
+        return new Response;
     }
 
     public function destroy(Request $request)
     {
-
-        $tag = new Tag;
-        $tags = $tag->getAllTags();
         $id = $request->request->get('deleteID');
         $taxonomy_type = $request->request->get('taxonomy_type');
-        $tag->deleteTagFromDb($id, $taxonomy_type);
-        return $response = new Response;
-        $response->prepare($request);
-        echo "<pre>";
-        var_dump($response);
-        return $response;
-    }
-
-    public function decodeRequest($request)
-    {
-        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-            $data = json_decode($request->getContent(), true);
-            $request->request->replace(is_array($data) ? $data : array());
-        }
-
-        return $request;
+        Tag::deleteTagFromDb($id, $taxonomy_type);
+        return new Response;
     }
 }

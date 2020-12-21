@@ -8,7 +8,7 @@ class Category
 {
     use Tcategory;
     private $cattax = ['maincat'];
-    public $image;
+    // public $image;
     static private $obj;
 
     public static function start()
