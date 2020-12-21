@@ -1,36 +1,25 @@
 <div class="innermenu" id="menuStart">
     <h1 class="menu">
-        Koreguokite pagrindinį Meniu
+        Sukurkite pagrindinį Meniu
     </h1>
     <div class="cont sm-17-24">
-        <?php
-        // _dc($menu);
-        foreach (range(0, (count($menu->names) - 1)) as $index) {
-        ?>
+        <div class="menuItem">
             <div class="draggable" id="addDrag" draggable="true">
-                <?php
-                $wpPage = get_page_by_title($menu->pages[$index], 'OBJECT', 'page');
-                $pagePost = $page->get($wpPage->ID);
-                $link = $pagePost->getLink();
-                $name = $menu->names[$index];
-                ?>
-
                 <div class="menuName">
                     <label for="">
                     </label>
-                    <input name="menu" class="menuText" placeholder="Pavadinimas" type="text" value="<?= $name ?>">
-                    <input name="menuhid" id="menuID" type="hidden" value="<?= $menu->ID ?>">
+                    <input name="menu" class="menuText initmenu" placeholder="Pavadinimas" type="text">
                 </div>
 
                 <div class="menuSelect">
                     <label for="standard-select">
                     </label>
-                    <select class="select-css" id="standard-select">
-                        <option value="<?= $pagePost->getLink() ?>" selected><?= $menu->pages[$index] ?></option>>
+                    <select class="select-css initSelect" id="standard-select">
+                        <option value="" selected>Pasirinkite menu puslapį</option>
                         <?php
                         foreach ($pages as $value) {
                         ?>
-                            <option><?= $value->post_title ?></option>
+                            <option class="initoption" value="<?= $value->getLink() ?>"><?= $value->post_title ?></option>
                         <?php
                         }
                         ?>
@@ -39,7 +28,7 @@
                 <div class="menuLinkAdd">
                     <label for="link">
                     </label>
-                    <input class="menuLink" placeholder="Prideti išorinę nuoroda" type="text">
+                    <input class="menuLink initmenuLink" placeholder="Prideti išorinę nuoroda" type="text">
                 </div>
 
                 <div class="addSubmenu">
@@ -58,7 +47,7 @@
                     </svg>
                 </div>
 
-                <div class="manuDelete">
+                <div class="manuDelete initdelete">
                     <svg height="35" version="1.1" viewBox="0 0 295 295" width="40">
                         <title />
                         <desc />
@@ -91,14 +80,18 @@
                     </svg>
                 </div>
             </div>
-        <?php
-        }
-        ?>
+
+            <div class="submenu sm-17-24">
+            </div>
+        </div>
 
 
     </div>
+
+
+
     <div class="menuBtn">
-        <div class="addNew">
+        <div class="addNew initadd">
             <svg height="40" version="1.1" viewBox="0 0 295 295" width="40">
                 <title />
                 <desc />
@@ -113,7 +106,7 @@
                 </g>
             </svg>
         </div>
-        <div class="save">
+        <div class="initsave">
             <svg height="40" data-name="Layer 1" id="Layer_1" viewBox="0 0 500 500">
                 <defs>
                     <style>

@@ -26,7 +26,6 @@ class NewsAdminController
 
 	public function store(Request $request)
 	{
-		// _d($request);
 		$title = $request->request->get('title');
 		$content = $request->request->get('content');
 		$altText = $request->request->get('altText');
@@ -72,8 +71,8 @@ class NewsAdminController
 	}
 	public function edit(Request $request, NewsPost $news)
 	{
+
 		$postCats = $news->getCats($news->ID);
-		
 		$postTags = $news->getTags($news->ID);
 
 		return View::adminRender('news.edit', ['data' => $news, 'postCats' => $postCats, 'postTags' => $postTags,]);
@@ -99,12 +98,11 @@ class NewsAdminController
 		$file = $request->files->get('image');
 		$image = null;
 		var_dump($request->request->get('id'));
-		if($attachments = $news->attachments){
+		if ($attachments = $news->attachments) {
 			foreach ($attachments as $att) {
-			$image = $att;
+				$image = $att;
 			}
-		}
-		elseif(!$attachments && $file){
+		} elseif (!$attachments && $file) {
 			$image = new Attachment;
 		}
 		$news->post_title = $request->request->get('title');

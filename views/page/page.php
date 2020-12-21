@@ -64,16 +64,26 @@
                         ?>
                         <a href="<?= $pageLink ?>"><?= $pageLink ?></a>
                     </td>
-                    <td>
-                        <?php
-                        foreach ($page->pageState as $value) {
-                        ?>
-                            <div><?= $value ?></div>
-                        <?php
-                        }
+                    <?php
+                    if ($page->pageState != 0 && $page->pageState != NUll && $page->pageState != 'undefined' && $page->pageState != '') {
+                    ?>
+                        <td>
+                            <?php
+                            foreach ($page->pageState as $value) {
+                            ?>
+                                <div><?= $value ?></div>
+                            <?php
+                            }
+                            ?>
+                        </td>
+                    <?php
+                    } else {
+                    ?>
+                        <td></td>
+                    <?php
+                    }
+                    ?>
 
-                        ?>
-                    </td>
 
                     <td>
                         <button class="page-edit btn-blue" type="submit" name="page-name" id="<?= $page->post_title ?>" value="<?= $page->ID ?>">Edit</button>

@@ -72,8 +72,31 @@ App::start();
 
 
 // use BIT\models\NewresPost;
-// add_action('init', function () {
+add_action('init', function () {
+    // $news = NewsPost::get(374);
+    // $news->attachCat([197, 196, 195]);
+    // $arr = $news->getCatsId(374);
+    // _dc($arr);
 
+
+    // $args = array(
+    //     'descendants_and_self' => 0,
+    //     'selected_cats' => false,
+    //     'popular_cats' => false,
+    //     // 'walker' => is a Walker_Category_Checklist instance, 
+    //     'taxonomy' => 'maincat',
+    //     'checked_ontop' => true
+    // );
+
+    // // NOTICE! Understand what this does before running. 
+    // $result = wp_terms_checklist($args);
+    // _dc($result);
+
+
+
+    // $category = new Category;
+    // $catImage = $category->getCatImage(192, 'image');
+    // _dc($catImage);
 
     // wp_set_object_terms(328, 154, 'maincat');
     // $news = new NewsPost;
@@ -211,5 +234,4 @@ App::start();
     // function flattenWithKeys(array $array, $childPrefix = '.', $root = '', $result = array()) {
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
-
-// });
+});

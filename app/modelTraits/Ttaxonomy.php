@@ -70,13 +70,13 @@ trait Ttaxonomy
     }
 
     // get tag from DB by ID
-    public function getTag($id, $taxonony_type = 'hashtag')
+    public static function getTag($id, $taxonony_type = 'hashtag')
     {
         $tag = get_term_by('id', $id, $taxonony_type);
         return $tag;
     }
 
-    public function updateTag(int $id, string $name, string $slug = '', string $description = '', $taxonomy_type = 'hashtag')
+    public static function updateTag(int $id, string $name, string $slug = '', string $description = '', $taxonomy_type = 'hashtag')
     {
         if (did_action('init')) {
             $args = ['name' => $name, 'slug' => $slug, 'description' => $description];
@@ -87,7 +87,7 @@ trait Ttaxonomy
     }
 
     //deletes tag from db
-    public function deleteTagFromDb(int $id, $taxonomy_type = 'hashtag')
+    public static function deleteTagFromDb(int $id, $taxonomy_type = 'hashtag')
     {
         wp_delete_term($id, $taxonomy_type);
     }
