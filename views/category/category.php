@@ -50,22 +50,6 @@ if (!function_exists('wp_terms_checklist')) {
             <?php wp_dropdown_categories($args); ?>
         </ul>
 
-        <?php
-        $args1 = array(
-            'taxonomy' => 'maincat',
-            'descendants_and_self' => 0,
-            'selected_cats' => false,
-            'popular_cats' => false,
-            // 'walker' => is a Walker_Category_Checklist instance, 
-
-            'checked_ontop' => true
-        );
-
-        // NOTICE! Understand what this does before running. 
-        $result = wp_terms_checklist($post_id = 0, $args1);
-        // _dc($result);
-        ?>
-
         <br><br>
 
         <input type="checkbox" id="catPage" name="catPage" value="catPage">

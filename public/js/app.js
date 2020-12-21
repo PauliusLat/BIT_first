@@ -2046,7 +2046,6 @@ var Menu = /*#__PURE__*/function () {
       var DOM = document.getElementById(this.target);
 
       if (DOM) {
-        // }
         var getDragAfterElement = function getDragAfterElement(container, y) {
           var draggableElements = _toConsumableArray(container.querySelectorAll('.draggable:not(.dragging)'));
 
@@ -2070,10 +2069,26 @@ var Menu = /*#__PURE__*/function () {
         var draggables = document.querySelectorAll('.draggable');
         var container = document.querySelector('.cont');
         var add = document.querySelector(".addNew");
+        var addSubmenu = document.querySelectorAll(".addSubmenu");
+        console.log(addSubmenu);
         add.addEventListener('click', function () {
-          // console.log(pageNo);
-          _this.cloning();
+          _this.cloning(); // this.init()
+
         });
+
+        var _loop = function _loop(i) {
+          var insert = document.querySelectorAll(".submenu");
+          console.log(addSubmenu[i]);
+          addSubmenu[i].addEventListener('click', function () {
+            _this.subcloning(insert[i]); //  this.init()
+
+          });
+        };
+
+        for (var i = 0; i < addSubmenu.length; i++) {
+          _loop(i);
+        }
+
         var storeinit = document.querySelector(".initsave");
 
         if (storeinit != null) {
@@ -2095,8 +2110,7 @@ var Menu = /*#__PURE__*/function () {
           draggable.addEventListener('dragend', function () {
             draggable.classList.remove('dragging');
           });
-        }); // containers.forEach(container => {
-
+        });
         container.addEventListener('dragover', function (e) {
           e.preventDefault();
           var afterElement = getDragAfterElement(container, e.clientY);
@@ -2114,10 +2128,19 @@ var Menu = /*#__PURE__*/function () {
     key: "cloning",
     value: function cloning() {
       var insert = document.querySelector(".cont");
+      var elmnt = document.querySelector(".menuItem");
+      var cln = elmnt.cloneNode(true);
+      console.log(cln);
+      insert.appendChild(cln);
+    }
+  }, {
+    key: "subcloning",
+    value: function subcloning(insert) {
+      // let insert = document.querySelector(".submenu");
       var elmnt = document.querySelector(".draggable");
       var cln = elmnt.cloneNode(true);
       console.log(cln);
-      insert.appendChild(cln); // this.init();
+      insert.appendChild(cln);
     } // async addNew() {
     //   let api = "menu_create";
     //   let htm = await this.axios.getDAta(api);
@@ -2190,14 +2213,14 @@ var Menu = /*#__PURE__*/function () {
     value: function _delete(draggables) {
       var deleted = document.querySelectorAll(".manuDelete");
 
-      var _loop = function _loop(i) {
+      var _loop2 = function _loop2(i) {
         deleted[i].addEventListener("click", function () {
           draggables[i].remove();
         });
       };
 
       for (var i = 0; i < draggables.length; i++) {
-        _loop(i);
+        _loop2(i);
       }
     }
   }, {

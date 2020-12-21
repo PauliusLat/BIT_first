@@ -18,13 +18,29 @@ class Menu {
       const draggables = document.querySelectorAll('.draggable')
       const container = document.querySelector('.cont')
       const add = document.querySelector(".addNew");
+      const addSubmenu = document.querySelectorAll(".addSubmenu");
+      console.log(addSubmenu);
      add.addEventListener(
        'click',
        () => {
-        // console.log(pageNo);
         this.cloning()
+        // this.init()
     },
      )
+ 
+  for(let i = 0; i<addSubmenu.length; i++){
+    let insert = document.querySelectorAll(".submenu");
+    console.log(addSubmenu[i])
+      addSubmenu[i].addEventListener(
+        'click',
+        () => {
+         this.subcloning(insert[i])
+        //  this.init()
+     },
+      )
+     }
+     
+    
 
      const storeinit = document.querySelector(".initsave");
      if (storeinit != null){
@@ -51,7 +67,6 @@ class Menu {
         })
       })
 
-      // containers.forEach(container => {
       container.addEventListener('dragover', e => {
         e.preventDefault()
         const afterElement = getDragAfterElement(container, e.clientY)
@@ -62,7 +77,7 @@ class Menu {
           container.insertBefore(draggable, afterElement)
         }
       })
-    // }
+  
 
       function getDragAfterElement(container, y) {
         const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
@@ -81,11 +96,18 @@ class Menu {
 
     cloning(){
       let insert = document.querySelector(".cont");
+      let elmnt = document.querySelector(".menuItem");
+      let cln = elmnt.cloneNode(true);
+      console.log(cln)
+      insert.appendChild(cln);
+    }
+
+    subcloning(insert){
+      // let insert = document.querySelector(".submenu");
       let elmnt = document.querySelector(".draggable");
       let cln = elmnt.cloneNode(true);
       console.log(cln)
       insert.appendChild(cln);
-      // this.init();
     }
  
   // async addNew() {

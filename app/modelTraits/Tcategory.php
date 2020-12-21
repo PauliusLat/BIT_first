@@ -276,6 +276,26 @@ trait Tcategory
         }
     }
 
+    /** returns all post cats as Collection */
+
+    public function getCatsId($postId, $taxonomy_type = 'maincat')
+    {
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    $idArr = [];
+                    $terms = get_terms(['taxonomy' => $value, 'object_ids' => $postId, 'hide_empty' => false]);
+                    foreach ($terms as $term) {
+                        array_push($idArr, $term->term_id);
+                    }
+                    return $idArr;
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
     public function getChildCats($number, $offset, $parent_id, $taxonomy_type = 'maincat')
     {
         $parent_id = (array)$parent_id;

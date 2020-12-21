@@ -51,7 +51,7 @@ class FrontMenuController
         if ($id == 0 || $id == 'undefined' || !isset($id) || $id == null || $id == '') {
             $menuPost = new FrontMenu;
         } else {
-            $menuPost = $menu->get($id);
+            $menuPost = FrontMenu::get($id);
         }
 
         $title = $request->request->get('names');
@@ -64,42 +64,4 @@ class FrontMenuController
         // _dc($menuPost);
         return new Response;
     }
-
-    // public function update(Request $request, FrontMenu $menu)
-    // {
-    //     // _dc($request);
-
-    //     $title = $request->request->get('content');
-    //     $menu->names = explode(',', $title);
-    //     // _dc($titles);
-    //     $page = $request->request->get('category');
-    //     $menu->pages = explode(',', $page);
-    //     // $menu->links = explode(',', $page);
-
-    //     $menu->save();
-    //     // _dc($menu);
-    //     return new Response;
-    // }
-
-    // public function edit(Page $page)
-    // {
-    //     // $output = View::adminRender('page.edit',  ['page' => $page]);
-    //     // return new JsonResponse(['html' => $output]);
-    // }
-
-
-    // public function destroy(Page $page)
-    // {
-    //     $page->delete();
-    //     return new Response;
-    // }
-
-    // public function decodeRequest($request)
-    // {
-    //     if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-    //         $data = json_decode($request->getContent(), true);
-    //         $request->request->replace(is_array($data) ? $data : array());
-    //     }
-    //     return $request;
-    // }
 }

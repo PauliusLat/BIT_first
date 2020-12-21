@@ -72,7 +72,11 @@ App::start();
 
 
 // use BIT\models\NewresPost;
-// add_action('init', function () {
+add_action('init', function () {
+    // $news = NewsPost::get(374);
+    // $news->attachCat([197, 196, 195]);
+    // $arr = $news->getCatsId(374);
+    // _dc($arr);
 
 
     // $args = array(
@@ -230,5 +234,4 @@ App::start();
     // function flattenWithKeys(array $array, $childPrefix = '.', $root = '', $result = array()) {
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
-
-// });
+});
