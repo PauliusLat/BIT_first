@@ -2054,6 +2054,7 @@ var Menu = /*#__PURE__*/function () {
       var DOM = document.getElementById(this.target);
 
       if (DOM) {
+        // }
         var getDragAfterElement = function getDragAfterElement(container, y) {
           var draggableElements = _toConsumableArray(container.querySelectorAll('.draggable:not(.dragging)'));
 
@@ -2262,6 +2263,14 @@ var News = /*#__PURE__*/function () {
       var DOM = document.getElementById(this.target);
 
       if (DOM) {
+        var getCheckedValues = function getCheckedValues() {
+          return Array.from(document.querySelectorAll('input[type="checkbox"]')).filter(function (checkbox) {
+            return checkbox.checked;
+          }).map(function (checkbox) {
+            return checkbox.value;
+          });
+        };
+
         var parentElement = document.querySelector(".news-add");
         var editor = document.getElementById("editor");
         var title = document.createElement("input");
@@ -2275,70 +2284,30 @@ var News = /*#__PURE__*/function () {
         var button = document.getElementById("submit");
         var newsImageTitle = document.getElementById("newsName");
         var altText = document.getElementById("newsAlt");
-        var category = document.getElementById("catNews");
-        var tag = document.getElementById("tagNews");
+        var catDown = document.querySelector(".catDown");
+        var catUp = document.querySelector(".catUp");
+        var tag = document.getElementById("newsTagInput");
         var newsCat = document.querySelector(".newsCat");
-        var newsCatBtn = document.getElementById("create");
-        category.addEventListener("click", function () {
-          newsCat.style.display = "";
-          var selectCat = document.getElementById("cat");
-          selectCat.setAttribute("multiple", "multiple");
+        catDown.addEventListener("click", function () {
+          catUp.classList.remove("hiden");
+          catDown.classList.add("hiden");
+          newsCat.classList.remove("hiden");
         });
-        tag.addEventListener("click", function () {});
-        newsCatBtn.addEventListener("click", function () {
-          newsCat.style.display = "none";
+        catUp.addEventListener("click", function () {
+          catUp.classList.add("hiden");
+          catDown.classList.remove("hiden");
+          newsCat.classList.add("hiden");
         });
-        var select = document.getElementById('cat');
-        var showAll = document.querySelector(".showAllSelected");
-        var cat = [];
-        var filteredAry = [];
-        var tempCat = [];
-
-        select.onchange = function () {
-          var options = select.getElementsByTagName('option'),
-              values;
-          var text;
-
-          for (var i = options.length; i--;) {
-            if (options[i].selected) values = options[i].value;
-            if (options[i].selected) text = options[i].innerText;
-          }
-
-          var showCat = document.createElement("div");
-          var span = document.createElement("span");
-          span.className = "closeCat";
-          span.setAttribute("id", values);
-          showCat.className = "selectedCat";
-          span.innerHTML = "X";
-          showCat.innerHTML = text.replace(/\s+/g, "");
-          showAll.appendChild(span);
-          showAll.appendChild(showCat);
-          cat.push(values);
-          var closeCat = document.querySelectorAll(".closeCat");
-          var selectedCat = document.querySelectorAll(".selectedCat");
-          closeCat[closeCat.length - 1].addEventListener("click", function () {
-            tempCat.push(closeCat[closeCat.length - 1].id);
-            filteredAry = cat.filter(function (e) {
-              return e !== closeCat[closeCat.length - 1].id;
-            });
-            cat = filteredAry;
-            closeCat[closeCat.length - 1].remove();
-            selectedCat[closeCat.length - 1].remove();
-          });
-        };
-
         button.addEventListener("click", function () {
           var obj = {
+            title: newsPostTitle.value,
+            tag: tag.value,
             api: 'news-store',
             content: editables[0].innerHTML,
+            category: getCheckedValues(),
             alt: altText.value,
-            imageTitle: newsImageTitle.value,
-            title: newsPostTitle.value,
-            catTitle: document.getElementById("category-name").value,
-            catContent: document.getElementById("category-description").value,
-            category: cat
+            imageTitle: newsImageTitle.value
           };
-          console.log(cat);
 
           if (obj.title) {
             readImage.sendImageData(obj);
@@ -2413,7 +2382,7 @@ var NewsList = /*#__PURE__*/function () {
                 }
 
                 return _context2.delegateYield( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                  var deleteApi, listApi, HTML, deleteNews, editNews, _loop, i;
+                  var deleteApi, listApi, HTML, deleteNews, _loop, i;
 
                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                     while (1) {
@@ -2428,7 +2397,6 @@ var NewsList = /*#__PURE__*/function () {
                           HTML = _context.sent;
                           DOM.innerHTML = HTML;
                           deleteNews = document.querySelectorAll(".deleteNews");
-                          editNews = document.querySelectorAll(".edit");
 
                           _loop = function _loop(i) {
                             var deleteId = deleteNews[i].id;
@@ -2443,7 +2411,7 @@ var NewsList = /*#__PURE__*/function () {
                             _loop(i);
                           }
 
-                        case 10:
+                        case 9:
                         case "end":
                           return _context.stop();
                       }
@@ -2804,7 +2772,7 @@ var Profile_image = /*#__PURE__*/function () {
                 div.className = "galleryDiv";
                 var removeUploade = document.querySelector(".wrapper");
                 removeUploade.style.display = "none";
-                div.innerHTML = "<img class=\"uploadeImageGallery\" height=\"200px\" width=\"200px\" src=\"".concat(picFile.result, "\" alt=\" \"/>");
+                div.innerHTML = "<img class=\"uploadeImageGallery\" src=\"".concat(picFile.result, "\" alt=\" \"/>");
                 output.insertBefore(div, currentDiv);
                 var changeImage = document.querySelector(".galleryDiv");
 
@@ -3584,8 +3552,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

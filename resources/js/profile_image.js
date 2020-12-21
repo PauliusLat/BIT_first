@@ -35,7 +35,7 @@ class Profile_image {
               div.className = "galleryDiv";
               const removeUploade = document.querySelector(".wrapper");
               removeUploade.style.display = "none";
-              div.innerHTML = `<img class="uploadeImageGallery" height="200px" width="200px" src="${picFile.result}" alt=" "/>`;
+              div.innerHTML = `<img class="uploadeImageGallery" src="${picFile.result}" alt=" "/>`;
 
               output.insertBefore(div, currentDiv);
 

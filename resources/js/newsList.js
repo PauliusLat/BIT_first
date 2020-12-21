@@ -23,7 +23,6 @@ class NewsList {
             DOM.innerHTML = HTML;
 
             const deleteNews = document.querySelectorAll(".deleteNews");
-            const editNews = document.querySelectorAll(".edit");
 
             for (let i = 0; i < deleteNews.length; i++) {
 
@@ -38,6 +37,5 @@ class NewsList {
         }
     }
 }
-
 
 export default NewsList;
