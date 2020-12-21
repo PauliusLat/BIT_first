@@ -106,24 +106,30 @@ trait Ttaxonomy
     public function addTag($tag, $slug = '', $description = '', $taxonomy_type = 'hashtag')
     {
         $tag = (array)$tag;
+        array_shift($tag);
         foreach ($this->taxonomy as $value) {
             if ($value == $taxonomy_type) {
                 if (did_action('init')) {
                     $args = ['description' => $description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
+                    $terms = [];
                     foreach ($tag as $key) {
                         wp_insert_term($key, $value, $args);
-                    }
-                    if ($this->ID == null) {
-                        throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
-                    } else {
-                        $terms = get_terms(['name' => $tag, 'taxonomy' => $value, 'hide_empty' => false]);
-                        foreach ($terms as $term) {
-
-                            wp_set_object_terms($this->ID, $term->term_id, $value, $append = false);
+                        if ($this->ID == null) {
+                            throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
+                        } else {
+                            $term = get_term_by('name', $key, $value);
+                            array_push($terms, $term->term_id);
                         }
-                        /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
-                         * so that children with the same names but different parents aren't confused.*/
                     }
+                    // _dc($terms);
+                    // array_shift($terms);
+                    // _dc($terms);
+                    // foreach ($terms as $term) {
+
+                    wp_set_object_terms($this->ID, $terms, $value, $append = false);
+                    // }
+                    /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
+                     * so that children with the same names but different parents aren't confused.*/
                 } else {
                     throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
                 }
