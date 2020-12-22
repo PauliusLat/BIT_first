@@ -12,29 +12,59 @@ class Menu {
   }
 
   init() {
+
     const DOM = document.getElementById(this.target);
 
     if (DOM) {
       const draggables = document.querySelectorAll('.draggable')
+     console.log(draggables.length);
       const container = document.querySelector('.cont')
-    
       this.cloning();
 
       const addSubmenuAll = document.querySelectorAll(".addSubmenu");
-      // const insertAll = document.querySelectorAll(".submenu");
-      console.log(addSubmenuAll.length);
-      for(let i = 0; i<addSubmenuAll.length; i++){
+    
+
+      let a=addSubmenuAll.length-1
+
+      addSubmenuAll[a].removeEventListener(
+        'click',
+        () => {
+         this.subcloning(a)
+        //  console.log(a)
+     },
+      )
+
+      addSubmenuAll[a].addEventListener(
+        'click',
+        () => {
+          this.subcloning(a)
+         //  console.log(a)
+      },
+      )
+
+      // addSubmenuAll[a].addEventListener(
+      //   'click',
+      //   function () {
+      //     let menu = new Menu;
+      //     menu.subcloning(a)
+      //     // menu.init();
+      //    //  console.log(a)
+      // },
+      // )
+
+      /*for(let i = 0; i<addSubmenuAll.length; i++){
         addSubmenuAll[i].addEventListener(
           'click',
           () => {
            this.subcloning(i)
+           console.log(i)
           //  console.log(insertAll[i])
            // this.init()
        },
         )
-      }
+      }*/
 
-      const addSubmenu = document.querySelector(".addSubmenu");
+      // const addSubmenu = document.querySelector(".addSubmenu");
       // this.subcloning();
       
      //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
@@ -92,24 +122,23 @@ class Menu {
     }
   }
 
-  subcloning(i){
-//   const div = document.createElement('div');
-//   div.className = 'submenu sm-17-24';
-//  const parent = document.querySelector(".cont")
-// parent.appendChild(div);
-// console.log(parent)
+subcloning(i){
 let parentAll = document.querySelectorAll(".menuItem");;
     // let insertAll = document.querySelectorAll(".submenu");
     // console.log(insertAll.length)
     let insert = parentAll[i].querySelector(".submenu");
+    // console.log(insert);
     let elmnt = document.querySelector(".draggable");
+    // console.log(elmnt);
     let cln = elmnt.cloneNode(true);
     let button = cln.querySelector(".button");
     button.innerHTML = '';
     // let insertedNode = parent.insertBefore(cln, null)
     // console.log(cln)
     insert.appendChild(cln);
- 
+    const draggables = document.querySelectorAll('.draggable')
+    console.log(draggables.length);
+    this.delete(draggables);
   }
 
   cloning() {
@@ -125,9 +154,6 @@ let parentAll = document.querySelectorAll(".menuItem");;
         emptySubmenu.innerHTML = '';
         insert.appendChild(cln);
         this.init();
-        // let addSubmenu = document.querySelectorAll(".addSubmenu");
-        // console.log(addSubmenu.length);
-        // this.subcloning(addSubmenu);
       }
       add.addEventListener("click", data);
     }
@@ -240,6 +266,7 @@ let parentAll = document.querySelectorAll(".menuItem");;
   delete(draggables) {
     var deleted = document.querySelectorAll(".manuDelete");
     for (let i = 0; i < draggables.length; i++) {
+      console.log(draggables.length);
       deleted[i].addEventListener("click", () => {
         draggables[i].remove();
       })

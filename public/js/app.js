@@ -2067,25 +2067,41 @@ var Menu = /*#__PURE__*/function () {
         };
 
         var draggables = document.querySelectorAll('.draggable');
+        console.log(draggables.length);
         var container = document.querySelector('.cont');
         this.cloning();
-        var addSubmenuAll = document.querySelectorAll(".addSubmenu"); // const insertAll = document.querySelectorAll(".submenu");
+        var addSubmenuAll = document.querySelectorAll(".addSubmenu");
+        var a = addSubmenuAll.length - 1;
+        addSubmenuAll[a].removeEventListener('click', function () {
+          _this.subcloning(a); //  console.log(a)
 
-        console.log(addSubmenuAll.length);
+        });
+        addSubmenuAll[a].addEventListener('click', function () {
+          _this.subcloning(a); //  console.log(a)
 
-        var _loop = function _loop(i) {
-          addSubmenuAll[i].addEventListener('click', function () {
-            _this.subcloning(i); //  console.log(insertAll[i])
-            // this.init()
+        }); // addSubmenuAll[a].addEventListener(
+        //   'click',
+        //   function () {
+        //     let menu = new Menu;
+        //     menu.subcloning(a)
+        //     // menu.init();
+        //    //  console.log(a)
+        // },
+        // )
 
-          });
-        };
-
-        for (var i = 0; i < addSubmenuAll.length; i++) {
-          _loop(i);
-        }
-
-        var addSubmenu = document.querySelector(".addSubmenu"); // this.subcloning();
+        /*for(let i = 0; i<addSubmenuAll.length; i++){
+          addSubmenuAll[i].addEventListener(
+            'click',
+            () => {
+             this.subcloning(i)
+             console.log(i)
+            //  console.log(insertAll[i])
+             // this.init()
+         },
+          )
+        }*/
+        // const addSubmenu = document.querySelector(".addSubmenu");
+        // this.subcloning();
         //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
         //tikrinam ar clonuota, tada pasileidzia kitas subcloning ar panasiai
         //submenu ilgi skaiciuoti po cloning ir tada ji paduoti i subcloning kaip nors ar dar kazkaip. gal reikia ta metoda kaip MInde parasyti, kad event listener kviestum jau paciame metode
@@ -2128,23 +2144,23 @@ var Menu = /*#__PURE__*/function () {
   }, {
     key: "subcloning",
     value: function subcloning(i) {
-      //   const div = document.createElement('div');
-      //   div.className = 'submenu sm-17-24';
-      //  const parent = document.querySelector(".cont")
-      // parent.appendChild(div);
-      // console.log(parent)
       var parentAll = document.querySelectorAll(".menuItem");
       ; // let insertAll = document.querySelectorAll(".submenu");
       // console.log(insertAll.length)
 
-      var insert = parentAll[i].querySelector(".submenu");
-      var elmnt = document.querySelector(".draggable");
+      var insert = parentAll[i].querySelector(".submenu"); // console.log(insert);
+
+      var elmnt = document.querySelector(".draggable"); // console.log(elmnt);
+
       var cln = elmnt.cloneNode(true);
       var button = cln.querySelector(".button");
       button.innerHTML = ''; // let insertedNode = parent.insertBefore(cln, null)
       // console.log(cln)
 
       insert.appendChild(cln);
+      var draggables = document.querySelectorAll('.draggable');
+      console.log(draggables.length);
+      this["delete"](draggables);
     }
   }, {
     key: "cloning",
@@ -2163,10 +2179,7 @@ var Menu = /*#__PURE__*/function () {
           emptySubmenu.innerHTML = '';
           insert.appendChild(cln);
 
-          _this2.init(); // let addSubmenu = document.querySelectorAll(".addSubmenu");
-          // console.log(addSubmenu.length);
-          // this.subcloning(addSubmenu);
-
+          _this2.init();
         };
 
         add.addEventListener("click", data);
@@ -2271,14 +2284,15 @@ var Menu = /*#__PURE__*/function () {
     value: function _delete(draggables) {
       var deleted = document.querySelectorAll(".manuDelete");
 
-      var _loop2 = function _loop2(i) {
+      var _loop = function _loop(i) {
+        console.log(draggables.length);
         deleted[i].addEventListener("click", function () {
           draggables[i].remove();
         });
       };
 
       for (var i = 0; i < draggables.length; i++) {
-        _loop2(i);
+        _loop(i);
       }
     }
   }, {
