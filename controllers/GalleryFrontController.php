@@ -52,10 +52,7 @@ class GalleryFrontController {
 					$image->save($files[$i], $album->ID);
 
 					if(isset($imgTags[$i])){
-						$iTags = explode('# ', $imgTags[$i]);
-						foreach ($iTags as $itag) {
-							$image->addTag($itag);
-						}
+						$image->addTag(explode('# ', $imgTags[$i]));
 					}
 					if($firstProfile){
 						$album->profileImgId = $image->ID;
