@@ -4,6 +4,7 @@ namespace BIT\app\modelTraits;
 
 use BIT\app\TaxCollection;
 use BIT\app\Page;
+use BIT\app\Attachment;
 // use BIT\app\App;
 use BIT\app\coreExeptions\InitHookNotFiredException;
 use BIT\app\coreExeptions\PostIdNotSetException;
@@ -11,12 +12,12 @@ use BIT\app\coreExeptions\PostIdNotSetException;
 trait Tcategory
 {
 
-    public function checkMulticat(string $cat)
+    public function checkMulticat(string $cat, $postId)
     {
         if (did_action('init')) {
             $cats = explode(', ', $cat);
             foreach ($cats as $term) {
-                foreach ($this->getCats() as $post_term) {
+                foreach ($this->getCats($postId) as $post_term) {
                     if ($post_term->name == $term) {
                         $cat_ids[] = $post_term->term_id;
                     }
@@ -75,8 +76,8 @@ trait Tcategory
     public function getCatPageLink(int $id)
     {
         $catPageId = get_term_meta($id, "page")[0];
-        $page = new Page;
-        $page = $page->get($catPageId);
+        // $page = new Page;
+        $page = Page::get($catPageId);
         $pageLink = $page->getLink();
         return $pageLink;
     }
@@ -84,8 +85,8 @@ trait Tcategory
     public function getCatPage(int $id)
     {
         $catPageId = get_term_meta($id, "page")[0];
-        $page = new Page;
-        $page = $page->get($catPageId);
+        // $page = new Page;
+        $page = Page::get($catPageId);
         // $pageLink = $page->getLink();
         return $page;
     }
@@ -142,22 +143,23 @@ trait Tcategory
     }
 
     //gets category image from db
-    public function getCatImage(int $term_id, string $meta_key)
+    public function getCatImage(int $term_id, string $meta_key = 'image')
     {
-        $image = get_term_meta($term_id, $meta_key);
-        return $image;
+        $imageID = get_term_meta($term_id, $meta_key)[0];
+        // _dc($imageID);
+        return Attachment::get($imageID);
     }
 
     //deletes category image from db
-    public function deleteCatImage(int $term_id, string $meta_key, $meta_value = '')
+    public function deleteCatImage(int $term_id, string $meta_key = 'image', $meta_value = '')
     {
         delete_metadata('term', $term_id, $meta_key, $meta_value);
     }
 
     //deletes category from db
-    public function deleteCatFromDb(int $id, $taxonomy_type = 'maincat')
+    public static function deleteCatFromDb(int $id, $taxonomy_type = 'maincat')
     {
-        $page = $this->getCatPage($id);
+        $page = self::getCatPage($id);
         // _dc($page->ID);
         wp_delete_term($id, $taxonomy_type);
 
@@ -267,6 +269,26 @@ trait Tcategory
                         $taxCollection->addTerm($term);
                     }
                     return $taxCollection;
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
+    /** returns all post cats as Collection */
+
+    public function getCatsId($postId, $taxonomy_type = 'maincat')
+    {
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    $idArr = [];
+                    $terms = get_terms(['taxonomy' => $value, 'object_ids' => $postId, 'hide_empty' => false]);
+                    foreach ($terms as $term) {
+                        array_push($idArr, $term->term_id);
+                    }
+                    return $idArr;
                 } else {
                     throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
                 }

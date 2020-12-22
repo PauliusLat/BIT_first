@@ -1,6 +1,8 @@
 <?php
-
-use BIT\app\Category;
+if (!function_exists('wp_terms_checklist')) {
+    include ABSPATH . 'wp-admin/includes/template.php';
+}
+// use BIT\app\Category;
 ?>
 
 <div class='catCreate grid-container'>
@@ -119,11 +121,10 @@ use BIT\app\Category;
             echo $first . $prev . $nav . $next . $last;
             echo '</div>';
             foreach ($categories as $cat) {
-
-                //tvarkyti sita
-                $category = new Category;
-                //bus per attachment
-                $cat->image = get_term_meta($cat->term_id, "image");
+                $catImage = $category->getCatImage($cat->term_id);
+                // _dc($catImage);
+                $urlImg = $catImage->getUrl();
+                // _dc($urlImg);
                 $pageLink =  $category->getCatPageLink($cat->term_id);
             ?>
                 <tr>
@@ -132,19 +133,22 @@ use BIT\app\Category;
                     <!-- <td><?= $cat->slug ?></td> -->
                     <td><?= $cat->description ?></td>
                     <?php
-                    if ($cat->image) {
+
+                    if ($catImage->ID != 0 && $catImage->ID != null && $catImage->ID != 'undefined' && $catImage->ID != '') {
                     ?>
-                        <td><?php foreach ($cat->image as $key => $value) {
-                                if ($key == 0) {
-                                    echo '<img style = "width: 100px; height: 100px; object-fit: cover;" src="' . $url . $value . '">';
-                                }
-                            }
+                        <td>
+                            <?php
+                            echo '<img class = "cat" src="' . $urlImg . '">';
                             ?>
                         </td>
                     <?php
                     } else {
                     ?>
-                        <td></td>
+                        <td>
+                            <?php
+                            echo '';
+                            ?>
+                        </td>
                     <?php
                     }
                     ?>
