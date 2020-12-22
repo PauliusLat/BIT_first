@@ -49,9 +49,7 @@ class CategoryController
         $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr($limit, $pagination->offset)));
         $message = $session->get('alert_message');
         $success_message = $session->get('success_message');
-        $uploads_dir = wp_upload_dir();
-        $url = $uploads_dir['url'] . '/';
-        $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'url' => $url]);
+        $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'category' => $category]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -86,29 +84,31 @@ class CategoryController
 
         //add category image
         if ($request->files->get('image')) {
-            $uploads_dir = wp_upload_dir();
-            $path = $uploads_dir['path'] . '/';
-            $target_file = basename($_FILES['image']['name']);
-            move_uploaded_file($_FILES["image"]["tmp_name"], "$path/$target_file");
-            $picture = $request->files->get('image')->getClientOriginalName();
-            $catID =  $category->getCatId($name);
-            $category->addImageToCat($catID, "image", $picture);
+            $file = $request->files->get('image');
+            $image = new Attachment();
+            // $image->setAlt($altText);
+            // $image->setCaption($imgTitle);
+            $image->save($file);
+            $category->addImageToCat($term_id, "image", $image->ID);
         }
-
         return new JsonResponse;
     }
 
-    public function edit(Request $requestJson, Category $category)
+    public function edit(Request $requestJson)
     {
         $request = $this->decodeRequest($requestJson);
         $id = $request->request->get('editID');
         $taxonomy_type = $request->request->get('taxonomy_type');
-        $category = $category->getCat($id, $taxonomy_type);
-        $output = View::adminRender('category.edit',  ['category' => $category]);
+        $cat = new Category;
+        $category = $cat->getCat($id, $taxonomy_type);
+        $catImage = $cat->getCatImage($category->term_id);
+        $urlImg = $catImage->getUrl();
+        $pageLink = $cat->getCatPageLink($category->term_id);
+        $output = View::adminRender('category.edit',  ['category' => $category, 'urlImg' =>  $urlImg, 'pageLink' => $pageLink, 'catImage' => $catImage]);
         return new JsonResponse(['html' => $output]);
     }
 
-    public function update(Request $requestJson, Category $category, Session $session)
+    public function update(Request $requestJson, Session $session)
     {
         $request = $this->decodeRequest($requestJson);
         $name = $request->request->get('cat_name');
@@ -116,18 +116,28 @@ class CategoryController
         $description = $request->request->get('cat_description');
         $id = $request->request->get('updateId');
         //update cat and cat page
+        $category = new Category;
         $category->updateCat($id, $name, $slug, $description);
+        if ($request->files->get('image')) {
+            $category->deleteCatImage($id);
+            $file = $request->files->get('image');
+            $image = new Attachment();
+            // $image->setAlt($altText);
+            // $image->setCaption($imgTitle);
+            $image->save($file);
+            $category->addImageToCat($id, "image", $image->ID);
+        }
         $session->flash('success_message', 'kategorija sėkmingai pakoreguota');
         return new Response;
     }
 
-    public function destroy(Request $requestJson, Category $category, Session $session)
+    public function destroy(Request $requestJson, Session $session)
     {
         $request = $this->decodeRequest($requestJson);
         $id = $request->request->get('deleteID');
         $taxonomy_type = $request->request->get('taxonomy_type');
         //delete cat and cat page
-        $category->deleteCatFromDb($id, $taxonomy_type);
+        Category::deleteCatFromDb($id, $taxonomy_type);
         $session->flash('success_message', 'kategorija sėkmingai ištrinta');
         return new Response;
     }

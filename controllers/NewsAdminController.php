@@ -26,7 +26,6 @@ class NewsAdminController
 
 	public function store(Request $request)
 	{
-		_d($request);
 		$title = $request->request->get('title');
 		$content = $request->request->get('content');
 		$altText = $request->request->get('altText');
@@ -52,8 +51,10 @@ class NewsAdminController
 
 		//add tag to post
 		$tag = $request->request->get('tag');
-		$tagInt = array_map('intval', explode(',', $tag));
-		$news->attachTag($tagInt);
+		if (isset($tag)) {
+			$tagsArr = explode('#', $tag);
+			$news->addTag($tagsArr);
+		}
 
 		$page->setRoute('showNews', $news->ID);
 		$page->save();
@@ -70,14 +71,12 @@ class NewsAdminController
 		$id = $request->request->get('id');
 		$news = NewsPost::get($id);
 	}
-	public function edit(Request $request, NewsPost $news)
+	public function edit(NewsPost $news)
 	{
-		// $news = NewsPost::get($request->request->get('id'));
-		// _d('EDIT metodas');
-		// _d($request);
-		// $id = $request->request->get('id');
-		$postCats = $news->getCats($id);
-		$postTags = $news->getTags($id);
+
+		$postCats = $news->getCatsId($news->ID);
+		$postTags = $news->getTags($news->ID);
+
 		return View::adminRender('news.edit', ['data' => $news, 'postCats' => $postCats, 'postTags' => $postTags,]);
 	}
 
@@ -101,12 +100,11 @@ class NewsAdminController
 		$file = $request->files->get('image');
 		$image = null;
 		var_dump($request->request->get('id'));
-		if($attachments = $news->attachments){
+		if ($attachments = $news->attachments) {
 			foreach ($attachments as $att) {
-			$image = $att;
+				$image = $att;
 			}
-		}
-		elseif(!$attachments && $file){
+		} elseif (!$attachments && $file) {
 			$image = new Attachment;
 		}
 		$news->post_title = $request->request->get('title');

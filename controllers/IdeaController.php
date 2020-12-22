@@ -27,7 +27,6 @@ class IdeaController
 
 	public function render(Request $request)
 	{
-
 		$data = (IdeaPost::all())->pluck('idea_content', 'idea_like', 'post_date', 'ID')->all();
 
 		$response = new Response;
