@@ -17,30 +17,30 @@ class Menu {
     if (DOM) {
       const draggables = document.querySelectorAll('.draggable')
       const container = document.querySelector('.cont')
-      const add = document.querySelector(".addNew");
-      const addSubmenu = document.querySelectorAll(".addSubmenu");
-      console.log(addSubmenu);
-     add.addEventListener(
-       'click',
-       () => {
-        this.cloning()
-        // this.init()
-    },
-     )
- 
-  for(let i = 0; i<addSubmenu.length; i++){
-    let insert = document.querySelectorAll(".submenu");
-    console.log(addSubmenu[i])
-      addSubmenu[i].addEventListener(
-        'click',
-        () => {
-         this.subcloning(insert[i])
-        //  this.init()
-     },
-      )
-     }
-     
     
+      this.cloning();
+
+      const addSubmenuAll = document.querySelectorAll(".addSubmenu");
+      // const insertAll = document.querySelectorAll(".submenu");
+      console.log(addSubmenuAll.length);
+      for(let i = 0; i<addSubmenuAll.length; i++){
+        addSubmenuAll[i].addEventListener(
+          'click',
+          () => {
+           this.subcloning(i)
+          //  console.log(insertAll[i])
+           // this.init()
+       },
+        )
+      }
+
+      const addSubmenu = document.querySelector(".addSubmenu");
+      // this.subcloning();
+      
+     //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
+     
+    //tikrinam ar clonuota, tada pasileidzia kitas subcloning ar panasiai
+    //submenu ilgi skaiciuoti po cloning ir tada ji paduoti i subcloning kaip nors ar dar kazkaip. gal reikia ta metoda kaip MInde parasyti, kad event listener kviestum jau paciame metode
 
      const storeinit = document.querySelector(".initsave");
      if (storeinit != null){
@@ -61,7 +61,6 @@ class Menu {
         draggable.addEventListener('dragstart', () => {
           draggable.classList.add('dragging')
         })
-
         draggable.addEventListener('dragend', () => {
           draggable.classList.remove('dragging')
         })
@@ -77,7 +76,6 @@ class Menu {
           container.insertBefore(draggable, afterElement)
         }
       })
-  
 
       function getDragAfterElement(container, y) {
         const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
@@ -94,21 +92,77 @@ class Menu {
     }
   }
 
-    cloning(){
-      let insert = document.querySelector(".cont");
-      let elmnt = document.querySelector(".menuItem");
-      let cln = elmnt.cloneNode(true);
-      console.log(cln)
-      insert.appendChild(cln);
-    }
+  subcloning(i){
+//   const div = document.createElement('div');
+//   div.className = 'submenu sm-17-24';
+//  const parent = document.querySelector(".cont")
+// parent.appendChild(div);
+// console.log(parent)
+let parentAll = document.querySelectorAll(".menuItem");;
+    // let insertAll = document.querySelectorAll(".submenu");
+    // console.log(insertAll.length)
+    let insert = parentAll[i].querySelector(".submenu");
+    let elmnt = document.querySelector(".draggable");
+    let cln = elmnt.cloneNode(true);
+    let button = cln.querySelector(".button");
+    button.innerHTML = '';
+    // let insertedNode = parent.insertBefore(cln, null)
+    // console.log(cln)
+    insert.appendChild(cln);
+ 
+  }
 
-    subcloning(insert){
-      // let insert = document.querySelector(".submenu");
-      let elmnt = document.querySelector(".draggable");
-      let cln = elmnt.cloneNode(true);
-      console.log(cln)
-      insert.appendChild(cln);
+  cloning() {
+    const add = document.querySelector(".addNew");
+    // console.log(add);
+      if (this.read) {
+      let data = () => {
+        let insert = document.querySelector(".cont");
+        let elmnt = document.querySelector(".menuItem");
+        let cln = elmnt.cloneNode(true);
+        console.log(cln)
+        let emptySubmenu = cln.querySelector(".submenu");
+        emptySubmenu.innerHTML = '';
+        insert.appendChild(cln);
+        this.init();
+        // let addSubmenu = document.querySelectorAll(".addSubmenu");
+        // console.log(addSubmenu.length);
+        // this.subcloning(addSubmenu);
+      }
+      add.addEventListener("click", data);
     }
+    this.read = false;
+  }
+
+  // subcloning() {
+  //   const addSubmenu = document.querySelector(".addSubmenu");
+  //   console.log(addSubmenu)
+  //     if (this.read) {
+  //       // for(let i = 0; i<this.addSubmenu.length; i++){
+  //       let data = () => {
+  //         console.log(1111111)
+  //       let insert = document.querySelector(".submenu");
+  //       let elmnt = document.querySelector(".draggable");
+  //       let cln = elmnt.cloneNode(true);
+  //       console.log(cln)
+  //       insert.appendChild(cln);
+  //       }
+  //       addSubmenu.addEventListener("click", data);
+  //     }
+  //   this.read = false;
+  // }
+
+    // cloning(){
+    //   let insert = document.querySelector(".cont");
+    //   let elmnt = document.querySelector(".menuItem");
+    //   let cln = elmnt.cloneNode(true);
+    //   console.log(cln)
+    //   insert.appendChild(cln);
+    //   const addSubmenu = document.querySelectorAll(".addSubmenu");
+    //   console.log(addSubmenu.length)
+    // }
+
+  
  
   // async addNew() {
    
@@ -196,7 +250,7 @@ class Menu {
     let store = document.querySelector(".initsave");
       if (this.read) {
         let api = "menu_store";
-      var data = () => {
+        var data = () => {
         const menuText = document.getElementsByName("menu");
         const extmenuLink = document.querySelectorAll(".menuLink");
         var selectBox = document.getElementsByTagName("select");

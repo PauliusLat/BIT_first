@@ -2068,26 +2068,27 @@ var Menu = /*#__PURE__*/function () {
 
         var draggables = document.querySelectorAll('.draggable');
         var container = document.querySelector('.cont');
-        var add = document.querySelector(".addNew");
-        var addSubmenu = document.querySelectorAll(".addSubmenu");
-        console.log(addSubmenu);
-        add.addEventListener('click', function () {
-          _this.cloning(); // this.init()
+        this.cloning();
+        var addSubmenuAll = document.querySelectorAll(".addSubmenu"); // const insertAll = document.querySelectorAll(".submenu");
 
-        });
+        console.log(addSubmenuAll.length);
 
         var _loop = function _loop(i) {
-          var insert = document.querySelectorAll(".submenu");
-          console.log(addSubmenu[i]);
-          addSubmenu[i].addEventListener('click', function () {
-            _this.subcloning(insert[i]); //  this.init()
+          addSubmenuAll[i].addEventListener('click', function () {
+            _this.subcloning(i); //  console.log(insertAll[i])
+            // this.init()
 
           });
         };
 
-        for (var i = 0; i < addSubmenu.length; i++) {
+        for (var i = 0; i < addSubmenuAll.length; i++) {
           _loop(i);
         }
+
+        var addSubmenu = document.querySelector(".addSubmenu"); // this.subcloning();
+        //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
+        //tikrinam ar clonuota, tada pasileidzia kitas subcloning ar panasiai
+        //submenu ilgi skaiciuoti po cloning ir tada ji paduoti i subcloning kaip nors ar dar kazkaip. gal reikia ta metoda kaip MInde parasyti, kad event listener kviestum jau paciame metode
 
         var storeinit = document.querySelector(".initsave");
 
@@ -2125,23 +2126,80 @@ var Menu = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "cloning",
-    value: function cloning() {
-      var insert = document.querySelector(".cont");
-      var elmnt = document.querySelector(".menuItem");
+    key: "subcloning",
+    value: function subcloning(i) {
+      //   const div = document.createElement('div');
+      //   div.className = 'submenu sm-17-24';
+      //  const parent = document.querySelector(".cont")
+      // parent.appendChild(div);
+      // console.log(parent)
+      var parentAll = document.querySelectorAll(".menuItem");
+      ; // let insertAll = document.querySelectorAll(".submenu");
+      // console.log(insertAll.length)
+
+      var insert = parentAll[i].querySelector(".submenu");
+      var elmnt = document.querySelector(".draggable");
       var cln = elmnt.cloneNode(true);
-      console.log(cln);
+      var button = cln.querySelector(".button");
+      button.innerHTML = ''; // let insertedNode = parent.insertBefore(cln, null)
+      // console.log(cln)
+
       insert.appendChild(cln);
     }
   }, {
-    key: "subcloning",
-    value: function subcloning(insert) {
-      // let insert = document.querySelector(".submenu");
-      var elmnt = document.querySelector(".draggable");
-      var cln = elmnt.cloneNode(true);
-      console.log(cln);
-      insert.appendChild(cln);
-    } // async addNew() {
+    key: "cloning",
+    value: function cloning() {
+      var _this2 = this;
+
+      var add = document.querySelector(".addNew"); // console.log(add);
+
+      if (this.read) {
+        var data = function data() {
+          var insert = document.querySelector(".cont");
+          var elmnt = document.querySelector(".menuItem");
+          var cln = elmnt.cloneNode(true);
+          console.log(cln);
+          var emptySubmenu = cln.querySelector(".submenu");
+          emptySubmenu.innerHTML = '';
+          insert.appendChild(cln);
+
+          _this2.init(); // let addSubmenu = document.querySelectorAll(".addSubmenu");
+          // console.log(addSubmenu.length);
+          // this.subcloning(addSubmenu);
+
+        };
+
+        add.addEventListener("click", data);
+      }
+
+      this.read = false;
+    } // subcloning() {
+    //   const addSubmenu = document.querySelector(".addSubmenu");
+    //   console.log(addSubmenu)
+    //     if (this.read) {
+    //       // for(let i = 0; i<this.addSubmenu.length; i++){
+    //       let data = () => {
+    //         console.log(1111111)
+    //       let insert = document.querySelector(".submenu");
+    //       let elmnt = document.querySelector(".draggable");
+    //       let cln = elmnt.cloneNode(true);
+    //       console.log(cln)
+    //       insert.appendChild(cln);
+    //       }
+    //       addSubmenu.addEventListener("click", data);
+    //     }
+    //   this.read = false;
+    // }
+    // cloning(){
+    //   let insert = document.querySelector(".cont");
+    //   let elmnt = document.querySelector(".menuItem");
+    //   let cln = elmnt.cloneNode(true);
+    //   console.log(cln)
+    //   insert.appendChild(cln);
+    //   const addSubmenu = document.querySelectorAll(".addSubmenu");
+    //   console.log(addSubmenu.length)
+    // }
+    // async addNew() {
     //   let api = "menu_create";
     //   let htm = await this.axios.getDAta(api);
     //   const lastElemet = document.querySelector(".cont");
@@ -2226,7 +2284,7 @@ var Menu = /*#__PURE__*/function () {
   }, {
     key: "store",
     value: function store() {
-      var _this2 = this;
+      var _this3 = this;
 
       var store = document.querySelector(".initsave");
 
@@ -2273,7 +2331,7 @@ var Menu = /*#__PURE__*/function () {
           };
           axios.formDataApi(obj);
 
-          _this2.init();
+          _this3.init();
         };
 
         store.addEventListener("click", data);

@@ -45,7 +45,7 @@ class FrontMenuController
         return new JsonResponse(['html' => $pages]);
     }
 
-    public function store(Request $request, FrontMenu $menu)
+    public function store(Request $request)
     {
         $id = $request->request->get('id');
         if ($id == 0 || $id == 'undefined' || !isset($id) || $id == null || $id == '') {
