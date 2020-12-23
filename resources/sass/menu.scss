@@ -133,6 +133,10 @@
         border-color: #aaa;
       }
 
+      .submenuSelect {
+        display: none;
+      }
+
       .menuDrag {
         width: 4%;
       }
@@ -140,6 +144,13 @@
       .manuDelete {
         width: 4%;
         cursor: pointer;
+      }
+
+      .addSubmenu {
+        svg {
+          height: 35px;
+          cursor: pointer;
+        }
       }
     }
 
@@ -302,7 +313,8 @@
     cursor: pointer;
   }
 
-  .save {
+  .save,
+  .initsave {
     display: flex;
     margin: 20px 3% 0 0;
     justify-content: flex-end;

@@ -2152,12 +2152,15 @@ var Menu = /*#__PURE__*/function () {
 
       var elmnt = document.querySelector(".draggable"); // console.log(elmnt);
 
-      var cln = elmnt.cloneNode(true); // let parent = cln.querySelector(".parent")
+      var cln = elmnt.cloneNode(true); // // let parent = cln.querySelector(".parent")
+      // console.log(parent)
 
-      console.log(parent);
       cln.classList.remove("parent");
-      var button = cln.querySelector(".button");
-      button.innerHTML = ''; // let insertedNode = parent.insertBefore(cln, null)
+      cln.querySelector(".addSubmenu").remove(); // button.remove();
+
+      cln.querySelector(".submenuSelect").style.display = "inline-block";
+      cln.querySelector(".mainSelect").style.display = "none"; // button.innerHTML = '';
+      // let insertedNode = parent.insertBefore(cln, null)
       // console.log(cln)
 
       insert.appendChild(cln);

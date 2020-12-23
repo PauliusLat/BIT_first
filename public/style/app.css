@@ -2279,12 +2279,21 @@ table th {
   border-color: #aaa;
 }
 
+.innermenu .cont .draggable .submenuSelect {
+  display: none;
+}
+
 .innermenu .cont .draggable .menuDrag {
   width: 4%;
 }
 
 .innermenu .cont .draggable .manuDelete {
   width: 4%;
+  cursor: pointer;
+}
+
+.innermenu .cont .draggable .addSubmenu svg {
+  height: 35px;
   cursor: pointer;
 }
 
@@ -2443,7 +2452,8 @@ table th {
   cursor: pointer;
 }
 
-.menuBtn .save {
+.menuBtn .save,
+.menuBtn .initsave {
   display: flex;
   margin: 20px 3% 0 0;
   justify-content: flex-end;

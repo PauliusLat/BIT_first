@@ -27,6 +27,7 @@ class FrontMenuController
         if ($menus) {
             $menu = $menus[0];
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
+            $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
             $page = new Page;
             return View::adminRender('frontmenu.mainmenu', ['menu' => $menu, 'pages' => $pages, 'page' => $page]);
         } else {

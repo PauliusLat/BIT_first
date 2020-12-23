@@ -131,11 +131,14 @@ let parentAll = document.querySelectorAll(".menuItem");;
     let elmnt = document.querySelector(".draggable");
     // console.log(elmnt);
     let cln = elmnt.cloneNode(true);
-    // let parent = cln.querySelector(".parent")
-    console.log(parent)
+    // // let parent = cln.querySelector(".parent")
+    // console.log(parent)
     cln.classList.remove("parent")
-    let button = cln.querySelector(".button");
-    button.innerHTML = '';
+   cln.querySelector(".addSubmenu").remove();
+    // button.remove();
+    cln.querySelector(".submenuSelect").style.display="inline-block"
+    cln.querySelector(".mainSelect").style.display="none"
+    // button.innerHTML = '';
     // let insertedNode = parent.insertBefore(cln, null)
     // console.log(cln)
     insert.appendChild(cln);
