@@ -131,13 +131,16 @@ let parentAll = document.querySelectorAll(".menuItem");;
     let elmnt = document.querySelector(".draggable");
     // console.log(elmnt);
     let cln = elmnt.cloneNode(true);
+    // let parent = cln.querySelector(".parent")
+    console.log(parent)
+    cln.classList.remove("parent")
     let button = cln.querySelector(".button");
     button.innerHTML = '';
     // let insertedNode = parent.insertBefore(cln, null)
     // console.log(cln)
     insert.appendChild(cln);
     const draggables = document.querySelectorAll('.draggable')
-    console.log(draggables.length);
+    // console.log(draggables.length);
     this.delete(draggables);
   }
 
@@ -160,36 +163,6 @@ let parentAll = document.querySelectorAll(".menuItem");;
     this.read = false;
   }
 
-  // subcloning() {
-  //   const addSubmenu = document.querySelector(".addSubmenu");
-  //   console.log(addSubmenu)
-  //     if (this.read) {
-  //       // for(let i = 0; i<this.addSubmenu.length; i++){
-  //       let data = () => {
-  //         console.log(1111111)
-  //       let insert = document.querySelector(".submenu");
-  //       let elmnt = document.querySelector(".draggable");
-  //       let cln = elmnt.cloneNode(true);
-  //       console.log(cln)
-  //       insert.appendChild(cln);
-  //       }
-  //       addSubmenu.addEventListener("click", data);
-  //     }
-  //   this.read = false;
-  // }
-
-    // cloning(){
-    //   let insert = document.querySelector(".cont");
-    //   let elmnt = document.querySelector(".menuItem");
-    //   let cln = elmnt.cloneNode(true);
-    //   console.log(cln)
-    //   insert.appendChild(cln);
-    //   const addSubmenu = document.querySelectorAll(".addSubmenu");
-    //   console.log(addSubmenu.length)
-    // }
-
-  
- 
   // async addNew() {
    
   //   let api = "menu_create";
@@ -264,14 +237,20 @@ let parentAll = document.querySelectorAll(".menuItem");;
   // }
 
   delete(draggables) {
-    console.log(draggables);
+    // console.log(draggables);
     var deleted = document.querySelectorAll(".manuDelete");
-    for (let i = 0; i < draggables.length; i++) {
-     
-      deleted[i].addEventListener("click", () => {
-        draggables[i].remove();
+      let i = draggables.length - 1;
+      deleted[i].addEventListener("click", function (){
+        if(draggables[i].classList.contains("parent")){
+          console.log(draggables[i].parentElement);
+        // draggables[i].nextElementSibling.remove();
+        draggables[i].parentElement.remove();
+        }else{
+          draggables[i].remove();
+        }
+          
       })
-    }
+    
   }
 
   store() {

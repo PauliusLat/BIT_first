@@ -2294,8 +2294,7 @@ table th {
 
 .innermenu .submenu {
   background-color: #333;
-  padding: 1rem;
-  margin-top: 1rem;
+  padding: 5px;
   height: 100%;
 }
 

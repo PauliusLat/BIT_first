@@ -4,7 +4,7 @@
     </h1>
     <div class="cont sm-17-24">
         <div class="menuItem">
-            <div class="draggable" id="addDrag" draggable="true">
+            <div class="draggable parent" id="addDrag" draggable="true">
                 <div class="menuName">
                     <label for="">
                     </label>
