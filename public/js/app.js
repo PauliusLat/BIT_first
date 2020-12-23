@@ -2282,10 +2282,10 @@ var Menu = /*#__PURE__*/function () {
   }, {
     key: "delete",
     value: function _delete(draggables) {
+      console.log(draggables);
       var deleted = document.querySelectorAll(".manuDelete");
 
       var _loop = function _loop(i) {
-        console.log(draggables.length);
         deleted[i].addEventListener("click", function () {
           draggables[i].remove();
         });

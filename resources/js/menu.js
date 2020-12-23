@@ -264,9 +264,10 @@ let parentAll = document.querySelectorAll(".menuItem");;
   // }
 
   delete(draggables) {
+    console.log(draggables);
     var deleted = document.querySelectorAll(".manuDelete");
     for (let i = 0; i < draggables.length; i++) {
-      console.log(draggables.length);
+     
       deleted[i].addEventListener("click", () => {
         draggables[i].remove();
       })
