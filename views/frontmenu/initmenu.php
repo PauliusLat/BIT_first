@@ -9,6 +9,7 @@
                     <label for="">
                     </label>
                     <input name="menu" class="menuText initmenu" placeholder="Pavadinimas" type="text">
+                    <input name="submenu" class="submenuText initmenu" placeholder="Pavadinimas" type="text">
                 </div>
 
                 <div class="menuSelect">
@@ -28,7 +29,7 @@
                     <select class="select-css submenuSelect" id="standard-select">
                         <option value="" selected>Pasirinkite submeniu puslapį</option>
                         <?php
-                        foreach ($pages as $value) {
+                        foreach ($catPages as $value) {
                         ?>
                             <option class="initoption" value="<?= $value->getLink() ?>"><?= $value->post_title ?></option>
                         <?php
@@ -43,6 +44,7 @@
                     <label for="link">
                     </label>
                     <input class="menuLink initmenuLink" placeholder="Prideti išorinę nuoroda" type="text">
+                    <input class="submenuLink initmenuLink" placeholder="Prideti išorinę nuoroda" type="text">
                 </div>
 
                 <!-- <div class="button"> -->

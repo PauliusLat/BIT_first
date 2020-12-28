@@ -2279,7 +2279,9 @@ table th {
   border-color: #aaa;
 }
 
-.innermenu .cont .draggable .submenuSelect {
+.innermenu .cont .draggable .submenuSelect,
+.innermenu .cont .draggable .submenuLink,
+.innermenu .cont .draggable .submenuText {
   display: none;
 }
 

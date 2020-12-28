@@ -2066,8 +2066,8 @@ var Menu = /*#__PURE__*/function () {
           }).element;
         };
 
-        var draggables = document.querySelectorAll('.draggable');
-        console.log(draggables.length);
+        var draggables = document.querySelectorAll('.draggable'); //  console.log(draggables.length);
+
         var container = document.querySelector('.cont');
         this.cloning();
         var addSubmenuAll = document.querySelectorAll(".addSubmenu");
@@ -2077,42 +2077,27 @@ var Menu = /*#__PURE__*/function () {
 
         });
         addSubmenuAll[a].addEventListener('click', function () {
-          _this.subcloning(a); //  console.log(a)
+          _this.subcloning(a);
+        });
+        var storeinit = document.querySelector(".initsave");
+        var events = getEventListeners(document.querySelector('.initsave'));
+        console.log(events);
 
-        }); // addSubmenuAll[a].addEventListener(
-        //   'click',
-        //   function () {
-        //     let menu = new Menu;
-        //     menu.subcloning(a)
-        //     // menu.init();
-        //    //  console.log(a)
-        // },
-        // )
+        if (storeinit != null) {
+          storeinit.addEventListener('click', function () {
+            _this.store(); // eventListener = true;
 
-        /*for(let i = 0; i<addSubmenuAll.length; i++){
-          addSubmenuAll[i].addEventListener(
-            'click',
-            () => {
-             this.subcloning(i)
-             console.log(i)
-            //  console.log(insertAll[i])
-             // this.init()
-         },
-          )
-        }*/
-        // const addSubmenu = document.querySelector(".addSubmenu");
-        // this.subcloning();
-        //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
+          }, true);
+          storeinit.removeEventListener('click', function () {
+            _this.store(); // eventListener = true;
+
+          }, true);
+        } else {
+          this.update();
+        } //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
         //tikrinam ar clonuota, tada pasileidzia kitas subcloning ar panasiai
         //submenu ilgi skaiciuoti po cloning ir tada ji paduoti i subcloning kaip nors ar dar kazkaip. gal reikia ta metoda kaip MInde parasyti, kad event listener kviestum jau paciame metode
 
-        var storeinit = document.querySelector(".initsave");
-
-        if (storeinit != null) {
-          this.store();
-        } else {
-          this.update();
-        }
 
         this["delete"](draggables); // var newBlock = () => {
         //   this.addNew();
@@ -2145,26 +2130,23 @@ var Menu = /*#__PURE__*/function () {
     key: "subcloning",
     value: function subcloning(i) {
       var parentAll = document.querySelectorAll(".menuItem");
-      ; // let insertAll = document.querySelectorAll(".submenu");
-      // console.log(insertAll.length)
-
-      var insert = parentAll[i].querySelector(".submenu"); // console.log(insert);
-
-      var elmnt = document.querySelector(".draggable"); // console.log(elmnt);
-
-      var cln = elmnt.cloneNode(true); // // let parent = cln.querySelector(".parent")
-      // console.log(parent)
+      var insert = parentAll[i].querySelector(".submenu");
+      var elmnt = document.querySelector(".draggable");
+      var cln = elmnt.cloneNode(true); //remove class parent after cloning - this is submenu item without parent class
 
       cln.classList.remove("parent");
-      cln.querySelector(".addSubmenu").remove(); // button.remove();
+      cln.classList.add("child"); //remove add button
+
+      cln.querySelector(".addSubmenu").remove(); //make submenu element visible
 
       cln.querySelector(".submenuSelect").style.display = "inline-block";
-      cln.querySelector(".mainSelect").style.display = "none"; // button.innerHTML = '';
-      // let insertedNode = parent.insertBefore(cln, null)
-      // console.log(cln)
-
+      cln.querySelector(".mainSelect").remove();
+      cln.querySelector(".submenuText").style.display = "inline-block";
+      cln.querySelector(".menuText").remove();
+      cln.querySelector(".submenuLink").style.display = "inline-block";
+      cln.querySelector(".menuLink").remove();
       insert.appendChild(cln);
-      var draggables = document.querySelectorAll('.draggable'); // console.log(draggables.length);
+      var draggables = document.querySelectorAll('.draggable'); //pass right number of draggable items to delete function
 
       this["delete"](draggables);
     }
@@ -2179,11 +2161,13 @@ var Menu = /*#__PURE__*/function () {
         var data = function data() {
           var insert = document.querySelector(".cont");
           var elmnt = document.querySelector(".menuItem");
-          var cln = elmnt.cloneNode(true);
-          console.log(cln);
+          var cln = elmnt.cloneNode(true); // console.log(cln)
+          //remove submenu item that only menu element is cloned
+
           var emptySubmenu = cln.querySelector(".submenu");
           emptySubmenu.innerHTML = '';
           insert.appendChild(cln);
+          var parentAll = document.querySelectorAll(".menuItem"); // this.subcloning(1, )
 
           _this2.init();
         };
@@ -2192,6 +2176,179 @@ var Menu = /*#__PURE__*/function () {
       }
 
       this.read = false;
+    }
+  }, {
+    key: "delete",
+    value: function _delete(draggables) {
+      // console.log(draggables);
+      var deleted = document.querySelectorAll(".manuDelete");
+      var i = draggables.length - 1;
+      deleted[i].addEventListener("click", function () {
+        if (draggables[i].classList.contains("parent")) {
+          // console.log(draggables[i].parentElement);
+          // draggables[i].nextElementSibling.remove();
+          draggables[i].parentElement.remove();
+        } else {
+          draggables[i].remove();
+        }
+      });
+    }
+  }, {
+    key: "store",
+    value: function store() {
+      // let store = document.querySelector(".initsave");
+      console.log(11111); // if (this.read) {
+      // let api = "menu_store";
+      // var data = () => {
+
+      var menuText = document.querySelectorAll(".menuText");
+      var extmenuLink = document.querySelectorAll(".menuLink");
+      var mainselectBox = document.querySelectorAll(".mainSelect");
+      var names = [];
+      var pages = [];
+      var pageLinks = [];
+      var extlinks = [];
+      var subnames = [];
+      var subpages = [];
+      var subpageLinks = [];
+      var subextlinks = [];
+      var mainMenu = document.querySelectorAll(".menuItem");
+
+      for (var i = 0; i < mainselectBox.length; i++) {
+        var options = mainselectBox[i].getElementsByTagName('option'); // console.log( options)
+
+        var subselect = mainMenu[i].querySelector(".submenu"); // console.log(subselect);
+
+        var subselectBox = subselect.querySelectorAll(".submenuSelect"); // console.log(subselectBox);
+        // console.log(subselectBox.length);
+        // if(subselectBox.length != 0){
+
+        var submenuText = mainMenu[i].querySelector(".submenu").querySelectorAll(".submenuText");
+        var subextmenuLink = mainMenu[i].querySelector(".submenu").querySelectorAll(".submenuLink");
+
+        for (var a = 0; a < subselectBox.length; a++) {
+          var suboptions = subselectBox[a].getElementsByTagName('option');
+
+          for (var k = 0; k < suboptions.length; k++) {
+            // console.log(suboptions[k])
+            if (suboptions[k].selected) {
+              subpages.push(suboptions[k].text);
+              subpageLinks.push(suboptions[k].value);
+            }
+          }
+
+          subnames.push(submenuText[a].value);
+          subextlinks.push(subextmenuLink[a].value);
+        } // }else{
+        //   subpages = null;
+        //   subnames = null;
+        //   subpageLinks = null;
+        //   subextlinks = null;
+        // }
+
+
+        for (var j = 0; j < options.length; j++) {
+          // console.log(options[j])
+          if (options[j].selected) {
+            pages.push(options[j].text);
+            pageLinks.push(options[j].value);
+
+            if (subselectBox.length != 0) {
+              pages.push(subpages);
+              pageLinks.push(subpageLinks);
+            }
+          }
+        }
+
+        names.push(menuText[i].value);
+        extlinks.push(extmenuLink[i].value);
+
+        if (subselectBox.length != 0) {
+          names.push(subnames);
+          extlinks.push(subextlinks);
+        }
+      }
+
+      console.log(pages);
+      console.log(pageLinks);
+      console.log(names); // var axios = new Api();
+      // var obj = {
+      //   names: names,
+      //   pages: pages,
+      //   pageLinks: pageLinks,
+      //   // extlinks: extlinks,
+      //   api: api
+      // }
+      // axios.formDataApi(obj);
+
+      var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+      var uri = document.location.origin;
+      axios.post(uri + path + "menu_store", {
+        names: names,
+        pages: pages,
+        pageLinks: pageLinks
+      }).then(function (response) {
+        if (response.status == 200 && response.statusText == "OK") {
+          console.log(response);
+          this.init();
+        }
+      })["catch"](function (err) {
+        console.log(err instanceof TypeError);
+      }); // console.log(obj)
+      //   store.addEventListener("click", data);
+      // }
+      // this.read = false;
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      var store = document.querySelector(".save");
+      var menuId = document.getElementById("menuID").value;
+      var api = "menu_store";
+
+      if (this.read) {
+        var data = function data() {
+          var menuText = document.getElementsByName("menu");
+          var extmenuLink = document.querySelectorAll(".menuLink");
+          var selectBox = document.getElementsByTagName("select");
+          var names = [];
+          var pages = [];
+          var pageLinks = [];
+          var extlinks = [];
+
+          for (var i = 0; i < selectBox.length; i++) {
+            var options = selectBox[i].getElementsByTagName('option');
+            console.log(options.length);
+
+            for (var j = 0; j < options.length; j++) {
+              if (options[j].selected) {
+                pages.push(options[j].text);
+                pageLinks.push(options[j].value);
+                console.log(options[j].value);
+              }
+            }
+
+            names.push(menuText[i].value);
+            extlinks.push(extmenuLink[i]);
+          }
+
+          console.log(pages);
+          console.log(pageLinks);
+          console.log(names);
+          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+          var obj = {
+            names: names,
+            pages: pages,
+            pageLinks: pageLinks,
+            api: api
+          };
+          axios.formDataApi(obj);
+        };
+
+        store.addEventListener("click", data);
+      }
+
+      this.read = false; // this.init();
     } // async addNew() {
     //   let api = "menu_create";
     //   let htm = await this.axios.getDAta(api);
@@ -2259,131 +2416,6 @@ var Menu = /*#__PURE__*/function () {
     //   this.init();
     // }
 
-  }, {
-    key: "delete",
-    value: function _delete(draggables) {
-      // console.log(draggables);
-      var deleted = document.querySelectorAll(".manuDelete");
-      var i = draggables.length - 1;
-      deleted[i].addEventListener("click", function () {
-        if (draggables[i].classList.contains("parent")) {
-          console.log(draggables[i].parentElement); // draggables[i].nextElementSibling.remove();
-
-          draggables[i].parentElement.remove();
-        } else {
-          draggables[i].remove();
-        }
-      });
-    }
-  }, {
-    key: "store",
-    value: function store() {
-      var _this3 = this;
-
-      var store = document.querySelector(".initsave");
-
-      if (this.read) {
-        var api = "menu_store";
-
-        var data = function data() {
-          var menuText = document.getElementsByName("menu");
-          var extmenuLink = document.querySelectorAll(".menuLink");
-          var selectBox = document.getElementsByTagName("select");
-          var names = [];
-          var pages = [];
-          var pageLinks = [];
-          var extlinks = [];
-
-          for (var i = 0; i < selectBox.length; i++) {
-            var options = selectBox[i].getElementsByTagName('option'); // console.log(options)
-
-            console.log(options.length);
-
-            for (var j = 0; j < options.length; j++) {
-              // console.log(111111)
-              if (options[j].selected) {
-                pages.push(options[j].text);
-                pageLinks.push(options[j].value);
-                console.log(options[j].value);
-              }
-            }
-
-            names.push(menuText[i].value);
-            extlinks.push(extmenuLink);
-          }
-
-          console.log(pages);
-          console.log(pageLinks);
-          console.log(names);
-          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
-          var obj = {
-            names: names,
-            pages: pages,
-            pageLinks: pageLinks,
-            // extlinks: extlinks,
-            api: api
-          };
-          axios.formDataApi(obj);
-
-          _this3.init();
-        };
-
-        store.addEventListener("click", data);
-      }
-
-      this.read = false;
-    }
-  }, {
-    key: "update",
-    value: function update() {
-      var store = document.querySelector(".save");
-      var menuId = document.getElementById("menuID").value;
-      var api = "menu_store";
-
-      if (this.read) {
-        var data = function data() {
-          var menuText = document.getElementsByName("menu");
-          var extmenuLink = document.querySelectorAll(".menuLink");
-          var selectBox = document.getElementsByTagName("select");
-          var names = [];
-          var pages = [];
-          var pageLinks = [];
-          var extlinks = [];
-
-          for (var i = 0; i < selectBox.length; i++) {
-            var options = selectBox[i].getElementsByTagName('option');
-            console.log(options.length);
-
-            for (var j = 0; j < options.length; j++) {
-              if (options[j].selected) {
-                pages.push(options[j].text);
-                pageLinks.push(options[j].value);
-                console.log(options[j].value);
-              }
-            }
-
-            names.push(menuText[i].value);
-            extlinks.push(extmenuLink[i]);
-          }
-
-          console.log(pages);
-          console.log(pageLinks);
-          console.log(names);
-          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
-          var obj = {
-            names: names,
-            pages: pages,
-            pageLinks: pageLinks,
-            api: api
-          };
-          axios.formDataApi(obj);
-        };
-
-        store.addEventListener("click", data);
-      }
-
-      this.read = false; // this.init();
-    }
   }]);
 
   return Menu;

@@ -74,7 +74,9 @@ App::start();
 // use BIT\models\NewresPost;
 add_action('init', function () {
 
-
+    // $query = new Query;
+    // $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
+    // _dc($catPages);
     // $news = new NewsPost;
     // $news->save();
     // $arr = explode('#', '#oras#astrus#naujas');
