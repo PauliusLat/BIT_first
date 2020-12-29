@@ -2036,6 +2036,8 @@ var Menu = /*#__PURE__*/function () {
     this.read = true;
     this.init();
     this.axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.storeSave;
+    this.storeinit;
   }
 
   _createClass(Menu, [{
@@ -2071,30 +2073,22 @@ var Menu = /*#__PURE__*/function () {
         var container = document.querySelector('.cont');
         this.cloning();
         var addSubmenuAll = document.querySelectorAll(".addSubmenu");
-        var a = addSubmenuAll.length - 1; //   addSubmenuAll[a].removeEventListener(
-        //     'click',
-        //     () => {
-        //      this.subcloning(a)
-        //     //  console.log(a)
-        //  },
-        //   )
-
+        var a = addSubmenuAll.length - 1;
         addSubmenuAll[a].addEventListener('click', function () {
           _this.subcloning(a);
         });
-        var storeinit = document.querySelector(".initsave"); // let events = getEventListeners(document.querySelector('.initsave'));
-        // console.log(events)
-        // let eventListener =
-        // this.store() = store();
+        this.storeinit = document.querySelector(".initsave");
 
-        if (storeinit != null) {
-          //     let storeSave = 
-          // ()=>{this.store()}
-          //     storeinit.removeEventListener('click', storeSave, true);
-          //     // storeSave();
-          storeinit.addEventListener('click', function () {
+        if (this.storeinit != null) {
+          // this.store()
+          var storeSave = function storeSave() {
             _this.store();
-          }, true);
+          }; // if (storeinit != null){
+
+
+          this.storeSave = storeSave;
+          this.storeinit.removeEventListener('click', storeSave, false);
+          this.storeinit.addEventListener('click', storeSave, false); // storeinit.addEventListener('click', ()=>{this.store()})
         } else {
           this.update();
         } //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
@@ -2130,6 +2124,35 @@ var Menu = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "cloning",
+    value: function cloning() {
+      var _this2 = this;
+
+      var add = document.querySelector(".addNew");
+
+      if (this.read) {
+        var data = function data() {
+          var insert = document.querySelector(".cont");
+          var elmnt = document.querySelector(".menuItem");
+          var cln = elmnt.cloneNode(true); // console.log(cln)
+          //remove submenu item that only menu element is cloned
+
+          var emptySubmenu = cln.querySelector(".submenu");
+          emptySubmenu.innerHTML = '';
+          insert.appendChild(cln);
+          var storeSave = _this2.storeSave;
+
+          _this2.storeinit.removeEventListener('click', storeSave, false);
+
+          _this2.init();
+        };
+
+        add.addEventListener("click", data);
+      }
+
+      this.read = false;
+    }
+  }, {
     key: "subcloning",
     value: function subcloning(i) {
       var parentAll = document.querySelectorAll(".menuItem");
@@ -2154,30 +2177,6 @@ var Menu = /*#__PURE__*/function () {
       this["delete"](draggables);
     }
   }, {
-    key: "cloning",
-    value: function cloning() {
-      var add = document.querySelector(".addNew"); // console.log(add);
-
-      if (this.read) {
-        var data = function data() {
-          var insert = document.querySelector(".cont");
-          var elmnt = document.querySelector(".menuItem");
-          var cln = elmnt.cloneNode(true); // console.log(cln)
-          //remove submenu item that only menu element is cloned
-
-          var emptySubmenu = cln.querySelector(".submenu");
-          emptySubmenu.innerHTML = '';
-          insert.appendChild(cln); // let parentAll = document.querySelectorAll(".menuItem");
-          // this.subcloning(1, )
-          // this.init();
-        };
-
-        add.addEventListener("click", data);
-      }
-
-      this.read = false;
-    }
-  }, {
     key: "delete",
     value: function _delete(draggables) {
       // console.log(draggables);
@@ -2197,9 +2196,9 @@ var Menu = /*#__PURE__*/function () {
     key: "store",
     value: function store() {
       // let storeInit = document.querySelector(".initsave");
-      console.log(11111); // if (this.read) {
-      //   let api = "menu_store";
-      //   var data = () => {
+      console.log(11111); //   if (this.read) {
+      //     let api = "menu_store";
+      //     var data = () => {
 
       var menuText = document.querySelectorAll(".menuText");
       var extmenuLink = document.querySelectorAll(".menuLink");
@@ -2208,29 +2207,23 @@ var Menu = /*#__PURE__*/function () {
       var pages = [];
       var pageLinks = [];
       var extlinks = [];
-      var subnames = [];
-      var subpages = [];
-      var subpageLinks = [];
-      var subextlinks = [];
       var mainMenu = document.querySelectorAll(".menuItem");
 
       for (var i = 0; i < mainselectBox.length; i++) {
-        var options = mainselectBox[i].getElementsByTagName('option'); // console.log( options)
-
-        var subselect = mainMenu[i].querySelector(".submenu"); // console.log(subselect);
-
-        var subselectBox = subselect.querySelectorAll(".submenuSelect"); // console.log(subselectBox);
-        // console.log(subselectBox.length);
-        // if(subselectBox.length != 0){
-
-        var submenuText = mainMenu[i].querySelector(".submenu").querySelectorAll(".submenuText");
-        var subextmenuLink = mainMenu[i].querySelector(".submenu").querySelectorAll(".submenuLink");
+        var options = mainselectBox[i].getElementsByTagName('option');
+        var subselect = mainMenu[i].querySelector(".submenu");
+        var subselectBox = subselect.querySelectorAll(".submenuSelect");
+        var submenuText = subselect.querySelectorAll(".submenuText");
+        var subextmenuLink = subselect.querySelectorAll(".submenuLink");
+        var subnames = [];
+        var subpages = [];
+        var subpageLinks = [];
+        var subextlinks = [];
 
         for (var a = 0; a < subselectBox.length; a++) {
           var suboptions = subselectBox[a].getElementsByTagName('option');
 
           for (var k = 0; k < suboptions.length; k++) {
-            // console.log(suboptions[k])
             if (suboptions[k].selected) {
               subpages.push(suboptions[k].text);
               subpageLinks.push(suboptions[k].value);
@@ -2242,7 +2235,6 @@ var Menu = /*#__PURE__*/function () {
         }
 
         for (var j = 0; j < options.length; j++) {
-          // console.log(options[j])
           if (options[j].selected) {
             pages.push(options[j].text);
             pageLinks.push(options[j].value);
@@ -2261,11 +2253,10 @@ var Menu = /*#__PURE__*/function () {
           names.push(subnames);
           extlinks.push(subextlinks);
         }
-      }
-
-      console.log(pages);
-      console.log(pageLinks);
-      console.log(names); // var axios = new Api();
+      } // console.log(pages)
+      // console.log(pageLinks)
+      // console.log(names)
+      // var axios = new Api();
       // var obj = {
       //   names: names,
       //   pages: pages,
@@ -2275,6 +2266,7 @@ var Menu = /*#__PURE__*/function () {
       // }
       // axios.formDataApi(obj);
 
+
       var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
       var uri = document.location.origin;
       axios.post(uri + path + "menu_store", {
@@ -2283,8 +2275,7 @@ var Menu = /*#__PURE__*/function () {
         pageLinks: pageLinks
       }).then(function (response) {
         if (response.status == 200 && response.statusText == "OK") {
-          console.log(response);
-          this.init();
+          console.log(response); // this.init();
         }
       })["catch"](function (err) {
         console.log(err instanceof TypeError);
@@ -2312,8 +2303,7 @@ var Menu = /*#__PURE__*/function () {
           var extlinks = [];
 
           for (var i = 0; i < selectBox.length; i++) {
-            var options = selectBox[i].getElementsByTagName('option');
-            console.log(options.length);
+            var options = selectBox[i].getElementsByTagName('option'); // console.log( options.length)
 
             for (var j = 0; j < options.length; j++) {
               if (options[j].selected) {
@@ -2325,11 +2315,11 @@ var Menu = /*#__PURE__*/function () {
 
             names.push(menuText[i].value);
             extlinks.push(extmenuLink[i]);
-          }
+          } // console.log(pages)
+          // console.log(pageLinks)
+          // console.log(names)
 
-          console.log(pages);
-          console.log(pageLinks);
-          console.log(names);
+
           var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
           var obj = {
             names: names,

@@ -9,12 +9,14 @@ class Menu {
     this.read = true;
     this.init();
     this.axios = new Api();
+    this.storeSave;
+    this.storeinit;
+  
   }
 
   init() {
 
     const DOM = document.getElementById(this.target);
-
     if (DOM) {
       const draggables = document.querySelectorAll('.draggable')
     //  console.log(draggables.length);
@@ -22,43 +24,31 @@ class Menu {
       this.cloning();
 
       const addSubmenuAll = document.querySelectorAll(".addSubmenu")
-
       let a=addSubmenuAll.length-1
-
-    //   addSubmenuAll[a].removeEventListener(
-    //     'click',
-    //     () => {
-    //      this.subcloning(a)
-    //     //  console.log(a)
-    //  },
-    //   )
 
       addSubmenuAll[a].addEventListener(
         'click',
         () => {
-          this.subcloning(a)
+        this.subcloning(a)
       },
       )
+    
 
-      const storeinit = document.querySelector(".initsave");
-   
-      // let events = getEventListeners(document.querySelector('.initsave'));
-      // console.log(events)
-   
-// let eventListener =
-
-
-// this.store() = store();
-
-  if (storeinit != null){
-//     let storeSave = 
-// ()=>{this.store()}
-//     storeinit.removeEventListener('click', storeSave, true);
-//     // storeSave();
-    storeinit.addEventListener('click', ()=>{this.store()}, true)
-  }else{
-  this.update();
-  }
+    this.storeinit = document.querySelector(".initsave");
+  
+    if (this.storeinit != null){
+      // this.store()
+      let storeSave = 
+      ()=>{this.store()}
+  // if (storeinit != null){
+    this.storeSave = storeSave;
+    this.storeinit.removeEventListener('click', storeSave, false);
+    this.storeinit.addEventListener('click', storeSave, false)
+  
+        // storeinit.addEventListener('click', ()=>{this.store()})
+    }else{
+        this.update();
+    }
       
      //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
      
@@ -108,33 +98,8 @@ class Menu {
     }
   }
 
-subcloning(i){
-let parentAll = document.querySelectorAll(".menuItem");
-    let insert = parentAll[i].querySelector(".submenu");
-    let elmnt = document.querySelector(".draggable");
-    let cln = elmnt.cloneNode(true);
-
-   //remove class parent after cloning - this is submenu item without parent class
-  cln.classList.remove("parent")
-  cln.classList.add("child")
-  //remove add button
-  cln.querySelector(".addSubmenu").remove();
-  //make submenu element visible
-  cln.querySelector(".submenuSelect").style.display="inline-block"
-  cln.querySelector(".mainSelect").remove()
-  cln.querySelector(".submenuText").style.display="inline-block"
-  cln.querySelector(".menuText").remove()
-  cln.querySelector(".submenuLink").style.display="inline-block"
-  cln.querySelector(".menuLink").remove()
-  insert.appendChild(cln);
-  const draggables = document.querySelectorAll('.draggable')
-  //pass right number of draggable items to delete function
-  this.delete(draggables);
-  }
-
   cloning() {
     const add = document.querySelector(".addNew");
-    // console.log(add);
       if (this.read) {
       let data = () => {
         let insert = document.querySelector(".cont");
@@ -145,14 +110,38 @@ let parentAll = document.querySelectorAll(".menuItem");
         let emptySubmenu = cln.querySelector(".submenu");
         emptySubmenu.innerHTML = '';
         insert.appendChild(cln);
-        // let parentAll = document.querySelectorAll(".menuItem");
-        // this.subcloning(1, )
-        // this.init();
+        const storeSave = this.storeSave;
+        this.storeinit.removeEventListener('click', storeSave, false);
+        this.init();
       }
       add.addEventListener("click", data);
     }
     this.read = false;
   }
+
+  subcloning(i){
+    let parentAll = document.querySelectorAll(".menuItem");
+        let insert = parentAll[i].querySelector(".submenu");
+        let elmnt = document.querySelector(".draggable");
+        let cln = elmnt.cloneNode(true);
+    
+       //remove class parent after cloning - this is submenu item without parent class
+      cln.classList.remove("parent")
+      cln.classList.add("child")
+      //remove add button
+      cln.querySelector(".addSubmenu").remove();
+      //make submenu element visible
+      cln.querySelector(".submenuSelect").style.display="inline-block"
+      cln.querySelector(".mainSelect").remove()
+      cln.querySelector(".submenuText").style.display="inline-block"
+      cln.querySelector(".menuText").remove()
+      cln.querySelector(".submenuLink").style.display="inline-block"
+      cln.querySelector(".menuLink").remove()
+      insert.appendChild(cln);
+      const draggables = document.querySelectorAll('.draggable')
+      //pass right number of draggable items to delete function
+      this.delete(draggables);
+      }
 
   delete(draggables) {
     // console.log(draggables);
@@ -168,16 +157,14 @@ let parentAll = document.querySelectorAll(".menuItem");
         }
           
       })
-    
   }
 
   store() {
-    // let storeInit = document.querySelector(".initsave");
+  // let storeInit = document.querySelector(".initsave");
   console.log(11111)
-    // if (this.read) {
-    //   let api = "menu_store";
-    //   var data = () => {
-    
+  //   if (this.read) {
+  //     let api = "menu_store";
+  //     var data = () => {
           const menuText = document.querySelectorAll(".menuText");
           const extmenuLink = document.querySelectorAll(".menuLink");
           const mainselectBox = document.querySelectorAll(".mainSelect");
@@ -186,40 +173,32 @@ let parentAll = document.querySelectorAll(".menuItem");
           let pages = [];
           let pageLinks = [];
           let extlinks = [];
-          let subnames = [];
-          let subpages = [];
-          let subpageLinks = [];
-          let subextlinks = [];
 
           const mainMenu = document.querySelectorAll(".menuItem");
 
           for ( let i = 0; i < mainselectBox.length; i++) {
             const options = mainselectBox[i].getElementsByTagName('option');
-            // console.log( options)
-
             const subselect = mainMenu[i].querySelector(".submenu");
-            // console.log(subselect);
             const subselectBox = subselect.querySelectorAll(".submenuSelect");
-            // console.log(subselectBox);
-            // console.log(subselectBox.length);
-            // if(subselectBox.length != 0){
-              const submenuText = mainMenu[i].querySelector(".submenu").querySelectorAll(".submenuText");
-              const subextmenuLink = mainMenu[i].querySelector(".submenu").querySelectorAll(".submenuLink");
-                for(let a = 0; a<subselectBox.length; a++){
-                  const suboptions = subselectBox[a].getElementsByTagName('option');
-                  for (let k = 0; k< suboptions.length; k++) {
-                    // console.log(suboptions[k])
-                    if (suboptions[k].selected) {
-                      subpages.push(suboptions[k].text)
-                      subpageLinks.push(suboptions[k].value)
-                    }
-                  }
-                  subnames.push(submenuText[a].value)
-                  subextlinks.push(subextmenuLink[a].value)
+            const submenuText = subselect.querySelectorAll(".submenuText");
+            const subextmenuLink = subselect.querySelectorAll(".submenuLink");
+            let subnames = [];
+            let subpages = [];
+            let subpageLinks = [];
+            let subextlinks = [];
+            for(let a = 0; a<subselectBox.length; a++){
+              const suboptions = subselectBox[a].getElementsByTagName('option');
+              for (let k = 0; k < suboptions.length; k++) {
+                if (suboptions[k].selected) {
+                  subpages.push(suboptions[k].text)
+                  subpageLinks.push(suboptions[k].value)
+                }
               }
-       
+              subnames.push(submenuText[a].value)
+              subextlinks.push(subextmenuLink[a].value)
+            }
+
             for (let j = 0; j< options.length; j++) {
-              // console.log(options[j])
               if (options[j].selected) {
                 pages.push(options[j].text)
                 pageLinks.push(options[j].value)
@@ -237,9 +216,9 @@ let parentAll = document.querySelectorAll(".menuItem");
             }
           }
 
-          console.log(pages)
-          console.log(pageLinks)
-          console.log(names)
+          // console.log(pages)
+          // console.log(pageLinks)
+          // console.log(names)
           // var axios = new Api();
           // var obj = {
           //   names: names,
@@ -260,8 +239,8 @@ let parentAll = document.querySelectorAll(".menuItem");
           })
           .then(function (response) {
             if (response.status == 200 && response.statusText == "OK") {
-              console.log(response);
-              this.init();
+            console.log(response);
+              // this.init();
             }
           })
           .catch((err) => {
@@ -292,7 +271,7 @@ let parentAll = document.querySelectorAll(".menuItem");
 
         for ( let i = 0; i < selectBox.length; i++) {
           var options = selectBox[i].getElementsByTagName('option');
-          console.log( options.length)
+          // console.log( options.length)
           for (let j = 0; j< options.length; j++) {
             if (options[j].selected) {
               pages.push(options[j].text)
@@ -304,9 +283,9 @@ let parentAll = document.querySelectorAll(".menuItem");
           extlinks.push(extmenuLink[i])
         }
 
-        console.log(pages)
-        console.log(pageLinks)
-        console.log(names)
+        // console.log(pages)
+        // console.log(pageLinks)
+        // console.log(names)
 
         var axios = new Api();
         var obj = {

@@ -67,8 +67,8 @@ class FrontMenuController
         $links = $request->request->get('pageLinks');
         // $menuPost->pageLinks = explode(',', $links);
         $menuPost->pageLinks = $links;
-        // $menuPost->save();
-        // _dc($menuPost);
+        $menuPost->save();
+        _dc($menuPost);
         return new Response;
     }
 
