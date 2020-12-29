@@ -25,13 +25,13 @@ class Menu {
 
       let a=addSubmenuAll.length-1
 
-      addSubmenuAll[a].removeEventListener(
-        'click',
-        () => {
-         this.subcloning(a)
-        //  console.log(a)
-     },
-      )
+    //   addSubmenuAll[a].removeEventListener(
+    //     'click',
+    //     () => {
+    //      this.subcloning(a)
+    //     //  console.log(a)
+    //  },
+    //   )
 
       addSubmenuAll[a].addEventListener(
         'click',
@@ -42,31 +42,23 @@ class Menu {
 
       const storeinit = document.querySelector(".initsave");
    
-      let events = getEventListeners(document.querySelector('.initsave'));
-      console.log(events)
-
-       if (storeinit != null){
-        
-        storeinit.addEventListener(
-          'click',
-          () => {
-            this.store()
-            // eventListener = true;
-        },
-        true
-        )
-        storeinit.removeEventListener(
-          'click',
-          () => {
-            this.store()
-            // eventListener = true;
-        },
-        true
-        )
+      // let events = getEventListeners(document.querySelector('.initsave'));
+      // console.log(events)
    
-       }else{
-        this.update();
-       }
+// let eventListener =
+
+
+// this.store() = store();
+
+  if (storeinit != null){
+//     let storeSave = 
+// ()=>{this.store()}
+//     storeinit.removeEventListener('click', storeSave, true);
+//     // storeSave();
+    storeinit.addEventListener('click', ()=>{this.store()}, true)
+  }else{
+  this.update();
+  }
       
      //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
      
@@ -153,16 +145,14 @@ let parentAll = document.querySelectorAll(".menuItem");
         let emptySubmenu = cln.querySelector(".submenu");
         emptySubmenu.innerHTML = '';
         insert.appendChild(cln);
-        let parentAll = document.querySelectorAll(".menuItem");
+        // let parentAll = document.querySelectorAll(".menuItem");
         // this.subcloning(1, )
-        this.init();
+        // this.init();
       }
       add.addEventListener("click", data);
     }
     this.read = false;
   }
-
- 
 
   delete(draggables) {
     // console.log(draggables);
@@ -182,11 +172,11 @@ let parentAll = document.querySelectorAll(".menuItem");
   }
 
   store() {
-    // let store = document.querySelector(".initsave");
+    // let storeInit = document.querySelector(".initsave");
   console.log(11111)
     // if (this.read) {
-      // let api = "menu_store";
-      // var data = () => {
+    //   let api = "menu_store";
+    //   var data = () => {
     
           const menuText = document.querySelectorAll(".menuText");
           const extmenuLink = document.querySelectorAll(".menuLink");
@@ -227,12 +217,6 @@ let parentAll = document.querySelectorAll(".menuItem");
                   subnames.push(submenuText[a].value)
                   subextlinks.push(subextmenuLink[a].value)
               }
-            // }else{
-            //   subpages = null;
-            //   subnames = null;
-            //   subpageLinks = null;
-            //   subextlinks = null;
-            // }
        
             for (let j = 0; j< options.length; j++) {
               // console.log(options[j])
@@ -284,8 +268,8 @@ let parentAll = document.querySelectorAll(".menuItem");
             console.log(err instanceof TypeError);
           });
           // console.log(obj)
-       
-    //   store.addEventListener("click", data);
+    //     }
+    //     storeInit.addEventListener("click", data);
     // }
     // this.read = false;
   }
@@ -411,8 +395,6 @@ let parentAll = document.querySelectorAll(".menuItem");
 
   //   this.init();
   // }
-
-  
 }
 
 

@@ -2071,26 +2071,29 @@ var Menu = /*#__PURE__*/function () {
         var container = document.querySelector('.cont');
         this.cloning();
         var addSubmenuAll = document.querySelectorAll(".addSubmenu");
-        var a = addSubmenuAll.length - 1;
-        addSubmenuAll[a].removeEventListener('click', function () {
-          _this.subcloning(a); //  console.log(a)
+        var a = addSubmenuAll.length - 1; //   addSubmenuAll[a].removeEventListener(
+        //     'click',
+        //     () => {
+        //      this.subcloning(a)
+        //     //  console.log(a)
+        //  },
+        //   )
 
-        });
         addSubmenuAll[a].addEventListener('click', function () {
           _this.subcloning(a);
         });
-        var storeinit = document.querySelector(".initsave");
-        var events = getEventListeners(document.querySelector('.initsave'));
-        console.log(events);
+        var storeinit = document.querySelector(".initsave"); // let events = getEventListeners(document.querySelector('.initsave'));
+        // console.log(events)
+        // let eventListener =
+        // this.store() = store();
 
         if (storeinit != null) {
+          //     let storeSave = 
+          // ()=>{this.store()}
+          //     storeinit.removeEventListener('click', storeSave, true);
+          //     // storeSave();
           storeinit.addEventListener('click', function () {
-            _this.store(); // eventListener = true;
-
-          }, true);
-          storeinit.removeEventListener('click', function () {
-            _this.store(); // eventListener = true;
-
+            _this.store();
           }, true);
         } else {
           this.update();
@@ -2153,8 +2156,6 @@ var Menu = /*#__PURE__*/function () {
   }, {
     key: "cloning",
     value: function cloning() {
-      var _this2 = this;
-
       var add = document.querySelector(".addNew"); // console.log(add);
 
       if (this.read) {
@@ -2166,10 +2167,9 @@ var Menu = /*#__PURE__*/function () {
 
           var emptySubmenu = cln.querySelector(".submenu");
           emptySubmenu.innerHTML = '';
-          insert.appendChild(cln);
-          var parentAll = document.querySelectorAll(".menuItem"); // this.subcloning(1, )
-
-          _this2.init();
+          insert.appendChild(cln); // let parentAll = document.querySelectorAll(".menuItem");
+          // this.subcloning(1, )
+          // this.init();
         };
 
         add.addEventListener("click", data);
@@ -2196,10 +2196,10 @@ var Menu = /*#__PURE__*/function () {
   }, {
     key: "store",
     value: function store() {
-      // let store = document.querySelector(".initsave");
+      // let storeInit = document.querySelector(".initsave");
       console.log(11111); // if (this.read) {
-      // let api = "menu_store";
-      // var data = () => {
+      //   let api = "menu_store";
+      //   var data = () => {
 
       var menuText = document.querySelectorAll(".menuText");
       var extmenuLink = document.querySelectorAll(".menuLink");
@@ -2239,13 +2239,7 @@ var Menu = /*#__PURE__*/function () {
 
           subnames.push(submenuText[a].value);
           subextlinks.push(subextmenuLink[a].value);
-        } // }else{
-        //   subpages = null;
-        //   subnames = null;
-        //   subpageLinks = null;
-        //   subextlinks = null;
-        // }
-
+        }
 
         for (var j = 0; j < options.length; j++) {
           // console.log(options[j])
@@ -2295,7 +2289,8 @@ var Menu = /*#__PURE__*/function () {
       })["catch"](function (err) {
         console.log(err instanceof TypeError);
       }); // console.log(obj)
-      //   store.addEventListener("click", data);
+      //     }
+      //     storeInit.addEventListener("click", data);
       // }
       // this.read = false;
     }
