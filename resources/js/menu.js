@@ -173,6 +173,7 @@ class Menu {
           let pages = [];
           let pageLinks = [];
           let extlinks = [];
+          
 
           const mainMenu = document.querySelectorAll(".menuItem");
 
