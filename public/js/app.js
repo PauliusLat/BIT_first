@@ -2207,6 +2207,10 @@ var Menu = /*#__PURE__*/function () {
       var pages = [];
       var pageLinks = [];
       var extlinks = [];
+      var childnames = [];
+      var childpages = [];
+      var childpageLinks = [];
+      var childextlinks = [];
       var mainMenu = document.querySelectorAll(".menuItem");
 
       for (var i = 0; i < mainselectBox.length; i++) {
@@ -2240,8 +2244,11 @@ var Menu = /*#__PURE__*/function () {
             pageLinks.push(options[j].value);
 
             if (subselectBox.length != 0) {
-              pages.push(subpages);
-              pageLinks.push(subpageLinks);
+              childpages.push(subpages);
+              childpageLinks.push(subpageLinks);
+            } else {
+              childpages.push([]);
+              childpageLinks.push([]);
             }
           }
         }
@@ -2250,13 +2257,20 @@ var Menu = /*#__PURE__*/function () {
         extlinks.push(extmenuLink[i].value);
 
         if (subselectBox.length != 0) {
-          names.push(subnames);
-          extlinks.push(subextlinks);
+          childnames.push(subnames);
+          childextlinks.push(subextlinks);
+        } else {
+          childnames.push([]);
+          childextlinks.push([]);
         }
-      } // console.log(pages)
-      // console.log(pageLinks)
-      // console.log(names)
-      // var axios = new Api();
+      }
+
+      console.log(pages);
+      console.log(pageLinks);
+      console.log(names);
+      console.log(childpages);
+      console.log(childpageLinks);
+      console.log(childnames); // var axios = new Api();
       // var obj = {
       //   names: names,
       //   pages: pages,
@@ -2266,13 +2280,15 @@ var Menu = /*#__PURE__*/function () {
       // }
       // axios.formDataApi(obj);
 
-
       var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
       var uri = document.location.origin;
       axios.post(uri + path + "menu_store", {
         names: names,
         pages: pages,
-        pageLinks: pageLinks
+        pageLinks: pageLinks,
+        childnames: childnames,
+        childpages: childpages,
+        childpageLinks: childpageLinks
       }).then(function (response) {
         if (response.status == 200 && response.statusText == "OK") {
           console.log(response); // this.init();

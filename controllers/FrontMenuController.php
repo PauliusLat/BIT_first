@@ -58,17 +58,20 @@ class FrontMenuController
         }
 
         $title = $request->request->get('names');
-        // _dc($title);
-        // $menuPost->names = explode(',', $title);
         $menuPost->names = $title;
+        $subtitle = $request->request->get('childnames');
+        $menuPost->subnames = $subtitle;
         $page = $request->request->get('pages');
-        // $menuPost->pages = explode(',', $page);
         $menuPost->pages = $page;
+        $subpage = $request->request->get('childpages');
+        $menuPost->subpages = $subpage;
         $links = $request->request->get('pageLinks');
         // $menuPost->pageLinks = explode(',', $links);
         $menuPost->pageLinks = $links;
-        // $menuPost->save();
-        // _dc($menuPost);
+        $sublinks = $request->request->get('childpageLinks');
+        $menuPost->subpageLinks = $sublinks;
+        $menuPost->save();
+        _dc($menuPost);
         return new Response;
     }
 

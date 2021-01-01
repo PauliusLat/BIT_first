@@ -37,15 +37,11 @@ class Menu {
     this.storeinit = document.querySelector(".initsave");
   
     if (this.storeinit != null){
-      // this.store()
       let storeSave = 
       ()=>{this.store()}
-  // if (storeinit != null){
     this.storeSave = storeSave;
     this.storeinit.removeEventListener('click', storeSave, false);
     this.storeinit.addEventListener('click', storeSave, false)
-  
-        // storeinit.addEventListener('click', ()=>{this.store()})
     }else{
         this.update();
     }
@@ -173,12 +169,16 @@ class Menu {
           let pages = [];
           let pageLinks = [];
           let extlinks = [];
-          
+          let childnames = [];
+          let childpages = [];
+          let childpageLinks = [];
+          let childextlinks = [];
 
           const mainMenu = document.querySelectorAll(".menuItem");
 
           for ( let i = 0; i < mainselectBox.length; i++) {
             const options = mainselectBox[i].getElementsByTagName('option');
+          
             const subselect = mainMenu[i].querySelector(".submenu");
             const subselectBox = subselect.querySelectorAll(".submenuSelect");
             const submenuText = subselect.querySelectorAll(".submenuText");
@@ -204,22 +204,32 @@ class Menu {
                 pages.push(options[j].text)
                 pageLinks.push(options[j].value)
                 if(subselectBox.length != 0){
-                  pages.push(subpages)
-                  pageLinks.push(subpageLinks)
+                  childpages.push(subpages)
+                  childpageLinks.push(subpageLinks)
+                }
+                else{
+                  childpages.push([])
+                  childpageLinks.push([])
                 }
               }
             }
             names.push(menuText[i].value)
             extlinks.push(extmenuLink[i].value)
             if(subselectBox.length != 0){
-              names.push(subnames)
-              extlinks.push(subextlinks)
+              childnames.push(subnames)
+              childextlinks.push(subextlinks)
+            }else{
+              childnames.push([])
+              childextlinks.push([])
             }
           }
 
-          // console.log(pages)
-          // console.log(pageLinks)
-          // console.log(names)
+          console.log(pages)
+          console.log(pageLinks)
+          console.log(names)
+          console.log(childpages)
+          console.log(childpageLinks)
+          console.log(childnames)
           // var axios = new Api();
           // var obj = {
           //   names: names,
@@ -237,6 +247,9 @@ class Menu {
             names: names,
             pages: pages,
             pageLinks: pageLinks,
+            childnames: childnames,
+            childpages: childpages,
+            childpageLinks: childpageLinks
           })
           .then(function (response) {
             if (response.status == 200 && response.statusText == "OK") {
