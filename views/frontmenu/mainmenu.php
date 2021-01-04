@@ -4,6 +4,8 @@
     </h1>
     <div class="cont sm-17-24">
         <?php
+
+        // neveikia cloning ir subcloning ant senu, veikia ant nauju - kas su senais ne taip?
         // _dc($menu);
         foreach (range(0, (count($menu->names) - 1)) as $index) {
             // _dc($index);
@@ -124,8 +126,8 @@
                                 <div class="menuName">
                                     <label for="">
                                     </label>
-                                    <input name="menu" class="menuText" placeholder="Pavadinimas" type="text" value="<?= $subname ?>">
-                                    <input name="submenu" class="submenuText initmenu" placeholder="Pavadinimas" type="text">
+                                    <!-- <input name="menu" class="menuText" placeholder="Pavadinimas" type="text" value="<?= $subname ?>"> -->
+                                    <input name="submenu" class="submenuText initmenu" style="display:block;" placeholder="Pavadinimas" type="text">
                                     <input name="menuhid" id="menuID" type="hidden" value="<?= $menu->ID ?>">
                                 </div>
                                 <div class="menuSelect">
@@ -145,8 +147,8 @@
                                 <div class="menuLinkAdd">
                                     <label for="link">
                                     </label>
-                                    <input class="menuLink" placeholder="Prideti išorinę nuoroda" type="text">
-                                    <input class="submenuLink initmenuLink" placeholder="Prideti išorinę nuoroda" type="text">
+                                    <!-- <input class="menuLink" placeholder="Prideti išorinę nuoroda" type="text"> -->
+                                    <input class="submenuLink initmenuLink" style="display:block;" placeholder="Prideti išorinę nuoroda" type="text">
                                 </div>
 
                                 <div class="manuDelete">

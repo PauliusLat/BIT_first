@@ -2034,10 +2034,17 @@ var Menu = /*#__PURE__*/function () {
 
     this.target = target;
     this.read = true;
-    this.init();
     this.axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
     this.storeSave;
     this.storeinit;
+    this.clone; // this.addSubmenuAll;
+
+    this.count = 1;
+    this.countS = 1;
+    this.draggables;
+    this.listenerarray = [];
+    this.deletelistener = [];
+    this.init(); // console.log(this.count);
   }
 
   _createClass(Menu, [{
@@ -2068,39 +2075,103 @@ var Menu = /*#__PURE__*/function () {
           }).element;
         };
 
-        var draggables = document.querySelectorAll('.draggable'); //  console.log(draggables.length);
+        var container = document.querySelector('.cont'); // let events = getEventListeners(document.querySelector('.cont'));
+        // console.log(events)
 
-        var container = document.querySelector('.cont');
         this.cloning();
-        var addSubmenuAll = document.querySelectorAll(".addSubmenu");
-        var a = addSubmenuAll.length - 1;
-        addSubmenuAll[a].addEventListener('click', function () {
-          _this.subcloning(a);
-        });
+        var addSubmenuAll = document.querySelectorAll(".addSubmenu"); // console.log(this.addSubmenuAll)
+
+        this.draggables = document.querySelectorAll('.draggable'); // console.log( this.draggables)
+
+        var draggables = this.draggables; // this.delete();
+
+        var deleted = document.querySelectorAll(".manuDelete");
+        console.log('init');
+        console.log(this.deletelistener);
+        console.log(this.deletelistener.length);
+        console.log(deleted); // if(this.deletelistener.length != deleted.length){
+        //   let diff = this.deletelistener.length - deleted.length;
+        //   this.deletelistener.splice(-diff);
+        // }
+        // console.log(this.deletelistener);
+
+        var _loop = function _loop(i) {
+          if (_this.deletelistener[i]) {
+            deleted[i].removeEventListener('click', _this.deletelistener[i]);
+          }
+
+          var deletevar = function deletevar() {
+            _this["delete"](i);
+          };
+
+          _this.deletelistener[i] = deletevar;
+          deleted[i].addEventListener('click', deletevar);
+        };
+
+        for (var i = 0; i < deleted.length; i++) {
+          _loop(i);
+        }
+
+        console.log('init after foreach');
+        console.log(this.deletelistener);
+        console.log(this.deletelistener.length);
+        console.log('------------------'); // console.log(this.listenerarray)
+        // console.log(addSubmenuAll)
+        // if(this.listenerarray.length != addSubmenuAll.length){
+        //   let diff = this.listenerarray.length - addSubmenuAll.length;
+        //   this.listenerarray.splice(-diff);
+        // 
+
+        console.log(this.listenerarray);
+
+        var _loop2 = function _loop2(_i) {
+          if (_this.listenerarray[_i]) {
+            addSubmenuAll[_i].removeEventListener('click', _this.listenerarray[_i]);
+          }
+
+          var clone = function clone() {
+            _this.subcloning(_i);
+          };
+
+          _this.listenerarray[_i] = clone;
+
+          addSubmenuAll[_i].addEventListener('click', clone);
+        };
+
+        for (var _i = 0; _i < addSubmenuAll.length; _i++) {
+          _loop2(_i);
+        }
+
+        console.log('init after foreach addsubemnu');
+        console.log(this.listenerarray);
+        console.log(this.listenerarray.length); // }
+
         this.storeinit = document.querySelector(".initsave");
 
         if (this.storeinit != null) {
-          // this.store()
           var storeSave = function storeSave() {
             _this.store();
-          }; // if (storeinit != null){
-
+          };
 
           this.storeSave = storeSave;
           this.storeinit.removeEventListener('click', storeSave, false);
-          this.storeinit.addEventListener('click', storeSave, false); // storeinit.addEventListener('click', ()=>{this.store()})
+          this.storeinit.addEventListener('click', storeSave, false);
         } else {
-          this.update();
+          this.storeinit = document.querySelector(".save"); // console.log(this.storeinit);
+
+          var _storeSave = function _storeSave() {
+            _this.update();
+          };
+
+          this.storeSave = _storeSave;
+          this.storeinit.removeEventListener('click', _storeSave, false);
+          this.storeinit.addEventListener('click', _storeSave, false);
         } //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
         //tikrinam ar clonuota, tada pasileidzia kitas subcloning ar panasiai
-        //submenu ilgi skaiciuoti po cloning ir tada ji paduoti i subcloning kaip nors ar dar kazkaip. gal reikia ta metoda kaip MInde parasyti, kad event listener kviestum jau paciame metode
+        //submenu ilgi skaiciuoti po cloning ir tada ji paduoti i subcloning kaip nors ar dar kazkaip. gal reikia ta metoda kaip MInde parasyti, kad event listener kviestum jau paciame metode 
+        // this.delete(draggables);
+        //pass right number of draggable items to delete function
 
-
-        this["delete"](draggables); // var newBlock = () => {
-        //   this.addNew();
-        //   add.removeEventListener("click", newBlock);
-        // }
-        // add.addEventListener("click", newBlock);
 
         draggables.forEach(function (draggable) {
           draggable.addEventListener('dragstart', function () {
@@ -2142,7 +2213,8 @@ var Menu = /*#__PURE__*/function () {
           insert.appendChild(cln);
           var storeSave = _this2.storeSave;
 
-          _this2.storeinit.removeEventListener('click', storeSave, false);
+          _this2.storeinit.removeEventListener('click', storeSave, false); // this.count++;
+
 
           _this2.init();
         };
@@ -2155,6 +2227,7 @@ var Menu = /*#__PURE__*/function () {
   }, {
     key: "subcloning",
     value: function subcloning(i) {
+      // console.log(i)
       var parentAll = document.querySelectorAll(".menuItem");
       var insert = parentAll[i].querySelector(".submenu");
       var elmnt = document.querySelector(".draggable");
@@ -2171,35 +2244,81 @@ var Menu = /*#__PURE__*/function () {
       cln.querySelector(".menuText").remove();
       cln.querySelector(".submenuLink").style.display = "inline-block";
       cln.querySelector(".menuLink").remove();
-      insert.appendChild(cln);
-      var draggables = document.querySelectorAll('.draggable'); //pass right number of draggable items to delete function
+      insert.appendChild(cln); // this.draggables = document.querySelectorAll('.draggable')
+      // this.countS++
 
-      this["delete"](draggables);
-    }
+      this.init(); // console.log(draggables.length);
+      //pass right number of draggable items to delete function
+      // this.delete(draggables);
+    } // delete() {
+    //   console.log( this.draggables)
+    //   let deleted = document.querySelectorAll(".manuDelete");
+    //     for(let i = 0; i<deleted.length; i++){
+    //       // console.log(draggables)
+    //       deleted[i].addEventListener("click", ()=>{
+    //         console.log( this.draggables[i])
+    //         if(this.draggables[i].classList.contains("parent")){
+    //         this.draggables[i].parentElement.remove();
+    //         }else{
+    //           this.draggables[i].remove();
+    //         }
+    //      })
+    //     }
+    // }
+
   }, {
     key: "delete",
-    value: function _delete(draggables) {
-      // console.log(draggables);
+    value: function _delete(i) {
+      // console.log(i)
+      // console.log('delete')
+      // console.log( this.draggables[i])
       var deleted = document.querySelectorAll(".manuDelete");
-      var i = draggables.length - 1;
-      deleted[i].addEventListener("click", function () {
-        if (draggables[i].classList.contains("parent")) {
-          // console.log(draggables[i].parentElement);
-          // draggables[i].nextElementSibling.remove();
-          draggables[i].parentElement.remove();
-        } else {
-          draggables[i].remove();
-        }
-      });
+
+      for (var _i2 = 0; _i2 < this.deletelistener.length; _i2++) {
+        deleted[_i2].removeEventListener('click', this.deletelistener[_i2]);
+      }
+
+      this.deletelistener = [];
+
+      for (var _i3 = 0; _i3 < this.deletelistener.length; _i3++) {
+        deleted[_i3].removeEventListener('click', this.deletelistener[_i3]);
+      }
+
+      if (this.draggables[i].classList.contains("parent")) {
+        console.log(this.draggables[i].parentElement);
+        this.draggables[i].parentElement.remove();
+      } else {
+        this.draggables[i].remove();
+      } // console.log(this.deletelistener);
+      // console.log(this.deletelistener.length);
+      // console.log(deleted);
+      // if(this.deletelistener.length != deleted.length){
+      //   let diff = this.deletelistener.length - deleted.length;
+      //   this.deletelistener.splice(-diff);
+      // }
+      // console.log(this.deletelistener);
+
+
+      console.log('------------------');
+      var addSubmenuAll = document.querySelectorAll(".addSubmenu");
+      console.log(this.listenerarray);
+      console.log(addSubmenuAll);
+
+      if (this.listenerarray.length != addSubmenuAll.length) {
+        var diff = this.listenerarray.length - addSubmenuAll.length;
+        this.listenerarray.splice(-diff);
+      } // console.log(this.listenerarray)
+
+
+      this.init();
     }
   }, {
     key: "store",
     value: function store() {
       // let storeInit = document.querySelector(".initsave");
-      console.log(11111); //   if (this.read) {
+      //   if (this.read) {
       //     let api = "menu_store";
       //     var data = () => {
-
       var menuText = document.querySelectorAll(".menuText");
       var extmenuLink = document.querySelectorAll(".menuLink");
       var mainselectBox = document.querySelectorAll(".mainSelect");
