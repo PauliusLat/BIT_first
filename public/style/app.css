@@ -2279,6 +2279,12 @@ table th {
   border-color: #aaa;
 }
 
+.innermenu .cont .draggable .submenuSelect,
+.innermenu .cont .draggable .submenuLink,
+.innermenu .cont .draggable .submenuText {
+  display: none;
+}
+
 .innermenu .cont .draggable .menuDrag {
   width: 4%;
 }
@@ -2288,14 +2294,18 @@ table th {
   cursor: pointer;
 }
 
+.innermenu .cont .draggable .addSubmenu svg {
+  height: 35px;
+  cursor: pointer;
+}
+
 .innermenu .cont .draggable.dragging {
   opacity: 0.5;
 }
 
 .innermenu .submenu {
   background-color: #333;
-  padding: 1rem;
-  margin-top: 1rem;
+  padding: 5px;
   height: 100%;
 }
 
@@ -2444,7 +2454,8 @@ table th {
   cursor: pointer;
 }
 
-.menuBtn .save {
+.menuBtn .save,
+.menuBtn .initsave {
   display: flex;
   margin: 20px 3% 0 0;
   justify-content: flex-end;

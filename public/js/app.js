@@ -1,3 +1,4 @@
+
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -3282,10 +3283,7 @@ var Tag = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
+
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3307,3 +3305,5 @@ module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\pl
 /***/ })
 
 /******/ });
+
+
