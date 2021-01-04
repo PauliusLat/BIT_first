@@ -16,10 +16,8 @@ class AlbumFrontController
 
     public function create()
     {
-
     
         $albumData  = (AlbumPost::all())->all();
-
        
         $output = View::adminRender('album.album',  ["data" => $albumData]);
         $response = new JsonResponse(['html' => $output]);
