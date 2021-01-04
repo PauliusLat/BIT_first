@@ -7,61 +7,123 @@ class Menu {
   constructor(target) {
     this.target = target;
     this.read = true;
-    this.init();
     this.axios = new Api();
+    this.storeSave;
+    this.storeinit;
+    this.clone;
+    // this.addSubmenuAll;
+    this.count = 1;
+    this.countS = 1;
+    this.draggables;
+    this.listenerarray = [];
+    this.deletelistener = [];
+    this.init();
+    // console.log(this.count);
   }
 
   init() {
+
+
     const DOM = document.getElementById(this.target);
-
     if (DOM) {
-      const draggables = document.querySelectorAll('.draggable')
-      const container = document.querySelector('.cont')
-      const add = document.querySelector(".addNew");
-      const addSubmenu = document.querySelectorAll(".addSubmenu");
-      console.log(addSubmenu);
-     add.addEventListener(
-       'click',
-       () => {
-        this.cloning()
-        // this.init()
-    },
-     )
- 
-  for(let i = 0; i<addSubmenu.length; i++){
-    let insert = document.querySelectorAll(".submenu");
-    console.log(addSubmenu[i])
-      addSubmenu[i].addEventListener(
-        'click',
-        () => {
-         this.subcloning(insert[i])
-        //  this.init()
-     },
-      )
-     }
-     
     
+    const container = document.querySelector('.cont')
+  // let events = getEventListeners(document.querySelector('.cont'));
+  // console.log(events)
 
-     const storeinit = document.querySelector(".initsave");
-     if (storeinit != null){
-      this.store();
-     }else{
-      this.update();
-     }
+    this.cloning();
+    let addSubmenuAll = document.querySelectorAll(".addSubmenu")
+    // console.log(this.addSubmenuAll)
+    this.draggables = document.querySelectorAll('.draggable')
+    // console.log( this.draggables)
+    let draggables = this.draggables;
+    // this.delete();
+
+    let deleted = document.querySelectorAll(".manuDelete");
+  
+    console.log('init')
+    console.log(this.deletelistener);
+    console.log(this.deletelistener.length);
+    console.log(deleted);
+    // if(this.deletelistener.length != deleted.length){
+    //   let diff = this.deletelistener.length - deleted.length;
+    //   this.deletelistener.splice(-diff);
+    // }
+    // console.log(this.deletelistener);
+
+    for(let i = 0; i<deleted.length; i++){
+      if(this.deletelistener[i]){
+        deleted[i].removeEventListener('click', this.deletelistener[i])
+      }
+      let deletevar =
+        ()=>{
+            this.delete(i)
+        } 
+      this.deletelistener[i] = deletevar
+      deleted[i].addEventListener('click', deletevar)
+    }
+    console.log('init after foreach')
+    console.log(this.deletelistener);
+    console.log(this.deletelistener.length);
+
+    console.log('------------------')
+
+    // console.log(this.listenerarray)
+    // console.log(addSubmenuAll)
+    // if(this.listenerarray.length != addSubmenuAll.length){
+    //   let diff = this.listenerarray.length - addSubmenuAll.length;
+    //   this.listenerarray.splice(-diff);
+    // 
+
+
+    console.log(this.listenerarray)
+
+    for(let i = 0; i<addSubmenuAll.length; i++){
+      if(this.listenerarray[i]){
+        addSubmenuAll[i].removeEventListener('click', this.listenerarray[i])
+      }
+      let clone =
+        ()=>{
+           this.subcloning(i)
+        } 
+        
+      this.listenerarray[i] = clone
+      addSubmenuAll[i].addEventListener('click', clone)
+    }
+
+    console.log('init after foreach addsubemnu')
+    console.log(this.listenerarray)
+    console.log(this.listenerarray.length)
+  // }
       
-    this.delete(draggables);
-
-      // var newBlock = () => {
-      //   this.addNew();
-      //   add.removeEventListener("click", newBlock);
-      // }
-      // add.addEventListener("click", newBlock);
-
+    this.storeinit = document.querySelector(".initsave");
+    if (this.storeinit != null){
+      let storeSave = 
+      ()=>{this.store()}
+    this.storeSave = storeSave;
+    this.storeinit.removeEventListener('click', storeSave, false);
+    this.storeinit.addEventListener('click', storeSave, false)
+    }else{
+      this.storeinit = document.querySelector(".save");
+      // console.log(this.storeinit);
+      let storeSave = 
+      ()=>{this.update()}
+    this.storeSave = storeSave;
+    this.storeinit.removeEventListener('click', storeSave, false);
+    this.storeinit.addEventListener('click', storeSave, false)
+    }
+      
+     //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
+    //tikrinam ar clonuota, tada pasileidzia kitas subcloning ar panasiai
+    //submenu ilgi skaiciuoti po cloning ir tada ji paduoti i subcloning kaip nors ar dar kazkaip. gal reikia ta metoda kaip MInde parasyti, kad event listener kviestum jau paciame metode 
+    // this.delete(draggables);
+      //pass right number of draggable items to delete function
+   
+    
       draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', () => {
           draggable.classList.add('dragging')
         })
-
         draggable.addEventListener('dragend', () => {
           draggable.classList.remove('dragging')
         })
@@ -77,7 +139,6 @@ class Menu {
           container.insertBefore(draggable, afterElement)
         }
       })
-  
 
       function getDragAfterElement(container, y) {
         const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
@@ -94,23 +155,282 @@ class Menu {
     }
   }
 
-    cloning(){
-      let insert = document.querySelector(".cont");
-      let elmnt = document.querySelector(".menuItem");
-      let cln = elmnt.cloneNode(true);
-      console.log(cln)
+  cloning() {
+    const add = document.querySelector(".addNew");
+      if (this.read) {
+      let data = () => {
+        let insert = document.querySelector(".cont");
+        let elmnt = document.querySelector(".menuItem");
+        let cln = elmnt.cloneNode(true);
+        // console.log(cln)
+        //remove submenu item that only menu element is cloned
+        let emptySubmenu = cln.querySelector(".submenu");
+        emptySubmenu.innerHTML = '';
+        insert.appendChild(cln);
+        const storeSave = this.storeSave;
+        this.storeinit.removeEventListener('click', storeSave, false);
+        // this.count++;
+        this.init();
+      }
+      add.addEventListener("click", data);
+    }
+    this.read = false;
+  }
+
+  subcloning(i){
+    // console.log(i)
+    let parentAll = document.querySelectorAll(".menuItem");
+        let insert = parentAll[i].querySelector(".submenu");
+        let elmnt = document.querySelector(".draggable");
+        let cln = elmnt.cloneNode(true);
+       //remove class parent after cloning - this is submenu item without parent class
+      cln.classList.remove("parent")
+      cln.classList.add("child")
+      //remove add button
+      cln.querySelector(".addSubmenu").remove();
+      //make submenu element visible
+      cln.querySelector(".submenuSelect").style.display="inline-block"
+      cln.querySelector(".mainSelect").remove()
+      cln.querySelector(".submenuText").style.display="inline-block"
+      cln.querySelector(".menuText").remove()
+      cln.querySelector(".submenuLink").style.display="inline-block"
+      cln.querySelector(".menuLink").remove()
       insert.appendChild(cln);
+      // this.draggables = document.querySelectorAll('.draggable')
+      // this.countS++
+      this.init()
+      // console.log(draggables.length);
+      //pass right number of draggable items to delete function
+      // this.delete(draggables);
+      }
+
+  // delete() {
+  //   console.log( this.draggables)
+  //   let deleted = document.querySelectorAll(".manuDelete");
+  //     for(let i = 0; i<deleted.length; i++){
+  //       // console.log(draggables)
+  //       deleted[i].addEventListener("click", ()=>{
+  //         console.log( this.draggables[i])
+  //         if(this.draggables[i].classList.contains("parent")){
+  //         this.draggables[i].parentElement.remove();
+  //         }else{
+  //           this.draggables[i].remove();
+  //         }
+  //      })
+  //     }
+  // }
+
+  delete(i) {
+    // console.log(i)
+    // console.log('delete')
+    // console.log( this.draggables[i])
+
+    let deleted = document.querySelectorAll(".manuDelete");
+    for(let i = 0; i<this.deletelistener.length; i++){
+      deleted[i].removeEventListener('click', this.deletelistener[i])
     }
 
-    subcloning(insert){
-      // let insert = document.querySelector(".submenu");
-      let elmnt = document.querySelector(".draggable");
-      let cln = elmnt.cloneNode(true);
-      console.log(cln)
-      insert.appendChild(cln);
+    this.deletelistener = [];
+
+    for(let i = 0; i<this.deletelistener.length; i++){
+      deleted[i].removeEventListener('click', this.deletelistener[i])
     }
- 
-  // async addNew() {
+
+
+    if(this.draggables[i].classList.contains("parent")){
+      console.log(this.draggables[i].parentElement)
+      this.draggables[i].parentElement.remove();
+    }else{
+      this.draggables[i].remove();
+    }
+
+   
+   
+    // console.log(this.deletelistener);
+    // console.log(this.deletelistener.length);
+    // console.log(deleted);
+    // if(this.deletelistener.length != deleted.length){
+    //   let diff = this.deletelistener.length - deleted.length;
+    //   this.deletelistener.splice(-diff);
+    // }
+    // console.log(this.deletelistener);
+
+    console.log('------------------')
+    let addSubmenuAll = document.querySelectorAll(".addSubmenu")
+    console.log(this.listenerarray)
+    console.log(addSubmenuAll)
+    if(this.listenerarray.length != addSubmenuAll.length){
+      let diff = this.listenerarray.length - addSubmenuAll.length;
+      this.listenerarray.splice(-diff);
+    }
+
+    // console.log(this.listenerarray)
+
+    this.init(); 
+  }
+
+
+  store() {
+  // let storeInit = document.querySelector(".initsave");
+  //   if (this.read) {
+  //     let api = "menu_store";
+  //     var data = () => {
+          const menuText = document.querySelectorAll(".menuText");
+          const extmenuLink = document.querySelectorAll(".menuLink");
+          const mainselectBox = document.querySelectorAll(".mainSelect");
+        
+          let names = [];
+          let pages = [];
+          let pageLinks = [];
+          let extlinks = [];
+          let childnames = [];
+          let childpages = [];
+          let childpageLinks = [];
+          let childextlinks = [];
+
+          const mainMenu = document.querySelectorAll(".menuItem");
+
+          for ( let i = 0; i < mainselectBox.length; i++) {
+            const options = mainselectBox[i].getElementsByTagName('option');
+          
+            const subselect = mainMenu[i].querySelector(".submenu");
+            const subselectBox = subselect.querySelectorAll(".submenuSelect");
+            const submenuText = subselect.querySelectorAll(".submenuText");
+            const subextmenuLink = subselect.querySelectorAll(".submenuLink");
+            let subnames = [];
+            let subpages = [];
+            let subpageLinks = [];
+            let subextlinks = [];
+            for(let a = 0; a<subselectBox.length; a++){
+              const suboptions = subselectBox[a].getElementsByTagName('option');
+              for (let k = 0; k < suboptions.length; k++) {
+                if (suboptions[k].selected) {
+                  subpages.push(suboptions[k].text)
+                  subpageLinks.push(suboptions[k].value)
+                }
+              }
+              subnames.push(submenuText[a].value)
+              subextlinks.push(subextmenuLink[a].value)
+            }
+
+            for (let j = 0; j< options.length; j++) {
+              if (options[j].selected) {
+                pages.push(options[j].text)
+                pageLinks.push(options[j].value)
+                if(subselectBox.length != 0){
+                  childpages.push(subpages)
+                  childpageLinks.push(subpageLinks)
+                }
+                else{
+                  childpages.push([])
+                  childpageLinks.push([])
+                }
+              }
+            }
+            names.push(menuText[i].value)
+            extlinks.push(extmenuLink[i].value)
+            if(subselectBox.length != 0){
+              childnames.push(subnames)
+              childextlinks.push(subextlinks)
+            }else{
+              childnames.push([])
+              childextlinks.push([])
+            }
+          }
+
+          console.log(pages)
+          console.log(pageLinks)
+          console.log(names)
+          console.log(childpages)
+          console.log(childpageLinks)
+          console.log(childnames)
+          // var axios = new Api();
+          // var obj = {
+          //   names: names,
+          //   pages: pages,
+          //   pageLinks: pageLinks,
+          //   // extlinks: extlinks,
+          //   api: api
+          // }
+          // axios.formDataApi(obj);
+          let path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+          let uri = document.location.origin;
+
+          axios
+          .post(uri + path + "menu_store",{
+            names: names,
+            pages: pages,
+            pageLinks: pageLinks,
+            childnames: childnames,
+            childpages: childpages,
+            childpageLinks: childpageLinks
+          })
+          .then(function (response) {
+            if (response.status == 200 && response.statusText == "OK") {
+            console.log(response);
+              // this.init();
+            }
+          })
+          .catch((err) => {
+            console.log(err instanceof TypeError);
+          });
+          // console.log(obj)
+    //     }
+    //     storeInit.addEventListener("click", data);
+    // }
+    // this.read = false;
+  }
+
+  update() {
+    const store = document.querySelector(".save");
+    const menuId = document.getElementById("menuID").value;
+    let api = "menu_store";
+
+    if (this.read) {
+      var data = () => {
+        const menuText = document.getElementsByName("menu");
+        const extmenuLink= document.querySelectorAll(".menuLink");
+        const selectBox = document.getElementsByTagName("select");
+
+        let names = [];
+        let pages = [];
+        let pageLinks = [];
+        let extlinks = [];
+
+        for ( let i = 0; i < selectBox.length; i++) {
+          var options = selectBox[i].getElementsByTagName('option');
+          // console.log( options.length)
+          for (let j = 0; j< options.length; j++) {
+            if (options[j].selected) {
+              pages.push(options[j].text)
+              pageLinks.push(options[j].value)
+              console.log(options[j].value)
+            }
+          }
+          names.push(menuText[i].value)
+          extlinks.push(extmenuLink[i])
+        }
+
+        // console.log(pages)
+        // console.log(pageLinks)
+        // console.log(names)
+
+        var axios = new Api();
+        var obj = {
+          names: names,
+          pages: pages,
+          pageLinks: pageLinks,
+          api: api
+        }
+        axios.formDataApi(obj);
+      }
+      store.addEventListener("click", data);
+    }
+    this.read = false;
+    // this.init();
+  }
+
+   // async addNew() {
    
   //   let api = "menu_create";
   //   let htm = await this.axios.getDAta(api);
@@ -182,118 +502,6 @@ class Menu {
 
   //   this.init();
   // }
-
-  delete(draggables) {
-    var deleted = document.querySelectorAll(".manuDelete");
-    for (let i = 0; i < draggables.length; i++) {
-      deleted[i].addEventListener("click", () => {
-        draggables[i].remove();
-      })
-    }
-  }
-
-  store() {
-    let store = document.querySelector(".initsave");
-      if (this.read) {
-        let api = "menu_store";
-      var data = () => {
-        const menuText = document.getElementsByName("menu");
-        const extmenuLink = document.querySelectorAll(".menuLink");
-        var selectBox = document.getElementsByTagName("select");
-      
-        let names = [];
-        let pages = [];
-        let pageLinks = [];
-        let extlinks = [];
-
-        for ( let i = 0; i < selectBox.length; i++) {
-       
-          var options = selectBox[i].getElementsByTagName('option');
-          // console.log(options)
-          console.log( options.length)
-          for (let j = 0; j< options.length; j++) {
-            // console.log(111111)
-            if (options[j].selected) {
-              pages.push(options[j].text)
-              pageLinks.push(options[j].value)
-              console.log(options[j].value)
-            }
-          }
-          names.push(menuText[i].value)
-          extlinks.push(extmenuLink)
-        }
-
-        console.log(pages)
-        console.log(pageLinks)
-        console.log(names)
-
-        var axios = new Api();
-        var obj = {
-          names: names,
-          pages: pages,
-          pageLinks: pageLinks,
-          // extlinks: extlinks,
-          api: api
-        }
-        axios.formDataApi(obj);
-        this.init();
-      }
-      store.addEventListener("click", data);
-    
-    }
-    this.read = false;
-  }
-
-  update() {
-    const store = document.querySelector(".save");
-    const menuId = document.getElementById("menuID").value;
-    let api = "menu_store";
-
-    if (this.read) {
-      var data = () => {
-        const menuText = document.getElementsByName("menu");
-        const extmenuLink= document.querySelectorAll(".menuLink");
-        const selectBox = document.getElementsByTagName("select");
-
-        let names = [];
-        let pages = [];
-        let pageLinks = [];
-        let extlinks = [];
-
-        for ( let i = 0; i < selectBox.length; i++) {
-          var options = selectBox[i].getElementsByTagName('option');
-          console.log( options.length)
-          for (let j = 0; j< options.length; j++) {
-            if (options[j].selected) {
-              pages.push(options[j].text)
-              pageLinks.push(options[j].value)
-              console.log(options[j].value)
-            }
-          }
-          names.push(menuText[i].value)
-          extlinks.push(extmenuLink[i])
-        }
-
-        console.log(pages)
-        console.log(pageLinks)
-        console.log(names)
-
-        var axios = new Api();
-        var obj = {
-          names: names,
-          pages: pages,
-          pageLinks: pageLinks,
-          api: api
-        }
-        axios.formDataApi(obj);
-      }
-      store.addEventListener("click", data);
-    }
-    this.read = false;
-    // this.init();
-  }
-
-  
 }
 
 
