@@ -12,17 +12,16 @@ class GalleryFrontController {
 		return View::render('gallery.uploade-images');
 	}
 
-	public function store(Request $request)
-	{	
+	public function store(Request $request) {
 		$title = $request->request->get('albumTitle');
 		$files = $request->files->all()['image'];
 		$profileImg = explode(',', $request->request->get('album'));
 		$imgTags = explode(',', $request->request->get('tag'));
-	
+
 		if ($title && $files) {
 			$page = new Page();
-			$page->pageState = 'Album Page'; 
-			$page->setRoute('showAlbum');
+			$page->pageState = 'Album Page';
+			$page->setRoute('show');
 
 			$page->setTitle($title);
 			$page->save();
@@ -43,47 +42,44 @@ class GalleryFrontController {
 
 			$page->setRoute('showAlbum', $album->ID);
 			$page->save();
-			
-			
+
 			$firstProfile = true;
-			for($i = 0; $i < count($files); $i++) {
+			for ($i = 0; $i < count($files); $i++) {
 				if ($files[$i] instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
 					$image = new Attachment();
 					$image->save($files[$i], $album->ID);
 
-					if(isset($imgTags[$i])){
+					if (isset($imgTags[$i])) {
 						$iTags = explode('# ', $imgTags[$i]);
 						foreach ($iTags as $itag) {
 							$image->addTag($itag);
 						}
 					}
-					if($firstProfile){
+					if ($firstProfile) {
 						$album->profileImgId = $image->ID;
 						$firstProfile = false;
 						$album->save();
 					}
-					if(strcmp($profileImg[$i], 'true') === 0){
+					if (strcmp($profileImg[$i], 'true') === 0) {
 						$album->profileImgId = $image->ID;
 						$album->save();
 					}
 				}
 			}
 		}
-			return new Response();
+		return new Response();
 	}
 
-	public function show(String $id){
+	public function show(String $id) {
 
-        $album = AlbumPost::get($id);
-        $title = $album->post_title;
-        $images = $album->attachments ?? [];
-       
+		$album = AlbumPost::get($id);
+		$title = $album->post_title;
+		$images = $album->attachments ?? [];
 
-        return View::render('gallery.show',  ["images" => $images, "title" => $title]);
-    }
+		return View::render('gallery.show', ["images" => $images, "title" => $title]);
+	}
 
-	private function decodeRequest($request)
-	{
+	private function decodeRequest($request) {
 
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);
