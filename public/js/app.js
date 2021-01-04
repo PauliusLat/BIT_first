@@ -1735,14 +1735,28 @@ var EditPost = /*#__PURE__*/function () {
       var DOM = document.querySelector(this.target);
 
       if (DOM) {
-        var id = document.querySelector('.save').id;
+        var getCheckedValues = function getCheckedValues() {
+          return Array.from(document.querySelectorAll('input[type="checkbox"]')).filter(function (checkbox) {
+            return checkbox.checked;
+          }).map(function (checkbox) {
+            return checkbox.value;
+          });
+        };
+
+        var id = document.querySelector('.newsBtnSend').id;
         var image = document.getElementById('image');
         var imageDiv = document.querySelector('.imageDiv');
         var imgBlock = document.querySelector('.galleryContainer');
-        var save = document.querySelector('.save');
-        var title = document.querySelector('.title');
+        var save = document.querySelector('.newsBtnSend');
+        var title = document.querySelector('.postTitle');
         var content = document.querySelectorAll("[contenteditable]");
         var getImage = document.querySelector('.getImage');
+        var altText = document.getElementById('alt');
+        var pavTtitle = document.getElementById('pavTtitle');
+        var catBoxBtn = document.querySelector('.catBoxBtn');
+        var newsCat = document.querySelector('.newsCat');
+        var catUp = document.querySelector('.catUp');
+        var catDown = document.querySelector('.catDown');
         var api = "news-update";
         var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_1__["default"]();
 
@@ -1751,14 +1765,26 @@ var EditPost = /*#__PURE__*/function () {
           imgBlock.classList.remove("hiden");
         };
 
+        catDown.addEventListener("click", function () {
+          newsCat.classList.remove("hiden");
+          catUp.classList.remove("hiden");
+          catDown.classList.add("hiden");
+        });
+        catUp.addEventListener("click", function () {
+          newsCat.classList.add("hiden");
+          catUp.classList.add("hiden");
+          catDown.classList.remove("hiden");
+        });
+
         var data = function data() {
           var obj = {
             api: api,
             title: title.value,
             content: content[0].innerHTML,
-            imageTitle: "",
-            altText: "",
-            id: id
+            imageTitle: pavTtitle.value,
+            altText: altText.value,
+            id: id,
+            category: getCheckedValues()
           };
           readImage.sendImageData(obj);
         };
