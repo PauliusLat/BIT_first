@@ -2565,3 +2565,89 @@ table th {
   margin: 5px 0 0 0;
 }
 
+.editStart {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.editStart .postDate {
+  width: 100%;
+}
+
+.editStart .postTitle {
+  width: 66.6667%;
+  text-align: center;
+  margin: 20px 0 14px 0;
+  height: 25px;
+  line-height: 25px;
+  font-weight: 700;
+  font-size: 28px;
+}
+
+.editStart .getImage {
+  width: 66.6667%;
+  align-self: center;
+  position: relative;
+  height: 300px;
+}
+
+.editStart .getImage .resizeImageNews {
+  width: 100%;
+  height: 100%;
+}
+
+.editStart .getImage img {
+  text-align: center;
+  width: 100%;
+  height: 300px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.editStart .getImage .galleryContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+
+.editStart .ql-toolbar {
+  width: 66.6667%;
+  z-index: 1;
+}
+
+.editStart .editPost p {
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.editStart .editPost {
+  width: 66.6667%;
+  text-align: center;
+}
+
+.editStart .postDate {
+  width: 100%;
+  margin: 14px 0 14px 0;
+  font-size: 14px;
+}
+
+.editStart .postContent {
+  width: 100%;
+  font-size: 20px;
+}
+
+.editStart .catPropNews {
+  margin-top: 1%;
+}
+
+.editStart .catPropNews .newsTag .inputTagClass label {
+  font-size: 14px;
+}
+
+.editStart .newsCatAdd .catBoxBtn .selectCatPost .children {
+  margin: 0 0 0 10px;
+}
+
