@@ -3,11 +3,14 @@
 const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
 const uri = document.location.origin;
 const pageStrt = document.getElementById("pageStart");
+
+
 // console.log(pageStrt);
 
 function startPage() {
   if (pageStrt) {
     window.addEventListener("load", init, false);
+  
   }
 }
 
@@ -26,16 +29,19 @@ function init() {
         //   const description = document.getElementById("page-description").value;
 
           let post = document.getElementById('post');
-          // console.log(post);
           let select = post.options[post.selectedIndex].value;
           let pageState = document.getElementById('pageState');
           let selectpageState = pageState.options[pageState.selectedIndex].value;
           // console.log(select);  
- 
         pageStore(title, select, name, selectpageState);
-         
         });
-
+        
+        const parentElement = document.querySelector(".mainheading");
+        const editor = document.getElementById("editor");
+        const title = document.createElement("input");
+        title.setAttribute('placeholder', 'Pavadinimas');
+title.className = "titleInput";
+parentElement.insertBefore(title, editor);
         const editBtn = pageStrt.querySelectorAll(".page-edit");
 
         for (let i = 0; i < editBtn.length; i++) {
@@ -110,9 +116,10 @@ function pageEdit(ID) {
         test.innerHTML = HTML;
       }
       const updateBtn = document.getElementById("pageUpdate");
+      // console.log(updateBtn)
+      const updateId = updateBtn.value;
+      // console.log(updateId)
       updateBtn.addEventListener("click", () => {
-        const updateId = updateBtn.value;
-
         pageUpdate(updateId);
       });
     })
@@ -122,22 +129,27 @@ function pageEdit(ID) {
 }
 
 function pageUpdate(updateId) {
+  // console.log(updateId)
   const title = document.getElementById("page_title").value;
-  console.log(title);
+  const post = document.getElementById('post');
+  const select = post.options[post.selectedIndex].value;
+  // console.log(select);
+  const pageState = document.getElementById('pageState');
+  const selectpageState = pageState.options[pageState.selectedIndex].value;
+  // console.log(selectpageState);
   const name = document.getElementById("page_name").value;
-  console.log(name);
+  // console.log(name);
 
   axios
     .post(uri + path + "page_update&id="+updateId, {
       updateId: updateId,
       page_title: title,
       page_name: name,
-    //   page_description: description
-
+      post_type: select,
+      page_state: selectpageState
     })
     .then(function(response) {
       if (response.status == 200 && response.statusText == "OK") {
-        // console.log(response);
         init();
       }
     })

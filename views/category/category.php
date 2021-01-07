@@ -18,9 +18,12 @@ if (!function_exists('wp_terms_checklist')) {
         <?php
         } else {
         ?>
+
             <div class='success_message'><?= $success_message ?></div>
+
         <?php
-        } ?>
+        }
+        ?>
 
         <h2 class='tcp'>Pridėkite naują kategoriją</h2>
         <div class='label'>

@@ -5,6 +5,7 @@ use BIT\app\Category;
 // use BIT\app\Tag;
 use BIT\models\NewsPost;
 use BIT\app\App;
+use BIT\app\Cookie;
 use BIT\app\Query;
 // use WP_Query;
 use BIT\app\Page;
@@ -31,12 +32,42 @@ require_once __DIR__ . '/vendor/autoload.php';
 define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
-App::start();
+$app = App::start();
+$session = $app->getService('session');
+// var_dump($app->getService('session'));
+// $session = new Session;
+
+// 
+
+// $session = Session::start();
+// echo '<pre>';
+// var_dump($session);
+// unset($session);
+
+// var_dump($session);
+// _dc($_COOKIE);
+// Cookie::deleteCookie();
+// // // // // var_dump($session);
+// $session->deleteSession();
+// // var_dump($session);
+// unset($session);
+// $session == null;
+// echo '<pre>';
+// var_dump($session);
+// // // _dc(Cookie::getUuid());
 
 
-// $pages = Page::all()->pageState('Site Page')->all();
-// _dc($pages);
-// $session = App::start()->getService('session');
+// $session->set('ggg', 5);
+// // $session->set('lllll', 8);
+// // $session->flash('ss', 5);
+// // _dc($session->get('ss'));
+// // // // _dc($session->get('0000'));
+// // $session->deleteSession();
+// _dc($_COOKIE);
+
+// // $pages = Page::all()->pageState('Site Page')->all();
+// // _dc($pages);
+
 // $session->set('oooo', 8);
 // _dc($_SERVER);
 // _dc($session->get('333333333333cassdca'));
@@ -73,6 +104,17 @@ App::start();
 
 // use BIT\models\NewresPost;
 add_action('init', function () {
+    // _dc($_REQUEST);
+    // _dc($_COOKIE);
+
+    // // $session->deleteSession();
+
+    // // unset($_COOKIE['Bit']);
+    // // setcookie("Bit", "", time() - 3600);
+    // // _dc($_COOKIE);
+
+    // $session->set('gg', 5);
+    // _dc($_COOKIE);
 
     // $query = new Query;
     // $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();

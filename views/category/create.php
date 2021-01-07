@@ -3,7 +3,7 @@
 use BIT\app\Category;
 ?>
 
-<div class='tagCreate'>
+<!-- <div class='tagCreate'>
     <div class="admin-tag-div-first">
         <div class="admin-tag-form-group">
             <h3>Pridėkite naują 'tag'ą'<h3>
@@ -132,4 +132,4 @@ use BIT\app\Category;
 ?>
 </table>
 </div>
-</div>
+</div> -->

@@ -41,32 +41,44 @@ class PageController
         $page = new Page;
         $name = $request->request->get('page_title');
         $post = $request->request->get('post_type');
-
         if ($request->request->get('page_state') && $request->request->get('page_state') != 'Site_page') {
             array_push($page->pageState, $request->request->get('page_state'));
         }
 
         $page->setRoute($post);
         $page->setTitle($name);
-        //update nenaudoti sito metodo
         $page->save();
         return new Response;
     }
 
     public function edit(Page $page)
     {
-        $output = View::adminRender('page.edit',  ['page' => $page]);
+        $postContent = $page->post_content;
+        $codeArr = str_word_count($postContent, 1);
+        $shortcode = explode("'", $codeArr[3])[1];
+        $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
+        $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
+        $menu_page_state = $page_state['main'];
+        $ID = $page->ID;
+        $output = View::adminRender('page.edit',  ['page' => $page, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'shortcode' => $shortcode, 'ID' => $ID]);
         return new JsonResponse(['html' => $output]);
     }
 
     public function update(Request $requestJson, Page $page)
     {
         $request = $this->decodeRequest($requestJson);
-        $page->post_title = $request->request->get('page_title');
+        $title = $request->request->get('page_title');
+        $post = $request->request->get('post_type');
+        if ($request->request->get('page_state')) {
+            array_push($page->pageState, $request->request->get('page_state'));
+        }
+
+
+        $page->setRoute($post);
+        $page->setTitle($title);
         $page->post_name = $request->request->get('page_name');
         $page->save();
-        // $output = View::adminRender('page.page');
-        // $response = new JsonResponse(['html' => $output]);
+        // _dc($page);
         return new JsonResponse;
     }
 

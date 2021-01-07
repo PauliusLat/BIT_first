@@ -1,8 +1,9 @@
 <?php
+
 use BIT\app\Category;
 ?>
 
-<style>
+<!-- <style>
 .category-container{
     width: 100%;
     display: flex;
@@ -53,15 +54,15 @@ table th {
                 <label class="admin-label">'Pasirinkite post'o tipą</label><br>
                 <select class="form-control" name = "post-type">
                     <?php
-                        $pages = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
-                        if ($pages) {
-                          foreach ($pages as $page => $args) {
-                              ?>
-                            <option value = "<?=$page?>"><?=$page?></option>
+                    $pages = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
+                    if ($pages) {
+                        foreach ($pages as $page => $args) {
+                    ?>
+                            <option value = "<?= $page ?>"><?= $page ?></option>
                             <?php
-                            }      
                         }
-                ?>
+                    }
+                            ?>
                 </select><br><br>
                 <div class="admin-event-buttons">
                     <button type="submit" id="create" class="admin-event-button">Pridėti</button>
@@ -82,37 +83,38 @@ table th {
         <th>Paveiksliukas</th>
     <div>
         <?php
-        foreach ($categories as $category) {
-            $category->image = get_term_meta($category->term_id, "my_term_key");
-            $url = $app->apiUrl.'/resources/img/';
-            ?>
-                <tr>
-                    <td><?=$category->name?></td>
-                    <td><?=$category->term_id?></td>
-                    <td><?=$category->description?></td>
-                    <td><?=$category->slug?></td>
-                    <td><?=$category->count?></td>
+        // foreach ($categories as $category) {
+        //     $category->image = get_term_meta($category->term_id, "my_term_key");
+        //     $url = $app->apiUrl.'/resources/img/';
+        //     
+        ?>
+        //         <tr>
+        //             <td><?= $category->name ?></td>
+        //             <td><?= $category->term_id ?></td>
+        //             <td><?= $category->description ?></td>
+        //             <td><?= $category->slug ?></td>
+        //             <td><?= $category->count ?></td>
                  
-                    <td><?php foreach($category->image as $key=>$value){
-                       if($key == 0){
-                        echo '<img style = "width: 200px; height: 200px; object-fit: cover;" src="'.$url.$value.'">';
-                        }
-                    }
-                    ?>
+        //             <td><?php foreach ($category->image as $key => $value) {
+                                //                if($key == 0){
+                                //                 echo '<img style = "width: 200px; height: 200px; object-fit: cover;" src="'.$url.$value.'">';
+                                //                 }
+                                //             }
+                            ?>
                     <td>
-                        <form action="http://localhost/wordpress/wp-admin/admin.php?page=category_edit&id=<?=$category->term_id?>" method="post"> 
-                        <button type="submit" name="edit" value="<?=$category->term_id?>">Edit</button> 
+                        <form action="http://localhost/wordpress/wp-admin/admin.php?page=category_edit&id=<?= $category->term_id ?>" method="post"> 
+                        <button type="submit" name="edit" value="<?= $category->term_id ?>">Edit</button> 
                         </form>
-                        <form action="http://localhost/wordpress/wp-admin/admin.php?page=category_destroy&id=<?=$category->term_id?>" method="post">
-                            <input type="hidden" name="ID" value="<?=$category->term_id?>"readonly>    
+                        <form action="http://localhost/wordpress/wp-admin/admin.php?page=category_destroy&id=<?= $category->term_id ?>" method="post">
+                            <input type="hidden" name="ID" value="<?= $category->term_id ?>"readonly>    
                             <button type="submit" name="delete">Delete</button>
                         </form>
                     <td>
                 </tr>
         </div>
     <?php
-    }
+                            }
     ?> 
 </table>
     </div> 
-</div> 
+</div>  -->

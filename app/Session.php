@@ -79,10 +79,15 @@ class Session
 
     public function deleteSession()
     {
-        $transient = Transient::start();
-        $transient->deleteTransient();
+        Transient::start()->deleteTransient();
         Cookie::deleteCookie();
+        //self::$obj = null;
     }
+
+    // public function __destruct()
+    // {
+    //     self::$obj = null;
+    // }
 
     public function __get($dir)
     {
