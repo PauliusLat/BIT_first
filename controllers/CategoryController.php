@@ -47,7 +47,8 @@ class CategoryController
             $number = 1;
         }
 
-        $pagination = new Pagination($limit, $number);
+        $total = wp_count_terms('maincat', ['hide_empty' => false]);
+        $pagination = new Pagination($limit, $number, $total);
         $category = new Category;
         $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr($limit, $pagination->offset)));
 
@@ -98,7 +99,7 @@ class CategoryController
             $term_id = $category->addCat($name, $parent_id, $slug,  $description);
 
 
-            _dc($_COOKIE);
+            // _dc($_COOKIE);
             // Cookie::deleteCookie();
             // Transient::start()->deleteTransient();
 

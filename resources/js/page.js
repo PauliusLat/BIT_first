@@ -35,13 +35,7 @@ function init() {
           // console.log(select);  
         pageStore(title, select, name, selectpageState);
         });
-        
-        const parentElement = document.querySelector(".mainheading");
-        const editor = document.getElementById("editor");
-        const title = document.createElement("input");
-        title.setAttribute('placeholder', 'Pavadinimas');
-title.className = "titleInput";
-parentElement.insertBefore(title, editor);
+
         const editBtn = pageStrt.querySelectorAll(".page-edit");
 
         for (let i = 0; i < editBtn.length; i++) {

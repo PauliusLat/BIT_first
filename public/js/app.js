@@ -1255,6 +1255,7 @@ var Calendar = /*#__PURE__*/function () {
       var curentM = new Date(y, this.date.getMonth() + a, 0);
       var curentY = curentM.toString().slice(11, -47);
       curentM = curentM.toString().slice(4, -55);
+      console.log(curentM);
       var curM = this.translate(curentM);
       curentMth.innerHTML = curentY + ' ' + curM;
       var lastDayM = new Date(y, m + a, 0).getDate();
@@ -2824,12 +2825,6 @@ function init() {
 
         pageStore(title, select, name, selectpageState);
       });
-      var parentElement = document.querySelector(".mainheading");
-      var editor = document.getElementById("editor");
-      var title = document.createElement("input");
-      title.setAttribute('placeholder', 'Pavadinimas');
-      title.className = "titleInput";
-      parentElement.insertBefore(title, editor);
       var editBtn = pageStrt.querySelectorAll(".page-edit");
 
       var _loop = function _loop(i) {

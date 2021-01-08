@@ -12,19 +12,14 @@
         <div class='label'>
             <label class="tcp-label">Pasirinkite kitą post'o tipą</label>
         </div>
-        <select class="form-control" name="post-type" id="post">
+        <select class="form-control" name="post-type" id="post">s
+            <option value="<?= $shortcode ?>" selected><?= $shortcode ?></option>>
+            <?php
+            foreach ($post_types as $post => $args) {
+            ?>
+                <option value="<?= $post ?>"><?= $post ?></option>
             <?php
 
-            // $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
-            if ($post_types) {
-            ?>
-                <option value="<?= $shortcode ?>" selected><?= $shortcode ?></option>>
-                <?php
-                foreach ($post_types as $post => $args) {
-                ?>
-                    <option value="<?= $post ?>"><?= $post ?></option>
-            <?php
-                }
             }
             ?>
         </select>
@@ -34,17 +29,12 @@
         </div>
 
         <select class="form-control" name="page-state" id="pageState">
+            <option value="<?= $oldValue ?>" selected><?= $oldValue ?></option>>
             <?php
-
-            if ($menu_page_state) {
+            foreach ($menu_page_state as $pagestate => $args) {
             ?>
-                <option value="<?= $page->pageState[1] ?>" selected><?= $page->pageState[1] ?></option>>
-                <?php
-                foreach ($menu_page_state as $page => $args) {
-                ?>
-                    <option value="<?= $args ?>"><?= $args ?></option>
+                <option value="<?= $args ?>"><?= $args ?></option>
             <?php
-                }
             }
             ?>
         </select>

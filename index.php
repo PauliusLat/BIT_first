@@ -106,19 +106,18 @@ $session = $app->getService('session');
 add_action('init', function () {
     // _dc($_REQUEST);
     // _dc($_COOKIE);
-
     // // $session->deleteSession();
-
     // // unset($_COOKIE['Bit']);
     // // setcookie("Bit", "", time() - 3600);
     // // _dc($_COOKIE);
-
     // $session->set('gg', 5);
     // _dc($_COOKIE);
 
     // $query = new Query;
-    // $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
-    // _dc($catPages);
+    // $Pages = $query->postOffset('page', 4)->getPost()->all();
+    // _dc($Pages);
+    // $pages = $query->postType('page')->getPost()->all();
+    // _dc($pages);
     // $news = new NewsPost;
     // $news->save();
     // $arr = explode('#', '#oras#astrus#naujas');
