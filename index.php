@@ -30,14 +30,29 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
-
 App::start();
 
 
+
+// use BIT\app\Cookie;
+// Cookie::deleteCookie();
+// // _d($session);
+
+// $session = App::start()->getService('session');
+// $session->deleteSession();
+// Session::start()->deleteSession();
+// unset($_COOKIE['Bit']);
+
+// _d($session);
+// $session->set('wvsfvdfvds', 45);
+// _dc($session);
 // $pages = Page::all()->pageState('Site Page')->all();
 // _dc($pages);
-// $session = App::start()->getService('session');
-// $session->set('oooo', 8);
+// $session->set('test2', 5622);
+
+// 
+
+// $session->set('testas', 81111);
 // _dc($_SERVER);
 // _dc($session->get('333333333333cassdca'));
 // $server = new Server;
@@ -72,7 +87,7 @@ App::start();
 
 
 // use BIT\models\NewresPost;
-add_action('init', function () {
+// add_action('init', function () {
 
 
     // $news = new NewsPost;
@@ -139,6 +154,9 @@ add_action('init', function () {
 
 
     // $session = new Session;
+    // $session->set('fgbsfsdf', 'gergerger');
+    // var_dump($session);
+
     // // // $session->deleteSession();
     // $session->flash('ooo', 5);
     // _dc($session->get('ooo'));
@@ -240,4 +258,4 @@ add_action('init', function () {
     // function flattenWithKeys(array $array, $childPrefix = '.', $root = '', $result = array()) {
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
-});
+// });

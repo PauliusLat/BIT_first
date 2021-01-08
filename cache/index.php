@@ -2,7 +2,6 @@
 
 namespace BitCache;
 
-use function Ramsey\Uuid\v1;
 
 $loadFromCache = true;
 define('C_DIR_1', '/loads/');
@@ -24,6 +23,10 @@ if ($loadFromCache) {
     if (preg_match('/^http::\/\/www\./i', $url)) {            //turi buti      /^http:|:\/\/www\./i
         $loadFromCache = false;
         
+    }
+}if ($loadFromCache) {
+    if (preg_match('/wp-admin/i', $url)) {            // tik frontui
+        $loadFromCache = false;        
     }
 }if ($loadFromCache) {
     $url = getScheme().getHost().$_SERVER['REQUEST_URI'];
@@ -100,3 +103,4 @@ function getHost() {
     $host = preg_replace('/:\d+$/', '', $host);
     return trim($host).':8080';                               //remove :8080.
 }
+

@@ -8,6 +8,7 @@ class AdminController {
     //     echo "Create HomeController";
     // }
     public function index() {
+
         echo PLUGIN_DIR_URL . '<br>';
         echo '
             <br>

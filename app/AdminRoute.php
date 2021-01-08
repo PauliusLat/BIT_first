@@ -27,7 +27,7 @@ class AdminRoute
                                 ucfirst($subPath),
                                 ucfirst($subPath),
                                 'manage_options',
-                                $subPath,
+                                $parentPath.'-'.$subPath,
                                 function () use ($controller, $method, $app) {
                                     echo $app->run($controller, $method);
                                 }
