@@ -1,4 +1,3 @@
-
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -2061,8 +2060,17 @@ var Menu = /*#__PURE__*/function () {
 
     this.target = target;
     this.read = true;
-    this.init();
     this.axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.storeSave;
+    this.storeinit;
+    this.clone; // this.addSubmenuAll;
+
+    this.count = 1;
+    this.countS = 1;
+    this.draggables;
+    this.listenerarray = [];
+    this.deletelistener = [];
+    this.init(); // console.log(this.count);
   }
 
   _createClass(Menu, [{
@@ -2093,42 +2101,103 @@ var Menu = /*#__PURE__*/function () {
           }).element;
         };
 
-        var draggables = document.querySelectorAll('.draggable');
-        var container = document.querySelector('.cont');
-        var add = document.querySelector(".addNew");
-        var addSubmenu = document.querySelectorAll(".addSubmenu");
-        console.log(addSubmenu);
-        add.addEventListener('click', function () {
-          _this.cloning(); // this.init()
+        var container = document.querySelector('.cont'); // let events = getEventListeners(document.querySelector('.cont'));
+        // console.log(events)
 
-        });
+        this.cloning();
+        var addSubmenuAll = document.querySelectorAll(".addSubmenu"); // console.log(this.addSubmenuAll)
+
+        this.draggables = document.querySelectorAll('.draggable'); // console.log( this.draggables)
+
+        var draggables = this.draggables; // this.delete();
+
+        var deleted = document.querySelectorAll(".manuDelete");
+        console.log('init');
+        console.log(this.deletelistener);
+        console.log(this.deletelistener.length);
+        console.log(deleted); // if(this.deletelistener.length != deleted.length){
+        //   let diff = this.deletelistener.length - deleted.length;
+        //   this.deletelistener.splice(-diff);
+        // }
+        // console.log(this.deletelistener);
 
         var _loop = function _loop(i) {
-          var insert = document.querySelectorAll(".submenu");
-          console.log(addSubmenu[i]);
-          addSubmenu[i].addEventListener('click', function () {
-            _this.subcloning(insert[i]); //  this.init()
+          if (_this.deletelistener[i]) {
+            deleted[i].removeEventListener('click', _this.deletelistener[i]);
+          }
 
-          });
+          var deletevar = function deletevar() {
+            _this["delete"](i);
+          };
+
+          _this.deletelistener[i] = deletevar;
+          deleted[i].addEventListener('click', deletevar);
         };
 
-        for (var i = 0; i < addSubmenu.length; i++) {
+        for (var i = 0; i < deleted.length; i++) {
           _loop(i);
         }
 
-        var storeinit = document.querySelector(".initsave");
+        console.log('init after foreach');
+        console.log(this.deletelistener);
+        console.log(this.deletelistener.length);
+        console.log('------------------'); // console.log(this.listenerarray)
+        // console.log(addSubmenuAll)
+        // if(this.listenerarray.length != addSubmenuAll.length){
+        //   let diff = this.listenerarray.length - addSubmenuAll.length;
+        //   this.listenerarray.splice(-diff);
+        // 
 
-        if (storeinit != null) {
-          this.store();
-        } else {
-          this.update();
+        console.log(this.listenerarray);
+
+        var _loop2 = function _loop2(_i) {
+          if (_this.listenerarray[_i]) {
+            addSubmenuAll[_i].removeEventListener('click', _this.listenerarray[_i]);
+          }
+
+          var clone = function clone() {
+            _this.subcloning(_i);
+          };
+
+          _this.listenerarray[_i] = clone;
+
+          addSubmenuAll[_i].addEventListener('click', clone);
+        };
+
+        for (var _i = 0; _i < addSubmenuAll.length; _i++) {
+          _loop2(_i);
         }
 
-        this["delete"](draggables); // var newBlock = () => {
-        //   this.addNew();
-        //   add.removeEventListener("click", newBlock);
-        // }
-        // add.addEventListener("click", newBlock);
+        console.log('init after foreach addsubemnu');
+        console.log(this.listenerarray);
+        console.log(this.listenerarray.length); // }
+
+        this.storeinit = document.querySelector(".initsave");
+
+        if (this.storeinit != null) {
+          var storeSave = function storeSave() {
+            _this.store();
+          };
+
+          this.storeSave = storeSave;
+          this.storeinit.removeEventListener('click', storeSave, false);
+          this.storeinit.addEventListener('click', storeSave, false);
+        } else {
+          this.storeinit = document.querySelector(".save"); // console.log(this.storeinit);
+
+          var _storeSave = function _storeSave() {
+            _this.update();
+          };
+
+          this.storeSave = _storeSave;
+          this.storeinit.removeEventListener('click', _storeSave, false);
+          this.storeinit.addEventListener('click', _storeSave, false);
+        } //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
+        //tikrinam ar clonuota, tada pasileidzia kitas subcloning ar panasiai
+        //submenu ilgi skaiciuoti po cloning ir tada ji paduoti i subcloning kaip nors ar dar kazkaip. gal reikia ta metoda kaip MInde parasyti, kad event listener kviestum jau paciame metode 
+        // this.delete(draggables);
+        //pass right number of draggable items to delete function
+
 
         draggables.forEach(function (draggable) {
           draggable.addEventListener('dragstart', function () {
@@ -2154,20 +2223,278 @@ var Menu = /*#__PURE__*/function () {
   }, {
     key: "cloning",
     value: function cloning() {
-      var insert = document.querySelector(".cont");
-      var elmnt = document.querySelector(".menuItem");
-      var cln = elmnt.cloneNode(true);
-      console.log(cln);
-      insert.appendChild(cln);
+      var _this2 = this;
+
+      var add = document.querySelector(".addNew");
+
+      if (this.read) {
+        var data = function data() {
+          var insert = document.querySelector(".cont");
+          var elmnt = document.querySelector(".menuItem");
+          var cln = elmnt.cloneNode(true); // console.log(cln)
+          //remove submenu item that only menu element is cloned
+
+          var emptySubmenu = cln.querySelector(".submenu");
+          emptySubmenu.innerHTML = '';
+          insert.appendChild(cln);
+          var storeSave = _this2.storeSave;
+
+          _this2.storeinit.removeEventListener('click', storeSave, false); // this.count++;
+
+
+          _this2.init();
+        };
+
+        add.addEventListener("click", data);
+      }
+
+      this.read = false;
     }
   }, {
     key: "subcloning",
-    value: function subcloning(insert) {
-      // let insert = document.querySelector(".submenu");
+    value: function subcloning(i) {
+      // console.log(i)
+      var parentAll = document.querySelectorAll(".menuItem");
+      var insert = parentAll[i].querySelector(".submenu");
       var elmnt = document.querySelector(".draggable");
-      var cln = elmnt.cloneNode(true);
-      console.log(cln);
-      insert.appendChild(cln);
+      var cln = elmnt.cloneNode(true); //remove class parent after cloning - this is submenu item without parent class
+
+      cln.classList.remove("parent");
+      cln.classList.add("child"); //remove add button
+
+      cln.querySelector(".addSubmenu").remove(); //make submenu element visible
+
+      cln.querySelector(".submenuSelect").style.display = "inline-block";
+      cln.querySelector(".mainSelect").remove();
+      cln.querySelector(".submenuText").style.display = "inline-block";
+      cln.querySelector(".menuText").remove();
+      cln.querySelector(".submenuLink").style.display = "inline-block";
+      cln.querySelector(".menuLink").remove();
+      insert.appendChild(cln); // this.draggables = document.querySelectorAll('.draggable')
+      // this.countS++
+
+      this.init(); // console.log(draggables.length);
+      //pass right number of draggable items to delete function
+      // this.delete(draggables);
+    } // delete() {
+    //   console.log( this.draggables)
+    //   let deleted = document.querySelectorAll(".manuDelete");
+    //     for(let i = 0; i<deleted.length; i++){
+    //       // console.log(draggables)
+    //       deleted[i].addEventListener("click", ()=>{
+    //         console.log( this.draggables[i])
+    //         if(this.draggables[i].classList.contains("parent")){
+    //         this.draggables[i].parentElement.remove();
+    //         }else{
+    //           this.draggables[i].remove();
+    //         }
+    //      })
+    //     }
+    // }
+
+  }, {
+    key: "delete",
+    value: function _delete(i) {
+      // console.log(i)
+      // console.log('delete')
+      // console.log( this.draggables[i])
+      var deleted = document.querySelectorAll(".manuDelete");
+
+      for (var _i2 = 0; _i2 < this.deletelistener.length; _i2++) {
+        deleted[_i2].removeEventListener('click', this.deletelistener[_i2]);
+      }
+
+      this.deletelistener = [];
+
+      for (var _i3 = 0; _i3 < this.deletelistener.length; _i3++) {
+        deleted[_i3].removeEventListener('click', this.deletelistener[_i3]);
+      }
+
+      if (this.draggables[i].classList.contains("parent")) {
+        console.log(this.draggables[i].parentElement);
+        this.draggables[i].parentElement.remove();
+      } else {
+        this.draggables[i].remove();
+      } // console.log(this.deletelistener);
+      // console.log(this.deletelistener.length);
+      // console.log(deleted);
+      // if(this.deletelistener.length != deleted.length){
+      //   let diff = this.deletelistener.length - deleted.length;
+      //   this.deletelistener.splice(-diff);
+      // }
+      // console.log(this.deletelistener);
+
+
+      console.log('------------------');
+      var addSubmenuAll = document.querySelectorAll(".addSubmenu");
+      console.log(this.listenerarray);
+      console.log(addSubmenuAll);
+
+      if (this.listenerarray.length != addSubmenuAll.length) {
+        var diff = this.listenerarray.length - addSubmenuAll.length;
+        this.listenerarray.splice(-diff);
+      } // console.log(this.listenerarray)
+
+
+      this.init();
+    }
+  }, {
+    key: "store",
+    value: function store() {
+      // let storeInit = document.querySelector(".initsave");
+      //   if (this.read) {
+      //     let api = "menu_store";
+      //     var data = () => {
+      var menuText = document.querySelectorAll(".menuText");
+      var extmenuLink = document.querySelectorAll(".menuLink");
+      var mainselectBox = document.querySelectorAll(".mainSelect");
+      var names = [];
+      var pages = [];
+      var pageLinks = [];
+      var extlinks = [];
+      var childnames = [];
+      var childpages = [];
+      var childpageLinks = [];
+      var childextlinks = [];
+      var mainMenu = document.querySelectorAll(".menuItem");
+
+      for (var i = 0; i < mainselectBox.length; i++) {
+        var options = mainselectBox[i].getElementsByTagName('option');
+        var subselect = mainMenu[i].querySelector(".submenu");
+        var subselectBox = subselect.querySelectorAll(".submenuSelect");
+        var submenuText = subselect.querySelectorAll(".submenuText");
+        var subextmenuLink = subselect.querySelectorAll(".submenuLink");
+        var subnames = [];
+        var subpages = [];
+        var subpageLinks = [];
+        var subextlinks = [];
+
+        for (var a = 0; a < subselectBox.length; a++) {
+          var suboptions = subselectBox[a].getElementsByTagName('option');
+
+          for (var k = 0; k < suboptions.length; k++) {
+            if (suboptions[k].selected) {
+              subpages.push(suboptions[k].text);
+              subpageLinks.push(suboptions[k].value);
+            }
+          }
+
+          subnames.push(submenuText[a].value);
+          subextlinks.push(subextmenuLink[a].value);
+        }
+
+        for (var j = 0; j < options.length; j++) {
+          if (options[j].selected) {
+            pages.push(options[j].text);
+            pageLinks.push(options[j].value);
+
+            if (subselectBox.length != 0) {
+              childpages.push(subpages);
+              childpageLinks.push(subpageLinks);
+            } else {
+              childpages.push([]);
+              childpageLinks.push([]);
+            }
+          }
+        }
+
+        names.push(menuText[i].value);
+        extlinks.push(extmenuLink[i].value);
+
+        if (subselectBox.length != 0) {
+          childnames.push(subnames);
+          childextlinks.push(subextlinks);
+        } else {
+          childnames.push([]);
+          childextlinks.push([]);
+        }
+      }
+
+      console.log(pages);
+      console.log(pageLinks);
+      console.log(names);
+      console.log(childpages);
+      console.log(childpageLinks);
+      console.log(childnames); // var axios = new Api();
+      // var obj = {
+      //   names: names,
+      //   pages: pages,
+      //   pageLinks: pageLinks,
+      //   // extlinks: extlinks,
+      //   api: api
+      // }
+      // axios.formDataApi(obj);
+
+      var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+      var uri = document.location.origin;
+      axios.post(uri + path + "menu_store", {
+        names: names,
+        pages: pages,
+        pageLinks: pageLinks,
+        childnames: childnames,
+        childpages: childpages,
+        childpageLinks: childpageLinks
+      }).then(function (response) {
+        if (response.status == 200 && response.statusText == "OK") {
+          console.log(response); // this.init();
+        }
+      })["catch"](function (err) {
+        console.log(err instanceof TypeError);
+      }); // console.log(obj)
+      //     }
+      //     storeInit.addEventListener("click", data);
+      // }
+      // this.read = false;
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      var store = document.querySelector(".save");
+      var menuId = document.getElementById("menuID").value;
+      var api = "menu_store";
+
+      if (this.read) {
+        var data = function data() {
+          var menuText = document.getElementsByName("menu");
+          var extmenuLink = document.querySelectorAll(".menuLink");
+          var selectBox = document.getElementsByTagName("select");
+          var names = [];
+          var pages = [];
+          var pageLinks = [];
+          var extlinks = [];
+
+          for (var i = 0; i < selectBox.length; i++) {
+            var options = selectBox[i].getElementsByTagName('option'); // console.log( options.length)
+
+            for (var j = 0; j < options.length; j++) {
+              if (options[j].selected) {
+                pages.push(options[j].text);
+                pageLinks.push(options[j].value);
+                console.log(options[j].value);
+              }
+            }
+
+            names.push(menuText[i].value);
+            extlinks.push(extmenuLink[i]);
+          } // console.log(pages)
+          // console.log(pageLinks)
+          // console.log(names)
+
+
+          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+          var obj = {
+            names: names,
+            pages: pages,
+            pageLinks: pageLinks,
+            api: api
+          };
+          axios.formDataApi(obj);
+        };
+
+        store.addEventListener("click", data);
+      }
+
+      this.read = false; // this.init();
     } // async addNew() {
     //   let api = "menu_create";
     //   let htm = await this.axios.getDAta(api);
@@ -2235,130 +2562,6 @@ var Menu = /*#__PURE__*/function () {
     //   this.init();
     // }
 
-  }, {
-    key: "delete",
-    value: function _delete(draggables) {
-      var deleted = document.querySelectorAll(".manuDelete");
-
-      var _loop2 = function _loop2(i) {
-        deleted[i].addEventListener("click", function () {
-          draggables[i].remove();
-        });
-      };
-
-      for (var i = 0; i < draggables.length; i++) {
-        _loop2(i);
-      }
-    }
-  }, {
-    key: "store",
-    value: function store() {
-      var _this2 = this;
-
-      var store = document.querySelector(".initsave");
-
-      if (this.read) {
-        var api = "menu_store";
-
-        var data = function data() {
-          var menuText = document.getElementsByName("menu");
-          var extmenuLink = document.querySelectorAll(".menuLink");
-          var selectBox = document.getElementsByTagName("select");
-          var names = [];
-          var pages = [];
-          var pageLinks = [];
-          var extlinks = [];
-
-          for (var i = 0; i < selectBox.length; i++) {
-            var options = selectBox[i].getElementsByTagName('option'); // console.log(options)
-
-            console.log(options.length);
-
-            for (var j = 0; j < options.length; j++) {
-              // console.log(111111)
-              if (options[j].selected) {
-                pages.push(options[j].text);
-                pageLinks.push(options[j].value);
-                console.log(options[j].value);
-              }
-            }
-
-            names.push(menuText[i].value);
-            extlinks.push(extmenuLink);
-          }
-
-          console.log(pages);
-          console.log(pageLinks);
-          console.log(names);
-          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
-          var obj = {
-            names: names,
-            pages: pages,
-            pageLinks: pageLinks,
-            // extlinks: extlinks,
-            api: api
-          };
-          axios.formDataApi(obj);
-
-          _this2.init();
-        };
-
-        store.addEventListener("click", data);
-      }
-
-      this.read = false;
-    }
-  }, {
-    key: "update",
-    value: function update() {
-      var store = document.querySelector(".save");
-      var menuId = document.getElementById("menuID").value;
-      var api = "menu_store";
-
-      if (this.read) {
-        var data = function data() {
-          var menuText = document.getElementsByName("menu");
-          var extmenuLink = document.querySelectorAll(".menuLink");
-          var selectBox = document.getElementsByTagName("select");
-          var names = [];
-          var pages = [];
-          var pageLinks = [];
-          var extlinks = [];
-
-          for (var i = 0; i < selectBox.length; i++) {
-            var options = selectBox[i].getElementsByTagName('option');
-            console.log(options.length);
-
-            for (var j = 0; j < options.length; j++) {
-              if (options[j].selected) {
-                pages.push(options[j].text);
-                pageLinks.push(options[j].value);
-                console.log(options[j].value);
-              }
-            }
-
-            names.push(menuText[i].value);
-            extlinks.push(extmenuLink[i]);
-          }
-
-          console.log(pages);
-          console.log(pageLinks);
-          console.log(names);
-          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
-          var obj = {
-            names: names,
-            pages: pages,
-            pageLinks: pageLinks,
-            api: api
-          };
-          axios.formDataApi(obj);
-        };
-
-        store.addEventListener("click", data);
-      }
-
-      this.read = false; // this.init();
-    }
   }]);
 
   return Menu;
@@ -3283,7 +3486,10 @@ var Tag = /*#__PURE__*/function () {
 
 /***/ }),
 
-
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3298,12 +3504,10 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
 
 /******/ });
-
-

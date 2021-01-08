@@ -29,8 +29,8 @@ class Transient
         // if(get_transient($this->name)){
             $this->value = get_transient($this->name);
         // }else{
-            // set_transient($this->name, Session::$array);
-            // $this->value = get_transient($this->name);
+        // set_transient($this->name, Session::$array);
+        // $this->value = get_transient($this->name);
 
         // }
         

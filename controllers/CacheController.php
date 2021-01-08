@@ -12,7 +12,6 @@ class CacheController
 	
 	public function index()
 	{
-		_dc(__DIR__);
 		return $this->renderView();
 	}
 
@@ -100,6 +99,7 @@ class CacheController
 		}else{
 			copy(ABSPATH.'/plugin-access/htaccess/.htaccess', ABSPATH.'/.htaccess');
 		}
+		$this->clearCache();
 	 }
 
 
