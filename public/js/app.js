@@ -1,3 +1,4 @@
+
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1735,14 +1736,28 @@ var EditPost = /*#__PURE__*/function () {
       var DOM = document.querySelector(this.target);
 
       if (DOM) {
-        var id = document.querySelector('.save').id;
+        var getCheckedValues = function getCheckedValues() {
+          return Array.from(document.querySelectorAll('input[type="checkbox"]')).filter(function (checkbox) {
+            return checkbox.checked;
+          }).map(function (checkbox) {
+            return checkbox.value;
+          });
+        };
+
+        var id = document.querySelector('.newsBtnSend').id;
         var image = document.getElementById('image');
         var imageDiv = document.querySelector('.imageDiv');
         var imgBlock = document.querySelector('.galleryContainer');
-        var save = document.querySelector('.save');
-        var title = document.querySelector('.title');
+        var save = document.querySelector('.newsBtnSend');
+        var title = document.querySelector('.postTitle');
         var content = document.querySelectorAll("[contenteditable]");
         var getImage = document.querySelector('.getImage');
+        var altText = document.getElementById('alt');
+        var pavTtitle = document.getElementById('pavTtitle');
+        var catBoxBtn = document.querySelector('.catBoxBtn');
+        var newsCat = document.querySelector('.newsCat');
+        var catUp = document.querySelector('.catUp');
+        var catDown = document.querySelector('.catDown');
         var api = "news-update";
         var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_1__["default"]();
 
@@ -1751,14 +1766,26 @@ var EditPost = /*#__PURE__*/function () {
           imgBlock.classList.remove("hiden");
         };
 
+        catDown.addEventListener("click", function () {
+          newsCat.classList.remove("hiden");
+          catUp.classList.remove("hiden");
+          catDown.classList.add("hiden");
+        });
+        catUp.addEventListener("click", function () {
+          newsCat.classList.add("hiden");
+          catUp.classList.add("hiden");
+          catDown.classList.remove("hiden");
+        });
+
         var data = function data() {
           var obj = {
             api: api,
             title: title.value,
             content: content[0].innerHTML,
-            imageTitle: "",
-            altText: "",
-            id: id
+            imageTitle: pavTtitle.value,
+            altText: altText.value,
+            id: id,
+            category: getCheckedValues()
           };
           readImage.sendImageData(obj);
         };
@@ -3030,7 +3057,10 @@ var Tag = /*#__PURE__*/function () {
                 this.page.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
-                addColor.classList.add("active");
+
+                if (addColor) {
+                  addColor.classList.add("active");
+                }
 
                 changes = /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -3253,10 +3283,7 @@ var Tag = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
+
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3271,10 +3298,12 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
 
 /******/ });
+
+
