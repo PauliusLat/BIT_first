@@ -4,17 +4,18 @@
     </h1>
     <div class="cont sm-17-24">
         <div class="menuItem">
-            <div class="draggable" id="addDrag" draggable="true">
+            <div class="draggable parent" id="addDrag" draggable="true">
                 <div class="menuName">
                     <label for="">
                     </label>
                     <input name="menu" class="menuText initmenu" placeholder="Pavadinimas" type="text">
+                    <input name="submenu" class="submenuText initmenu" placeholder="Pavadinimas" type="text">
                 </div>
 
                 <div class="menuSelect">
                     <label for="standard-select">
                     </label>
-                    <select class="select-css initSelect" id="standard-select">
+                    <select class="select-css mainSelect" id="standard-select">
                         <option value="" selected>Pasirinkite menu puslapį</option>
                         <?php
                         foreach ($pages as $value) {
@@ -24,13 +25,27 @@
                         }
                         ?>
                     </select>
+
+                    <select class="select-css submenuSelect" id="standard-select">
+                        <option value="" selected>Pasirinkite submeniu puslapį</option>
+                        <?php
+                        foreach ($catPages as $value) {
+                        ?>
+                            <option class="initoption" value="<?= $value->getLink() ?>"><?= $value->post_title ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+
                 </div>
                 <div class="menuLinkAdd">
                     <label for="link">
                     </label>
                     <input class="menuLink initmenuLink" placeholder="Prideti išorinę nuoroda" type="text">
+                    <input class="submenuLink initmenuLink" placeholder="Prideti išorinę nuoroda" type="text">
                 </div>
 
+                <!-- <div class="button"> -->
                 <div class="addSubmenu">
                     <svg height="40" version="1.1" viewBox="0 0 295 295" width="40">
                         <title />
@@ -46,6 +61,7 @@
                         </g>
                     </svg>
                 </div>
+                <!-- </div> -->
 
                 <div class="manuDelete initdelete">
                     <svg height="35" version="1.1" viewBox="0 0 295 295" width="40">
@@ -84,7 +100,6 @@
             <div class="submenu sm-17-24">
             </div>
         </div>
-
 
     </div>
 
@@ -130,3 +145,4 @@
             </svg>
         </div>
     </div>
+</div>

@@ -70,19 +70,12 @@
                 'selected_cats' => false,
                 'popular_cats' => false,
                 'checked_ontop' => false,
-                // 'selected_cats' => [40, 144]
+                // 'selected_cats' => [$postCats]
             );
             ?>
             <ul>
                 <?php wp_terms_checklist($post_id = 0, $args1); ?>
             </ul>
-            <!-- <div class="showAllSelected">
-            </div>
-            <div class="buttons sm-1">
-                <div type="submit" id="create" class="btn-blue">
-                    Pridėti
-                </div>
-            </div> -->
         </div>
         <div class="newsTag" id="tagNews">
             <div class="tagTitle">

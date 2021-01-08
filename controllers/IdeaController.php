@@ -5,28 +5,27 @@ namespace BIT\controllers;
 use BIT\app\Server;
 use BIT\app\Session;
 use BIT\app\View;
+use BIT\models\AlbumPost;
 use BIT\models\IdeaPost;
 use BIT\models\NewsPost;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class IdeaController
-{
-	public function __construct()
-	{
-	}
+class IdeaController {
 
+	public function frontIndex() {
 
-	public function frontIndex()
-	{
+		$albumData = (AlbumPost::all())->all();
+		$album = View::adminRender('album.albumHome', ["data" => $albumData]);
+
 		$allNews = NewsPost::all()->all();
-		$output = View::adminRender('news.homeNews', ['html' => $allNews]);
-		return View::render('home.ideja', ["html" => $output]);
+		$news = View::adminRender('news.homeNews', ['html' => $allNews]);
+
+		return View::render('home.ideja', ["news" => $news, "album" => $album]);
 	}
 
-	public function render(Request $request)
-	{
+	public function render(Request $request) {
 		$data = (IdeaPost::all())->pluck('idea_content', 'idea_like', 'post_date', 'ID')->all();
 
 		$response = new Response;
@@ -37,8 +36,7 @@ class IdeaController
 		return $response;
 	}
 
-	public function create(Request $requestJson, Session $session)
-	{
+	public function create(Request $requestJson, Session $session) {
 		$server = new Server;
 
 		$idea = new IdeaPost;
@@ -82,8 +80,7 @@ class IdeaController
 		return $response;
 	}
 
-	public function decodeRequest($request)
-	{
+	public function decodeRequest($request) {
 
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);
