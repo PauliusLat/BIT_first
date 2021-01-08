@@ -22,24 +22,34 @@ class Transient
         return self::$obj ?? self::$obj = new self;
     }
 
-    public function __construct()
+    private function __construct()
     {
-        $this->name = Cookie::getUuid();
-        $this->value = get_transient($this->name);
+        $this->name = (string)Cookie::getUuid();
+// if/else pridejau
+        // if(get_transient($this->name)){
+            $this->value = get_transient($this->name);
+        // }else{
+        // set_transient($this->name, Session::$array);
+        // $this->value = get_transient($this->name);
 
+        // }
+        
         $this->newValue = $this->value;
-        foreach ($this->newValue as $index => $string) {
-            if (is_array($string)) {
-                continue;
-            }
-            if (strpos($string, 'autodelete') !== FALSE)
-                unset($this->newValue[$index]);
-            $name = substr($string, 11);
-        }
 
-        foreach ($this->newValue as $index => $string) {
-            if ($index == $name) {
+        if($this->newValue){
+            foreach ($this->newValue as $index => $string) {
+                if (is_array($string)) {
+                    continue;
+                }
+                if (strpos($string, 'autodelete') !== FALSE)
                 unset($this->newValue[$index]);
+                $namee = substr($string, 11);
+            }
+            
+            foreach ($this->newValue as $index => $string) {
+                if ($index == $namee) {
+                    unset($this->newValue[$index]);
+                }
             }
         }
     }
@@ -58,7 +68,8 @@ class Transient
     public function __destruct()
     {
         $setValue = Session::$array;
-        if ($this->name != 0 && $this->name != null && $this->name != null && $this->name != '' && is_array($setValue) && isset($_COOKIE['Bit'])) {
+
+        if ($this->name && is_array($setValue) && isset($_COOKIE['Bit'])) {
             set_transient($this->name, $setValue);
         } else {
             throw new SessionArgsExeption('Error: session set should be an array and name can not be set');
