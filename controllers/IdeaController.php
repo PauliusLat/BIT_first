@@ -8,6 +8,7 @@ use BIT\app\View;
 use BIT\models\AlbumPost;
 use BIT\models\IdeaPost;
 use BIT\models\NewsPost;
+use BIT\app\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,7 +42,6 @@ class IdeaController
 
 	public function create(Request $requestJson, Session $session)
 	{
-		// $session = Session::start();
 		$server = new Server;
 
 		$idea = new IdeaPost;
@@ -73,7 +73,7 @@ class IdeaController
 			$array[] = $like;
 			$session->set('ideja', $array);
 
-			// $session->deleteSession();
+
 			// if ($session->get('id') != $array) {
 
 			$ideaLike = IdeaPost::get($like);

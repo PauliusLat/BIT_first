@@ -45,8 +45,8 @@ class Transient
                 }
             }
         } else {
-            $this->value = [];
-            $this->newValue = $this->value;
+            $this->value = null;
+            // $this->newValue = $this->value;
         }
     }
 
@@ -65,7 +65,7 @@ class Transient
     public function __destruct()
     {
         $setValue = Session::$array;
-        if ($this->name && isset($_COOKIE['Bit'])) {
+        if ($this->name && is_array($setValue) && isset($_COOKIE[Cookie::COOKIENAME])) {
             set_transient($this->name, $setValue);
             // var_dump($this->name);
             // dc(isset($_COOKIE['Bit']));

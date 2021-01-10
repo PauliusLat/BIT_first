@@ -46,6 +46,7 @@ class PageController
 
         $query = new Query;
         $total = count(Page::all()->all());
+        // dar neveikia offset, reikia ziuret
         $pages = $query->postOffset('page', $pagination->offset)->getPost()->all();
         $pagination = new Pagination($limit, $number, $total);
         $output = View::adminRender('page.page', ["pages" => $pages, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pagesnr' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);

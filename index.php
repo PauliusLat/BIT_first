@@ -33,11 +33,7 @@ define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 $app = App::start();
-$session = $app->getService('session');
-// var_dump($app->getService('session'));
-// $session = new Session;
 
-// 
 
 // $session = Session::start();
 // echo '<pre>';
@@ -54,16 +50,7 @@ $session = $app->getService('session');
 // $session == null;
 // echo '<pre>';
 // var_dump($session);
-// // // _dc(Cookie::getUuid());
-
-
-// $session->set('ggg', 5);
-// // $session->set('lllll', 8);
-// // $session->flash('ss', 5);
-// // _dc($session->get('ss'));
-// // // // _dc($session->get('0000'));
-// // $session->deleteSession();
-// _dc($_COOKIE);
+// // // _dc(Cookie::getUuid())
 
 // // $pages = Page::all()->pageState('Site Page')->all();
 // // _dc($pages);
@@ -99,14 +86,22 @@ $session = $app->getService('session');
 // $category = new Category;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
-
-
-
 // use BIT\models\NewresPost;
 add_action('init', function () {
+    // $session = App::start()->getService('session');
+    // _dc($_COOKIE);
+    // echo '<pre>';
+    // var_dump($session);
+
+    // $session->set('000', 5);
+    // $session->set('vvv', 8);
+    // $session->flash('ss', 5);
+    // _dc($session->get('ss'));
+    // // // // _dc($session->get('0000'));
+    // $session->deleteSession();
     // _dc($_REQUEST);
     // _dc($_COOKIE);
-    // // $session->deleteSession();
+    // $session->deleteSession();
     // // unset($_COOKIE['Bit']);
     // // setcookie("Bit", "", time() - 3600);
     // // _dc($_COOKIE);

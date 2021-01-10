@@ -32,7 +32,6 @@ class CategoryController
     public function create(Request $requestJson, Session $session)
 
     {
-        // _dc($session);
         $request = $this->decodeRequest($requestJson);
 
         if ($request->request->get('pageSelected') != null) {
@@ -54,17 +53,11 @@ class CategoryController
 
         if ($session->get('alert_message') != null) {
             $message = $session->get('alert_message');
-            // _dc($message);
         } else if ($session->get('success_message') != null) {
             $success_message = $session->get('success_message');
-            // _dc($message);
         } else {
             $message = "";
-            // _dc($message);
-            // $success_message = null;
         }
-
-
 
         $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $categories, 'message' => $message,  'success_message' => $success_message, 'category' => $category]);
         return new JsonResponse(['html' => $output]);
@@ -74,8 +67,6 @@ class CategoryController
 
     {
         $session = App::start()->getService('session');
-        var_dump($session);
-
         $category = new Category;
         $name = $request->request->get('title');
         $slug = $request->request->get('slug');
@@ -86,8 +77,6 @@ class CategoryController
             $parent_id = 0;
         }
 
-
-
         //check if category ex 
         $categ = get_term_by('name', $name, 'maincat');
         if ($categ->name == $name) {
@@ -97,32 +86,17 @@ class CategoryController
             //add category to db and get cat ID
             $session->flash('success_message', 'kategorija sėkmingai sukurta');
             $term_id = $category->addCat($name, $parent_id, $slug,  $description);
-
-
-            // _dc($_COOKIE);
-            // Cookie::deleteCookie();
-            // Transient::start()->deleteTransient();
-
         }
 
-
-        // setcookie("Bit", "", time() - 3600);
-
-        // echo '<pre>';
-        // var_dump($session);
-
-        // create category page if selected
         $createPage = $request->request->get('page');
         if ($createPage == 1) {
             $category->addPageToCat($name, $term_id, 'page');
         }
 
-        //add category image
+
         if ($request->files->get('image')) {
             $file = $request->files->get('image');
             $image = new Attachment();
-            // $image->setAlt($altText);
-            // $image->setCaption($imgTitle);
             $image->save($file);
             $category->addImageToCat($term_id, "image", $image->ID);
         }
