@@ -55,7 +55,7 @@ class App
         AdminRoute::start();
         // Cookie::getUuid();
         Session::start();
-        ClearCache::start();
+        // ClearCache::start();
 
         // require_once __DIR__.'/../cache/clearCache.php';
 
