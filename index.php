@@ -32,31 +32,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
-$app = App::start();
+App::start();
 
+// $app = App::start();
 
-// $session = Session::start();
-// echo '<pre>';
-// var_dump($session);
-// unset($session);
-
-// var_dump($session);
-// _dc($_COOKIE);
-// Cookie::deleteCookie();
-// // // // // var_dump($session);
-// $session->deleteSession();
-// // var_dump($session);
-// unset($session);
-// $session == null;
-// echo '<pre>';
-// var_dump($session);
-// // // _dc(Cookie::getUuid())
-
-// // $pages = Page::all()->pageState('Site Page')->all();
-// // _dc($pages);
-
-// $session->set('oooo', 8);
-// _dc($_SERVER);
 // _dc($session->get('333333333333cassdca'));
 // $server = new Server;
 //
@@ -86,28 +65,8 @@ $app = App::start();
 // $category = new Category;
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
-// use BIT\models\NewresPost;
-add_action('init', function () {
-    // $session = App::start()->getService('session');
-    // _dc($_COOKIE);
-    // echo '<pre>';
-    // var_dump($session);
 
-    // $session->set('000', 5);
-    // $session->set('vvv', 8);
-    // $session->flash('ss', 5);
-    // _dc($session->get('ss'));
-    // // // // _dc($session->get('0000'));
-    // $session->deleteSession();
-    // _dc($_REQUEST);
-    // _dc($_COOKIE);
-    // $session->deleteSession();
-    // // unset($_COOKIE['Bit']);
-    // // setcookie("Bit", "", time() - 3600);
-    // // _dc($_COOKIE);
-    // $session->set('gg', 5);
-    // _dc($_COOKIE);
-
+// add_action('init', function () {
     // $query = new Query;
     // $Pages = $query->postOffset('page', 4)->getPost()->all();
     // _dc($Pages);
@@ -177,6 +136,9 @@ add_action('init', function () {
 
 
     // $session = new Session;
+    // $session->set('fgbsfsdf', 'gergerger');
+    // var_dump($session);
+
     // // // $session->deleteSession();
     // $session->flash('ooo', 5);
     // _dc($session->get('ooo'));
@@ -278,4 +240,4 @@ add_action('init', function () {
     // function flattenWithKeys(array $array, $childPrefix = '.', $root = '', $result = array()) {
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
-});
+// });

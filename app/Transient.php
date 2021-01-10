@@ -67,8 +67,6 @@ class Transient
         $setValue = Session::$array;
         if ($this->name && is_array($setValue) && isset($_COOKIE[Cookie::COOKIENAME])) {
             set_transient($this->name, $setValue);
-            // var_dump($this->name);
-            // dc(isset($_COOKIE['Bit']));
         } else {
             throw new SessionArgsExeption('Error: Cookie name should be set');
         }

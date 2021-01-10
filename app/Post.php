@@ -11,6 +11,7 @@ use BIT\models\IdeaPost;
 use BIT\models\EventPost;
 use BIT\models\NewsPost;
 use BIT\models\AlbumPost;
+use BIT\models\CacheConfig;
 
 class Post
 {
@@ -177,6 +178,8 @@ class Post
                 return Page::get($post->ID);
             case 'menu':
                 return FrontMenu::get($post->ID);
+            case 'menu':
+                return CacheConfig::get($post->ID);
 
             default:
                 return null;
