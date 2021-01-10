@@ -2,7 +2,7 @@
 
 namespace BIT\controllers;
 
-// use BIT\app\App;
+use BIT\app\App;
 use BIT\app\View;
 use BIT\app\Attachment;
 // use BIT\models\NewsPost;
@@ -10,7 +10,8 @@ use BIT\app\Attachment;
 use BIT\app\Category;
 use BIT\app\Session;
 use BIT\app\Pagination;
-// use BIT\app\Tag;
+use BIT\app\Cookie;
+use BIT\app\Transient;
 use BIT\app\Page;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,7 @@ class CategoryController
     }
 
     public function create(Request $requestJson, Session $session)
+
     {
         $request = $this->decodeRequest($requestJson);
 
@@ -44,17 +46,27 @@ class CategoryController
             $number = 1;
         }
 
-        $pagination = new Pagination($limit, $number);
+        $total = wp_count_terms('maincat', ['hide_empty' => false]);
+        $pagination = new Pagination($limit, $number, $total);
         $category = new Category;
         $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr($limit, $pagination->offset)));
-        $message = $session->get('alert_message');
-        $success_message = $session->get('success_message');
-        $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $categories, 'message' => $message, 'success_message' => $success_message, 'category' => $category]);
+
+        if ($session->get('alert_message') != null) {
+            $message = $session->get('alert_message');
+        } else if ($session->get('success_message') != null) {
+            $success_message = $session->get('success_message');
+        } else {
+            $message = "";
+        }
+
+        $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $categories, 'message' => $message,  'success_message' => $success_message, 'category' => $category]);
         return new JsonResponse(['html' => $output]);
     }
 
-    public function store(Request $request, Session $session)
+    public function store(Request $request)
+
     {
+        $session = App::start()->getService('session');
         $category = new Category;
         $name = $request->request->get('title');
         $slug = $request->request->get('slug');
@@ -72,22 +84,19 @@ class CategoryController
             $categ->name != $name;
         } else {
             //add category to db and get cat ID
-            $term_id = $category->addCat($name, $parent_id, $slug,  $description);
             $session->flash('success_message', 'kategorija sėkmingai sukurta');
+            $term_id = $category->addCat($name, $parent_id, $slug,  $description);
         }
 
-        // create category page if selected
         $createPage = $request->request->get('page');
         if ($createPage == 1) {
             $category->addPageToCat($name, $term_id, 'page');
         }
 
-        //add category image
+
         if ($request->files->get('image')) {
             $file = $request->files->get('image');
             $image = new Attachment();
-            // $image->setAlt($altText);
-            // $image->setCaption($imgTitle);
             $image->save($file);
             $category->addImageToCat($term_id, "image", $image->ID);
         }
@@ -127,7 +136,7 @@ class CategoryController
             $image->save($file);
             $category->addImageToCat($id, "image", $image->ID);
         }
-        $session->flash('success_message', 'kategorija sėkmingai pakoreguota');
+        // $session->flash('success_message', 'kategorija sėkmingai pakoreguota');
         return new Response;
     }
 

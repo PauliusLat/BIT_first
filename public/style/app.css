@@ -2048,6 +2048,54 @@ button:focus {
 
 /** @format */
 
+.editor {
+  border: solid 1px #ccc;
+  padding: 20px;
+  min-height: 70%;
+  width: 60%;
+}
+
+.editor b,
+.editor strong {
+  font-weight: 800;
+}
+
+.sample-toolbar {
+  border: solid 1px #ddd;
+  background: #f4f4f4;
+  padding: 10px 0 0 0;
+  border-radius: 3px;
+  width: 60%;
+}
+
+.sample-toolbar a {
+  text-decoration: none;
+}
+
+.sample-toolbar .fa-bold {
+  margin: 0 5px 0 10px;
+}
+
+.sample-toolbar .fa-italic {
+  margin: 0 5px 0 5px;
+}
+
+.sample-toolbar .fa-list {
+  margin: 0 5px 0 5px;
+}
+
+.sample-toolbar .fa-link {
+  margin: 0 5px 0 5px;
+}
+
+.sample-toolbar > span {
+  cursor: pointer;
+}
+
+.sample-toolbar > span:hover {
+  text-decoration: underline;
+}
+
 .pages {
   display: inline-block;
 }
@@ -2062,6 +2110,41 @@ button:focus {
 
 .form-control {
   margin-bottom: 20px;
+}
+
+.titleInput {
+  width: 100%;
+  border: solid 1px #cccccc;
+  height: 10%;
+  text-align: center;
+  margin: 0;
+  font-size: 35px;
+  outline: none;
+}
+
+.titleInput:-moz-placeholder-shown {
+  font-size: 35px;
+}
+
+.titleInput:-ms-input-placeholder {
+  font-size: 35px;
+}
+
+.titleInput:placeholder-shown {
+  font-size: 35px;
+}
+
+.titleInput:placeholder {
+  font-size: 35px;
+}
+
+.ql-container {
+  height: 80%;
+}
+
+.ql-container .ql-editor p {
+  font-size: 20px;
+  font-weight: 200;
 }
 
 .page {

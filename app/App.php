@@ -53,6 +53,7 @@ class App
         });
         add_shortcode('front_shortcode', [FrontRoute::class, 'frontRoute']);
         AdminRoute::start();
+        // Cookie::getUuid();
         Session::start();
         ClearCache::start();
 

@@ -5,6 +5,7 @@ use BIT\app\Category;
 // use BIT\app\Tag;
 use BIT\models\NewsPost;
 use BIT\app\App;
+use BIT\app\Cookie;
 use BIT\app\Query;
 // use WP_Query;
 use BIT\app\Page;
@@ -30,30 +31,11 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
+
 App::start();
 
+// $app = App::start();
 
-
-// use BIT\app\Cookie;
-// Cookie::deleteCookie();
-// // _d($session);
-
-// $session = App::start()->getService('session');
-// $session->deleteSession();
-// Session::start()->deleteSession();
-// unset($_COOKIE['Bit']);
-
-// _d($session);
-// $session->set('wvsfvdfvds', 45);
-// _dc($session);
-// $pages = Page::all()->pageState('Site Page')->all();
-// _dc($pages);
-// $session->set('test2', 5622);
-
-// 
-
-// $session->set('testas', 81111);
-// _dc($_SERVER);
 // _dc($session->get('333333333333cassdca'));
 // $server = new Server;
 //
@@ -84,14 +66,12 @@ App::start();
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 
-
-
-// use BIT\models\NewresPost;
 // add_action('init', function () {
-
     // $query = new Query;
-    // $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
-    // _dc($catPages);
+    // $Pages = $query->postOffset('page', 4)->getPost()->all();
+    // _dc($Pages);
+    // $pages = $query->postType('page')->getPost()->all();
+    // _dc($pages);
     // $news = new NewsPost;
     // $news->save();
     // $arr = explode('#', '#oras#astrus#naujas');

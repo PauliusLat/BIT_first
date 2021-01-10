@@ -12,10 +12,9 @@ class Pagination
     private $firstpage;
 
 
-    public function __construct($limit, $number)
+    public function __construct($limit, $number, $total)
     {
         $this->offset = ($number - 1)  * $limit;
-        $total = wp_count_terms('hashtag', ['hide_empty' => false]);
         $this->pages = ceil($total / $limit);
 
         if ($number < $this->pages) {
