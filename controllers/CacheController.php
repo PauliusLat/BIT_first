@@ -46,8 +46,10 @@ class CacheController
 	private function renderView(...$args){
 
 		$arr =['cacheStatus' => $this->getCahceStaus()];
-		foreach ($args as $key => $value) {
-			$arr[$key] = $value;
+		foreach ($args as $value) {
+			foreach ($value as $key => $arg) {
+				$arr[$key] = $arg;
+			}
 		}
 		return View::adminRender('cache.cache', $arr);
 	}

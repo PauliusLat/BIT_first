@@ -1,4 +1,3 @@
-
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1375,6 +1374,7 @@ var Calendar = /*#__PURE__*/function () {
       var curentM = new Date(y, this.date.getMonth() + a, 0);
       var curentY = curentM.toString().slice(11, -47);
       curentM = curentM.toString().slice(4, -55);
+      console.log(curentM);
       var curM = this.translate(curentM);
       curentMth.innerHTML = curentY + ' ' + curM;
       var lastDayM = new Date(y, m + a, 0).getDate();
@@ -2942,8 +2942,7 @@ function init() {
         var title = document.getElementById("page_title").value; // const name = document.getElementById("page_name").value;
         //   const description = document.getElementById("page-description").value;
 
-        var post = document.getElementById('post'); // console.log(post);
-
+        var post = document.getElementById('post');
         var select = post.options[post.selectedIndex].value;
         var pageState = document.getElementById('pageState');
         var selectpageState = pageState.options[pageState.selectedIndex].value; // console.log(select);  
@@ -3021,9 +3020,11 @@ function pageEdit(ID) {
       test.innerHTML = HTML;
     }
 
-    var updateBtn = document.getElementById("pageUpdate");
+    var updateBtn = document.getElementById("pageUpdate"); // console.log(updateBtn)
+
+    var updateId = updateBtn.value; // console.log(updateId)
+
     updateBtn.addEventListener("click", function () {
-      var updateId = updateBtn.value;
       pageUpdate(updateId);
     });
   })["catch"](function (err) {
@@ -3032,18 +3033,24 @@ function pageEdit(ID) {
 }
 
 function pageUpdate(updateId) {
+  // console.log(updateId)
   var title = document.getElementById("page_title").value;
-  console.log(title);
-  var name = document.getElementById("page_name").value;
-  console.log(name);
+  var post = document.getElementById('post');
+  var select = post.options[post.selectedIndex].value; // console.log(select);
+
+  var pageState = document.getElementById('pageState');
+  var selectpageState = pageState.options[pageState.selectedIndex].value; // console.log(selectpageState);
+
+  var name = document.getElementById("page_name").value; // console.log(name);
+
   axios.post(uri + path + "page_update&id=" + updateId, {
     updateId: updateId,
     page_title: title,
-    page_name: name //   page_description: description
-
+    page_name: name,
+    post_type: select,
+    page_state: selectpageState
   }).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {
-      // console.log(response);
       init();
     }
   })["catch"](function (err) {
@@ -3636,4 +3643,3 @@ module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-
 /***/ })
 
 /******/ });
-
