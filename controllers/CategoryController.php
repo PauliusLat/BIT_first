@@ -79,9 +79,10 @@ class CategoryController
 
         //check if category ex 
         $categ = get_term_by('name', $name, 'maincat');
-        if ($categ->name == $name) {
+        if ($name == '') {
+            $session->flash('alert_message', 'įrašykite kategorijos pavadinimą');
+        } elseif ($name == $categ->name && $name != '') {
             $session->flash('alert_message', 'tokiu pavadinimu kategorija jau sukurta');
-            $categ->name != $name;
         } else {
             //add category to db and get cat ID
             $session->flash('success_message', 'kategorija sėkmingai sukurta');
@@ -89,7 +90,7 @@ class CategoryController
         }
 
         $createPage = $request->request->get('page');
-        if ($createPage == 1) {
+        if ($createPage == '0' && $term_id != null) {
             $category->addPageToCat($name, $term_id, 'page');
         }
 
@@ -128,8 +129,12 @@ class CategoryController
         $category = new Category;
         $category->updateCat($id, $name, $slug, $description);
         if ($request->files->get('image')) {
-            $category->deleteCatImage($id);
+            if ($category->getCatImage($id)) {
+                $category->deleteCatImage($id);
+            }
+
             $file = $request->files->get('image');
+
             $image = new Attachment();
             // $image->setAlt($altText);
             // $image->setCaption($imgTitle);

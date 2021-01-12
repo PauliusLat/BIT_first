@@ -59,30 +59,34 @@ class PageController
         $page = new Page;
         $name = $request->request->get('page_title');
         $post = $request->request->get('post_type');
-        if ($request->request->get('page_state') && $request->request->get('page_state') != 'Site_page') {
-            array_push($page->pageState, $request->request->get('page_state'));
+        $state = $request->request->get('page_state');
+        foreach ($state as $value) {
+            array_push($page->pageState, $value);
         }
         $page->setRoute($post);
         $page->setTitle($name);
         $page->save();
-        // _dc($page);
         return new Response;
     }
 
     public function edit(Page $page)
     {
+
         $postContent = $page->post_content;
         $codeArr = str_word_count($postContent, 1);
         $shortcode = explode("'", $codeArr[3])[1];
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
-        $oldValue = 1;
-        foreach ($page->pageState as $key => $value) {
-            if ($value != 'Site_page' && array_key_exists($key, $page->pageState)) {
-                $oldValue = $value;
-            }
-        }
+        // $oldValue = 1;
+        // foreach ($page->pageState as $key => $value) {
+        //     if ($value != 'Site_page' && array_key_exists($key, $page->pageState)) {
+        //         $oldValue = $value;
+        //     }
+        // }
+        // _dc($menu_page_state);
+        // _dc($page->pageState);
+
         $ID = $page->ID;
         $output = View::adminRender('page.edit',  ['page' => $page, 'oldValue' => $oldValue, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'shortcode' => $shortcode, 'ID' => $ID]);
         return new JsonResponse(['html' => $output]);
@@ -94,16 +98,16 @@ class PageController
         $title = $request->request->get('page_title');
         $post = $request->request->get('post_type');
         $pagestate = $request->request->get('page_state');
-        foreach ($page->pageState as $key => $value) {
-            if ($value != 'Site_page' && array_key_exists($key, $page->pageState)) {
-                $replace = [$key => $pagestate];
-                $page->pageState = array_replace($page->pageState, $replace);
-            }
+        $state = ['Site_page'];
+        foreach ($pagestate as $value) {
+            array_push($state, $value);
         }
+        $page->pageState = $state;
         $page->setRoute($post);
         $page->setTitle($title);
         $page->post_name = $request->request->get('page_name');
         $page->save();
+        _dc($page);
         return new JsonResponse;
     }
 

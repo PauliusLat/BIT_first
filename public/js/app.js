@@ -1,4 +1,3 @@
-
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1256,6 +1255,7 @@ var Calendar = /*#__PURE__*/function () {
       var curentM = new Date(y, this.date.getMonth() + a, 0);
       var curentY = curentM.toString().slice(11, -47);
       curentM = curentM.toString().slice(4, -55);
+      console.log(curentM);
       var curM = this.translate(curentM);
       curentMth.innerHTML = curentY + ' ' + curM;
       var lastDayM = new Date(y, m + a, 0).getDate();
@@ -1640,7 +1640,7 @@ function catStore(name, select, slug, description, selectedPage) {
 }
 
 function catEdit(editID, taxonomy) {
-  console.log(name);
+  // console.log(name)
   axios.post(uri + path + "category_edit&id=" + editID, {
     editID: editID,
     taxonomy_type: taxonomy
@@ -1664,6 +1664,7 @@ function catEdit(editID, taxonomy) {
 }
 
 function catUpdate(updateId) {
+  console.log(updateId);
   var name = document.getElementById("category_name").value;
   var slug = document.getElementById("category_slug").value;
   var description = document.getElementById("category_description").value;
@@ -2818,13 +2819,20 @@ function init() {
         var title = document.getElementById("page_title").value; // const name = document.getElementById("page_name").value;
         //   const description = document.getElementById("page-description").value;
 
-        var post = document.getElementById('post'); // console.log(post);
-
+        var post = document.getElementById('post');
         var select = post.options[post.selectedIndex].value;
-        var pageState = document.getElementById('pageState');
-        var selectpageState = pageState.options[pageState.selectedIndex].value; // console.log(select);  
+        var stateArray = [];
+        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
 
-        pageStore(title, select, name, selectpageState);
+        for (var i = 0; i < checkboxes.length; i++) {
+          stateArray.push(checkboxes[i].value);
+        }
+
+        console.log(stateArray); // let pageState = document.getElementById('pageState');
+        // let selectpageState = pageState.options[pageState.selectedIndex].value;
+        // console.log(select);  
+
+        pageStore(title, select, stateArray);
       });
       var editBtn = pageStrt.querySelectorAll(".page-edit");
 
@@ -2871,12 +2879,13 @@ function init() {
   ;
 }
 
-function pageStore(title, select, name, selectpageState) {
+function pageStore(title, select, stateArray) {
+  console.log(stateArray);
   axios.post(uri + path + "page_store", {
     page_title: title,
-    page_name: name,
+    // page_name: name,
     post_type: select,
-    page_state: selectpageState
+    page_state: stateArray
   }).then(function (response) {
     console.log(response);
     init();
@@ -2897,9 +2906,11 @@ function pageEdit(ID) {
       test.innerHTML = HTML;
     }
 
-    var updateBtn = document.getElementById("pageUpdate");
+    var updateBtn = document.getElementById("pageUpdate"); // console.log(updateBtn)
+
+    var updateId = updateBtn.value; // console.log(updateId)
+
     updateBtn.addEventListener("click", function () {
-      var updateId = updateBtn.value;
       pageUpdate(updateId);
     });
   })["catch"](function (err) {
@@ -2908,18 +2919,30 @@ function pageEdit(ID) {
 }
 
 function pageUpdate(updateId) {
+  // console.log(updateId)
   var title = document.getElementById("page_title").value;
-  console.log(title);
-  var name = document.getElementById("page_name").value;
-  console.log(name);
+  var post = document.getElementById('post');
+  var select = post.options[post.selectedIndex].value; // console.log(select);
+
+  var stateArray = [];
+  var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+  for (var i = 0; i < checkboxes.length; i++) {
+    stateArray.push(checkboxes[i].value);
+  }
+
+  console.log(stateArray); // console.log(selectpageState);
+
+  var name = document.getElementById("page_name").value; // console.log(name);
+
   axios.post(uri + path + "page_update&id=" + updateId, {
     updateId: updateId,
     page_title: title,
-    page_name: name //   page_description: description
-
+    page_name: name,
+    post_type: select,
+    page_state: stateArray
   }).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {
-      // console.log(response);
       init();
     }
   })["catch"](function (err) {
@@ -3512,4 +3535,3 @@ module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-
 /***/ })
 
 /******/ });
-

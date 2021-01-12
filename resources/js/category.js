@@ -116,7 +116,7 @@ function catStore(name, select, slug, description, selectedPage) {
 
 function catEdit(editID, taxonomy) {
 
-  console.log(name)
+  // console.log(name)
   axios
     .post(uri + path + "category_edit&id=" + editID, {
       editID: editID,
@@ -142,6 +142,7 @@ function catEdit(editID, taxonomy) {
 }
 
 function catUpdate(updateId) {
+  console.log(updateId)
   const name = document.getElementById("category_name").value;
   const slug = document.getElementById("category_slug").value;
   const description = document.getElementById("category_description").value;

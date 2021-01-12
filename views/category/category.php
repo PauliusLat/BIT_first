@@ -56,7 +56,7 @@ if (!function_exists('wp_terms_checklist')) {
         <br><br>
 
         <input type="checkbox" id="catPage" name="catPage" value="catPage">
-        <label for="catPage">Sukurti kategorijos puslapį</label><br>
+        <label for="catPage">Nekurti kategorijos puslapio</label><br>
 
         <div class='label'>
             <label class="tcp-label">Kategorijos aprašymas</label>

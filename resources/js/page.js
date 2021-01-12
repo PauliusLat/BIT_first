@@ -30,10 +30,17 @@ function init() {
 
           let post = document.getElementById('post');
           let select = post.options[post.selectedIndex].value;
-          let pageState = document.getElementById('pageState');
-          let selectpageState = pageState.options[pageState.selectedIndex].value;
+
+          let stateArray = []
+          let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+          for (let i = 0; i < checkboxes.length; i++) {
+            stateArray.push(checkboxes[i].value)
+          }
+          console.log(stateArray);
+          // let pageState = document.getElementById('pageState');
+          // let selectpageState = pageState.options[pageState.selectedIndex].value;
           // console.log(select);  
-        pageStore(title, select, name, selectpageState);
+        pageStore(title, select, stateArray);
         });
 
         const editBtn = pageStrt.querySelectorAll(".page-edit");
@@ -79,13 +86,14 @@ function init() {
   ;
 }
 
-function pageStore(title, select, name, selectpageState) {
+function pageStore(title, select, stateArray) {
+  console.log(stateArray);
   axios
     .post(uri + path + "page_store", {
       page_title: title,
-      page_name: name,
+      // page_name: name,
       post_type: select,
-      page_state: selectpageState
+      page_state: stateArray
     })
     .then(function(response) {
       console.log(response);
@@ -128,8 +136,12 @@ function pageUpdate(updateId) {
   const post = document.getElementById('post');
   const select = post.options[post.selectedIndex].value;
   // console.log(select);
-  const pageState = document.getElementById('pageState');
-  const selectpageState = pageState.options[pageState.selectedIndex].value;
+  let stateArray = []
+  let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+  for (let i = 0; i < checkboxes.length; i++) {
+    stateArray.push(checkboxes[i].value)
+  }
+  console.log(stateArray);
   // console.log(selectpageState);
   const name = document.getElementById("page_name").value;
   // console.log(name);
@@ -140,7 +152,7 @@ function pageUpdate(updateId) {
       page_title: title,
       page_name: name,
       post_type: select,
-      page_state: selectpageState
+      page_state: stateArray
     })
     .then(function(response) {
       if (response.status == 200 && response.statusText == "OK") {

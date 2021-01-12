@@ -5,11 +5,9 @@
 
     <div class="sm-1-2">
         <h2 class='tcp'>Pridėkite naują puslapį</h2>
-
         <div class='label'>
             <label class="tcp-label">Puslapio antraštė</label>
         </div>
-
 
         <input type="text" name="page_title" id="page_title" value="" placeholder="Įrašykite puslapio pavadinimą..." class="tcp-input">
 
@@ -18,33 +16,20 @@
         </div>
         <select class="form-control" name="post-type" id="post">
             <?php
-            // $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
-            if ($post_types) {
-                foreach ($post_types as $post => $args) {
-            ?>
-                    <option value="<?= $post ?>"><?= $post ?></option>
-            <?php
-                }
-            }
+            foreach ($post_types as $post => $args) : ?>
+                <option value="<?= $post ?>"><?= $post ?></option>
+            <?php endforeach;
             ?>
         </select>
 
         <div class='label'>
-            <label class="tcp-label">Pasirinkite puslapio rūšį</label>
+            <label class="tcp-label">Pasirinkite puslapio rūšį/rūšis</label>
         </div>
 
-        <select class="form-control" name="page-state" id="pageState">
-            <?php
-            // $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
-            if ($menu_page_state) {
-                foreach ($menu_page_state as $args) {
-            ?>
-                    <option value="<?= $args ?>"><?= $args ?></option>
-            <?php
-                }
-            }
-            ?>
-        </select>
+        <?php foreach ($menu_page_state as $args) : ?>
+            <input type="checkbox" name="pageState" value="<?= $args ?>">
+            <label for="pageState"> <?= $args ?></label><br><br>
+        <?php endforeach; ?>
         <div class="buttons">
             <button type="submit" id="create" class="btn-blue">Pridėti</button>
         </div>
@@ -57,12 +42,11 @@
             <!-- <th>Puslapio pavadinimas</th> -->
             <th>Puslapio rūšis</th>
             <th>Veiksmai</th>
-            <?php
 
+            <?php
             $pageNum = 1;
             $nav = '';
             for ($currpage = 1; $currpage <= $pagesnr; $currpage++) {
-
                 $nav .= '&nbsp <a class=" paging nr-' . $currpage . '" id = "' . $currpage . ' ">' . $currpage . '</a> ';
                 $next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';
                 $prev = '<a class="paging" id = "' . $prevpage . ' "><</a>';
@@ -90,8 +74,7 @@
             echo $first . $prev . $nav . $next . $last;
             echo '</div>';
 
-            foreach ($pages as $page) {
-            ?>
+            foreach ($pages as $page) : ?>
                 <tr>
                     <td><?= $page->post_title ?></td>
                     <td>
@@ -105,12 +88,9 @@
                     ?>
                         <td>
                             <?php
-                            foreach ($page->pageState as $value) {
-                            ?>
+                            foreach ($page->pageState as $value) : ?>
                                 <div><?= $value ?></div>
-                            <?php
-                            }
-                            ?>
+                            <?php endforeach; ?>
                         </td>
                     <?php
                     } else {
@@ -119,16 +99,12 @@
                     <?php
                     }
                     ?>
-
-
                     <td>
                         <button class="page-edit btn-blue" type="submit" name="page-name" id="<?= $page->post_title ?>" value="<?= $page->ID ?>">Edit</button>
                         <button class="page-delete btn-red" type="submit" name="pageDelete" id="<?= $page->post_title ?>" value="<?= $page->ID ?>">Delete</button>
                     </td>
                 </tr>
-            <?php
-            }
-            ?>
+            <?php endforeach; ?>
         </table>
     </div>
 </div>

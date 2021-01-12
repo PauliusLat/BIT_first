@@ -18,7 +18,7 @@
         </div>
     </div>
 </div>
-<div class="galleryContainer" id="loadeGallery">
+<div class="galleryContainer cat" id="loadeGallery">
     <output class="gallerGrid" id='result' />
     <div id="message">
         <div class="wrapper">

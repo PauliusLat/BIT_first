@@ -9,7 +9,7 @@ return [
     'main' => [
         'category' => 'Category_page',
         'menu' => 'Menu_page',
-        'contacts' => 'Contacts_page',
-        'faq' => 'FAQ_page',
+        // 'contacts' => 'Contacts_page',
+        // 'faq' => 'FAQ_page',
     ]
 ];
