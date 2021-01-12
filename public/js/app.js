@@ -857,6 +857,122 @@ try {
 
 /***/ }),
 
+/***/ "./resources/js/albumList.js":
+/*!***********************************!*\
+  !*** ./resources/js/albumList.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var AlbumList = /*#__PURE__*/function () {
+  function AlbumList(target) {
+    _classCallCheck(this, AlbumList);
+
+    this.target = target;
+    this.api = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.init();
+  }
+
+  _createClass(AlbumList, [{
+    key: "init",
+    value: function () {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this = this;
+
+        var DOM;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                DOM = document.getElementById(this.target);
+
+                if (!DOM) {
+                  _context2.next = 3;
+                  break;
+                }
+
+                return _context2.delegateYield( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+                  var deleteApi, listApi, HTML, deleteAlbum, _loop, i;
+
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          deleteApi = 'album-destroy&id=';
+                          listApi = 'album-list';
+                          _context.next = 4;
+                          return _this.api.getDAta(listApi);
+
+                        case 4:
+                          HTML = _context.sent;
+                          DOM.innerHTML = HTML;
+                          deleteAlbum = document.querySelectorAll(".deleteAlbum");
+
+                          _loop = function _loop(i) {
+                            var deleteId = deleteAlbum[i].id;
+                            deleteAlbum[i].addEventListener("click", function () {
+                              _this.api["delete"](deleteApi, deleteId);
+
+                              setTimeout(location.reload(), 500);
+                            });
+                          };
+
+                          for (i = 0; i < deleteAlbum.length; i++) {
+                            _loop(i);
+                          }
+
+                        case 9:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }
+                  }, _callee);
+                })(), "t0", 3);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function init() {
+        return _init.apply(this, arguments);
+      }
+
+      return init;
+    }()
+  }]);
+
+  return AlbumList;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (AlbumList);
+
+/***/ }),
+
 /***/ "./resources/js/api.js":
 /*!*****************************!*\
   !*** ./resources/js/api.js ***!
@@ -1157,9 +1273,12 @@ var Calendar = /*#__PURE__*/function () {
 
       if (exisitClassMonth == 1) {
         var nowM = new Date(this.y, this.date.getMonth());
+        console.log(nowM);
         var nowY = nowM.toString().slice(11, -47);
         nowM = nowM.toString().slice(4, -55);
+        console.log(nowM);
         nowM = this.translate(nowM);
+        console.log(nowM);
         document.getElementById("calendar-month").innerHTML = nowY + ' ' + nowM;
       }
 
@@ -1265,6 +1384,8 @@ var Calendar = /*#__PURE__*/function () {
   }, {
     key: "translate",
     value: function translate(curentM) {
+      console.log(curentM);
+
       switch (curentM) {
         case 'Jan':
           return curentM = 'Sausis';
@@ -1993,9 +2114,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
 /* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 /* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
-/* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
-/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./light_box */ "./resources/js/light_box.js");
-/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_light_box__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _albumList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./albumList */ "./resources/js/albumList.js");
+/* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
+/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./light_box */ "./resources/js/light_box.js");
+/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_light_box__WEBPACK_IMPORTED_MODULE_11__);
 /** @format */
  // import startGallery from './gallery.js';
 
@@ -2011,14 +2133,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
  // new TextEditor('.news-container')
 
 new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
 new _news__WEBPACK_IMPORTED_MODULE_6__["default"]('startNewsAdmin');
 new _newsList__WEBPACK_IMPORTED_MODULE_8__["default"]('startNweaList');
-new _editPost__WEBPACK_IMPORTED_MODULE_9__["default"]('.editStart');
+new _editPost__WEBPACK_IMPORTED_MODULE_10__["default"]('.editStart');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
 new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
+new _albumList__WEBPACK_IMPORTED_MODULE_9__["default"]('startAlbumList');
 
 /***/ }),
 

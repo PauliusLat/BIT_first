@@ -15,7 +15,10 @@ return [
 
 	'idejos' => 'IdeAdminController@adminIndex',
 
-	'galerija' => 'GalleryAdminController@adminIndex',
+	'galerija' => 'GalleryAdminController@index',
+	'galerija@' => ['0def' => 'GalleryAdminController@index',
+					'0edit' => 'GalleryAdminController@edit'
+					],
 
 	// 'kategorija' => 'CategoryFrontController@index',
 
