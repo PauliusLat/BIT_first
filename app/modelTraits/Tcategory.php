@@ -57,6 +57,13 @@ trait Tcategory
         }
     }
 
+    public function getCatParent($term_id, $taxonomy = 'maincat')
+    {
+        // $args = ['inclusive' => false];
+        $array = get_ancestors($term_id, $taxonomy);
+        return array_shift($array);
+    }
+
     public function updateCat(int $id, string $name, string $slug, string $description = '',  $parent_id = 0,  $taxonomy_type = 'maincat')
     {
         if (did_action('init')) {

@@ -66,7 +66,12 @@ App::start();
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 
-// add_action('init', function () {
+add_action('init', function () {
+    // $category = new Category;
+    // $cat = $category->getCatParent(275);
+    // // $cat =  get_ancestors(275, 'maincat',);
+    // _dc($cat);
+
     // $query = new Query;
     // $Pages = $query->postOffset('page', 4)->getPost()->all();
     // _dc($Pages);
@@ -240,4 +245,4 @@ App::start();
     // function flattenWithKeys(array $array, $childPrefix = '.', $root = '', $result = array()) {
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
-// });
+});

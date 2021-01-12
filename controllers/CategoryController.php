@@ -113,8 +113,9 @@ class CategoryController
         $category = $cat->getCat($id, $taxonomy_type);
         $catImage = $cat->getCatImage($category->term_id);
         $urlImg = $catImage->getUrl();
+        $parent = $cat->getCatParent($id);
         $pageLink = $cat->getCatPageLink($category->term_id);
-        $output = View::adminRender('category.edit',  ['category' => $category, 'urlImg' =>  $urlImg, 'pageLink' => $pageLink, 'catImage' => $catImage]);
+        $output = View::adminRender('category.edit',  ['category' => $category, 'urlImg' =>  $urlImg, 'pageLink' => $pageLink, 'catImage' => $catImage, 'parent' => $parent]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -124,17 +125,21 @@ class CategoryController
         $name = $request->request->get('cat_name');
         $slug = $request->request->get('cat_slug');
         $description = $request->request->get('cat_description');
+        if ($request->request->get('cat_parent')) {
+            $parent_id = $request->request->get('cat_parent');
+        } else {
+            $parent_id = 0;
+        }
         $id = $request->request->get('updateId');
         //update cat and cat page
         $category = new Category;
-        $category->updateCat($id, $name, $slug, $description);
+        $category->updateCat($id, $name, $slug, $description, $parent_id);
         if ($request->files->get('image')) {
             if ($category->getCatImage($id)) {
                 $category->deleteCatImage($id);
             }
 
             $file = $request->files->get('image');
-
             $image = new Attachment();
             // $image->setAlt($altText);
             // $image->setCaption($imgTitle);

@@ -1664,14 +1664,23 @@ function catEdit(editID, taxonomy) {
 }
 
 function catUpdate(updateId) {
-  console.log(updateId);
   var name = document.getElementById("category_name").value;
   var slug = document.getElementById("category_slug").value;
   var description = document.getElementById("category_description").value;
+  var parent = document.getElementById('cat');
+  var select;
+
+  if (parent.options[parent.selectedIndex] != undefined) {
+    select = parent.options[parent.selectedIndex].value;
+  } else {
+    select = 0;
+  }
+
   var api = "category_update";
   var obj = {
     api: api,
     updateId: updateId,
+    cat_parent: select,
     cat_name: name,
     cat_slug: slug,
     cat_description: description

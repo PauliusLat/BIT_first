@@ -128,7 +128,6 @@ function catEdit(editID, taxonomy) {
         const HTML = response.data.html;
         test.innerHTML = HTML;
         readImage.image();
-
       }
       const updateBtn = document.getElementById("catUpdate");
       updateBtn.addEventListener("click", () => {
@@ -142,15 +141,23 @@ function catEdit(editID, taxonomy) {
 }
 
 function catUpdate(updateId) {
-  console.log(updateId)
   const name = document.getElementById("category_name").value;
   const slug = document.getElementById("category_slug").value;
   const description = document.getElementById("category_description").value;
+  let parent = document.getElementById('cat');
+  let select;
+  if (parent.options[parent.selectedIndex] != undefined) {
+    select = parent.options[parent.selectedIndex].value;
+  } else {
+    select = 0;
+  }
+
   const api = "category_update";
 
   let obj = {
     api: api,
     updateId: updateId,
+    cat_parent: select,
     cat_name: name,
     cat_slug: slug,
     cat_description: description
