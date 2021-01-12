@@ -13,6 +13,7 @@ import Calendar from './calendar.js';
 import News from './news';
 import Profile_image from './profile_image';
 import NewsList from './newsList';
+import AlbumList from './albumList';
 import EditPost from './editPost';
 import lightbox from './light_box';
 
@@ -23,6 +24,7 @@ new NewsList('startNweaList');
 new EditPost('.editStart');
 new Tag('tagStart');
 new Menu('menuStart');
+new AlbumList('startAlbumList');
 
 
 
