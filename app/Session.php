@@ -21,11 +21,11 @@ class Session
         $transient = Transient::start();
         self::$array = $transient->newValue;
         self::$array[$a] = $b;
-        if (is_array(self::$array)) {
-            return self::$array;
-        } else {
-            throw new SessionArgsExeption('Error: session set should be an array');
-        }
+        // if (is_array(self::$array)) {
+        return self::$array;
+        //     } else {
+        //         throw new SessionArgsExeption('Error: session set should be an array');
+        //     }
     }
 
     public function flash($a, $b)
@@ -34,11 +34,11 @@ class Session
         self::$array = $transient->newValue;
         self::$array[$a] = $b;
         array_push(self::$array, 'autodelete_' . $a);
-        if (is_array(self::$array)) {
-            return self::$array;
-        } else {
-            throw new SessionArgsExeption('Error: session set should be an array');
-        }
+        // if (is_array(self::$array)) {
+        return self::$array;
+        // } else {
+        //     throw new SessionArgsExeption('Error: session set should be an array');
+        // }
     }
 
     public function get($index)
@@ -79,10 +79,15 @@ class Session
 
     public function deleteSession()
     {
-        $transient = Transient::start();
-        $transient->deleteTransient();
+        Transient::start()->deleteTransient();
         Cookie::deleteCookie();
+        //self::$obj = null;
     }
+
+    // public function __destruct()
+    // {
+    //     self::$obj = null;
+    // }
 
     public function __get($dir)
     {

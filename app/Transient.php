@@ -24,38 +24,35 @@ class Transient
 
     private function __construct()
     {
-        $this->name = (string)Cookie::getUuid();
-// if/else pridejau
-        // if(get_transient($this->name)){
-            $this->value = get_transient($this->name);
-        // }else{
-        // set_transient($this->name, Session::$array);
-        // $this->value = get_transient($this->name);
-
-        // }
-        
-        $this->newValue = $this->value;
-
-        if($this->newValue){
+        $this->name = Cookie::getUuid();
+        // _dc($this->name);
+        $this->value = get_transient($this->name);
+        // _dc($this->value);
+        if ($this->value) {
+            $this->newValue = $this->value;
             foreach ($this->newValue as $index => $string) {
                 if (is_array($string)) {
                     continue;
                 }
                 if (strpos($string, 'autodelete') !== FALSE)
-                unset($this->newValue[$index]);
-                $namee = substr($string, 11);
+                    unset($this->newValue[$index]);
+                $name = substr($string, 11);
             }
-            
+
             foreach ($this->newValue as $index => $string) {
-                if ($index == $namee) {
+                if ($index == $name) {
                     unset($this->newValue[$index]);
                 }
             }
+        } else {
+            $this->value = null;
+            // $this->newValue = $this->value;
         }
     }
 
     public function deleteTransient()
     {
+        // _dc($this->name);
         delete_transient($this->name);
     }
 
@@ -68,11 +65,10 @@ class Transient
     public function __destruct()
     {
         $setValue = Session::$array;
-
-        if ($this->name && is_array($setValue) && isset($_COOKIE['Bit'])) {
+        if ($this->name && is_array($setValue) && isset($_COOKIE[Cookie::COOKIENAME])) {
             set_transient($this->name, $setValue);
         } else {
-            throw new SessionArgsExeption('Error: session set should be an array and name can not be set');
+            throw new SessionArgsExeption('Error: Cookie name should be set');
         }
     }
 }

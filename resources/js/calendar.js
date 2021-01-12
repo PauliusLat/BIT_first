@@ -144,6 +144,7 @@ class Calendar {
         let curentM = new Date(y, this.date.getMonth() + a, 0);
         let curentY = curentM.toString().slice(11, -47);
         curentM = curentM.toString().slice(4, -55);
+        console.log(curentM);
         let curM = this.translate(curentM);
         curentMth.innerHTML = curentY + ' ' + curM;
         let lastDayM = new Date(y, m + a, 0).getDate();
