@@ -87,7 +87,7 @@ class NewsAdminController
 
 	public function listPost(Request $request)
 	{
-		$uri = admin_url('admin.php?page=0edit');
+		$uri = admin_url('admin.php?page=news-0edit');
 		$allNews = NewsPost::all()->all();
 		$output = View::adminRender('news.renderList', ['html' => $allNews,  'uri' => $uri]);
 		$response = new JsonResponse(['html' => $output]);

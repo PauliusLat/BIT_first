@@ -3,7 +3,7 @@
 use BIT\app\App;
 ?>
 
-<div class='tagCreate grid-container'>
+<!-- <div class='tagCreate grid-container'>
     <div class="sm-1">
         <h1 class="tcp">Tagai</h1>
     </div>
@@ -146,4 +146,4 @@ use BIT\app\App;
 
 
     </div>
-</div>
+</div> -->

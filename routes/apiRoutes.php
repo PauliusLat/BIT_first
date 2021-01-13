@@ -31,6 +31,8 @@ return [
 	'gallery-create-front' => 'GalleryFrontController@create',
 
 	'album-create-admin' => 'AlbumFrontController@create',
+	'album-list' => 'GalleryAdminController@renderList',
+	'album-destroy' => 'GalleryAdminController@delete',
 
 	'news-list' => 'NewsAdminController@listPost',
 	'news-store' => 'NewsAdminController@store',
@@ -62,4 +64,8 @@ return [
 	'menu_update' => 'FrontMenuController@update',
 	'menu_destroy' => 'FrontMenuController@destroy',
 	'menu_edit' => 'FrontMenuController@edit',
+
+	'cache_clear' => 'CacheController@clearCache',
+	'cache_enable' => 'CacheController@enableCache',
+	'cache_disable' => 'CacheController@disableCache'
 ];

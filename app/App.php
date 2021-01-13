@@ -10,6 +10,7 @@ use BIT\app\Config;
 use BIT\app\FrontRouter;
 use BIT\app\AdminRoute;
 use BIT\app\Cookie;
+use BIT\cache\ClearCache;
 use BIT\models\IdeaPost;
 
 class App
@@ -53,6 +54,10 @@ class App
         add_shortcode('front_shortcode', [FrontRoute::class, 'frontRoute']);
         AdminRoute::start();
         Session::start();
+        // ClearCache::start();
+
+        // require_once __DIR__.'/../cache/clearCache.php';
+
     }
 
     public function getService($service)

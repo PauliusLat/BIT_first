@@ -1,4 +1,3 @@
-
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -858,6 +857,300 @@ try {
 
 /***/ }),
 
+/***/ "./resources/js/Oldpage.js":
+/*!*********************************!*\
+  !*** ./resources/js/Oldpage.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+
+var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+var uri = document.location.origin;
+var pageStrt = document.getElementById("pageStart"); // console.log(pageStrt);
+
+function startPage() {
+  if (pageStrt) {
+    window.addEventListener("load", init, false);
+  }
+}
+
+function init() {
+  axios.post(uri + path + "page_create", {}).then(function (response) {
+    var test = document.querySelector(".innerpage");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+      var submit = document.getElementById("create");
+      submit.addEventListener("click", function () {
+        var title = document.getElementById("page_title").value;
+        var post = document.getElementById('post');
+        var select = post.options[post.selectedIndex].value;
+        var stateArray = [];
+        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+        for (var i = 0; i < checkboxes.length; i++) {
+          stateArray.push(checkboxes[i].value);
+        }
+
+        console.log(stateArray); // let pageState = document.getElementById('pageState');
+        // let selectpageState = pageState.options[pageState.selectedIndex].value;
+        // console.log(select);  
+
+        pageStore(title, select, stateArray);
+      });
+      var editBtn = pageStrt.querySelectorAll(".page-edit");
+
+      var _loop = function _loop(i) {
+        var ID = editBtn[i].value; //   console.log(ID);
+        //   let page = editBtn[i].id;
+
+        editBtn[i].addEventListener("click", function () {
+          pageEdit(ID);
+        }, false);
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop(i);
+      }
+
+      var deleteBtn = document.querySelectorAll(".page-delete");
+
+      var _loop2 = function _loop2(_i) {
+        var ID = deleteBtn[_i].value;
+
+        deleteBtn[_i].addEventListener("click", function () {
+          pageDelete(ID);
+        }, false);
+      };
+
+      for (var _i = 0; _i < deleteBtn.length; _i++) {
+        _loop2(_i);
+      }
+    }
+  })["catch"](function (error) {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
+    }
+
+    console.log(error);
+  });
+  ;
+}
+
+function pageStore(title, select, stateArray) {
+  console.log(stateArray);
+  axios.post(uri + path + "page_store", {
+    page_title: title,
+    // page_name: name,
+    post_type: select,
+    page_state: stateArray
+  }).then(function (response) {
+    console.log(response);
+    init();
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+  document.getElementById("page_title").value = "";
+}
+
+function pageEdit(ID) {
+  axios.post(uri + path + "page_edit&id=" + ID, {
+    editID: ID
+  }).then(function (response) {
+    var test = document.querySelector(".innerpage");
+
+    if (response.status == 200 && response.statusText == "OK") {
+      var HTML = response.data.html;
+      test.innerHTML = HTML;
+    }
+
+    var updateBtn = document.getElementById("pageUpdate"); // console.log(updateBtn)
+
+    var updateId = updateBtn.value; // console.log(updateId)
+
+    updateBtn.addEventListener("click", function () {
+      pageUpdate(updateId);
+    });
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function pageUpdate(updateId) {
+  // console.log(updateId)
+  var title = document.getElementById("page_title").value;
+  var post = document.getElementById('post');
+  var select = post.options[post.selectedIndex].value;
+  var stateArray = [];
+  var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+  for (var i = 0; i < checkboxes.length; i++) {
+    stateArray.push(checkboxes[i].value);
+  }
+
+  console.log(stateArray); // console.log(selectpageState);
+
+  var name = document.getElementById("page_name").value; // console.log(name);
+
+  axios.post(uri + path + "page_update&id=" + updateId, {
+    updateId: updateId,
+    page_title: title,
+    page_name: name,
+    post_type: select,
+    page_state: stateArray
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      init();
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+function pageDelete(ID) {
+  axios.post(uri + path + "page_destroy&id=" + ID, {
+    deleteID: ID
+  }).then(function (response) {
+    if (response.status == 200 && response.statusText == "OK") {
+      console.log(response);
+      init();
+    }
+  })["catch"](function (err) {
+    console.log(err instanceof TypeError);
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (startPage());
+
+/***/ }),
+
+/***/ "./resources/js/albumList.js":
+/*!***********************************!*\
+  !*** ./resources/js/albumList.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var AlbumList = /*#__PURE__*/function () {
+  function AlbumList(target) {
+    _classCallCheck(this, AlbumList);
+
+    this.target = target;
+    this.api = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.init();
+  }
+
+  _createClass(AlbumList, [{
+    key: "init",
+    value: function () {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this = this;
+
+        var DOM;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                DOM = document.getElementById(this.target);
+
+                if (!DOM) {
+                  _context2.next = 3;
+                  break;
+                }
+
+                return _context2.delegateYield( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+                  var deleteApi, listApi, HTML, deleteAlbum, _loop, i;
+
+                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          deleteApi = 'album-destroy&id=';
+                          listApi = 'album-list';
+                          _context.next = 4;
+                          return _this.api.getDAta(listApi);
+
+                        case 4:
+                          HTML = _context.sent;
+                          DOM.innerHTML = HTML;
+                          deleteAlbum = document.querySelectorAll(".deleteAlbum");
+
+                          _loop = function _loop(i) {
+                            var deleteId = deleteAlbum[i].id;
+                            deleteAlbum[i].addEventListener("click", function () {
+                              _this.api["delete"](deleteApi, deleteId);
+
+                              setTimeout(location.reload(), 500);
+                            });
+                          };
+
+                          for (i = 0; i < deleteAlbum.length; i++) {
+                            _loop(i);
+                          }
+
+                        case 9:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }
+                  }, _callee);
+                })(), "t0", 3);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function init() {
+        return _init.apply(this, arguments);
+      }
+
+      return init;
+    }()
+  }]);
+
+  return AlbumList;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (AlbumList);
+
+/***/ }),
+
 /***/ "./resources/js/api.js":
 /*!*****************************!*\
   !*** ./resources/js/api.js ***!
@@ -1016,7 +1309,7 @@ var Api = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!obj.api) {
-                  _context2.next = 17;
+                  _context2.next = 18;
                   break;
                 }
 
@@ -1025,42 +1318,42 @@ var Api = /*#__PURE__*/function () {
 
                 for (key in obj) {
                   formData.append(key, obj[key]);
-                } // console.log(Object.fromEntries(formData))
+                }
 
-
-                _context2.next = 6;
+                console.log(Object.fromEntries(formData));
+                _context2.next = 7;
                 return axios.post(this.uri + this.path + obj.api, formData, {});
 
-              case 6:
+              case 7:
                 response = _context2.sent;
 
                 if (!(response.status == 200 && response.statusText == "OK")) {
-                  _context2.next = 11;
+                  _context2.next = 12;
                   break;
                 }
 
-                _context2.next = 10;
+                _context2.next = 11;
                 return response.data.html;
 
-              case 10:
+              case 11:
                 return _context2.abrupt("return", _context2.sent);
 
-              case 11:
-                _context2.next = 17;
+              case 12:
+                _context2.next = 18;
                 break;
 
-              case 13:
-                _context2.prev = 13;
+              case 14:
+                _context2.prev = 14;
                 _context2.t0 = _context2["catch"](1);
                 console.error(_context2.t0);
                 console.log("Duomenys is serveverio nepasiekiami !!!");
 
-              case 17:
+              case 18:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[1, 13]]);
+        }, _callee2, this, [[1, 14]]);
       }));
 
       function getPostData(_x2) {
@@ -1158,9 +1451,12 @@ var Calendar = /*#__PURE__*/function () {
 
       if (exisitClassMonth == 1) {
         var nowM = new Date(this.y, this.date.getMonth());
+        console.log(nowM);
         var nowY = nowM.toString().slice(11, -47);
         nowM = nowM.toString().slice(4, -55);
+        console.log(nowM);
         nowM = this.translate(nowM);
+        console.log(nowM);
         document.getElementById("calendar-month").innerHTML = nowY + ' ' + nowM;
       }
 
@@ -1256,6 +1552,7 @@ var Calendar = /*#__PURE__*/function () {
       var curentM = new Date(y, this.date.getMonth() + a, 0);
       var curentY = curentM.toString().slice(11, -47);
       curentM = curentM.toString().slice(4, -55);
+      console.log(curentM);
       var curM = this.translate(curentM);
       curentMth.innerHTML = curentY + ' ' + curM;
       var lastDayM = new Date(y, m + a, 0).getDate();
@@ -1266,6 +1563,8 @@ var Calendar = /*#__PURE__*/function () {
   }, {
     key: "translate",
     value: function translate(curentM) {
+      console.log(curentM);
+
       switch (curentM) {
         case 'Jan':
           return curentM = 'Sausis';
@@ -1532,170 +1831,367 @@ var Calendar = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
+/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var catStrt = document.getElementById("catStart");
-var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_0__["default"]();
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-function startCat() {
-  if (catStrt) {
-    window.addEventListener("load", init, false);
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+var Category = /*#__PURE__*/function () {
+  function Category(target) {
+    _classCallCheck(this, Category);
+
+    var api = "category_create";
+    this.api = api;
+    this.target = target;
+    this.pages = 5;
+    this.page = new _pagination__WEBPACK_IMPORTED_MODULE_2__["default"](api);
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.changes;
+    this.init();
+    this.readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_3__["default"]();
   }
-}
 
-function init() {
-  axios.post(uri + path + "category_create", {}).then(function (response) {
-    var test = document.querySelector(".innercat");
+  _createClass(Category, [{
+    key: "init",
+    value: function () {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this = this;
 
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-      readImage.image();
+        var hash,
+            HTML,
+            DOM,
+            inner,
+            obj,
+            addColor,
+            changes,
+            option,
+            selected,
+            _args2 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
+                HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
+                DOM = document.getElementById(this.target);
+                inner = document.querySelector(".innercat");
+
+                if (!DOM) {
+                  _context2.next = 32;
+                  break;
+                }
+
+                if (!(HTML == null)) {
+                  _context2.next = 14;
+                  break;
+                }
+
+                location.hash = 1;
+                obj = {
+                  api: this.api,
+                  hash: 1
+                };
+                _context2.next = 10;
+                return this.axios.getPostData(obj);
+
+              case 10:
+                HTML = _context2.sent;
+                inner.innerHTML = HTML;
+                _context2.next = 15;
+                break;
+
+              case 14:
+                inner.innerHTML = HTML;
+
+              case 15:
+                this.page.paging();
+                HTML = "";
+                addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
+                console.log(addColor);
+
+                if (addColor) {
+                  addColor.classList.add("active");
+                }
+
+                changes = /*#__PURE__*/function () {
+                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+                    var pages;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            hash = location.hash.slice(1, 2);
+
+                            if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
+                              _context.next = 8;
+                              break;
+                            }
+
+                            pages = _this.pages;
+                            _context.next = 5;
+                            return _this.page.select(hash, pages);
+
+                          case 5:
+                            HTML = _context.sent;
+                            window.removeEventListener('hashchange', changes);
+
+                            _this.init(hash, HTML);
+
+                          case 8:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee);
+                  }));
+
+                  return function changes() {
+                    return _ref.apply(this, arguments);
+                  };
+                }();
+
+                window.addEventListener('hashchange', changes);
+                this.changes = changes;
+                option = document.getElementById("items");
+                option.value = this.pages;
+                console.log(option.value);
+
+                selected = function selected() {
+                  _this.pages = option.value;
+                  location.hash = 1;
+                  window.removeEventListener('hashchange', changes);
+                  changes();
+                  option.removeEventListener('change', selected);
+                };
+
+                option.addEventListener('change', selected);
+                this["delete"]();
+                this.catStore();
+                this.CatEdit(inner);
+                this.readImage.image();
+
+              case 32:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function init() {
+        return _init.apply(this, arguments);
+      }
+
+      return init;
+    }()
+  }, {
+    key: "catStore",
+    value: function catStore() {
+      var _this2 = this;
+
+      var name = document.getElementById("category-name");
+      console.log(name);
+      var slug = document.getElementById("category-slug");
+      var description = document.getElementById("category-description");
+      var parent = document.getElementById('cat');
+      var select;
+
+      if (parent.options[parent.selectedIndex] != undefined) {
+        select = parent.options[parent.selectedIndex];
+      } else {
+        select = 0;
+      }
+
+      var selectedPage;
+
+      if (document.querySelector('[name="catPage"]:checked')) {
+        selectedPage = 1;
+      } else {
+        selectedPage = 0;
+      }
+
       var submit = document.getElementById("create");
+      var api = 'category_store';
       submit.addEventListener("click", function () {
-        var name = document.getElementById("category-name").value;
-        var slug = document.getElementById("category-slug").value;
-        var description = document.getElementById("category-description").value;
-        var parent = document.getElementById('cat');
-        var select;
+        console.log(name.value);
+        var obj = {
+          api: api,
+          title: name.value,
+          slug: slug.value,
+          page: selectedPage,
+          content: description.value,
+          cat_parent: select.value
+        };
 
-        if (parent.options[parent.selectedIndex] != undefined) {
-          select = parent.options[parent.selectedIndex].value;
-        } else {
-          select = 0;
+        if (obj) {
+          _this2.readImage.sendImageData(obj);
         }
 
-        var selectedPage;
+        _this2.axios.formDataApi(obj);
 
-        if (document.querySelector('[name="catPage"]:checked')) {
-          selectedPage = 1;
-        } else {
-          selectedPage = 0;
-        }
-
-        catStore(name, select, slug, description, selectedPage);
+        var changes = _this2.changes;
+        window.removeEventListener('hashchange', changes);
+        name.value = "";
+        slug.value = "";
+        description.value = "";
+        return setTimeout(function () {
+          _this2.init();
+        }, 300);
       });
-      var editBtn = catStrt.querySelectorAll(".category-edit");
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      var _this3 = this;
 
-      var _loop = function _loop(i) {
-        var ID = editBtn[i].value;
+      var api = "category_destroy";
+      var deleteBtn = document.querySelectorAll(".category-delete");
+
+      if (deleteBtn) {
+        var _loop = function _loop(i) {
+          var ID = deleteBtn[i].value; // console.log(ID);
+
+          var taxonomy = deleteBtn[i].id;
+          deleteBtn[i].addEventListener("click", function () {
+            var obj = {
+              api: api,
+              deleteID: ID,
+              taxonomy_type: taxonomy
+            };
+            console.log(ID);
+
+            _this3.axios.formDataApi(obj);
+
+            var changes = _this3.changes;
+            window.removeEventListener('hashchange', changes);
+            return setTimeout(function () {
+              _this3.init();
+            }, 300);
+          });
+        };
+
+        for (var i = 0; i < deleteBtn.length; i++) {
+          _loop(i);
+        }
+      }
+    }
+  }, {
+    key: "CatEdit",
+    value: function CatEdit(inner) {
+      var _this4 = this;
+
+      var editBtn = document.querySelectorAll(".category-edit");
+
+      var _loop2 = function _loop2(i) {
+        var editID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
-        editBtn[i].addEventListener("click", function () {
-          catEdit(ID, taxonomy);
-        }, false);
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          var api, obj, HTML, name, slug, description, parent, select, updateBtn;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  api = "category_edit";
+                  obj = {
+                    api: api,
+                    editID: editID,
+                    taxonomy_type: taxonomy
+                  };
+                  _context4.next = 4;
+                  return _this4.axios.getPostData(obj);
+
+                case 4:
+                  HTML = _context4.sent;
+                  inner.innerHTML = HTML;
+
+                  _this4.readImage.image();
+
+                  name = document.getElementById("category_name");
+                  slug = document.getElementById("category_slug");
+                  description = document.getElementById("category_description");
+                  parent = document.getElementById('cat');
+
+                  if (parent.options[parent.selectedIndex] != undefined) {
+                    select = parent.options[parent.selectedIndex].value;
+                  } else {
+                    select = 0;
+                  }
+
+                  updateBtn = document.getElementById("catUpdate");
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+                    var api, obj, changes;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            api = "category_update";
+                            obj = {
+                              api: api,
+                              updateId: updateBtn.value,
+                              cat_parent: select.value,
+                              cat_name: name.value,
+                              cat_slug: slug.value,
+                              cat_description: description
+                            };
+
+                            _this4.readImage.sendImageData(obj);
+
+                            _this4.axios.formDataApi(obj);
+
+                            changes = _this4.changes;
+                            window.removeEventListener('hashchange', changes);
+                            description.value = "";
+                            slug.value = "";
+                            name.value = "";
+                            return _context3.abrupt("return", setTimeout(function () {
+                              _this4.init();
+                            }, 300));
+
+                          case 10:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  })));
+
+                case 14:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4);
+        })));
       };
 
       for (var i = 0; i < editBtn.length; i++) {
-        _loop(i);
-      }
-
-      var deleteBtn = document.querySelectorAll(".category-delete");
-
-      var _loop2 = function _loop2(_i) {
-        var ID = deleteBtn[_i].value;
-        var taxonomy = deleteBtn[_i].id;
-
-        deleteBtn[_i].addEventListener("click", function () {
-          catDelete(ID, taxonomy);
-        }, false);
-      };
-
-      for (var _i = 0; _i < deleteBtn.length; _i++) {
-        _loop2(_i);
+        _loop2(i);
       }
     }
-  })["catch"](function (error) {
-    if (error.response) {} else if (error.request) {} else {
-      console.log("Error", error.message);
-    }
+  }]);
 
-    console.log(error);
-  });
-  1;
-}
+  return Category;
+}();
 
-function catStore(name, select, slug, description, selectedPage) {
-  console.log(_typeof(selectedPage));
-  var obj = {
-    api: "category_store",
-    title: name,
-    slug: slug,
-    page: selectedPage,
-    content: description,
-    cat_parent: select
-  };
-
-  if (obj) {
-    readImage.sendImageData(obj);
-  }
-
-  setTimeout(init, 500);
-  document.getElementById("category-name").value = "";
-}
-
-function catEdit(editID, taxonomy) {
-  console.log(name);
-  axios.post(uri + path + "category_edit&id=" + editID, {
-    editID: editID,
-    taxonomy_type: taxonomy
-  }).then(function (response) {
-    var test = document.querySelector(".innercat");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-      readImage.image();
-    }
-
-    var updateBtn = document.getElementById("catUpdate");
-    updateBtn.addEventListener("click", function () {
-      var updateId = updateBtn.value;
-      catUpdate(updateId);
-    });
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function catUpdate(updateId) {
-  var name = document.getElementById("category_name").value;
-  var slug = document.getElementById("category_slug").value;
-  var description = document.getElementById("category_description").value;
-  var api = "category_update";
-  var obj = {
-    api: api,
-    updateId: updateId,
-    cat_name: name,
-    cat_slug: slug,
-    cat_description: description
-  };
-  readImage.sendImageData(obj);
-  setTimeout(init, 500); //klausti Arvido ka naudoti timesetout ar async ????????
-}
-
-function catDelete(ID, taxonomy) {
-  // console.log(ID)
-  axios.post(uri + path + "category_destroy", {
-    deleteID: ID,
-    taxonomy_type: taxonomy
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init(); // setTimeout(init(), 500);
-      // console.log(11111);
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startCat());
+/* harmony default export */ __webpack_exports__["default"] = (Category);
 
 /***/ }),
 
@@ -1988,17 +2484,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
 /* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
 /* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
-/* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
+/* harmony import */ var _Oldpage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Oldpage.js */ "./resources/js/Oldpage.js");
 /* harmony import */ var _menu_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./menu.js */ "./resources/js/menu.js");
-/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
-/* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
-/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
-/* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
-/* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
-/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./light_box */ "./resources/js/light_box.js");
-/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_light_box__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
+/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
+/* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
+/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
+/* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
+/* harmony import */ var _albumList__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./albumList */ "./resources/js/albumList.js");
+/* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
+/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./light_box */ "./resources/js/light_box.js");
+/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_light_box__WEBPACK_IMPORTED_MODULE_12__);
 /** @format */
  // import startGallery from './gallery.js';
+
+
 
 
 
@@ -2012,14 +2512,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
  // new TextEditor('.news-container')
 
-new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
-new _news__WEBPACK_IMPORTED_MODULE_6__["default"]('startNewsAdmin');
-new _newsList__WEBPACK_IMPORTED_MODULE_8__["default"]('startNweaList');
-new _editPost__WEBPACK_IMPORTED_MODULE_9__["default"]('.editStart');
+new _calendar_js__WEBPACK_IMPORTED_MODULE_6__["default"]('.calendar');
+new _news__WEBPACK_IMPORTED_MODULE_7__["default"]('startNewsAdmin');
+new _newsList__WEBPACK_IMPORTED_MODULE_9__["default"]('startNweaList');
+new _editPost__WEBPACK_IMPORTED_MODULE_11__["default"]('.editStart');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
+new _category_js__WEBPACK_IMPORTED_MODULE_1__["default"]('catStart');
 new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
+new _albumList__WEBPACK_IMPORTED_MODULE_10__["default"]('startAlbumList');
+new _page_js__WEBPACK_IMPORTED_MODULE_5__["default"]('pageStart');
 
 /***/ }),
 
@@ -2061,8 +2565,17 @@ var Menu = /*#__PURE__*/function () {
 
     this.target = target;
     this.read = true;
-    this.init();
     this.axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.storeSave;
+    this.storeinit;
+    this.clone; // this.addSubmenuAll;
+
+    this.count = 1;
+    this.countS = 1;
+    this.draggables;
+    this.listenerarray = [];
+    this.deletelistener = [];
+    this.init(); // console.log(this.count);
   }
 
   _createClass(Menu, [{
@@ -2093,42 +2606,103 @@ var Menu = /*#__PURE__*/function () {
           }).element;
         };
 
-        var draggables = document.querySelectorAll('.draggable');
-        var container = document.querySelector('.cont');
-        var add = document.querySelector(".addNew");
-        var addSubmenu = document.querySelectorAll(".addSubmenu");
-        console.log(addSubmenu);
-        add.addEventListener('click', function () {
-          _this.cloning(); // this.init()
+        var container = document.querySelector('.cont'); // let events = getEventListeners(document.querySelector('.cont'));
+        // console.log(events)
 
-        });
+        this.cloning();
+        var addSubmenuAll = document.querySelectorAll(".addSubmenu"); // console.log(this.addSubmenuAll)
+
+        this.draggables = document.querySelectorAll('.draggable'); // console.log( this.draggables)
+
+        var draggables = this.draggables; // this.delete();
+
+        var deleted = document.querySelectorAll(".manuDelete");
+        console.log('init');
+        console.log(this.deletelistener);
+        console.log(this.deletelistener.length);
+        console.log(deleted); // if(this.deletelistener.length != deleted.length){
+        //   let diff = this.deletelistener.length - deleted.length;
+        //   this.deletelistener.splice(-diff);
+        // }
+        // console.log(this.deletelistener);
 
         var _loop = function _loop(i) {
-          var insert = document.querySelectorAll(".submenu");
-          console.log(addSubmenu[i]);
-          addSubmenu[i].addEventListener('click', function () {
-            _this.subcloning(insert[i]); //  this.init()
+          if (_this.deletelistener[i]) {
+            deleted[i].removeEventListener('click', _this.deletelistener[i]);
+          }
 
-          });
+          var deletevar = function deletevar() {
+            _this["delete"](i);
+          };
+
+          _this.deletelistener[i] = deletevar;
+          deleted[i].addEventListener('click', deletevar);
         };
 
-        for (var i = 0; i < addSubmenu.length; i++) {
+        for (var i = 0; i < deleted.length; i++) {
           _loop(i);
         }
 
-        var storeinit = document.querySelector(".initsave");
+        console.log('init after foreach');
+        console.log(this.deletelistener);
+        console.log(this.deletelistener.length);
+        console.log('------------------'); // console.log(this.listenerarray)
+        // console.log(addSubmenuAll)
+        // if(this.listenerarray.length != addSubmenuAll.length){
+        //   let diff = this.listenerarray.length - addSubmenuAll.length;
+        //   this.listenerarray.splice(-diff);
+        // 
 
-        if (storeinit != null) {
-          this.store();
-        } else {
-          this.update();
+        console.log(this.listenerarray);
+
+        var _loop2 = function _loop2(_i) {
+          if (_this.listenerarray[_i]) {
+            addSubmenuAll[_i].removeEventListener('click', _this.listenerarray[_i]);
+          }
+
+          var clone = function clone() {
+            _this.subcloning(_i);
+          };
+
+          _this.listenerarray[_i] = clone;
+
+          addSubmenuAll[_i].addEventListener('click', clone);
+        };
+
+        for (var _i = 0; _i < addSubmenuAll.length; _i++) {
+          _loop2(_i);
         }
 
-        this["delete"](draggables); // var newBlock = () => {
-        //   this.addNew();
-        //   add.removeEventListener("click", newBlock);
-        // }
-        // add.addEventListener("click", newBlock);
+        console.log('init after foreach addsubemnu');
+        console.log(this.listenerarray);
+        console.log(this.listenerarray.length); // }
+
+        this.storeinit = document.querySelector(".initsave");
+
+        if (this.storeinit != null) {
+          var storeSave = function storeSave() {
+            _this.store();
+          };
+
+          this.storeSave = storeSave;
+          this.storeinit.removeEventListener('click', storeSave, false);
+          this.storeinit.addEventListener('click', storeSave, false);
+        } else {
+          this.storeinit = document.querySelector(".save"); // console.log(this.storeinit);
+
+          var _storeSave = function _storeSave() {
+            _this.update();
+          };
+
+          this.storeSave = _storeSave;
+          this.storeinit.removeEventListener('click', _storeSave, false);
+          this.storeinit.addEventListener('click', _storeSave, false);
+        } //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
+        //tikrinam ar clonuota, tada pasileidzia kitas subcloning ar panasiai
+        //submenu ilgi skaiciuoti po cloning ir tada ji paduoti i subcloning kaip nors ar dar kazkaip. gal reikia ta metoda kaip MInde parasyti, kad event listener kviestum jau paciame metode 
+        // this.delete(draggables);
+        //pass right number of draggable items to delete function
+
 
         draggables.forEach(function (draggable) {
           draggable.addEventListener('dragstart', function () {
@@ -2154,20 +2728,278 @@ var Menu = /*#__PURE__*/function () {
   }, {
     key: "cloning",
     value: function cloning() {
-      var insert = document.querySelector(".cont");
-      var elmnt = document.querySelector(".menuItem");
-      var cln = elmnt.cloneNode(true);
-      console.log(cln);
-      insert.appendChild(cln);
+      var _this2 = this;
+
+      var add = document.querySelector(".addNew");
+
+      if (this.read) {
+        var data = function data() {
+          var insert = document.querySelector(".cont");
+          var elmnt = document.querySelector(".menuItem");
+          var cln = elmnt.cloneNode(true); // console.log(cln)
+          //remove submenu item that only menu element is cloned
+
+          var emptySubmenu = cln.querySelector(".submenu");
+          emptySubmenu.innerHTML = '';
+          insert.appendChild(cln);
+          var storeSave = _this2.storeSave;
+
+          _this2.storeinit.removeEventListener('click', storeSave, false); // this.count++;
+
+
+          _this2.init();
+        };
+
+        add.addEventListener("click", data);
+      }
+
+      this.read = false;
     }
   }, {
     key: "subcloning",
-    value: function subcloning(insert) {
-      // let insert = document.querySelector(".submenu");
+    value: function subcloning(i) {
+      // console.log(i)
+      var parentAll = document.querySelectorAll(".menuItem");
+      var insert = parentAll[i].querySelector(".submenu");
       var elmnt = document.querySelector(".draggable");
-      var cln = elmnt.cloneNode(true);
-      console.log(cln);
-      insert.appendChild(cln);
+      var cln = elmnt.cloneNode(true); //remove class parent after cloning - this is submenu item without parent class
+
+      cln.classList.remove("parent");
+      cln.classList.add("child"); //remove add button
+
+      cln.querySelector(".addSubmenu").remove(); //make submenu element visible
+
+      cln.querySelector(".submenuSelect").style.display = "inline-block";
+      cln.querySelector(".mainSelect").remove();
+      cln.querySelector(".submenuText").style.display = "inline-block";
+      cln.querySelector(".menuText").remove();
+      cln.querySelector(".submenuLink").style.display = "inline-block";
+      cln.querySelector(".menuLink").remove();
+      insert.appendChild(cln); // this.draggables = document.querySelectorAll('.draggable')
+      // this.countS++
+
+      this.init(); // console.log(draggables.length);
+      //pass right number of draggable items to delete function
+      // this.delete(draggables);
+    } // delete() {
+    //   console.log( this.draggables)
+    //   let deleted = document.querySelectorAll(".manuDelete");
+    //     for(let i = 0; i<deleted.length; i++){
+    //       // console.log(draggables)
+    //       deleted[i].addEventListener("click", ()=>{
+    //         console.log( this.draggables[i])
+    //         if(this.draggables[i].classList.contains("parent")){
+    //         this.draggables[i].parentElement.remove();
+    //         }else{
+    //           this.draggables[i].remove();
+    //         }
+    //      })
+    //     }
+    // }
+
+  }, {
+    key: "delete",
+    value: function _delete(i) {
+      // console.log(i)
+      // console.log('delete')
+      // console.log( this.draggables[i])
+      var deleted = document.querySelectorAll(".manuDelete");
+
+      for (var _i2 = 0; _i2 < this.deletelistener.length; _i2++) {
+        deleted[_i2].removeEventListener('click', this.deletelistener[_i2]);
+      }
+
+      this.deletelistener = [];
+
+      for (var _i3 = 0; _i3 < this.deletelistener.length; _i3++) {
+        deleted[_i3].removeEventListener('click', this.deletelistener[_i3]);
+      }
+
+      if (this.draggables[i].classList.contains("parent")) {
+        console.log(this.draggables[i].parentElement);
+        this.draggables[i].parentElement.remove();
+      } else {
+        this.draggables[i].remove();
+      } // console.log(this.deletelistener);
+      // console.log(this.deletelistener.length);
+      // console.log(deleted);
+      // if(this.deletelistener.length != deleted.length){
+      //   let diff = this.deletelistener.length - deleted.length;
+      //   this.deletelistener.splice(-diff);
+      // }
+      // console.log(this.deletelistener);
+
+
+      console.log('------------------');
+      var addSubmenuAll = document.querySelectorAll(".addSubmenu");
+      console.log(this.listenerarray);
+      console.log(addSubmenuAll);
+
+      if (this.listenerarray.length != addSubmenuAll.length) {
+        var diff = this.listenerarray.length - addSubmenuAll.length;
+        this.listenerarray.splice(-diff);
+      } // console.log(this.listenerarray)
+
+
+      this.init();
+    }
+  }, {
+    key: "store",
+    value: function store() {
+      // let storeInit = document.querySelector(".initsave");
+      //   if (this.read) {
+      //     let api = "menu_store";
+      //     var data = () => {
+      var menuText = document.querySelectorAll(".menuText");
+      var extmenuLink = document.querySelectorAll(".menuLink");
+      var mainselectBox = document.querySelectorAll(".mainSelect");
+      var names = [];
+      var pages = [];
+      var pageLinks = [];
+      var extlinks = [];
+      var childnames = [];
+      var childpages = [];
+      var childpageLinks = [];
+      var childextlinks = [];
+      var mainMenu = document.querySelectorAll(".menuItem");
+
+      for (var i = 0; i < mainselectBox.length; i++) {
+        var options = mainselectBox[i].getElementsByTagName('option');
+        var subselect = mainMenu[i].querySelector(".submenu");
+        var subselectBox = subselect.querySelectorAll(".submenuSelect");
+        var submenuText = subselect.querySelectorAll(".submenuText");
+        var subextmenuLink = subselect.querySelectorAll(".submenuLink");
+        var subnames = [];
+        var subpages = [];
+        var subpageLinks = [];
+        var subextlinks = [];
+
+        for (var a = 0; a < subselectBox.length; a++) {
+          var suboptions = subselectBox[a].getElementsByTagName('option');
+
+          for (var k = 0; k < suboptions.length; k++) {
+            if (suboptions[k].selected) {
+              subpages.push(suboptions[k].text);
+              subpageLinks.push(suboptions[k].value);
+            }
+          }
+
+          subnames.push(submenuText[a].value);
+          subextlinks.push(subextmenuLink[a].value);
+        }
+
+        for (var j = 0; j < options.length; j++) {
+          if (options[j].selected) {
+            pages.push(options[j].text);
+            pageLinks.push(options[j].value);
+
+            if (subselectBox.length != 0) {
+              childpages.push(subpages);
+              childpageLinks.push(subpageLinks);
+            } else {
+              childpages.push([]);
+              childpageLinks.push([]);
+            }
+          }
+        }
+
+        names.push(menuText[i].value);
+        extlinks.push(extmenuLink[i].value);
+
+        if (subselectBox.length != 0) {
+          childnames.push(subnames);
+          childextlinks.push(subextlinks);
+        } else {
+          childnames.push([]);
+          childextlinks.push([]);
+        }
+      }
+
+      console.log(pages);
+      console.log(pageLinks);
+      console.log(names);
+      console.log(childpages);
+      console.log(childpageLinks);
+      console.log(childnames); // var axios = new Api();
+      // var obj = {
+      //   names: names,
+      //   pages: pages,
+      //   pageLinks: pageLinks,
+      //   // extlinks: extlinks,
+      //   api: api
+      // }
+      // axios.formDataApi(obj);
+
+      var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+      var uri = document.location.origin;
+      axios.post(uri + path + "menu_store", {
+        names: names,
+        pages: pages,
+        pageLinks: pageLinks,
+        childnames: childnames,
+        childpages: childpages,
+        childpageLinks: childpageLinks
+      }).then(function (response) {
+        if (response.status == 200 && response.statusText == "OK") {
+          console.log(response); // this.init();
+        }
+      })["catch"](function (err) {
+        console.log(err instanceof TypeError);
+      }); // console.log(obj)
+      //     }
+      //     storeInit.addEventListener("click", data);
+      // }
+      // this.read = false;
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      var store = document.querySelector(".save");
+      var menuId = document.getElementById("menuID").value;
+      var api = "menu_store";
+
+      if (this.read) {
+        var data = function data() {
+          var menuText = document.getElementsByName("menu");
+          var extmenuLink = document.querySelectorAll(".menuLink");
+          var selectBox = document.getElementsByTagName("select");
+          var names = [];
+          var pages = [];
+          var pageLinks = [];
+          var extlinks = [];
+
+          for (var i = 0; i < selectBox.length; i++) {
+            var options = selectBox[i].getElementsByTagName('option'); // console.log( options.length)
+
+            for (var j = 0; j < options.length; j++) {
+              if (options[j].selected) {
+                pages.push(options[j].text);
+                pageLinks.push(options[j].value);
+                console.log(options[j].value);
+              }
+            }
+
+            names.push(menuText[i].value);
+            extlinks.push(extmenuLink[i]);
+          } // console.log(pages)
+          // console.log(pageLinks)
+          // console.log(names)
+
+
+          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+          var obj = {
+            names: names,
+            pages: pages,
+            pageLinks: pageLinks,
+            api: api
+          };
+          axios.formDataApi(obj);
+        };
+
+        store.addEventListener("click", data);
+      }
+
+      this.read = false; // this.init();
     } // async addNew() {
     //   let api = "menu_create";
     //   let htm = await this.axios.getDAta(api);
@@ -2235,130 +3067,6 @@ var Menu = /*#__PURE__*/function () {
     //   this.init();
     // }
 
-  }, {
-    key: "delete",
-    value: function _delete(draggables) {
-      var deleted = document.querySelectorAll(".manuDelete");
-
-      var _loop2 = function _loop2(i) {
-        deleted[i].addEventListener("click", function () {
-          draggables[i].remove();
-        });
-      };
-
-      for (var i = 0; i < draggables.length; i++) {
-        _loop2(i);
-      }
-    }
-  }, {
-    key: "store",
-    value: function store() {
-      var _this2 = this;
-
-      var store = document.querySelector(".initsave");
-
-      if (this.read) {
-        var api = "menu_store";
-
-        var data = function data() {
-          var menuText = document.getElementsByName("menu");
-          var extmenuLink = document.querySelectorAll(".menuLink");
-          var selectBox = document.getElementsByTagName("select");
-          var names = [];
-          var pages = [];
-          var pageLinks = [];
-          var extlinks = [];
-
-          for (var i = 0; i < selectBox.length; i++) {
-            var options = selectBox[i].getElementsByTagName('option'); // console.log(options)
-
-            console.log(options.length);
-
-            for (var j = 0; j < options.length; j++) {
-              // console.log(111111)
-              if (options[j].selected) {
-                pages.push(options[j].text);
-                pageLinks.push(options[j].value);
-                console.log(options[j].value);
-              }
-            }
-
-            names.push(menuText[i].value);
-            extlinks.push(extmenuLink);
-          }
-
-          console.log(pages);
-          console.log(pageLinks);
-          console.log(names);
-          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
-          var obj = {
-            names: names,
-            pages: pages,
-            pageLinks: pageLinks,
-            // extlinks: extlinks,
-            api: api
-          };
-          axios.formDataApi(obj);
-
-          _this2.init();
-        };
-
-        store.addEventListener("click", data);
-      }
-
-      this.read = false;
-    }
-  }, {
-    key: "update",
-    value: function update() {
-      var store = document.querySelector(".save");
-      var menuId = document.getElementById("menuID").value;
-      var api = "menu_store";
-
-      if (this.read) {
-        var data = function data() {
-          var menuText = document.getElementsByName("menu");
-          var extmenuLink = document.querySelectorAll(".menuLink");
-          var selectBox = document.getElementsByTagName("select");
-          var names = [];
-          var pages = [];
-          var pageLinks = [];
-          var extlinks = [];
-
-          for (var i = 0; i < selectBox.length; i++) {
-            var options = selectBox[i].getElementsByTagName('option');
-            console.log(options.length);
-
-            for (var j = 0; j < options.length; j++) {
-              if (options[j].selected) {
-                pages.push(options[j].text);
-                pageLinks.push(options[j].value);
-                console.log(options[j].value);
-              }
-            }
-
-            names.push(menuText[i].value);
-            extlinks.push(extmenuLink[i]);
-          }
-
-          console.log(pages);
-          console.log(pageLinks);
-          console.log(names);
-          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
-          var obj = {
-            names: names,
-            pages: pages,
-            pageLinks: pageLinks,
-            api: api
-          };
-          axios.formDataApi(obj);
-        };
-
-        store.addEventListener("click", data);
-      }
-
-      this.read = false; // this.init();
-    }
   }]);
 
   return Menu;
@@ -2590,153 +3298,337 @@ var NewsList = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
 
 
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var pageStrt = document.getElementById("pageStart"); // console.log(pageStrt);
 
-function startPage() {
-  if (pageStrt) {
-    window.addEventListener("load", init, false);
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var Pag = /*#__PURE__*/function () {
+  function Pag(target) {
+    _classCallCheck(this, Pag);
+
+    var api = "page_create";
+    this.api = api;
+    this.target = target;
+    this.pages = 5;
+    this.page = new _pagination__WEBPACK_IMPORTED_MODULE_2__["default"](api);
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.changes;
+    this.init();
   }
-}
 
-function init() {
-  axios.post(uri + path + "page_create", {}).then(function (response) {
-    var test = document.querySelector(".innerpage");
+  _createClass(Pag, [{
+    key: "init",
+    value: function () {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this = this;
 
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
+        var hash,
+            HTML,
+            DOM,
+            inner,
+            obj,
+            addColor,
+            changes,
+            option,
+            selected,
+            _args2 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
+                HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
+                console.log(hash);
+                DOM = document.getElementById(this.target);
+                inner = document.querySelector(".innerpage");
+
+                if (!DOM) {
+                  _context2.next = 33;
+                  break;
+                }
+
+                if (!(HTML == null)) {
+                  _context2.next = 15;
+                  break;
+                }
+
+                location.hash = 1;
+                obj = {
+                  api: this.api,
+                  hash: 1
+                };
+                _context2.next = 11;
+                return this.axios.getPostData(obj);
+
+              case 11:
+                HTML = _context2.sent;
+                inner.innerHTML = HTML;
+                _context2.next = 16;
+                break;
+
+              case 15:
+                inner.innerHTML = HTML;
+
+              case 16:
+                this.page.paging();
+                HTML = "";
+                addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
+
+                if (addColor) {
+                  addColor.classList.add("active");
+                }
+
+                changes = /*#__PURE__*/function () {
+                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+                    var pages;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            hash = location.hash.slice(1, 2);
+
+                            if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
+                              _context.next = 8;
+                              break;
+                            }
+
+                            pages = _this.pages;
+                            _context.next = 5;
+                            return _this.page.select(hash, pages);
+
+                          case 5:
+                            HTML = _context.sent;
+                            window.removeEventListener('hashchange', changes);
+
+                            _this.init(hash, HTML);
+
+                          case 8:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee);
+                  }));
+
+                  return function changes() {
+                    return _ref.apply(this, arguments);
+                  };
+                }();
+
+                window.addEventListener('hashchange', changes);
+                this.changes = changes;
+                option = document.getElementById("items");
+                option.value = this.pages;
+                console.log(option);
+                console.log(option.value);
+
+                selected = function selected() {
+                  _this.pages = option.value;
+                  location.hash = 1;
+                  window.removeEventListener('hashchange', changes);
+                  changes();
+                  option.removeEventListener('change', selected);
+                };
+
+                option.addEventListener('change', selected);
+                console.log(option.value);
+                this["delete"]();
+                this.pageStore();
+                this.pageEdit(inner);
+
+              case 33:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function init() {
+        return _init.apply(this, arguments);
+      }
+
+      return init;
+    }()
+  }, {
+    key: "pageStore",
+    value: function pageStore() {
+      var _this2 = this;
+
+      var title = document.getElementById("page_title");
+      var post = document.getElementById('post');
+      var select = post.options[post.selectedIndex];
+      var stateArray = [];
+      var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+      for (var i = 0; i < checkboxes.length; i++) {
+        stateArray.push(checkboxes[i].value);
+      }
+
+      var api = "page_store";
       var submit = document.getElementById("create");
       submit.addEventListener("click", function () {
-        var title = document.getElementById("page_title").value; // const name = document.getElementById("page_name").value;
-        //   const description = document.getElementById("page-description").value;
+        var obj = {
+          api: api,
+          page_title: title.value,
+          post_type: select.value,
+          page_state: stateArray
+        };
 
-        var post = document.getElementById('post'); // console.log(post);
+        _this2.axios.formDataApi(obj);
 
-        var select = post.options[post.selectedIndex].value;
-        var pageState = document.getElementById('pageState');
-        var selectpageState = pageState.options[pageState.selectedIndex].value; // console.log(select);  
-
-        pageStore(title, select, name, selectpageState);
+        var changes = _this2.changes;
+        window.removeEventListener('hashchange', changes);
+        title.value = "";
+        slug.value = "";
+        description.value = "";
+        return setTimeout(function () {
+          _this2.init();
+        }, 300);
       });
-      var editBtn = pageStrt.querySelectorAll(".page-edit");
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      var _this3 = this;
 
-      var _loop = function _loop(i) {
-        var ID = editBtn[i].value; //   console.log(ID);
-        //   let page = editBtn[i].id;
+      var api = "page_destroy";
+      var deleteBtn = document.querySelectorAll(".page-delete");
 
-        editBtn[i].addEventListener("click", function () {
-          pageEdit(ID);
-        }, false);
+      if (deleteBtn) {
+        var _loop = function _loop(i) {
+          var ID = deleteBtn[i].value;
+          deleteBtn[i].addEventListener("click", function () {
+            var obj = {
+              api: api,
+              deleteID: ID
+            };
+
+            _this3.axios.formDataApi(obj);
+
+            var changes = _this3.changes;
+            window.removeEventListener('hashchange', changes);
+            return setTimeout(function () {
+              _this3.init();
+            }, 300);
+          });
+        };
+
+        for (var i = 0; i < deleteBtn.length; i++) {
+          _loop(i);
+        }
+      }
+    }
+  }, {
+    key: "pageEdit",
+    value: function pageEdit(inner) {
+      var _this4 = this;
+
+      var editBtn = document.querySelectorAll(".page-edit");
+
+      var _loop2 = function _loop2(i) {
+        var ID = editBtn[i].value;
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          var api, obj, HTML, title, post, select, stateArray, checkboxes, _i, name, updateBtn;
+
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+            while (1) {
+              switch (_context4.prev = _context4.next) {
+                case 0:
+                  api = "page_edit";
+                  obj = {
+                    api: api,
+                    editID: ID
+                  };
+                  _context4.next = 4;
+                  return _this4.axios.getPostData(obj);
+
+                case 4:
+                  HTML = _context4.sent;
+                  inner.innerHTML = HTML;
+                  title = document.getElementById("page_title");
+                  post = document.getElementById('post');
+                  select = post.options[post.selectedIndex];
+                  stateArray = [];
+                  checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+                  for (_i = 0; _i < checkboxes.length; _i++) {
+                    stateArray.push(checkboxes[_i].value);
+                  }
+
+                  name = document.getElementById("page_name");
+                  updateBtn = document.getElementById("pageUpdate");
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+                    var api, obj, changes;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            api = "page_update";
+                            obj = {
+                              api: api,
+                              updateId: updateBtn.value,
+                              page_title: title.value,
+                              page_name: name.value,
+                              post_type: select.value,
+                              page_state: stateArray
+                            };
+
+                            _this4.axios.formDataApi(obj);
+
+                            changes = _this4.changes;
+                            window.removeEventListener('hashchange', changes);
+                            description.value = "";
+                            slug.value = "";
+                            name.value = "";
+                            return _context3.abrupt("return", setTimeout(function () {
+                              _this4.init();
+                            }, 300));
+
+                          case 9:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  })));
+
+                case 15:
+                case "end":
+                  return _context4.stop();
+              }
+            }
+          }, _callee4);
+        })));
       };
 
       for (var i = 0; i < editBtn.length; i++) {
-        _loop(i);
-      }
-
-      var deleteBtn = document.querySelectorAll(".page-delete");
-
-      var _loop2 = function _loop2(_i) {
-        var ID = deleteBtn[_i].value;
-
-        deleteBtn[_i].addEventListener("click", function () {
-          pageDelete(ID);
-        }, false);
-      };
-
-      for (var _i = 0; _i < deleteBtn.length; _i++) {
-        _loop2(_i);
+        _loop2(i);
       }
     }
-  })["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error.message);
-    }
+  }]);
 
-    console.log(error);
-  });
-  ;
-}
+  return Pag;
+}();
 
-function pageStore(title, select, name, selectpageState) {
-  axios.post(uri + path + "page_store", {
-    page_title: title,
-    page_name: name,
-    post_type: select,
-    page_state: selectpageState
-  }).then(function (response) {
-    console.log(response);
-    init();
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-  document.getElementById("page_title").value = "";
-}
-
-function pageEdit(ID) {
-  axios.post(uri + path + "page_edit&id=" + ID, {
-    editID: ID
-  }).then(function (response) {
-    var test = document.querySelector(".innerpage");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-    }
-
-    var updateBtn = document.getElementById("pageUpdate");
-    updateBtn.addEventListener("click", function () {
-      var updateId = updateBtn.value;
-      pageUpdate(updateId);
-    });
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function pageUpdate(updateId) {
-  var title = document.getElementById("page_title").value;
-  console.log(title);
-  var name = document.getElementById("page_name").value;
-  console.log(name);
-  axios.post(uri + path + "page_update&id=" + updateId, {
-    updateId: updateId,
-    page_title: title,
-    page_name: name //   page_description: description
-
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      // console.log(response);
-      init();
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function pageDelete(ID) {
-  axios.post(uri + path + "page_destroy&id=" + ID, {
-    deleteID: ID
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init();
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startPage());
+/* harmony default export */ __webpack_exports__["default"] = (Pag);
 
 /***/ }),
 
@@ -2781,14 +3673,20 @@ var Pagination = /*#__PURE__*/function () {
   _createClass(Pagination, [{
     key: "paging",
     value: function paging() {
+      // console.log(111111)
       var page = document.querySelectorAll(".paging");
+      console.log(page);
       var hash = window.location.hash.replace(/^#!?/, '').slice(0, 1);
 
       if (page.length) {
         var _nextPage;
 
         var _loop = function _loop(i) {
+          console.log(page[i]);
+
           _nextPage = function nextPage() {
+            page[i].addEventListener('click', _nextPage);
+            console.log(222222);
             var id = page[i].id;
             location.hash = '#' + id;
             page[i].removeEventListener("click", _nextPage);
@@ -2825,7 +3723,7 @@ var Pagination = /*#__PURE__*/function () {
                 }
 
                 hash = 1;
-                _context.next = 10;
+                _context.next = 12;
                 break;
 
               case 6:
@@ -2834,13 +3732,15 @@ var Pagination = /*#__PURE__*/function () {
                   pageSelected: pages,
                   hash: hash
                 };
-                _context.next = 9;
+                console.log(obj.page);
+                console.log(obj.pageSelected);
+                _context.next = 11;
                 return this.axios.getPostData(obj);
 
-              case 9:
+              case 11:
                 return _context.abrupt("return", _context.sent);
 
-              case 10:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -3143,7 +4043,7 @@ var Tag = /*#__PURE__*/function () {
       var api = "tag_store";
       storeTag.addEventListener("click", function () {
         var obj = {
-          api: "tag_store",
+          api: api,
           tag_name: name.value,
           tag_slug: slug.value,
           tag_description: description.value
@@ -3283,7 +4183,10 @@ var Tag = /*#__PURE__*/function () {
 
 /***/ }),
 
-
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3298,12 +4201,10 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
 
 /******/ });
-
-

@@ -1,5 +1,7 @@
 <?php
+
 namespace BIT\controllers;
+
 use BIT\app\Attachment;
 use BIT\app\Page;
 use BIT\app\View;
@@ -7,12 +9,15 @@ use BIT\models\AlbumPost;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GalleryFrontController {
-	public function uploadeIndex() {
+class GalleryFrontController
+{
+	public function uploadeIndex()
+	{
 		return View::render('gallery.uploade-images');
 	}
 
-	public function store(Request $request) {
+	public function store(Request $request)
+	{
 		$title = $request->request->get('albumTitle');
 		$files = $request->files->all()['image'];
 		$profileImg = explode(',', $request->request->get('album'));
@@ -22,7 +27,6 @@ class GalleryFrontController {
 			$page = new Page();
 			$page->pageState = 'Album Page';
 			$page->setRoute('show');
-
 			$page->setTitle($title);
 			$page->save();
 			$album = new AlbumPost();
@@ -70,17 +74,16 @@ class GalleryFrontController {
 		return new Response();
 	}
 
-	public function show(String $id) {
-
+	public function show(String $id)
+	{
 		$album = AlbumPost::get($id);
 		$title = $album->post_title;
 		$images = $album->attachments ?? [];
-
 		return View::render('gallery.show', ["images" => $images, "title" => $title]);
 	}
 
-	private function decodeRequest($request) {
-
+	private function decodeRequest($request)
+	{
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);
 			$request->request->replace(is_array($data) ? $data : array());

@@ -10,15 +10,35 @@
         </div>
         <input type="text" name="category_slug" id="category_slug" value="<?= $category->slug ?>" placeholder="Įrašykite kategorijos slug..." class="tcp-input"><br><br>
         <div class='label'>
+            <label class="tcp-label">Pakeiskite 'tėvinę' kategoriją</label>
+        </div>
+
+        <?php
+        $args = array(
+            'taxonomy'     => 'maincat',
+            'show_option_all' => 'pasirinkite tėvinę kategoriją',
+            'orderby'      => 'name',
+            'hide_empty'   => false,
+            'show_count'   => false,
+            'pad_counts'   => false,
+            'hierarchical' => true,
+            'selected'  => $parent,
+        );
+        ?>
+        <ul style="display:inline-block">
+            <?php wp_dropdown_categories($args); ?>
+        </ul>
+
+        <div class='label'>
             <label class="tcp-label">Kategorijos aprašymas</label>
         </div>
-        <input type="textarea" name="category_description" id="category_description" value="<?= $category->description ?>" placeholder="Įrašykite kategorijos aprašymą..." class="tcp-input"><br><br>
+        <textarea name="category_description" id="category_description" value="<?= $category->description ?>" placeholder="Įrašykite kategorijos aprašymą..." class="tcp-input"></textarea><br><br>
         <div class="buttons">
             <button class="catUpdateBtn btn-blue" type="submit" id="catUpdate" value="<?= $category->term_id ?>">Pakeisti</button>
         </div>
     </div>
 </div>
-<div class="galleryContainer" id="loadeGallery">
+<div class="galleryContainer cat" id="loadeGallery">
     <output class="gallerGrid" id='result' />
     <div id="message">
         <div class="wrapper">

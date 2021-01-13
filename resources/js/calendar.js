@@ -57,9 +57,12 @@ class Calendar {
 
         if (exisitClassMonth == 1) {
             let nowM = new Date(this.y, this.date.getMonth());
+       console.log(nowM);
             let nowY = nowM.toString().slice(11, -47);
             nowM = nowM.toString().slice(4, -55);
+      console.log(nowM);
             nowM = this.translate(nowM);
+      console.log(nowM);
             document.getElementById("calendar-month").innerHTML = nowY + ' ' + nowM;
         }
 
@@ -141,6 +144,7 @@ class Calendar {
         let curentM = new Date(y, this.date.getMonth() + a, 0);
         let curentY = curentM.toString().slice(11, -47);
         curentM = curentM.toString().slice(4, -55);
+        console.log(curentM);
         let curM = this.translate(curentM);
         curentMth.innerHTML = curentY + ' ' + curM;
         let lastDayM = new Date(y, m + a, 0).getDate();
@@ -151,7 +155,7 @@ class Calendar {
     }
 
     translate(curentM) {
-
+console.log(curentM);
         switch (curentM) {
             case 'Jan':
                 return curentM = 'Sausis';
