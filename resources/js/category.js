@@ -33,6 +33,7 @@ class Category {
             HTML = "";
 
             let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
+            console.log(addColor)
             if(addColor){
                 addColor.classList.add("active");
             }         
@@ -40,7 +41,6 @@ class Category {
             var changes = async () => {
 
                 hash = location.hash.slice(1, 2);
-                console.log(hash);
                 if (hash != undefined &&
                     hash != null &&
                     hash > 0 &&

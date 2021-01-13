@@ -7,7 +7,7 @@ import startTag from './tag.js';
 import startPage from './Oldpage.js';
 import startMenu from './menu.js';
 import Tag from './tag.js';
-import Pages from './page.js';
+import Pag from './page.js';
 import Category from './category.js';
 import Menu from './menu.js';
 import Calendar from './calendar.js';
@@ -26,7 +26,7 @@ new EditPost('.editStart');
 new Tag('tagStart');
 new Category('catStart');
 new Menu('menuStart');
-new Pages('pageStart');
+new Pag('pageStart');
 
 
 

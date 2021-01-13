@@ -1193,7 +1193,7 @@ var Api = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!obj.api) {
-                  _context2.next = 17;
+                  _context2.next = 18;
                   break;
                 }
 
@@ -1202,42 +1202,42 @@ var Api = /*#__PURE__*/function () {
 
                 for (key in obj) {
                   formData.append(key, obj[key]);
-                } // console.log(Object.fromEntries(formData))
+                }
 
-
-                _context2.next = 6;
+                console.log(Object.fromEntries(formData));
+                _context2.next = 7;
                 return axios.post(this.uri + this.path + obj.api, formData, {});
 
-              case 6:
+              case 7:
                 response = _context2.sent;
 
                 if (!(response.status == 200 && response.statusText == "OK")) {
-                  _context2.next = 11;
+                  _context2.next = 12;
                   break;
                 }
 
-                _context2.next = 10;
+                _context2.next = 11;
                 return response.data.html;
 
-              case 10:
+              case 11:
                 return _context2.abrupt("return", _context2.sent);
 
-              case 11:
-                _context2.next = 17;
+              case 12:
+                _context2.next = 18;
                 break;
 
-              case 13:
-                _context2.prev = 13;
+              case 14:
+                _context2.prev = 14;
                 _context2.t0 = _context2["catch"](1);
                 console.error(_context2.t0);
                 console.log("Duomenys is serveverio nepasiekiami !!!");
 
-              case 17:
+              case 18:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[1, 13]]);
+        }, _callee2, this, [[1, 14]]);
       }));
 
       function getPostData(_x2) {
@@ -1774,7 +1774,7 @@ var Category = /*#__PURE__*/function () {
                 inner = document.querySelector(".innercat");
 
                 if (!DOM) {
-                  _context2.next = 31;
+                  _context2.next = 32;
                   break;
                 }
 
@@ -1804,6 +1804,7 @@ var Category = /*#__PURE__*/function () {
                 this.page.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
+                console.log(addColor);
 
                 if (addColor) {
                   addColor.classList.add("active");
@@ -1817,24 +1818,23 @@ var Category = /*#__PURE__*/function () {
                         switch (_context.prev = _context.next) {
                           case 0:
                             hash = location.hash.slice(1, 2);
-                            console.log(hash);
 
                             if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
-                              _context.next = 9;
+                              _context.next = 8;
                               break;
                             }
 
                             pages = _this.pages;
-                            _context.next = 6;
+                            _context.next = 5;
                             return _this.page.select(hash, pages);
 
-                          case 6:
+                          case 5:
                             HTML = _context.sent;
                             window.removeEventListener('hashchange', changes);
 
                             _this.init(hash, HTML);
 
-                          case 9:
+                          case 8:
                           case "end":
                             return _context.stop();
                         }
@@ -1867,7 +1867,7 @@ var Category = /*#__PURE__*/function () {
                 this.CatEdit(inner);
                 this.readImage.image();
 
-              case 31:
+              case 32:
               case "end":
                 return _context2.stop();
             }
@@ -3195,9 +3195,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var Pages = /*#__PURE__*/function () {
-  function Pages(target) {
-    _classCallCheck(this, Pages);
+var Pag = /*#__PURE__*/function () {
+  function Pag(target) {
+    _classCallCheck(this, Pag);
 
     var api = "page_create";
     this.api = api;
@@ -3209,7 +3209,7 @@ var Pages = /*#__PURE__*/function () {
     this.init();
   }
 
-  _createClass(Pages, [{
+  _createClass(Pag, [{
     key: "init",
     value: function () {
       var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -3231,16 +3231,17 @@ var Pages = /*#__PURE__*/function () {
               case 0:
                 hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
                 HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
+                console.log(hash);
                 DOM = document.getElementById(this.target);
                 inner = document.querySelector(".innerpage");
 
                 if (!DOM) {
-                  _context2.next = 30;
+                  _context2.next = 33;
                   break;
                 }
 
                 if (!(HTML == null)) {
-                  _context2.next = 14;
+                  _context2.next = 15;
                   break;
                 }
 
@@ -3249,19 +3250,19 @@ var Pages = /*#__PURE__*/function () {
                   api: this.api,
                   hash: 1
                 };
-                _context2.next = 10;
+                _context2.next = 11;
                 return this.axios.getPostData(obj);
 
-              case 10:
+              case 11:
                 HTML = _context2.sent;
                 inner.innerHTML = HTML;
-                _context2.next = 15;
+                _context2.next = 16;
                 break;
 
-              case 14:
+              case 15:
                 inner.innerHTML = HTML;
 
-              case 15:
+              case 16:
                 this.page.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
@@ -3311,6 +3312,7 @@ var Pages = /*#__PURE__*/function () {
                 this.changes = changes;
                 option = document.getElementById("items");
                 option.value = this.pages;
+                console.log(option);
                 console.log(option.value);
 
                 selected = function selected() {
@@ -3322,11 +3324,12 @@ var Pages = /*#__PURE__*/function () {
                 };
 
                 option.addEventListener('change', selected);
+                console.log(option.value);
                 this["delete"]();
                 this.pageStore();
                 this.pageEdit(inner);
 
-              case 30:
+              case 33:
               case "end":
                 return _context2.stop();
             }
@@ -3498,10 +3501,10 @@ var Pages = /*#__PURE__*/function () {
     }
   }]);
 
-  return Pages;
+  return Pag;
 }();
 
-/* harmony default export */ __webpack_exports__["default"] = (Pages);
+/* harmony default export */ __webpack_exports__["default"] = (Pag);
 
 /***/ }),
 
@@ -3546,14 +3549,20 @@ var Pagination = /*#__PURE__*/function () {
   _createClass(Pagination, [{
     key: "paging",
     value: function paging() {
+      // console.log(111111)
       var page = document.querySelectorAll(".paging");
+      console.log(page);
       var hash = window.location.hash.replace(/^#!?/, '').slice(0, 1);
 
       if (page.length) {
         var _nextPage;
 
         var _loop = function _loop(i) {
+          console.log(page[i]);
+
           _nextPage = function nextPage() {
+            page[i].addEventListener('click', _nextPage);
+            console.log(222222);
             var id = page[i].id;
             location.hash = '#' + id;
             page[i].removeEventListener("click", _nextPage);

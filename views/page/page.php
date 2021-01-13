@@ -4,6 +4,18 @@
     </div>
 
     <div class="sm-1-2">
+
+        <?php
+        if ($message) {
+        ?>
+            <div class='message'><?= $message ?></div>
+        <?php
+        } else {
+        ?>
+            <div class='success_message'><?= $success_message ?></div>
+        <?php
+        }
+        ?>
         <h2 class='tcp'>Pridėkite naują puslapį</h2>
         <div class='label'>
             <label class="tcp-label">Puslapio antraštė</label>
@@ -45,9 +57,8 @@
 
             <?php
             $pageNum = 1;
-            $nav = '';
-            for ($currpage = 1; $currpage <= $pagesnr; $currpage++) {
-                $nav .= '&nbsp <a class=" paging nr-' . $currpage . '" id = "' . $currpage . ' ">' . $currpage . '</a> ';
+            for ($page = 1; $page <= $pages; $page++) {
+                $nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
                 $next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';
                 $prev = '<a class="paging" id = "' . $prevpage . ' "><</a>';
                 $last = '<a class="paging" id = "' . $lastpage . ' "> &nbsp>> </a>';
@@ -74,21 +85,21 @@
             echo $first . $prev . $nav . $next . $last;
             echo '</div>';
 
-            foreach ($pages as $page) : ?>
+            foreach ($postPages as $postPage) : ?>
                 <tr>
-                    <td><?= $page->post_title ?></td>
+                    <td><?= $postPage->post_title ?></td>
                     <td>
                         <?php
-                        $pageLink = $page->getLink();
+                        $pageLink = $postPage->getLink();
                         ?>
                         <a href="<?= $pageLink ?>"><?= $pageLink ?></a>
                     </td>
                     <?php
-                    if ($page->pageState != 0 && $page->pageState != NUll && $page->pageState != 'undefined' && $page->pageState != '') {
+                    if ($postPage->pageState != 0 && $postPage->pageState != NUll && $postPage->pageState != 'undefined' && $postPage->pageState != '') {
                     ?>
                         <td>
                             <?php
-                            foreach ($page->pageState as $value) : ?>
+                            foreach ($postPage->pageState as $value) : ?>
                                 <div><?= $value ?></div>
                             <?php endforeach; ?>
                         </td>
@@ -100,8 +111,8 @@
                     }
                     ?>
                     <td>
-                        <button class="page-edit btn-blue" type="submit" name="page-name" id="<?= $page->post_title ?>" value="<?= $page->ID ?>">Edit</button>
-                        <button class="page-delete btn-red" type="submit" name="pageDelete" id="<?= $page->post_title ?>" value="<?= $page->ID ?>">Delete</button>
+                        <button class="page-edit btn-blue" type="submit" name="page-name" id="<?= $postPage->post_title ?>" value="<?= $postPage->ID ?>">Edit</button>
+                        <button class="page-delete btn-red" type="submit" name="pageDelete" id="<?= $postPage->post_title ?>" value="<?= $postPage->ID ?>">Delete</button>
                     </td>
                 </tr>
             <?php endforeach; ?>

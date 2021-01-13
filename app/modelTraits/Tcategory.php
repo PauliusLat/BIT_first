@@ -303,7 +303,7 @@ trait Tcategory
         }
     }
 
-    public function getChildCats($number, $offset, $parent_id, $taxonomy_type = 'maincat')
+    public function getChildCats($parent_id, $taxonomy_type = 'maincat')
     {
         $parent_id = (array)$parent_id;
         foreach ($this->cattax as $value) {

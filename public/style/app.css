@@ -2184,6 +2184,11 @@ table th {
   color: #0071a1;
 }
 
+.catCreate .page .active {
+  color: #000000;
+  font-size: 20px;
+}
+
 .tagCreate .page .active {
   color: #000000;
   font-size: 20px;

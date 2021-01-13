@@ -46,7 +46,6 @@ class CategoryController
             $number = 1;
         }
 
-
         $total = wp_count_terms('maincat', ['hide_empty' => false]);
         $pagination = new Pagination($limit, $number, $total);
         $category = new Category;
@@ -70,10 +69,8 @@ class CategoryController
         return new JsonResponse(['html' => $output]);
     }
 
-    public function store(Request $request)
-
+    public function store(Request $request, Session $session)
     {
-        $session = App::start()->getService('session');
         $category = new Category;
         $name = $request->request->get('title');
         $slug = $request->request->get('slug');
@@ -140,7 +137,7 @@ class CategoryController
         $id = $request->request->get('updateId');
         //update cat and cat page
         $category = new Category;
-        // $session->flash('success_message', 'kategorija sėkmingai pakoreguota');
+        $session->flash('success_message', 'kategorija sėkmingai pakoreguota');
         $category->updateCat($id, $name, $slug, $description, $parent_id);
         if ($request->files->get('image')) {
             if ($category->getCatImage($id)) {

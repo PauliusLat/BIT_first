@@ -1,7 +1,7 @@
 "use strict";
 import Api from './api';
 import Pagination from './pagination';
-class Pages {
+class Pag {
     constructor(target) {
         const api = "page_create";
         this.api = api;
@@ -13,6 +13,7 @@ class Pages {
         this.init();
     }
     async init(hash = null, HTML = null) {
+        console.log(hash);
         const DOM = document.getElementById(this.target);
         const inner = document.querySelector(".innerpage");
         if (DOM) {
@@ -36,7 +37,6 @@ class Pages {
             }         
 
             var changes = async () => {
-
                 hash = location.hash.slice(1, 2);
                 if (hash != undefined &&
                     hash != null &&
@@ -54,6 +54,7 @@ class Pages {
             this.changes = changes;
             const option = document.getElementById("items");
             option.value = this.pages;
+            console.log(option)
             console.log(option.value)
             var selected = () => {
                 this.pages = option.value;
@@ -63,6 +64,7 @@ class Pages {
                 option.removeEventListener('change', selected);
             }
             option.addEventListener('change', selected);
+            console.log(option.value)
             this.delete();
             this.pageStore();
             this.pageEdit(inner);
@@ -164,4 +166,4 @@ class Pages {
         }
     }
 }
-export default Pages;
+export default Pag;

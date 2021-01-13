@@ -5,6 +5,7 @@ namespace BIT\controllers;
 // use BIT\app\App;
 use BIT\app\Page;
 use BIT\app\View;
+use BIT\app\Session;
 // use BIT\app\Attachment;
 // use BIT\models\NewsPost;
 // use BIT\models\AlbumPost;
@@ -24,7 +25,7 @@ class PageController
         return View::adminRender('page.mainpage');
     }
 
-    public function create(Request $requestJson)
+    public function create(Request $requestJson, Session $session)
     {
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
@@ -53,11 +54,19 @@ class PageController
             }
         }
 
-        $output = View::adminRender('page.page', ["pages" =>  $pageArr, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pagesnr' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
+        if ($session->get('alert_message') != null) {
+            $message = $session->get('alert_message');
+        } else if ($session->get('success_message') != null) {
+            $success_message = $session->get('success_message');
+        } else {
+            $message = "";
+        }
+
+        $output = View::adminRender('page.page', ["postPages" =>  $pageArr, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'message' => $message,  'success_message' => $success_message]);
         return new JsonResponse(['html' => $output]);
     }
 
-    public function store(Request $requestJson)
+    public function store(Request $requestJson, Session $session)
     {
         $request = $this->decodeRequest($requestJson);
         $page = new Page;
@@ -69,7 +78,14 @@ class PageController
         }
         $page->setRoute($post);
         $page->setTitle($name);
-        $page->save();
+        if ($name == '') {
+            $session->flash('alert_message', 'įrašykite puslapio pavadinimą');
+        } else {
+            //add category to db and get cat ID
+            $session->flash('success_message', 'puslapis sėkmingai sukurtas');
+            $page->save();
+        }
+
         return new Response;
     }
 
@@ -87,7 +103,7 @@ class PageController
         return new JsonResponse(['html' => $output]);
     }
 
-    public function update(Request $requestJson, Page $page)
+    public function update(Request $requestJson, Page $page, Session $session)
     {
         $request = $this->decodeRequest($requestJson);
         $title = $request->request->get('page_title');
@@ -101,13 +117,14 @@ class PageController
         $page->setRoute($post);
         $page->setTitle($title);
         $page->post_name = $request->request->get('page_name');
+        $session->flash('success_message', 'puslapis sėkmingai pakoreguotas');
         $page->save();
-        _dc($page);
         return new JsonResponse;
     }
 
-    public function destroy(Page $page)
+    public function destroy(Page $page, Session $session)
     {
+        $session->flash('success_message', 'puslapis sėkmingai ištrintas');
         $page->delete();
         return new Response;
     }
