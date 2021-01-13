@@ -7,7 +7,7 @@ use BIT\models\NewsPost;
 use BIT\app\App;
 use BIT\app\Cookie;
 use BIT\app\Query;
-// use WP_Query;
+use BIT\app\Tag;
 use BIT\app\Page;
 use BIT\app\Post;
 use BIT\app\Pagination;
@@ -66,7 +66,14 @@ App::start();
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 
-// add_action('init', function () {
+add_action('init', function () {
+    $tag = new Tag;
+
+    // $tags = get_terms('hashtag', array('number' => 5, 'hide_empty' => false, 'offset' => 2));
+    // $cat = $category->(2, 0);
+    // $cat =  get_ancestors(275, 'maincat',);
+    // _dc($tags);
+
     // $query = new Query;
     // $Pages = $query->postOffset('page', 4)->getPost()->all();
     // _dc($Pages);
@@ -240,4 +247,4 @@ App::start();
     // function flattenWithKeys(array $array, $childPrefix = '.', $root = '', $result = array()) {
     //     // redundant with type hint
     //     //if(!is_array($array)) return $result;
-// });
+});

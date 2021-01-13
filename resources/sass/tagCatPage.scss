@@ -1,51 +1,4 @@
 /** @format */
-.editor {
-  border: solid 1px #ccc;
-  padding: 20px;
-  min-height: 70%;
-  width: 60%;
-
-  b,
-  strong {
-    font-weight: 800;
-  }
-}
-
-.sample-toolbar {
-  border: solid 1px #ddd;
-  background: #f4f4f4;
-  padding: 10px 0 0 0;
-  border-radius: 3px;
-  width: 60%;
-
-  a {
-    text-decoration: none;
-  }
-
-  .fa-bold {
-    margin: 0 5px 0 10px;
-  }
-
-  .fa-italic {
-    margin: 0 5px 0 5px;
-  }
-
-  .fa-list {
-    margin: 0 5px 0 5px;
-  }
-
-  .fa-link {
-    margin: 0 5px 0 5px;
-  }
-}
-
-.sample-toolbar > span {
-  cursor: pointer;
-}
-
-.sample-toolbar > span:hover {
-  text-decoration: underline;
-}
 
 .pages {
   display: inline-block;
@@ -61,35 +14,6 @@
 
 .form-control {
   margin-bottom: 20px;
-}
-
-.titleInput {
-  width: 100%;
-  border: solid 1px #cccccc;
-  height: 10%;
-  text-align: center;
-  margin: 0;
-  font-size: 35px;
-  outline: none;
-}
-
-.titleInput:placeholder-shown {
-  font-size: 35px;
-}
-
-.titleInput:placeholder {
-  font-size: 35px;
-}
-
-.ql-container {
-  height: 80%;
-
-  .ql-editor {
-    p {
-      font-size: 20px;
-      font-weight: 200;
-    }
-  }
 }
 
 .page {
@@ -213,6 +137,15 @@ table th {
   color: #0071a1;
 }
 
+.catCreate {
+  .page {
+    .active {
+      color: $black;
+      font-size: 20px;
+    }
+  }
+}
+
 .tagCreate {
   .page {
     .active {
@@ -229,7 +162,44 @@ table th {
 
 .categoriImageGrid {
   display: inline-block;
+
+  .galleryContainer.cat {
+    height: 210px;
+
+    .galleryDiv {
+      height: 200px;
+      width: 200px;
+
+      .uploadeImageGallery {
+        height: 200px;
+        width: 200px;
+        // position: absolute;
+        top: 0;
+        left: 0;
+        // opacity: 0;
+        cursor: pointer;
+      }
+    }
+  }
 }
+
+.galleryContainer.cat {
+  .galleryDiv {
+    // height: 200px;
+    // width: 200px;
+
+    .uploadeImageGallery {
+      height: 200px;
+      width: 200px;
+      // position: absolute;
+      top: 0;
+      left: 0;
+      // opacity: 0;
+      cursor: pointer;
+    }
+  }
+}
+//
 
 .galleryImage {
   display: inline-block;
@@ -241,10 +211,6 @@ table th {
   display: inline-block;
   align-items: left;
   justify-content: left;
-}
-
-.galleryContainer.cat {
-  height: 210px;
 }
 
 .paging {
