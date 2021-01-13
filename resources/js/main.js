@@ -22,7 +22,7 @@ new News('startNewsAdmin');
 new NewsList('startNweaList');
 new EditPost('.editStart');
 new Tag('tagStart');
-new Menu('menuStart');
+new Menu('.adminMenuStart');
 
 
 

@@ -32,8 +32,9 @@ define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 App::start();
-
-
+// var_dump($_COOKIE);
+// $session = Session::start();
+// $session->deleteSession();
 // $pages = Page::all()->pageState('Site Page')->all();
 // _dc($pages);
 // $session = App::start()->getService('session');

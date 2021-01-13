@@ -21,9 +21,14 @@ class FrontMenuController
 
     public function index()
     {
+        return View::adminRender('frontmenu.menucreate');
+    }
+
+    public function create()
+    {
         $query = new Query;
         $menus = $query->postType('menu')->getPost()->all();
-        // _dc($menus);
+
         if ($menus) {
             $menu = $menus[0];
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
@@ -31,20 +36,18 @@ class FrontMenuController
             $page = new Page;
             return View::adminRender('frontmenu.mainmenu', ['menu' => $menu, 'pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
         } else {
+            $query = new Query;
+            $menus = $query->postType('menu')->getPost()->all();
+
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
             $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
+  
             $page = new Page;
-            return View::adminRender('frontmenu.initmenu', ['pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
-        }
-    }
 
-    public function create()
-    {
-        $query = new Query;
-        $menus = $query->postType('menu')->getPost()->all();
-        $menu = $menus[0];
-        $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
-        return new JsonResponse(['html' => $pages]);
+            $output = View::adminRender('frontmenu.initmenu', ['pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
+
+            return new JsonResponse(['html' => $output]);
+        }
     }
 
     public function store(Request $requestJson)
@@ -70,8 +73,8 @@ class FrontMenuController
         $menuPost->pageLinks = $links;
         $sublinks = $request->request->get('childpageLinks');
         $menuPost->subpageLinks = $sublinks;
-        $menuPost->save();
-        _dc($menuPost);
+        // $menuPost->save();
+        // _dc($menuPost);
         return new Response;
     }
 

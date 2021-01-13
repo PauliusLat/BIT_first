@@ -2147,6 +2147,11 @@ table th {
 
 /** @format */
 
+#wpbody-content .innermenu .cont .submenu {
+  margin: 0 0 0 3%;
+  width: 97%;
+}
+
 .innermenu .menu {
   text-align: center;
 }
