@@ -8,7 +8,7 @@ use BIT\controllers\controllerTraits\Tpagination;
 class Tag
 {
     use Ttaxonomy;
-    use Tpagination;
+    // use Tpagination;
     private $taxonomy = ['hashtag', 'ideatag'];
     static private $obj;
 

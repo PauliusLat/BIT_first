@@ -77,7 +77,7 @@ class Tag {
         const storeTag = document.getElementById("create");
         storeTag.addEventListener("click", () => {
             let obj = {
-                api: "tag_store",
+                api: api,
                 tag_name: name.value,
                 tag_slug: slug.value,
                 tag_description: description.value

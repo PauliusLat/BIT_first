@@ -96,11 +96,10 @@ class Api {
         if (obj.api) {
             try {
                 let formData = new FormData();
-
                 for (var key in obj) {
                     formData.append(key, obj[key])
                 }
-                // console.log(Object.fromEntries(formData))
+                console.log(Object.fromEntries(formData))
                 let response = await axios.post(this.uri + this.path + obj.api, formData, {});
                 if (response.status == 200 && response.statusText == "OK") {
                     return await response.data.html;

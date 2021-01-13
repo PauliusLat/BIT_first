@@ -7,18 +7,27 @@ use BIT\models\IdeaPost;
 class Cookie
 {
     private static $uuid;
+    const COOKIENAME = 'New';
+
     public static function getUuid()
     {
+
         self::$uuid = rand(1000, 2000);
-        if (!isset($_COOKIE['Bit'])) {
-            setcookie('Bit', self::$uuid);
+        if (!isset($_COOKIE[self::COOKIENAME])) {
+            setcookie(self::COOKIENAME, self::$uuid, time() + 24 * 3600 * 30 * 5 * 12, '/');
+
         }
-        self::$uuid = $_COOKIE['Bit'];
+        self::$uuid = $_COOKIE[self::COOKIENAME];
         return self::$uuid;
     }
 
     public static function deleteCookie()
+
     {
-        unset($_COOKIE[self::$uuid]);
+
+        // dc(self::$uuid);
+        // unset($_COOKIE['Bit']);
+        setcookie(self::COOKIENAME, "", time() - 3600, '/');
+
     }
 }

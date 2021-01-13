@@ -31,6 +31,8 @@ return [
 	'gallery-create-front' => 'GalleryFrontController@create',
 
 	'album-create-admin' => 'AlbumFrontController@create',
+	'album-list' => 'GalleryAdminController@renderList',
+	'album-destroy' => 'GalleryAdminController@delete',
 
 	'news-list' => 'NewsAdminController@listPost',
 	'news-store' => 'NewsAdminController@store',
