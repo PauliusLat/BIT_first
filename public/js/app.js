@@ -1309,7 +1309,7 @@ var Api = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!obj.api) {
-                  _context2.next = 19;
+                  _context2.next = 20;
                   break;
                 }
 
@@ -1349,6 +1349,13 @@ var Api = /*#__PURE__*/function () {
                 console.log("Data from the server is not available !!!");
 
               case 18:
+                _context2.next = 21;
+                break;
+
+              case 20:
+                throw 'can not find API';
+
+              case 21:
               case "end":
                 return _context2.stop();
             }
@@ -2042,21 +2049,9 @@ var Category = /*#__PURE__*/function () {
           cat_parent: select.value
         };
 
-        var id = document.querySelector('.newsBtnSend').id;
-        var image = document.getElementById('image');
-        var imageDiv = document.querySelector('.imageDiv');
-        var imgBlock = document.querySelector('.galleryContainer');
-        var save = document.querySelector('.newsBtnSend');
-        var title = document.querySelector('.postTitle');
-        var content = document.querySelectorAll("[contenteditable]");
-        var getImage = document.querySelector('.getImage');
-        var altText = document.getElementById('alt');
-        var pavTtitle = document.getElementById('pavTtitle');
-        var newsCat = document.querySelector('.newsCat');
-        var catUp = document.querySelector('.catUp');
-        var catDown = document.querySelector('.catDown');
-        var api = "news-update";
-        var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_1__["default"]();
+        if (obj) {
+          _this2.readImage.sendImageData(obj);
+        }
 
         _this2.axios.formDataApi(obj);
 
@@ -2263,7 +2258,6 @@ var EditPost = /*#__PURE__*/function () {
         var getImage = document.querySelector('.getImage');
         var altText = document.getElementById('alt');
         var pavTtitle = document.getElementById('pavTtitle');
-        var catBoxBtn = document.querySelector('.catBoxBtn');
         var newsCat = document.querySelector('.newsCat');
         var catUp = document.querySelector('.catUp');
         var catDown = document.querySelector('.catDown');
@@ -2534,7 +2528,10 @@ new _news__WEBPACK_IMPORTED_MODULE_7__["default"]('startNewsAdmin');
 new _newsList__WEBPACK_IMPORTED_MODULE_9__["default"]('startNweaList');
 new _editPost__WEBPACK_IMPORTED_MODULE_11__["default"]('.editStart');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
-new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.adminMenuStart');
+new _category_js__WEBPACK_IMPORTED_MODULE_1__["default"]('catStart');
+new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
+new _albumList__WEBPACK_IMPORTED_MODULE_10__["default"]('startAlbumList');
+new _page_js__WEBPACK_IMPORTED_MODULE_5__["default"]('pageStart');
 
 /***/ }),
 
@@ -4022,8 +4019,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
