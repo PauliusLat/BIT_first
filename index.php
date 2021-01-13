@@ -5,8 +5,9 @@ use BIT\app\Category;
 // use BIT\app\Tag;
 use BIT\models\NewsPost;
 use BIT\app\App;
+use BIT\app\Cookie;
 use BIT\app\Query;
-// use WP_Query;
+use BIT\app\Tag;
 use BIT\app\Page;
 use BIT\app\Post;
 use BIT\app\Pagination;
@@ -33,12 +34,8 @@ define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 App::start();
 
+// $app = App::start();
 
-// $pages = Page::all()->pageState('Site Page')->all();
-// _dc($pages);
-// $session = App::start()->getService('session');
-// $session->set('oooo', 8);
-// _dc($_SERVER);
 // _dc($session->get('333333333333cassdca'));
 // $server = new Server;
 //
@@ -69,14 +66,19 @@ App::start();
 // _dc(View::adminRender('category.edit', ['url' => PLUGIN_DIR_URL, 'category' => $category]));
 
 
-
-
-// use BIT\models\NewresPost;
 add_action('init', function () {
+    $tag = new Tag;
+
+    // $tags = get_terms('hashtag', array('number' => 5, 'hide_empty' => false, 'offset' => 2));
+    // $cat = $category->(2, 0);
+    // $cat =  get_ancestors(275, 'maincat',);
+    // _dc($tags);
 
     // $query = new Query;
-    // $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
-    // _dc($catPages);
+    // $Pages = $query->postOffset('page', 4)->getPost()->all();
+    // _dc($Pages);
+    // $pages = $query->postType('page')->getPost()->all();
+    // _dc($pages);
     // $news = new NewsPost;
     // $news->save();
     // $arr = explode('#', '#oras#astrus#naujas');
@@ -141,6 +143,9 @@ add_action('init', function () {
 
 
     // $session = new Session;
+    // $session->set('fgbsfsdf', 'gergerger');
+    // var_dump($session);
+
     // // // $session->deleteSession();
     // $session->flash('ooo', 5);
     // _dc($session->get('ooo'));

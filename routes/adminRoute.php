@@ -1,17 +1,24 @@
 <?php
-// array works like submenus;
+// array works like SUBMENUS;
 // '0' in front of KEY makes submenu Hidden;
+// SubMenus SLUG made of parent NAME '-' child NAME;
+
+use BIT\controllers\CacheController;
 
 return [
 	'admin' => 'AdminController@index',
 	'news' => 'NewsAdminController@create',
 	'news@' => ['add new' => 'NewsAdminController@create', 
 				'list' => 'NewsAdminController@list', 
-				'0edit' => 'NewsAdminController@edit'],
+				'0edit' => 'NewsAdminController@edit'
+			],
 
 	'idejos' => 'IdeAdminController@adminIndex',
 
-	'galerija' => 'GalleryAdminController@adminIndex',
+	'galerija' => 'GalleryAdminController@index',
+	'galerija@' => ['0def' => 'GalleryAdminController@index',
+					'0edit' => 'GalleryAdminController@edit'
+					],
 
 	// 'kategorija' => 'CategoryFrontController@index',
 
@@ -29,4 +36,10 @@ return [
 	// 'tag@' => ['list' =>'TagController@create', 'tag_edit'=> 'TagController@edit', 'tag_store'=> 'TagController@store', 'tag_destroy'=> 'TagController@destroy', 'tag_update'=> 'TagController@update']
 
 	'frontmenu' => 'FrontMenuController@index',
+
+	'cache' => 'CacheController@index',
+	'cache@' => ['0def' => 'CacheController@index',
+				 '0clear' => 'CacheController@clearCache',
+				 '0enable' => 'CacheController@enableCache'
+				]
 ];

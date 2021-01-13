@@ -18,9 +18,12 @@ if (!function_exists('wp_terms_checklist')) {
         <?php
         } else {
         ?>
+
             <div class='success_message'><?= $success_message ?></div>
+
         <?php
-        } ?>
+        }
+        ?>
 
         <h2 class='tcp'>Pridėkite naują kategoriją</h2>
         <div class='label'>
@@ -53,7 +56,7 @@ if (!function_exists('wp_terms_checklist')) {
         <br><br>
 
         <input type="checkbox" id="catPage" name="catPage" value="catPage">
-        <label for="catPage">Sukurti kategorijos puslapį</label><br>
+        <label for="catPage">Nekurti kategorijos puslapio</label><br>
 
         <div class='label'>
             <label class="tcp-label">Kategorijos aprašymas</label>
@@ -154,7 +157,7 @@ if (!function_exists('wp_terms_checklist')) {
                     ?>
 
                     <td>
-                        <button class="category-edit btn-blue" type="submit" name="category-name" id="<?= $cat->taxonomy ?>" value="<?= $cat->term_id ?>">Edit</button>
+                        <button class="category-edit btn-blue" type="submit" name="category-edit" id="<?= $cat->taxonomy ?>" value="<?= $cat->term_id ?>">Edit</button>
                         <button class="category-delete btn-red" type="submit" name="catDelete" id="<?= $cat->taxonomy ?>" value="<?= $cat->term_id ?>">Delete</button>
                     </td>
                 </tr>

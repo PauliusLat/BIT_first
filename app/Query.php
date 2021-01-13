@@ -77,14 +77,20 @@ class Query
         return $this;
     }
 
-
-    public function countPosts()
+    public function postOffset($post_type, $offset)
     {
-        $query = new WP_Query($this->args);
-        $count = $query->found_posts();
-        var_dump($count);
-        return $count;
+        $this->args['post_type'] = $post_type;
+        $this->args['post_type'] = $post_type;
+        $this->args['offset'] = $offset;
+        return $this;
     }
+    // public function countPosts()
+    // {
+    //     $query = new WP_Query($this->args);
+    //     $count = $query->found_posts();
+    //     var_dump($count);
+    //     return $count;
+    // }
 
     public function getPost(): Collection
     {
