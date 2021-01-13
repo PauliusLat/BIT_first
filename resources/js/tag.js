@@ -75,7 +75,7 @@ class Tag {
         const api = "tag_store";
         storeTag.addEventListener("click", () => {
             let obj = {
-                api: "tag_store",
+                api: api,
                 tag_name: name.value,
                 tag_slug: slug.value,
                 tag_description: description.value
@@ -89,6 +89,8 @@ class Tag {
             return setTimeout(() => { this.init() }, (300))
         });
     }
+
+    
     delete() {
         const api = "tag_destroy";
         const deleteBtn = document.querySelectorAll(".tag-delete");

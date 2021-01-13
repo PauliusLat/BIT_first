@@ -26,7 +26,6 @@ class PageController
 
     public function create(Request $requestJson)
     {
-        // $pages = Page::all()->all(); //cia reiktu ofseto
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
@@ -35,7 +34,7 @@ class PageController
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
-            $limit = 3;
+            $limit = 5;
         }
 
         if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
@@ -44,12 +43,17 @@ class PageController
             $number = 1;
         }
 
-        $query = new Query;
         $total = count(Page::all()->all());
-        // dar neveikia offset, reikia ziuret
-        $pages = $query->postOffset('page', $pagination->offset)->getPost()->all();
         $pagination = new Pagination($limit, $number, $total);
-        $output = View::adminRender('page.page', ["pages" => $pages, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pagesnr' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
+        $pages = Page::all()->all();
+        $pageArr = [];
+        foreach ($pages as $key => $value) {
+            if ($key >= $pagination->offset && count($pageArr) < $limit) {
+                array_push($pageArr, $value);
+            }
+        }
+
+        $output = View::adminRender('page.page', ["pages" =>  $pageArr, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pagesnr' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -78,15 +82,6 @@ class PageController
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
-        // $oldValue = 1;
-        // foreach ($page->pageState as $key => $value) {
-        //     if ($value != 'Site_page' && array_key_exists($key, $page->pageState)) {
-        //         $oldValue = $value;
-        //     }
-        // }
-        // _dc($menu_page_state);
-        // _dc($page->pageState);
-
         $ID = $page->ID;
         $output = View::adminRender('page.edit',  ['page' => $page, 'oldValue' => $oldValue, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'shortcode' => $shortcode, 'ID' => $ID]);
         return new JsonResponse(['html' => $output]);

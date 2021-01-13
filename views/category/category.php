@@ -157,7 +157,7 @@ if (!function_exists('wp_terms_checklist')) {
                     ?>
 
                     <td>
-                        <button class="category-edit btn-blue" type="submit" name="category-name" id="<?= $cat->taxonomy ?>" value="<?= $cat->term_id ?>">Edit</button>
+                        <button class="category-edit btn-blue" type="submit" name="category-edit" id="<?= $cat->taxonomy ?>" value="<?= $cat->term_id ?>">Edit</button>
                         <button class="category-delete btn-red" type="submit" name="catDelete" id="<?= $cat->taxonomy ?>" value="<?= $cat->term_id ?>">Delete</button>
                     </td>
                 </tr>

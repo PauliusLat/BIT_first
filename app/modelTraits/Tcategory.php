@@ -164,9 +164,9 @@ trait Tcategory
     }
 
     //deletes category from db
-    public static function deleteCatFromDb(int $id, $taxonomy_type = 'maincat')
+    public function deleteCatFromDb(int $id, $taxonomy_type = 'maincat')
     {
-        $page = self::getCatPage($id);
+        $page = $this->getCatPage($id);
         // _dc($page->ID);
         wp_delete_term($id, $taxonomy_type);
 
@@ -314,7 +314,7 @@ trait Tcategory
                         if (isset($this->ID)) {
                             $terms = get_terms(['number' => $number, 'offset' => $offset, 'taxonomy' => $value, 'object_ids' => $this->ID, 'parent' => $id, 'hide_empty' => false]);
                         } else {
-                            $terms = get_terms(['taxonomy' => $value, 'parent' => $id, 'hide_empty' => false]);
+                            $terms = get_terms(['number' => $number, 'offset' => $offset, 'taxonomy' => $value, 'parent' => $id, 'hide_empty' => false]);
                         }
                         foreach ($terms as $term) {
                             $taxCollection->addTerm($term);
@@ -328,25 +328,30 @@ trait Tcategory
         }
     }
 
-    public function getTaxonomyHierarchy($number, $offset, $plevel = 1, $taxonomy = 'maincat', $parent = 0)
+    public function getTaxonomyHierarchy($plevel = 1,  $parent = 0, $taxonomy = 'maincat')
     {
         // only 1 taxonomy
         $taxonomy = is_array($taxonomy) ? array_shift($taxonomy) : $taxonomy;
-        $terms = $this->getChildCats($number, $offset, $parent, $taxonomy);
+        $terms = $this->getChildCats($parent, $taxonomy);
         // _dc($terms);
         if (did_action('init')) {
             $taxCollection = new TaxCollection();
+            $count = 1;
             foreach ($terms as $term) {
                 $taxCollection->addTerm($term);
+
                 // recurse to get the direct decendants of "this" term
                 if ($term->parent == 0) {
                     $term->level = 0;
-                    $term->children = $this->getTaxonomyHierarchy($term->level, $taxonomy, $term->term_id);
+                    $term->children = $this->getTaxonomyHierarchy($term->level, $term->term_id, $taxonomy);
+                    $count++;
                 } else {
                     $term->level = $plevel + 1;
-                    $term->children = $this->getTaxonomyHierarchy($term->level, $taxonomy, $term->term_id);
+                    $term->children = $this->getTaxonomyHierarchy($term->level, $term->term_id, $taxonomy);
+                    $count++;
                 }
             }
+
             return $taxCollection;
         } else {
             throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');

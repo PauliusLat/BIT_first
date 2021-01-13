@@ -42,6 +42,8 @@ class Pagination {
                 pageSelected: pages,
                 hash: hash
             }
+            console.log(obj.page);
+            console.log(obj.pageSelected);
             return await this.axios.getPostData(obj);
         }
 
