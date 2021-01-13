@@ -1309,7 +1309,7 @@ var Api = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 if (!obj.api) {
-                  _context2.next = 18;
+                  _context2.next = 19;
                   break;
                 }
 
@@ -1346,7 +1346,7 @@ var Api = /*#__PURE__*/function () {
                 _context2.prev = 14;
                 _context2.t0 = _context2["catch"](1);
                 console.error(_context2.t0);
-                console.log("Duomenys is serveverio nepasiekiami !!!");
+                console.log("Data from the server is not available !!!");
 
               case 18:
               case "end":
@@ -1529,6 +1529,7 @@ var Calendar = /*#__PURE__*/function () {
           var day = event[_i2].innerText;
           var action = event[_i2].dataset.date;
           var curentM = action.toString().slice(4, -55);
+          console.log(curentM);
 
           var month = _this2.translate(curentM);
 
@@ -2041,9 +2042,21 @@ var Category = /*#__PURE__*/function () {
           cat_parent: select.value
         };
 
-        if (obj) {
-          _this2.readImage.sendImageData(obj);
-        }
+        var id = document.querySelector('.newsBtnSend').id;
+        var image = document.getElementById('image');
+        var imageDiv = document.querySelector('.imageDiv');
+        var imgBlock = document.querySelector('.galleryContainer');
+        var save = document.querySelector('.newsBtnSend');
+        var title = document.querySelector('.postTitle');
+        var content = document.querySelectorAll("[contenteditable]");
+        var getImage = document.querySelector('.getImage');
+        var altText = document.getElementById('alt');
+        var pavTtitle = document.getElementById('pavTtitle');
+        var newsCat = document.querySelector('.newsCat');
+        var catUp = document.querySelector('.catUp');
+        var catDown = document.querySelector('.catDown');
+        var api = "news-update";
+        var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_1__["default"]();
 
         _this2.axios.formDataApi(obj);
 
@@ -2295,7 +2308,8 @@ var EditPost = /*#__PURE__*/function () {
           readImage.image();
           save.addEventListener("click", data);
         }
-      }
+      } // window.location.reload();
+
     }
   }]);
 
@@ -2520,10 +2534,7 @@ new _news__WEBPACK_IMPORTED_MODULE_7__["default"]('startNewsAdmin');
 new _newsList__WEBPACK_IMPORTED_MODULE_9__["default"]('startNweaList');
 new _editPost__WEBPACK_IMPORTED_MODULE_11__["default"]('.editStart');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
-new _category_js__WEBPACK_IMPORTED_MODULE_1__["default"]('catStart');
-new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
-new _albumList__WEBPACK_IMPORTED_MODULE_10__["default"]('startAlbumList');
-new _page_js__WEBPACK_IMPORTED_MODULE_5__["default"]('pageStart');
+new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.adminMenuStart');
 
 /***/ }),
 
@@ -2536,7 +2547,11 @@ new _page_js__WEBPACK_IMPORTED_MODULE_5__["default"]('pageStart');
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+
+
 
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -2551,6 +2566,10 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2564,509 +2583,312 @@ var Menu = /*#__PURE__*/function () {
     _classCallCheck(this, Menu);
 
     this.target = target;
-    this.read = true;
-    this.axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
-    this.storeSave;
-    this.storeinit;
-    this.clone; // this.addSubmenuAll;
-
-    this.count = 1;
-    this.countS = 1;
-    this.draggables;
-    this.listenerarray = [];
-    this.deletelistener = [];
-    this.init(); // console.log(this.count);
+    this.parent;
+    this.child;
+    this.parentString;
+    this.currentElemet;
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.init();
   }
 
   _createClass(Menu, [{
     key: "init",
-    value: function init() {
+    value: function () {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var DOM, menuDB, api, HTML, a, b;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                DOM = document.querySelector(this.target);
+
+                if (!DOM) {
+                  _context.next = 22;
+                  break;
+                }
+
+                menuDB = document.getElementById('menuStart2');
+
+                if (menuDB) {
+                  _context.next = 17;
+                  break;
+                }
+
+                api = "menu_create";
+                _context.next = 7;
+                return this.axios.getDAta(api);
+
+              case 7:
+                HTML = _context.sent;
+                DOM.innerHTML = HTML;
+                a = document.querySelector('.parent');
+                this.parent = document.createRange().createContextualFragment(a.outerHTML).querySelector(".parent");
+                b = document.createRange().createContextualFragment(a.outerHTML).querySelector(".parent");
+                b.classList.remove("parent");
+                b.classList.add("submenu");
+                b.childNodes[7].remove();
+                this.child = b;
+                this.currentElemet = document.createRange().createContextualFragment(a.outerHTML).querySelector(".addSubmenu");
+
+              case 17:
+                this.cloning();
+                this.drag();
+                this["delete"]();
+                this.store();
+                this.addAction();
+
+              case 22:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function init() {
+        return _init.apply(this, arguments);
+      }
+
+      return init;
+    }()
+  }, {
+    key: "addAction",
+    value: function addAction() {
       var _this = this;
 
-      var DOM = document.getElementById(this.target);
+      var sub = document.querySelectorAll(".addSubmenu");
 
-      if (DOM) {
-        var getDragAfterElement = function getDragAfterElement(container, y) {
-          var draggableElements = _toConsumableArray(container.querySelectorAll('.draggable:not(.dragging)'));
+      var _loop = function _loop(i) {
+        sub[i].addEventListener("click", function () {
+          var el = sub[i].parentNode;
 
-          return draggableElements.reduce(function (closest, child) {
-            var box = child.getBoundingClientRect();
-            var offset = y - box.top - box.height / 2;
+          _this.createNewElemet(el);
+        });
+      };
 
-            if (offset < 0 && offset > closest.offset) {
-              return {
-                offset: offset,
-                element: child
-              };
-            } else {
-              return closest;
+      for (var i = 0; i < sub.length; i++) {
+        _loop(i);
+      }
+    }
+  }, {
+    key: "drag",
+    value: function drag() {
+      var _this2 = this;
+
+      var draggables = document.querySelectorAll('.draggable');
+      var container = document.querySelector('.cont');
+      var controlRect = container.getBoundingClientRect().left;
+      var start;
+      var position;
+      var rect;
+      var element;
+      var addPlusButton;
+      var addSub = false;
+      draggables.forEach(function (draggable) {
+        draggable.addEventListener('dragstart', function (e) {
+          draggable.classList.add('dragging');
+          rect = draggable.getBoundingClientRect();
+          start = e.clientX - rect.left;
+
+          var dargEl = _toConsumableArray(draggable.childNodes);
+
+          addSub = dargEl.find(function (n) {
+            return n.classList == "addSubmenu";
+          });
+        });
+        draggable.addEventListener('dragend', function () {
+          draggable.classList.remove('dragging');
+
+          if (controlRect + 80 <= rect.left + position && addSub) {
+            draggable.classList.remove("parent");
+            draggable.classList.add("submenu");
+
+            for (var j = 0; j < draggable.childNodes.length; j++) {
+              if (draggable.childNodes[j].classList == "addSubmenu") {
+                if (element) {
+                  element.removeEventListener("click", addPlusButton);
+                }
+
+                draggable.childNodes[j].remove();
+              }
             }
-          }, {
-            offset: Number.NEGATIVE_INFINITY
-          }).element;
-        };
-
-        var container = document.querySelector('.cont'); // let events = getEventListeners(document.querySelector('.cont'));
-        // console.log(events)
-
-        this.cloning();
-        var addSubmenuAll = document.querySelectorAll(".addSubmenu"); // console.log(this.addSubmenuAll)
-
-        this.draggables = document.querySelectorAll('.draggable'); // console.log( this.draggables)
-
-        var draggables = this.draggables; // this.delete();
-
-        var deleted = document.querySelectorAll(".manuDelete");
-        console.log('init');
-        console.log(this.deletelistener);
-        console.log(this.deletelistener.length);
-        console.log(deleted); // if(this.deletelistener.length != deleted.length){
-        //   let diff = this.deletelistener.length - deleted.length;
-        //   this.deletelistener.splice(-diff);
-        // }
-        // console.log(this.deletelistener);
-
-        var _loop = function _loop(i) {
-          if (_this.deletelistener[i]) {
-            deleted[i].removeEventListener('click', _this.deletelistener[i]);
-          }
-
-          var deletevar = function deletevar() {
-            _this["delete"](i);
-          };
-
-          _this.deletelistener[i] = deletevar;
-          deleted[i].addEventListener('click', deletevar);
-        };
-
-        for (var i = 0; i < deleted.length; i++) {
-          _loop(i);
-        }
-
-        console.log('init after foreach');
-        console.log(this.deletelistener);
-        console.log(this.deletelistener.length);
-        console.log('------------------'); // console.log(this.listenerarray)
-        // console.log(addSubmenuAll)
-        // if(this.listenerarray.length != addSubmenuAll.length){
-        //   let diff = this.listenerarray.length - addSubmenuAll.length;
-        //   this.listenerarray.splice(-diff);
-        // 
-
-        console.log(this.listenerarray);
-
-        var _loop2 = function _loop2(_i) {
-          if (_this.listenerarray[_i]) {
-            addSubmenuAll[_i].removeEventListener('click', _this.listenerarray[_i]);
-          }
-
-          var clone = function clone() {
-            _this.subcloning(_i);
-          };
-
-          _this.listenerarray[_i] = clone;
-
-          addSubmenuAll[_i].addEventListener('click', clone);
-        };
-
-        for (var _i = 0; _i < addSubmenuAll.length; _i++) {
-          _loop2(_i);
-        }
-
-        console.log('init after foreach addsubemnu');
-        console.log(this.listenerarray);
-        console.log(this.listenerarray.length); // }
-
-        this.storeinit = document.querySelector(".initsave");
-
-        if (this.storeinit != null) {
-          var storeSave = function storeSave() {
-            _this.store();
-          };
-
-          this.storeSave = storeSave;
-          this.storeinit.removeEventListener('click', storeSave, false);
-          this.storeinit.addEventListener('click', storeSave, false);
-        } else {
-          this.storeinit = document.querySelector(".save"); // console.log(this.storeinit);
-
-          var _storeSave = function _storeSave() {
-            _this.update();
-          };
-
-          this.storeSave = _storeSave;
-          this.storeinit.removeEventListener('click', _storeSave, false);
-          this.storeinit.addEventListener('click', _storeSave, false);
-        } //subclonuojat set atrribute select klasei ir jeigu tas atributas yra, pakeisti selecto inner html su js, paduodant subpages, kurie jau bus kategorijos
-        //tikrinam ar clonuota, tada pasileidzia kitas subcloning ar panasiai
-        //submenu ilgi skaiciuoti po cloning ir tada ji paduoti i subcloning kaip nors ar dar kazkaip. gal reikia ta metoda kaip MInde parasyti, kad event listener kviestum jau paciame metode 
-        // this.delete(draggables);
-        //pass right number of draggable items to delete function
-
-
-        draggables.forEach(function (draggable) {
-          draggable.addEventListener('dragstart', function () {
-            draggable.classList.add('dragging');
-          });
-          draggable.addEventListener('dragend', function () {
-            draggable.classList.remove('dragging');
-          });
-        });
-        container.addEventListener('dragover', function (e) {
-          e.preventDefault();
-          var afterElement = getDragAfterElement(container, e.clientY);
-          var draggable = document.querySelector('.dragging');
-
-          if (afterElement == null) {
-            container.appendChild(draggable);
           } else {
-            container.insertBefore(draggable, afterElement);
+            draggable.classList.remove("submenu");
+            draggable.classList.add("parent");
+
+            for (var i = 0; i < draggable.childNodes.length; i++) {
+              if (draggable.childNodes[i].classList == "menuLinkAdd" && draggable.childNodes.length == 12) {
+                var clon = _this2.currentElemet.cloneNode(true);
+
+                draggable.childNodes[i].insertAdjacentElement('afterend', clon); ///sukuria add button
+
+                element = draggable.childNodes[6];
+
+                addPlusButton = function addPlusButton() {
+                  _this2.createNewElemet(draggable);
+                };
+
+                element.addEventListener("click", addPlusButton);
+              }
+            }
           }
         });
+      });
+      container.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        var afterElement = getDragAfterElement(container, e.clientY);
+        var draggable = document.querySelector('.dragging');
+        position = e.clientX - controlRect - start;
+
+        if (afterElement == null) {
+          container.appendChild(draggable);
+        } else {
+          container.insertBefore(draggable, afterElement);
+        }
+      });
+
+      function getDragAfterElement(container, y) {
+        var draggableElements = _toConsumableArray(container.querySelectorAll('.draggable:not(.dragging)'));
+
+        return draggableElements.reduce(function (closest, child) {
+          var box = child.getBoundingClientRect();
+          var offset = y - box.top - box.height / 2;
+
+          if (offset < 0 && offset > closest.offset) {
+            return {
+              offset: offset,
+              element: child
+            };
+          } else {
+            return closest;
+          }
+        }, {
+          offset: Number.NEGATIVE_INFINITY
+        }).element;
       }
     }
   }, {
     key: "cloning",
     value: function cloning() {
-      var _this2 = this;
+      var _this3 = this;
 
-      var add = document.querySelector(".addNew");
+      var element = this.parent;
 
-      if (this.read) {
-        var data = function data() {
-          var insert = document.querySelector(".cont");
-          var elmnt = document.querySelector(".menuItem");
-          var cln = elmnt.cloneNode(true); // console.log(cln)
-          //remove submenu item that only menu element is cloned
+      if (element) {
+        var addParent = document.querySelector(".addNew");
+        var container = document.querySelector(".cont");
 
-          var emptySubmenu = cln.querySelector(".submenu");
-          emptySubmenu.innerHTML = '';
-          insert.appendChild(cln);
-          var storeSave = _this2.storeSave;
+        var parent = function parent() {
+          var clon = element.cloneNode(true);
+          var myObj = new Object();
+          myObj.html = clon;
 
-          _this2.storeinit.removeEventListener('click', storeSave, false); // this.count++;
+          var el = _toConsumableArray(myObj.html.children);
 
+          var addSub = el.find(function (n) {
+            return n.classList == "addSubmenu";
+          });
+          myObj.html.children[3].addEventListener("click", function () {
+            if (addSub) {
+              var curentEl = myObj.html;
 
-          _this2.init();
+              _this3.createNewElemet(curentEl);
+            }
+          });
+          container.insertAdjacentElement('beforeend', clon);
+
+          _this3["delete"]();
+
+          _this3.drag();
         };
 
-        add.addEventListener("click", data);
+        addParent.addEventListener("click", parent);
       }
-
-      this.read = false;
     }
   }, {
-    key: "subcloning",
-    value: function subcloning(i) {
-      // console.log(i)
-      var parentAll = document.querySelectorAll(".menuItem");
-      var insert = parentAll[i].querySelector(".submenu");
-      var elmnt = document.querySelector(".draggable");
-      var cln = elmnt.cloneNode(true); //remove class parent after cloning - this is submenu item without parent class
-
-      cln.classList.remove("parent");
-      cln.classList.add("child"); //remove add button
-
-      cln.querySelector(".addSubmenu").remove(); //make submenu element visible
-
-      cln.querySelector(".submenuSelect").style.display = "inline-block";
-      cln.querySelector(".mainSelect").remove();
-      cln.querySelector(".submenuText").style.display = "inline-block";
-      cln.querySelector(".menuText").remove();
-      cln.querySelector(".submenuLink").style.display = "inline-block";
-      cln.querySelector(".menuLink").remove();
-      insert.appendChild(cln); // this.draggables = document.querySelectorAll('.draggable')
-      // this.countS++
-
-      this.init(); // console.log(draggables.length);
-      //pass right number of draggable items to delete function
-      // this.delete(draggables);
-    } // delete() {
-    //   console.log( this.draggables)
-    //   let deleted = document.querySelectorAll(".manuDelete");
-    //     for(let i = 0; i<deleted.length; i++){
-    //       // console.log(draggables)
-    //       deleted[i].addEventListener("click", ()=>{
-    //         console.log( this.draggables[i])
-    //         if(this.draggables[i].classList.contains("parent")){
-    //         this.draggables[i].parentElement.remove();
-    //         }else{
-    //           this.draggables[i].remove();
-    //         }
-    //      })
-    //     }
-    // }
-
+    key: "createNewElemet",
+    value: function createNewElemet(el) {
+      var subCat = this.child;
+      var clon = subCat.cloneNode(true);
+      el.insertAdjacentElement('afterend', clon);
+      this.drag();
+      this["delete"]();
+    }
+  }, {
+    key: "getID",
+    value: function getID() {
+      return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+    }
   }, {
     key: "delete",
-    value: function _delete(i) {
-      // console.log(i)
-      // console.log('delete')
-      // console.log( this.draggables[i])
-      var deleted = document.querySelectorAll(".manuDelete");
+    value: function _delete() {
+      var _this4 = this;
 
-      for (var _i2 = 0; _i2 < this.deletelistener.length; _i2++) {
-        deleted[_i2].removeEventListener('click', this.deletelistener[_i2]);
+      var id;
+      var remove = document.querySelectorAll(".manuDelete");
+
+      var _loop2 = function _loop2(i) {
+        id = _this4.getID();
+        remove[i].setAttribute("id", id);
+        var removeDiv = document.getElementById(id);
+        removeDiv.addEventListener("click", function () {
+          var currentDiv = remove[i].parentNode;
+          currentDiv.remove();
+        });
+      };
+
+      for (var i = 0; i < remove.length; i++) {
+        _loop2(i);
       }
-
-      this.deletelistener = [];
-
-      for (var _i3 = 0; _i3 < this.deletelistener.length; _i3++) {
-        deleted[_i3].removeEventListener('click', this.deletelistener[_i3]);
-      }
-
-      if (this.draggables[i].classList.contains("parent")) {
-        console.log(this.draggables[i].parentElement);
-        this.draggables[i].parentElement.remove();
-      } else {
-        this.draggables[i].remove();
-      } // console.log(this.deletelistener);
-      // console.log(this.deletelistener.length);
-      // console.log(deleted);
-      // if(this.deletelistener.length != deleted.length){
-      //   let diff = this.deletelistener.length - deleted.length;
-      //   this.deletelistener.splice(-diff);
-      // }
-      // console.log(this.deletelistener);
-
-
-      console.log('------------------');
-      var addSubmenuAll = document.querySelectorAll(".addSubmenu");
-      console.log(this.listenerarray);
-      console.log(addSubmenuAll);
-
-      if (this.listenerarray.length != addSubmenuAll.length) {
-        var diff = this.listenerarray.length - addSubmenuAll.length;
-        this.listenerarray.splice(-diff);
-      } // console.log(this.listenerarray)
-
-
-      this.init();
     }
   }, {
     key: "store",
     value: function store() {
-      // let storeInit = document.querySelector(".initsave");
-      //   if (this.read) {
-      //     let api = "menu_store";
-      //     var data = () => {
-      var menuText = document.querySelectorAll(".menuText");
-      var extmenuLink = document.querySelectorAll(".menuLink");
-      var mainselectBox = document.querySelectorAll(".mainSelect");
-      var names = [];
-      var pages = [];
-      var pageLinks = [];
-      var extlinks = [];
-      var childnames = [];
-      var childpages = [];
-      var childpageLinks = [];
-      var childextlinks = [];
-      var mainMenu = document.querySelectorAll(".menuItem");
+      var _this5 = this;
 
-      for (var i = 0; i < mainselectBox.length; i++) {
-        var options = mainselectBox[i].getElementsByTagName('option');
-        var subselect = mainMenu[i].querySelector(".submenu");
-        var subselectBox = subselect.querySelectorAll(".submenuSelect");
-        var submenuText = subselect.querySelectorAll(".submenuText");
-        var subextmenuLink = subselect.querySelectorAll(".submenuLink");
-        var subnames = [];
-        var subpages = [];
-        var subpageLinks = [];
-        var subextlinks = [];
-
-        for (var a = 0; a < subselectBox.length; a++) {
-          var suboptions = subselectBox[a].getElementsByTagName('option');
-
-          for (var k = 0; k < suboptions.length; k++) {
-            if (suboptions[k].selected) {
-              subpages.push(suboptions[k].text);
-              subpageLinks.push(suboptions[k].value);
-            }
-          }
-
-          subnames.push(submenuText[a].value);
-          subextlinks.push(subextmenuLink[a].value);
-        }
-
-        for (var j = 0; j < options.length; j++) {
-          if (options[j].selected) {
-            pages.push(options[j].text);
-            pageLinks.push(options[j].value);
-
-            if (subselectBox.length != 0) {
-              childpages.push(subpages);
-              childpageLinks.push(subpageLinks);
-            } else {
-              childpages.push([]);
-              childpageLinks.push([]);
-            }
-          }
-        }
-
-        names.push(menuText[i].value);
-        extlinks.push(extmenuLink[i].value);
-
-        if (subselectBox.length != 0) {
-          childnames.push(subnames);
-          childextlinks.push(subextlinks);
-        } else {
-          childnames.push([]);
-          childextlinks.push([]);
-        }
-      }
-
-      console.log(pages);
-      console.log(pageLinks);
-      console.log(names);
-      console.log(childpages);
-      console.log(childpageLinks);
-      console.log(childnames); // var axios = new Api();
-      // var obj = {
-      //   names: names,
-      //   pages: pages,
-      //   pageLinks: pageLinks,
-      //   // extlinks: extlinks,
-      //   api: api
-      // }
-      // axios.formDataApi(obj);
-
-      var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-      var uri = document.location.origin;
-      axios.post(uri + path + "menu_store", {
-        names: names,
-        pages: pages,
-        pageLinks: pageLinks,
-        childnames: childnames,
-        childpages: childpages,
-        childpageLinks: childpageLinks
-      }).then(function (response) {
-        if (response.status == 200 && response.statusText == "OK") {
-          console.log(response); // this.init();
-        }
-      })["catch"](function (err) {
-        console.log(err instanceof TypeError);
-      }); // console.log(obj)
-      //     }
-      //     storeInit.addEventListener("click", data);
-      // }
-      // this.read = false;
-    }
-  }, {
-    key: "update",
-    value: function update() {
-      var store = document.querySelector(".save");
-      var menuId = document.getElementById("menuID").value;
+      var save = document.querySelector(".save");
       var api = "menu_store";
+      var obj;
+      save.addEventListener("click", function () {
+        var elements = document.querySelectorAll(".draggable");
+        var parent = document.querySelectorAll(".parent");
+        var child = document.querySelectorAll(".submenu");
+        var select = document.querySelectorAll(".mainSelect");
+        var text = document.querySelectorAll(".menuText");
+        var link = document.querySelectorAll(".menuLink");
 
-      if (this.read) {
-        var data = function data() {
-          var menuText = document.getElementsByName("menu");
-          var extmenuLink = document.querySelectorAll(".menuLink");
-          var selectBox = document.getElementsByTagName("select");
-          var names = [];
-          var pages = [];
-          var pageLinks = [];
-          var extlinks = [];
+        var opts = _toConsumableArray(select).map(function (el) {
+          return el.options;
+        });
 
-          for (var i = 0; i < selectBox.length; i++) {
-            var options = selectBox[i].getElementsByTagName('option'); // console.log( options.length)
+        var a = [],
+            b = [],
+            c = [],
+            d = [];
+        parent.forEach(function (element) {
+          return element.setAttribute("data", true);
+        });
+        child.forEach(function (element) {
+          return element.setAttribute("data", false);
+        });
 
-            for (var j = 0; j < options.length; j++) {
-              if (options[j].selected) {
-                pages.push(options[j].text);
-                pageLinks.push(options[j].value);
-                console.log(options[j].value);
-              }
-            }
-
-            names.push(menuText[i].value);
-            extlinks.push(extmenuLink[i]);
-          } // console.log(pages)
-          // console.log(pageLinks)
-          // console.log(names)
-
-
-          var axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
-          var obj = {
-            names: names,
-            pages: pages,
-            pageLinks: pageLinks,
-            api: api
+        for (var i = 0; i < opts.length; i++) {
+          a.push(opts[i].selectedIndex);
+          b.push(text[i].value);
+          c.push(link[i].value);
+          d.push(elements[i].getAttribute('data'));
+          obj = {
+            api: api,
+            all: d,
+            select: a,
+            text: b,
+            link: c
           };
-          axios.formDataApi(obj);
-        };
+        }
 
-        store.addEventListener("click", data);
-      }
-
-      this.read = false; // this.init();
-    } // async addNew() {
-    //   let api = "menu_create";
-    //   let htm = await this.axios.getDAta(api);
-    //   const lastElemet = document.querySelector(".cont");
-    //     const HTML = `<div class="menuName">
-    //     <label for="">
-    //     </label>
-    //     <input name="menu" class="menuText" placeholder="Pavadinimas" type="text">
-    // </div>
-    // <div class="menuSelect">
-    //     <label for="standard-select">
-    //     </label>
-    //     <select class="select-css add" id="standard-select">
-    //     </select>
-    // </div>
-    // <div class="menuLinkAdd">
-    //     <label for="link">
-    //     </label>
-    //     <input class="menuLink" placeholder="Prideti nuoroda" type="text">
-    // </div>
-    // <div class="manuDelete">
-    //     <svg height="35" version="1.1" viewBox="0 0 295 295" width="40">
-    //         <title />
-    //         <desc />
-    //         <defs />
-    //         <g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
-    //             <g fill-rule="nonzero" id="close">
-    //                 <path d="M147.421,0 C66.133,0 0,66.133 0,147.421 C0,228.709 66.133,294.842 147.421,294.842 C185.708,294.842 221.988,280.233 249.58,253.706 C251.969,251.41 252.044,247.611 249.747,245.223 C247.452,242.835 243.654,242.759 241.264,245.056 C215.919,269.423 182.592,282.842 147.422,282.842 C72.75,282.843 12,222.093 12,147.421 C12,72.749 72.75,12 147.421,12 C222.092,12 282.842,72.75 282.842,147.421 C282.842,164.263 279.79,180.694 273.771,196.256 C272.576,199.347 274.112,202.821 277.203,204.017 C280.295,205.21 283.768,203.676 284.964,200.585 C291.519,183.636 294.843,165.749 294.843,147.42 C294.843,66.133 228.71,0 147.421,0 Z" fill="#000000" id="Shape" />
-    //                 <path d="M167.619,160.134 C165.249,157.815 161.451,157.857 159.134,160.224 C156.816,162.592 156.857,166.391 159.224,168.709 L206.46,214.945 C207.628,216.088 209.143,216.657 210.657,216.657 C212.214,216.657 213.77,216.054 214.945,214.854 C217.263,212.486 217.222,208.687 214.855,206.369 L167.619,160.134 Z" fill="#FB4A5E" id="Shape" />
-    //                 <path d="M125.178,133.663 C126.349,134.834 127.885,135.42 129.421,135.42 C130.957,135.42 132.492,134.834 133.664,133.663 C136.007,131.32 136.007,127.521 133.664,125.178 L88.428,79.942 C86.085,77.599 82.285,77.599 79.943,79.942 C77.6,82.285 77.6,86.084 79.943,88.427 L125.178,133.663 Z" fill="#FB4A5E" id="Shape" />
-    //                 <path d="M214.9,79.942 C212.557,77.599 208.757,77.599 206.415,79.942 L79.942,206.415 C77.599,208.758 77.599,212.557 79.942,214.9 C81.113,216.071 82.649,216.657 84.185,216.657 C85.721,216.657 87.256,216.071 88.428,214.9 L214.9,88.428 C217.243,86.084 217.243,82.286 214.9,79.942 Z" fill="#FB4A5E" id="Shape" />
-    //             </g>
-    //         </g>
-    //     </svg>
-    // </div>
-    // <div class="menuDrag">
-    //     <svg data-name="Layer 1" id="Layer_1" height="35" width="40" viewBox="0 0 32 32">
-    //         <defs>
-    //             <style>
-    //                 .cls-1 {
-    //                     fill: #515151;
-    //                 }
-    //             </style>
-    //         </defs>
-    //         <title />
-    //         <path class="cls-1" d="M16,9a3,3,0,1,0-3-3A3,3,0,0,0,16,9Zm0-4.46A1.46,1.46,0,1,1,14.54,6,1.46,1.46,0,0,1,16,4.54Z" />
-    //         <path class="cls-1" d="M16,19a3,3,0,1,0-3-3A3,3,0,0,0,16,19Zm0-4.46A1.46,1.46,0,1,1,14.54,16,1.46,1.46,0,0,1,16,14.54Z" />
-    //         <path class="cls-1" d="M16,29a3,3,0,1,0-3-3A3,3,0,0,0,16,29Zm0-4.46A1.46,1.46,0,1,1,14.54,26,1.46,1.46,0,0,1,16,24.54Z" />
-    //     </svg>
-    // </div>`;
-    //   HTML = document.querySelector();
-    //   let node = document.createElement("div");
-    //   node.classList.add("draggable");
-    //   node.setAttribute('id', "addDrag");
-    //   node.setAttribute('draggable', true);
-    //   node.innerHTML = HTML;
-    //   lastElemet.appendChild(node)
-    //   // let select = document.querySelector(".add");
-    //   // console.log(select)
-    //   // htm.forEach(myFunction)
-    //   // function myFunction(item){ 
-    //   //   select.innerHTML += `<option>${item.post_title}</option>` 
-    //   //    console.log(item.post_title)
-    //   // }
-    //   this.init();
-    // }
-
+        _this5.axios.formDataApi(obj);
+      });
+    }
   }]);
 
   return Menu;
@@ -4040,7 +3862,6 @@ var Tag = /*#__PURE__*/function () {
       var slug = document.getElementById("tag-slug");
       var description = document.getElementById("tag-description");
       var storeTag = document.getElementById("create");
-      var api = "tag_store";
       storeTag.addEventListener("click", function () {
         var obj = {
           api: api,
