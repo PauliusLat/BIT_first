@@ -1,6 +1,7 @@
 "use strict";
 import Api from './api';
 import Pagination from './pagination';
+
 class Tag {
     constructor(target) {
         const api = "tag_create";
@@ -12,6 +13,7 @@ class Tag {
         this.changes;
         this.init();
     }
+
     async init(hash = null, HTML = null) {
         const DOM = document.getElementById(this.target);
         const test = document.querySelector(".test");
@@ -31,9 +33,9 @@ class Tag {
             HTML = "";
 
             let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
-            if(addColor){
+            if (addColor) {
                 addColor.classList.add("active");
-            }         
+            }
 
             var changes = async () => {
 
@@ -67,12 +69,12 @@ class Tag {
             this.tagEdit(test);
         }
     }
+
     createTag() {
         const name = document.getElementById("tag-name")
         const slug = document.getElementById("tag-slug");
         const description = document.getElementById("tag-description");
         const storeTag = document.getElementById("create");
-        const api = "tag_store";
         storeTag.addEventListener("click", () => {
             let obj = {
                 api: api,
@@ -90,7 +92,6 @@ class Tag {
         });
     }
 
-    
     delete() {
         const api = "tag_destroy";
         const deleteBtn = document.querySelectorAll(".tag-delete");
@@ -114,6 +115,7 @@ class Tag {
             }
         }
     }
+
     tagEdit(test) {
         const editBtn = document.querySelectorAll(".tag-edit");
         for (let i = 0; i < editBtn.length; i++) {

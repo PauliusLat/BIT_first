@@ -145,9 +145,9 @@
             </div>
             <div class="inputTagClass">
                 <label for="alt">Alt tekstas</label>
-                <input type="text" id="alt" value=" <?= $image->getAlt(); ?>" />
+                <input type="text" id="alt" value="<?=$image->getAlt();?>" />
                 <label for="pavTtitle">Pav. pavadinimas</label>
-                <input type="text" id="pavTtitle" value=" <?= $image->post_title; ?>" />
+                <input type="text" id="pavTtitle" value="<?=$image->getCaption();?>" />
             </div>
         </div>
     </div>

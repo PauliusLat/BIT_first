@@ -99,6 +99,7 @@ class Attachment extends Post
 
     public function setCaption($caption)
     {
+        var_dump($caption);
         $this->post_excerpt = $caption;
     }
 

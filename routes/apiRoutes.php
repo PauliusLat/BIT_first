@@ -61,11 +61,5 @@ return [
 
 	'menu_create' => 'FrontMenuController@create',
 	'menu_store' => 'FrontMenuController@store',
-	'menu_update' => 'FrontMenuController@update',
 	'menu_destroy' => 'FrontMenuController@destroy',
-	'menu_edit' => 'FrontMenuController@edit',
-
-	'cache_clear' => 'CacheController@clearCache',
-	'cache_enable' => 'CacheController@enableCache',
-	'cache_disable' => 'CacheController@disableCache'
 ];

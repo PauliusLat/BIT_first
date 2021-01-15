@@ -10,14 +10,17 @@ class Menu {
     this.axios = new Api();
     this.init();
   }
+
   async init() {
     const DOM = document.querySelector(this.target);
     if (DOM) {
       const menuDB = document.getElementById('menuStart2');
+
       if (!menuDB) {
         let api = "menu_create";
         let HTML = await this.axios.getDAta(api);
         DOM.innerHTML = HTML;
+
         const a = document.querySelector('.parent');
         this.parent = document.createRange().createContextualFragment(a.outerHTML).querySelector(".parent");
         let b = document.createRange().createContextualFragment(a.outerHTML).querySelector(".parent");
@@ -27,6 +30,7 @@ class Menu {
         this.child = b;
         this.currentElemet = document.createRange().createContextualFragment(a.outerHTML).querySelector(".addSubmenu");
       }
+
       this.cloning();
       this.drag();
       this.delete();
@@ -34,6 +38,7 @@ class Menu {
       this.addAction();
     }
   }
+
   addAction() {
     const sub = document.querySelectorAll(".addSubmenu");
     for (let i = 0; i < sub.length; i++) {
@@ -43,26 +48,32 @@ class Menu {
       })
     }
   }
+
   drag() {
     const draggables = document.querySelectorAll('.draggable')
     const container = document.querySelector('.cont')
     const controlRect = container.getBoundingClientRect().left;
+
     let start;
     let position;
     let rect;
     let element;
     let addPlusButton;
     let addSub = false;
+
     draggables.forEach(draggable => {
+
       draggable.addEventListener('dragstart', e => {
         draggable.classList.add('dragging')
         rect = draggable.getBoundingClientRect();
         start = e.clientX - rect.left;
+
         let dargEl = [...draggable.childNodes];
         addSub = dargEl.find(n => n.classList == "addSubmenu");
       })
       draggable.addEventListener('dragend', () => {
         draggable.classList.remove('dragging')
+
         if (controlRect + 80 <= (rect.left + position) && addSub) {
           draggable.classList.remove("parent");
           draggable.classList.add("submenu");
@@ -83,6 +94,7 @@ class Menu {
               const clon = this.currentElemet.cloneNode(true);
               draggable.childNodes[i].insertAdjacentElement('afterend', clon);  ///sukuria add button
               element = draggable.childNodes[6];
+
               addPlusButton = () => {
                 this.createNewElemet(draggable);
               }
@@ -92,17 +104,20 @@ class Menu {
         }
       })
     })
+
     container.addEventListener('dragover', e => {
       e.preventDefault()
       const afterElement = getDragAfterElement(container, e.clientY)
       const draggable = document.querySelector('.dragging')
       position = e.clientX - controlRect - start;
+
       if (afterElement == null) {
         container.appendChild(draggable)
       } else {
         container.insertBefore(draggable, afterElement)
       }
     })
+
     function getDragAfterElement(container, y) {
       const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
       return draggableElements.reduce((closest, child) => {
@@ -117,6 +132,7 @@ class Menu {
     }
   }
   cloning() {
+
     const element = this.parent;
     if (element) {
       const addParent = document.querySelector(".addNew");
@@ -127,6 +143,7 @@ class Menu {
         myObj.html = clon;
         let el = [...myObj.html.children];
         let addSub = el.find(n => n.classList == "addSubmenu");
+
         myObj.html.children[3].addEventListener("click", () => {
           if (addSub) {
             let curentEl = myObj.html;
@@ -138,6 +155,7 @@ class Menu {
         this.drag();
       }
       addParent.addEventListener("click", parent);
+
     }
   }
   createNewElemet(el) {
@@ -167,6 +185,7 @@ class Menu {
     const save = document.querySelector(".save");
     const api = "menu_store";
     let obj;
+
     save.addEventListener("click", () => {
       const elements = document.querySelectorAll(".draggable");
       const parent = document.querySelectorAll(".parent");
@@ -174,6 +193,7 @@ class Menu {
       const select = document.querySelectorAll(".mainSelect");
       const text = document.querySelectorAll(".menuText");
       const link = document.querySelectorAll(".menuLink");
+
       const opts = [...select].map(el => el.options);
       let a = [], b = [], c = [], d = [], e = [];
       parent.forEach(element => element.setAttribute("data", true));
@@ -185,12 +205,15 @@ class Menu {
         d.push(elements[i].getAttribute('data'))
         e.push(opts[i][opts[i].selectedIndex].value)
         console.log(e);
+
         obj = {
           api: api,
           all: d,
           select: a,
           text: b,
+
           textLink:e,
+
           link: c
         }
       }
@@ -198,4 +221,5 @@ class Menu {
     })
   }
 }
+
 export default Menu;

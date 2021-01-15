@@ -28,6 +28,7 @@ class FrontMenuController
     {
         $query = new Query;
         $menus = $query->postType('menu')->getPost()->all();
+
         if ($menus) {
             $menu = $menus[0];
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
@@ -37,15 +38,18 @@ class FrontMenuController
         } else {
             $query = new Query;
             $menus = $query->postType('menu')->getPost()->all();
+
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
             $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
+  
             $page = new Page;
-            $output = View::adminRender('frontmenu.initmenu', ['pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
+    $output = View::adminRender('frontmenu.initmenu', ['pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
             return new JsonResponse(['html' => $output]);
         }
     }
 
     public function store(Request $request)
+
     {
         // $request = $this->decodeRequest($requestJson);
         $id = $request->request->get('id');
@@ -137,14 +141,7 @@ class FrontMenuController
                 array_push($subextLinksArr, $extLinks[$index]);
             }
         }
-        // _dc($bigSubnamesArr);
-        // _dc($namesArr);
-        // _dc($bigSubmenuItemsArr);
-        // _dc($menuItemsArr);
-        // _dc($bigSubpageLinksArr);
-        // _dc($pageLinksArr);
-        // _dc($bigSubextLinksArr);
-        // _dc($extLinksArr);
+      
 
         $menuPost->names = $menuItemsArr;
         $menuPost->subnames = $bigSubmenuItemsArr;
@@ -155,7 +152,8 @@ class FrontMenuController
         $menuPost->extLinks = $extLinksArr;
         $menuPost->subextLinks = $bigSubextLinksArr;
         $menuPost->save();
-        _dc($menuPost);
+//         _dc($menuPost);
+
         return new Response;
     }
 
