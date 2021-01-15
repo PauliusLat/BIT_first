@@ -84,13 +84,7 @@ class Query
         $this->args['offset'] = $offset;
         return $this;
     }
-    // public function countPosts()
-    // {
-    //     $query = new WP_Query($this->args);
-    //     $count = $query->found_posts();
-    //     var_dump($count);
-    //     return $count;
-    // }
+
 
     public function getPost(): Collection
     {

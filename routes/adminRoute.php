@@ -6,7 +6,7 @@
 use BIT\controllers\CacheController;
 
 return [
-	'admin' => 'AdminController@index',
+	// 'admin' => 'AdminController@index',
 	'news' => 'NewsAdminController@create',
 	'news@' => ['add new' => 'NewsAdminController@create', 
 				'list' => 'NewsAdminController@list', 
@@ -17,7 +17,8 @@ return [
 
 	'galerija' => 'GalleryAdminController@index',
 	'galerija@' => ['0def' => 'GalleryAdminController@index',
-					'0edit' => 'GalleryAdminController@edit'
+					'0edit' => 'GalleryAdminController@edit',
+					'0delete' => 'GalleryAdminController@attDelete'
 					],
 
 	// 'kategorija' => 'CategoryFrontController@index',

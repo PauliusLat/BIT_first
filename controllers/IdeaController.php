@@ -8,7 +8,6 @@ use BIT\app\View;
 use BIT\models\AlbumPost;
 use BIT\models\IdeaPost;
 use BIT\models\NewsPost;
-use BIT\app\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
