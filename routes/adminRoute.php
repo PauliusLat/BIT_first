@@ -36,7 +36,7 @@ return [
 	'tag' => 'TagController@index',
 	// 'tag@' => ['list' =>'TagController@create', 'tag_edit'=> 'TagController@edit', 'tag_store'=> 'TagController@store', 'tag_destroy'=> 'TagController@destroy', 'tag_update'=> 'TagController@update']
 
-	'frontmenu' => 'FrontMenuController@index',
+	'frontmenu' => 'AdminMenuController@index',
 
 	'cache' => 'CacheController@index',
 	'cache@' => ['0def' => 'CacheController@index',
