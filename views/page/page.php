@@ -1,8 +1,11 @@
-<div class='pageCreate grid-container'>
+<?php
+
+?>
+
+<div class='tagCreate grid-container'>
     <div class="sm-1">
         <h1 class="tcp">Puslapiai</h1>
     </div>
-
     <div class="sm-1-2">
 
         <?php
@@ -46,18 +49,19 @@
             <button type="submit" id="create" class="btn-blue">Pridėti</button>
         </div>
     </div>
-
     <div class="sm-1-2">
+
         <table>
             <th>Antraštė</th>
             <th>Nuoroda</th>
-            <!-- <th>Puslapio pavadinimas</th> -->
             <th>Puslapio rūšis</th>
             <th>Veiksmai</th>
-
             <?php
+
             $pageNum = 1;
+            $nav = '';
             for ($page = 1; $page <= $pages; $page++) {
+
                 $nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
                 $next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';
                 $prev = '<a class="paging" id = "' . $prevpage . ' "><</a>';
@@ -74,18 +78,14 @@
                     <option value="8">8</option>
                     <option value="10">10</option>
                 </select>
-                <div class="buttons">
-                    <button type="submit" id="selectpage" class="btn-blue">Rinktis</button>
-                </div>
             </div>
-
-
             <?php
             echo '<div class = "page">';
             echo $first . $prev . $nav . $next . $last;
-            echo '</div>';
+            echo '</div>';?>
 
-            foreach ($postPages as $postPage) : ?>
+
+            <?php foreach ($postPages as $postPage) : ?>
                 <tr>
                     <td><?= $postPage->post_title ?></td>
                     <td>

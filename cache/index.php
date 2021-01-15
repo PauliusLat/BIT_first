@@ -101,6 +101,6 @@ function getHost() {
         }
     }
     $host = preg_replace('/:\d+$/', '', $host);
-    return trim($host).':8080';                               //remove :8080.
+    return trim($host);                               //remove :8080.
 }
 

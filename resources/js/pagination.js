@@ -12,7 +12,6 @@ class Pagination {
     }
 
     paging() {
-        // console.log(111111)
 
         const page = document.querySelectorAll(".paging");
 
@@ -21,16 +20,14 @@ class Pagination {
         if (page.length) {
             var nextPage
             for (let i = 0; i < page.length; i++) {
-                //console.log(page[i])
                 nextPage = () => {
                     page[i].addEventListener('click', nextPage);
-                    console.log(222222)
                     let id = page[i].id;
                     location.hash = '#' + id;
                     page[i].removeEventListener("click", nextPage);
                 }
 
-               page[i].addEventListener('click', nextPage);
+                page[i].addEventListener('click', nextPage);
             }
         }
         this.lenght = page.length - 4;
@@ -45,8 +42,6 @@ class Pagination {
                 pageSelected: pages,
                 hash: hash
             }
-            // console.log(obj.page);
-            console.log(obj.pageSelected);
             return await this.axios.getPostData(obj);
         }
 

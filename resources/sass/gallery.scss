@@ -35,16 +35,6 @@
       cursor: pointer;
     }
 
-    // .albumImage::after {
-    //     content    : "\2713";
-    //     color      : #6dc01a;
-    //     line-height: 85px;
-    //     font-size  : 85px;
-    //     font-weight: 1000;
-    //     margin     : 10px 0 0 -75px;
-    //     position   : absolute;
-    // }
-
     .svg-wrapper {
       margin: 25px 0 0 0;
       width: 150px;
@@ -83,14 +73,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    // .file-upload {
-
-    //     input[type=file] {
-    //         width : 100px;
-    //         height: 100px;
-    //     }
-    // }
 
     .file-upload {
       height: 200px;
@@ -222,3 +204,5 @@
   border-bottom: 0.3rem solid transparent;
   transition: all 0.3s;
 }
+
+
