@@ -5,6 +5,7 @@ namespace BIT\controllers;
 use BIT\app\View;
 use BIT\app\Tag;
 use BIT\app\Pagination;
+use BIT\app\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
