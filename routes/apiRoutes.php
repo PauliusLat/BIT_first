@@ -22,9 +22,7 @@ return [
 	'idea-create-admin' => 'IdeAdminController@create',
 	'idea-delete-admin' => 'IdeAdminController@delete',
 
-	'gallery-store-admin' => 'GalleryAdminController@store',
-	'gallery-edit-admin' => 'GalleryAdminController@edit',
-	'gallery-create-admin' => 'GalleryAdminController@create',
+	'gallery-update-admin' => 'GalleryAdminController@update',
 	'gallery-delete-admin' => 'GalleryAdminController@delete',
 
 	'gallery-store-front' => 'GalleryFrontController@store',
@@ -61,11 +59,5 @@ return [
 
 	'menu_create' => 'FrontMenuController@create',
 	'menu_store' => 'FrontMenuController@store',
-	'menu_update' => 'FrontMenuController@update',
 	'menu_destroy' => 'FrontMenuController@destroy',
-	'menu_edit' => 'FrontMenuController@edit',
-
-	'cache_clear' => 'CacheController@clearCache',
-	'cache_enable' => 'CacheController@enableCache',
-	'cache_disable' => 'CacheController@disableCache'
 ];

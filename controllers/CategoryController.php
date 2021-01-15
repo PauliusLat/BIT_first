@@ -46,7 +46,13 @@ class CategoryController
         $total = wp_count_terms('maincat', ['hide_empty' => false]);
         $pagination = new Pagination($limit, $number, $total);
         $category = new Category;
-        $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr($limit, $pagination->offset)));
+        $categories = array_reverse($category->flattenArray($category->getTaxonomyHierarchyArr()));
+        $catArr = [];
+        foreach ($categories as $cats => $value) {
+            if ($cats >= $pagination->offset && count($catArr) < $limit) {
+                array_push($catArr, $value);
+            }
+        }
 
         if ($session->get('alert_message') != null) {
             $message = $session->get('alert_message');
@@ -56,14 +62,12 @@ class CategoryController
             $message = "";
         }
 
-        $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $categories, 'message' => $message,  'success_message' => $success_message, 'category' => $category]);
+        $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $catArr, 'message' => $message,  'success_message' => $success_message, 'category' => $category]);
         return new JsonResponse(['html' => $output]);
     }
 
-    public function store(Request $request)
-
+    public function store(Request $request, Session $session)
     {
-        $session = App::start()->getService('session');
         $category = new Category;
         $name = $request->request->get('title');
         $slug = $request->request->get('slug');
@@ -76,9 +80,10 @@ class CategoryController
 
         //check if category ex 
         $categ = get_term_by('name', $name, 'maincat');
-        if ($categ->name == $name) {
+        if ($name == '') {
+            $session->flash('alert_message', 'įrašykite kategorijos pavadinimą');
+        } elseif ($name == $categ->name && $name != '') {
             $session->flash('alert_message', 'tokiu pavadinimu kategorija jau sukurta');
-            $categ->name != $name;
         } else {
             //add category to db and get cat ID
             $session->flash('success_message', 'kategorija sėkmingai sukurta');
@@ -86,7 +91,7 @@ class CategoryController
         }
 
         $createPage = $request->request->get('page');
-        if ($createPage == 1) {
+        if ($createPage == '0' && $term_id != null) {
             $category->addPageToCat($name, $term_id, 'page');
         }
 
@@ -109,8 +114,9 @@ class CategoryController
         $category = $cat->getCat($id, $taxonomy_type);
         $catImage = $cat->getCatImage($category->term_id);
         $urlImg = $catImage->getUrl();
+        $parent = $cat->getCatParent($id);
         $pageLink = $cat->getCatPageLink($category->term_id);
-        $output = View::adminRender('category.edit',  ['category' => $category, 'urlImg' =>  $urlImg, 'pageLink' => $pageLink, 'catImage' => $catImage]);
+        $output = View::adminRender('category.edit',  ['category' => $category, 'urlImg' =>  $urlImg, 'pageLink' => $pageLink, 'catImage' => $catImage, 'parent' => $parent]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -120,12 +126,21 @@ class CategoryController
         $name = $request->request->get('cat_name');
         $slug = $request->request->get('cat_slug');
         $description = $request->request->get('cat_description');
+        if ($request->request->get('cat_parent')) {
+            $parent_id = $request->request->get('cat_parent');
+        } else {
+            $parent_id = 0;
+        }
         $id = $request->request->get('updateId');
         //update cat and cat page
         $category = new Category;
-        $category->updateCat($id, $name, $slug, $description);
+        $session->flash('success_message', 'kategorija sėkmingai pakoreguota');
+        $category->updateCat($id, $name, $slug, $description, $parent_id);
         if ($request->files->get('image')) {
-            $category->deleteCatImage($id);
+            if ($category->getCatImage($id)) {
+                $category->deleteCatImage($id);
+            }
+
             $file = $request->files->get('image');
             $image = new Attachment();
             // $image->setAlt($altText);
@@ -133,17 +148,18 @@ class CategoryController
             $image->save($file);
             $category->addImageToCat($id, "image", $image->ID);
         }
-        // $session->flash('success_message', 'kategorija sėkmingai pakoreguota');
+
         return new Response;
     }
 
     public function destroy(Request $requestJson, Session $session)
     {
+        $category = new Category;
         $request = $this->decodeRequest($requestJson);
         $id = $request->request->get('deleteID');
         $taxonomy_type = $request->request->get('taxonomy_type');
         //delete cat and cat page
-        Category::deleteCatFromDb($id, $taxonomy_type);
+        $category->deleteCatFromDb($id, $taxonomy_type);
         $session->flash('success_message', 'kategorija sėkmingai ištrinta');
         return new Response;
     }

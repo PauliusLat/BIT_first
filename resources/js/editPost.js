@@ -24,7 +24,6 @@ class EditPost {
             const getImage = document.querySelector('.getImage');
             const altText = document.getElementById('alt');
             const pavTtitle = document.getElementById('pavTtitle');
-            const catBoxBtn = document.querySelector('.catBoxBtn');
             const newsCat = document.querySelector('.newsCat');
             const catUp = document.querySelector('.catUp');
             const catDown = document.querySelector('.catDown')
@@ -36,13 +35,13 @@ class EditPost {
                 image.remove();
                 imgBlock.classList.remove("hiden");
             }
-            catDown.addEventListener("click",  () => {
+            catDown.addEventListener("click", () => {
                 newsCat.classList.remove("hiden");
                 catUp.classList.remove("hiden");
                 catDown.classList.add("hiden");
             })
 
-            catUp.addEventListener("click",  () => {
+            catUp.addEventListener("click", () => {
                 newsCat.classList.add("hiden");
                 catUp.classList.add("hiden");
                 catDown.classList.remove("hiden");
@@ -77,6 +76,7 @@ class EditPost {
                 save.addEventListener("click", data)
             }
         }
+        // window.location.reload();
     }
 }
 

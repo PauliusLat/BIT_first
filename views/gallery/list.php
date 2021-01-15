@@ -1,3 +1,3 @@
-<div class="md-4-5 containerAlbumList" id="startAlbumList">
+<div class="sm-23-24 containerAlbumList " id="startAlbumList">
   
 </div>

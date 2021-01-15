@@ -18,15 +18,15 @@ class Pagination {
         let hash = window.location.hash.replace(/^#!?/, '').slice(0, 1);
 
         if (page.length) {
-
             var nextPage
-
             for (let i = 0; i < page.length; i++) {
                 nextPage = () => {
+                    page[i].addEventListener('click', nextPage);
                     let id = page[i].id;
                     location.hash = '#' + id;
                     page[i].removeEventListener("click", nextPage);
                 }
+
                 page[i].addEventListener('click', nextPage);
             }
         }
@@ -42,6 +42,7 @@ class Pagination {
                 pageSelected: pages,
                 hash: hash
             }
+
             return await this.axios.getPostData(obj);
         }
 

@@ -15,7 +15,6 @@ class AlbumList {
         const DOM = document.getElementById(this.target);
 
         if (DOM) {
-
             const deleteApi = 'album-destroy&id=';
             const listApi = 'album-list';
 

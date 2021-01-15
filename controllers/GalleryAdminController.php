@@ -10,13 +10,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GalleryAdminController {
+class GalleryAdminController
+{
 
-	public function index() {
+	public function index()
+	{
 		return View::adminRender('gallery.list');
 	}
 
-	public function create(Request $request, AlbumPost $album) {
+	public function create(Request $request, AlbumPost $album)
+	{
 		$data = (AlbumPost::all())->all();
 
 		$response = new Response;
@@ -26,7 +29,8 @@ class GalleryAdminController {
 		return $response;
 	}
 
-	public function renderList(){
+	public function renderList()
+	{
 		$uri = admin_url('admin.php?page=galerija-0edit');
 		$allAlbums = AlbumPost::all()->all();
 		$output = View::adminRender('gallery.renderList', ['html' => $allAlbums,  'uri' => $uri]);
@@ -96,11 +100,12 @@ class GalleryAdminController {
 	// 	// }
 	// 	//$image->save($file, $post_id);
 
-	
 
 
 
-	private function decodeRequest($request) {
+
+	private function decodeRequest($request)
+	{
 
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);

@@ -1579,6 +1579,8 @@ button:focus {
   margin: 0 0 0 20px;
 }
 
+/** @format */
+
 .gellerTitle {
   text-align: center;
   margin: 30px 0 20px 0;
@@ -1629,7 +1631,7 @@ button:focus {
 .galleryContainer .galleryUploade #shape {
   stroke-width: 6px;
   fill: transparent;
-  stroke: #009FFD;
+  stroke: #009ffd;
   stroke-dasharray: 85 400;
   stroke-dashoffset: -220;
   transition: 1s all ease;
@@ -2048,54 +2050,6 @@ button:focus {
 
 /** @format */
 
-.editor {
-  border: solid 1px #ccc;
-  padding: 20px;
-  min-height: 70%;
-  width: 60%;
-}
-
-.editor b,
-.editor strong {
-  font-weight: 800;
-}
-
-.sample-toolbar {
-  border: solid 1px #ddd;
-  background: #f4f4f4;
-  padding: 10px 0 0 0;
-  border-radius: 3px;
-  width: 60%;
-}
-
-.sample-toolbar a {
-  text-decoration: none;
-}
-
-.sample-toolbar .fa-bold {
-  margin: 0 5px 0 10px;
-}
-
-.sample-toolbar .fa-italic {
-  margin: 0 5px 0 5px;
-}
-
-.sample-toolbar .fa-list {
-  margin: 0 5px 0 5px;
-}
-
-.sample-toolbar .fa-link {
-  margin: 0 5px 0 5px;
-}
-
-.sample-toolbar > span {
-  cursor: pointer;
-}
-
-.sample-toolbar > span:hover {
-  text-decoration: underline;
-}
-
 .pages {
   display: inline-block;
 }
@@ -2110,41 +2064,6 @@ button:focus {
 
 .form-control {
   margin-bottom: 20px;
-}
-
-.titleInput {
-  width: 100%;
-  border: solid 1px #cccccc;
-  height: 10%;
-  text-align: center;
-  margin: 0;
-  font-size: 35px;
-  outline: none;
-}
-
-.titleInput:-moz-placeholder-shown {
-  font-size: 35px;
-}
-
-.titleInput:-ms-input-placeholder {
-  font-size: 35px;
-}
-
-.titleInput:placeholder-shown {
-  font-size: 35px;
-}
-
-.titleInput:placeholder {
-  font-size: 35px;
-}
-
-.ql-container {
-  height: 80%;
-}
-
-.ql-container .ql-editor p {
-  font-size: 20px;
-  font-weight: 200;
 }
 
 .page {
@@ -2265,6 +2184,11 @@ table th {
   color: #0071a1;
 }
 
+.catCreate .page .active {
+  color: #000000;
+  font-size: 20px;
+}
+
 .tagCreate .page .active {
   color: #000000;
   font-size: 20px;
@@ -2279,6 +2203,31 @@ table th {
   display: inline-block;
 }
 
+.categoriImageGrid .galleryContainer.cat {
+  height: 210px;
+}
+
+.categoriImageGrid .galleryContainer.cat .galleryDiv {
+  height: 200px;
+  width: 200px;
+}
+
+.categoriImageGrid .galleryContainer.cat .galleryDiv .uploadeImageGallery {
+  height: 200px;
+  width: 200px;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.galleryContainer.cat .galleryDiv .uploadeImageGallery {
+  height: 200px;
+  width: 200px;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
 .galleryImage {
   display: inline-block;
 }
@@ -2291,10 +2240,6 @@ table th {
   justify-content: left;
 }
 
-.galleryContainer.cat {
-  height: 210px;
-}
-
 .paging {
   cursor: pointer;
 }
@@ -2304,6 +2249,11 @@ table th {
 }
 
 /** @format */
+
+#wpbody-content .innermenu .cont .submenu {
+  margin: 0 0 0 3%;
+  width: 97%;
+}
 
 .innermenu .menu {
   text-align: center;
@@ -2388,7 +2338,6 @@ table th {
   background-color: #fff;
   /* note           : bg image below uses 2 urls. The first is an svg data uri for the arrow icon, and the second is the gradient. 
             for the icon, if you want to change the color, be sure to use `%23` instead of `#`, since it's a url. You can also swap in a different svg icon or an external image reference
-
           */
   background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"), linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
   background-repeat: no-repeat, repeat;
@@ -2539,7 +2488,6 @@ table th {
   background-color: #fff;
   /* note           : bg image below uses 2 urls. The first is an svg data uri for the arrow icon, and the second is the gradient. 
             for the icon, if you want to change the color, be sure to use `%23` instead of `#`, since it's a url. You can also swap in a different svg icon or an external image reference
-
           */
   background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"), linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
   background-repeat: no-repeat, repeat;
@@ -2807,5 +2755,106 @@ table th {
 
 .editStart .newsCatAdd .catBoxBtn .selectCatPost .children {
   margin: 0 0 0 10px;
+}
+
+/*-----------list---------------*/
+
+.containerAlbumList {
+  -ms-box-orient: horizontal;
+  display: -moz-flex;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 1% 0 0 2%;
+}
+
+.containerAlbumList .albumList {
+  height: 450px;
+  margin: 2% 2% 0 0;
+  box-shadow: 0px 0px 21px 0px rgba(0, 0, 0, 0.51);
+  border: solid 1px rgba(231, 230, 230, 0.8);
+  border-radius: 0.425rem;
+}
+
+.containerAlbumList .albumList .parentAlbum .imageAlbum img {
+  height: 310px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+}
+
+.containerAlbumList .albumList .albumTitle {
+  text-align: center;
+}
+
+.containerAlbumList .albumList .albumButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.containerAlbumList .albumList .albumButtons .deleteAlbum {
+  margin: 0 2% 0 25%;
+}
+
+.containerAlbumList .albumList .albumButtons form {
+  width: 50%;
+}
+
+.containerAlbumList .albumList .albumButtons form .albumEdit {
+  margin: 0 25% 0 2%;
+}
+
+/*----------------edit---------------------*/
+
+.containerAlbumEdit {
+  margin: 1% 0 0 2%;
+}
+
+.containerAlbumEdit .albumTitle {
+  width: 93%;
+  margin: 1% 0 1% 1%;
+  color: #000000;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  height: 20px;
+}
+
+.containerAlbumEdit .albumGallery {
+  -ms-box-orient: horizontal;
+  display: -moz-flex;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.containerAlbumEdit .albumGallery .imgePosition {
+  position: relative;
+  width: 30%;
+  border: solid 1px rgba(231, 230, 230, 0.8);
+}
+
+.containerAlbumEdit .albumGallery .imgePosition img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 350px;
+}
+
+.containerAlbumEdit .albumGallery .imgePosition .galleryEdit {
+  position: absolute;
+  top: 92%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  background-color: #FFFFFF;
+  height: 14%;
+}
+
+.containerAlbumEdit .albumGallery .imgePosition .galleryEdit .removeBtn {
+  margin: 2% 5% 0 5%;
+}
+
+.containerAlbumEdit .saveAlbum {
+  float: right;
+  margin: 0 8% 0 0;
 }
 

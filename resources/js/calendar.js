@@ -133,6 +133,7 @@ class Calendar {
                     let day = event[i].innerText;
                     let action = event[i].dataset.date;
                     let curentM = action.toString().slice(4, -55);
+                    console.log(curentM);
                     let month = this.translate(curentM);
                     this.event(action, month, day);
                 });
