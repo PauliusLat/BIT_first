@@ -43,16 +43,15 @@ class FrontMenuController
             $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
   
             $page = new Page;
-
-            $output = View::adminRender('frontmenu.initmenu', ['pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
-
+    $output = View::adminRender('frontmenu.initmenu', ['pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
             return new JsonResponse(['html' => $output]);
         }
     }
 
-    public function store(Request $requestJson)
+    public function store(Request $request)
+
     {
-        $request = $this->decodeRequest($requestJson);
+        // $request = $this->decodeRequest($requestJson);
         $id = $request->request->get('id');
         if ($id == 0 || $id == 'undefined' || !isset($id) || $id == null || $id == '') {
             $menuPost = new FrontMenu;
@@ -60,21 +59,101 @@ class FrontMenuController
             $menuPost = FrontMenu::get($id);
         }
 
-        $title = $request->request->get('names');
-        $menuPost->names = $title;
-        $subtitle = $request->request->get('childnames');
-        $menuPost->subnames = $subtitle;
-        $page = $request->request->get('pages');
-        $menuPost->pages = $page;
-        $subpage = $request->request->get('childpages');
-        $menuPost->subpages = $subpage;
-        $links = $request->request->get('pageLinks');
-        // $menuPost->pageLinks = explode(',', $links);
-        $menuPost->pageLinks = $links;
-        $sublinks = $request->request->get('childpageLinks');
-        $menuPost->subpageLinks = $sublinks;
-        // $menuPost->save();
-        // _dc($menuPost);
+        $rvalues = $request->request->get('all');
+        $rpageNames = $request->request->get('select');
+        $rmenuItems = $request->request->get('text');
+        $rpageLinks = $request->request->get('textLink');
+        $rextLinks = $request->request->get('link');
+
+        $values = explode(',', $rvalues);
+        $pageNames = explode(',', $rpageNames);
+        $menuItems = explode(',', $rmenuItems);
+        $pageLinks = explode(',', $rpageLinks);
+        $extLinks = explode(',', $rextLinks);
+
+        $namesArr = [];
+        $subnamesArr = [];
+        $bigSubnamesArr = [];
+
+        $menuItemsArr = [];
+        $submenuItemsArr = [];
+        $bigSubmenuItemsArr = [];
+
+        $pageLinksArr = [];
+        $subpageLinksArr = [];
+        $bigSubpageLinksArr = [];
+
+        $extLinksArr = [];
+        $subextLinksArr = [];
+        $bigSubextLinksArr = [];
+
+        foreach ($values as $index => $bool) {
+            if ($bool == 'true' && $index == 0) {
+                array_push($namesArr, $pageNames[$index]);
+                array_push($menuItemsArr, $menuItems[$index]);
+                array_push($pageLinksArr, $pageLinks[$index]);
+                array_push($extLinksArr, $extLinks[$index]);
+            } else if ($bool == 'true' && $index > 0 && $index != count($values) - 1) {
+                array_push($bigSubnamesArr, $subnamesArr);
+                array_push($bigSubmenuItemsArr, $submenuItemsArr);
+                array_push($bigSubpageLinksArr, $subpageLinksArr);
+                array_push($bigSubextLinksArr, $subextLinksArr);
+                $subnamesArr = [];
+                $submenuItemsArr = [];
+                $subpageLinksArr = [];
+                $subextLinksArr = [];
+                array_push($namesArr, $pageNames[$index]);
+                array_push($menuItemsArr, $menuItems[$index]);
+                array_push($pageLinksArr, $pageLinks[$index]);
+                array_push($extLinksArr, $extLinks[$index]);
+            } else if ($bool == 'true' && $index = count($values) - 1) {
+                array_push($bigSubnamesArr, $subnamesArr);
+                array_push($bigSubmenuItemsArr, $submenuItemsArr);
+                array_push($bigSubpageLinksArr, $subpageLinksArr);
+                array_push($bigSubextLinksArr, $subextLinksArr);
+                $subnamesArr = [];
+                $submenuItemsArr = [];
+                $subpageLinksArr = [];
+                $subextLinksArr = [];
+                array_push($bigSubnamesArr, $subnamesArr);
+                array_push($bigSubmenuItemsArr, $submenuItemsArr);
+                array_push($bigSubpageLinksArr, $subpageLinksArr);
+                array_push($bigSubextLinksArr, $subextLinksArr);
+
+                array_push($namesArr, $pageNames[$index]);
+                array_push($menuItemsArr, $menuItems[$index]);
+                array_push($pageLinksArr, $pageLinks[$index]);
+                array_push($extLinksArr, $extLinks[$index]);
+            } else if ($bool == 'false' && $index == count($values) - 1) {
+                array_push($subnamesArr, $pageNames[$index]);
+                array_push($submenuItemsArr, $menuItems[$index]);
+                array_push($subpageLinksArr, $pageLinks[$index]);
+                array_push($subextLinksArr, $extLinks[$index]);
+
+                array_push($bigSubnamesArr, $subnamesArr);
+                array_push($bigSubmenuItemsArr, $submenuItemsArr);
+                array_push($bigSubpageLinksArr, $subpageLinksArr);
+                array_push($bigSubextLinksArr, $subextLinksArr);
+            } else {
+                array_push($subnamesArr, $pageNames[$index]);
+                array_push($submenuItemsArr, $menuItems[$index]);
+                array_push($subpageLinksArr, $pageLinks[$index]);
+                array_push($subextLinksArr, $extLinks[$index]);
+            }
+        }
+      
+
+        $menuPost->names = $menuItemsArr;
+        $menuPost->subnames = $bigSubmenuItemsArr;
+        $menuPost->pages = $namesArr;
+        $menuPost->subpages = $bigSubnamesArr;
+        $menuPost->pageLinks = $pageLinksArr;
+        $menuPost->subpageLinks = $bigSubpageLinksArr;
+        $menuPost->extLinks = $extLinksArr;
+        $menuPost->subextLinks = $bigSubextLinksArr;
+        $menuPost->save();
+//         _dc($menuPost);
+
         return new Response;
     }
 

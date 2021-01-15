@@ -12,5 +12,9 @@ class FrontMenu extends Post
     public $names = [];
     public $pages = [];
     public $pageLinks = [];
-    public $links = [];
+    public $extLinks = [];
+    public $subnames = [];
+    public $subpages = [];
+    public $subpageLinks = [];
+    public $subextLinks = [];
 }
