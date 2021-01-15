@@ -9,7 +9,7 @@ use BIT\app\Session;
 // use BIT\app\Attachment;
 // use BIT\models\NewsPost;
 // use BIT\models\AlbumPost;
-use BIT\app\Query;
+// use BIT\app\Query;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;

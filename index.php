@@ -67,7 +67,7 @@ App::start();
 
 
 add_action('init', function () {
-    $tag = new Tag;
+    // $tag = new Tag;
 
     // $tags = get_terms('hashtag', array('number' => 5, 'hide_empty' => false, 'offset' => 2));
     // $cat = $category->(2, 0);

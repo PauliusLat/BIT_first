@@ -56,8 +56,8 @@ class App
         Session::start();
         ClearCache::start();
 
-        // require_once __DIR__.'/../cache/clearCache.php';
 
+        // require_once __DIR__.'/../cache/clearCache.php';
     }
 
     public function getService($service)

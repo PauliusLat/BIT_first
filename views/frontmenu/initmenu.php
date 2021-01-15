@@ -9,12 +9,11 @@
                 </label>
                 <input name="menu" class="menuText menu" placeholder="Pavadinimas" type="text">
             </div>
-
             <div class="menuSelect">
                 <label for="standard-select">
                 </label>
                 <select class="select-css mainSelect" id="standard-select">
-                    <option value="" selected>Pasirinkite kategorija</option>
+                    <option value="" selected>Pasirinkite kategorijos puslapį</option>
                     <?php
                     foreach ($pages as $value) {
                     ?>
@@ -59,8 +58,6 @@
                     </g>
                 </svg>
             </div>
-
-
             <div class="menuDrag">
                 <svg data-name="Layer 1" id="Layer_1" height="35" width="40" viewBox="0 0 32 32">
                     <defs>
@@ -76,6 +73,7 @@
                     <path class="cls-1" d="M16,29a3,3,0,1,0-3-3A3,3,0,0,0,16,29Zm0-4.46A1.46,1.46,0,1,1,14.54,26,1.46,1.46,0,0,1,16,24.54Z" />
                 </svg>
             </div>
+
         </div>
     </div>
 </div>
