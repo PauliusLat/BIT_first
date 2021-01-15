@@ -40,7 +40,12 @@ class GalleryAdminController {
 	}
 
 	public function update(Request $request, AlbumPost $album){
-		//cia reikia directinti is edito ir saugoti i DB
+		$album->post_title = $request->request->get('title');
+		$album->profileImgId = $request->request->get('prifileImgID');
+		$album->save();
+	}
+	public function deleteAttachment(Attachment $attachment){
+		$attachment->delete();
 	}
 
 	public function delete(AlbumPost $albumPost)

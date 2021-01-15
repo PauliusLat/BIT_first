@@ -8,9 +8,6 @@ use BIT\models\EventPost;
 
 class EventController
 {
-	public function __construct()
-	{
-	}
 
 	function index()
 	{

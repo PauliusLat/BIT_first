@@ -55,22 +55,6 @@ class Collection {
         return new self($stateItems);
     }
 
-    // public function contains($key, $operator = null, $value = null)
-    // {
-    //     if (func_num_args() === 1) {
-    //         if ($this->useAsCallable($key)) {
-    //             $placeholder = new stdClass;
-
-    //             return $this->first($key, $placeholder) !== $placeholder;
-    //         }
-
-    //         return in_array($key, $this->items);
-    //     }
-
-    //     return $this->contains($this->operatorForWhere(...func_get_args()));
-    // }
-
-
 
     protected function getArrayableItems($items){
         if (is_array($items)) {

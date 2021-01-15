@@ -35,7 +35,7 @@ class App
 
     private function __construct()
     {
-        Config::postTypeRegister();
+        // Config::postTypeRegister();
         Config::customTaxonomyRegister();
         $this->routeDir = PLUGIN_DIR_PATH . 'routes/';
         $this->viewDir = PLUGIN_DIR_PATH . 'views/';

@@ -56,12 +56,17 @@ class Calendar {
         const exisitClassMonth = document.querySelector(".cview__month-current").textContent;
 
         if (exisitClassMonth == 1) {
+    console.log(this.date);
+    console.log(this.date.getMonth());
             let nowM = new Date(this.y, this.date.getMonth());
+       console.log('111111111');
        console.log(nowM);
             let nowY = nowM.toString().slice(11, -47);
             nowM = nowM.toString().slice(4, -55);
+      console.log('2222222222');
       console.log(nowM);
             nowM = this.translate(nowM);
+      console.log('3333333333');
       console.log(nowM);
             document.getElementById("calendar-month").innerHTML = nowY + ' ' + nowM;
         }
@@ -142,10 +147,14 @@ class Calendar {
         let y = this.date.getFullYear(),
             m = this.date.getMonth();
         let curentM = new Date(y, this.date.getMonth() + a, 0);
+ console.log('555555555');
+ console.log(curentM);
         let curentY = curentM.toString().slice(11, -47);
         curentM = curentM.toString().slice(4, -55);
         console.log(curentM);
         let curM = this.translate(curentM);
+console.log('6666666666');
+console.log(curM);
         curentMth.innerHTML = curentY + ' ' + curM;
         let lastDayM = new Date(y, m + a, 0).getDate();
         let newM = new Date(y, m + a, 0).getMonth();
@@ -155,7 +164,6 @@ class Calendar {
     }
 
     translate(curentM) {
-console.log(curentM);
         switch (curentM) {
             case 'Jan':
                 return curentM = 'Sausis';

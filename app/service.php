@@ -31,10 +31,6 @@ return function (ContainerConfigurator $configurator) {
         ->args([ref(Request::class)]);
     $services->alias(RequestId::class, 'requestId');
 
-    // $services->set('requestTermId', RequestTermId::class)
-    //     ->args([ref(Request::class)]);
-    // $services->alias(RequestTermId::class, 'requestTermId');
-
     $services->set('Category', Category::class)
         ->args([ref(RequestId::class)]);
     $services->alias(Category::class, 'category');

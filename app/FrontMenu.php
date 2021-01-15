@@ -2,9 +2,6 @@
 
 namespace BIT\app;
 
-use Ramsey\Uuid\Uuid;
-
-// use BIT\app\Post;
 
 class FrontMenu extends Post
 {

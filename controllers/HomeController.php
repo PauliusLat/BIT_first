@@ -1,11 +1,11 @@
 <?php
 
-namespace BIT\controllers;
+// namespace BIT\controllers;
 
-class HomeController {
-    public function __construct()
-    {
-        echo "Create HomeController";
-    }
+// class HomeController {
+//     public function __construct()
+//     {
+//         echo "Create HomeController";
+//     }
 
-}
+// }
