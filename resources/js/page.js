@@ -13,7 +13,6 @@ class Pag {
         this.init();
     }
     async init(hash = null, HTML = null) {
-        console.log(hash);
         const DOM = document.getElementById(this.target);
         const inner = document.querySelector(".innerpage");
         if (DOM) {
@@ -54,8 +53,6 @@ class Pag {
             this.changes = changes;
             const option = document.getElementById("items");
             option.value = this.pages;
-            console.log(option)
-            console.log(option.value)
             var selected = () => {
                 this.pages = option.value;
                 location.hash = 1;
@@ -64,7 +61,7 @@ class Pag {
                 option.removeEventListener('change', selected);
             }
             option.addEventListener('change', selected);
-            console.log(option.value)
+
             this.delete();
             this.pageStore();
             this.pageEdit(inner);

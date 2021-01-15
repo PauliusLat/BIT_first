@@ -15,9 +15,10 @@ import Calendar from './calendar.js';
 import News from './news';
 import Profile_image from './profile_image';
 import NewsList from './newsList';
-import AlbumList from './albumList';
 import EditPost from './editPost';
-import lightbox from './light_box';
+// import lightbox from './light_box';
+import AlbumEdit from './AlbumEdit.js';
+import AlbumList from './albumList';
 
 // new TextEditor('.news-container')
 new Calendar('.calendar');
@@ -27,7 +28,9 @@ new EditPost('.editStart');
 new Tag('tagStart');
 new Category('catStart');
 new Menu('.adminMenuStart');
+
 new AlbumList('startAlbumList');
+new AlbumEdit('.containerAlbumEdit')
 new Pag('pageStart');
 
 
