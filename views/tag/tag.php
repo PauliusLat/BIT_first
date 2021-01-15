@@ -1,6 +1,5 @@
 <?php
 
-use BIT\app\App;
 ?>
 
 <div class='tagCreate grid-container'>
@@ -9,16 +8,16 @@ use BIT\app\App;
     </div>
     <div class="sm-1-2">
         <?php
-        if ($message) {
-        ?>
-            <div class='message'><?= $message ?></div>
+if ($message) {
+	?>
+            <div class='message'><?=$message?></div>
         <?php
-        } else {
-        ?>
-            <div class='success_message'><?= $success_message ?></div>
+} else {
+	?>
+            <div class='success_message'><?=$success_message?></div>
         <?php
-        }
-        ?>
+}
+?>
         <h2 class='tcp'>Pridėkite naują'tag'ą'</h2>
         <div class='label'>
             <label class="tcp-label">'Tag'o' pavadinimas</label>
@@ -47,18 +46,18 @@ use BIT\app\App;
             <th>Veiksmai</th>
             <?php
 
-            $pageNum = 1;
-            $nav = '';
-            for ($page = 1; $page <= $pages; $page++) {
+$pageNum = 1;
+$nav = '';
+for ($page = 1; $page <= $pages; $page++) {
 
-                $nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
-                $next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';
-                $prev = '<a class="paging" id = "' . $prevpage . ' "><</a>';
-                $last = '<a class="paging" id = "' . $lastpage . ' "> &nbsp>> </a>';
-                $first = '<a class="paging" id = "' . $firstpage . ' "><<&nbsp</a>';
-            }
+	$nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
+	$next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';
+	$prev = '<a class="paging" id = "' . $prevpage . ' "><</a>';
+	$last = '<a class="paging" id = "' . $lastpage . ' "> &nbsp>> </a>';
+	$first = '<a class="paging" id = "' . $firstpage . ' "><<&nbsp</a>';
+}
 
-            ?>
+?>
             <div class='selectPages sm-1-2'>
                 <label for="items">Rodyti puslapyje:</label>
                 <select name="items" id="items">
@@ -67,32 +66,29 @@ use BIT\app\App;
                     <option value="8">8</option>
                     <option value="10">10</option>
                 </select>
-                <div class="buttons">
-                    <button type="submit" id="selectpage" class="btn-blue">Rinktis</button>
-                </div>
             </div>
 
 
             <?php
-            echo '<div class = "page">';
-            echo $first . $prev . $nav . $next . $last;
-            echo '</div>';
+echo '<div class = "page">';
+echo $first . $prev . $nav . $next . $last;
+echo '</div>';
 
-            foreach ($tags as $tag) {
-            ?>
+foreach ($tags as $tag) {
+	?>
                 <tr>
-                    <td class="count"><?= $tag->name ?></td>
-                    <td><?= $tag->term_id ?></td>
-                    <td><?= $tag->slug ?></td>
-                    <td><?= $tag->description ?></td>
+                    <td class="count"><?=$tag->name?></td>
+                    <td><?=$tag->term_id?></td>
+                    <td><?=$tag->slug?></td>
+                    <td><?=$tag->description?></td>
                     <td>
-                        <button class="tag-edit btn-blue" type="submit" name="tag-name" id="<?= $tag->taxonomy ?>" value="<?= $tag->term_id ?>">Edit</button>
-                        <button class="tag-delete btn-red" type="submit" name="tagDelete" id="<?= $tag->taxonomy ?>" value="<?= $tag->term_id ?>">Delete</button>
+                        <button class="tag-edit btn-blue" type="submit" name="tag-name" id="<?=$tag->taxonomy?>" value="<?=$tag->term_id?>">Edit</button>
+                        <button class="tag-delete btn-red" type="submit" name="tagDelete" id="<?=$tag->taxonomy?>" value="<?=$tag->term_id?>">Delete</button>
                     </td>
                 </tr>
             <?php
-            }
-            ?>
+}
+?>
         </table>
 
 

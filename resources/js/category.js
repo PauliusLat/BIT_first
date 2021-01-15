@@ -33,7 +33,7 @@ class Category {
             HTML = "";
 
             let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
-            console.log(addColor)
+
             if(addColor){
                 addColor.classList.add("active");
             }         
@@ -57,7 +57,7 @@ class Category {
             this.changes = changes;
             const option = document.getElementById("items");
             option.value = this.pages;
-            console.log(option.value);
+
             var selected = () => {
                 this.pages = option.value;
                 location.hash = 1;
@@ -74,7 +74,7 @@ class Category {
     }
     catStore() {
         const name = document.getElementById("category-name");
-        console.log(name);
+
           const slug = document.getElementById("category-slug");
           const description = document.getElementById("category-description");
           let parent = document.getElementById('cat');
@@ -96,7 +96,7 @@ class Category {
         const api = 'category_store';
 
         submit.addEventListener("click", () => {
-            console.log(name.value);
+
             let obj = {
                 api:  api,
                 title: name.value,
@@ -126,7 +126,7 @@ class Category {
         if (deleteBtn) {
             for (let i = 0; i < deleteBtn.length; i++) {
             let ID = deleteBtn[i].value;
-            // console.log(ID);
+     
             let taxonomy = deleteBtn[i].id;
             deleteBtn[i].addEventListener(
                 "click",
@@ -136,7 +136,7 @@ class Category {
                         deleteID: ID,
                         taxonomy_type: taxonomy
                     }
-                    console.log(ID);
+
                     this.axios.formDataApi(obj);
                     let changes = this.changes;
                     window.removeEventListener('hashchange', changes);
