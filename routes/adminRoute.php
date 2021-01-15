@@ -17,7 +17,8 @@ return [
 
 	'galerija' => 'GalleryAdminController@index',
 	'galerija@' => ['0def' => 'GalleryAdminController@index',
-					'0edit' => 'GalleryAdminController@edit'
+					'0edit' => 'GalleryAdminController@edit',
+					'0delete' => 'GalleryAdminController@attDelete'
 					],
 
 	// 'kategorija' => 'CategoryFrontController@index',

@@ -1,4 +1,3 @@
-
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -933,8 +932,9 @@ var AlbumEdit = /*#__PURE__*/function () {
       var title = document.querySelector(".albumTitle");
       var id;
       var axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
-      var api = 'gallery-update-admin';
+      var api = 'gallery-update-admin&id=';
       var obj;
+      var albumID = save.getAttribute('data');
       save.addEventListener("click", function () {
         id = _this.check();
 
@@ -943,7 +943,7 @@ var AlbumEdit = /*#__PURE__*/function () {
         }
 
         obj = {
-          api: api,
+          api: api + albumID,
           title: title.value,
           profileImgID: id
         };
@@ -4107,11 +4107,10 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
 
 /******/ });
-

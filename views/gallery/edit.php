@@ -17,16 +17,17 @@
             <div class="imgePosition">
                 <img src="<?= $attachment->getUrl(); ?>" alt="">
                 <div class="galleryEdit">
-                    <div class="btn-red removeBtn" id="<?= $attachment->ID; ?>">
-                        Trinti
-                    </div>
-                    <label for="ceck">Pakeisti albumo paveiksleli</label>
+                    <form action="<?=  get_admin_url().'admin.php?page=galerija-0delete&id='.$attachment->ID ?>" method="post">
+                        <button class="btn-red removeBtn" type="submit" id="<?= $attachment->ID; ?>" name="album" value="<?= $data->ID; ?>">
+                            Trinti
+                        </button>
+                    </form>
+                    <label for="checkbox">Pakeisti albumo paveiksleli</label>
                     <input class="checkbox" type="checkbox" >
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
-    <div class="btn-blue saveAlbum" id="<?= $data->getProfileImage()->ID; ?>">
-        Publikuoti
+    <div class="btn-blue saveAlbum" data="<?= $data->ID; ?>" id="<?= $data->getProfileImage()->ID; ?>">        Publikuoti
     </div>
 </div>
