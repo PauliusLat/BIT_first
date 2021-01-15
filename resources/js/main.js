@@ -26,8 +26,7 @@ new NewsList('startNweaList');
 new EditPost('.editStart');
 new Tag('tagStart');
 new Category('catStart');
-new Menu('menuStart');
-
+new Menu('.adminMenuStart');
 new AlbumList('startAlbumList');
 new Pag('pageStart');
 
