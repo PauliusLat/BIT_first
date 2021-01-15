@@ -5,13 +5,7 @@
     <div class="cont sm-17-24">
         <?php
 
-        // neveikia cloning ir subcloning ant senu, veikia ant nauju - kas su senais ne taip?
-        // _dc($menu);
         foreach (range(0, (count($menu->names) - 1)) as $index) {
-            // _dc($index);
-            // if (is_array($menu->names[$index + 1]) && $index + 1 <= count($menu->names) - 1) 
-            // {
-            // _dc($index + 1);
         ?>
 
             <div class="draggable parent" id="addDrag" draggable="true">
@@ -123,7 +117,7 @@
                             <label for="">
                             </label>
                             <input name="submenu" class="submenuText initmenu" style="display:block;" placeholder="Pavadinimas" type="text">
-                          </div>
+                        </div>
                         <div class="menuSelect">
                             <label for="standard-select">
                             </label>

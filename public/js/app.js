@@ -1,4 +1,3 @@
-
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -2530,7 +2529,7 @@ new _newsList__WEBPACK_IMPORTED_MODULE_9__["default"]('startNweaList');
 new _editPost__WEBPACK_IMPORTED_MODULE_11__["default"]('.editStart');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
 new _category_js__WEBPACK_IMPORTED_MODULE_1__["default"]('catStart');
-new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
+new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.adminMenuStart');
 new _albumList__WEBPACK_IMPORTED_MODULE_10__["default"]('startAlbumList');
 new _page_js__WEBPACK_IMPORTED_MODULE_5__["default"]('pageStart');
 
@@ -2862,7 +2861,8 @@ var Menu = /*#__PURE__*/function () {
         var a = [],
             b = [],
             c = [],
-            d = [];
+            d = [],
+            e = [];
         parent.forEach(function (element) {
           return element.setAttribute("data", true);
         });
@@ -2871,15 +2871,18 @@ var Menu = /*#__PURE__*/function () {
         });
 
         for (var i = 0; i < opts.length; i++) {
-          a.push(opts[i].selectedIndex);
+          a.push(opts[i][opts[i].selectedIndex].text);
           b.push(text[i].value);
           c.push(link[i].value);
           d.push(elements[i].getAttribute('data'));
+          e.push(opts[i][opts[i].selectedIndex].value);
+          console.log(e);
           obj = {
             api: api,
             all: d,
             select: a,
             text: b,
+            textLink: e,
             link: c
           };
         }
@@ -3495,15 +3498,13 @@ var Pagination = /*#__PURE__*/function () {
     value: function paging() {
       // console.log(111111)
       var page = document.querySelectorAll(".paging");
-      console.log(page);
       var hash = window.location.hash.replace(/^#!?/, '').slice(0, 1);
 
       if (page.length) {
         var _nextPage;
 
         var _loop = function _loop(i) {
-          console.log(page[i]);
-
+          //console.log(page[i])
           _nextPage = function nextPage() {
             page[i].addEventListener('click', _nextPage);
             console.log(222222);
@@ -3543,7 +3544,7 @@ var Pagination = /*#__PURE__*/function () {
                 }
 
                 hash = 1;
-                _context.next = 12;
+                _context.next = 11;
                 break;
 
               case 6:
@@ -3551,16 +3552,16 @@ var Pagination = /*#__PURE__*/function () {
                   api: this.api,
                   pageSelected: pages,
                   hash: hash
-                };
-                console.log(obj.page);
+                }; // console.log(obj.page);
+
                 console.log(obj.pageSelected);
-                _context.next = 11;
+                _context.next = 10;
                 return this.axios.getPostData(obj);
 
-              case 11:
+              case 10:
                 return _context.abrupt("return", _context.sent);
 
-              case 12:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -4020,11 +4021,10 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
 
 /******/ });
-

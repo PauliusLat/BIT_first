@@ -64,6 +64,9 @@ class Pag {
                 option.removeEventListener('change', selected);
             }
             option.addEventListener('change', selected);
+
+
+            
             console.log(option.value)
             this.delete();
             this.pageStore();

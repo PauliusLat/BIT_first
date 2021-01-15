@@ -15,14 +15,13 @@ class Pagination {
         // console.log(111111)
 
         const page = document.querySelectorAll(".paging");
-        console.log(page)
 
         let hash = window.location.hash.replace(/^#!?/, '').slice(0, 1);
 
         if (page.length) {
             var nextPage
             for (let i = 0; i < page.length; i++) {
-                console.log(page[i])
+                //console.log(page[i])
                 nextPage = () => {
                     page[i].addEventListener('click', nextPage);
                     console.log(222222)
@@ -46,7 +45,7 @@ class Pagination {
                 pageSelected: pages,
                 hash: hash
             }
-            console.log(obj.page);
+            // console.log(obj.page);
             console.log(obj.pageSelected);
             return await this.axios.getPostData(obj);
         }
