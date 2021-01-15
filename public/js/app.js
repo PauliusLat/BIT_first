@@ -857,6 +857,122 @@ try {
 
 /***/ }),
 
+/***/ "./resources/js/AlbumEdit.js":
+/*!***********************************!*\
+  !*** ./resources/js/AlbumEdit.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var AlbumEdit = /*#__PURE__*/function () {
+  function AlbumEdit(target) {
+    _classCallCheck(this, AlbumEdit);
+
+    this.target = target;
+    this.DOM = null;
+    this.init();
+  }
+
+  _createClass(AlbumEdit, [{
+    key: "init",
+    value: function () {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var DOM;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                DOM = document.querySelector(this.target);
+
+                if (DOM) {
+                  this.save();
+                }
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function init() {
+        return _init.apply(this, arguments);
+      }
+
+      return init;
+    }()
+  }, {
+    key: "save",
+    value: function save() {
+      var _this = this;
+
+      var save = document.querySelector(".saveAlbum");
+      var title = document.querySelector(".albumTitle");
+      var id;
+      var axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+      var api = 'gallery-update-admin';
+      var obj;
+      save.addEventListener("click", function () {
+        id = _this.check();
+
+        if (!id) {
+          id = save.id;
+        }
+
+        obj = {
+          api: api,
+          title: title.value,
+          profileImgID: id
+        };
+        axios.formDataApi(obj);
+      });
+    }
+  }, {
+    key: "check",
+    value: function check() {
+      var remove = document.querySelectorAll(".removeBtn");
+      var select = document.querySelectorAll(".checkbox");
+      var id = null;
+
+      for (var i = 0; i < remove.length; i++) {
+        if (select[i].checked) {
+          id = remove[i].id;
+        }
+      }
+
+      return id;
+    }
+  }]);
+
+  return AlbumEdit;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (AlbumEdit);
+
+/***/ }),
+
 /***/ "./resources/js/Oldpage.js":
 /*!*********************************!*\
   !*** ./resources/js/Oldpage.js ***!
@@ -1903,7 +2019,7 @@ var Category = /*#__PURE__*/function () {
                 inner = document.querySelector(".innercat");
 
                 if (!DOM) {
-                  _context2.next = 32;
+                  _context2.next = 30;
                   break;
                 }
 
@@ -1933,7 +2049,6 @@ var Category = /*#__PURE__*/function () {
                 this.page.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
-                console.log(addColor);
 
                 if (addColor) {
                   addColor.classList.add("active");
@@ -1980,7 +2095,6 @@ var Category = /*#__PURE__*/function () {
                 this.changes = changes;
                 option = document.getElementById("items");
                 option.value = this.pages;
-                console.log(option.value);
 
                 selected = function selected() {
                   _this.pages = option.value;
@@ -1996,7 +2110,7 @@ var Category = /*#__PURE__*/function () {
                 this.CatEdit(inner);
                 this.readImage.image();
 
-              case 32:
+              case 30:
               case "end":
                 return _context2.stop();
             }
@@ -2016,7 +2130,6 @@ var Category = /*#__PURE__*/function () {
       var _this2 = this;
 
       var name = document.getElementById("category-name");
-      console.log(name);
       var slug = document.getElementById("category-slug");
       var description = document.getElementById("category-description");
       var parent = document.getElementById('cat');
@@ -2039,7 +2152,6 @@ var Category = /*#__PURE__*/function () {
       var submit = document.getElementById("create");
       var api = 'category_store';
       submit.addEventListener("click", function () {
-        console.log(name.value);
         var obj = {
           api: api,
           title: name.value,
@@ -2075,8 +2187,7 @@ var Category = /*#__PURE__*/function () {
 
       if (deleteBtn) {
         var _loop = function _loop(i) {
-          var ID = deleteBtn[i].value; // console.log(ID);
-
+          var ID = deleteBtn[i].value;
           var taxonomy = deleteBtn[i].id;
           deleteBtn[i].addEventListener("click", function () {
             var obj = {
@@ -2084,7 +2195,6 @@ var Category = /*#__PURE__*/function () {
               deleteID: ID,
               taxonomy_type: taxonomy
             };
-            console.log(ID);
 
             _this3.axios.formDataApi(obj);
 
@@ -2457,29 +2567,6 @@ function renderColons(e) {
 
 /***/ }),
 
-/***/ "./resources/js/light_box.js":
-/*!***********************************!*\
-  !*** ./resources/js/light_box.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// document.getElementById("clickme").addEventListener("click", function() {
-//     document.getElementById("lightbox").className = "open";
-//   });
-//   document.getElementById("close").addEventListener("click", function() {
-//     document.getElementById("lightbox").className = "";
-//   });
-//   var i = 0;
-//   document.getElementById("lightbox").addEventListener("click", function(e) {
-//     if (e.target.id+i == "lightbox"+i) {
-//         console.log(e.target.id+i);
-//       document.getElementById("lightbox").className = "";
-//     }
-//   });
-
-/***/ }),
-
 /***/ "./resources/js/main.js":
 /*!******************************!*\
   !*** ./resources/js/main.js ***!
@@ -2499,10 +2586,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
 /* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 /* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
-/* harmony import */ var _albumList__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./albumList */ "./resources/js/albumList.js");
-/* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
-/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./light_box */ "./resources/js/light_box.js");
-/* harmony import */ var _light_box__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_light_box__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
+/* harmony import */ var _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AlbumEdit.js */ "./resources/js/AlbumEdit.js");
+/* harmony import */ var _albumList__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./albumList */ "./resources/js/albumList.js");
 /** @format */
  // import startGallery from './gallery.js';
 
@@ -2519,6 +2605,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // import lightbox from './light_box';
 
 
  // new TextEditor('.news-container')
@@ -2526,11 +2613,12 @@ __webpack_require__.r(__webpack_exports__);
 new _calendar_js__WEBPACK_IMPORTED_MODULE_6__["default"]('.calendar');
 new _news__WEBPACK_IMPORTED_MODULE_7__["default"]('startNewsAdmin');
 new _newsList__WEBPACK_IMPORTED_MODULE_9__["default"]('startNweaList');
-new _editPost__WEBPACK_IMPORTED_MODULE_11__["default"]('.editStart');
+new _editPost__WEBPACK_IMPORTED_MODULE_10__["default"]('.editStart');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
 new _category_js__WEBPACK_IMPORTED_MODULE_1__["default"]('catStart');
-new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('menuStart');
-new _albumList__WEBPACK_IMPORTED_MODULE_10__["default"]('startAlbumList');
+new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.adminMenuStart');
+new _albumList__WEBPACK_IMPORTED_MODULE_12__["default"]('startAlbumList');
+new _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_11__["default"]('.containerAlbumEdit');
 new _page_js__WEBPACK_IMPORTED_MODULE_5__["default"]('pageStart');
 
 /***/ }),
@@ -2861,7 +2949,8 @@ var Menu = /*#__PURE__*/function () {
         var a = [],
             b = [],
             c = [],
-            d = [];
+            d = [],
+            e = [];
         parent.forEach(function (element) {
           return element.setAttribute("data", true);
         });
@@ -2870,15 +2959,17 @@ var Menu = /*#__PURE__*/function () {
         });
 
         for (var i = 0; i < opts.length; i++) {
-          a.push(opts[i].selectedIndex);
+          a.push(opts[i][opts[i].selectedIndex].text);
           b.push(text[i].value);
           c.push(link[i].value);
           d.push(elements[i].getAttribute('data'));
+          e.push(opts[i][opts[i].selectedIndex].value);
           obj = {
             api: api,
             all: d,
             select: a,
             text: b,
+            textLink: e,
             link: c
           };
         }
@@ -3174,17 +3265,16 @@ var Pag = /*#__PURE__*/function () {
               case 0:
                 hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
                 HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
-                console.log(hash);
                 DOM = document.getElementById(this.target);
                 inner = document.querySelector(".innerpage");
 
                 if (!DOM) {
-                  _context2.next = 33;
+                  _context2.next = 29;
                   break;
                 }
 
                 if (!(HTML == null)) {
-                  _context2.next = 15;
+                  _context2.next = 14;
                   break;
                 }
 
@@ -3193,19 +3283,19 @@ var Pag = /*#__PURE__*/function () {
                   api: this.api,
                   hash: 1
                 };
-                _context2.next = 11;
+                _context2.next = 10;
                 return this.axios.getPostData(obj);
 
-              case 11:
+              case 10:
                 HTML = _context2.sent;
                 inner.innerHTML = HTML;
-                _context2.next = 16;
+                _context2.next = 15;
                 break;
 
-              case 15:
+              case 14:
                 inner.innerHTML = HTML;
 
-              case 16:
+              case 15:
                 this.page.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
@@ -3255,8 +3345,6 @@ var Pag = /*#__PURE__*/function () {
                 this.changes = changes;
                 option = document.getElementById("items");
                 option.value = this.pages;
-                console.log(option);
-                console.log(option.value);
 
                 selected = function selected() {
                   _this.pages = option.value;
@@ -3267,12 +3355,11 @@ var Pag = /*#__PURE__*/function () {
                 };
 
                 option.addEventListener('change', selected);
-                console.log(option.value);
                 this["delete"]();
                 this.pageStore();
                 this.pageEdit(inner);
 
-              case 33:
+              case 29:
               case "end":
                 return _context2.stop();
             }
@@ -3492,20 +3579,15 @@ var Pagination = /*#__PURE__*/function () {
   _createClass(Pagination, [{
     key: "paging",
     value: function paging() {
-      // console.log(111111)
       var page = document.querySelectorAll(".paging");
-      console.log(page);
       var hash = window.location.hash.replace(/^#!?/, '').slice(0, 1);
 
       if (page.length) {
         var _nextPage;
 
         var _loop = function _loop(i) {
-          console.log(page[i]);
-
           _nextPage = function nextPage() {
             page[i].addEventListener('click', _nextPage);
-            console.log(222222);
             var id = page[i].id;
             location.hash = '#' + id;
             page[i].removeEventListener("click", _nextPage);
@@ -3542,7 +3624,7 @@ var Pagination = /*#__PURE__*/function () {
                 }
 
                 hash = 1;
-                _context.next = 12;
+                _context.next = 10;
                 break;
 
               case 6:
@@ -3551,15 +3633,13 @@ var Pagination = /*#__PURE__*/function () {
                   pageSelected: pages,
                   hash: hash
                 };
-                console.log(obj.page);
-                console.log(obj.pageSelected);
-                _context.next = 11;
+                _context.next = 9;
                 return this.axios.getPostData(obj);
 
-              case 11:
+              case 9:
                 return _context.abrupt("return", _context.sent);
 
-              case 12:
+              case 10:
               case "end":
                 return _context.stop();
             }

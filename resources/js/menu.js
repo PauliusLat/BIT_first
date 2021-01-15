@@ -25,6 +25,7 @@ class Menu {
       if (!menuDB) {
         let api = "menu_create";
         let HTML = await this.axios.getDAta(api);
+
         DOM.innerHTML = HTML;
 
         const a = document.querySelector('.parent');
@@ -219,22 +220,25 @@ class Menu {
       const link = document.querySelectorAll(".menuLink");
 
       const opts = [...select].map(el => el.options);
-      let a = [], b = [], c = [], d = [];
+      let a = [], b = [], c = [], d = [], e = [];
 
       parent.forEach(element => element.setAttribute("data", true));
       child.forEach(element => element.setAttribute("data", false));
 
       for (let i = 0; i < opts.length; i++) {
 
-        a.push(opts[i].selectedIndex)
+        a.push(opts[i][opts[i].selectedIndex].text)
         b.push(text[i].value)
         c.push(link[i].value)
         d.push(elements[i].getAttribute('data'))
+        e.push(opts[i][opts[i].selectedIndex].value)
+
         obj = {
           api: api,
           all: d,
           select: a,
           text: b,
+          textLink:e,
           link: c
         }
       }

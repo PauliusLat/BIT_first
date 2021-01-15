@@ -22,9 +22,7 @@ return [
 	'idea-create-admin' => 'IdeAdminController@create',
 	'idea-delete-admin' => 'IdeAdminController@delete',
 
-	'gallery-store-admin' => 'GalleryAdminController@store',
-	'gallery-edit-admin' => 'GalleryAdminController@edit',
-	'gallery-create-admin' => 'GalleryAdminController@create',
+	'gallery-update-admin' => 'GalleryAdminController@update',
 	'gallery-delete-admin' => 'GalleryAdminController@delete',
 
 	'gallery-store-front' => 'GalleryFrontController@store',
