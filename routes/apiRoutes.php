@@ -57,7 +57,7 @@ return [
 	'page_destroy' => 'PageController@destroy',
 	'page_edit' => 'PageController@edit',
 
-	'menu_create' => 'FrontMenuController@create',
-	'menu_store' => 'FrontMenuController@store',
-	'menu_destroy' => 'FrontMenuController@destroy',
+	'menu_create' => 'AdminMenuController@create',
+	'menu_store' => 'AdminMenuController@store',
+	'menu_destroy' => 'AdminMenuController@destroy',
 ];
