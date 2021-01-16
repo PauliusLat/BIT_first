@@ -2,19 +2,14 @@
 
 namespace BIT\controllers;
 
-use BIT\app\App;
 use BIT\app\View;
-use BIT\app\Attachment;
-use BIT\models\NewsPost;
-use BIT\models\AlbumPost;
-use BIT\app\Category;
 use BIT\app\Tag;
 use BIT\app\Pagination;
 use BIT\app\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+// use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
 class TagController

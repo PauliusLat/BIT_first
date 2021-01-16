@@ -932,8 +932,9 @@ var AlbumEdit = /*#__PURE__*/function () {
       var title = document.querySelector(".albumTitle");
       var id;
       var axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
-      var api = 'gallery-update-admin';
+      var api = 'gallery-update-admin&id=';
       var obj;
+      var albumID = save.getAttribute('data');
       save.addEventListener("click", function () {
         id = _this.check();
 
@@ -942,7 +943,7 @@ var AlbumEdit = /*#__PURE__*/function () {
         }
 
         obj = {
-          api: api,
+          api: api + albumID,
           title: title.value,
           profileImgID: id
         };
@@ -1567,12 +1568,17 @@ var Calendar = /*#__PURE__*/function () {
       var exisitClassMonth = document.querySelector(".cview__month-current").textContent;
 
       if (exisitClassMonth == 1) {
+        console.log(this.date);
+        console.log(this.date.getMonth());
         var nowM = new Date(this.y, this.date.getMonth());
+        console.log('111111111');
         console.log(nowM);
         var nowY = nowM.toString().slice(11, -47);
         nowM = nowM.toString().slice(4, -55);
+        console.log('2222222222');
         console.log(nowM);
         nowM = this.translate(nowM);
+        console.log('3333333333');
         console.log(nowM);
         document.getElementById("calendar-month").innerHTML = nowY + ' ' + nowM;
       }
@@ -1668,10 +1674,14 @@ var Calendar = /*#__PURE__*/function () {
       var y = this.date.getFullYear(),
           m = this.date.getMonth();
       var curentM = new Date(y, this.date.getMonth() + a, 0);
+      console.log('555555555');
+      console.log(curentM);
       var curentY = curentM.toString().slice(11, -47);
       curentM = curentM.toString().slice(4, -55);
       console.log(curentM);
       var curM = this.translate(curentM);
+      console.log('6666666666');
+      console.log(curM);
       curentMth.innerHTML = curentY + ' ' + curM;
       var lastDayM = new Date(y, m + a, 0).getDate();
       var newM = new Date(y, m + a, 0).getMonth();
@@ -1681,8 +1691,6 @@ var Calendar = /*#__PURE__*/function () {
   }, {
     key: "translate",
     value: function translate(curentM) {
-      console.log(curentM);
-
       switch (curentM) {
         case 'Jan':
           return curentM = 'Sausis';
@@ -4143,8 +4151,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

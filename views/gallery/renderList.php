@@ -4,7 +4,7 @@ use BIT\app\Attachment;
 
 foreach ($html as $album) : ?>
     <div class="albumList sm-7-24">
-
+<?php _d($album->profileImgId) ?>
         <?php $profileImg = Attachment::get($album->profileImgId); ?>
 
         <div class="parentAlbum ">
