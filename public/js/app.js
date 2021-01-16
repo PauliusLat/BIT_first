@@ -3796,9 +3796,13 @@ var Tag = /*#__PURE__*/function () {
     this.page = new _pagination__WEBPACK_IMPORTED_MODULE_2__["default"](api);
     this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.changes;
-    this.init(); // if (condition) {
-    //     location.hash        
-    // }
+    var hash = location.hash.split('#')[1];
+
+    if (hash) {
+      this.init(hash);
+    } else {
+      this.init();
+    }
   }
 
   _createClass(Tag, [{
@@ -3812,6 +3816,8 @@ var Tag = /*#__PURE__*/function () {
             DOM,
             test,
             obj,
+            pages,
+            page,
             addColor,
             changes,
             option,
@@ -3829,11 +3835,10 @@ var Tag = /*#__PURE__*/function () {
 
                 if (typeof hash != "string") {
                   location.hash = hash;
-                } // if(HTML == null && location.hash)
-
+                }
 
                 if (!DOM) {
-                  _context2.next = 31;
+                  _context2.next = 47;
                   break;
                 }
 
@@ -3842,7 +3847,6 @@ var Tag = /*#__PURE__*/function () {
                   break;
                 }
 
-                //suveikia kai nera HTML todel neskaito liko, kol nera HTML nepasileidzia JS ir nevyksta stebejimas
                 location.hash = 1;
                 obj = {
                   api: this.api,
@@ -3854,16 +3858,47 @@ var Tag = /*#__PURE__*/function () {
               case 12:
                 HTML = _context2.sent;
                 test.innerHTML = HTML;
-                _context2.next = 17;
+                _context2.next = 33;
                 break;
 
               case 16:
+                if (!(HTML && hash)) {
+                  _context2.next = 20;
+                  break;
+                }
+
+                test.innerHTML = HTML;
+                _context2.next = 33;
+                break;
+
+              case 20:
+                pages = this.pages;
+                _context2.next = 23;
+                return this.page.select(hash, pages);
+
+              case 23:
+                HTML = _context2.sent;
+                test.innerHTML = HTML;
+                page = document.querySelectorAll(".paging");
+
+                if (!(hash > page.length - 4)) {
+                  _context2.next = 33;
+                  break;
+                }
+
+                hash = 1;
+                location.hash = hash;
+                _context2.next = 31;
+                return this.page.select(hash, pages);
+
+              case 31:
+                HTML = _context2.sent;
                 test.innerHTML = HTML;
 
-              case 17:
+              case 33:
                 this.page.paging();
                 HTML = "";
-                addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
+                addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
 
                 if (addColor) {
                   addColor.classList.add("active");
@@ -3871,21 +3906,22 @@ var Tag = /*#__PURE__*/function () {
 
                 changes = /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                    var pages;
+                    var _pages;
+
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
                         switch (_context.prev = _context.next) {
                           case 0:
-                            hash = location.hash.slice(1, 2);
+                            hash = location.hash.split('#')[1];
 
                             if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
                               _context.next = 8;
                               break;
                             }
 
-                            pages = _this.pages;
+                            _pages = _this.pages;
                             _context.next = 5;
-                            return _this.page.select(hash, pages);
+                            return _this.page.select(hash, _pages);
 
                           case 5:
                             HTML = _context.sent;
@@ -3924,7 +3960,7 @@ var Tag = /*#__PURE__*/function () {
                 this.createTag();
                 this.tagEdit(test);
 
-              case 31:
+              case 47:
               case "end":
                 return _context2.stop();
             }
