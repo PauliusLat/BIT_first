@@ -4,26 +4,35 @@ namespace BIT\app;
 
 use BIT\app\App;
 
+
+
 class FrontRoute
 {
 // Iš frontRoutes.php paima kontrolerį ir metodą ir jį paleidžia
-    static function frontRoute($atts) {
+    static function frontRoute($atts, $content, $shortcode_tag) {
+
         $app = App::start();        
         $routes = require $app->routeDir.'frontRoutes.php';
         if (file_exists(get_stylesheet_directory() . '/frontRoutes.php')) {
-            $routesTheme = require get_stylesheet_directory().'/frontRoutes.php';
+            $routesTheme = require get_stylesheet_directory() . '/frontRoutes.php';
 
             $routes = array_merge($routes, $routesTheme);
         }
         
         $a = shortcode_atts( [
-            'route' => '',	
+            'route' => '',
+            'args' => ''
         ], $atts );
         list($controller, $method) = explode('@', $routes[$a['route']]);
-        $controller = 'BIT\\controllers\\' . $controller;
-        return (new $controller)->$method();
-    }
 
+        $controller = 'BIT\\controllers\\' . $controller;
+        if ($a['args'] === ''){
+            return (new $controller)->$method();
+        }
+        else{
+            return (new $controller)->$method($a['args']);
+        }
+    }
 }
 
 /**App __construct() uzregistruoti FrontRoute klase add_shortcode*/

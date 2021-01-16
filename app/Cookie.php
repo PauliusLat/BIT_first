@@ -1,39 +1,33 @@
 <?php
+
 namespace BIT\app;
+
 use BIT\models\IdeaPost;
 
-class Cookie {
+class Cookie
+{
     private static $uuid;
-    
-    public static function getUuid(){
+    const COOKIENAME = 'New';
+
+    public static function getUuid()
+    {
+
         self::$uuid = rand(1000, 2000);
-        if (!isset($_COOKIE['Bit'])) {
-            setcookie("Bit", self::$uuid); 
+        if (!isset($_COOKIE[self::COOKIENAME])) {
+            setcookie(self::COOKIENAME, self::$uuid, time() + 24 * 3600 * 30 * 5 * 12, '/');
+
         }
-        self::$uuid = $_COOKIE['Bit'];
+        self::$uuid = $_COOKIE[self::COOKIENAME];
         return self::$uuid;
     }
 
-    public static function deleteCookie(){
-        unset($_COOKIE[self::$uuid]);
-    }
+    public static function deleteCookie()
 
-    public static function ideaCookie($like){
-        $cookieName = "Idea_cookie-".$like;
-        if ( isset($_COOKIE[$cookieName]) ) {
-            $cookie = unserialize($_COOKIE[$cookieName]);
-        } else {
-            $cookie = array();
-        }     
-        if ( ! in_array($like, $cookie) ) {
-            $cookie[] = $like;
-        }       
-        setcookie($cookieName, serialize( $cookie), time()+365*24*60*60, '/');   
-    }
-
-    public function __get($dir)
     {
-        return $this->$dir;
-    }
 
+        // dc(self::$uuid);
+        // unset($_COOKIE['Bit']);
+        setcookie(self::COOKIENAME, "", time() - 3600, '/');
+
+    }
 }

@@ -1,7 +1,41 @@
+/** @format */
 
 import startIdea from './idea.js';
-import startGallery from './gallery.js';
-// import Header from "./test.js"
+// import startGallery from './gallery.js';
+import startCat from './category.js';
+import startTag from './tag.js';
+import startPage from './Oldpage.js';
+import startMenu from './menu.js';
+import Tag from './tag.js';
+import Pag from './page.js';
+import Category from './category.js';
+import Menu from './menu.js';
+import Calendar from './calendar.js';
+// import TextEditor from './text-editor.js'
+import News from './news';
+import Profile_image from './profile_image';
+import NewsList from './newsList';
+import EditPost from './editPost';
+// import lightbox from './light_box';
+import AlbumEdit from './AlbumEdit.js';
+import AlbumList from './albumList';
+
+// new TextEditor('.news-container')
+new Calendar('.calendar');
+new News('startNewsAdmin');
+new NewsList('startNweaList');
+new EditPost('.editStart');
+new Tag('tagStart');
+new Category('catStart');
+new Menu('.adminMenuStart');
+
+new AlbumList('startAlbumList');
+new AlbumEdit('.containerAlbumEdit')
+new Pag('pageStart');
+
+
+
+
 
 
 

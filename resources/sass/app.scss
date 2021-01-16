@@ -1,5 +1,21 @@
-@import 'admin';
-@import 'news-phil';
-@import 'crud';
-@import 'idea';
-@import 'gallery';
+/** @format */
+
+@import "reset";
+@import "variables";
+@import "layout-grid";
+@import "variables";
+@import "button";
+@import "admin";
+@import "news";
+@import "idea";
+@import "gallery";
+@import "calendar";
+@import "event";
+@import "page";
+@import "tagCatPage";
+@import "post";
+@import "menu";
+@import "light-box";
+@import "news-list";
+@import "news-edit";
+@import "album";

@@ -1,0 +1,47 @@
+import Api from './api';
+
+class Pagination {
+
+    constructor(api) {
+        this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+        this.uri = document.location.origin;
+        this.lenght;
+        this.api = api;
+        this.axios = new Api();
+        this.hash;
+    }
+
+    paging() {
+
+        const page = document.querySelectorAll(".paging");
+
+        if (page.length) {
+            var nextPage
+            for (let i = 0; i < page.length; i++) {
+                nextPage = () => {
+                    page[i].addEventListener('click', nextPage);
+                    let id = parseInt(page[i].id);
+                    location.hash = id;
+                    page[i].removeEventListener("click", nextPage);
+                }
+                page[i].addEventListener('click', nextPage);
+            }
+        }
+        this.lenght = page.length - 4;  //tikrina ar yra page, ka daryti kai nera HTML
+    }
+
+    async select(hash = 1, pages) {
+        if (this.lenght < hash) { //tikrina ar yra page 
+            hash = 1;
+        } else {            
+            let obj = {
+                api: this.api,
+                pageSelected: pages,
+                hash: hash
+            }
+            return await this.axios.getPostData(obj);
+        }
+    }
+}
+
+export default Pagination;

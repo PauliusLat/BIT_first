@@ -77,7 +77,7 @@ return [
     'maincat' => [
         // Add new "Ideatags" taxonomy to Posts register_taxonomy('ideatag', 'post', $args)
         // Non-hierarchical taxonomy (tag)
-        'hierarchical' => false,
+        'hierarchical' => true,
 		'public' => true,
 		'publicly_queryable' => true,
 		'show_ui' => true,
@@ -94,8 +94,8 @@ return [
             'singular_name' => _x( 'Maincat', 'taxonomy singular name' ),
             'search_items' =>  __( 'Search Maincats' ),
             'all_items' => __( 'All Maincats' ),
-            'parent_item' => __( 'Parent Maincat' ),
-            'parent_item_colon' => __( 'Parent Maincat:' ),
+            // 'parent_item' => __( 'Parent Maincat' ),
+            // 'parent_item_colon' => __( 'Parent Maincat:' ),
             'edit_item' => __( 'Edit Maincat' ),
             'update_item' => __( 'Update Maincat' ),
             'add_new_item' => __( 'Add New Maincat' ),

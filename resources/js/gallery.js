@@ -1,147 +1,133 @@
 "use strict";
+import Api from './api'
 
-const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-const uri = document.location.origin;
+class ImageUploade {
 
-const gallery = document.getElementById("loadeGallery");
+    constructor(target) {
 
-function startGallery() {
-    if (gallery) {        
-        window.addEventListener("load", renderGallery, false);
+        this.target = target;
+        this.DOM = null;
+        this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+        this.uri = document.location.origin;
+        this.index = 0;
+        this.init();
     }
-}
 
-function renderGallery() {
-    //Check File API support
-    if (window.File && window.FileList && window.FileReader) {
-
-        let filesInput = document.getElementById("files");
-        // let rates = document.getElementsByName('img').files;
-        // console.log(rates);
+    init() {
+        const DOM = document.getElementById(this.target);
         let filesAll = [];
+        if (DOM) {
 
-        filesInput.addEventListener("change", function (event) {
+            if (window.File && window.FileList && window.FileReader) {
 
-            let array = Array.from(event.target.files);
+                let filesInput = document.getElementById("files");
 
-            let imgArray = new Array(array);
+                filesInput.addEventListener("change", (event) => {
 
-            for (let i = 0; i < imgArray.length; i++) {
-                filesAll = imgArray[i];
-            }
-            renderImages(filesAll);
-        });
-    } else {
-        console.log("Your browser does not support File API");
-    }
-}
+                    let files = event.target.files;
 
-function renderImages(filesAll) {
+                    for (let i = 0; i < files.length; i++) {
+                        if (files[i].size <= 1048576) {
+                            if (filesAll[i].type.match("image")) {
+                                ((file, i) => {
+                                    filesAll.push(file)
 
-    let arraySend = [];
-    const currentDiv = document.getElementById("message");
+                                    const fileReader = new FileReader();
 
-    for (let i = 0; i < filesAll.length; i++) {
+                                    fileReader.onloadend = (e) => {
+                                        const imgFile = e.target;
+                                        let j = this.index++
 
-        if (filesAll[i].size < 1048576) {
+                                        let deleteId = this.getID();
+                                        let dot = this.getID();
+                                        let imageId = this.getID();
+                                        let imadeDivId = this.getID();
 
-            if (filesAll[i].type.match('image')) {
+                                        const tagInput = document.querySelector(".tagInput");
+                                        const currentDiv = document.getElementById("message");
+                                        const output = document.getElementById("result");
+                                        const div = document.createElement("div");
 
-                const picReader = new FileReader();
+                                        div.className = "galleryDiv";
+                                        div.setAttribute("id", imadeDivId);
+                                        div.innerHTML = `<img class="uploadeImageGallery galleryCell" data="false" tag="" id="${imageId}" src="${imgFile.result} "
+                                      alt=" "/>
+                                      <div class="dots" id="${dot}"><div/>`;
+                                        output.insertBefore(div, currentDiv);
 
-                picReader.addEventListener("load", function (event) {
+                                        let deleteDiv = document.querySelectorAll(".galleryDiv");
+                                        let dots = document.getElementById(dot);
+                                        const actionBtn = document.getElementById("actionBox");
+                                        const deleteBtn = document.querySelector(".deleteImd");
+                                        const checkBox = document.getElementById("c1");
+                                        const image = document.querySelectorAll(".uploadeImageGallery");
 
-                    const picFile = event.target;
-                    let altId = getID();
-                    let deleteId = getID();
-                    let deleteBtn = getID();
-                    const output = document.getElementById("result");
-                    const div = document.createElement("div");
-                    div.className = "galleryDiv";
-                    div.id = deleteId;
+                                        console.log(deleteDiv[j])
+                                        console.log(j);
 
-                    div.innerHTML = `<img class="uploadeImageGallery" src=" ${picFile.result} "
-                      alt=" "/>
-                      <label for="${deleteBtn}">Tag: </label>
-                      <input type="text" id="${altId}" name="altImage">
-                      <div class="deleteImd" id="${deleteBtn}">Trinti<div/>`;
+                                        dots.addEventListener("click", () => {
 
-                    output.insertBefore(div, currentDiv);
+                                            tagInput.value = "";
+                                            deleteDiv[j].setAttribute("id", deleteId);
+                                            actionBtn.classList.remove("EventBoxHidden");
+                                            actionBtn.classList.add("boxImg");
 
-                    // const altText = document.getElementById(altId.name);
-                    const imgDeleteBtn = document.getElementById(deleteBtn);
-                    const deleteDiv = document.getElementById(deleteId);
+                                            actionBtn.addEventListener("click", renderActionBtn);
 
-                    imgDeleteBtn.addEventListener("click", () => {
-                        filesAll.splice(i, 1);
-                        deleteDiv.remove();
-                    });
+                                            function renderActionBtn() {
+
+                                                actionBtn.removeEventListener("click", renderActionBtn);
+                                                const checked = document.querySelector(".albumImage");
+
+                                                if (checkBox.checked && !checked) {
+                                                    deleteDiv[j].classList.add("albumImage");
+                                                    image[j].setAttribute("data", "true");
+                                                    actionBtn.removeEventListener;
+                                                    deleteDiv[j].removeAttribute("id", deleteId);
+                                                } else {
+                                                    image[j].setAttribute("data", "false");
+                                                    deleteDiv[j].classList.remove("albumImage");
+                                                    deleteDiv[j].removeAttribute("id");
+                                                    actionBtn.removeEventListener;
+                                                }
+                                                actionBtn.classList.remove("boxImg");
+                                                actionBtn.classList.add("EventBoxHidden");
+                                                checkBox.checked = false;
+                                                image[j].setAttribute("tag", tagInput.value);
+                                            }
+                                        });
+                                        deleteBtn.addEventListener("click", () => {
+
+                                            let deleteImage = document.getElementById(deleteId);
+                                            if (deleteImage) {
+                                                deleteImage.remove();
+                                                filesAll.splice(j, 1);
+                                                this.index--;
+                                                filesInput.value = "";
+
+                                            }
+                                            actionBtn.classList.remove("boxImg");
+                                            actionBtn.classList.add("EventBoxHidden");
+                                        });
+
+                                    }
+                                    fileReader.readAsDataURL(files[i]);
+                                })(files[i], i);
+                            } else alert("Tai nera paveikslelio tipo formatas");
+                        } else alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
+
+                    }
 
                 });
-
-                picReader.readAsDataURL(filesAll[i]);
-
-            } else {
-             //   const newContent = document.createTextNode("Tai nera paveikslelio tipo formatas");
-                alert("Tai nera paveikslelio tipo formatas");
-              //  currentDiv.appendChild(newContent);
             }
-        } else {
-          //  const newContent = document.createTextNode("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-            alert("Paveikslelio dydis virsija 1MB, rekomneduojamas dydis yra iki 200kb");
-         //   currentDiv.appendChild(newContent);
+
         }
     }
 
-    arraySend.push(filesAll);
-
-    const uploadeImg = document.getElementById("submitImg");
-
-    uploadeImg.addEventListener('click', function () {
-        // console.log(arraySend);
-        sendImageData(arraySend);
-    });
-}
-
-function sendImageData(filesAll) {
-    // filesAll.filter((a, b) => filesAll.indexOf(a) === b)
-
-    let formData = new FormData();
-
-    let file = [];
-
-    for (let i = 0; i < filesAll.length; i++) {
-        for (let j = 0; j < filesAll[i].length; j++) {
-            file = (filesAll[i][j]);
-        }
+    getID() {
+        return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
     }
-    // console.log('images', file)
-    formData.append('images', file);
-
-    // formData.append('text', allText);
-    axios.post(uri + path + 'gallery-create-admin', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        },
-    }).then(function (response) {
-
-    }).catch(function (error) {
-        if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-        } else if (error.request) {
-            console.log(error.request);
-        } else {
-            console.log('Error', error.message);
-        }
-        console.log(error);
-    });
-
 }
 
-function getID() {
-    return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
-}
 
-export default startGallery();
+export default ImageUploade;

@@ -1,11 +1,18 @@
 <?php
 namespace BIT\app\modelTraits;
+use BIT\app\Attachment;
 
-trait Talbum{
-    
-    public $album_date = 'YYYY-MM_DD';
-    public $album_content = '';
-    private $taxonomy = ['hashtag', 'ideatag', 'maincat'];
-    private $cattax = ['maincat'];
-    
+trait Talbum
+{
+
+  private $taxonomy = ['hashtag', 'ideatag'];
+  private $cattax = ['maincat'];
+  public $profileImgId = 0;
+
+  public function getProfileImage()
+  {
+    if ($this->profileImgId) {
+      return Attachment::get($this->profileImgId);
+    }
+  }
 }

@@ -1,130 +1,448 @@
 <?php
+
 namespace BIT\app\modelTraits;
 
 use BIT\app\TaxCollection;
+use BIT\app\Page;
+use BIT\app\Attachment;
+// use BIT\app\App;
 use BIT\app\coreExeptions\InitHookNotFiredException;
 use BIT\app\coreExeptions\PostIdNotSetException;
 
-// trait Tcategory {
+trait Tcategory
+{
 
-//     // si savybe turi buti modelio traite;
-   
+    public function checkMulticat(string $cat, $postId)
+    {
+        if (did_action('init')) {
+            $cats = explode(', ', $cat);
+            foreach ($cats as $term) {
+                foreach ($this->getCats($postId) as $post_term) {
+                    if ($post_term->name == $term) {
+                        $cat_ids[] = $post_term->term_id;
+                    }
+                }
+            }
+            wp_remove_object_terms($this->ID, $cat_ids, $this->cattax);
+        } else {
+            throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+        }
+    }
 
-//     //mes turim tureti galimybe sukurti daugiau taksonomiju;
-    
-    
-//     public function checkMulticat(string $tag)
-//     {
-//         if (did_action('init')) {       
-//             $tags = explode(', ', $tag);
-//             foreach ($tags as $key => $term) {
-//                 foreach ($this->getTags() as $post_term) {
-//                     if ($post_term->name == $term) {
-//                         $tag_ids[] = $post_term->term_id;                    
-//                     }
-//                 }
-//             }
-//             wp_remove_object_terms( $this->ID, $tag_ids, $this->taxonomy );
-//         } else {
-//             throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
-//         }    
-//     }
-    
-//     /** adds tag (Hashtag term) to post type Album
-//      * string $tag: 'tag' or 'tag1, tag2'
-//      */
-//     /** Example usage:
-//      * $album = new AlbumPost;
-//      * $album->save();
-//      * $album->addTag('tag1, tag2');
-//      */
-//     public function addCat(string $tag, $taxonomy_type = 'hashtag')    
+    /** adds cat (Maincat term) to post type Album
+     */
+    /** Example usage:
+     * $album = new AlbumPost;
+     * $album->save();
+     * $album->addCat('cat1', 'maincat'); or $album->addCat(['cat1', 'cat2'], 'maincat', 45));*/
 
-//     {
-//             foreach ($this->taxonomy as $value){
+    // add category to DB
+    public function addCat($cat, $parent_id = 0, $description = '',  $slug = '', $taxonomy_type = 'maincat')
+    {
+        $cat = (array)$cat;
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
+                    foreach ($cat as $key) {
+                        // wp_insert_term($key, $value, $args);
+                        $category = wp_insert_term($key, $value, $args);
+                        $catId = $category['term_id'];
+                        return $catId;
+                    }
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
 
-//                 if($value == $taxonomy_type){
-    
-//                     if (did_action('init')) {
-//                         // if (!term_exists( $tag, $this->taxonomy )) {
-//                         //     wp_insert_term( $tag, $this->taxonomy, ['slug' => str_replace(' ', '-', $tag)] );                           
-//                         // }
-                        
-//                         if ($this->ID == null) {
-//                             throw new PostIdNotSetException('Error: Call to addTag() function before save()');
-//                         } else {
-//                             wp_set_post_terms( $this->ID, $tag, $value, $append = true );
-//                             /**Hierarchical taxonomies must always pass IDs rather than names ($tag) 
-//                              * so that children with the same names but different parents aren't confused.*/
-//                         }
-//                     } else {
-//                         throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
-//                     }
-//                 }
-//             }
-        
-//     } 
+    public function getCatParent($term_id, $taxonomy = 'maincat')
+    {
+        // $args = ['inclusive' => false];
+        $array = get_ancestors($term_id, $taxonomy);
+        return array_shift($array);
+    }
 
-//     /** removes tag form post type Album
-//      * $album->removeTag('tag') or $album->removeTag('tag1, tag2')
-//      */
-//     public function removeCat(string $tag) 
-//     {
-//         if (did_action('init')) {
-//             if(strpos($tag, ',')) {
-//                 $this->checkMulti($tag);
-//             } else {
-//                 foreach ($this->getTags() as $term) {
-//                     if ($term->name == $tag) {
-//                         $tag_id = $term->term_id;
-//                         wp_remove_object_terms( $this->ID, $tag_id, $this->taxonomy );
-//                     }
-//                 }
-//             }
-//         } else {
-//             throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
-//         }        
-//     }
+    public function updateCat(int $id, string $name, string $slug, string $description = '',  $parent_id = 0,  $taxonomy_type = 'maincat')
+    {
+        if (did_action('init')) {
+            $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'name' => $name];
+            wp_update_term($id, $taxonomy_type, $args);
+            $page = $this->getCatPage($id);
+            if ($page != null || $page != 0 || $page != 'undefined' || $page != '') {
+                $page->post_name = $slug;
+                $page->save();
+            }
+        } else {
+            throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+        }
+    }
 
-//     /** returns all post tags as Collection */
-//     //default.defaultas bus pirmas elementas.
-//     public function getCats($taxonomy_type = 'hashtag') 
-//     {
-//         foreach ($this->taxonomy as $value){
-//             if($value == $taxonomy_type){
-//             // $taxonomy_type = $this->taxonomy[i];
-//                 if (did_action('init')) {
-//                     $taxCollection = new TaxCollection();
-//                     $terms = get_the_terms($this->ID, $value);
+    //get category id by name
+    public function getCatPageLink(int $id)
+    {
+        $catPageId = get_term_meta($id, "page")[0];
+        // $page = new Page;
+        $page = Page::get($catPageId);
+        $pageLink = $page->getLink();
+        return $pageLink;
+    }
 
-//                     foreach ($terms as $term) {
-//                         $taxCollection->addTerm($term);
-//                     }
-//                     return $taxCollection;
-//                 } else {
-//                     throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
-//                 }
-//             }
-//         }
-//     }
+    public function getCatPage(int $id)
+    {
+        $catPageId = get_term_meta($id, "page")[0];
+        // $page = new Page;
+        $page = Page::get($catPageId);
+        // $pageLink = $page->getLink();
+        return $page;
+    }
 
-//     /** returns all hashtags as Collection */
-//     public function getAllCats() 
-//     {
-//         if (did_action('init')) {
-//             $taxCollection = new TaxCollection();
 
-//             $args = ['taxonomy' => $this->taxonomy, 'hide_empty' => 0,];
-//             $terms = get_terms($args);
+    public function getCatId($name, $taxonony_type = 'maincat')
+    {
+        $cat = get_term_by('name', $name, $taxonony_type);
+        return $cat->term_id;
+    }
 
-//             foreach ($terms as $term) {
-//                 $taxCollection->addTerm($term);
-//             }
-//             return $taxCollection;
-//         } else {
-//             throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
-//         }
-// }
+    //get category name by id
+    public function getCatName($id, $taxonony_type = 'maincat')
+    {
+        $cat = get_term_by('id', $id, $taxonony_type);
+        return $cat->name;
+    }
 
-    
-// }
+    //get category by id
+    public function getCat($id, $taxonony_type = 'maincat')
+    {
+        $cat = get_term_by('id', $id, $taxonony_type);
+        return $cat;
+    }
+
+    public function getCatbyName($name, $taxonony_type = 'maincat')
+    {
+        $cat = get_term_by('name', $name, $taxonony_type);
+        return $cat;
+    }
+
+    //adds page to category
+    public function addPageToCat(string $name, int $term_id, string $meta_key)
+    {
+        $page = new Page();
+        $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
+        $menu_page_state = $page_state['main'];
+        foreach ($menu_page_state as $state => $value) {
+            if ($state == 'category') {
+                array_push($page->pageState, $value);
+            }
+        }
+        // $page->pageState = $pageState;
+        $page->setRoute('kategorija');
+        $page->setTitle($name);
+        $page->save();
+        add_term_meta($term_id, $meta_key, $page->ID);
+    }
+
+    //adds image to category
+    public function addImageToCat(int $term_id, string $meta_key, $image)
+    {
+        add_term_meta($term_id, $meta_key, $image);
+    }
+
+    //gets category image from db
+    public function getCatImage(int $term_id, string $meta_key = 'image')
+    {
+        $imageID = get_term_meta($term_id, $meta_key)[0];
+        // _dc($imageID);
+        return Attachment::get($imageID);
+    }
+
+    //deletes category image from db
+    public function deleteCatImage(int $term_id, string $meta_key = 'image', $meta_value = '')
+    {
+        delete_metadata('term', $term_id, $meta_key, $meta_value);
+    }
+
+    //deletes category from db
+    public function deleteCatFromDb(int $id, $taxonomy_type = 'maincat')
+    {
+        $page = $this->getCatPage($id);
+        // _dc($page->ID);
+        wp_delete_term($id, $taxonomy_type);
+
+        if ($page->ID != null && $page->ID != 0 && $page->ID != 'undefined' && $page->ID != '') {
+            wp_delete_post($page->ID);
+        }
+    }
+
+    //attach category to post type
+    public function attachCat($cat, $taxonomy_type = 'maincat')
+    {
+        $cat = (array)$cat;
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    if ($this->ID == null) {
+                        throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
+                    } else {
+                        wp_set_object_terms($this->ID, $cat, $value);
+                        /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
+                         * so that children with the same names but different parents aren't confused.*/
+                    }
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
+    public function addCatDbPost($cat, $parent_id = 0, $slug = '', $description = '', $taxonomy_type = 'maincat')
+    {
+        $cat = (array)$cat;
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'taxonomy_type' => $taxonomy_type];
+                    foreach ($cat as $key) {
+                        wp_insert_term($key, $value, $args);
+                    }
+                    if ($this->ID == null) {
+                        throw new PostIdNotSetException('Error: Call to attachCat() function before save()');
+                    } else {
+                        $terms = get_terms(['name' => $cat, 'taxonomy' => $value, 'hide_empty' => false]);
+                        foreach ($terms as $term) {
+                            wp_set_object_terms($this->ID, $term->term_id, $value);
+                        }
+                        /**Hierarchical taxonomies must always pass IDs rather than names ($cat) 
+                         * so that children with the same names but different parents aren't confused.*/
+                    }
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
+    //removes category from post type
+    private function catDelete(string $cat, $taxonomy_type = 'maincat')
+    {
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    if (strpos($cat, ',')) {
+                        $this->checkMulti($cat);
+                    } else {
+                        foreach ($this->getAllCats() as $term) {
+                            if ($term->name == $cat) {
+                                $cat_id = $term->term_id;
+                                wp_remove_object_terms($this->ID, $cat_id, $taxonomy_type);
+                            }
+                        }
+                    }
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
+    /** removes cat form post type
+     * $album->removeCat('cat') or $album->removeCat(['cat1', 'cat2'])
+     */
+
+    public function removeCat($cat, $taxonomy_type = 'maincat')
+    {
+        if (is_string($cat)) {
+            $this->catDelete($cat, $taxonomy_type);
+        }
+        if (is_array($cat)) {
+            foreach ($cat as $key) {
+                $this->catDelete($key, $taxonomy_type);
+            }
+        }
+    }
+
+
+    /** returns all post cats as Collection */
+
+    public function getCats($postId, $taxonomy_type = 'maincat')
+    {
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    $taxCollection = new TaxCollection();
+                    $terms = get_terms(['taxonomy' => $value, 'object_ids' => $postId, 'hide_empty' => false]);
+                    foreach ($terms as $term) {
+                        $taxCollection->addTerm($term);
+                    }
+                    return $taxCollection;
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
+    /** returns all post cats as Collection */
+
+    public function getCatsId($postId, $taxonomy_type = 'maincat')
+    {
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    $idArr = [];
+                    $terms = get_terms(['taxonomy' => $value, 'object_ids' => $postId, 'hide_empty' => false]);
+                    foreach ($terms as $term) {
+                        array_push($idArr, $term->term_id);
+                    }
+                    return $idArr;
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
+    public function getChildCats($parent_id, $taxonomy_type = 'maincat')
+    {
+        $parent_id = (array)$parent_id;
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    $taxCollection = new TaxCollection();
+                    foreach ($parent_id as $id) {
+                        if (isset($this->ID)) {
+                            $terms = get_terms(['number' => $number, 'offset' => $offset, 'taxonomy' => $value, 'object_ids' => $this->ID, 'parent' => $id, 'hide_empty' => false]);
+                        } else {
+                            $terms = get_terms(['number' => $number, 'offset' => $offset, 'taxonomy' => $value, 'parent' => $id, 'hide_empty' => false]);
+                        }
+                        foreach ($terms as $term) {
+                            $taxCollection->addTerm($term);
+                        }
+                    }
+                    return $taxCollection;
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
+    public function getTaxonomyHierarchy($plevel = 1,  $parent = 0, $taxonomy = 'maincat')
+    {
+        // only 1 taxonomy
+        $taxonomy = is_array($taxonomy) ? array_shift($taxonomy) : $taxonomy;
+        $terms = $this->getChildCats($parent, $taxonomy);
+        // _dc($terms);
+        if (did_action('init')) {
+            $taxCollection = new TaxCollection();
+            $count = 1;
+            foreach ($terms as $term) {
+                $taxCollection->addTerm($term);
+
+                // recurse to get the direct decendants of "this" term
+                if ($term->parent == 0) {
+                    $term->level = 0;
+                    $term->children = $this->getTaxonomyHierarchy($term->level, $term->term_id, $taxonomy);
+                    $count++;
+                } else {
+                    $term->level = $plevel + 1;
+                    $term->children = $this->getTaxonomyHierarchy($term->level, $term->term_id, $taxonomy);
+                    $count++;
+                }
+            }
+
+            return $taxCollection;
+        } else {
+            throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+        }
+    }
+
+    public function getTaxonomyHierarchyArr($plevel = 0, $taxonomy = 'maincat', $parent = 0)
+    {
+        // only 1 taxonomy
+        $taxonomy = is_array($taxonomy) ? array_shift($taxonomy) : $taxonomy;
+        $terms = $this->getChildCatsArr($parent, $taxonomy);
+        // _dc( $terms);
+        if (did_action('init')) {
+            $cat = [];
+            foreach ($terms as $term) {
+                $cat[] = $term;
+
+                if ($term->parent == 0) {
+                    $term->level = 0;
+                    $term->children = $this->getTaxonomyHierarchyArr(0, $taxonomy, $term->term_id);
+                } else {
+                    $term->level = $plevel + 1;
+                    $term->children = $this->getTaxonomyHierarchyArr($term->level, $taxonomy, $term->term_id);
+                }
+            }
+            return $cat;
+        } else {
+            throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+        }
+    }
+
+    public function getChildCatsArr($parent_id, $taxonomy_type = 'maincat')
+    {
+        $parent_id = (array)$parent_id;
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    $children = [];
+                    foreach ($parent_id as $id) {
+                        if (isset($this->ID)) {
+                            $terms = get_terms(['taxonomy' => $value, 'object_ids' => $this->ID, 'parent' => $id, 'hide_empty' => false]);
+                        } else {
+                            $terms = get_terms(['taxonomy' => $value, 'parent' => $id, 'hide_empty' => false]);
+                        }
+                        foreach ($terms as $term) {
+                            $children[$term->term_id] = $term;
+                        }
+                    }
+                    return $children;
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+
+
+    public function flattenArray($array)
+    {
+        static $flattened = [];
+        if (is_array($array) && count($array) > 0) {
+            foreach ($array as $member) {
+                if (empty($member->children)) {
+                    $flattened[] = $member;
+                } else {
+                    $this->flattenArray($member->children);
+                    unset($member->children);
+                    $flattened[] = $member;
+                }
+            }
+        }
+        return $flattened;
+    }
+
+
+    public function getAllCats($taxonomy_type = 'maincat')
+    {
+        foreach ($this->cattax as $value) {
+            if ($value == $taxonomy_type) {
+                if (did_action('init')) {
+                    $taxCollection = new TaxCollection();
+                    $args = ['taxonomy' => $this->cattax, 'hide_empty' => 0,];
+                    $terms = get_terms($args);
+                    foreach ($terms as $term) {
+                        $taxCollection->addTerm($term);
+                    }
+                    return $taxCollection;
+                } else {
+                    throw new InitHookNotFiredException('Error: Call to custom taxonomy function before init hook is fired.');
+                }
+            }
+        }
+    }
+}

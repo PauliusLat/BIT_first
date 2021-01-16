@@ -1,0 +1,130 @@
+.eventContainer {
+  position : absolute;
+  top      : 35%;
+  left     : 50%;
+  transform: translate(-50%, -50%);
+  height   : 300px;
+
+  .popup {
+    height: 100%;
+    width : 100%;
+
+    .content {
+      height: 60px;
+
+      .eventBox {
+        background-color: grey;
+        display         : inline-block;
+        width           : 100%;
+
+        .myEventBtn {
+          box-shadow      : inset 0px 39px 0px -24px #e67a73;
+          background-color: #e4685d;
+          border-radius   : 6px;
+          border          : 1px solid #ffffff;
+          cursor          : pointer;
+          color           : #ffffff;
+          font-family     : Arial;
+          font-size       : 15px;
+          padding         : 3px 15px;
+          text-decoration : none;
+          text-shadow     : 0px 1px 0px #b23e35;
+          margin          : 2px 0 0px 16px;
+        }
+
+        .myEventBtn:hover {
+          background-color: #eb675e;
+        }
+
+        .myEventBtn:active {
+          position: relative;
+          top     : 1px;
+        }
+
+        .oneEventBtn {
+          display: flex;
+          color  : rgb(22, 21, 21);
+          padding: 10px;
+
+          .oneEvent {
+            line-height: 25px;
+            font-size  : 16px;
+            width      : 73%;
+
+          }
+        }
+
+      }
+    }
+  }
+
+  .eventTitle {
+    margin: 10px 0 0 0;
+  }
+
+  .eventH2 {
+    text-align      : center;
+    line-height     : 20px;
+    font-size       : 1.2rem;
+    background-color: grey;
+    color           : black;
+    padding         : 10px;
+  }
+}
+
+.event {
+  padding         : 10px;
+  background-color: grey;
+
+  .subscribe {
+    width: 350px;
+  }
+
+  .newEvent {
+    width  : 255px;
+    z-index: -1;
+  }
+
+  .closebtn {
+    position  : absolute;
+    right     : 20px;
+    font-size : 1.5rem;
+    color     : #3e4146;
+    transition: all 0.4s;
+  }
+
+  .closebtn:hover {
+    cursor: pointer;
+    color : #f66867;
+  }
+
+  .subscribe {
+    .eventBtn {
+      background-color     : #5cd67d;
+      -webkit-border-radius: 6px;
+      -moz-border-radius   : 6px;
+      border-radius        : 6px;
+      border               : 1px solid #18ab29;
+      cursor               : pointer;
+      color                : #ffffff;
+      font-family          : Arial;
+      font-size            : 15px;
+      padding              : 3px 15px;
+      text-decoration      : none;
+      text-shadow          : 0px 1px 0px #2f6627;
+      float                : right;
+      margin               : 5px 10px 10px 5px;
+    }
+
+    .eventBtn:hover {
+      background-color: #42871d;
+    }
+
+    .eventBtn:active {
+      position: relative;
+      top     : 1px;
+    }
+
+
+  }
+}

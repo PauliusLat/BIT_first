@@ -4,71 +4,111 @@ namespace BIT\controllers;
 
 use BIT\app\Attachment;
 use BIT\app\View;
+use BIT\app\Page;
 use BIT\models\AlbumPost;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GalleryAdminController {
-	public function __construct() {
+class GalleryAdminController
+{
 
-// 		$attachment = new Attachment();
-		// $attachment->save($request, $post_parent_id(optional)); -sukuria nauja, arba update’ina esanti.
-		// $attachment->delete();
-		// $attachment->getURL();
-		// $attachment->geAttachmentDetails();
+	public function index()
+	{
+		return View::adminRender('gallery.list');
 	}
 
-	public function adminIndex() {
-		return View::adminRender('gallery.galerija');
+	public function create(Request $request, AlbumPost $album)
+	{
+		$data = (AlbumPost::all())->all();
+
+		$response = new Response;
+		$output = View::render('gallery.all-images');
+		$response->prepare($request);
+		$response = new JsonResponse(['html' => $output, 'Images' => $data]);
+		return $response;
 	}
 
-	public function create(Request $request, AlbumPost $album) {
+	public function renderList()
+	{
+		$uri = admin_url('admin.php?page=galerija-0edit');
+		$allAlbums = AlbumPost::all()->all();
+		$output = View::adminRender('gallery.renderList', ['html' => $allAlbums,  'uri' => $uri]);
+		$response = new JsonResponse(['html' => $output]);
+		return $response;
+	}
 
-		foreach ($request->files->all() as $filesArr) {
-			if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
-				$image = new Attachment();
+	public function edit(AlbumPost $album)
+	{
+		return View::adminRender('gallery.edit', ['data' => $album]);
+	}
 
-				$image->save($filesArr);
-			} elseif (is_array($filesArr)) {
-				foreach ($filesArr as $file) {
-					$image = new Attachment();
-					$image->save($file);
-				}
-			}
+	public function update(Request $request, AlbumPost $album)
+	{
+		$album->post_title = $request->request->get('title');
+		$album->profileImgId = $request->request->get('profileImgID');
+
+		$album->save();
+	}
+	public function deleteAttachment(Attachment $attachment)
+	{
+		$attachment->delete();
+	}
+
+	public function delete(AlbumPost $albumPost)
+	{
+		$albumPost->delete();
+		$page = Page::get($albumPost->post_parent);
+		$page->delete(true);
+		foreach ($albumPost->attachments as $img) {
+			$img->delete();
 		}
-
-		// $album->save();
-		// $album->addTag('pridedamas tag');
-		// $album->getAllTags();
-		// $album->getTags('maincat')->sortBy('count', 'desc');
-
-		return new Response();
-
+		return new Response;
 	}
 
-	public function render() {
+	// public function store(Request $request, AlbumPost $album) {
 
-		// $data = (Atachment::all())->all();
-		// foreach ($data as $img) {
-		// 	$allImages = $img->getUrl();
-		// }
-	}
-
-	// private function getFilesFromRequest(Request $request){
-	// 	foreach($request->files->all() as $filesArr) {
-	// 		if($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile){
+	// 	foreach ($request->request as $key => $a) {
+	// 		if ($key == "album") {
+	// 			$album->album_title = $a;
+	// 			$album->save();
+	// 		}
+	// 	}
+	// 	var_dump($request->file);
+	// 	$count = 0;
+	// 	$tags = [];
+	// 	foreach ($request->request as $value) {
+	// 		$tags[] = trim($value);
+	// 	}
+	// 	foreach ($request->files->all() as $key => $filesArr) {
+	// 		if ($filesArr instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
+	// 			$count++;
 	// 			$image = new Attachment();
-	// 			$image->save($filesArr);
-	// 		}elseif(is_array($filesArr)){
-	// 			foreach ($filesArr as $file) {
-	// 				$image = new Attachment();
-	// 				$image->save($file);
+	// 			foreach ($tags as $key1 => $tag) {
+	// 				if ($key1 + 1 == $count) {
+	// 					// var_dump($image);
+	// 					// $image->save($request->files->all()[$key], $album->ID);
+	// 					// $image->addTag($tags[$key1]);
+	// 					// $image->save();
+	// 				}
 	// 			}
 	// 		}
 	// 	}
-	// }
+	// 	// } elseif (is_array($filesArr)) {
+	// 	// 	foreach ($filesArr as $file) {
+	// 	// 		$image = new Attachment();
+	// 	//$image->save($file);
+	// 	// $image->addTag('pridedamas tag');
+	// 	// $image->save();
+	// 	// }
+	// 	//$image->save($file, $post_id);
 
-	private function decodeRequest($request) {
+
+
+
+
+	private function decodeRequest($request)
+	{
 
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);
@@ -77,5 +117,4 @@ class GalleryAdminController {
 
 		return $request;
 	}
-
 }
