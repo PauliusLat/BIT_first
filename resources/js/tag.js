@@ -11,14 +11,25 @@ class Tag {
         this.page = new Pagination(api);
         this.axios = new Api;
         this.changes;
-        this.init();
+        let hash = location.hash.split('#')[1];
+        if (hash) {
+            this.init(hash);
+        } else {
+            this.init();
+        }
     }
 
     async init(hash = null, HTML = null) {
         const DOM = document.getElementById(this.target);
         const test = document.querySelector(".test");
+
+        hash = parseInt(hash)
+
+        if (typeof hash != "string") {
+            location.hash = hash
+        }
         if (DOM) {
-            if (HTML == null) {
+            if (HTML == null && hash == null) {
                 location.hash = 1;
                 let obj = {
                     api: this.api,
@@ -26,20 +37,32 @@ class Tag {
                 }
                 HTML = await this.axios.getPostData(obj);
                 test.innerHTML = HTML;
-            } else {
+            } else if (HTML && hash) {
                 test.innerHTML = HTML;
+            } else {
+                let pages = this.pages;
+                HTML = await this.page.select(hash, pages);
+                test.innerHTML = HTML
+                const page = document.querySelectorAll(".paging");
+                if (hash > page.length - 4) {
+                    hash = 1
+                    location.hash = hash
+                    HTML = await this.page.select(hash, pages);
+                    test.innerHTML = HTML
+                }
             }
+
             this.page.paging();
             HTML = "";
 
-            let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
+            let addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
             if (addColor) {
                 addColor.classList.add("active");
             }
-
             var changes = async () => {
 
-                hash = location.hash.slice(1, 2);
+                hash = location.hash.split('#')[1];
+
                 if (hash != undefined &&
                     hash != null &&
                     hash > 0 &&
@@ -55,6 +78,7 @@ class Tag {
             window.addEventListener('hashchange', changes);
             this.changes = changes;
             const option = document.getElementById("items");
+
             option.value = this.pages;
             var selected = () => {
                 this.pages = option.value;
@@ -77,7 +101,7 @@ class Tag {
         const storeTag = document.getElementById("create");
         storeTag.addEventListener("click", () => {
             let obj = {
-                api: api,
+                api: 'tag_store',
                 tag_name: name.value,
                 tag_slug: slug.value,
                 tag_description: description.value

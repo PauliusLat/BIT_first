@@ -978,177 +978,171 @@ var AlbumEdit = /*#__PURE__*/function () {
 /*!*********************************!*\
   !*** ./resources/js/Oldpage.js ***!
   \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var pageStrt = document.getElementById("pageStart"); // console.log(pageStrt);
-
-function startPage() {
-  if (pageStrt) {
-    window.addEventListener("load", init, false);
-  }
-}
-
-function init() {
-  axios.post(uri + path + "page_create", {}).then(function (response) {
-    var test = document.querySelector(".innerpage");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-      var submit = document.getElementById("create");
-      submit.addEventListener("click", function () {
-        var title = document.getElementById("page_title").value;
-        var post = document.getElementById('post');
-        var select = post.options[post.selectedIndex].value;
-        var stateArray = [];
-        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-        for (var i = 0; i < checkboxes.length; i++) {
-          stateArray.push(checkboxes[i].value);
-        }
-
-        console.log(stateArray); // let pageState = document.getElementById('pageState');
-        // let selectpageState = pageState.options[pageState.selectedIndex].value;
-        // console.log(select);  
-
-        pageStore(title, select, stateArray);
-      });
-      var editBtn = pageStrt.querySelectorAll(".page-edit");
-
-      var _loop = function _loop(i) {
-        var ID = editBtn[i].value; //   console.log(ID);
-        //   let page = editBtn[i].id;
-
-        editBtn[i].addEventListener("click", function () {
-          pageEdit(ID);
-        }, false);
-      };
-
-      for (var i = 0; i < editBtn.length; i++) {
-        _loop(i);
-      }
-
-      var deleteBtn = document.querySelectorAll(".page-delete");
-
-      var _loop2 = function _loop2(_i) {
-        var ID = deleteBtn[_i].value;
-
-        deleteBtn[_i].addEventListener("click", function () {
-          pageDelete(ID);
-        }, false);
-      };
-
-      for (var _i = 0; _i < deleteBtn.length; _i++) {
-        _loop2(_i);
-      }
-    }
-  })["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error.message);
-    }
-
-    console.log(error);
-  });
-  ;
-}
-
-function pageStore(title, select, stateArray) {
-  console.log(stateArray);
-  axios.post(uri + path + "page_store", {
-    page_title: title,
-    // page_name: name,
-    post_type: select,
-    page_state: stateArray
-  }).then(function (response) {
-    console.log(response);
-    init();
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-  document.getElementById("page_title").value = "";
-}
-
-function pageEdit(ID) {
-  axios.post(uri + path + "page_edit&id=" + ID, {
-    editID: ID
-  }).then(function (response) {
-    var test = document.querySelector(".innerpage");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-    }
-
-    var updateBtn = document.getElementById("pageUpdate"); // console.log(updateBtn)
-
-    var updateId = updateBtn.value; // console.log(updateId)
-
-    updateBtn.addEventListener("click", function () {
-      pageUpdate(updateId);
-    });
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function pageUpdate(updateId) {
-  // console.log(updateId)
-  var title = document.getElementById("page_title").value;
-  var post = document.getElementById('post');
-  var select = post.options[post.selectedIndex].value;
-  var stateArray = [];
-  var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-  for (var i = 0; i < checkboxes.length; i++) {
-    stateArray.push(checkboxes[i].value);
-  }
-
-  console.log(stateArray); // console.log(selectpageState);
-
-  var name = document.getElementById("page_name").value; // console.log(name);
-
-  axios.post(uri + path + "page_update&id=" + updateId, {
-    updateId: updateId,
-    page_title: title,
-    page_name: name,
-    post_type: select,
-    page_state: stateArray
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      init();
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function pageDelete(ID) {
-  axios.post(uri + path + "page_destroy&id=" + ID, {
-    deleteID: ID
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init();
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startPage());
+// "use strict";
+// const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+// const uri = document.location.origin;
+// const pageStrt = document.getElementById("pageStart");
+// // console.log(pageStrt);
+// function startPage() {
+//   if (pageStrt) {
+//     window.addEventListener("load", init, false);
+//   }
+// }
+// function init() {
+//   axios
+//     .post(uri + path + "page_create", {})
+//     .then(function(response) {
+//       const test = document.querySelector(".innerpage");
+//       if (response.status == 200 && response.statusText == "OK") {
+//         const HTML = response.data.html;
+//         test.innerHTML = HTML;
+//         const submit = document.getElementById("create");
+//         submit.addEventListener("click", () => {
+//           const title = document.getElementById("page_title").value;
+//           let post = document.getElementById('post');
+//           let select = post.options[post.selectedIndex].value;
+//           let stateArray = []
+//           let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+//           for (let i = 0; i < checkboxes.length; i++) {
+//             stateArray.push(checkboxes[i].value)
+//           }
+//           console.log(stateArray);
+//           // let pageState = document.getElementById('pageState');
+//           // let selectpageState = pageState.options[pageState.selectedIndex].value;
+//           // console.log(select);  
+//         pageStore(title, select, stateArray);
+//         });
+//         const editBtn = pageStrt.querySelectorAll(".page-edit");
+//         for (let i = 0; i < editBtn.length; i++) {
+//           let ID = editBtn[i].value;
+//         //   console.log(ID);
+//         //   let page = editBtn[i].id;
+//           editBtn[i].addEventListener(
+//             "click",
+//             function() {
+//               pageEdit(ID);
+//             },
+//             false
+//           );
+//         }
+//         const deleteBtn = document.querySelectorAll(".page-delete");
+//         for (let i = 0; i < deleteBtn.length; i++) {
+//           let ID = deleteBtn[i].value;
+//           deleteBtn[i].addEventListener(
+//             "click",
+//             function() {
+//               pageDelete(ID);
+//             },
+//             false
+//           );
+//         }
+//       }
+//     })
+//     .catch(function(error) {
+//       if (error.response) {
+//         console.log(error.response.data);
+//         console.log(error.response.status);
+//         console.log(error.response.headers);
+//       } else if (error.request) {
+//         console.log(error.request);
+//       } else {
+//         console.log("Error", error.message);
+//       }
+//       console.log(error);
+//     });
+//   ;
+// }
+// function pageStore(title, select, stateArray) {
+//   console.log(stateArray);
+//   axios
+//     .post(uri + path + "page_store", {
+//       page_title: title,
+//       // page_name: name,
+//       post_type: select,
+//       page_state: stateArray
+//     })
+//     .then(function(response) {
+//       console.log(response);
+//       init();
+//     })
+//     .catch((err) => {
+//       console.log(err instanceof TypeError);
+//     });
+//   document.getElementById("page_title").value = "";
+// }
+// function pageEdit(ID) {
+//   axios
+//     .post(uri + path + "page_edit&id="+ID, {
+//       editID: ID,
+//     })
+//     .then(function(response) {
+//       const test = document.querySelector(".innerpage");
+//       if (response.status == 200 && response.statusText == "OK") {
+//         const HTML = response.data.html;
+//         test.innerHTML = HTML;
+//       }
+//       const updateBtn = document.getElementById("pageUpdate");
+//       // console.log(updateBtn)
+//       const updateId = updateBtn.value;
+//       // console.log(updateId)
+//       updateBtn.addEventListener("click", () => {
+//         pageUpdate(updateId);
+//       });
+//     })
+//     .catch((err) => {
+//       console.log(err instanceof TypeError);
+//     });
+// }
+// function pageUpdate(updateId) {
+//   // console.log(updateId)
+//   const title = document.getElementById("page_title").value;
+//   const post = document.getElementById('post');
+//   const select = post.options[post.selectedIndex].value;
+//   let stateArray = []
+//   let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+//   for (let i = 0; i < checkboxes.length; i++) {
+//     stateArray.push(checkboxes[i].value)
+//   }
+//   console.log(stateArray);
+//   // console.log(selectpageState);
+//   const name = document.getElementById("page_name").value;
+//   // console.log(name);
+//   axios
+//     .post(uri + path + "page_update&id="+updateId, {
+//       updateId: updateId,
+//       page_title: title,
+//       page_name: name,
+//       post_type: select,
+//       page_state: stateArray
+//     })
+//     .then(function(response) {
+//       if (response.status == 200 && response.statusText == "OK") {
+//         init();
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err instanceof TypeError);
+//     });
+// }
+// function pageDelete(ID) {
+//   axios
+//     .post(uri + path + "page_destroy&id="+ID, {
+//       deleteID: ID,
+//     })
+//     .then(function(response) {
+//       if (response.status == 200 && response.statusText == "OK") {
+//         console.log(response);
+//         init();
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err instanceof TypeError);
+//     });
+// }
+// export default startPage();
 
 /***/ }),
 
@@ -2588,6 +2582,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
 /* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
 /* harmony import */ var _Oldpage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Oldpage.js */ "./resources/js/Oldpage.js");
+/* harmony import */ var _Oldpage_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Oldpage_js__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _menu_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./menu.js */ "./resources/js/menu.js");
 /* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
 /* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
@@ -2805,7 +2800,7 @@ var Menu = /*#__PURE__*/function () {
                 draggable.childNodes[j].remove();
               }
             }
-          } else {
+          } else if (controlRect + 80 >= rect.left + position) {
             draggable.classList.remove("submenu");
             draggable.classList.add("parent");
 
@@ -2950,39 +2945,43 @@ var Menu = /*#__PURE__*/function () {
         var text = document.querySelectorAll(".menuText");
         var link = document.querySelectorAll(".menuLink");
 
-        var opts = _toConsumableArray(select).map(function (el) {
-          return el.options;
-        });
+        if (elements || elements[0].className != "draggable parent") {
+          alert("Neteisingai suformuotas meniu");
+        } else {
+          var opts = _toConsumableArray(select).map(function (el) {
+            return el.options;
+          });
 
-        var a = [],
-            b = [],
-            c = [],
-            d = [],
-            e = [];
-        parent.forEach(function (element) {
-          return element.setAttribute("data", true);
-        });
-        child.forEach(function (element) {
-          return element.setAttribute("data", false);
-        });
+          var a = [],
+              b = [],
+              c = [],
+              d = [],
+              e = [];
+          parent.forEach(function (element) {
+            return element.setAttribute("data", true);
+          });
+          child.forEach(function (element) {
+            return element.setAttribute("data", false);
+          });
 
-        for (var i = 0; i < opts.length; i++) {
-          a.push(opts[i][opts[i].selectedIndex].text);
-          b.push(text[i].value);
-          c.push(link[i].value);
-          d.push(elements[i].getAttribute('data'));
-          e.push(opts[i][opts[i].selectedIndex].value);
-          obj = {
-            api: api,
-            all: d,
-            select: a,
-            text: b,
-            textLink: e,
-            link: c
-          };
+          for (var i = 0; i < opts.length; i++) {
+            a.push(opts[i][opts[i].selectedIndex].text);
+            b.push(text[i].value);
+            c.push(link[i].value);
+            d.push(elements[i].getAttribute('data'));
+            e.push(opts[i][opts[i].selectedIndex].value);
+            obj = {
+              api: api,
+              all: d,
+              select: a,
+              text: b,
+              textLink: e,
+              link: c
+            };
+          }
+
+          _this5.axios.formDataApi(obj);
         }
-
-        _this5.axios.formDataApi(obj);
       });
     }
   }]);
@@ -3588,7 +3587,6 @@ var Pagination = /*#__PURE__*/function () {
     key: "paging",
     value: function paging() {
       var page = document.querySelectorAll(".paging");
-      var hash = window.location.hash.replace(/^#!?/, '').slice(0, 1);
 
       if (page.length) {
         var _nextPage;
@@ -3596,8 +3594,8 @@ var Pagination = /*#__PURE__*/function () {
         var _loop = function _loop(i) {
           _nextPage = function nextPage() {
             page[i].addEventListener('click', _nextPage);
-            var id = page[i].id;
-            location.hash = '#' + id;
+            var id = parseInt(page[i].id);
+            location.hash = id;
             page[i].removeEventListener("click", _nextPage);
           };
 
@@ -3609,7 +3607,7 @@ var Pagination = /*#__PURE__*/function () {
         }
       }
 
-      this.lenght = page.length - 4;
+      this.lenght = page.length - 4; //tikrina ar yra page, ka daryti kai nera HTML
     }
   }, {
     key: "select",
@@ -3631,6 +3629,7 @@ var Pagination = /*#__PURE__*/function () {
                   break;
                 }
 
+                //tikrina ar yra page 
                 hash = 1;
                 _context.next = 10;
                 break;
@@ -3805,7 +3804,13 @@ var Tag = /*#__PURE__*/function () {
     this.page = new _pagination__WEBPACK_IMPORTED_MODULE_2__["default"](api);
     this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.changes;
-    this.init();
+    var hash = location.hash.split('#')[1];
+
+    if (hash) {
+      this.init(hash);
+    } else {
+      this.init();
+    }
   }
 
   _createClass(Tag, [{
@@ -3819,6 +3824,8 @@ var Tag = /*#__PURE__*/function () {
             DOM,
             test,
             obj,
+            pages,
+            page,
             addColor,
             changes,
             option,
@@ -3832,14 +3839,19 @@ var Tag = /*#__PURE__*/function () {
                 HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
                 DOM = document.getElementById(this.target);
                 test = document.querySelector(".test");
+                hash = parseInt(hash);
+
+                if (typeof hash != "string") {
+                  location.hash = hash;
+                }
 
                 if (!DOM) {
-                  _context2.next = 29;
+                  _context2.next = 47;
                   break;
                 }
 
-                if (!(HTML == null)) {
-                  _context2.next = 14;
+                if (!(HTML == null && hash == null)) {
+                  _context2.next = 16;
                   break;
                 }
 
@@ -3848,22 +3860,53 @@ var Tag = /*#__PURE__*/function () {
                   api: this.api,
                   hash: 1
                 };
-                _context2.next = 10;
+                _context2.next = 12;
                 return this.axios.getPostData(obj);
 
-              case 10:
+              case 12:
                 HTML = _context2.sent;
                 test.innerHTML = HTML;
-                _context2.next = 15;
+                _context2.next = 33;
                 break;
 
-              case 14:
+              case 16:
+                if (!(HTML && hash)) {
+                  _context2.next = 20;
+                  break;
+                }
+
+                test.innerHTML = HTML;
+                _context2.next = 33;
+                break;
+
+              case 20:
+                pages = this.pages;
+                _context2.next = 23;
+                return this.page.select(hash, pages);
+
+              case 23:
+                HTML = _context2.sent;
+                test.innerHTML = HTML;
+                page = document.querySelectorAll(".paging");
+
+                if (!(hash > page.length - 4)) {
+                  _context2.next = 33;
+                  break;
+                }
+
+                hash = 1;
+                location.hash = hash;
+                _context2.next = 31;
+                return this.page.select(hash, pages);
+
+              case 31:
+                HTML = _context2.sent;
                 test.innerHTML = HTML;
 
-              case 15:
+              case 33:
                 this.page.paging();
                 HTML = "";
-                addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
+                addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
 
                 if (addColor) {
                   addColor.classList.add("active");
@@ -3871,21 +3914,22 @@ var Tag = /*#__PURE__*/function () {
 
                 changes = /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                    var pages;
+                    var _pages;
+
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
                         switch (_context.prev = _context.next) {
                           case 0:
-                            hash = location.hash.slice(1, 2);
+                            hash = location.hash.split('#')[1];
 
                             if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
                               _context.next = 8;
                               break;
                             }
 
-                            pages = _this.pages;
+                            _pages = _this.pages;
                             _context.next = 5;
-                            return _this.page.select(hash, pages);
+                            return _this.page.select(hash, _pages);
 
                           case 5:
                             HTML = _context.sent;
@@ -3924,7 +3968,7 @@ var Tag = /*#__PURE__*/function () {
                 this.createTag();
                 this.tagEdit(test);
 
-              case 29:
+              case 47:
               case "end":
                 return _context2.stop();
             }
@@ -3949,7 +3993,7 @@ var Tag = /*#__PURE__*/function () {
       var storeTag = document.getElementById("create");
       storeTag.addEventListener("click", function () {
         var obj = {
-          api: api,
+          api: 'tag_store',
           tag_name: name.value,
           tag_slug: slug.value,
           tag_description: description.value
