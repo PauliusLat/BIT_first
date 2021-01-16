@@ -1,4 +1,3 @@
-
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -2798,7 +2797,7 @@ var Menu = /*#__PURE__*/function () {
                 draggable.childNodes[j].remove();
               }
             }
-          } else {
+          } else if (controlRect + 80 >= rect.left + position) {
             draggable.classList.remove("submenu");
             draggable.classList.add("parent");
 
@@ -2943,39 +2942,43 @@ var Menu = /*#__PURE__*/function () {
         var text = document.querySelectorAll(".menuText");
         var link = document.querySelectorAll(".menuLink");
 
-        var opts = _toConsumableArray(select).map(function (el) {
-          return el.options;
-        });
+        if (elements || elements[0].className != "draggable parent") {
+          alert("Neteisingai suformuotas meniu");
+        } else {
+          var opts = _toConsumableArray(select).map(function (el) {
+            return el.options;
+          });
 
-        var a = [],
-            b = [],
-            c = [],
-            d = [],
-            e = [];
-        parent.forEach(function (element) {
-          return element.setAttribute("data", true);
-        });
-        child.forEach(function (element) {
-          return element.setAttribute("data", false);
-        });
+          var a = [],
+              b = [],
+              c = [],
+              d = [],
+              e = [];
+          parent.forEach(function (element) {
+            return element.setAttribute("data", true);
+          });
+          child.forEach(function (element) {
+            return element.setAttribute("data", false);
+          });
 
-        for (var i = 0; i < opts.length; i++) {
-          a.push(opts[i][opts[i].selectedIndex].text);
-          b.push(text[i].value);
-          c.push(link[i].value);
-          d.push(elements[i].getAttribute('data'));
-          e.push(opts[i][opts[i].selectedIndex].value);
-          obj = {
-            api: api,
-            all: d,
-            select: a,
-            text: b,
-            textLink: e,
-            link: c
-          };
+          for (var i = 0; i < opts.length; i++) {
+            a.push(opts[i][opts[i].selectedIndex].text);
+            b.push(text[i].value);
+            c.push(link[i].value);
+            d.push(elements[i].getAttribute('data'));
+            e.push(opts[i][opts[i].selectedIndex].value);
+            obj = {
+              api: api,
+              all: d,
+              select: a,
+              text: b,
+              textLink: e,
+              link: c
+            };
+          }
+
+          _this5.axios.formDataApi(obj);
         }
-
-        _this5.axios.formDataApi(obj);
       });
     }
   }]);
@@ -3581,7 +3584,6 @@ var Pagination = /*#__PURE__*/function () {
     key: "paging",
     value: function paging() {
       var page = document.querySelectorAll(".paging");
-      var hash = window.location.hash.replace(/^#!?/, '').slice(0, 1);
 
       if (page.length) {
         var _nextPage;
@@ -3589,8 +3591,8 @@ var Pagination = /*#__PURE__*/function () {
         var _loop = function _loop(i) {
           _nextPage = function nextPage() {
             page[i].addEventListener('click', _nextPage);
-            var id = page[i].id;
-            location.hash = '#' + id;
+            var id = parseInt(page[i].id);
+            location.hash = id;
             page[i].removeEventListener("click", _nextPage);
           };
 
@@ -3602,7 +3604,7 @@ var Pagination = /*#__PURE__*/function () {
         }
       }
 
-      this.lenght = page.length - 4;
+      this.lenght = page.length - 4; //tikrina ar yra page, ka daryti kai nera HTML
     }
   }, {
     key: "select",
@@ -3624,6 +3626,7 @@ var Pagination = /*#__PURE__*/function () {
                   break;
                 }
 
+                //tikrina ar yra page 
                 hash = 1;
                 _context.next = 10;
                 break;
@@ -3825,14 +3828,19 @@ var Tag = /*#__PURE__*/function () {
                 HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
                 DOM = document.getElementById(this.target);
                 test = document.querySelector(".test");
+                hash = parseInt(hash);
+
+                if (typeof hash != "string") {
+                  location.hash = hash;
+                }
 
                 if (!DOM) {
-                  _context2.next = 29;
+                  _context2.next = 31;
                   break;
                 }
 
                 if (!(HTML == null)) {
-                  _context2.next = 14;
+                  _context2.next = 16;
                   break;
                 }
 
@@ -3841,19 +3849,19 @@ var Tag = /*#__PURE__*/function () {
                   api: this.api,
                   hash: 1
                 };
-                _context2.next = 10;
+                _context2.next = 12;
                 return this.axios.getPostData(obj);
 
-              case 10:
+              case 12:
                 HTML = _context2.sent;
                 test.innerHTML = HTML;
-                _context2.next = 15;
+                _context2.next = 17;
                 break;
 
-              case 14:
+              case 16:
                 test.innerHTML = HTML;
 
-              case 15:
+              case 17:
                 this.page.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
@@ -3917,7 +3925,7 @@ var Tag = /*#__PURE__*/function () {
                 this.createTag();
                 this.tagEdit(test);
 
-              case 29:
+              case 31:
               case "end":
                 return _context2.stop();
             }
@@ -3942,7 +3950,7 @@ var Tag = /*#__PURE__*/function () {
       var storeTag = document.getElementById("create");
       storeTag.addEventListener("click", function () {
         var obj = {
-          api: api,
+          api: 'tag_store',
           tag_name: name.value,
           tag_slug: slug.value,
           tag_description: description.value
@@ -4107,4 +4115,3 @@ module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\pl
 /***/ })
 
 /******/ });
-

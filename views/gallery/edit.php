@@ -26,7 +26,7 @@
             </div>
         <?php endforeach; ?>
     </div>
-    <div class="btn-blue saveAlbum" id="<?= $data->getProfileImage()->ID; ?>">
+    <div class="btn-blue saveAlbum" data="<?= $data->ID; ?>" id="<?= $data->getProfileImage()->ID; ?>">
         Publikuoti
     </div>
 </div>

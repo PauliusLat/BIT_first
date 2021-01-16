@@ -17,6 +17,12 @@ class Tag {
     async init(hash = null, HTML = null) {
         const DOM = document.getElementById(this.target);
         const test = document.querySelector(".test");
+
+        hash = parseInt(hash)
+       
+        if (typeof hash != "string") {
+            location.hash = hash
+        }
         if (DOM) {
             if (HTML == null) {
                 location.hash = 1;
@@ -40,6 +46,7 @@ class Tag {
             var changes = async () => {
 
                 hash = location.hash.slice(1, 2);
+
                 if (hash != undefined &&
                     hash != null &&
                     hash > 0 &&
@@ -77,7 +84,7 @@ class Tag {
         const storeTag = document.getElementById("create");
         storeTag.addEventListener("click", () => {
             let obj = {
-                api: api,
+                api:  'tag_store',
                 tag_name: name.value,
                 tag_slug: slug.value,
                 tag_description: description.value
