@@ -14,8 +14,7 @@ class Tag {
         this.init();
 
         // if (condition) {
-        //     location.hash
-        
+        //     location.hash        
         // }
        
     }

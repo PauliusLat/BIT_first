@@ -3797,7 +3797,7 @@ var Tag = /*#__PURE__*/function () {
     this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.changes;
     this.init(); // if (condition) {
-    //     location.hash
+    //     location.hash        
     // }
   }
 
