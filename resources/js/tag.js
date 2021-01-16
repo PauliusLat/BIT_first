@@ -12,6 +12,11 @@ class Tag {
         this.axios = new Api;
         this.changes;
         this.init();
+
+        // if (condition) {
+        //     location.hash
+        // }
+       
     }
 
     async init(hash = null, HTML = null) {
@@ -23,8 +28,9 @@ class Tag {
         if (typeof hash != "string") {
             location.hash = hash
         }
+        // if(HTML == null && location.hash)
         if (DOM) {
-            if (HTML == null) {
+            if (HTML == null && hash == null) { //suveikia kai nera HTML todel neskaito liko, kol nera HTML nepasileidzia JS ir nevyksta stebejimas
                 location.hash = 1;
                 let obj = {
                     api: this.api,

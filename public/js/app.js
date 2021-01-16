@@ -977,177 +977,171 @@ var AlbumEdit = /*#__PURE__*/function () {
 /*!*********************************!*\
   !*** ./resources/js/Oldpage.js ***!
   \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var pageStrt = document.getElementById("pageStart"); // console.log(pageStrt);
-
-function startPage() {
-  if (pageStrt) {
-    window.addEventListener("load", init, false);
-  }
-}
-
-function init() {
-  axios.post(uri + path + "page_create", {}).then(function (response) {
-    var test = document.querySelector(".innerpage");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-      var submit = document.getElementById("create");
-      submit.addEventListener("click", function () {
-        var title = document.getElementById("page_title").value;
-        var post = document.getElementById('post');
-        var select = post.options[post.selectedIndex].value;
-        var stateArray = [];
-        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-        for (var i = 0; i < checkboxes.length; i++) {
-          stateArray.push(checkboxes[i].value);
-        }
-
-        console.log(stateArray); // let pageState = document.getElementById('pageState');
-        // let selectpageState = pageState.options[pageState.selectedIndex].value;
-        // console.log(select);  
-
-        pageStore(title, select, stateArray);
-      });
-      var editBtn = pageStrt.querySelectorAll(".page-edit");
-
-      var _loop = function _loop(i) {
-        var ID = editBtn[i].value; //   console.log(ID);
-        //   let page = editBtn[i].id;
-
-        editBtn[i].addEventListener("click", function () {
-          pageEdit(ID);
-        }, false);
-      };
-
-      for (var i = 0; i < editBtn.length; i++) {
-        _loop(i);
-      }
-
-      var deleteBtn = document.querySelectorAll(".page-delete");
-
-      var _loop2 = function _loop2(_i) {
-        var ID = deleteBtn[_i].value;
-
-        deleteBtn[_i].addEventListener("click", function () {
-          pageDelete(ID);
-        }, false);
-      };
-
-      for (var _i = 0; _i < deleteBtn.length; _i++) {
-        _loop2(_i);
-      }
-    }
-  })["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error.message);
-    }
-
-    console.log(error);
-  });
-  ;
-}
-
-function pageStore(title, select, stateArray) {
-  console.log(stateArray);
-  axios.post(uri + path + "page_store", {
-    page_title: title,
-    // page_name: name,
-    post_type: select,
-    page_state: stateArray
-  }).then(function (response) {
-    console.log(response);
-    init();
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-  document.getElementById("page_title").value = "";
-}
-
-function pageEdit(ID) {
-  axios.post(uri + path + "page_edit&id=" + ID, {
-    editID: ID
-  }).then(function (response) {
-    var test = document.querySelector(".innerpage");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-    }
-
-    var updateBtn = document.getElementById("pageUpdate"); // console.log(updateBtn)
-
-    var updateId = updateBtn.value; // console.log(updateId)
-
-    updateBtn.addEventListener("click", function () {
-      pageUpdate(updateId);
-    });
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function pageUpdate(updateId) {
-  // console.log(updateId)
-  var title = document.getElementById("page_title").value;
-  var post = document.getElementById('post');
-  var select = post.options[post.selectedIndex].value;
-  var stateArray = [];
-  var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-  for (var i = 0; i < checkboxes.length; i++) {
-    stateArray.push(checkboxes[i].value);
-  }
-
-  console.log(stateArray); // console.log(selectpageState);
-
-  var name = document.getElementById("page_name").value; // console.log(name);
-
-  axios.post(uri + path + "page_update&id=" + updateId, {
-    updateId: updateId,
-    page_title: title,
-    page_name: name,
-    post_type: select,
-    page_state: stateArray
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      init();
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function pageDelete(ID) {
-  axios.post(uri + path + "page_destroy&id=" + ID, {
-    deleteID: ID
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init();
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startPage());
+// "use strict";
+// const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
+// const uri = document.location.origin;
+// const pageStrt = document.getElementById("pageStart");
+// // console.log(pageStrt);
+// function startPage() {
+//   if (pageStrt) {
+//     window.addEventListener("load", init, false);
+//   }
+// }
+// function init() {
+//   axios
+//     .post(uri + path + "page_create", {})
+//     .then(function(response) {
+//       const test = document.querySelector(".innerpage");
+//       if (response.status == 200 && response.statusText == "OK") {
+//         const HTML = response.data.html;
+//         test.innerHTML = HTML;
+//         const submit = document.getElementById("create");
+//         submit.addEventListener("click", () => {
+//           const title = document.getElementById("page_title").value;
+//           let post = document.getElementById('post');
+//           let select = post.options[post.selectedIndex].value;
+//           let stateArray = []
+//           let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+//           for (let i = 0; i < checkboxes.length; i++) {
+//             stateArray.push(checkboxes[i].value)
+//           }
+//           console.log(stateArray);
+//           // let pageState = document.getElementById('pageState');
+//           // let selectpageState = pageState.options[pageState.selectedIndex].value;
+//           // console.log(select);  
+//         pageStore(title, select, stateArray);
+//         });
+//         const editBtn = pageStrt.querySelectorAll(".page-edit");
+//         for (let i = 0; i < editBtn.length; i++) {
+//           let ID = editBtn[i].value;
+//         //   console.log(ID);
+//         //   let page = editBtn[i].id;
+//           editBtn[i].addEventListener(
+//             "click",
+//             function() {
+//               pageEdit(ID);
+//             },
+//             false
+//           );
+//         }
+//         const deleteBtn = document.querySelectorAll(".page-delete");
+//         for (let i = 0; i < deleteBtn.length; i++) {
+//           let ID = deleteBtn[i].value;
+//           deleteBtn[i].addEventListener(
+//             "click",
+//             function() {
+//               pageDelete(ID);
+//             },
+//             false
+//           );
+//         }
+//       }
+//     })
+//     .catch(function(error) {
+//       if (error.response) {
+//         console.log(error.response.data);
+//         console.log(error.response.status);
+//         console.log(error.response.headers);
+//       } else if (error.request) {
+//         console.log(error.request);
+//       } else {
+//         console.log("Error", error.message);
+//       }
+//       console.log(error);
+//     });
+//   ;
+// }
+// function pageStore(title, select, stateArray) {
+//   console.log(stateArray);
+//   axios
+//     .post(uri + path + "page_store", {
+//       page_title: title,
+//       // page_name: name,
+//       post_type: select,
+//       page_state: stateArray
+//     })
+//     .then(function(response) {
+//       console.log(response);
+//       init();
+//     })
+//     .catch((err) => {
+//       console.log(err instanceof TypeError);
+//     });
+//   document.getElementById("page_title").value = "";
+// }
+// function pageEdit(ID) {
+//   axios
+//     .post(uri + path + "page_edit&id="+ID, {
+//       editID: ID,
+//     })
+//     .then(function(response) {
+//       const test = document.querySelector(".innerpage");
+//       if (response.status == 200 && response.statusText == "OK") {
+//         const HTML = response.data.html;
+//         test.innerHTML = HTML;
+//       }
+//       const updateBtn = document.getElementById("pageUpdate");
+//       // console.log(updateBtn)
+//       const updateId = updateBtn.value;
+//       // console.log(updateId)
+//       updateBtn.addEventListener("click", () => {
+//         pageUpdate(updateId);
+//       });
+//     })
+//     .catch((err) => {
+//       console.log(err instanceof TypeError);
+//     });
+// }
+// function pageUpdate(updateId) {
+//   // console.log(updateId)
+//   const title = document.getElementById("page_title").value;
+//   const post = document.getElementById('post');
+//   const select = post.options[post.selectedIndex].value;
+//   let stateArray = []
+//   let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+//   for (let i = 0; i < checkboxes.length; i++) {
+//     stateArray.push(checkboxes[i].value)
+//   }
+//   console.log(stateArray);
+//   // console.log(selectpageState);
+//   const name = document.getElementById("page_name").value;
+//   // console.log(name);
+//   axios
+//     .post(uri + path + "page_update&id="+updateId, {
+//       updateId: updateId,
+//       page_title: title,
+//       page_name: name,
+//       post_type: select,
+//       page_state: stateArray
+//     })
+//     .then(function(response) {
+//       if (response.status == 200 && response.statusText == "OK") {
+//         init();
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err instanceof TypeError);
+//     });
+// }
+// function pageDelete(ID) {
+//   axios
+//     .post(uri + path + "page_destroy&id="+ID, {
+//       deleteID: ID,
+//     })
+//     .then(function(response) {
+//       if (response.status == 200 && response.statusText == "OK") {
+//         console.log(response);
+//         init();
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err instanceof TypeError);
+//     });
+// }
+// export default startPage();
 
 /***/ }),
 
@@ -2580,6 +2574,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
 /* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
 /* harmony import */ var _Oldpage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Oldpage.js */ "./resources/js/Oldpage.js");
+/* harmony import */ var _Oldpage_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Oldpage_js__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _menu_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./menu.js */ "./resources/js/menu.js");
 /* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
 /* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
@@ -3801,7 +3796,9 @@ var Tag = /*#__PURE__*/function () {
     this.page = new _pagination__WEBPACK_IMPORTED_MODULE_2__["default"](api);
     this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.changes;
-    this.init();
+    this.init(); // if (condition) {
+    //     location.hash
+    // }
   }
 
   _createClass(Tag, [{
@@ -3832,18 +3829,20 @@ var Tag = /*#__PURE__*/function () {
 
                 if (typeof hash != "string") {
                   location.hash = hash;
-                }
+                } // if(HTML == null && location.hash)
+
 
                 if (!DOM) {
                   _context2.next = 31;
                   break;
                 }
 
-                if (!(HTML == null)) {
+                if (!(HTML == null && hash == null)) {
                   _context2.next = 16;
                   break;
                 }
 
+                //suveikia kai nera HTML todel neskaito liko, kol nera HTML nepasileidzia JS ir nevyksta stebejimas
                 location.hash = 1;
                 obj = {
                   api: this.api,
