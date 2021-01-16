@@ -15,6 +15,7 @@ class Tag {
 
         // if (condition) {
         //     location.hash
+        
         // }
        
     }
