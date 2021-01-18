@@ -104,7 +104,7 @@ class Pag {
                     "click",
                     () => {
                         this.axios.delete(deleteApi, deleteId);
-                        setTimeout(location.reload(), 500);
+                        // setTimeout(location.reload(), 500);
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
                         return setTimeout(() => { this.init() }, (300))
@@ -120,32 +120,27 @@ class Pag {
                 "click",
                 async () => {
                     const api = "page_edit&id=";
-                
                     let obj = {
                         api: api+ID,
                         editID: ID,
                     }
                     let HTML = await this.axios.getPostData(obj);
                     inner.innerHTML = HTML;
-
                     const title = document.getElementById("page_title");
-                    let post = document.getElementById('post');
-                    let select = post.options[post.selectedIndex];
-                  
-                    let stateArray = []
-                    let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-                    for (let i = 0; i < checkboxes.length; i++) {
-                      stateArray.push(checkboxes[i].value)
-                    }
-    
                     const name = document.getElementById("page_name");
                     const updateBtn = document.getElementById("pageUpdate");
                     updateBtn.addEventListener("click", async () => {
-                        // const select = post.options[post.selectedIndex];
+                        let stateArray = []
+                        let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+                        for (let i = 0; i < checkboxes.length; i++) {
+                          stateArray.push(checkboxes[i].value)
+                        }
+                        let post = document.getElementById('post');
+                        let select = post.options[post.selectedIndex];
                         const api = "page_update&id=";
                         let obj = {
                             api: api+ID,
-                            updateId: updateBtn.value,
+                            // updateId: updateBtn.value,
                             page_title: title.value,
                             page_name: name.value,
                             post_type: select.value,

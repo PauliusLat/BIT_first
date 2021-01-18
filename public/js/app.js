@@ -3246,9 +3246,9 @@ var Pag = /*#__PURE__*/function () {
         var _loop = function _loop(i) {
           var deleteId = deleteBtn[i].value;
           deleteBtn[i].addEventListener("click", function () {
-            _this3.axios["delete"](deleteApi, deleteId);
+            _this3.axios["delete"](deleteApi, deleteId); // setTimeout(location.reload(), 500);
 
-            setTimeout(location.reload(), 500);
+
             var changes = _this3.changes;
             window.removeEventListener('hashchange', changes);
             return setTimeout(function () {
@@ -3272,8 +3272,7 @@ var Pag = /*#__PURE__*/function () {
       var _loop2 = function _loop2(i) {
         var ID = editBtn[i].value;
         editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          var api, obj, HTML, title, post, select, stateArray, checkboxes, _i, name, updateBtn;
-
+          var api, obj, HTML, title, name, updateBtn;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
@@ -3290,28 +3289,28 @@ var Pag = /*#__PURE__*/function () {
                   HTML = _context4.sent;
                   inner.innerHTML = HTML;
                   title = document.getElementById("page_title");
-                  post = document.getElementById('post');
-                  select = post.options[post.selectedIndex];
-                  stateArray = [];
-                  checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-                  for (_i = 0; _i < checkboxes.length; _i++) {
-                    stateArray.push(checkboxes[_i].value);
-                  }
-
                   name = document.getElementById("page_name");
                   updateBtn = document.getElementById("pageUpdate");
                   updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-                    var api, obj, changes;
+                    var stateArray, checkboxes, _i, post, select, api, obj, changes;
+
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                       while (1) {
                         switch (_context3.prev = _context3.next) {
                           case 0:
-                            // const select = post.options[post.selectedIndex];
+                            stateArray = [];
+                            checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+                            for (_i = 0; _i < checkboxes.length; _i++) {
+                              stateArray.push(checkboxes[_i].value);
+                            }
+
+                            post = document.getElementById('post');
+                            select = post.options[post.selectedIndex];
                             api = "page_update&id=";
                             obj = {
                               api: api + ID,
-                              updateId: updateBtn.value,
+                              // updateId: updateBtn.value,
                               page_title: title.value,
                               page_name: name.value,
                               post_type: select.value,
@@ -3331,7 +3330,7 @@ var Pag = /*#__PURE__*/function () {
                               _this4.init();
                             }, 300));
 
-                          case 9:
+                          case 14:
                           case "end":
                             return _context3.stop();
                         }
@@ -3339,7 +3338,7 @@ var Pag = /*#__PURE__*/function () {
                     }, _callee3);
                   })));
 
-                case 15:
+                case 10:
                 case "end":
                   return _context4.stop();
               }
