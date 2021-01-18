@@ -18,6 +18,7 @@ class Pagination {
         if (page.length) {
             var nextPage
             for (let i = 0; i < page.length; i++) {
+               
                 nextPage = () => {
                     page[i].addEventListener('click', nextPage);
                     let id = parseInt(page[i].id);

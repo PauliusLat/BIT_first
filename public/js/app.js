@@ -974,178 +974,6 @@ var AlbumEdit = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/js/Oldpage.js":
-/*!*********************************!*\
-  !*** ./resources/js/Oldpage.js ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// "use strict";
-// const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-// const uri = document.location.origin;
-// const pageStrt = document.getElementById("pageStart");
-// // console.log(pageStrt);
-// function startPage() {
-//   if (pageStrt) {
-//     window.addEventListener("load", init, false);
-//   }
-// }
-// function init() {
-//   axios
-//     .post(uri + path + "page_create", {})
-//     .then(function(response) {
-//       const test = document.querySelector(".innerpage");
-//       if (response.status == 200 && response.statusText == "OK") {
-//         const HTML = response.data.html;
-//         test.innerHTML = HTML;
-//         const submit = document.getElementById("create");
-//         submit.addEventListener("click", () => {
-//           const title = document.getElementById("page_title").value;
-//           let post = document.getElementById('post');
-//           let select = post.options[post.selectedIndex].value;
-//           let stateArray = []
-//           let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-//           for (let i = 0; i < checkboxes.length; i++) {
-//             stateArray.push(checkboxes[i].value)
-//           }
-//           console.log(stateArray);
-//           // let pageState = document.getElementById('pageState');
-//           // let selectpageState = pageState.options[pageState.selectedIndex].value;
-//           // console.log(select);  
-//         pageStore(title, select, stateArray);
-//         });
-//         const editBtn = pageStrt.querySelectorAll(".page-edit");
-//         for (let i = 0; i < editBtn.length; i++) {
-//           let ID = editBtn[i].value;
-//         //   console.log(ID);
-//         //   let page = editBtn[i].id;
-//           editBtn[i].addEventListener(
-//             "click",
-//             function() {
-//               pageEdit(ID);
-//             },
-//             false
-//           );
-//         }
-//         const deleteBtn = document.querySelectorAll(".page-delete");
-//         for (let i = 0; i < deleteBtn.length; i++) {
-//           let ID = deleteBtn[i].value;
-//           deleteBtn[i].addEventListener(
-//             "click",
-//             function() {
-//               pageDelete(ID);
-//             },
-//             false
-//           );
-//         }
-//       }
-//     })
-//     .catch(function(error) {
-//       if (error.response) {
-//         console.log(error.response.data);
-//         console.log(error.response.status);
-//         console.log(error.response.headers);
-//       } else if (error.request) {
-//         console.log(error.request);
-//       } else {
-//         console.log("Error", error.message);
-//       }
-//       console.log(error);
-//     });
-//   ;
-// }
-// function pageStore(title, select, stateArray) {
-//   console.log(stateArray);
-//   axios
-//     .post(uri + path + "page_store", {
-//       page_title: title,
-//       // page_name: name,
-//       post_type: select,
-//       page_state: stateArray
-//     })
-//     .then(function(response) {
-//       console.log(response);
-//       init();
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-//   document.getElementById("page_title").value = "";
-// }
-// function pageEdit(ID) {
-//   axios
-//     .post(uri + path + "page_edit&id="+ID, {
-//       editID: ID,
-//     })
-//     .then(function(response) {
-//       const test = document.querySelector(".innerpage");
-//       if (response.status == 200 && response.statusText == "OK") {
-//         const HTML = response.data.html;
-//         test.innerHTML = HTML;
-//       }
-//       const updateBtn = document.getElementById("pageUpdate");
-//       // console.log(updateBtn)
-//       const updateId = updateBtn.value;
-//       // console.log(updateId)
-//       updateBtn.addEventListener("click", () => {
-//         pageUpdate(updateId);
-//       });
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
-// function pageUpdate(updateId) {
-//   // console.log(updateId)
-//   const title = document.getElementById("page_title").value;
-//   const post = document.getElementById('post');
-//   const select = post.options[post.selectedIndex].value;
-//   let stateArray = []
-//   let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-//   for (let i = 0; i < checkboxes.length; i++) {
-//     stateArray.push(checkboxes[i].value)
-//   }
-//   console.log(stateArray);
-//   // console.log(selectpageState);
-//   const name = document.getElementById("page_name").value;
-//   // console.log(name);
-//   axios
-//     .post(uri + path + "page_update&id="+updateId, {
-//       updateId: updateId,
-//       page_title: title,
-//       page_name: name,
-//       post_type: select,
-//       page_state: stateArray
-//     })
-//     .then(function(response) {
-//       if (response.status == 200 && response.statusText == "OK") {
-//         init();
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
-// function pageDelete(ID) {
-//   axios
-//     .post(uri + path + "page_destroy&id="+ID, {
-//       deleteID: ID,
-//     })
-//     .then(function(response) {
-//       if (response.status == 200 && response.statusText == "OK") {
-//         console.log(response);
-//         init();
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err instanceof TypeError);
-//     });
-// }
-// export default startPage();
-
-/***/ }),
-
 /***/ "./resources/js/albumList.js":
 /*!***********************************!*\
   !*** ./resources/js/albumList.js ***!
@@ -2134,15 +1962,6 @@ var Category = /*#__PURE__*/function () {
       var name = document.getElementById("category-name");
       var slug = document.getElementById("category-slug");
       var description = document.getElementById("category-description");
-      var parent = document.getElementById('cat');
-      var select;
-
-      if (parent.options[parent.selectedIndex] != undefined) {
-        select = parent.options[parent.selectedIndex];
-      } else {
-        select = 0;
-      }
-
       var selectedPage;
 
       if (document.querySelector('[name="catPage"]:checked')) {
@@ -2154,18 +1973,30 @@ var Category = /*#__PURE__*/function () {
       var submit = document.getElementById("create");
       var api = 'category_store';
       submit.addEventListener("click", function () {
+        var parent = document.getElementById('cat');
+        var select;
+
+        if (parent.options[parent.selectedIndex] != undefined) {
+          select = parent.options[parent.selectedIndex];
+        } else {
+          select = 0;
+        }
+
         var obj = {
           api: api,
           title: name.value,
           slug: slug.value,
           page: selectedPage,
           content: description.value,
-          cat_parent: select.value
+          cat_parent: description.value
         };
+        console.log(select.value);
 
         if (obj) {
           _this2.readImage.sendImageData(obj);
         }
+
+        console.log(obj);
 
         _this2.axios.formDataApi(obj);
 
@@ -2581,22 +2412,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
 /* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
 /* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
-/* harmony import */ var _Oldpage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Oldpage.js */ "./resources/js/Oldpage.js");
-/* harmony import */ var _Oldpage_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_Oldpage_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _menu_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./menu.js */ "./resources/js/menu.js");
-/* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
-/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
-/* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
-/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
-/* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
-/* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
-/* harmony import */ var _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AlbumEdit.js */ "./resources/js/AlbumEdit.js");
-/* harmony import */ var _albumList__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./albumList */ "./resources/js/albumList.js");
+/* harmony import */ var _menu_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./menu.js */ "./resources/js/menu.js");
+/* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
+/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
+/* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
+/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
+/* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
+/* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
+/* harmony import */ var _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AlbumEdit.js */ "./resources/js/AlbumEdit.js");
+/* harmony import */ var _albumList__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./albumList */ "./resources/js/albumList.js");
 /** @format */
  // import startGallery from './gallery.js';
 
 
-
+ //import startPage from './page.js';
 
 
 
@@ -2613,16 +2442,16 @@ __webpack_require__.r(__webpack_exports__);
 
  // new TextEditor('.news-container')
 
-new _calendar_js__WEBPACK_IMPORTED_MODULE_6__["default"]('.calendar');
-new _news__WEBPACK_IMPORTED_MODULE_7__["default"]('startNewsAdmin');
-new _newsList__WEBPACK_IMPORTED_MODULE_9__["default"]('startNweaList');
-new _editPost__WEBPACK_IMPORTED_MODULE_10__["default"]('.editStart');
+new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
+new _news__WEBPACK_IMPORTED_MODULE_6__["default"]('startNewsAdmin');
+new _newsList__WEBPACK_IMPORTED_MODULE_8__["default"]('startNweaList');
+new _editPost__WEBPACK_IMPORTED_MODULE_9__["default"]('.editStart');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
 new _category_js__WEBPACK_IMPORTED_MODULE_1__["default"]('catStart');
-new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.adminMenuStart');
-new _albumList__WEBPACK_IMPORTED_MODULE_12__["default"]('startAlbumList');
-new _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_11__["default"]('.containerAlbumEdit');
-new _page_js__WEBPACK_IMPORTED_MODULE_5__["default"]('pageStart');
+new _menu_js__WEBPACK_IMPORTED_MODULE_3__["default"]('.adminMenuStart');
+new _albumList__WEBPACK_IMPORTED_MODULE_11__["default"]('startAlbumList');
+new _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_10__["default"]('.containerAlbumEdit');
+new _page_js__WEBPACK_IMPORTED_MODULE_4__["default"]('pageStart');
 
 /***/ }),
 
@@ -3386,18 +3215,18 @@ var Pag = /*#__PURE__*/function () {
       var _this2 = this;
 
       var title = document.getElementById("page_title");
-      var post = document.getElementById('post');
-      var select = post.options[post.selectedIndex];
-      var stateArray = [];
-      var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-      for (var i = 0; i < checkboxes.length; i++) {
-        stateArray.push(checkboxes[i].value);
-      }
-
       var api = "page_store";
       var submit = document.getElementById("create");
       submit.addEventListener("click", function () {
+        var post = document.getElementById('post');
+        var select = post.options[post.selectedIndex];
+        var stateArray = [];
+        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+        for (var i = 0; i < checkboxes.length; i++) {
+          stateArray.push(checkboxes[i].value);
+        }
+
         var obj = {
           api: api,
           page_title: title.value,
@@ -3410,8 +3239,7 @@ var Pag = /*#__PURE__*/function () {
         var changes = _this2.changes;
         window.removeEventListener('hashchange', changes);
         title.value = "";
-        slug.value = "";
-        description.value = "";
+        console.log(obj);
         return setTimeout(function () {
           _this2.init();
         }, 300);
@@ -3422,19 +3250,15 @@ var Pag = /*#__PURE__*/function () {
     value: function _delete() {
       var _this3 = this;
 
-      var api = "page_destroy";
+      var deleteApi = "page_destroy&id=";
       var deleteBtn = document.querySelectorAll(".page-delete");
 
       if (deleteBtn) {
         var _loop = function _loop(i) {
-          var ID = deleteBtn[i].value;
+          var deleteId = deleteBtn[i].value;
           deleteBtn[i].addEventListener("click", function () {
-            var obj = {
-              api: api,
-              deleteID: ID
-            };
+            _this3.axios["delete"](deleteApi, deleteId); // setTimeout(location.reload(), 500);
 
-            _this3.axios.formDataApi(obj);
 
             var changes = _this3.changes;
             window.removeEventListener('hashchange', changes);
@@ -3459,15 +3283,14 @@ var Pag = /*#__PURE__*/function () {
       var _loop2 = function _loop2(i) {
         var ID = editBtn[i].value;
         editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          var api, obj, HTML, title, post, select, stateArray, checkboxes, _i, name, updateBtn;
-
+          var api, obj, HTML, title, name, updateBtn;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
-                  api = "page_edit";
+                  api = "page_edit&id=";
                   obj = {
-                    api: api,
+                    api: api + ID,
                     editID: ID
                   };
                   _context4.next = 4;
@@ -3477,45 +3300,48 @@ var Pag = /*#__PURE__*/function () {
                   HTML = _context4.sent;
                   inner.innerHTML = HTML;
                   title = document.getElementById("page_title");
-                  post = document.getElementById('post');
-                  select = post.options[post.selectedIndex];
-                  stateArray = [];
-                  checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-                  for (_i = 0; _i < checkboxes.length; _i++) {
-                    stateArray.push(checkboxes[_i].value);
-                  }
-
                   name = document.getElementById("page_name");
                   updateBtn = document.getElementById("pageUpdate");
                   updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-                    var api, obj, changes;
+                    var stateArray, checkboxes, _i, post, select, api, obj, changes;
+
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                       while (1) {
                         switch (_context3.prev = _context3.next) {
                           case 0:
-                            api = "page_update";
+                            stateArray = [];
+                            checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+                            for (_i = 0; _i < checkboxes.length; _i++) {
+                              stateArray.push(checkboxes[_i].value);
+                            }
+
+                            post = document.getElementById('post');
+                            select = post.options[post.selectedIndex];
+                            api = "page_update&id=";
                             obj = {
-                              api: api,
-                              updateId: updateBtn.value,
+                              api: api + ID,
+                              // updateId: updateBtn.value,
                               page_title: title.value,
                               page_name: name.value,
                               post_type: select.value,
                               page_state: stateArray
                             };
+                            console.log(select.value);
 
                             _this4.axios.formDataApi(obj);
 
+                            console.log(stateArray);
                             changes = _this4.changes;
-                            window.removeEventListener('hashchange', changes);
-                            description.value = "";
-                            slug.value = "";
+                            window.removeEventListener('hashchange', changes); // description.value = "";
+                            // slug.value = "";
+
                             name.value = "";
                             return _context3.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));
 
-                          case 9:
+                          case 14:
                           case "end":
                             return _context3.stop();
                         }
@@ -3523,7 +3349,7 @@ var Pag = /*#__PURE__*/function () {
                     }, _callee3);
                   })));
 
-                case 15:
+                case 10:
                 case "end":
                   return _context4.stop();
               }
@@ -3776,6 +3602,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 /* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
+/** @format */
 
 
 
@@ -3804,13 +3631,7 @@ var Tag = /*#__PURE__*/function () {
     this.page = new _pagination__WEBPACK_IMPORTED_MODULE_2__["default"](api);
     this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.changes;
-    var hash = location.hash.split('#')[1];
-
-    if (hash) {
-      this.init(hash);
-    } else {
-      this.init();
-    }
+    this.init();
   }
 
   _createClass(Tag, [{
@@ -3824,8 +3645,6 @@ var Tag = /*#__PURE__*/function () {
             DOM,
             test,
             obj,
-            pages,
-            page,
             addColor,
             changes,
             option,
@@ -3839,19 +3658,14 @@ var Tag = /*#__PURE__*/function () {
                 HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
                 DOM = document.getElementById(this.target);
                 test = document.querySelector(".test");
-                hash = parseInt(hash);
-
-                if (typeof hash != "string") {
-                  location.hash = hash;
-                }
 
                 if (!DOM) {
-                  _context2.next = 47;
+                  _context2.next = 29;
                   break;
                 }
 
-                if (!(HTML == null && hash == null)) {
-                  _context2.next = 16;
+                if (!(HTML == null)) {
+                  _context2.next = 14;
                   break;
                 }
 
@@ -3860,53 +3674,22 @@ var Tag = /*#__PURE__*/function () {
                   api: this.api,
                   hash: 1
                 };
-                _context2.next = 12;
+                _context2.next = 10;
                 return this.axios.getPostData(obj);
 
-              case 12:
+              case 10:
                 HTML = _context2.sent;
                 test.innerHTML = HTML;
-                _context2.next = 33;
+                _context2.next = 15;
                 break;
 
-              case 16:
-                if (!(HTML && hash)) {
-                  _context2.next = 20;
-                  break;
-                }
-
-                test.innerHTML = HTML;
-                _context2.next = 33;
-                break;
-
-              case 20:
-                pages = this.pages;
-                _context2.next = 23;
-                return this.page.select(hash, pages);
-
-              case 23:
-                HTML = _context2.sent;
-                test.innerHTML = HTML;
-                page = document.querySelectorAll(".paging");
-
-                if (!(hash > page.length - 4)) {
-                  _context2.next = 33;
-                  break;
-                }
-
-                hash = 1;
-                location.hash = hash;
-                _context2.next = 31;
-                return this.page.select(hash, pages);
-
-              case 31:
-                HTML = _context2.sent;
+              case 14:
                 test.innerHTML = HTML;
 
-              case 33:
+              case 15:
                 this.page.paging();
                 HTML = "";
-                addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
+                addColor = document.querySelector(".nr-" + location.hash.slice(1, 2));
 
                 if (addColor) {
                   addColor.classList.add("active");
@@ -3914,26 +3697,25 @@ var Tag = /*#__PURE__*/function () {
 
                 changes = /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                    var _pages;
-
+                    var pages;
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
                         switch (_context.prev = _context.next) {
                           case 0:
-                            hash = location.hash.split('#')[1];
+                            hash = location.hash.slice(1, 2);
 
                             if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
                               _context.next = 8;
                               break;
                             }
 
-                            _pages = _this.pages;
+                            pages = _this.pages;
                             _context.next = 5;
-                            return _this.page.select(hash, _pages);
+                            return _this.page.select(hash, pages);
 
                           case 5:
                             HTML = _context.sent;
-                            window.removeEventListener('hashchange', changes);
+                            window.removeEventListener("hashchange", changes);
 
                             _this.init(hash, HTML);
 
@@ -3950,7 +3732,7 @@ var Tag = /*#__PURE__*/function () {
                   };
                 }();
 
-                window.addEventListener('hashchange', changes);
+                window.addEventListener("hashchange", changes);
                 this.changes = changes;
                 option = document.getElementById("items");
                 option.value = this.pages;
@@ -3958,17 +3740,17 @@ var Tag = /*#__PURE__*/function () {
                 selected = function selected() {
                   _this.pages = option.value;
                   location.hash = 1;
-                  window.removeEventListener('hashchange', changes);
+                  window.removeEventListener("hashchange", changes);
                   changes();
-                  option.removeEventListener('change', selected);
+                  option.removeEventListener("change", selected);
                 };
 
-                option.addEventListener('change', selected);
+                option.addEventListener("change", selected);
                 this["delete"]();
                 this.createTag();
                 this.tagEdit(test);
 
-              case 47:
+              case 29:
               case "end":
                 return _context2.stop();
             }
@@ -3993,7 +3775,7 @@ var Tag = /*#__PURE__*/function () {
       var storeTag = document.getElementById("create");
       storeTag.addEventListener("click", function () {
         var obj = {
-          api: 'tag_store',
+          api: "tag_store",
           tag_name: name.value,
           tag_slug: slug.value,
           tag_description: description.value
@@ -4002,7 +3784,7 @@ var Tag = /*#__PURE__*/function () {
         _this2.axios.formDataApi(obj);
 
         var changes = _this2.changes;
-        window.removeEventListener('hashchange', changes);
+        window.removeEventListener("hashchange", changes);
         name.value = "";
         slug.value = "";
         description.value = "";
@@ -4033,7 +3815,7 @@ var Tag = /*#__PURE__*/function () {
             _this3.axios.formDataApi(obj);
 
             var changes = _this3.changes;
-            window.removeEventListener('hashchange', changes);
+            window.removeEventListener("hashchange", changes);
             return setTimeout(function () {
               _this3.init();
             }, 300);
@@ -4095,7 +3877,7 @@ var Tag = /*#__PURE__*/function () {
                             _this4.axios.formDataApi(obj);
 
                             changes = _this4.changes;
-                            window.removeEventListener('hashchange', changes);
+                            window.removeEventListener("hashchange", changes);
                             description.value = "";
                             slug.value = "";
                             name.value = "";

@@ -4,7 +4,7 @@ import startIdea from './idea.js';
 // import startGallery from './gallery.js';
 import startCat from './category.js';
 import startTag from './tag.js';
-import startPage from './Oldpage.js';
+//import startPage from './page.js';
 import startMenu from './menu.js';
 import Tag from './tag.js';
 import Pag from './page.js';
