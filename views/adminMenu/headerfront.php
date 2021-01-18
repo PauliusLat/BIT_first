@@ -3,7 +3,7 @@
 <!-- <div class="navFront"> -->
 <?php
 // _dc($menu);
-foreach (range(0, (count($menu->names) - 1)) as $index) : ?>
+foreach (range((count($menu->names) - 1), 0) as $index) : ?>
     <div class='dropdown'>
         <a class="dropbtn" href="<?= $menu->pageLinks[$index] ?>"><?= $menu->names[$index] ?></a>
         <?php

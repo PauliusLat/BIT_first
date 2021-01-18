@@ -123,12 +123,12 @@ class Post
             $this->ID = $postID;
         }
 
-// dispachinam
+        // dispachinam
         // $dispatcher = new EventDispatcher();
         // $event = new PostSaveEvent($this->ID);
         // // $dispatcher->addSubscriber(new PostSaveSubscriber());
         // $dispatcher->dispatch($event, PostSaveEvent::NAME);
-// end dispach
+        // end dispach
     }
 
     public function delete($force_delete = false)
@@ -189,10 +189,10 @@ class Post
     {
         return get_permalink($this->ID);
     }
-// returns post Page
+    // returns post Page
     public function getPage()
     {
-        if($this->post_parent){
+        if ($this->post_parent) {
             return Page::get($this->post_parent);
         }
     }
