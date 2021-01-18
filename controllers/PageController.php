@@ -9,7 +9,7 @@ use BIT\app\Session;
 // use BIT\app\Attachment;
 // use BIT\models\NewsPost;
 // use BIT\models\AlbumPost;
-// use BIT\app\Query;
+use BIT\app\Query;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,13 +25,12 @@ class PageController
         return View::adminRender('page.mainpage');
     }
 
-    public function create(Request $requestJson, Session $session)
+    public function create(Request $request, Session $session)
     {
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
-        $request = $this->decodeRequest($requestJson);
-
+        // $request = $this->decodeRequest($requestJson);
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
@@ -40,20 +39,26 @@ class PageController
 
         if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
             $number = $request->request->get('hash');
+            // var_dump($number);
         } else {
             $number = 1;
         }
 
         $total = count(Page::all()->all());
         $pagination = new Pagination($limit, $number, $total);
-        $pages = Page::all()->all();
+
+        $pagesPost = Page::all()->all();
+        $pagesPost = array_values($pagesPost);
+
+        // _dc($pagesPost);
         $pageArr = [];
-        foreach ($pages as $key => $value) {
+        foreach ($pagesPost as $key => $value) {
             if ($key >= $pagination->offset && count($pageArr) < $limit) {
                 array_push($pageArr, $value);
             }
         }
-
+        $success_message = '';
+        $message  = '';
         if ($session->get('alert_message') != null) {
             $message = $session->get('alert_message');
         } else if ($session->get('success_message') != null) {
@@ -62,13 +67,17 @@ class PageController
             $message = "";
         }
 
+        // _dc($pagination);
         $output = View::adminRender('page.page', ["postPages" =>  $pageArr, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'message' => $message,  'success_message' => $success_message]);
         return new JsonResponse(['html' => $output]);
     }
 
-    public function store(Request $requestJson, Session $session)
+    public function store(Request $request, Session $session)
     {
-        $request = $this->decodeRequest($requestJson);
+        // $query = new Query;
+        // $menus = $query->postType('menu')->getPost()->all();
+        // $menu = $menus[0];
+        // $request = $this->decodeRequest($requestJson);
         $page = new Page;
         $name = $request->request->get('page_title');
         $post = $request->request->get('post_type');
@@ -76,6 +85,8 @@ class PageController
         foreach ($state as $value) {
             array_push($page->pageState, $value);
         }
+        // $menu = serialize($menu);
+        // _dc($menu);
         $page->setRoute($post);
         $page->setTitle($name);
         if ($name == '') {
@@ -99,13 +110,14 @@ class PageController
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
         $ID = $page->ID;
-        $output = View::adminRender('page.edit',  ['page' => $page, 'oldValue' => $oldValue, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'shortcode' => $shortcode, 'ID' => $ID]);
+        $output = View::adminRender('page.edit',  ['page' => $page, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'shortcode' => $shortcode, 'ID' => $ID]);
         return new JsonResponse(['html' => $output]);
     }
 
-    public function update(Request $requestJson, Page $page, Session $session)
+    public function update(Request $request, Page $page, Session $session)
     {
-        $request = $this->decodeRequest($requestJson);
+        //tvarkyti update
+        // $request = $this->decodeRequest($requestJson);
         $title = $request->request->get('page_title');
         $post = $request->request->get('post_type');
         $pagestate = $request->request->get('page_state');
@@ -124,17 +136,19 @@ class PageController
 
     public function destroy(Page $page, Session $session)
     {
+
         $session->flash('success_message', 'puslapis sėkmingai ištrintas');
         $page->delete();
+
         return new Response;
     }
 
-    public function decodeRequest($request)
-    {
-        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-            $data = json_decode($request->getContent(), true);
-            $request->request->replace(is_array($data) ? $data : array());
-        }
-        return $request;
-    }
+    // public function decodeRequest($request)
+    // {
+    //     if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+    //         $data = json_decode($request->getContent(), true);
+    //         $request->request->replace(is_array($data) ? $data : array());
+    //     }
+    //     return $request;
+    // }
 }

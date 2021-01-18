@@ -89,25 +89,22 @@ class Pag {
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
             title.value = "";
-            slug.value = "";
-            description.value = ""
+            // slug.value = "";
+            // description.value = ""
             return setTimeout(() => { this.init() }, (300));
         });
     }
     delete() {
-        const api = "page_destroy";
+        const deleteApi = "page_destroy&id=";
         const deleteBtn = document.querySelectorAll(".page-delete");
         if (deleteBtn) {
             for (let i = 0; i < deleteBtn.length; i++) {
-                let ID = deleteBtn[i].value;
+                let deleteId = deleteBtn[i].value;
                 deleteBtn[i].addEventListener(
                     "click",
                     () => {
-                        let obj = {
-                            api: api,
-                            deleteID: ID,
-                        }
-                        this.axios.formDataApi(obj);
+                        this.axios.delete(deleteApi, deleteId);
+                        setTimeout(location.reload(), 500);
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
                         return setTimeout(() => { this.init() }, (300))
@@ -122,16 +119,19 @@ class Pag {
             editBtn[i].addEventListener(
                 "click",
                 async () => {
-                    const api = "page_edit";
+                    const api = "page_edit&id=";
+                
                     let obj = {
-                        api: api,
+                        api: api+ID,
                         editID: ID,
                     }
                     let HTML = await this.axios.getPostData(obj);
                     inner.innerHTML = HTML;
+
                     const title = document.getElementById("page_title");
-                    const post = document.getElementById('post');
-                    const select = post.options[post.selectedIndex];
+                    let post = document.getElementById('post');
+                    let select = post.options[post.selectedIndex];
+                  
                     let stateArray = []
                     let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
                     for (let i = 0; i < checkboxes.length; i++) {
@@ -140,22 +140,24 @@ class Pag {
     
                     const name = document.getElementById("page_name");
                     const updateBtn = document.getElementById("pageUpdate");
-
                     updateBtn.addEventListener("click", async () => {
-                        const api = "page_update";
+                        // const select = post.options[post.selectedIndex];
+                        const api = "page_update&id=";
                         let obj = {
-                            api: api,
+                            api: api+ID,
                             updateId: updateBtn.value,
                             page_title: title.value,
                             page_name: name.value,
                             post_type: select.value,
                             page_state: stateArray
                         }
+                        console.log(select.value)
                         this.axios.formDataApi(obj);
+                        console.log(stateArray);
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
-                        description.value = "";
-                        slug.value = "";
+                        // description.value = "";
+                        // slug.value = "";
                         name.value = "";
                         return setTimeout(() => { this.init() }, (300))
                     });

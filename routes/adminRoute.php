@@ -8,17 +8,19 @@ use BIT\controllers\CacheController;
 return [
 	'admin' => 'AdminController@index',
 	'news' => 'NewsAdminController@create',
-	'news@' => ['add new' => 'NewsAdminController@create', 
-				'list' => 'NewsAdminController@list', 
-				'0edit' => 'NewsAdminController@edit'
-			],
+	'news@' => [
+		'add new' => 'NewsAdminController@create',
+		'list' => 'NewsAdminController@list',
+		'0edit' => 'NewsAdminController@edit'
+	],
 
 	'idejos' => 'IdeAdminController@adminIndex',
 
 	'galerija' => 'GalleryAdminController@index',
-	'galerija@' => ['0def' => 'GalleryAdminController@index',
-					'0edit' => 'GalleryAdminController@edit'
-					],
+	'galerija@' => [
+		'0def' => 'GalleryAdminController@index',
+		'0edit' => 'GalleryAdminController@edit'
+	],
 
 	// 'kategorija' => 'CategoryFrontController@index',
 
@@ -35,11 +37,13 @@ return [
 	'tag' => 'TagController@index',
 	// 'tag@' => ['list' =>'TagController@create', 'tag_edit'=> 'TagController@edit', 'tag_store'=> 'TagController@store', 'tag_destroy'=> 'TagController@destroy', 'tag_update'=> 'TagController@update']
 
-	'frontmenu' => 'AdminMenuController@index',
+	'create' => 'AdminMenuController@index',
+	'menufront' => 'FrontMenuController@index',
 
 	'cache' => 'CacheController@index',
-	'cache@' => ['0def' => 'CacheController@index',
-				 '0clear' => 'CacheController@clearCache',
-				 '0enable' => 'CacheController@enableCache'
-				]
+	'cache@' => [
+		'0def' => 'CacheController@index',
+		'0clear' => 'CacheController@clearCache',
+		'0enable' => 'CacheController@enableCache'
+	]
 ];

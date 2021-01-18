@@ -973,184 +973,6 @@ var AlbumEdit = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/js/Oldpage.js":
-/*!*********************************!*\
-  !*** ./resources/js/Oldpage.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
-var pageStrt = document.getElementById("pageStart"); // console.log(pageStrt);
-
-function startPage() {
-  if (pageStrt) {
-    window.addEventListener("load", init, false);
-  }
-}
-
-function init() {
-  axios.post(uri + path + "page_create", {}).then(function (response) {
-    var test = document.querySelector(".innerpage");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-      var submit = document.getElementById("create");
-      submit.addEventListener("click", function () {
-        var title = document.getElementById("page_title").value;
-        var post = document.getElementById('post');
-        var select = post.options[post.selectedIndex].value;
-        var stateArray = [];
-        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-        for (var i = 0; i < checkboxes.length; i++) {
-          stateArray.push(checkboxes[i].value);
-        }
-
-        console.log(stateArray); // let pageState = document.getElementById('pageState');
-        // let selectpageState = pageState.options[pageState.selectedIndex].value;
-        // console.log(select);  
-
-        pageStore(title, select, stateArray);
-      });
-      var editBtn = pageStrt.querySelectorAll(".page-edit");
-
-      var _loop = function _loop(i) {
-        var ID = editBtn[i].value; //   console.log(ID);
-        //   let page = editBtn[i].id;
-
-        editBtn[i].addEventListener("click", function () {
-          pageEdit(ID);
-        }, false);
-      };
-
-      for (var i = 0; i < editBtn.length; i++) {
-        _loop(i);
-      }
-
-      var deleteBtn = document.querySelectorAll(".page-delete");
-
-      var _loop2 = function _loop2(_i) {
-        var ID = deleteBtn[_i].value;
-
-        deleteBtn[_i].addEventListener("click", function () {
-          pageDelete(ID);
-        }, false);
-      };
-
-      for (var _i = 0; _i < deleteBtn.length; _i++) {
-        _loop2(_i);
-      }
-    }
-  })["catch"](function (error) {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error.message);
-    }
-
-    console.log(error);
-  });
-  ;
-}
-
-function pageStore(title, select, stateArray) {
-  console.log(stateArray);
-  axios.post(uri + path + "page_store", {
-    page_title: title,
-    // page_name: name,
-    post_type: select,
-    page_state: stateArray
-  }).then(function (response) {
-    console.log(response);
-    init();
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-  document.getElementById("page_title").value = "";
-}
-
-function pageEdit(ID) {
-  axios.post(uri + path + "page_edit&id=" + ID, {
-    editID: ID
-  }).then(function (response) {
-    var test = document.querySelector(".innerpage");
-
-    if (response.status == 200 && response.statusText == "OK") {
-      var HTML = response.data.html;
-      test.innerHTML = HTML;
-    }
-
-    var updateBtn = document.getElementById("pageUpdate"); // console.log(updateBtn)
-
-    var updateId = updateBtn.value; // console.log(updateId)
-
-    updateBtn.addEventListener("click", function () {
-      pageUpdate(updateId);
-    });
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function pageUpdate(updateId) {
-  // console.log(updateId)
-  var title = document.getElementById("page_title").value;
-  var post = document.getElementById('post');
-  var select = post.options[post.selectedIndex].value;
-  var stateArray = [];
-  var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-  for (var i = 0; i < checkboxes.length; i++) {
-    stateArray.push(checkboxes[i].value);
-  }
-
-  console.log(stateArray); // console.log(selectpageState);
-
-  var name = document.getElementById("page_name").value; // console.log(name);
-
-  axios.post(uri + path + "page_update&id=" + updateId, {
-    updateId: updateId,
-    page_title: title,
-    page_name: name,
-    post_type: select,
-    page_state: stateArray
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      init();
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-function pageDelete(ID) {
-  axios.post(uri + path + "page_destroy&id=" + ID, {
-    deleteID: ID
-  }).then(function (response) {
-    if (response.status == 200 && response.statusText == "OK") {
-      console.log(response);
-      init();
-    }
-  })["catch"](function (err) {
-    console.log(err instanceof TypeError);
-  });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (startPage());
-
-/***/ }),
-
 /***/ "./resources/js/albumList.js":
 /*!***********************************!*\
   !*** ./resources/js/albumList.js ***!
@@ -2132,15 +1954,6 @@ var Category = /*#__PURE__*/function () {
       var name = document.getElementById("category-name");
       var slug = document.getElementById("category-slug");
       var description = document.getElementById("category-description");
-      var parent = document.getElementById('cat');
-      var select;
-
-      if (parent.options[parent.selectedIndex] != undefined) {
-        select = parent.options[parent.selectedIndex];
-      } else {
-        select = 0;
-      }
-
       var selectedPage;
 
       if (document.querySelector('[name="catPage"]:checked')) {
@@ -2152,18 +1965,30 @@ var Category = /*#__PURE__*/function () {
       var submit = document.getElementById("create");
       var api = 'category_store';
       submit.addEventListener("click", function () {
+        var parent = document.getElementById('cat');
+        var select;
+
+        if (parent.options[parent.selectedIndex] != undefined) {
+          select = parent.options[parent.selectedIndex];
+        } else {
+          select = 0;
+        }
+
         var obj = {
           api: api,
           title: name.value,
           slug: slug.value,
           page: selectedPage,
           content: description.value,
-          cat_parent: select.value
+          cat_parent: description.value
         };
+        console.log(select.value);
 
         if (obj) {
           _this2.readImage.sendImageData(obj);
         }
+
+        console.log(obj);
 
         _this2.axios.formDataApi(obj);
 
@@ -2579,21 +2404,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _idea_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./idea.js */ "./resources/js/idea.js");
 /* harmony import */ var _category_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./category.js */ "./resources/js/category.js");
 /* harmony import */ var _tag_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tag.js */ "./resources/js/tag.js");
-/* harmony import */ var _Oldpage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Oldpage.js */ "./resources/js/Oldpage.js");
-/* harmony import */ var _menu_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./menu.js */ "./resources/js/menu.js");
-/* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
-/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
-/* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
-/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
-/* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
-/* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
-/* harmony import */ var _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AlbumEdit.js */ "./resources/js/AlbumEdit.js");
-/* harmony import */ var _albumList__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./albumList */ "./resources/js/albumList.js");
+/* harmony import */ var _menu_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./menu.js */ "./resources/js/menu.js");
+/* harmony import */ var _page_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./page.js */ "./resources/js/page.js");
+/* harmony import */ var _calendar_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./calendar.js */ "./resources/js/calendar.js");
+/* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./news */ "./resources/js/news.js");
+/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
+/* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
+/* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
+/* harmony import */ var _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AlbumEdit.js */ "./resources/js/AlbumEdit.js");
+/* harmony import */ var _albumList__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./albumList */ "./resources/js/albumList.js");
 /** @format */
  // import startGallery from './gallery.js';
 
 
-
+ //import startPage from './page.js';
 
 
 
@@ -2610,16 +2434,16 @@ __webpack_require__.r(__webpack_exports__);
 
  // new TextEditor('.news-container')
 
-new _calendar_js__WEBPACK_IMPORTED_MODULE_6__["default"]('.calendar');
-new _news__WEBPACK_IMPORTED_MODULE_7__["default"]('startNewsAdmin');
-new _newsList__WEBPACK_IMPORTED_MODULE_9__["default"]('startNweaList');
-new _editPost__WEBPACK_IMPORTED_MODULE_10__["default"]('.editStart');
+new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
+new _news__WEBPACK_IMPORTED_MODULE_6__["default"]('startNewsAdmin');
+new _newsList__WEBPACK_IMPORTED_MODULE_8__["default"]('startNweaList');
+new _editPost__WEBPACK_IMPORTED_MODULE_9__["default"]('.editStart');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
 new _category_js__WEBPACK_IMPORTED_MODULE_1__["default"]('catStart');
-new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.adminMenuStart');
-new _albumList__WEBPACK_IMPORTED_MODULE_12__["default"]('startAlbumList');
-new _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_11__["default"]('.containerAlbumEdit');
-new _page_js__WEBPACK_IMPORTED_MODULE_5__["default"]('pageStart');
+new _menu_js__WEBPACK_IMPORTED_MODULE_3__["default"]('.adminMenuStart');
+new _albumList__WEBPACK_IMPORTED_MODULE_11__["default"]('startAlbumList');
+new _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_10__["default"]('.containerAlbumEdit');
+new _page_js__WEBPACK_IMPORTED_MODULE_4__["default"]('pageStart');
 
 /***/ }),
 
@@ -3402,9 +3226,9 @@ var Pag = /*#__PURE__*/function () {
 
         var changes = _this2.changes;
         window.removeEventListener('hashchange', changes);
-        title.value = "";
-        slug.value = "";
-        description.value = "";
+        title.value = ""; // slug.value = "";
+        // description.value = ""
+
         return setTimeout(function () {
           _this2.init();
         }, 300);
@@ -3415,20 +3239,16 @@ var Pag = /*#__PURE__*/function () {
     value: function _delete() {
       var _this3 = this;
 
-      var api = "page_destroy";
+      var deleteApi = "page_destroy&id=";
       var deleteBtn = document.querySelectorAll(".page-delete");
 
       if (deleteBtn) {
         var _loop = function _loop(i) {
-          var ID = deleteBtn[i].value;
+          var deleteId = deleteBtn[i].value;
           deleteBtn[i].addEventListener("click", function () {
-            var obj = {
-              api: api,
-              deleteID: ID
-            };
+            _this3.axios["delete"](deleteApi, deleteId);
 
-            _this3.axios.formDataApi(obj);
-
+            setTimeout(location.reload(), 500);
             var changes = _this3.changes;
             window.removeEventListener('hashchange', changes);
             return setTimeout(function () {
@@ -3458,9 +3278,9 @@ var Pag = /*#__PURE__*/function () {
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
-                  api = "page_edit";
+                  api = "page_edit&id=";
                   obj = {
-                    api: api,
+                    api: api + ID,
                     editID: ID
                   };
                   _context4.next = 4;
@@ -3487,22 +3307,25 @@ var Pag = /*#__PURE__*/function () {
                       while (1) {
                         switch (_context3.prev = _context3.next) {
                           case 0:
-                            api = "page_update";
+                            // const select = post.options[post.selectedIndex];
+                            api = "page_update&id=";
                             obj = {
-                              api: api,
+                              api: api + ID,
                               updateId: updateBtn.value,
                               page_title: title.value,
                               page_name: name.value,
                               post_type: select.value,
                               page_state: stateArray
                             };
+                            console.log(select.value);
 
                             _this4.axios.formDataApi(obj);
 
+                            console.log(stateArray);
                             changes = _this4.changes;
-                            window.removeEventListener('hashchange', changes);
-                            description.value = "";
-                            slug.value = "";
+                            window.removeEventListener('hashchange', changes); // description.value = "";
+                            // slug.value = "";
+
                             name.value = "";
                             return _context3.abrupt("return", setTimeout(function () {
                               _this4.init();
@@ -3589,6 +3412,7 @@ var Pagination = /*#__PURE__*/function () {
           _nextPage = function nextPage() {
             page[i].addEventListener('click', _nextPage);
             var id = page[i].id;
+            console.log(page[i]);
             location.hash = '#' + id;
             page[i].removeEventListener("click", _nextPage);
           };
@@ -3769,6 +3593,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 /* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
+/** @format */
 
 
 
@@ -3855,7 +3680,7 @@ var Tag = /*#__PURE__*/function () {
               case 15:
                 this.page.paging();
                 HTML = "";
-                addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
+                addColor = document.querySelector(".nr-" + location.hash.slice(1, 2));
 
                 if (addColor) {
                   addColor.classList.add("active");
@@ -3881,7 +3706,7 @@ var Tag = /*#__PURE__*/function () {
 
                           case 5:
                             HTML = _context.sent;
-                            window.removeEventListener('hashchange', changes);
+                            window.removeEventListener("hashchange", changes);
 
                             _this.init(hash, HTML);
 
@@ -3898,7 +3723,7 @@ var Tag = /*#__PURE__*/function () {
                   };
                 }();
 
-                window.addEventListener('hashchange', changes);
+                window.addEventListener("hashchange", changes);
                 this.changes = changes;
                 option = document.getElementById("items");
                 option.value = this.pages;
@@ -3906,12 +3731,12 @@ var Tag = /*#__PURE__*/function () {
                 selected = function selected() {
                   _this.pages = option.value;
                   location.hash = 1;
-                  window.removeEventListener('hashchange', changes);
+                  window.removeEventListener("hashchange", changes);
                   changes();
-                  option.removeEventListener('change', selected);
+                  option.removeEventListener("change", selected);
                 };
 
-                option.addEventListener('change', selected);
+                option.addEventListener("change", selected);
                 this["delete"]();
                 this.createTag();
                 this.tagEdit(test);
@@ -3941,7 +3766,7 @@ var Tag = /*#__PURE__*/function () {
       var storeTag = document.getElementById("create");
       storeTag.addEventListener("click", function () {
         var obj = {
-          api: api,
+          api: "tag_store",
           tag_name: name.value,
           tag_slug: slug.value,
           tag_description: description.value
@@ -3950,7 +3775,7 @@ var Tag = /*#__PURE__*/function () {
         _this2.axios.formDataApi(obj);
 
         var changes = _this2.changes;
-        window.removeEventListener('hashchange', changes);
+        window.removeEventListener("hashchange", changes);
         name.value = "";
         slug.value = "";
         description.value = "";
@@ -3981,7 +3806,7 @@ var Tag = /*#__PURE__*/function () {
             _this3.axios.formDataApi(obj);
 
             var changes = _this3.changes;
-            window.removeEventListener('hashchange', changes);
+            window.removeEventListener("hashchange", changes);
             return setTimeout(function () {
               _this3.init();
             }, 300);
@@ -4043,7 +3868,7 @@ var Tag = /*#__PURE__*/function () {
                             _this4.axios.formDataApi(obj);
 
                             changes = _this4.changes;
-                            window.removeEventListener('hashchange', changes);
+                            window.removeEventListener("hashchange", changes);
                             description.value = "";
                             slug.value = "";
                             name.value = "";

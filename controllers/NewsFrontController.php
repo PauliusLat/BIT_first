@@ -20,21 +20,19 @@ class NewsFrontController
     {
         $allNews = NewsPost::all()->all();
         $output = View::adminRender('news.front', ['html' =>  $allNews]);
-        return View::render('news.news',  ["html" => $output]);
+        return View::render('news.news',  ['html' => $output]);
     }
 
 
-    public function show(String $id){
-
-
+    public function show(String $id)
+    {
         $news = NewsPost::get($id);
         $title = $news->post_title;
         $content = $news->news_content;
         $date = $news->post_date;
         $image = null;
-        foreach($news->attachments as $value){
+        foreach ($news->attachments as $value) {
             $image = $value->getUrl();
-           // $alt = $value->getAtl();
         }
 
         return View::render('news.show',  ["content" => $content, "date" => $date, "image" => $image, "title" => $title]);
