@@ -3203,18 +3203,18 @@ var Pag = /*#__PURE__*/function () {
       var _this2 = this;
 
       var title = document.getElementById("page_title");
-      var post = document.getElementById('post');
-      var select = post.options[post.selectedIndex];
-      var stateArray = [];
-      var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-      for (var i = 0; i < checkboxes.length; i++) {
-        stateArray.push(checkboxes[i].value);
-      }
-
       var api = "page_store";
       var submit = document.getElementById("create");
       submit.addEventListener("click", function () {
+        var post = document.getElementById('post');
+        var select = post.options[post.selectedIndex];
+        var stateArray = [];
+        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+        for (var i = 0; i < checkboxes.length; i++) {
+          stateArray.push(checkboxes[i].value);
+        }
+
         var obj = {
           api: api,
           page_title: title.value,
@@ -3226,9 +3226,8 @@ var Pag = /*#__PURE__*/function () {
 
         var changes = _this2.changes;
         window.removeEventListener('hashchange', changes);
-        title.value = ""; // slug.value = "";
-        // description.value = ""
-
+        title.value = "";
+        console.log(obj);
         return setTimeout(function () {
           _this2.init();
         }, 300);

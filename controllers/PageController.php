@@ -85,7 +85,7 @@ class PageController
                 array_push($state, $value);
             }
         }
-
+        $page->pageState = $state;
         $page->setRoute($post);
         $page->setTitle($name);
         if ($name == '') {

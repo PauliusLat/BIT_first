@@ -20,11 +20,27 @@ class FrontMenuController
 {
     public function index()
     {
+        // $query = new Query;
+        // $menus = $query->postType('menu')->getPost()->all();
+        // $menu = $menus[0];
+        // return View::adminRender('adminMenu.headerfront', ['menu' =>  $menu]);
+
+        return View::render('header');
+    }
+
+    public function create()
+    {
         $query = new Query;
         $menus = $query->postType('menu')->getPost()->all();
         $menu = $menus[0];
-        $output = View::adminRender('adminMenu.headerfront', ['html' =>  $menu]);
-        
-        return View::render('header', ['html' => $output]);
+        $output =  View::adminRender('adminMenu.headerfront', ['menu' =>  $menu]);
+
+        // $albumData  = (AlbumPost::all())->all();
+
+        // $output = View::adminRender('album.album',  ["data" => $albumData]);
+        $response = new JsonResponse(['html' => $output]);
+
+        return $response;
+        //return View::render('header', ['html' => $output]);
     }
 }

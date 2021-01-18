@@ -61,7 +61,6 @@ class Pag {
                 option.removeEventListener('change', selected);
             }
             option.addEventListener('change', selected);
-
             this.delete();
             this.pageStore();
             this.pageEdit(inner);
@@ -69,6 +68,10 @@ class Pag {
     }
     pageStore() {
         const title = document.getElementById("page_title");
+        const api = "page_store";
+        const submit = document.getElementById("create");
+        
+        submit.addEventListener("click", () => {
         let post = document.getElementById('post');
         let select = post.options[post.selectedIndex];
         let stateArray = []
@@ -76,9 +79,6 @@ class Pag {
         for (let i = 0; i < checkboxes.length; i++) {
           stateArray.push(checkboxes[i].value)
         }
-        const api = "page_store";
-        const submit = document.getElementById("create");
-        submit.addEventListener("click", () => {
             let obj = {
                 api: api,
                 page_title: title.value,
@@ -89,8 +89,7 @@ class Pag {
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
             title.value = "";
-            // slug.value = "";
-            // description.value = ""
+            console.log(obj)
             return setTimeout(() => { this.init() }, (300));
         });
     }
