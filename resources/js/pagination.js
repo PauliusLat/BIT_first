@@ -15,30 +15,26 @@ class Pagination {
 
         const page = document.querySelectorAll(".paging");
 
-        let hash = window.location.hash.replace(/^#!?/, '').slice(0, 1);
-
         if (page.length) {
             var nextPage
             for (let i = 0; i < page.length; i++) {
                
                 nextPage = () => {
                     page[i].addEventListener('click', nextPage);
-                    let id = page[i].id;
-                    console.log(page[i]);
-                    location.hash = '#' + id;
+                    let id = parseInt(page[i].id);
+                    location.hash = id;
                     page[i].removeEventListener("click", nextPage);
                 }
-
                 page[i].addEventListener('click', nextPage);
             }
         }
-        this.lenght = page.length - 4;
+        this.lenght = page.length - 4;  //tikrina ar yra page, ka daryti kai nera HTML
     }
 
     async select(hash = 1, pages) {
-        if (this.lenght < hash) {
+        if (this.lenght < hash) { //tikrina ar yra page 
             hash = 1;
-        } else {
+        } else {            
             let obj = {
                 api: this.api,
                 pageSelected: pages,
@@ -46,7 +42,6 @@ class Pagination {
             }
             return await this.axios.getPostData(obj);
         }
-
     }
 }
 

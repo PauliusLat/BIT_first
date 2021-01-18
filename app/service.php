@@ -2,6 +2,7 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use BIT\app\Attachment;
 use Symfony\Component\HttpFoundation\Request;
 use BIT\models\NewsPost;
 use BIT\models\IdeaPost;
@@ -31,10 +32,6 @@ return function (ContainerConfigurator $configurator) {
         ->args([ref(Request::class)]);
     $services->alias(RequestId::class, 'requestId');
 
-    // $services->set('requestTermId', RequestTermId::class)
-    //     ->args([ref(Request::class)]);
-    // $services->alias(RequestTermId::class, 'requestTermId');
-
     $services->set('Category', Category::class)
         ->args([ref(RequestId::class)]);
     $services->alias(Category::class, 'category');
@@ -46,6 +43,10 @@ return function (ContainerConfigurator $configurator) {
     $services->set('newsPost', NewsPost::class)
         ->args([ref(RequestId::class)]);
     $services->alias(NewsPost::class, 'newsPost');
+
+    $services->set('attachment', Attachment::class)
+        ->args([ref(RequestId::class)]);
+    $services->alias(Attachment::class, 'attachment');
 
     $services->set('albumPost', AlbumPost::class)
         ->args([ref(RequestId::class)]);

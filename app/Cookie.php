@@ -2,7 +2,6 @@
 
 namespace BIT\app;
 
-use BIT\models\IdeaPost;
 
 class Cookie
 {

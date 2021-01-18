@@ -2,7 +2,6 @@
 
 namespace BIT\controllers;
 
-// use BIT\app\App;
 use BIT\app\Page;
 use BIT\app\View;
 use BIT\app\Session;

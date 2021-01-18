@@ -21,11 +21,13 @@ class AlbumEdit {
     save() {
 
         const save = document.querySelector(".saveAlbum");
+
         const title = document.querySelector(".albumTitle");
         let id;
         let axios = new Api;
-        const api = 'gallery-update-admin';
+        const api = 'gallery-update-admin&id=';
         let obj;
+        const albumID = save.getAttribute('data');
 
         save.addEventListener("click", () => {
             id = this.check();
@@ -35,7 +37,7 @@ class AlbumEdit {
             }
 
             obj = {
-                api: api,
+                api: api+albumID,
                 title: title.value,
                 profileImgID: id
             }
