@@ -1,20 +1,19 @@
 "use strict";
-import Api from './api';
 import Pagination from './pagination';
-class Pag {
+class Pag extends Pagination{
     constructor(target) {
+        super();
+
         const api = "page_create";
         this.api = api;
         this.target = target;
         this.pages = 5;
-        this.page = new Pagination(api);
-        this.axios = new Api;
         this.changes;
+        this.watch = document.querySelector(".innerpage");
         this.init();
     }
     async init(hash = null, HTML = null) {
         const DOM = document.getElementById(this.target);
-        const inner = document.querySelector(".innerpage");
         if (DOM) {
             if (HTML == null) {
                 location.hash = 1;
@@ -23,11 +22,11 @@ class Pag {
                     hash: 1
                 }
                 HTML = await this.axios.getPostData(obj);
-                inner.innerHTML = HTML;
+                this.watch.innerHTML = HTML;
             } else {
-                inner.innerHTML = HTML;
+                this.watch.innerHTML = HTML;
             }
-            this.page.paging();
+            this.paging();
             HTML = "";
 
             let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
@@ -35,36 +34,15 @@ class Pag {
                 addColor.classList.add("active");
             }         
 
-            var changes = async () => {
-                hash = location.hash.slice(1, 2);
-                if (hash != undefined &&
-                    hash != null &&
-                    hash > 0 &&
-                    hash != "" &&
-                    hash != NaN &&
-                    hash != Infinity) {
-                    let pages = this.pages;
-                    HTML = await this.page.select(hash, pages);
-                    window.removeEventListener('hashchange', changes);
-                    this.init(hash, HTML);
-                }
-            }
-            window.addEventListener('hashchange', changes);
-            this.changes = changes;
-            const option = document.getElementById("items");
-            option.value = this.pages;
-            var selected = () => {
-                this.pages = option.value;
-                location.hash = 1;
-                window.removeEventListener('hashchange', changes);
-                changes();
-                option.removeEventListener('change', selected);
-            }
-            option.addEventListener('change', selected);
-            this.delete();
-            this.pageStore();
-            this.pageEdit(inner);
+            this.hashChange();
+            this.paging();
         }
+        
+    }
+    addAction(){
+        this.delete();
+        this.pageStore();
+        this.pageEdit(this.watch);
     }
     pageStore() {
         const title = document.getElementById("page_title");
@@ -111,7 +89,7 @@ class Pag {
             }
         }
     }
-    pageEdit(inner) {
+    pageEdit(watch) {
         const editBtn = document.querySelectorAll(".page-edit");
         for (let i = 0; i < editBtn.length; i++) {
             let ID = editBtn[i].value;
@@ -124,7 +102,7 @@ class Pag {
                         editID: ID,
                     }
                     let HTML = await this.axios.getPostData(obj);
-                    inner.innerHTML = HTML;
+                    watch.innerHTML = HTML;
                     const title = document.getElementById("page_title");
                     const name = document.getElementById("page_name");
                     const updateBtn = document.getElementById("pageUpdate");

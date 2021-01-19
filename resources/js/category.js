@@ -1,22 +1,21 @@
 "use strict";
-import Api from './api';
 import Pagination from './pagination';
 import Profile_image from './profile_image';
-class Category {
+class Category extends Pagination{
     constructor(target) {
+        super();
+
         const api = "category_create";
         this.api = api;
-        this.target = target;
         this.pages = 5;
-        this.page = new Pagination(api);
-        this.axios = new Api;
+        this.target = target;
+        this.watch = document.querySelector(".innercat");
         this.changes;
         this.init();
         this.readImage = new Profile_image();
     }
     async init(hash = null, HTML = null) {
         const DOM = document.getElementById(this.target);
-        const inner = document.querySelector(".innercat");
         if (DOM) {
             if (HTML == null) {
                 location.hash = 1;
@@ -25,11 +24,11 @@ class Category {
                     hash: 1
                 }
                 HTML = await this.axios.getPostData(obj);
-                inner.innerHTML = HTML;
+                this.watch.innerHTML = HTML;
             } else {
-                inner.innerHTML = HTML;
+                this.watch.innerHTML = HTML;
             }
-            this.page.paging();
+            this.paging();
             HTML = "";
 
             let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
@@ -37,41 +36,18 @@ class Category {
             if(addColor){
                 addColor.classList.add("active");
             }         
-
-            var changes = async () => {
-
-                hash = location.hash.slice(1, 2);
-                if (hash != undefined &&
-                    hash != null &&
-                    hash > 0 &&
-                    hash != "" &&
-                    hash != NaN &&
-                    hash != Infinity) {
-                    let pages = this.pages;
-                    HTML = await this.page.select(hash, pages);
-                    window.removeEventListener('hashchange', changes);
-                    this.init(hash, HTML);
-                }
-            }
-            window.addEventListener('hashchange', changes);
-            this.changes = changes;
-            const option = document.getElementById("items");
-            option.value = this.pages;
-
-            var selected = () => {
-                this.pages = option.value;
-                location.hash = 1;
-                window.removeEventListener('hashchange', changes);
-                changes();
-                option.removeEventListener('change', selected);
-            }
-            option.addEventListener('change', selected);
-            this.delete();
-            this.catStore();
-            this.CatEdit(inner);
             this.readImage.image();
+            this.hashChange();
+            this.paging();
         }
     }
+
+    addAction(){
+        this.catStore();
+        this.delete();
+        this.catEdit(this.watch);
+    }
+
     catStore() {
         const name = document.getElementById("category-name");
           const slug = document.getElementById("category-slug");
@@ -145,7 +121,7 @@ class Category {
         }
     }
     
-    CatEdit(inner) {
+    catEdit(watch) {
         const editBtn = document.querySelectorAll(".category-edit");
         for (let i = 0; i < editBtn.length; i++) {
             let editID = editBtn[i].value;
@@ -160,7 +136,7 @@ class Category {
                         taxonomy_type: taxonomy,
                     }
                     let HTML = await this.axios.getPostData(obj);
-                    inner.innerHTML = HTML;
+                    watch.innerHTML = HTML;
                     this.readImage.image();
 
                     const name = document.getElementById("category_name");
