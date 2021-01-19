@@ -1,5 +1,6 @@
 "use strict";
 
+import Axios from 'axios';
 class Api {
     constructor() {
         this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
@@ -28,18 +29,12 @@ class Api {
                 console.log(error);
             });
     }
-
     async getDAta(api) {
-
         try {
-
             let response = await axios.post(this.uri + this.path + api,)
-
             if (response.status == 200 && response.statusText == "OK") {
-
                 return response.data.html;
             }
-
         } catch (e) {
             console.error(e);
             console.log("Duomenys is serveverio nepasiekiami !!!");
@@ -67,7 +62,6 @@ class Api {
                 console.log(error);
             });
     }
-
     formDataApi(obj) {
         let formData = new FormData();
         if (obj.api) {
@@ -91,7 +85,6 @@ class Api {
             throw 'can not find API';
         }
     }
-
     async getPostData(obj) {
         if (obj.api) {
             try {
@@ -113,5 +106,4 @@ class Api {
         }
     }
 }
-
 export default Api;
