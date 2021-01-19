@@ -2774,7 +2774,7 @@ var Menu = /*#__PURE__*/function () {
         var text = document.querySelectorAll(".menuText");
         var link = document.querySelectorAll(".menuLink");
 
-        if (elements || elements[0].className != "draggable parent") {
+        if (!elements || elements[0].className != "draggable parent") {
           alert("Neteisingai suformuotas meniu");
         } else {
           var opts = _toConsumableArray(select).map(function (el) {

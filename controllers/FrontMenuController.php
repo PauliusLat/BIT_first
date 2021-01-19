@@ -20,8 +20,7 @@ class FrontMenuController
         // $menus = $query->postType('menu')->getPost()->all();
         // $menu = $menus[0];
         // return View::adminRender('adminMenu.headerfront', ['menu' =>  $menu]);
-
-        return View::render('header');
+        // return View::render('header');
     }
 
     public function create()
@@ -30,10 +29,6 @@ class FrontMenuController
         $menus = $query->postType('menu')->getPost()->all();
         $menu = $menus[0];
         $output =  View::adminRender('adminMenu.headerfront', ['menu' =>  $menu]);
-
-        // $albumData  = (AlbumPost::all())->all();
-
-        // $output = View::adminRender('album.album',  ["data" => $albumData]);
         $response = new JsonResponse(['html' => $output]);
 
         return $response;

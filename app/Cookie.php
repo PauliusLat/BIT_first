@@ -6,7 +6,7 @@ namespace BIT\app;
 class Cookie
 {
     private static $uuid;
-    const COOKIENAME = 'bitas';
+    const COOKIENAME = 'bit';
 
     public static function getUuid()
     {

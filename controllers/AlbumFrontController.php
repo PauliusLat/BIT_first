@@ -12,7 +12,7 @@ class AlbumFrontController
     public function index()
     {
         $query = new Query;
-        $page = $query->postType('page')->postName('nuotraukos')->getPost()->all();
+        $page = $query->postType('page')->postName('upload-images')->getPost()->all();
         $page = $page[0];
         $page = $page->getLink();
         return View::render('gallery.all-album', ['page' => $page]);
