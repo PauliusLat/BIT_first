@@ -2,6 +2,9 @@
 
 // example Controller names and functions
 // 'event' (key) is part of URL http://.../bebras/api/?route=event
+
+use BIT\app\FrontMenu;
+
 return [
 	'event-create-front' => 'EventController@create',
 
@@ -22,9 +25,7 @@ return [
 	'idea-create-admin' => 'IdeAdminController@create',
 	'idea-delete-admin' => 'IdeAdminController@delete',
 
-	'gallery-store-admin' => 'GalleryAdminController@store',
-	'gallery-edit-admin' => 'GalleryAdminController@edit',
-	'gallery-create-admin' => 'GalleryAdminController@create',
+	'gallery-update-admin' => 'GalleryAdminController@update',
 	'gallery-delete-admin' => 'GalleryAdminController@delete',
 
 	'gallery-store-front' => 'GalleryFrontController@store',
@@ -59,7 +60,9 @@ return [
 	'page_destroy' => 'PageController@destroy',
 	'page_edit' => 'PageController@edit',
 
-	'menu_create' => 'FrontMenuController@create',
-	'menu_store' => 'FrontMenuController@store',
-	'menu_destroy' => 'FrontMenuController@destroy',
+	'menu_create' => 'AdminMenuController@create',
+	'menu_store' => 'AdminMenuController@store',
+	'menu_destroy' => 'AdminMenuController@destroy',
+
+	'frontmenu_create' => 'FrontMenuController@create',
 ];

@@ -35,7 +35,7 @@ class App
 
     private function __construct()
     {
-        Config::postTypeRegister();
+        // Config::postTypeRegister();
         Config::customTaxonomyRegister();
         $this->routeDir = PLUGIN_DIR_PATH . 'routes/';
         $this->viewDir = PLUGIN_DIR_PATH . 'views/';
@@ -54,10 +54,10 @@ class App
         add_shortcode('front_shortcode', [FrontRoute::class, 'frontRoute']);
         AdminRoute::start();
         Session::start();
-        // ClearCache::start();
+        ClearCache::start();
+
 
         // require_once __DIR__.'/../cache/clearCache.php';
-
     }
 
     public function getService($service)

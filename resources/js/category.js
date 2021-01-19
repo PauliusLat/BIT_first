@@ -1,22 +1,21 @@
 "use strict";
-import Api from './api';
 import Pagination from './pagination';
 import Profile_image from './profile_image';
-class Category {
+class Category extends Pagination{
     constructor(target) {
+        super();
+
         const api = "category_create";
         this.api = api;
-        this.target = target;
         this.pages = 5;
-        this.page = new Pagination(api);
-        this.axios = new Api;
+        this.target = target;
+        this.watch = document.querySelector(".innercat");
         this.changes;
         this.init();
         this.readImage = new Profile_image();
     }
     async init(hash = null, HTML = null) {
         const DOM = document.getElementById(this.target);
-        const inner = document.querySelector(".innercat");
         if (DOM) {
             if (HTML == null) {
                 location.hash = 1;
@@ -25,66 +24,34 @@ class Category {
                     hash: 1
                 }
                 HTML = await this.axios.getPostData(obj);
-                inner.innerHTML = HTML;
+                this.watch.innerHTML = HTML;
             } else {
-                inner.innerHTML = HTML;
+                this.watch.innerHTML = HTML;
             }
-            this.page.paging();
+            this.paging();
             HTML = "";
 
             let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
-            console.log(addColor)
+
             if(addColor){
                 addColor.classList.add("active");
             }         
-
-            var changes = async () => {
-
-                hash = location.hash.slice(1, 2);
-                if (hash != undefined &&
-                    hash != null &&
-                    hash > 0 &&
-                    hash != "" &&
-                    hash != NaN &&
-                    hash != Infinity) {
-                    let pages = this.pages;
-                    HTML = await this.page.select(hash, pages);
-                    window.removeEventListener('hashchange', changes);
-                    this.init(hash, HTML);
-                }
-            }
-            window.addEventListener('hashchange', changes);
-            this.changes = changes;
-            const option = document.getElementById("items");
-            option.value = this.pages;
-            console.log(option.value);
-            var selected = () => {
-                this.pages = option.value;
-                location.hash = 1;
-                window.removeEventListener('hashchange', changes);
-                changes();
-                option.removeEventListener('change', selected);
-            }
-            option.addEventListener('change', selected);
-            this.delete();
-            this.catStore();
-            this.CatEdit(inner);
             this.readImage.image();
+            this.hashChange();
+            this.paging();
         }
     }
+
+    addAction(){
+        this.catStore();
+        this.delete();
+        this.catEdit(this.watch);
+    }
+
     catStore() {
         const name = document.getElementById("category-name");
-        console.log(name);
           const slug = document.getElementById("category-slug");
           const description = document.getElementById("category-description");
-          let parent = document.getElementById('cat');
-          let select;
-          if (parent.options[parent.selectedIndex] != undefined) {
-            select = parent.options[parent.selectedIndex];
-          } else {
-            select = 0;
-          }
-
           let selectedPage;
           if (document.querySelector('[name="catPage"]:checked')) {
             selectedPage = 1;
@@ -92,22 +59,30 @@ class Category {
             selectedPage = 0;
           }
         const submit = document.getElementById("create");
-
         const api = 'category_store';
 
         submit.addEventListener("click", () => {
-            console.log(name.value);
+            let parent = document.getElementById('cat');
+            let select;
+            if (parent.options[parent.selectedIndex] != undefined) {
+              select = parent.options[parent.selectedIndex];
+            } else {
+              select = 0;
+            }
+
             let obj = {
                 api:  api,
                 title: name.value,
                 slug: slug.value,
                 page: selectedPage,
                 content: description.value,
-                cat_parent: select.value,
-            }          
+                cat_parent: description.value,
+            }   
+            console.log(select.value)       
             if (obj) {
                 this.readImage.sendImageData(obj);
               }
+            console.log(obj);
             this.axios.formDataApi(obj);
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
@@ -126,7 +101,7 @@ class Category {
         if (deleteBtn) {
             for (let i = 0; i < deleteBtn.length; i++) {
             let ID = deleteBtn[i].value;
-            // console.log(ID);
+     
             let taxonomy = deleteBtn[i].id;
             deleteBtn[i].addEventListener(
                 "click",
@@ -136,7 +111,7 @@ class Category {
                         deleteID: ID,
                         taxonomy_type: taxonomy
                     }
-                    console.log(ID);
+
                     this.axios.formDataApi(obj);
                     let changes = this.changes;
                     window.removeEventListener('hashchange', changes);
@@ -146,7 +121,7 @@ class Category {
         }
     }
     
-    CatEdit(inner) {
+    catEdit(watch) {
         const editBtn = document.querySelectorAll(".category-edit");
         for (let i = 0; i < editBtn.length; i++) {
             let editID = editBtn[i].value;
@@ -161,7 +136,7 @@ class Category {
                         taxonomy_type: taxonomy,
                     }
                     let HTML = await this.axios.getPostData(obj);
-                    inner.innerHTML = HTML;
+                    watch.innerHTML = HTML;
                     this.readImage.image();
 
                     const name = document.getElementById("category_name");

@@ -67,7 +67,13 @@ App::start();
 
 
 add_action('init', function () {
-    $tag = new Tag;
+    //  Page::all()->mano metodas->all();
+
+    // $page = $query->postType('page')->postName('upload-images')->getPost()->all();
+    // $page = $page[0];
+    // $page = $page->getLink();
+
+    // $tag = new Tag;
 
     // $tags = get_terms('hashtag', array('number' => 5, 'hide_empty' => false, 'offset' => 2));
     // $cat = $category->(2, 0);

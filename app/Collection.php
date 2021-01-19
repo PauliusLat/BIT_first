@@ -1,16 +1,18 @@
 <?php
+
 namespace BIT\app;
 
 use BIT\app\coreExeptions\wrongArgsTypeExeption;
 use stdClass;
 
-class Collection {
+class Collection
+{
 
     protected $items = [];
 
-    public function __construct($items = []){
+    public function __construct($items = [])
+    {
         $this->items = $this->getArrayableItems($items);
-
     }
 
     public function all()
@@ -21,62 +23,48 @@ class Collection {
     public function pluck(...$args)
     {
         $pluckedItems = [];
-        if($args){
+        if ($args) {
             foreach ($args as $arg) {
                 foreach ($this->items as $itemKey => $itemValue) {
-                    if(is_object($itemValue)){
+                    if (is_object($itemValue)) {
                         $vars = get_object_vars($itemValue);
                         $vars['ID'] = $itemValue->__get('ID');
-                        foreach ( $vars as $key => $value ) {
-                            if(strcmp((string)$key, (string)$arg)==0){
-                                $pluckedItems[$itemKey][$key] = $value; 
+                        foreach ($vars as $key => $value) {
+                            if (strcmp((string)$key, (string)$arg) == 0) {
+                                $pluckedItems[$itemKey][$key] = $value;
                             }
-                        } 
-                    }else{
-                        if(strcmp((string)$itemKey, (string)$arg)==0){
-                            $pluckedItems[$itemKey] = $itemValue; 
+                        }
+                    } else {
+                        if (strcmp((string)$itemKey, (string)$arg) == 0) {
+                            $pluckedItems[$itemKey] = $itemValue;
                         }
                     }
-
                 }
             }
         }
         return new self($pluckedItems);
     }
 
-    public function pageState($state = ''){
+    public function pageState($state = '')
+    {
         $state = (string)$state;
         $stateItems = [];
         foreach ($this->items as $value) {
-            if( strcmp ( $value->pageState , $state ) === 0){
+            if (strcmp($value->pageState, $state) === 0) {
                 $stateItems[$value->ID] = $value;
             }
         }
         return new self($stateItems);
     }
 
-    // public function contains($key, $operator = null, $value = null)
-    // {
-    //     if (func_num_args() === 1) {
-    //         if ($this->useAsCallable($key)) {
-    //             $placeholder = new stdClass;
-
-    //             return $this->first($key, $placeholder) !== $placeholder;
-    //         }
-
-    //         return in_array($key, $this->items);
-    //     }
-
-    //     return $this->contains($this->operatorForWhere(...func_get_args()));
-    // }
 
 
 
-    protected function getArrayableItems($items){
+    protected function getArrayableItems($items)
+    {
         if (is_array($items)) {
             return $items;
-        }
-        elseif ($items instanceof self) {
+        } elseif ($items instanceof self) {
             return $items->all();
         }
 

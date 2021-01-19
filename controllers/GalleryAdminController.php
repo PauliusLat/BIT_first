@@ -10,13 +10,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GalleryAdminController {
+class GalleryAdminController
+{
 
-	public function index() {
+	public function index()
+	{
 		return View::adminRender('gallery.list');
 	}
 
-	public function create(Request $request, AlbumPost $album) {
+	public function create(Request $request, AlbumPost $album)
+	{
 		$data = (AlbumPost::all())->all();
 
 		$response = new Response;
@@ -26,7 +29,8 @@ class GalleryAdminController {
 		return $response;
 	}
 
-	public function renderList(){
+	public function renderList()
+	{
 		$uri = admin_url('admin.php?page=galerija-0edit');
 		$allAlbums = AlbumPost::all()->all();
 		$output = View::adminRender('gallery.renderList', ['html' => $allAlbums,  'uri' => $uri]);
@@ -39,8 +43,17 @@ class GalleryAdminController {
 		return View::adminRender('gallery.edit', ['data' => $album]);
 	}
 
-	public function update(Request $request, AlbumPost $album){
-		//cia reikia directinti is edito ir saugoti i DB
+	public function update(Request $request, AlbumPost $albumPost)
+	{
+
+		_dc($request->request);
+		$albumPost->post_title = $request->request->get('title');
+		$albumPost->profileImgId = $request->request->get('profileImgID');
+		$albumPost->save();
+	}
+	public function deleteAttachment(Attachment $attachment)
+	{
+		$attachment->delete();
 	}
 
 	public function delete(AlbumPost $albumPost)
@@ -52,6 +65,17 @@ class GalleryAdminController {
 			$img->delete();
 		}
 		return new Response;
+	}
+
+	public function attDelete(Request $request, Attachment $attachment)
+	{
+
+		if ($attachment->ID) {
+			$attachment->delete();
+		};
+		$album = AlbumPost::get($request->request->get('album'));
+		header("Location:" . get_admin_url() . 'admin.php?page=galerija-0edit&id=' . $album->ID);
+		die();
 	}
 
 	// public function store(Request $request, AlbumPost $album) {
@@ -91,11 +115,12 @@ class GalleryAdminController {
 	// 	// }
 	// 	//$image->save($file, $post_id);
 
-	
 
 
 
-	private function decodeRequest($request) {
+
+	private function decodeRequest($request)
+	{
 
 		if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
 			$data = json_decode($request->getContent(), true);

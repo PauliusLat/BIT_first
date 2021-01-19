@@ -1,83 +1,42 @@
-"use strict";
-import Api from './api';
-import Pagination from './pagination';
+/** @format */
 
-class Tag {
+"use strict";
+import Pagination from './pagination';
+class Tag extends Pagination{
     constructor(target) {
-        const api = "tag_create";
-        this.api = api;
-        this.target = target;
+        super();
+    
+        this.api = 'tag_create';
         this.pages = 5;
-        this.page = new Pagination(api);
-        this.axios = new Api;
+        this.target = target;
         this.changes;
+        this.watch = document.querySelector(".startWatch");
         this.init();
     }
-
-    async init(hash = null, HTML = null) {
+    async init() {
         const DOM = document.getElementById(this.target);
-        const test = document.querySelector(".test");
         if (DOM) {
-            if (HTML == null) {
-                location.hash = 1;
-                let obj = {
-                    api: this.api,
-                    hash: 1
-                }
-                HTML = await this.axios.getPostData(obj);
-                test.innerHTML = HTML;
-            } else {
-                test.innerHTML = HTML;
-            }
-            this.page.paging();
-            HTML = "";
-
-            let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
-            if (addColor) {
-                addColor.classList.add("active");
-            }
-
-            var changes = async () => {
-
-                hash = location.hash.slice(1, 2);
-                if (hash != undefined &&
-                    hash != null &&
-                    hash > 0 &&
-                    hash != "" &&
-                    hash != NaN &&
-                    hash != Infinity) {
-                    let pages = this.pages;
-                    HTML = await this.page.select(hash, pages);
-                    window.removeEventListener('hashchange', changes);
-                    this.init(hash, HTML);
-                }
-            }
-            window.addEventListener('hashchange', changes);
-            this.changes = changes;
-            const option = document.getElementById("items");
-            option.value = this.pages;
-            var selected = () => {
-                this.pages = option.value;
-                location.hash = 1;
-                window.removeEventListener('hashchange', changes);
-                changes();
-                option.removeEventListener('change', selected);
-            }
-            option.addEventListener('change', selected);
-            this.delete();
-            this.createTag();
-            this.tagEdit(test);
+        
+            this.hashChange();
+            this.paging();
         }
     }
+ 
+    addAction(){
+        this.create();
+        this.delete();
+        this.edit(this.wach);
+    }
 
-    createTag() {
+
+    create() {
         const name = document.getElementById("tag-name")
         const slug = document.getElementById("tag-slug");
         const description = document.getElementById("tag-description");
         const storeTag = document.getElementById("create");
         storeTag.addEventListener("click", () => {
             let obj = {
-                api: api,
+                api: 'tag_store',
                 tag_name: name.value,
                 tag_slug: slug.value,
                 tag_description: description.value
@@ -91,7 +50,6 @@ class Tag {
             return setTimeout(() => { this.init() }, (300))
         });
     }
-
     delete() {
         const api = "tag_destroy";
         const deleteBtn = document.querySelectorAll(".tag-delete");
@@ -115,8 +73,7 @@ class Tag {
             }
         }
     }
-
-    tagEdit(test) {
+    edit(test) {
         const editBtn = document.querySelectorAll(".tag-edit");
         for (let i = 0; i < editBtn.length; i++) {
             let ID = editBtn[i].value;
@@ -156,5 +113,6 @@ class Tag {
                 });
         }
     }
+  
 }
 export default Tag;

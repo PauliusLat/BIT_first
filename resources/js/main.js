@@ -4,7 +4,7 @@ import startIdea from './idea.js';
 // import startGallery from './gallery.js';
 import startCat from './category.js';
 import startTag from './tag.js';
-import startPage from './Oldpage.js';
+//import startPage from './page.js';
 import startMenu from './menu.js';
 import Tag from './tag.js';
 import Pag from './page.js';
@@ -15,9 +15,10 @@ import Calendar from './calendar.js';
 import News from './news';
 import Profile_image from './profile_image';
 import NewsList from './newsList';
-import AlbumList from './albumList';
 import EditPost from './editPost';
-import lightbox from './light_box';
+// import lightbox from './light_box';
+import AlbumEdit from './AlbumEdit.js';
+import AlbumList from './albumList';
 
 // new TextEditor('.news-container')
 new Calendar('.calendar');
@@ -26,9 +27,10 @@ new NewsList('startNweaList');
 new EditPost('.editStart');
 new Tag('tagStart');
 new Category('catStart');
-new Menu('menuStart');
+new Menu('.adminMenuStart');
 
 new AlbumList('startAlbumList');
+new AlbumEdit('.containerAlbumEdit')
 new Pag('pageStart');
 
 

@@ -1,6 +1,5 @@
 <?php
 
-use BIT\app\App;
 ?>
 
 <div class='tagCreate grid-container'>
@@ -67,9 +66,6 @@ use BIT\app\App;
                     <option value="8">8</option>
                     <option value="10">10</option>
                 </select>
-                <div class="buttons">
-                    <button type="submit" id="selectpage" class="btn-blue">Rinktis</button>
-                </div>
             </div>
 
 

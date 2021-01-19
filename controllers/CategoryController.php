@@ -5,13 +5,10 @@ namespace BIT\controllers;
 use BIT\app\App;
 use BIT\app\View;
 use BIT\app\Attachment;
-// use BIT\models\NewsPost;
-// use BIT\models\AlbumPost;
 use BIT\app\Category;
 use BIT\app\Session;
 use BIT\app\Pagination;
 use BIT\app\Cookie;
-use BIT\app\Transient;
 use BIT\app\Page;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +30,6 @@ class CategoryController
 
     {
         $request = $this->decodeRequest($requestJson);
-
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
@@ -90,7 +86,7 @@ class CategoryController
         } else {
             //add category to db and get cat ID
             $session->flash('success_message', 'kategorija sėkmingai sukurta');
-            $term_id = $category->addCat($name, $parent_id, $slug,  $description);
+            $term_id = $category->addCat($name, $parent_id, $description, $slug);
         }
 
         $createPage = $request->request->get('page');
