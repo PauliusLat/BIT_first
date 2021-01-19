@@ -85,6 +85,7 @@ class Calendar {
             for (let d = 1; d <= lastDayM; d++) {
 
                 let _date = new Date(this.y, this.m, d);
+                console.log(_date);
                 const day = document.createElement("div");
                 day.className = "cview--date";
                 day.textContent = d;
