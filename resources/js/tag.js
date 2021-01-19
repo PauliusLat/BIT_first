@@ -1,8 +1,11 @@
+/** @format */
+
 "use strict";
 import Pagination from './pagination';
 class Tag extends Pagination{
     constructor(target) {
         super();
+    
         this.api = 'tag_create';
         this.pages = 5;
         this.target = target;
@@ -13,16 +16,19 @@ class Tag extends Pagination{
     async init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
-            const api = "tag_create";
+        
             this.hashChange();
             this.paging();
         }
     }
+ 
     addAction(){
         this.create();
         this.delete();
-        this.edit(this.watch);
+        this.edit(this.wach);
     }
+
+
     create() {
         const name = document.getElementById("tag-name")
         const slug = document.getElementById("tag-slug");
@@ -107,5 +113,6 @@ class Tag extends Pagination{
                 });
         }
     }
+  
 }
 export default Tag;
