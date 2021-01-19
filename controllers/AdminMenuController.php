@@ -152,7 +152,6 @@ class AdminMenuController
         $menuPost->extLinks = $extLinksArr;
         $menuPost->subextLinks = $bigSubextLinksArr;
         $menuPost->save();
-        // _dc($menuPost);
 
         return new Response;
     }
