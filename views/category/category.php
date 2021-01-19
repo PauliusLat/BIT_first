@@ -2,9 +2,7 @@
 if (!function_exists('wp_terms_checklist')) {
     include ABSPATH . 'wp-admin/includes/template.php';
 }
-// use BIT\app\Category;
 ?>
-
 <div class='catCreate grid-container'>
     <div class="sm-1">
         <h1 class="tcp">Kategorijos</h1>
@@ -18,9 +16,7 @@ if (!function_exists('wp_terms_checklist')) {
         <?php
         } else {
         ?>
-
             <div class='success_message'><?= $success_message ?></div>
-
         <?php
         }
         ?>
@@ -125,15 +121,12 @@ if (!function_exists('wp_terms_checklist')) {
             echo '</div>';
             foreach ($categories as $cat) {
                 $catImage = $category->getCatImage($cat->term_id);
-                // _dc($catImage);
                 $urlImg = $catImage->getUrl();
-                // _dc($urlImg);
                 $pageLink =  $category->getCatPageLink($cat->term_id);
             ?>
                 <tr>
                     <td><?= str_repeat('--', $cat->level) ?><?= $cat->name ?></td>
                     <td><a href="<?= $pageLink ?>"><?= $pageLink ?></a></td>
-                    <!-- <td><?= $cat->slug ?></td> -->
                     <td><?= $cat->description ?></td>
                     <?php
 

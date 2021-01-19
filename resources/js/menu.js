@@ -74,7 +74,6 @@ class Menu {
       })
       draggable.addEventListener('dragend', () => {
         draggable.classList.remove('dragging')
-
         if (controlRect + 80 <= (rect.left + position) && addSub) {
           draggable.classList.remove("parent");
           draggable.classList.add("submenu");
@@ -86,7 +85,7 @@ class Menu {
               draggable.childNodes[j].remove();
             }
           }
-        } else {
+        } else if (controlRect + 80 >= (rect.left + position)) {
           draggable.classList.remove("submenu");
           draggable.classList.add("parent");
           for (let i = 0; i < draggable.childNodes.length; i++) {
@@ -195,29 +194,34 @@ class Menu {
       const text = document.querySelectorAll(".menuText");
       const link = document.querySelectorAll(".menuLink");
 
-      const opts = [...select].map(el => el.options);
-      let a = [], b = [], c = [], d = [], e = [];
 
-      parent.forEach(element => element.setAttribute("data", true));
-      child.forEach(element => element.setAttribute("data", false));
-      for (let i = 0; i < opts.length; i++) {
+      if (elements || elements[0].className != "draggable parent") {
+        alert("Neteisingai suformuotas meniu")
+      } else {
+        const opts = [...select].map(el => el.options);
+        let a = [], b = [], c = [], d = [], e = [];
 
-        a.push(opts[i][opts[i].selectedIndex].text)
-        b.push(text[i].value)
-        c.push(link[i].value)
-        d.push(elements[i].getAttribute('data'))
-        e.push(opts[i][opts[i].selectedIndex].value)
+        parent.forEach(element => element.setAttribute("data", true));
+        child.forEach(element => element.setAttribute("data", false));
+        for (let i = 0; i < opts.length; i++) {
 
-        obj = {
-          api: api,
-          all: d,
-          select: a,
-          text: b,
-          textLink:e,
-          link: c
+          a.push(opts[i][opts[i].selectedIndex].text)
+          b.push(text[i].value)
+          c.push(link[i].value)
+          d.push(elements[i].getAttribute('data'))
+          e.push(opts[i][opts[i].selectedIndex].value)
+
+          obj = {
+            api: api,
+            all: d,
+            select: a,
+            text: b,
+            textLink: e,
+            link: c
+          }
         }
+        this.axios.formDataApi(obj);
       }
-      this.axios.formDataApi(obj);
     })
   }
 }

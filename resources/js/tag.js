@@ -1,3 +1,5 @@
+/** @format */
+
 "use strict";
 import Pagination from './pagination';
 class Tag extends Pagination{
@@ -18,7 +20,24 @@ class Tag extends Pagination{
             this.hashChange();
             this.paging();
         }
+      };
+      window.addEventListener("hashchange", changes);
+      this.changes = changes;
+      const option = document.getElementById("items");
+      option.value = this.pages;
+      var selected = () => {
+        this.pages = option.value;
+        location.hash = 1;
+        window.removeEventListener("hashchange", changes);
+        changes();
+        option.removeEventListener("change", selected);
+      };
+      option.addEventListener("change", selected);
+      this.delete();
+      this.createTag();
+      this.tagEdit(test);
     }
+  }
 
     addAction(){
         this.create();
@@ -111,5 +130,6 @@ class Tag extends Pagination{
                 });
         }
     }
+  }
 }
 export default Tag;

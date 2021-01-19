@@ -50,17 +50,8 @@ class Category extends Pagination{
 
     catStore() {
         const name = document.getElementById("category-name");
-
           const slug = document.getElementById("category-slug");
           const description = document.getElementById("category-description");
-          let parent = document.getElementById('cat');
-          let select;
-          if (parent.options[parent.selectedIndex] != undefined) {
-            select = parent.options[parent.selectedIndex];
-          } else {
-            select = 0;
-          }
-
           let selectedPage;
           if (document.querySelector('[name="catPage"]:checked')) {
             selectedPage = 1;
@@ -68,10 +59,16 @@ class Category extends Pagination{
             selectedPage = 0;
           }
         const submit = document.getElementById("create");
-
         const api = 'category_store';
 
         submit.addEventListener("click", () => {
+            let parent = document.getElementById('cat');
+            let select;
+            if (parent.options[parent.selectedIndex] != undefined) {
+              select = parent.options[parent.selectedIndex];
+            } else {
+              select = 0;
+            }
 
             let obj = {
                 api:  api,
@@ -79,11 +76,13 @@ class Category extends Pagination{
                 slug: slug.value,
                 page: selectedPage,
                 content: description.value,
-                cat_parent: select.value,
-            }          
+                cat_parent: description.value,
+            }   
+            console.log(select.value)       
             if (obj) {
                 this.readImage.sendImageData(obj);
               }
+            console.log(obj);
             this.axios.formDataApi(obj);
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);

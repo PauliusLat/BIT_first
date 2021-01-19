@@ -1,4 +1,4 @@
-<h1>Hello Lightbox</h1>
+<!-- <h1>Hello Lightbox</h1>
 <button id="clickme">Open Lightbox</button>
 
 <div id="lightbox">
@@ -7,4 +7,4 @@
     <h2>Javascript Lightbox</h2>
     <p>Hello from the lightbox :)</p>
   </div>
-</div>
+</div> -->

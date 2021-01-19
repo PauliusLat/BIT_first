@@ -38,6 +38,8 @@ class TagController
         $total = wp_count_terms('hashtag', ['hide_empty' => false]);
         $pagination = new Pagination($limit, $number, $total);
         $tags = get_terms('hashtag', array('number' => $limit, 'hide_empty' => false, 'offset' => $pagination->offset));
+        $success_message = '';
+        $message  = '';
         if ($session->get('alert_message') != null) {
             $message = $session->get('alert_message');
         } else if ($session->get('success_message') != null) {
