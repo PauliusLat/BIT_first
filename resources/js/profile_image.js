@@ -4,7 +4,6 @@ import Api from './api';
 class Profile_image {
 
   constructor() {
-
     this.file = null;
 
   }

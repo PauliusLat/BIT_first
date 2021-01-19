@@ -33,7 +33,6 @@ use BIT\app\App;
             ////////////
             // Find out how many items are in the table
             $total = wp_count_terms('hashtag', ['hide_empty' => false]);
-            _dc($total);
 
             // How many items to list per page
             $limit = 3;
