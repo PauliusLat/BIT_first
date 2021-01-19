@@ -5688,9 +5688,253 @@ var Profile_image = /*#__PURE__*/function () {
   !*** ./resources/js/tag.js ***!
   \*****************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/tag.js: Unexpected token (24:12)\n\n\u001b[0m \u001b[90m 22 | \u001b[39m        }\u001b[0m\n\u001b[0m \u001b[90m 23 | \u001b[39m      }\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 24 | \u001b[39m      window\u001b[33m.\u001b[39maddEventListener(\u001b[32m\"hashchange\"\u001b[39m\u001b[33m,\u001b[39m changes)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 | \u001b[39m      \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mchanges \u001b[33m=\u001b[39m changes\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 26 | \u001b[39m      \u001b[36mconst\u001b[39m option \u001b[33m=\u001b[39m document\u001b[33m.\u001b[39mgetElementById(\u001b[32m\"items\"\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 27 | \u001b[39m      option\u001b[33m.\u001b[39mvalue \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpages\u001b[33m;\u001b[39m\u001b[0m\n    at Parser._raise (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:766:17)\n    at Parser.raiseWithData (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:759:17)\n    at Parser.raise (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:753:17)\n    at Parser.unexpected (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:8966:16)\n    at Parser.parseClassMemberWithIsStatic (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12395:12)\n    at Parser.parseClassMember (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12288:10)\n    at /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12240:14\n    at Parser.withTopicForbiddingContext (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11271:14)\n    at Parser.parseClassBody (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12217:10)\n    at Parser.parseClass (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12192:22)\n    at Parser.parseStatementContent (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11472:21)\n    at Parser.parseStatement (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11430:17)\n    at Parser.parseBlockOrModuleBlockBody (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:12012:25)\n    at Parser.parseBlockBody (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11998:10)\n    at Parser.parseTopLevel (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:11361:10)\n    at Parser.parse (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:13044:10)\n    at parse (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/parser/lib/index.js:13097:38)\n    at parser (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/core/lib/parser/index.js:54:34)\n    at parser.next (<anonymous>)\n    at normalizeFile (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/core/lib/transformation/normalize-file.js:99:38)\n    at normalizeFile.next (<anonymous>)\n    at run (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/core/lib/transformation/index.js:31:50)\n    at run.next (<anonymous>)\n    at Function.transform (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/@babel/core/lib/transform.js:27:41)\n    at transform.next (<anonymous>)\n    at step (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/gensync/index.js:254:32)\n    at /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/gensync/index.js:266:13\n    at async.call.result.err.err (/Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/node_modules/gensync/index.js:216:11)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
+/** @format */
+
+
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var Tag = /*#__PURE__*/function (_Pagination) {
+  _inherits(Tag, _Pagination);
+
+  var _super = _createSuper(Tag);
+
+  function Tag(target) {
+    var _this;
+
+    _classCallCheck(this, Tag);
+
+    _this = _super.call(this);
+    _this.api = 'tag_create';
+    _this.pages = 5;
+    _this.target = target;
+    _this.changes;
+    _this.watch = document.querySelector(".startWatch");
+
+    _this.init();
+
+    return _this;
+  }
+
+  _createClass(Tag, [{
+    key: "init",
+    value: function () {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var DOM;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                DOM = document.getElementById(this.target);
+
+                if (DOM) {
+                  this.hashChange();
+                  this.paging();
+                }
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function init() {
+        return _init.apply(this, arguments);
+      }
+
+      return init;
+    }()
+  }, {
+    key: "addAction",
+    value: function addAction() {
+      this.create();
+      this["delete"]();
+      this.edit(this.wach);
+    }
+  }, {
+    key: "create",
+    value: function create() {
+      var _this2 = this;
+
+      var name = document.getElementById("tag-name");
+      var slug = document.getElementById("tag-slug");
+      var description = document.getElementById("tag-description");
+      var storeTag = document.getElementById("create");
+      storeTag.addEventListener("click", function () {
+        var obj = {
+          api: 'tag_store',
+          tag_name: name.value,
+          tag_slug: slug.value,
+          tag_description: description.value
+        };
+
+        _this2.axios.formDataApi(obj);
+
+        var changes = _this2.changes;
+        window.removeEventListener('hashchange', changes);
+        name.value = "";
+        slug.value = "";
+        description.value = "";
+        return setTimeout(function () {
+          _this2.init();
+        }, 300);
+      });
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      var _this3 = this;
+
+      var api = "tag_destroy";
+      var deleteBtn = document.querySelectorAll(".tag-delete");
+
+      if (deleteBtn) {
+        var _loop = function _loop(i) {
+          var ID = deleteBtn[i].value;
+          var taxonomy = deleteBtn[i].id;
+          deleteBtn[i].addEventListener("click", function () {
+            var obj = {
+              api: api,
+              deleteID: ID,
+              taxonomy_type: taxonomy
+            };
+
+            _this3.axios.formDataApi(obj);
+
+            var changes = _this3.changes;
+            window.removeEventListener('hashchange', changes);
+            return setTimeout(function () {
+              _this3.init();
+            }, 300);
+          });
+        };
+
+        for (var i = 0; i < deleteBtn.length; i++) {
+          _loop(i);
+        }
+      }
+    }
+  }, {
+    key: "edit",
+    value: function edit(test) {
+      var _this4 = this;
+
+      var editBtn = document.querySelectorAll(".tag-edit");
+
+      var _loop2 = function _loop2(i) {
+        var ID = editBtn[i].value;
+        var taxonomy = editBtn[i].id;
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+          var api, obj, HTML, name, slug, description, updateBtn;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  api = "tag_edit";
+                  obj = {
+                    api: api,
+                    editID: ID,
+                    taxonomy_type: taxonomy
+                  };
+                  _context3.next = 4;
+                  return _this4.axios.getPostData(obj);
+
+                case 4:
+                  HTML = _context3.sent;
+                  test.innerHTML = HTML;
+                  name = document.getElementById("tag_name");
+                  slug = document.getElementById("tag_slug");
+                  description = document.getElementById("tag_description");
+                  updateBtn = document.getElementById("tagUpdate");
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+                    var api, obj, changes;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                      while (1) {
+                        switch (_context2.prev = _context2.next) {
+                          case 0:
+                            api = "tag_update";
+                            obj = {
+                              api: api,
+                              updateId: updateBtn.value,
+                              tag_name: name.value,
+                              tag_slug: slug.value,
+                              tag_description: description.value
+                            };
+
+                            _this4.axios.formDataApi(obj);
+
+                            changes = _this4.changes;
+                            window.removeEventListener('hashchange', changes);
+                            description.value = "";
+                            slug.value = "";
+                            name.value = "";
+                            return _context2.abrupt("return", setTimeout(function () {
+                              _this4.init();
+                            }, 300));
+
+                          case 9:
+                          case "end":
+                            return _context2.stop();
+                        }
+                      }
+                    }, _callee2);
+                  })));
+
+                case 11:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3);
+        })));
+      };
+
+      for (var i = 0; i < editBtn.length; i++) {
+        _loop2(i);
+      }
+    }
+  }]);
+
+  return Tag;
+}(_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (Tag);
 
 /***/ }),
 
