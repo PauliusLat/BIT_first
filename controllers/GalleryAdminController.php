@@ -44,13 +44,15 @@ class GalleryAdminController
 		return View::adminRender('gallery.edit', ['data' => $album]);
 	}
 
-	public function update(Request $request, AlbumPost $albumPost){
+	public function update(Request $request, AlbumPost $albumPost)
+	{
 
 		$albumPost->post_title = $request->request->get('title');
 		$albumPost->profileImgId = $request->request->get('profileImgID');
 		$albumPost->save();
 	}
-	public function deleteAttachment(Attachment $attachment){
+	public function deleteAttachment(Attachment $attachment)
+	{
 		$attachment->delete();
 	}
 
@@ -65,9 +67,10 @@ class GalleryAdminController
 		return new Response;
 	}
 
-	public function attDelete(Request $request, Attachment $attachment){
+	public function attDelete(Request $request, Attachment $attachment)
+	{
 
-		if($attachment->ID){
+		if ($attachment->ID) {
 			$attachment->delete();
 		};
 		$album = AlbumPost::get($request->request->get('album'));

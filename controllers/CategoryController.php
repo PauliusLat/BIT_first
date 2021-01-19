@@ -30,7 +30,6 @@ class CategoryController
 
     {
         $request = $this->decodeRequest($requestJson);
-
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
@@ -87,7 +86,7 @@ class CategoryController
         } else {
             //add category to db and get cat ID
             $session->flash('success_message', 'kategorija sėkmingai sukurta');
-            $term_id = $category->addCat($name, $parent_id, $slug,  $description);
+            $term_id = $category->addCat($name, $parent_id, $description, $slug);
         }
 
         $createPage = $request->request->get('page');

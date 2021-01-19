@@ -48,10 +48,9 @@ class AdminMenuController
             return new JsonResponse(['html' => $output]);
         }
     }
-    
+
 
     public function store(Request $request)
-
     {
         // $request = $this->decodeRequest($requestJson);
         $id = $request->request->get('id');
@@ -144,7 +143,6 @@ class AdminMenuController
             }
         }
 
-
         $menuPost->names = $menuItemsArr;
         $menuPost->subnames = $bigSubmenuItemsArr;
         $menuPost->pages = $namesArr;
@@ -154,7 +152,6 @@ class AdminMenuController
         $menuPost->extLinks = $extLinksArr;
         $menuPost->subextLinks = $bigSubextLinksArr;
         $menuPost->save();
-        //         _dc($menuPost);
 
         return new Response;
     }
