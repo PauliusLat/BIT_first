@@ -7,7 +7,7 @@ return [
 
 	'calendar-create-front' => 'CalendarFrontController@create',
 
-	// 'category-creat-front' => 'CategoryFrontController@create',
+	// 'menu' => 'menuFrontController@getData',
 
 	'calendar-create-admin' => 'CalendarAdminController@create',
 	'calendar-store-admin' => 'CalendarAdminController@store',
@@ -31,6 +31,7 @@ return [
 	'album-create-admin' => 'AlbumFrontController@create',
 	'album-list' => 'GalleryAdminController@renderList',
 	'album-destroy' => 'GalleryAdminController@delete',
+	'album-image-destroy' => 'GalleryAdminController@deleteAttachment',
 
 	'news-list' => 'NewsAdminController@listPost',
 	'news-store' => 'NewsAdminController@store',

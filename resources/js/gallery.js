@@ -82,13 +82,13 @@ class ImageUploade {
                                                 if (checkBox.checked && !checked) {
                                                     deleteDiv[j].classList.add("albumImage");
                                                     image[j].setAttribute("data", "true");
-                                                    actionBtn.removeEventListener;
+                                                   
                                                     deleteDiv[j].removeAttribute("id", deleteId);
                                                 } else {
                                                     image[j].setAttribute("data", "false");
                                                     deleteDiv[j].classList.remove("albumImage");
                                                     deleteDiv[j].removeAttribute("id");
-                                                    actionBtn.removeEventListener;
+                                                   
                                                 }
                                                 actionBtn.classList.remove("boxImg");
                                                 actionBtn.classList.add("EventBoxHidden");

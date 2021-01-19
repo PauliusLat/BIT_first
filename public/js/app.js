@@ -873,6 +873,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -891,6 +903,9 @@ var AlbumEdit = /*#__PURE__*/function () {
 
     this.target = target;
     this.DOM = null;
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.array;
+    this.add;
     this.init();
   }
 
@@ -898,7 +913,7 @@ var AlbumEdit = /*#__PURE__*/function () {
     key: "init",
     value: function () {
       var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var DOM;
+        var DOM, array;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -906,7 +921,10 @@ var AlbumEdit = /*#__PURE__*/function () {
                 DOM = document.querySelector(this.target);
 
                 if (DOM) {
+                  array = _toConsumableArray(document.querySelectorAll(".imgePosition"));
+                  this.array = array;
                   this.save();
+                  this["delete"]();
                 }
 
               case 2:
@@ -928,18 +946,17 @@ var AlbumEdit = /*#__PURE__*/function () {
     value: function save() {
       var _this = this;
 
-      var save = document.querySelector(".saveAlbum");
+      this.add = document.querySelector(".saveAlbum");
       var title = document.querySelector(".albumTitle");
       var id;
-      var axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
       var api = 'gallery-update-admin&id=';
       var obj;
-      var albumID = save.getAttribute('data');
-      save.addEventListener("click", function () {
+      var albumID = this.add.getAttribute('data');
+      this.add.addEventListener("click", function () {
         id = _this.check();
 
         if (!id) {
-          id = save.id;
+          id = _this.add.id;
         }
 
         obj = {
@@ -947,7 +964,8 @@ var AlbumEdit = /*#__PURE__*/function () {
           title: title.value,
           profileImgID: id
         };
-        axios.formDataApi(obj);
+
+        _this.axios.formDataApi(obj);
       });
     }
   }, {
@@ -955,15 +973,57 @@ var AlbumEdit = /*#__PURE__*/function () {
     value: function check() {
       var remove = document.querySelectorAll(".removeBtn");
       var select = document.querySelectorAll(".checkbox");
-      var id = null;
+      var id = [];
 
       for (var i = 0; i < remove.length; i++) {
         if (select[i].checked) {
-          id = remove[i].id;
+          id.push(remove[i].id);
         }
       }
 
-      return id;
+      if (id.length > 1) {
+        alert("Galima pasirinkite tik 1 albumo paveiksleli !!!");
+      } else {
+        return id[0];
+      }
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      var _this2 = this;
+
+      var check = true;
+
+      var _loop = function _loop(i) {
+        var remove = _this2.array[i].children[1].children[0];
+
+        var newRemove = function newRemove() {
+          if (check) {
+            if (_this2.add.id != remove.id) {
+              var api = 'album-image-destroy&id=';
+              var id = remove.id;
+
+              _this2.array[i].remove();
+
+              _this2.array.splice(i, 1);
+
+              _this2.axios["delete"](api, id);
+
+              _this2["delete"]();
+
+              check = false;
+            } else {
+              alert("Albumo paveikslelio trinti negalima !!!");
+            }
+          }
+        };
+
+        remove.addEventListener("click", newRemove);
+      };
+
+      for (var i = 0; i < this.array.length; i++) {
+        _loop(i);
+      }
     }
   }]);
 
@@ -1155,16 +1215,20 @@ var AlbumEdit = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1179,80 +1243,51 @@ var AlbumList = /*#__PURE__*/function () {
     _classCallCheck(this, AlbumList);
 
     this.target = target;
-    this.api = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
-    this.init();
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.array = _toConsumableArray(document.querySelectorAll(".deleteAlbum"));
+    this["delete"]();
   }
 
   _createClass(AlbumList, [{
-    key: "init",
-    value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _this = this;
+    key: "delete",
+    value: function _delete() {
+      var _this = this;
 
-        var DOM;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                DOM = document.getElementById(this.target);
+      var DOM = document.getElementById(this.target);
 
-                if (!DOM) {
-                  _context2.next = 3;
-                  break;
-                }
+      if (DOM) {
+        (function () {
+          var check = true;
 
-                return _context2.delegateYield( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                  var deleteApi, listApi, HTML, deleteAlbum, _loop, i;
+          var _loop = function _loop(i) {
+            var remove = _this.array[i].parentElement.parentElement.parentElement;
 
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                      switch (_context.prev = _context.next) {
-                        case 0:
-                          deleteApi = 'album-destroy&id=';
-                          listApi = 'album-list';
-                          _context.next = 4;
-                          return _this.api.getDAta(listApi);
+            var newRemove = function newRemove() {
+              if (check) {
+                var api = 'album-destroy&id=';
+                var id = _this.array[i].id;
+                console.log(id);
+                remove.remove();
 
-                        case 4:
-                          HTML = _context.sent;
-                          DOM.innerHTML = HTML;
-                          deleteAlbum = document.querySelectorAll(".deleteAlbum");
+                _this.array.splice(i, 1);
 
-                          _loop = function _loop(i) {
-                            var deleteId = deleteAlbum[i].id;
-                            deleteAlbum[i].addEventListener("click", function () {
-                              _this.api["delete"](deleteApi, deleteId);
+                _this.axios["delete"](api, id);
 
-                              setTimeout(location.reload(), 500);
-                            });
-                          };
+                _this["delete"]();
 
-                          for (i = 0; i < deleteAlbum.length; i++) {
-                            _loop(i);
-                          }
+                check = false;
+              }
+            };
 
-                        case 9:
-                        case "end":
-                          return _context.stop();
-                      }
-                    }
-                  }, _callee);
-                })(), "t0", 3);
+            remove.addEventListener("click", newRemove);
+          };
 
-              case 3:
-              case "end":
-                return _context2.stop();
-            }
+          for (var i = 0; i < _this.array.length; i++) {
+            _loop(i);
           }
-        }, _callee2, this);
-      }));
-
-      function init() {
-        return _init.apply(this, arguments);
+        })();
       }
-
-      return init;
-    }()
+    }
   }]);
 
   return AlbumList;
@@ -1596,6 +1631,7 @@ var Calendar = /*#__PURE__*/function () {
         for (var d = 1; d <= lastDayM; d++) {
           var _date = new Date(this.y, this.m, d);
 
+          console.log(_date);
           var day = document.createElement("div");
           day.className = "cview--date";
           day.textContent = d;
@@ -1959,12 +1995,13 @@ var Calendar = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
-/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
-/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
+/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
+/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 
 
 
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -1976,57 +2013,72 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
 
 
-var Category = /*#__PURE__*/function () {
+var Category = /*#__PURE__*/function (_Pagination) {
+  _inherits(Category, _Pagination);
+
+  var _super = _createSuper(Category);
+
   function Category(target) {
+    var _this;
+
     _classCallCheck(this, Category);
 
+    _this = _super.call(this);
     var api = "category_create";
-    this.api = api;
-    this.target = target;
-    this.pages = 5;
-    this.page = new _pagination__WEBPACK_IMPORTED_MODULE_2__["default"](api);
-    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
-    this.changes;
-    this.init();
-    this.readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_3__["default"]();
+    _this.api = api;
+    _this.pages = 5;
+    _this.target = target;
+    _this.watch = document.querySelector(".innercat");
+    _this.changes;
+
+    _this.init();
+
+    _this.readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_2__["default"]();
+    return _this;
   }
 
   _createClass(Category, [{
     key: "init",
     value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _this = this;
-
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var hash,
             HTML,
             DOM,
-            inner,
             obj,
             addColor,
-            changes,
-            option,
-            selected,
-            _args2 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            _args = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context.prev = _context.next) {
               case 0:
-                hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
-                HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
+                hash = _args.length > 0 && _args[0] !== undefined ? _args[0] : null;
+                HTML = _args.length > 1 && _args[1] !== undefined ? _args[1] : null;
                 DOM = document.getElementById(this.target);
-                inner = document.querySelector(".innercat");
 
                 if (!DOM) {
-                  _context2.next = 30;
+                  _context.next = 21;
                   break;
                 }
 
                 if (!(HTML == null)) {
-                  _context2.next = 14;
+                  _context.next = 13;
                   break;
                 }
 
@@ -2035,20 +2087,20 @@ var Category = /*#__PURE__*/function () {
                   api: this.api,
                   hash: 1
                 };
-                _context2.next = 10;
+                _context.next = 9;
                 return this.axios.getPostData(obj);
 
-              case 10:
-                HTML = _context2.sent;
-                inner.innerHTML = HTML;
-                _context2.next = 15;
+              case 9:
+                HTML = _context.sent;
+                this.watch.innerHTML = HTML;
+                _context.next = 14;
                 break;
 
-              case 14:
-                inner.innerHTML = HTML;
+              case 13:
+                this.watch.innerHTML = HTML;
 
-              case 15:
-                this.page.paging();
+              case 14:
+                this.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
 
@@ -2056,68 +2108,16 @@ var Category = /*#__PURE__*/function () {
                   addColor.classList.add("active");
                 }
 
-                changes = /*#__PURE__*/function () {
-                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                    var pages;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-                      while (1) {
-                        switch (_context.prev = _context.next) {
-                          case 0:
-                            hash = location.hash.slice(1, 2);
-
-                            if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
-                              _context.next = 8;
-                              break;
-                            }
-
-                            pages = _this.pages;
-                            _context.next = 5;
-                            return _this.page.select(hash, pages);
-
-                          case 5:
-                            HTML = _context.sent;
-                            window.removeEventListener('hashchange', changes);
-
-                            _this.init(hash, HTML);
-
-                          case 8:
-                          case "end":
-                            return _context.stop();
-                        }
-                      }
-                    }, _callee);
-                  }));
-
-                  return function changes() {
-                    return _ref.apply(this, arguments);
-                  };
-                }();
-
-                window.addEventListener('hashchange', changes);
-                this.changes = changes;
-                option = document.getElementById("items");
-                option.value = this.pages;
-
-                selected = function selected() {
-                  _this.pages = option.value;
-                  location.hash = 1;
-                  window.removeEventListener('hashchange', changes);
-                  changes();
-                  option.removeEventListener('change', selected);
-                };
-
-                option.addEventListener('change', selected);
-                this["delete"]();
-                this.catStore();
-                this.CatEdit(inner);
                 this.readImage.image();
+                this.hashChange();
+                this.paging();
 
-              case 30:
+              case 21:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee, this);
       }));
 
       function init() {
@@ -2126,6 +2126,14 @@ var Category = /*#__PURE__*/function () {
 
       return init;
     }()
+  }, {
+    key: "addAction",
+    value: function addAction() {
+      this.catStore();
+      this["delete"]();
+      var watch = this.watch;
+      this.CatEdit(watch);
+    }
   }, {
     key: "catStore",
     value: function catStore() {
@@ -2215,7 +2223,7 @@ var Category = /*#__PURE__*/function () {
     }
   }, {
     key: "CatEdit",
-    value: function CatEdit(inner) {
+    value: function CatEdit(watch) {
       var _this4 = this;
 
       var editBtn = document.querySelectorAll(".category-edit");
@@ -2223,11 +2231,11 @@ var Category = /*#__PURE__*/function () {
       var _loop2 = function _loop2(i) {
         var editID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
-        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
           var api, obj, HTML, name, slug, description, parent, select, updateBtn;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
             while (1) {
-              switch (_context4.prev = _context4.next) {
+              switch (_context3.prev = _context3.next) {
                 case 0:
                   api = "category_edit";
                   obj = {
@@ -2235,12 +2243,12 @@ var Category = /*#__PURE__*/function () {
                     editID: editID,
                     taxonomy_type: taxonomy
                   };
-                  _context4.next = 4;
+                  _context3.next = 4;
                   return _this4.axios.getPostData(obj);
 
                 case 4:
-                  HTML = _context4.sent;
-                  inner.innerHTML = HTML;
+                  HTML = _context3.sent;
+                  watch.innerHTML = HTML;
 
                   _this4.readImage.image();
 
@@ -2256,11 +2264,11 @@ var Category = /*#__PURE__*/function () {
                   }
 
                   updateBtn = document.getElementById("catUpdate");
-                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
                     var api, obj, changes;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
                       while (1) {
-                        switch (_context3.prev = _context3.next) {
+                        switch (_context2.prev = _context2.next) {
                           case 0:
                             api = "category_update";
                             obj = {
@@ -2281,24 +2289,24 @@ var Category = /*#__PURE__*/function () {
                             description.value = "";
                             slug.value = "";
                             name.value = "";
-                            return _context3.abrupt("return", setTimeout(function () {
+                            return _context2.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));
 
                           case 10:
                           case "end":
-                            return _context3.stop();
+                            return _context2.stop();
                         }
                       }
-                    }, _callee3);
+                    }, _callee2);
                   })));
 
                 case 14:
                 case "end":
-                  return _context4.stop();
+                  return _context3.stop();
               }
             }
-          }, _callee4);
+          }, _callee3);
         })));
       };
 
@@ -2309,7 +2317,7 @@ var Category = /*#__PURE__*/function () {
   }]);
 
   return Category;
-}();
+}(_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (Category);
 
@@ -2592,8 +2600,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
 /* harmony import */ var _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AlbumEdit.js */ "./resources/js/AlbumEdit.js");
 /* harmony import */ var _albumList__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./albumList */ "./resources/js/albumList.js");
+/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
 /** @format */
- // import startGallery from './gallery.js';
 
 
 
@@ -2603,15 +2611,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // import TextEditor from './text-editor.js'
 
 
 
 
- // import lightbox from './light_box';
 
 
- // new TextEditor('.news-container')
+
 
 new _calendar_js__WEBPACK_IMPORTED_MODULE_6__["default"]('.calendar');
 new _news__WEBPACK_IMPORTED_MODULE_7__["default"]('startNewsAdmin');
@@ -2620,7 +2626,7 @@ new _editPost__WEBPACK_IMPORTED_MODULE_10__["default"]('.editStart');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
 new _category_js__WEBPACK_IMPORTED_MODULE_1__["default"]('catStart');
 new _menu_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.adminMenuStart');
-new _albumList__WEBPACK_IMPORTED_MODULE_12__["default"]('startAlbumList');
+new _albumList__WEBPACK_IMPORTED_MODULE_12__["default"]('startAlbumLis');
 new _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_11__["default"]('.containerAlbumEdit');
 new _page_js__WEBPACK_IMPORTED_MODULE_5__["default"]('pageStart');
 
@@ -2945,7 +2951,7 @@ var Menu = /*#__PURE__*/function () {
         var text = document.querySelectorAll(".menuText");
         var link = document.querySelectorAll(".menuLink");
 
-        if (elements || elements[0].className != "draggable parent") {
+        if (!elements || elements[0].className != "draggable parent") {
           alert("Neteisingai suformuotas meniu");
         } else {
           var opts = _toConsumableArray(select).map(function (el) {
@@ -3572,13 +3578,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 var Pagination = /*#__PURE__*/function () {
-  function Pagination(api) {
+  function Pagination() {
     _classCallCheck(this, Pagination);
 
-    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-    this.uri = document.location.origin;
-    this.lenght;
-    this.api = api;
     this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.hash;
   }
@@ -3606,59 +3608,175 @@ var Pagination = /*#__PURE__*/function () {
           _loop(i);
         }
       }
-
-      this.lenght = page.length - 4; //tikrina ar yra page, ka daryti kai nera HTML
     }
   }, {
-    key: "select",
+    key: "hashChange",
     value: function () {
-      var _select = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var _hashChange = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this = this;
+
         var hash,
+            HTML,
+            page,
+            _hash,
             pages,
             obj,
-            _args = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                hash = _args.length > 0 && _args[0] !== undefined ? _args[0] : 1;
-                pages = _args.length > 1 ? _args[1] : undefined;
+            _hash2,
+            _page,
+            _obj,
+            addColor,
+            changes,
+            option,
+            selected,
+            _args2 = arguments;
 
-                if (!(this.lenght < hash)) {
-                  _context.next = 6;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
+                HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
+
+                if (!(HTML && hash)) {
+                  _context2.next = 9;
                   break;
                 }
 
-                //tikrina ar yra page 
-                hash = 1;
-                _context.next = 10;
+                this.watch.innerHTML = HTML;
+                page = document.querySelectorAll(".paging");
+                _hash = location.hash.split('#')[1];
+
+                if (_hash > page.length - 4) {
+                  _hash = 1;
+                  location.hash = _hash;
+                }
+
+                _context2.next = 25;
                 break;
 
-              case 6:
+              case 9:
+                if (!(hash && HTML == null)) {
+                  _context2.next = 17;
+                  break;
+                }
+
+                pages = this.pages;
                 obj = {
                   api: this.api,
                   pageSelected: pages,
                   hash: hash
                 };
-                _context.next = 9;
+                _context2.next = 14;
                 return this.axios.getPostData(obj);
 
-              case 9:
-                return _context.abrupt("return", _context.sent);
+              case 14:
+                this.watch.innerHTML = _context2.sent;
+                _context2.next = 25;
+                break;
 
-              case 10:
+              case 17:
+                _hash2 = 1;
+                _page = document.querySelectorAll(".paging");
+
+                if (_hash2 > _page.length - 4) {
+                  _hash2 = 1;
+                  location.hash = _hash2;
+                }
+
+                location.hash = _hash2;
+                _obj = {
+                  api: this.api,
+                  pageSelected: this.pages,
+                  hash: _hash2
+                };
+                _context2.next = 24;
+                return this.axios.getPostData(_obj);
+
+              case 24:
+                this.watch.innerHTML = _context2.sent;
+
+              case 25:
+                this.paging();
+                HTML = "";
+                addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
+
+                if (addColor) {
+                  addColor.classList.add("active");
+                }
+
+                changes = /*#__PURE__*/function () {
+                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+                    var _pages, _obj2;
+
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            hash = location.hash.split('#')[1];
+
+                            if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
+                              _context.next = 9;
+                              break;
+                            }
+
+                            _pages = _this.pages;
+                            _obj2 = {
+                              api: _this.api,
+                              pageSelected: _pages,
+                              hash: hash
+                            };
+                            _context.next = 6;
+                            return _this.axios.getPostData(_obj2);
+
+                          case 6:
+                            HTML = _context.sent;
+                            window.removeEventListener('hashchange', changes);
+
+                            _this.hashChange(hash, HTML);
+
+                          case 9:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee);
+                  }));
+
+                  return function changes() {
+                    return _ref.apply(this, arguments);
+                  };
+                }();
+
+                window.addEventListener('hashchange', changes);
+                this.changes = changes;
+                option = document.getElementById("items");
+                option.value = this.pages;
+
+                selected = function selected() {
+                  _this.pages = option.value;
+                  location.hash = 1;
+                  window.removeEventListener('hashchange', changes);
+                  changes();
+                  option.removeEventListener('change', selected);
+                };
+
+                option.addEventListener('change', selected); // child class implements button listeners or etc html functions 
+
+                this.addAction();
+
+              case 37:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
-      function select() {
-        return _select.apply(this, arguments);
+      function hashChange() {
+        return _hashChange.apply(this, arguments);
       }
 
-      return select;
+      return hashChange;
     }()
   }]);
 
@@ -3774,11 +3892,12 @@ var Profile_image = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
-/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
+/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
 
 
 
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -3790,190 +3909,67 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
 
-var Tag = /*#__PURE__*/function () {
+var Tag = /*#__PURE__*/function (_Pagination) {
+  _inherits(Tag, _Pagination);
+
+  var _super = _createSuper(Tag);
+
   function Tag(target) {
+    var _this;
+
     _classCallCheck(this, Tag);
 
-    var api = "tag_create";
-    this.api = api;
-    this.target = target;
-    this.pages = 5;
-    this.page = new _pagination__WEBPACK_IMPORTED_MODULE_2__["default"](api);
-    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
-    this.changes;
-    var hash = location.hash.split('#')[1];
+    _this = _super.call(this);
+    _this.api = 'tag_create';
+    _this.pages = 5;
+    _this.target = target;
+    _this.changes;
+    _this.watch = document.querySelector(".startWatch");
 
-    if (hash) {
-      this.init(hash);
-    } else {
-      this.init();
-    }
+    _this.init();
+
+    return _this;
   }
 
   _createClass(Tag, [{
     key: "init",
     value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _this = this;
-
-        var hash,
-            HTML,
-            DOM,
-            test,
-            obj,
-            pages,
-            page,
-            addColor,
-            changes,
-            option,
-            selected,
-            _args2 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var DOM, api;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context.prev = _context.next) {
               case 0:
-                hash = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : null;
-                HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
                 DOM = document.getElementById(this.target);
-                test = document.querySelector(".test");
-                hash = parseInt(hash);
 
-                if (typeof hash != "string") {
-                  location.hash = hash;
+                if (DOM) {
+                  api = "tag_create";
+                  this.hashChange();
+                  this.paging();
                 }
 
-                if (!DOM) {
-                  _context2.next = 47;
-                  break;
-                }
-
-                if (!(HTML == null && hash == null)) {
-                  _context2.next = 16;
-                  break;
-                }
-
-                location.hash = 1;
-                obj = {
-                  api: this.api,
-                  hash: 1
-                };
-                _context2.next = 12;
-                return this.axios.getPostData(obj);
-
-              case 12:
-                HTML = _context2.sent;
-                test.innerHTML = HTML;
-                _context2.next = 33;
-                break;
-
-              case 16:
-                if (!(HTML && hash)) {
-                  _context2.next = 20;
-                  break;
-                }
-
-                test.innerHTML = HTML;
-                _context2.next = 33;
-                break;
-
-              case 20:
-                pages = this.pages;
-                _context2.next = 23;
-                return this.page.select(hash, pages);
-
-              case 23:
-                HTML = _context2.sent;
-                test.innerHTML = HTML;
-                page = document.querySelectorAll(".paging");
-
-                if (!(hash > page.length - 4)) {
-                  _context2.next = 33;
-                  break;
-                }
-
-                hash = 1;
-                location.hash = hash;
-                _context2.next = 31;
-                return this.page.select(hash, pages);
-
-              case 31:
-                HTML = _context2.sent;
-                test.innerHTML = HTML;
-
-              case 33:
-                this.page.paging();
-                HTML = "";
-                addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
-
-                if (addColor) {
-                  addColor.classList.add("active");
-                }
-
-                changes = /*#__PURE__*/function () {
-                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                    var _pages;
-
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-                      while (1) {
-                        switch (_context.prev = _context.next) {
-                          case 0:
-                            hash = location.hash.split('#')[1];
-
-                            if (!(hash != undefined && hash != null && hash > 0 && hash != "" && hash != NaN && hash != Infinity)) {
-                              _context.next = 8;
-                              break;
-                            }
-
-                            _pages = _this.pages;
-                            _context.next = 5;
-                            return _this.page.select(hash, _pages);
-
-                          case 5:
-                            HTML = _context.sent;
-                            window.removeEventListener('hashchange', changes);
-
-                            _this.init(hash, HTML);
-
-                          case 8:
-                          case "end":
-                            return _context.stop();
-                        }
-                      }
-                    }, _callee);
-                  }));
-
-                  return function changes() {
-                    return _ref.apply(this, arguments);
-                  };
-                }();
-
-                window.addEventListener('hashchange', changes);
-                this.changes = changes;
-                option = document.getElementById("items");
-                option.value = this.pages;
-
-                selected = function selected() {
-                  _this.pages = option.value;
-                  location.hash = 1;
-                  window.removeEventListener('hashchange', changes);
-                  changes();
-                  option.removeEventListener('change', selected);
-                };
-
-                option.addEventListener('change', selected);
-                this["delete"]();
-                this.createTag();
-                this.tagEdit(test);
-
-              case 47:
+              case 2:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee, this);
       }));
 
       function init() {
@@ -3983,8 +3979,15 @@ var Tag = /*#__PURE__*/function () {
       return init;
     }()
   }, {
-    key: "createTag",
-    value: function createTag() {
+    key: "addAction",
+    value: function addAction() {
+      this.create();
+      this["delete"]();
+      this.edit(this.watch);
+    }
+  }, {
+    key: "create",
+    value: function create() {
       var _this2 = this;
 
       var name = document.getElementById("tag-name");
@@ -4046,8 +4049,8 @@ var Tag = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "tagEdit",
-    value: function tagEdit(test) {
+    key: "edit",
+    value: function edit(test) {
       var _this4 = this;
 
       var editBtn = document.querySelectorAll(".tag-edit");
@@ -4055,11 +4058,11 @@ var Tag = /*#__PURE__*/function () {
       var _loop2 = function _loop2(i) {
         var ID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
-        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
           var api, obj, HTML, name, slug, description, updateBtn;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
             while (1) {
-              switch (_context4.prev = _context4.next) {
+              switch (_context3.prev = _context3.next) {
                 case 0:
                   api = "tag_edit";
                   obj = {
@@ -4067,21 +4070,21 @@ var Tag = /*#__PURE__*/function () {
                     editID: ID,
                     taxonomy_type: taxonomy
                   };
-                  _context4.next = 4;
+                  _context3.next = 4;
                   return _this4.axios.getPostData(obj);
 
                 case 4:
-                  HTML = _context4.sent;
+                  HTML = _context3.sent;
                   test.innerHTML = HTML;
                   name = document.getElementById("tag_name");
                   slug = document.getElementById("tag_slug");
                   description = document.getElementById("tag_description");
                   updateBtn = document.getElementById("tagUpdate");
-                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
                     var api, obj, changes;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
                       while (1) {
-                        switch (_context3.prev = _context3.next) {
+                        switch (_context2.prev = _context2.next) {
                           case 0:
                             api = "tag_update";
                             obj = {
@@ -4099,24 +4102,24 @@ var Tag = /*#__PURE__*/function () {
                             description.value = "";
                             slug.value = "";
                             name.value = "";
-                            return _context3.abrupt("return", setTimeout(function () {
+                            return _context2.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));
 
                           case 9:
                           case "end":
-                            return _context3.stop();
+                            return _context2.stop();
                         }
                       }
-                    }, _callee3);
+                    }, _callee2);
                   })));
 
                 case 11:
                 case "end":
-                  return _context4.stop();
+                  return _context3.stop();
               }
             }
-          }, _callee4);
+          }, _callee3);
         })));
       };
 
@@ -4127,7 +4130,7 @@ var Tag = /*#__PURE__*/function () {
   }]);
 
   return Tag;
-}();
+}(_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (Tag);
 
@@ -4151,8 +4154,8 @@ var Tag = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -36,7 +36,7 @@ class PageController
 
         if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
             $number = $request->request->get('hash');
-        } else {
+         } else {
             $number = 1;
         }
 

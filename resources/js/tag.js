@@ -1,100 +1,29 @@
 "use strict";
-import Api from './api';
 import Pagination from './pagination';
-
-class Tag {
+class Tag extends Pagination{
     constructor(target) {
-        const api = "tag_create";
-        this.api = api;
-        this.target = target;
+        super();
+        this.api = 'tag_create';
         this.pages = 5;
-        this.page = new Pagination(api);
-        this.axios = new Api;
+        this.target = target;
         this.changes;
-        let hash = location.hash.split('#')[1];
-        if (hash) {
-            this.init(hash);
-        } else {
-            this.init();
-        }
+        this.watch = document.querySelector(".startWatch");
+        this.init();
     }
-
-    async init(hash = null, HTML = null) {
+    async init() {
         const DOM = document.getElementById(this.target);
-        const test = document.querySelector(".test");
-
-        hash = parseInt(hash)
-
-        if (typeof hash != "string") {
-            location.hash = hash
-        }
         if (DOM) {
-            if (HTML == null && hash == null) {
-                location.hash = 1;
-                let obj = {
-                    api: this.api,
-                    hash: 1
-                }
-                HTML = await this.axios.getPostData(obj);
-                test.innerHTML = HTML;
-            } else if (HTML && hash) {
-                test.innerHTML = HTML;
-            } else {
-                let pages = this.pages;
-                HTML = await this.page.select(hash, pages);
-                test.innerHTML = HTML
-                const page = document.querySelectorAll(".paging");
-                if (hash > page.length - 4) {
-                    hash = 1
-                    location.hash = hash
-                    HTML = await this.page.select(hash, pages);
-                    test.innerHTML = HTML
-                }
-            }
-
-            this.page.paging();
-            HTML = "";
-
-            let addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
-            if (addColor) {
-                addColor.classList.add("active");
-            }
-            var changes = async () => {
-
-                hash = location.hash.split('#')[1];
-
-                if (hash != undefined &&
-                    hash != null &&
-                    hash > 0 &&
-                    hash != "" &&
-                    hash != NaN &&
-                    hash != Infinity) {
-                    let pages = this.pages;
-                    HTML = await this.page.select(hash, pages);
-                    window.removeEventListener('hashchange', changes);
-                    this.init(hash, HTML);
-                }
-            }
-            window.addEventListener('hashchange', changes);
-            this.changes = changes;
-            const option = document.getElementById("items");
-
-            option.value = this.pages;
-            var selected = () => {
-                this.pages = option.value;
-                location.hash = 1;
-                window.removeEventListener('hashchange', changes);
-                changes();
-                option.removeEventListener('change', selected);
-            }
-            option.addEventListener('change', selected);
-            this.delete();
-            this.createTag();
-            this.tagEdit(test);
+            const api = "tag_create";
+            this.hashChange();
+            this.paging();
         }
     }
-
-    createTag() {
+    addAction(){
+        this.create();
+        this.delete();
+        this.edit(this.watch);
+    }
+    create() {
         const name = document.getElementById("tag-name")
         const slug = document.getElementById("tag-slug");
         const description = document.getElementById("tag-description");
@@ -115,7 +44,6 @@ class Tag {
             return setTimeout(() => { this.init() }, (300))
         });
     }
-
     delete() {
         const api = "tag_destroy";
         const deleteBtn = document.querySelectorAll(".tag-delete");
@@ -139,8 +67,7 @@ class Tag {
             }
         }
     }
-
-    tagEdit(test) {
+    edit(test) {
         const editBtn = document.querySelectorAll(".tag-edit");
         for (let i = 0; i < editBtn.length; i++) {
             let ID = editBtn[i].value;

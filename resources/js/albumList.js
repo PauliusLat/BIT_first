@@ -5,33 +5,36 @@ import Api from './api';
 class AlbumList {
 
     constructor(target) {
+    
         this.target = target;
-        this.api = new Api;
-        this.init();
-
+        this.axios = new Api;
+        this.array = [...document.querySelectorAll(".deleteAlbum")];
+        this.delete();
     }
 
-    async init() {
+    delete() {
         const DOM = document.getElementById(this.target);
 
         if (DOM) {
-            const deleteApi = 'album-destroy&id=';
-            const listApi = 'album-list';
+           
+            let check = true
 
-            let HTML = await this.api.getDAta(listApi);
-            DOM.innerHTML = HTML;
+            for (let i = 0; i < this.array.length; i++) {
+                let remove = this.array[i].parentElement.parentElement.parentElement;
+                let newRemove = () => {
+                    if (check) {
 
-            const deleteAlbum = document.querySelectorAll(".deleteAlbum");
-
-            for (let i = 0; i < deleteAlbum.length; i++) {
-
-                let deleteId = deleteAlbum[i].id;
-                deleteAlbum[i].addEventListener(
-                    "click",
-                    () => {
-                        this.api.delete(deleteApi, deleteId);
-                        setTimeout(location.reload(), 500);
-                    });
+                        const api = 'album-destroy&id='
+                        let id = this.array[i].id;
+                        console.log(id);
+                        remove.remove();
+                        this.array.splice(i, 1);
+                        this.axios.delete(api, id);
+                        this.delete()
+                        check = false;
+                    }
+                }
+                remove.addEventListener("click", newRemove);
             }
         }
     }
