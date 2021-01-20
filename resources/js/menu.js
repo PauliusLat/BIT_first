@@ -196,9 +196,6 @@ class Menu {
 
 
       if (!elements || elements[0].className != "draggable parent") {
-  console.log(elements);
-  console.log('111111111');
-  console.log(elements[0].className);
         alert("Neteisingai suformuotas meniu")
       } else {
         const opts = [...select].map(el => el.options);

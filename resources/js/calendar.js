@@ -12,7 +12,6 @@ class Calendar {
         this.DOM = null;
         this.date = new Date();
         this.y = this.date.getFullYear(), this.m = this.date.getMonth(), this.d = this.date.getDay();
- 
         this.lastDayM = new Date(this.y, this.m + 1, 0).getDate();
         let days = this.lastDayM;
         this.curentM = new Date(this.y, this.m + 1, 0).getMonth();
@@ -22,7 +21,6 @@ class Calendar {
         this.uri = document.location.origin;
         this.months = ['Sausis', 'Vasaris', 'Kovas', 'Balandis', 'Gegužė', 'Birželis', 'Liepa', 'Rugpjūtis', 'Rugsėjis', 'Spalis', 'Lapkritis', 'Gruodis'];
         this.init(days, startDay);
- 
     }
  
     init(lastDayM, startDay) {
@@ -59,7 +57,6 @@ class Calendar {
         const exisitClassMonth = document.querySelector(".cview__month-current").textContent;
  
         if (exisitClassMonth == 1) {
- 
             this.m;
             let nowM = this.m;
             let nowY = this.y;
@@ -122,7 +119,6 @@ class Calendar {
         }
         const event = document.querySelectorAll(".cview--date");
         const month = document.querySelector(".cview__month-current")
- 
         for (let i = 0; i < event.length; i++) {
  
             event[i].addEventListener(
@@ -149,10 +145,10 @@ class Calendar {
         let lastDayM = new Date(y, m + a, 0).getDate();
         let newM = new Date(y, m + a, 0).getMonth();
         let startDay = new Date(curentY, newM, 1).getDay();
- 
+
         return this.render(lastDayM, startDay, dataDate)
     }
- 
+
     event(action, month, day) {
         this.path;
         this.uri;
@@ -207,7 +203,6 @@ class Calendar {
                         time: time
                     }
                     this.axios.formDataApi(obj);
- 
                     setTimeout(() => { this.getData(action); }, 400);
                     setTimeout(() => { this.renderEvents(action); }, 500);
                 }

@@ -1,14 +1,10 @@
 <?php
-
 use BIT\app\Attachment;
 ?>
-
 <div class="sm-23-24 containerAlbumList " id="startAlbumLis">
 <?php foreach ($albums as $album) : ?>
-
     <div class="albumList sm-7-24">
         <?php $profileImg = Attachment::get($album->profileImgId); ?>
-
         <div class="parentAlbum ">
             <div class="imageAlbum ">
                 <img src="<?= $profileImg->getUrl(); ?>" alt="<?= $profileImg->getAlt(); ?>">
@@ -31,6 +27,5 @@ use BIT\app\Attachment;
             </div>
         </div>
     </div>
-
 <?php endforeach; ?>
 </div>
