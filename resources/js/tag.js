@@ -7,7 +7,6 @@ class Tag extends Pagination {
     constructor(target) {
         super();
 
-
         this.api = 'tag_create';
         this.pages = 5;
         this.target = target;
@@ -20,7 +19,6 @@ class Tag extends Pagination {
     init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
-
 
             this.hashChange();
             this.paging();
@@ -77,7 +75,6 @@ class Tag extends Pagination {
                     });
             }
         }
-
     }
 
     edit() {
@@ -120,6 +117,5 @@ class Tag extends Pagination {
                 });
         }
     }
-
 }
 export default Tag;
