@@ -3,7 +3,6 @@
 import startIdea from './idea.js';
 import startCat from './category.js';
 import startTag from './tag.js';
-//import startPage from './page.js';
 import startMenu from './menu.js';
 import Tag from './tag.js';
 import Pag from './page.js';
@@ -14,7 +13,7 @@ import News from './news';
 import Profile_image from './profile_image';
 import NewsList from './newsList';
 import EditPost from './editPost';
-import AlbumEdit from './AlbumEdit.js';
+import AlbumEdit from './albumEdit.js';
 import AlbumList from './albumList';
 import Pagination from './pagination';
 

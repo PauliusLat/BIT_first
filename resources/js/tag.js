@@ -2,10 +2,10 @@
 
 "use strict";
 import Pagination from './pagination';
-class Tag extends Pagination{
+class Tag extends Pagination {
     constructor(target) {
         super();
-    
+
         this.api = 'tag_create';
         this.pages = 5;
         this.target = target;
@@ -13,21 +13,21 @@ class Tag extends Pagination{
         this.watch = document.querySelector(".startWatch");
         this.init();
     }
-    async init() {
+
+    init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
-        
+
             this.hashChange();
             this.paging();
         }
     }
- 
-    addAction(){
+
+    addAction() {
         this.create();
         this.delete();
-        this.edit(this.wach);
+        this.edit();
     }
-
 
     create() {
         const name = document.getElementById("tag-name")
@@ -50,6 +50,7 @@ class Tag extends Pagination{
             return setTimeout(() => { this.init() }, (300))
         });
     }
+
     delete() {
         const api = "tag_destroy";
         const deleteBtn = document.querySelectorAll(".tag-delete");
@@ -73,7 +74,8 @@ class Tag extends Pagination{
             }
         }
     }
-    edit(test) {
+
+    edit() {
         const editBtn = document.querySelectorAll(".tag-edit");
         for (let i = 0; i < editBtn.length; i++) {
             let ID = editBtn[i].value;
@@ -88,7 +90,7 @@ class Tag extends Pagination{
                         taxonomy_type: taxonomy,
                     }
                     let HTML = await this.axios.getPostData(obj);
-                    test.innerHTML = HTML;
+                    this.watch.innerHTML = HTML;
                     const name = document.getElementById("tag_name");
                     const slug = document.getElementById("tag_slug");
                     const description = document.getElementById("tag_description");
@@ -113,6 +115,6 @@ class Tag extends Pagination{
                 });
         }
     }
-  
+
 }
 export default Tag;
