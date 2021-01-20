@@ -13,8 +13,8 @@ class AlbumFrontController
     {
         $query = new Query;
         $page = $query->postType('page')->postName('nuotraukos')->getPost()->all();
-        $page = $page[0];
-        $page = $page->getLink();
+        // $page = $page[0];
+        // $page = $page->getLink();
         return View::render('gallery.all-album', ['page' => $page]);
     }
 

@@ -26,25 +26,24 @@ class Api {
                     console.log('Error', error.message);
                 }
                 console.log(error);
+                console.log("Data from the server is not available !!!");
             });
     }
 
     async getDAta(api) {
 
         try {
-
             let response = await axios.post(this.uri + this.path + api,)
-
             if (response.status == 200 && response.statusText == "OK") {
-
                 return response.data.html;
             }
 
         } catch (e) {
             console.error(e);
-            console.log("Duomenys is serveverio nepasiekiami !!!");
+            console.log("Data from the server is not available !!!");
         }
     }
+
     saveContent(api, id, content) {
         axios
             .post(
@@ -65,6 +64,7 @@ class Api {
                     console.log('Error', error.message);
                 }
                 console.log(error);
+                console.log("Data from the server is not available !!!");
             });
     }
 
@@ -84,6 +84,7 @@ class Api {
                     console.log(error.request);
                 } else {
                     console.log('Error', error.message);
+                    console.log("Data from the server is not available !!!");
                 }
                 console.log(error);
             });
