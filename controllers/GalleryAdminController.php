@@ -21,7 +21,6 @@ class GalleryAdminController
 	public function create(Request $request, AlbumPost $album)
 	{
 		$data = (AlbumPost::all())->all();
-
 		$response = new Response;
 		$output = View::render('gallery.all-images');
 		$response->prepare($request);
@@ -46,7 +45,7 @@ class GalleryAdminController
 	public function update(Request $request, AlbumPost $albumPost)
 	{
 
-		_dc($request->request);
+		// _dc($request->request);
 		$albumPost->post_title = $request->request->get('title');
 		$albumPost->profileImgId = $request->request->get('profileImgID');
 		$albumPost->save();

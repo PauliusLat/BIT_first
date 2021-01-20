@@ -5219,8 +5219,8 @@ var Pag = /*#__PURE__*/function (_Pagination) {
 
         var changes = _this2.changes;
         window.removeEventListener('hashchange', changes);
-        title.value = "";
-        console.log(obj);
+        title.value = ""; // console.log(obj)
+
         return setTimeout(function () {
           _this2.init();
         }, 300);
@@ -5238,8 +5238,7 @@ var Pag = /*#__PURE__*/function (_Pagination) {
         var _loop = function _loop(i) {
           var deleteId = deleteBtn[i].value;
           deleteBtn[i].addEventListener("click", function () {
-            _this3.axios["delete"](deleteApi, deleteId); // setTimeout(location.reload(), 500);
-
+            _this3.axios["delete"](deleteApi, deleteId);
 
             var changes = _this3.changes;
             window.removeEventListener('hashchange', changes);
@@ -5307,12 +5306,11 @@ var Pag = /*#__PURE__*/function (_Pagination) {
                               page_name: name.value,
                               post_type: select.value,
                               page_state: stateArray
-                            };
-                            console.log(select.value);
+                            }; // console.log(select.value)
 
-                            _this4.axios.formDataApi(obj);
+                            _this4.axios.formDataApi(obj); // console.log(stateArray);
 
-                            console.log(stateArray);
+
                             changes = _this4.changes;
                             window.removeEventListener('hashchange', changes); // description.value = "";
                             // slug.value = "";
@@ -5322,7 +5320,7 @@ var Pag = /*#__PURE__*/function (_Pagination) {
                               _this4.init();
                             }, 300));
 
-                          case 14:
+                          case 12:
                           case "end":
                             return _context2.stop();
                         }

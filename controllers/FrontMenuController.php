@@ -28,7 +28,7 @@ class FrontMenuController
         $query = new Query;
         $menus = $query->postType('menu')->getPost()->all();
         $menu = $menus[0];
-        $output =  View::adminRender('adminMenu.headerfront', ['menu' =>  $menu]);
+        $output =  View::adminRender('frontMenu.headerfront', ['menu' =>  $menu]);
         $response = new JsonResponse(['html' => $output]);
 
         return $response;

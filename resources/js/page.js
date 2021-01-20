@@ -67,7 +67,7 @@ class Pag extends Pagination{
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
             title.value = "";
-            console.log(obj)
+            // console.log(obj)
             return setTimeout(() => { this.init() }, (300));
         });
     }
@@ -81,7 +81,6 @@ class Pag extends Pagination{
                     "click",
                     () => {
                         this.axios.delete(deleteApi, deleteId);
-                        // setTimeout(location.reload(), 500);
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
                         return setTimeout(() => { this.init() }, (300))
@@ -123,9 +122,9 @@ class Pag extends Pagination{
                             post_type: select.value,
                             page_state: stateArray
                         }
-                        console.log(select.value)
+                        // console.log(select.value)
                         this.axios.formDataApi(obj);
-                        console.log(stateArray);
+                        // console.log(stateArray);
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
                         // description.value = "";
