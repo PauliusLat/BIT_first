@@ -2,6 +2,8 @@
 <!-- <div class="navMenu show"> -->
 <!-- <div class="navFront"> -->
 <?php
+
+
 // _dc($menu);
 foreach (range((count($menu->names) - 1), 0) as $index) : ?>
     <div class='dropdown'>

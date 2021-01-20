@@ -2,7 +2,9 @@
 import Pagination from './pagination';
 import Profile_image from './profile_image';
 
+
 class Category extends Pagination {
+
     constructor(target) {
         super();
 
@@ -22,6 +24,7 @@ class Category extends Pagination {
             this.paging();
         }
     }
+
 
     addAction() {
 
@@ -103,7 +106,9 @@ class Category extends Pagination {
         }
     }
 
+
     edit() {
+
         const editBtn = document.querySelectorAll(".category-edit");
         for (let i = 0; i < editBtn.length; i++) {
             let editID = editBtn[i].value;
@@ -118,7 +123,9 @@ class Category extends Pagination {
                         taxonomy_type: taxonomy,
                     }
                     let HTML = await this.axios.getPostData(obj);
+
                     this.watch.innerHTML = HTML;
+
                     this.readImage.image();
 
                     const name = document.getElementById("category_name");
