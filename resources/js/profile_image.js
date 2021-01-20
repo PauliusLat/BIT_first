@@ -5,7 +5,6 @@ class Profile_image {
 
   constructor() {
     this.file = null;
-
   }
 
   image() {

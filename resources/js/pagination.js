@@ -1,7 +1,6 @@
 
 // extend this class and implement   addAction();
 
-
 import Api from './api';
 class Pagination {
     constructor() {
@@ -62,7 +61,6 @@ class Pagination {
 
             let hash = location.hash.split('#')[1];
 
-
             location.hash = hash
             let obj = {
                 api: this.api,
@@ -110,7 +108,6 @@ class Pagination {
         window.addEventListener('hashchange', changes);
         this.changes = changes;
         const option = document.getElementById("items");
-        console.log(option);
         option.value = this.pages;
         var selected = () => {
             this.pages = option.value;
@@ -122,7 +119,6 @@ class Pagination {
         option.addEventListener('change', selected);
         // child class implements button listeners or etc html functions 
         this.addAction();
-
     }
 }
 export default Pagination;
