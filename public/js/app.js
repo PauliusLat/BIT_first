@@ -3393,6 +3393,7 @@ var Calendar = /*#__PURE__*/function () {
     var startDay = this.curentDay;
     this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
     this.uri = document.location.origin;
+    this.months = ['Sausis', 'Vasaris', 'Kovas', 'Balandis', 'Gegužė', 'Birželis', 'Liepa', 'Rugpjūtis', 'Rugsėjis', 'Spalis', 'Lapkritis', 'Gruodis'];
     this.init(days, startDay);
   }
 
@@ -3435,18 +3436,10 @@ var Calendar = /*#__PURE__*/function () {
       var exisitClassMonth = document.querySelector(".cview__month-current").textContent;
 
       if (exisitClassMonth == 1) {
-        console.log(this.date);
-        console.log(this.date.getMonth());
-        var nowM = new Date(this.y, this.date.getMonth());
-        console.log('111111111');
-        console.log(nowM);
-        var nowY = nowM.toString().slice(11, -47);
-        nowM = nowM.toString().slice(4, -55);
-        console.log('2222222222');
-        console.log(nowM);
-        nowM = this.translate(nowM);
-        console.log('3333333333');
-        console.log(nowM);
+        this.m;
+        var nowM = this.m;
+        var nowY = this.y;
+        nowM = this.months[nowM];
         document.getElementById("calendar-month").innerHTML = nowY + ' ' + nowM;
       }
 
@@ -3461,7 +3454,8 @@ var Calendar = /*#__PURE__*/function () {
         }
 
         for (var d = 1; d <= lastDayM; d++) {
-          var _date = new Date(this.y, this.m, d);
+          var _date = new Date(this.y, this.m, d); // console.log(_date);
+
 
           var day = document.createElement("div");
           day.className = "cview--date";
@@ -3513,17 +3507,15 @@ var Calendar = /*#__PURE__*/function () {
       }
 
       var event = document.querySelectorAll(".cview--date");
+      var month = document.querySelector(".cview__month-current");
 
       var _loop = function _loop(_i2) {
         event[_i2].addEventListener("click", function (e) {
           var day = event[_i2].innerText;
           var action = event[_i2].dataset.date;
-          var curentM = action.toString().slice(4, -55);
-          console.log(curentM);
+          var m = month.innerText;
 
-          var month = _this2.translate(curentM);
-
-          _this2.event(action, month, day);
+          _this2.event(action, m, day);
         });
       };
 
@@ -3540,73 +3532,13 @@ var Calendar = /*#__PURE__*/function () {
       var dataDate = new Date(this.y, this.m + a - 1);
       var y = this.date.getFullYear(),
           m = this.date.getMonth();
-      var curentM = new Date(y, this.date.getMonth() + a, 0);
-      console.log('555555555');
-      console.log(curentM);
-      var curentY = curentM.toString().slice(11, -47);
-      curentM = curentM.toString().slice(4, -55);
-      console.log(curentM);
-      var curM = this.translate(curentM);
-      console.log('6666666666');
-      console.log(curM);
+      var curentY = new Date(y, this.date.getMonth() + a, 0).getFullYear();
+      var curM = this.months[new Date(y, this.date.getMonth() + a, 0).getMonth()];
       curentMth.innerHTML = curentY + ' ' + curM;
       var lastDayM = new Date(y, m + a, 0).getDate();
       var newM = new Date(y, m + a, 0).getMonth();
       var startDay = new Date(curentY, newM, 1).getDay();
       return this.render(lastDayM, startDay, dataDate);
-    }
-  }, {
-    key: "translate",
-    value: function translate(curentM) {
-      switch (curentM) {
-        case 'Jan':
-          return curentM = 'Sausis';
-          break;
-
-        case 'Feb':
-          return curentM = 'Vasaris';
-          break;
-
-        case 'Mar':
-          return curentM = 'Kovas';
-          break;
-
-        case 'Apr':
-          return curentM = 'Balandis';
-          break;
-
-        case 'May':
-          return curentM = 'Gegužė';
-          break;
-
-        case 'Jun':
-          return curentM = 'Birželis';
-          break;
-
-        case 'Jul':
-          return curentM = 'Liepa';
-          break;
-
-        case 'Aug':
-          return curentM = 'Rugpjūtis';
-          break;
-
-        case 'Sep':
-          return curentM = 'Rugsėjis';
-          break;
-
-        case 'Oct':
-          return curentM = 'Spalis';
-          break;
-
-        case 'Nov':
-          return curentM = 'Lapkritis';
-          break;
-
-        case 'Dec':
-          return curentM = 'Gruodis';
-          break;
-      }
     }
   }, {
     key: "event",
@@ -4784,7 +4716,10 @@ var Menu = /*#__PURE__*/function () {
         var text = document.querySelectorAll(".menuText");
         var link = document.querySelectorAll(".menuLink");
 
-        if (elements || elements[0].className != "draggable parent") {
+        if (!elements || elements[0].className != "draggable parent") {
+          console.log(elements);
+          console.log('111111111');
+          console.log(elements[0].className);
           alert("Neteisingai suformuotas meniu");
         } else {
           var opts = _toConsumableArray(select).map(function (el) {

@@ -11,7 +11,7 @@ class Page extends Post
 
     public function setRoute($route, $args = '')
     {
-        $this->post_content  = "[front_shortcode route='$route' args='$args']";
+        $this->post_content  = "[front_shortcode route=$route args=$args]";
     }
 
     public function setTitle($post_title)
