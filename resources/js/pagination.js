@@ -1,3 +1,7 @@
+
+// extend this class and implement   addAction();
+
+
 import Api from './api';
 class Pagination {
     constructor() {
@@ -55,7 +59,9 @@ class Pagination {
             this.watch.innerHTML = await this.axios.getPostData(obj);
 
         } else {
+
             let hash = location.hash.split('#')[1];
+
 
             location.hash = hash
             let obj = {
@@ -65,18 +71,21 @@ class Pagination {
             }
             this.watch.innerHTML = await this.axios.getPostData(obj);
 
+
             const page = document.querySelectorAll(".paging");
 
             if (hash > page.length - 4) {
                 hash = 1
                 location.hash = hash
             }
+
         }
         this.paging();
         HTML = "";
         let addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
         if (addColor) {
             addColor.classList.add("active");
+
         }
         var changes = async () => {
 
@@ -113,6 +122,7 @@ class Pagination {
         option.addEventListener('change', selected);
         // child class implements button listeners or etc html functions 
         this.addAction();
+
     }
 }
 export default Pagination;

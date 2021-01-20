@@ -6,6 +6,7 @@ use BIT\app\Query;
 use BIT\app\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+
 class FrontMenuController {
 	public function index() {
 		// $query = new Query;

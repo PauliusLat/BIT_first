@@ -1,6 +1,6 @@
 "use strict";
-import Api from './api';
 import Pagination from './pagination';
+
 
 class Pag extends Pagination {
     constructor(target) {
@@ -9,18 +9,24 @@ class Pag extends Pagination {
         this.target = target;
         this.pages = 5;
          this.axios = new Api;
+
         this.changes;
         this.watch = document.querySelector(".innerpage");
         this.init();
     }
     init() {
         const DOM = document.getElementById(this.target);
-
         if (DOM) {
 
             this.hashChange();
             this.paging();
         }
+        
+    }
+    addAction(){
+        this.delete();
+        this.pageStore();
+        this.pageEdit(this.watch);
     }
 
     addAction() {
@@ -53,7 +59,7 @@ class Pag extends Pagination {
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
             title.value = "";
-            console.log(obj)
+            // console.log(obj)
             return setTimeout(() => { this.init() }, (300));
         });
     }
@@ -67,7 +73,6 @@ class Pag extends Pagination {
                     "click",
                     () => {
                         this.axios.delete(deleteApi, deleteId);
-                        // setTimeout(location.reload(), 500);
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
                         return setTimeout(() => { this.init() }, (300))
@@ -75,6 +80,7 @@ class Pag extends Pagination {
             }
         }
     }
+
     edit(inner) {
         const editBtn = document.querySelectorAll(".page-edit");
         for (let i = 0; i < editBtn.length; i++) {
@@ -88,7 +94,7 @@ class Pag extends Pagination {
                         editID: ID,
                     }
                     let HTML = await this.axios.getPostData(obj);
-                    inner.innerHTML = HTML;
+                    watch.innerHTML = HTML;
                     const title = document.getElementById("page_title");
                     const name = document.getElementById("page_name");
                     const updateBtn = document.getElementById("pageUpdate");
@@ -109,9 +115,9 @@ class Pag extends Pagination {
                             post_type: select.value,
                             page_state: stateArray
                         }
-                        console.log(select.value)
+                        // console.log(select.value)
                         this.axios.formDataApi(obj);
-                        console.log(stateArray);
+                        // console.log(stateArray);
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
                         // description.value = "";

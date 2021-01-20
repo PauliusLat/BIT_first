@@ -2,9 +2,11 @@
 
 "use strict";
 import Pagination from './pagination';
+
 class Tag extends Pagination {
     constructor(target) {
         super();
+
 
         this.api = 'tag_create';
         this.pages = 5;
@@ -14,15 +16,17 @@ class Tag extends Pagination {
         this.init();
     }
 
+
     init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
+
 
             this.hashChange();
             this.paging();
         }
     }
-
+  
     addAction() {
         this.create();
         this.delete();
@@ -73,6 +77,7 @@ class Tag extends Pagination {
                     });
             }
         }
+
     }
 
     edit() {
