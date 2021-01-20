@@ -42,6 +42,22 @@ class Pagination {
                 hash: hash
             }
             this.watch.innerHTML = await this.axios.getPostData(obj);
+        } else if (hash == undefined ||
+            hash == null ||
+            hash < 0 ||
+            hash == "" ||
+            hash == NaN ||
+            hash == Infinity) {
+            hash = 1
+            location.hash = hash
+            let pages = this.pages;
+            let obj = {
+                api: this.api,
+                pageSelected: pages,
+                hash: hash
+            }
+            this.watch.innerHTML = await this.axios.getPostData(obj);
+
         } else {
 
             let hash = location.hash.split('#')[1];
@@ -94,6 +110,7 @@ class Pagination {
         window.addEventListener('hashchange', changes);
         this.changes = changes;
         const option = document.getElementById("items");
+        console.log(option);
         option.value = this.pages;
         var selected = () => {
             this.pages = option.value;
