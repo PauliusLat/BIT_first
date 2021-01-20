@@ -27,6 +27,7 @@ class Api {
                     console.log('Error', error.message);
                 }
                 console.log(error);
+                console.log("Data from the server is not available !!!");
             });
     }
     async getDAta(api) {
@@ -37,9 +38,10 @@ class Api {
             }
         } catch (e) {
             console.error(e);
-            console.log("Duomenys is serveverio nepasiekiami !!!");
+            console.log("Data from the server is not available !!!");
         }
     }
+
     saveContent(api, id, content) {
         axios
             .post(
@@ -60,6 +62,7 @@ class Api {
                     console.log('Error', error.message);
                 }
                 console.log(error);
+                console.log("Data from the server is not available !!!");
             });
     }
     formDataApi(obj) {
@@ -78,6 +81,7 @@ class Api {
                     console.log(error.request);
                 } else {
                     console.log('Error', error.message);
+                    console.log("Data from the server is not available !!!");
                 }
                 console.log(error);
             });

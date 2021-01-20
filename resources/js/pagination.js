@@ -1,3 +1,4 @@
+
 // extend this class and implement   addAction();
 
 
@@ -10,10 +11,10 @@ class Pagination {
     paging() {
         const page = document.querySelectorAll(".paging");
         if (page.length) {
-            var nextPage
+
             for (let i = 0; i < page.length; i++) {
-               
-                nextPage = () => {
+
+                let nextPage = () => {
                     page[i].addEventListener('click', nextPage);
                     let id = parseInt(page[i].id);
                     location.hash = id;
@@ -33,6 +34,7 @@ class Pagination {
                 location.hash = hash
             }
         } else if (hash && HTML == null) {
+
             let pages = this.pages;
             let obj = {
                 api: this.api,
@@ -41,12 +43,10 @@ class Pagination {
             }
             this.watch.innerHTML = await this.axios.getPostData(obj);
         } else {
-            let hash = 1;
-            const page = document.querySelectorAll(".paging");
-            if (hash > page.length - 4 ) {
-                hash = 1
-                location.hash = hash
-            }
+
+            let hash = location.hash.split('#')[1];
+
+
             location.hash = hash
             let obj = {
                 api: this.api,
@@ -54,14 +54,25 @@ class Pagination {
                 hash: hash
             }
             this.watch.innerHTML = await this.axios.getPostData(obj);
+
+
+            const page = document.querySelectorAll(".paging");
+
+            if (hash > page.length - 4) {
+                hash = 1
+                location.hash = hash
+            }
+
         }
         this.paging();
         HTML = "";
         let addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
         if (addColor) {
             addColor.classList.add("active");
+
         }
         var changes = async () => {
+
             hash = location.hash.split('#')[1];
             if (hash != undefined &&
                 hash != null &&
@@ -92,11 +103,9 @@ class Pagination {
             option.removeEventListener('change', selected);
         }
         option.addEventListener('change', selected);
-        
         // child class implements button listeners or etc html functions 
         this.addAction();
 
-                
     }
 }
 export default Pagination;

@@ -15,7 +15,8 @@ class GalleryAdminController
 
 	public function index()
 	{
-		return View::adminRender('gallery.list');
+		$albums = (AlbumPost::all())->all();
+		return View::adminRender('gallery.list', ['albums' => $albums]);
 	}
 
 	public function create(Request $request, AlbumPost $album)
@@ -45,7 +46,7 @@ class GalleryAdminController
 	public function update(Request $request, AlbumPost $albumPost)
 	{
 
-		// _dc($request->request);
+
 		$albumPost->post_title = $request->request->get('title');
 		$albumPost->profileImgId = $request->request->get('profileImgID');
 		$albumPost->save();
@@ -73,8 +74,6 @@ class GalleryAdminController
 			$attachment->delete();
 		};
 		$album = AlbumPost::get($request->request->get('album'));
-		header("Location:" . get_admin_url() . 'admin.php?page=galerija-0edit&id=' . $album->ID);
-		die();
 	}
 
 	// public function store(Request $request, AlbumPost $album) {
