@@ -3133,8 +3133,9 @@ var AlbumList = /*#__PURE__*/function () {
                 var id = _this.array[i].id;
                 remove.remove();
 
-                _this.array.splice(i, 1); // this.axios.delete(api, id);
+                _this.array.splice(i, 1);
 
+                _this.axios["delete"](api, id);
 
                 _this["delete"]();
 
@@ -5031,7 +5032,6 @@ var Pag = /*#__PURE__*/function (_Pagination) {
     _this.api = "page_create";
     _this.target = target;
     _this.pages = 5;
-    _this.axios = new _api__WEBPACK_IMPORTED_MODULE_2__["default"]();
     _this.changes;
     _this.watch = document.querySelector(".innerpage");
 
@@ -5055,15 +5055,7 @@ var Pag = /*#__PURE__*/function (_Pagination) {
     value: function addAction() {
       this["delete"]();
       this.pageStore();
-      this.pageEdit(this.watch);
-    }
-  }, {
-    key: "addAction",
-    value: function addAction() {
-      var watch = this.watch;
-      this.create();
-      this["delete"]();
-      this.edit(watch);
+      this.pageEdit();
     }
   }, {
     key: "create",
@@ -5095,7 +5087,6 @@ var Pag = /*#__PURE__*/function (_Pagination) {
         var changes = _this2.changes;
         window.removeEventListener('hashchange', changes);
         title.value = "";
-        console.log(obj);
         return setTimeout(function () {
           _this2.init();
         }, 300);
@@ -5113,8 +5104,7 @@ var Pag = /*#__PURE__*/function (_Pagination) {
         var _loop = function _loop(i) {
           var deleteId = deleteBtn[i].value;
           deleteBtn[i].addEventListener("click", function () {
-            _this3.axios["delete"](deleteApi, deleteId); // setTimeout(location.reload(), 500);
-
+            _this3.axios["delete"](deleteApi, deleteId);
 
             var changes = _this3.changes;
             window.removeEventListener('hashchange', changes);
@@ -5154,7 +5144,7 @@ var Pag = /*#__PURE__*/function (_Pagination) {
 
                 case 4:
                   HTML = _context2.sent;
-                  watch.innerHTML = HTML;
+                  _this4.watch.innerHTML = HTML;
                   title = document.getElementById("page_title");
                   name = document.getElementById("page_name");
                   updateBtn = document.getElementById("pageUpdate");
@@ -5177,27 +5167,22 @@ var Pag = /*#__PURE__*/function (_Pagination) {
                             api = "page_update&id=";
                             obj = {
                               api: api + ID,
-                              // updateId: updateBtn.value,
                               page_title: title.value,
                               page_name: name.value,
                               post_type: select.value,
                               page_state: stateArray
                             };
-                            console.log(select.value);
 
                             _this4.axios.formDataApi(obj);
 
-                            console.log(stateArray);
                             changes = _this4.changes;
-                            window.removeEventListener('hashchange', changes); // description.value = "";
-                            // slug.value = "";
-
+                            window.removeEventListener('hashchange', changes);
                             name.value = "";
                             return _context.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));
 
-                          case 14:
+                          case 12:
                           case "end":
                             return _context.stop();
                         }
@@ -5251,6 +5236,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+// extend this class and implement   addAction();
 
 
 var Pagination = /*#__PURE__*/function () {
@@ -5295,8 +5281,10 @@ var Pagination = /*#__PURE__*/function () {
             _hash,
             pages,
             obj,
-            _hash2,
+            _pages,
             _obj,
+            _hash2,
+            _obj2,
             _page,
             addColor,
             changes,
@@ -5325,7 +5313,7 @@ var Pagination = /*#__PURE__*/function () {
                   location.hash = _hash;
                 }
 
-                _context2.next = 25;
+                _context2.next = 35;
                 break;
 
               case 9:
@@ -5345,21 +5333,43 @@ var Pagination = /*#__PURE__*/function () {
 
               case 14:
                 this.watch.innerHTML = _context2.sent;
-                _context2.next = 25;
+                _context2.next = 35;
                 break;
 
               case 17:
+                if (!(hash == undefined || hash == null || hash < 0 || hash == "" || hash == NaN || hash == Infinity)) {
+                  _context2.next = 27;
+                  break;
+                }
+
+                hash = 1;
+                location.hash = hash;
+                _pages = this.pages;
+                _obj = {
+                  api: this.api,
+                  pageSelected: _pages,
+                  hash: hash
+                };
+                _context2.next = 24;
+                return this.axios.getPostData(_obj);
+
+              case 24:
+                this.watch.innerHTML = _context2.sent;
+                _context2.next = 35;
+                break;
+
+              case 27:
                 _hash2 = location.hash.split('#')[1];
                 location.hash = _hash2;
-                _obj = {
+                _obj2 = {
                   api: this.api,
                   pageSelected: this.pages,
                   hash: _hash2
                 };
-                _context2.next = 22;
-                return this.axios.getPostData(_obj);
+                _context2.next = 32;
+                return this.axios.getPostData(_obj2);
 
-              case 22:
+              case 32:
                 this.watch.innerHTML = _context2.sent;
                 _page = document.querySelectorAll(".paging");
 
@@ -5368,7 +5378,7 @@ var Pagination = /*#__PURE__*/function () {
                   location.hash = _hash2;
                 }
 
-              case 25:
+              case 35:
                 this.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
@@ -5379,7 +5389,7 @@ var Pagination = /*#__PURE__*/function () {
 
                 changes = /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                    var _pages, _obj2;
+                    var _pages2, _obj3;
 
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
@@ -5392,14 +5402,14 @@ var Pagination = /*#__PURE__*/function () {
                               break;
                             }
 
-                            _pages = _this.pages;
-                            _obj2 = {
+                            _pages2 = _this.pages;
+                            _obj3 = {
                               api: _this.api,
-                              pageSelected: _pages,
+                              pageSelected: _pages2,
                               hash: hash
                             };
                             _context.next = 6;
-                            return _this.axios.getPostData(_obj2);
+                            return _this.axios.getPostData(_obj3);
 
                           case 6:
                             HTML = _context.sent;
@@ -5437,7 +5447,7 @@ var Pagination = /*#__PURE__*/function () {
 
                 this.addAction();
 
-              case 37:
+              case 47:
               case "end":
                 return _context2.stop();
             }

@@ -23,6 +23,10 @@ return [
 		'0delete' => 'GalleryAdminController@attDelete'
 	],
 
+	'newspage' => 'NewsFrontController@index',
+	// 'newspage@' => [
+	// 	'0paging' => 'NewsFrontController@paging',
+	// ],
 	// 'kategorija' => 'CategoryFrontController@index',
 
 	'kalendorius' => 'CalendarAdminController@adminIndex',
@@ -44,7 +48,7 @@ return [
 		'0menufront' => 'FrontMenuController@index'
 	],
 
-	
+
 	'cache' => 'CacheController@index',
 	'cache@' => [
 		'0def' => 'CacheController@index',

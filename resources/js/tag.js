@@ -2,6 +2,7 @@
 
 "use strict";
 import Pagination from './pagination';
+
 class Tag extends Pagination {
     constructor(target) {
         super();
@@ -22,7 +23,7 @@ class Tag extends Pagination {
             this.paging();
         }
     }
-
+  
     addAction() {
         this.create();
         this.delete();
@@ -114,6 +115,5 @@ class Tag extends Pagination {
                 });
         }
     }
-
 }
 export default Tag;

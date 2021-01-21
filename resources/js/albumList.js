@@ -30,7 +30,7 @@ class AlbumList {
                         let id = this.array[i].id;
                         remove.remove();
                         this.array.splice(i, 1);
-                        // this.axios.delete(api, id);
+                        this.axios.delete(api, id);
                         this.delete()
                         check = false;
                     }

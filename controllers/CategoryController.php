@@ -94,7 +94,6 @@ class CategoryController
             $category->addPageToCat($name, $term_id, 'page');
         }
 
-
         if ($request->files->get('image')) {
             $file = $request->files->get('image');
             $image = new Attachment();

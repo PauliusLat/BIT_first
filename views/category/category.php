@@ -159,5 +159,6 @@ if (!function_exists('wp_terms_checklist')) {
             ?>
         </table>
 
+
     </div>
 </div>
