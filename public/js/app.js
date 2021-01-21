@@ -5054,8 +5054,8 @@ var Page = /*#__PURE__*/function (_Pagination) {
     key: "addAction",
     value: function addAction() {
       this["delete"]();
-      this.pageStore();
-      this.pageEdit(this.watch);
+      this.create();
+      this.edit(this.watch);
     }
   }, {
     key: "addAction",
@@ -5153,7 +5153,7 @@ var Page = /*#__PURE__*/function (_Pagination) {
 
                 case 4:
                   HTML = _context2.sent;
-                  watch.innerHTML = HTML;
+                  _this4.watch.innerHTML = HTML;
                   title = document.getElementById("page_title");
                   name = document.getElementById("page_name");
                   updateBtn = document.getElementById("pageUpdate");

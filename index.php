@@ -69,8 +69,8 @@ App::start();
 
 add_action('init', function () {
 
-    $page = Page::all()->shortCode('news')->all();
-    _dc($page);
+
+
 
     // $request = App::start()->getService('request');
     // if ($request->query->get('items') != null) {

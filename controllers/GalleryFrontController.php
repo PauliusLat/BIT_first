@@ -79,6 +79,8 @@ class GalleryFrontController
 		$album = AlbumPost::get($id);
 		$title = $album->post_title;
 		$images = $album->attachments ?? [];
+		
+
 		return View::render('gallery.show', ["images" => $images, "title" => $title]);
 	}
 

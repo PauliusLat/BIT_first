@@ -10,7 +10,6 @@ class Page extends Pagination {
         this.target = target;
         this.pages = 5;
         //  this.axios = new Api;
-
         this.changes;
         this.watch = document.querySelector(".innerpage");
         this.init();
@@ -26,8 +25,8 @@ class Page extends Pagination {
     }
     addAction(){
         this.delete();
-        this.pageStore();
-        this.pageEdit(this.watch);
+        this.create();
+        this.edit(this.watch);
     }
 
     addAction() {
@@ -95,7 +94,7 @@ class Page extends Pagination {
                         editID: ID,
                     }
                     let HTML = await this.axios.getPostData(obj);
-                    watch.innerHTML = HTML;
+                    this.watch.innerHTML = HTML;
                     const title = document.getElementById("page_title");
                     const name = document.getElementById("page_name");
                     const updateBtn = document.getElementById("pageUpdate");

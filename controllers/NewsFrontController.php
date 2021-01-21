@@ -16,8 +16,8 @@ class NewsFrontController
     public function index()
     {
         $request = App::start()->getService('request');
-        if ($request->query->get('items') != null) {
-            $limit = $request->query->get('items');
+        if ($request->query->get('showitems') != null) {
+            $limit = $request->query->get('showitems');
         } else {
             $limit = 5;
         }
@@ -28,7 +28,6 @@ class NewsFrontController
             $number = 1;
         }
 
-        // _dc($number);
         $allNews = NewsPost::all()->all();
         $total = count(NewsPost::all()->all());
         $pagination = new Pagination($limit, $number, $total);
@@ -40,8 +39,8 @@ class NewsFrontController
             }
         }
 
-        Page::all()->shortCode('news')->all()[0]->getLink();
-        $output = View::adminRender('news.front', ['html' =>  $pageArr, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
+        $newsLink =  reset(Page::all()->shortCode('news')->all())->getLink();
+        $output = View::adminRender('news.front', ['newsLink' => $newsLink, 'html' =>  $pageArr, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
         return View::render('news.news',  ['html' => $output]);
     }
 
