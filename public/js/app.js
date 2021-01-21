@@ -4983,6 +4983,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 
 
 
@@ -5015,6 +5016,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Pag = /*#__PURE__*/function (_Pagination) {
   _inherits(Pag, _Pagination);
 
@@ -5029,7 +5031,7 @@ var Pag = /*#__PURE__*/function (_Pagination) {
     _this.api = "page_create";
     _this.target = target;
     _this.pages = 5;
-    _this.axios = new Api();
+    _this.axios = new _api__WEBPACK_IMPORTED_MODULE_2__["default"]();
     _this.changes;
     _this.watch = document.querySelector(".innerpage");
 

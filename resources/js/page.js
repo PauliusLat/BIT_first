@@ -1,5 +1,6 @@
 "use strict";
 import Pagination from './pagination';
+import Api from './api';
 
 class Pag extends Pagination {
     constructor(target) {
@@ -7,7 +8,7 @@ class Pag extends Pagination {
         this.api = "page_create";
         this.target = target;
         this.pages = 5;
-         this.axios = new Api;
+        this.axios = new Api;
         this.changes;
         this.watch = document.querySelector(".innerpage");
         this.init();
