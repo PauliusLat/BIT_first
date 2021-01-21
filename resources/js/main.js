@@ -5,7 +5,7 @@ import startCat from './category.js';
 import startTag from './tag.js';
 import startMenu from './menu.js';
 import Tag from './tag.js';
-import Pag from './page.js';
+import Page from './page.js';
 import Category from './category.js';
 import Menu from './menu.js';
 import Calendar from './calendar.js';
@@ -26,7 +26,7 @@ new Category('catStart');
 new Menu('.adminMenuStart');
 new AlbumList('startAlbumLis');
 new AlbumEdit('.containerAlbumEdit')
-new Pag('pageStart');
+new Page('pageStart');
 
 
 

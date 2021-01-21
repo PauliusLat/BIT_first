@@ -9,6 +9,9 @@
         ?>
             <div class="draggable parent" id="addDrag" draggable="true">
                 <?php
+                $wpPage = get_page_by_title($menu->pages[$index], 'OBJECT', 'page');
+                $pagePost = $page->get($wpPage->ID);
+                $link = $pagePost->getLink();
                 $name = $menu->names[$index];
                 ?>
                 <div class="menuName">
@@ -21,7 +24,7 @@
                     <label for="standard-select">
                     </label>
                     <select class="select-css mainSelect" id="standard-select">
-                        <option value="<?= $menu->pageLinks[$index] ?>" selected><?= $menu->pages[$index] ?></option>
+                        <option value="<?= $link ?>" selected><?= $menu->pages[$index] ?></option>
                         <?php
                         foreach ($pages as $value) {
                         ?>
@@ -93,9 +96,9 @@
             ?>
                     <div class="draggable submenu" id="addDrag" draggable="true">
                         <?php
-                        // $wpPage = get_page_by_title($menu->subpages[$index][$key], 'OBJECT', 'page');
-                        // $pagePost = $page->get($wpPage->ID);
-                        // $sublink = $pagePost->getLink();
+                        $wpPage = get_page_by_title($menu->subpages[$index][$key], 'OBJECT', 'page');
+                        $pagePost = $page->get($wpPage->ID);
+                        $sublink = $pagePost->getLink();
                         $subname = $menu->subnames[$index][$key];
                         ?>
                         <div class="menuName">
@@ -107,7 +110,7 @@
                             <label for="standard-select">
                             </label>
                             <select class="select-css mainSelect" id="standard-select">
-                                <option value="<?= $menu->subpageLinks[$index][$key] ?>" selected><?= $menu->subpages[$index][$key] ?></option>>
+                                <option value="<?= $sublink ?>" selected><?= $menu->subpages[$index][$key] ?></option>>
                                 <?php
                                 foreach ($pages as $value) {
                                 ?>

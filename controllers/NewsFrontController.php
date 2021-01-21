@@ -22,8 +22,8 @@ class NewsFrontController
             $limit = 5;
         }
 
-        if ($request->query->get('page')) {
-            $number = $request->query->get('page');
+        if ($request->query->get('psl')) {
+            $number = $request->query->get('psl');
         } else {
             $number = 1;
         }
@@ -40,6 +40,7 @@ class NewsFrontController
             }
         }
 
+        Page::all()->shortCode('news')->all()[0]->getLink();
         $output = View::adminRender('news.front', ['html' =>  $pageArr, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
         return View::render('news.news',  ['html' => $output]);
     }

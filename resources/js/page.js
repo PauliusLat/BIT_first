@@ -1,14 +1,15 @@
 "use strict";
 import Pagination from './pagination';
+// import Api from './api';
 
 
-class Pag extends Pagination {
+class Page extends Pagination {
     constructor(target) {
         super();
         this.api = "page_create";
         this.target = target;
         this.pages = 5;
-         this.axios = new Api;
+        //  this.axios = new Api;
 
         this.changes;
         this.watch = document.querySelector(".innerpage");
@@ -129,4 +130,4 @@ class Pag extends Pagination {
         }
     }
 }
-export default Pag;
+export default Page;

@@ -57,7 +57,18 @@ class Collection
         return new self($stateItems);
     }
 
-
+    public function shortCode($shortCode = '')
+    {
+        $shortCode = (string)$shortCode;
+        $shItems = [];
+        foreach ($this->items as $value) {
+            $shCode = substr((explode(' ', $value->post_content))[1], 6);
+            if (strcmp($shCode, $shortCode) === 0) {
+                $shItems[$value->ID] = $value;
+            }
+        }
+        return new self($shItems);
+    }
 
 
     protected function getArrayableItems($items)

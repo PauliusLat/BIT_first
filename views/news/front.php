@@ -14,7 +14,7 @@ use BIT\app\Page;
     $pageNum = 1;
     $nav = '';
     for ($page = 1; $page <= $pages; $page++) {
-        $nav .= '&nbsp <a href = "http://localhost:8080/wordpress/naujienos/?page=' . $page . '"  class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
+        $nav .= '&nbsp <a href = "' . get_site_url() . '/naujienos/?psl=' . $page . '"  class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
         //$nav .= '&nbsp <a href = "' . get_site_url() .  '/' . 'naujienos' . '"  name = "page" class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
         $next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';
         $prev = '<a class="paging" id = "' . $prevpage . ' "><</a>';
@@ -33,7 +33,7 @@ use BIT\app\Page;
                 <option value="10">10</option>
             </select>
         </div>
-        <div class="admin-event-buttons">
+        <div class="buttons">
             <button type="submit" id="create" class="admin-event-button">Pridėti</button>
         </div>
         <form>

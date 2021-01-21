@@ -3,6 +3,7 @@
 "use strict";
 import Pagination from './pagination';
 
+
 class Tag extends Pagination {
     constructor(target) {
         super();
