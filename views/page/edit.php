@@ -12,9 +12,10 @@
         <div class='label'>
             <label class="tcp-label">Pasirinkite kitą post'o tipą</label>
         </div>
-        <select class="form-control" name="post-type" id="post">s
-            <option value="<?= $shortcode ?>" selected><?= $shortcode ?></option>>
+        <select class="form-control" name="post-type" id="post">
+            <option value="<?= $shortcode ?>" selected><?= $shortcode ?></option>
             <?php
+
             foreach ($post_types as $post => $args) : ?>
                 <option value="<?= $post ?>"><?= $post ?></option>
             <?php endforeach; ?>

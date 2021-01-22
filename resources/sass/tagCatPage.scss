@@ -18,9 +18,13 @@
 
 .page {
   display: flex;
+
   margin-top: 20px;
   font-size: 16px;
   margin-bottom: 20px;
+  .paging {
+    color: $dark-gray;
+  }
 }
 
 .submitLink {

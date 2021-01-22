@@ -2,7 +2,7 @@
 import Pagination from './pagination';
 
 
-class Pag extends Pagination {
+class Page extends Pagination {
     constructor(target) {
         super();
         this.api = "page_create";
@@ -12,10 +12,10 @@ class Pag extends Pagination {
         this.watch = document.querySelector(".innerpage");
         this.init();
     }
+
     init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
-
             this.hashChange();
             this.paging();
         }
@@ -31,7 +31,7 @@ class Pag extends Pagination {
         const title = document.getElementById("page_title");
         const api = "page_store";
         const submit = document.getElementById("create");
-
+        
         submit.addEventListener("click", () => {
             let post = document.getElementById('post');
             let select = post.options[post.selectedIndex];
@@ -46,6 +46,7 @@ class Pag extends Pagination {
                 post_type: select.value,
                 page_state: stateArray
             }
+            console.log(obj)
             this.axios.formDataApi(obj);
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
@@ -118,4 +119,4 @@ class Pag extends Pagination {
         }
     }
 }
-export default Pag;
+export default Page;
