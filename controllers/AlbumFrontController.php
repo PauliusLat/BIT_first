@@ -48,8 +48,6 @@ class AlbumFrontController
             }
         }
 
-        // $albumLink =  reset(Page::all()->shortCode('all-album')->all())->getLink();
-
         $output = View::adminRender('album.album',  ["data" => $pageArr, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
         $response = new JsonResponse(['html' => $output]);
         return $response;

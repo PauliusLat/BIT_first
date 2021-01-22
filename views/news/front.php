@@ -34,9 +34,6 @@ use BIT\app\Page;
                 <option value="10">10</option>
             </select>
         </div>
-        <!-- <div class="buttons">
-        <button type="submit" id="create" class="admin-event-button">Pridėti</button>
-    </div> -->
         <form>
 
             <?php

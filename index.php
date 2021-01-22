@@ -69,11 +69,6 @@ App::start();
 
 add_action('init', function () {
 
-    // $albumLink =  reset(Page::all()->shortCode('all-album')->all())->getLink();
-    $albumLink = Page::all()->shortCode('all-album')->all();
-    // _dc($albumLink);
-
-
     // $request = App::start()->getService('request');
     // if ($request->query->get('items') != null) {
     //     $limit = $request->query->get('items');

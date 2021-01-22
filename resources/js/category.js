@@ -130,18 +130,15 @@ class Category extends Pagination {
                     const slug = document.getElementById("category_slug");
                     const description = document.getElementById("category_description");
                     let parent = document.getElementById('cat');
-                
                     let select;
-
-                    if (parent.options[parent.selectedIndex] != undefined) {
-                        select = parent.options[parent.options.selectedIndex].value;
-                    } else {
-                        select = 0;
-                    }
-
                     const updateBtn = document.getElementById("catUpdate");
                     updateBtn.addEventListener("click", async () => {
                         let api = "category_update";
+                        if (parent.options[parent.selectedIndex] != undefined) {
+                            select = parent.options[parent.options.selectedIndex].value;
+                        } else {
+                            select = 0;
+                        }
                         let obj = {
                             api: api,
                             updateId: updateBtn.value,

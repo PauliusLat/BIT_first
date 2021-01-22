@@ -4019,13 +4019,6 @@ var Category = /*#__PURE__*/function (_Pagination) {
                   slug = document.getElementById("category_slug");
                   description = document.getElementById("category_description");
                   parent = document.getElementById('cat');
-
-                  if (parent.options[parent.selectedIndex] != undefined) {
-                    select = parent.options[parent.options.selectedIndex].value;
-                  } else {
-                    select = 0;
-                  }
-
                   updateBtn = document.getElementById("catUpdate");
                   updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
                     var api, obj, changes;
@@ -4034,6 +4027,13 @@ var Category = /*#__PURE__*/function (_Pagination) {
                         switch (_context2.prev = _context2.next) {
                           case 0:
                             api = "category_update";
+
+                            if (parent.options[parent.selectedIndex] != undefined) {
+                              select = parent.options[parent.options.selectedIndex].value;
+                            } else {
+                              select = 0;
+                            }
+
                             obj = {
                               api: api,
                               updateId: updateBtn.value,
@@ -4056,7 +4056,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                               _this4.init();
                             }, 300));
 
-                          case 10:
+                          case 11:
                           case "end":
                             return _context2.stop();
                         }
@@ -4064,7 +4064,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                     }, _callee2);
                   })));
 
-                case 14:
+                case 13:
                 case "end":
                   return _context3.stop();
               }
