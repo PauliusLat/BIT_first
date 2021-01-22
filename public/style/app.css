@@ -2073,6 +2073,10 @@ button:focus {
   margin-bottom: 20px;
 }
 
+.page .paging {
+  color: #23282D;
+}
+
 .submitLink {
   background-color: transparent;
   text-decoration: underline;
