@@ -38,7 +38,6 @@ class NewsFrontController
                 array_push($pageArr, $value);
             }
         }
-
         $newsLink =  reset(Page::all()->shortCode('news')->all())->getLink();
         $output = View::adminRender('news.front', ['newsLink' => $newsLink, 'html' =>  $pageArr, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
         return View::render('news.news',  ['html' => $output]);

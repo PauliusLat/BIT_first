@@ -6,6 +6,8 @@ use BIT\app\Attachment;
 use BIT\app\Page;
 use BIT\app\View;
 use BIT\models\AlbumPost;
+use BIT\app\Pagination;
+use BIT\app\App;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -79,8 +81,6 @@ class GalleryFrontController
 		$album = AlbumPost::get($id);
 		$title = $album->post_title;
 		$images = $album->attachments ?? [];
-		
-
 		return View::render('gallery.show', ["images" => $images, "title" => $title]);
 	}
 

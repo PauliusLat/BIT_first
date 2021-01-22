@@ -22,10 +22,11 @@ use BIT\app\Page;
         $first = '<a href = "' . $newsLink . '?psl=' . $firstpage . '&showitems=' . $limit . '" class="paging" id = "' . $firstpage . ' "><<&nbsp</a>';
     }
     ?>
-    <form action="" method='get'>
+    <form name="myform" action="" method='get'>
         <div class='selectPages sm-1-2'>
             <label for="showitems">Rodyti puslapyje:</label>
-            <select name="showitems" id="items">
+            <!-- <select name="showitems" id="items"> -->
+            <select onchange="myform.submit()" name="showitems">
                 <option selected value="<?= $limit ?>"><?= $limit ?></option>
                 <option value="5">5</option>
                 <option value="7">7</option>
@@ -33,9 +34,9 @@ use BIT\app\Page;
                 <option value="10">10</option>
             </select>
         </div>
-        <div class="buttons">
-            <button type="submit" id="create" class="admin-event-button">Pridėti</button>
-        </div>
+        <!-- <div class="buttons">
+        <button type="submit" id="create" class="admin-event-button">Pridėti</button>
+    </div> -->
         <form>
 
             <?php

@@ -5015,7 +5015,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
- // import Api from './api';
+
 
 var Page = /*#__PURE__*/function (_Pagination) {
   _inherits(Page, _Pagination);
@@ -5030,8 +5030,7 @@ var Page = /*#__PURE__*/function (_Pagination) {
     _this = _super.call(this);
     _this.api = "page_create";
     _this.target = target;
-    _this.pages = 5; //  this.axios = new Api;
-
+    _this.pages = 5;
     _this.changes;
     _this.watch = document.querySelector(".innerpage");
 
@@ -5053,17 +5052,9 @@ var Page = /*#__PURE__*/function (_Pagination) {
   }, {
     key: "addAction",
     value: function addAction() {
-      this["delete"]();
-      this.create();
-      this.edit(this.watch);
-    }
-  }, {
-    key: "addAction",
-    value: function addAction() {
-      var watch = this.watch;
       this.create();
       this["delete"]();
-      this.edit(watch);
+      this.edit();
     }
   }, {
     key: "create",
@@ -5130,7 +5121,7 @@ var Page = /*#__PURE__*/function (_Pagination) {
     }
   }, {
     key: "edit",
-    value: function edit(inner) {
+    value: function edit() {
       var _this4 = this;
 
       var editBtn = document.querySelectorAll(".page-edit");

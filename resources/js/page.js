@@ -1,6 +1,5 @@
 "use strict";
 import Pagination from './pagination';
-// import Api from './api';
 
 
 class Page extends Pagination {
@@ -9,31 +8,23 @@ class Page extends Pagination {
         this.api = "page_create";
         this.target = target;
         this.pages = 5;
-        //  this.axios = new Api;
         this.changes;
         this.watch = document.querySelector(".innerpage");
         this.init();
     }
+
     init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
-
             this.hashChange();
             this.paging();
         }
-        
-    }
-    addAction(){
-        this.delete();
-        this.create();
-        this.edit(this.watch);
     }
 
     addAction() {
-        const watch = this.watch
         this.create();
         this.delete();
-        this.edit(watch);
+        this.edit();
     }
 
     create() {
@@ -81,7 +72,7 @@ class Page extends Pagination {
         }
     }
 
-    edit(inner) {
+    edit() {
         const editBtn = document.querySelectorAll(".page-edit");
         for (let i = 0; i < editBtn.length; i++) {
             let ID = editBtn[i].value;
