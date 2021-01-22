@@ -5,9 +5,7 @@ use BIT\app\Page;
 ?>
 
 <div class="sm-3-4 al">
-    <div class="news">
-        NAUJIENOS
-    </div>
+
 
     <?php
     // _dc($limit);
