@@ -5,9 +5,7 @@ use BIT\app\Page;
 ?>
 
 <div class="sm-3-4 al">
-    <div class="news">
-        NAUJIENOS
-    </div>
+
 
     <?php
 // _dc($limit);
@@ -22,6 +20,9 @@ for ($page = 1; $page <= $pages; $page++) {
 	$first = '<a class="paging" id = "' . $firstpage . ' "><<&nbsp</a>';
 }
 ?>
+    <div class="news">
+        NAUJIENOS
+    </div>
     <form action="" method='get'>
         <div class='selectPages sm-1-2'>
             <label for="items">Rodyti puslapyje:</label>
