@@ -68,6 +68,8 @@ App::start();
 
 
 add_action('init', function () {
+    // $page =  reset(Page::all()->shortCode('upload-images')->all())->getLink();
+
 
     // $request = App::start()->getService('request');
     // if ($request->query->get('items') != null) {
