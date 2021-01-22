@@ -14,8 +14,8 @@ class AlbumFrontController
 {
     public function index()
     {
-        $query = new Query;
-        $page = $query->postType('page')->postName('upload-images')->getPost()->all();
+        $page = reset(Page::all()->shortCode('uploade-images')->all())->getLink();
+        // _dc($page);
         // $page = $page[0];
         // $page = $page->getLink();
         return View::render('gallery.all-album', ['page' => $page]);
