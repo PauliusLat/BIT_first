@@ -3,25 +3,23 @@
 <!-- <div class="navFront"> -->
 <?php
 
-
-// _dc($menu);
-foreach (range((count($menu->names) - 1), 0) as $index) : ?>
+foreach (range((count($menu->names) - 1), 0) as $index): ?>
     <div class='dropdown'>
-        <a class="dropbtn" href="<?= $menu->pageLinks[$index] ?>"><?= $menu->names[$index] ?></a>
+        <a class="dropbtn" href="<?=$menu->pageLinks[$index]?>"><?=$menu->names[$index]?></a>
         <?php
-        if (count($menu->subnames[$index]) != 0) {
-        ?>
+if (count($menu->subnames[$index]) != 0) {
+	?>
             <div class="dropdown-content">
                 <?php
-                foreach ($menu->subnames[$index] as $key => $subindex) : ?>
-                    <a href="<?= $menu->subpageLinks[$index][$key] ?>"><?= $menu->subnames[$index][$key] ?></a>
-                <?php endforeach; ?>
+foreach ($menu->subnames[$index] as $key => $subindex): ?>
+                    <a href="<?=$menu->subpageLinks[$index][$key]?>"><?=$menu->subnames[$index][$key]?></a>
+                <?php endforeach;?>
             </div>
         <?php
-        }
-        ?>
+}
+?>
     </div>
-<?php endforeach; ?>
+<?php endforeach;?>
 
 <!-- <div class='dropdown'> -->
 <!-- <a class='dropbtn' href="#">KONTAKTAI</a> -->

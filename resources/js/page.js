@@ -23,8 +23,8 @@ class Pag extends Pagination {
     }
     addAction() {
         this.delete();
-        this.pageStore();
-        this.pageEdit();
+        this.create();
+        this.edit();
     }
 
     create() {

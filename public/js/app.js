@@ -5052,8 +5052,8 @@ var Pag = /*#__PURE__*/function (_Pagination) {
     key: "addAction",
     value: function addAction() {
       this["delete"]();
-      this.pageStore();
-      this.pageEdit();
+      this.create();
+      this.edit();
     }
   }, {
     key: "create",
