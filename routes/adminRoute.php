@@ -23,7 +23,7 @@ return [
 		'0delete' => 'GalleryAdminController@attDelete'
 	],
 
-	'newspage' => 'NewsFrontController@index',
+	// 'newspage' => 'NewsFrontController@index',
 	// 'newspage@' => [
 	// 	'0paging' => 'NewsFrontController@paging',
 	// ],
@@ -45,7 +45,8 @@ return [
 	'create' => 'AdminMenuController@index',
 	'create@' => [
 		'0def' => 'AdminMenuController@index',
-		'0menufront' => 'FrontMenuController@index'
+		'0menufront' => 'FrontMenuController@index',
+		// '0newspage' => 'NewsFrontController@index'
 	],
 
 
