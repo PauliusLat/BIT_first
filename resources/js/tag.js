@@ -90,6 +90,7 @@ class Tag extends Pagination {
                         editID: ID,
                         taxonomy_type: taxonomy,
                     }
+                    console.log(obj)
                     let HTML = await this.axios.getPostData(obj);
                     this.watch.innerHTML = HTML;
                     const name = document.getElementById("tag_name");

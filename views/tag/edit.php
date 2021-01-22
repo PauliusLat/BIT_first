@@ -6,17 +6,17 @@
         <div class='label'>
             <label class="tcp-label">Įveskite naują 'tag'o' pavadinimą</label>
         </div>
-        <input type="text" name="tag-name" id="tag-name" value="" placeholder="Įrašykite tag'o pavadinimą..." class="tcp-input">
+        <input type="text" name="tag_name" id="tag_name" value="<?= $tag->name ?>" placeholder="Įrašykite tag'o pavadinimą..." class="tcp-input">
         <div class='label'>
-            <label class="tcp-label">Įveskite naują 'tag'o''slug'</label>
+            <label class="tcp_label">Įveskite naują 'tag'o''slug'</label>
         </div>
-        <input type="text" name="tag-slug" id="tag-slug" value="" placeholder="Įrašykite tag'o slug..." class="tcp-input">
+        <input type="text" name="tag_slug" id="tag_slug" value="<?= $tag->slug ?>" placeholder="Įrašykite tag'o slug..." class="tcp-input">
         <div class='label'>
             <label class="tcp-label">Įveskine naują 'tag'o' aprašymas</label>
         </div>
-        <textarea name="tag-description" id="tag-description" value="" placeholder="Įrašykite tag'o aprašymą..." class="tcp-input"></textarea>
+        <textarea name="tag_description" id="tag_description" value="<?= $tag->description ?>" placeholder="Įrašykite tag'o aprašymą..." class="tcp-input"></textarea>
         <div class="buttons">
-            <button type="submit" id="create" class="btn-blue">Pakeisti</button>
+            <button class="tagUpdateBtn btn-blue" type="submit" id="tagUpdate" value="<?= $tag->term_id ?>">Pakeisti</button>
         </div>
     </div>
 </div>

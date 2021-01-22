@@ -3931,7 +3931,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
           slug: slug.value,
           page: selectedPage,
           content: description.value,
-          cat_parent: description.value
+          cat_parent: select.value
         };
 
         if (obj) {
@@ -4746,6 +4746,8 @@ var Menu = /*#__PURE__*/function () {
             };
           }
 
+          console.log(obj);
+
           _this5.axios.formDataApi(obj);
         }
       });
@@ -5016,15 +5018,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var Pag = /*#__PURE__*/function (_Pagination) {
-  _inherits(Pag, _Pagination);
+var Page = /*#__PURE__*/function (_Pagination) {
+  _inherits(Page, _Pagination);
 
-  var _super = _createSuper(Pag);
+  var _super = _createSuper(Page);
 
-  function Pag(target) {
+  function Page(target) {
     var _this;
 
-    _classCallCheck(this, Pag);
+    _classCallCheck(this, Page);
 
     _this = _super.call(this);
     _this.api = "page_create";
@@ -5038,7 +5040,7 @@ var Pag = /*#__PURE__*/function (_Pagination) {
     return _this;
   }
 
-  _createClass(Pag, [{
+  _createClass(Page, [{
     key: "init",
     value: function init() {
       var DOM = document.getElementById(this.target);
@@ -5203,10 +5205,10 @@ var Pag = /*#__PURE__*/function (_Pagination) {
     }
   }]);
 
-  return Pag;
+  return Page;
 }(_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Pag);
+/* harmony default export */ __webpack_exports__["default"] = (Page);
 
 /***/ }),
 
@@ -5731,10 +5733,11 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                     editID: ID,
                     taxonomy_type: taxonomy
                   };
-                  _context2.next = 4;
+                  console.log(obj);
+                  _context2.next = 5;
                   return _this4.axios.getPostData(obj);
 
-                case 4:
+                case 5:
                   HTML = _context2.sent;
                   _this4.watch.innerHTML = HTML;
                   name = document.getElementById("tag_name");
@@ -5775,7 +5778,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                     }, _callee);
                   })));
 
-                case 11:
+                case 12:
                 case "end":
                   return _context2.stop();
               }
@@ -5815,8 +5818,8 @@ var Tag = /*#__PURE__*/function (_Pagination) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
