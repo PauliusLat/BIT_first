@@ -19,11 +19,11 @@ class Page extends Pagination {
             this.hashChange();
             this.paging();
         }
-    }
 
+    }
     addAction() {
-        this.create();
         this.delete();
+        this.create();
         this.edit();
     }
 
@@ -50,7 +50,6 @@ class Page extends Pagination {
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
             title.value = "";
-            // console.log(obj)
             return setTimeout(() => { this.init() }, (300));
         });
     }
@@ -74,6 +73,7 @@ class Page extends Pagination {
 
     edit() {
         const editBtn = document.querySelectorAll(".page-edit");
+
         for (let i = 0; i < editBtn.length; i++) {
             let ID = editBtn[i].value;
             editBtn[i].addEventListener(
@@ -100,19 +100,17 @@ class Page extends Pagination {
                         const api = "page_update&id=";
                         let obj = {
                             api: api + ID,
-                            // updateId: updateBtn.value,
                             page_title: title.value,
                             page_name: name.value,
                             post_type: select.value,
                             page_state: stateArray
                         }
-                        // console.log(select.value)
+
                         this.axios.formDataApi(obj);
-                        // console.log(stateArray);
+ 
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
-                        // description.value = "";
-                        // slug.value = "";
+
                         name.value = "";
                         return setTimeout(() => { this.init() }, (300))
                     });

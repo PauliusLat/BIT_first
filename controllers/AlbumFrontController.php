@@ -2,11 +2,11 @@
 
 namespace BIT\controllers;
 
-use BIT\app\View;
 use BIT\app\Query;
 use BIT\app\App;
 use BIT\app\Page;
 use BIT\app\Pagination;
+use BIT\app\View;
 use BIT\models\AlbumPost;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -16,8 +16,8 @@ class AlbumFrontController
     {
         $query = new Query;
         $page = $query->postType('page')->postName('upload-images')->getPost()->all();
-        $page = $page[0];
-        $page = $page->getLink();
+        // $page = $page[0];
+        // $page = $page->getLink();
         return View::render('gallery.all-album', ['page' => $page]);
     }
 

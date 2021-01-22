@@ -25,7 +25,6 @@ class Category extends Pagination {
         }
     }
 
-
     addAction() {
 
         this.readImage.image();

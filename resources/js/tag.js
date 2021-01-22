@@ -74,7 +74,6 @@ class Tag extends Pagination {
                     });
             }
         }
-
     }
 
     edit() {
@@ -117,6 +116,5 @@ class Tag extends Pagination {
                 });
         }
     }
-
 }
 export default Tag;
