@@ -94,7 +94,6 @@ class CategoryController
             $category->addPageToCat($name, $term_id, 'page');
         }
 
-
         if ($request->files->get('image')) {
             $file = $request->files->get('image');
             $image = new Attachment();
@@ -130,11 +129,12 @@ class CategoryController
         } else {
             $parent_id = 0;
         }
+        // _dc($parent_id);
         $id = $request->request->get('updateId');
         //update cat and cat page
         $category = new Category;
         $session->flash('success_message', 'kategorija sėkmingai pakoreguota');
-        $category->updateCat($id, $name, $slug, $description, $parent_id);
+        $category->updateCat($id, $name, $slug,  $parent_id, $description);
         if ($request->files->get('image')) {
             if ($category->getCatImage($id)) {
                 $category->deleteCatImage($id);

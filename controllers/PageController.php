@@ -29,6 +29,7 @@ class PageController
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
+
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
@@ -100,7 +101,8 @@ class PageController
     {
         $postContent = $page->post_content;
         $codeArr = str_word_count($postContent, 1);
-        $shortcode = explode("'", $codeArr[3])[1];
+        $shortcode = $codeArr[3];
+
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];

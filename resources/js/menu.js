@@ -195,7 +195,7 @@ class Menu {
       const link = document.querySelectorAll(".menuLink");
 
 
-      if (elements || elements[0].className != "draggable parent") {
+      if (!elements || elements[0].className != "draggable parent") {
         alert("Neteisingai suformuotas meniu")
       } else {
         const opts = [...select].map(el => el.options);
@@ -220,6 +220,7 @@ class Menu {
             link: c
           }
         }
+        console.log(obj);
         this.axios.formDataApi(obj);
       }
     })

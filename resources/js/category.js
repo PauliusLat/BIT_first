@@ -1,7 +1,10 @@
 "use strict";
 import Pagination from './pagination';
 import Profile_image from './profile_image';
-class Category extends Pagination{
+
+
+class Category extends Pagination {
+
     constructor(target) {
         super();
 
@@ -11,53 +14,35 @@ class Category extends Pagination{
         this.target = target;
         this.watch = document.querySelector(".innercat");
         this.changes;
-        this.init();
         this.readImage = new Profile_image();
+        this.init();
     }
-    async init(hash = null, HTML = null) {
+    async init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
-            if (HTML == null) {
-                location.hash = 1;
-                let obj = {
-                    api: this.api,
-                    hash: 1
-                }
-                HTML = await this.axios.getPostData(obj);
-                this.watch.innerHTML = HTML;
-            } else {
-                this.watch.innerHTML = HTML;
-            }
-            this.paging();
-            HTML = "";
-
-            let addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
-
-            if(addColor){
-                addColor.classList.add("active");
-            }         
-            this.readImage.image();
             this.hashChange();
             this.paging();
         }
     }
 
-    addAction(){
-        this.catStore();
+    addAction() {
+
+        this.readImage.image();
+        this.create();
         this.delete();
-        this.catEdit(this.watch);
+        this.edit();
     }
 
-    catStore() {
+    create() {
         const name = document.getElementById("category-name");
-          const slug = document.getElementById("category-slug");
-          const description = document.getElementById("category-description");
-          let selectedPage;
-          if (document.querySelector('[name="catPage"]:checked')) {
+        const slug = document.getElementById("category-slug");
+        const description = document.getElementById("category-description");
+        let selectedPage;
+        if (document.querySelector('[name="catPage"]:checked')) {
             selectedPage = 1;
-          } else {
+        } else {
             selectedPage = 0;
-          }
+        }
         const submit = document.getElementById("create");
         const api = 'category_store';
 
@@ -65,24 +50,23 @@ class Category extends Pagination{
             let parent = document.getElementById('cat');
             let select;
             if (parent.options[parent.selectedIndex] != undefined) {
-              select = parent.options[parent.selectedIndex];
+                select = parent.options[parent.selectedIndex];
             } else {
-              select = 0;
+                select = 0;
             }
 
             let obj = {
-                api:  api,
+                api: api,
                 title: name.value,
                 slug: slug.value,
                 page: selectedPage,
                 content: description.value,
-                cat_parent: description.value,
-            }   
-            console.log(select.value)       
+                cat_parent: select.value,
+            }
             if (obj) {
                 this.readImage.sendImageData(obj);
-              }
-            console.log(obj);
+            }
+
             this.axios.formDataApi(obj);
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
@@ -90,7 +74,7 @@ class Category extends Pagination{
             name.value = "";
             slug.value = ""
             description.value = ""
-         
+
             return setTimeout(() => { this.init() }, (300))
         });
     }
@@ -100,28 +84,30 @@ class Category extends Pagination{
         const deleteBtn = document.querySelectorAll(".category-delete");
         if (deleteBtn) {
             for (let i = 0; i < deleteBtn.length; i++) {
-            let ID = deleteBtn[i].value;
-     
-            let taxonomy = deleteBtn[i].id;
-            deleteBtn[i].addEventListener(
-                "click",
-                () => {
-                    let obj = {
-                        api: api,
-                        deleteID: ID,
-                        taxonomy_type: taxonomy
-                    }
+                let ID = deleteBtn[i].value;
 
-                    this.axios.formDataApi(obj);
-                    let changes = this.changes;
-                    window.removeEventListener('hashchange', changes);
-                    return setTimeout(() => { this.init() }, (300))
-                });
+                let taxonomy = deleteBtn[i].id;
+                deleteBtn[i].addEventListener(
+                    "click",
+                    () => {
+                        let obj = {
+                            api: api,
+                            deleteID: ID,
+                            taxonomy_type: taxonomy
+                        }
+
+                        this.axios.formDataApi(obj);
+                        let changes = this.changes;
+                        window.removeEventListener('hashchange', changes);
+                        return setTimeout(() => { this.init() }, (300))
+                    });
             }
         }
     }
-    
-    catEdit(watch) {
+
+
+    edit() {
+
         const editBtn = document.querySelectorAll(".category-edit");
         for (let i = 0; i < editBtn.length; i++) {
             let editID = editBtn[i].value;
@@ -136,30 +122,30 @@ class Category extends Pagination{
                         taxonomy_type: taxonomy,
                     }
                     let HTML = await this.axios.getPostData(obj);
-                    watch.innerHTML = HTML;
-                    this.readImage.image();
 
+                    this.watch.innerHTML = HTML;
+
+                    this.readImage.image();
                     const name = document.getElementById("category_name");
                     const slug = document.getElementById("category_slug");
                     const description = document.getElementById("category_description");
                     let parent = document.getElementById('cat');
                     let select;
-                    if (parent.options[parent.selectedIndex] != undefined) {
-                        select = parent.options[parent.selectedIndex].value;
-                    } else {
-                        select = 0;
-                    }
-
                     const updateBtn = document.getElementById("catUpdate");
                     updateBtn.addEventListener("click", async () => {
                         let api = "category_update";
+                        if (parent.options[parent.selectedIndex] != undefined) {
+                            select = parent.options[parent.options.selectedIndex].value;
+                        } else {
+                            select = 0;
+                        }
                         let obj = {
                             api: api,
                             updateId: updateBtn.value,
-                            cat_parent: select.value,
+                            cat_parent: select,
                             cat_name: name.value,
                             cat_slug: slug.value,
-                            cat_description: description
+                            cat_description: description.value
                         }
                         this.readImage.sendImageData(obj);
                         this.axios.formDataApi(obj);

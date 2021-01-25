@@ -35,8 +35,9 @@ define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 App::start();
 
 // $app = App::start();
-
-// _dc($session->get('333333333333cassdca'));
+// $session = $app->getService('session');
+// $session->set(9, 3);
+// _dc($session->get(9));
 // $server = new Server;
 //
 // _dc($app->getService('request')->query->get('route', ''));
@@ -67,6 +68,35 @@ App::start();
 
 
 add_action('init', function () {
+    // $page =  reset(Page::all()->shortCode('upload-images')->all())->getLink();
+
+
+    // $request = App::start()->getService('request');
+    // if ($request->query->get('items') != null) {
+    //     $limit = $request->query->get('items');
+    // } else {
+    //     $limit = 5;
+    // }
+
+    // if ($request->query->get('page')) {
+    //     $number = $request->query->get('page');
+    // } else {
+    //     $number = 2;
+    // }
+
+    // _dc($number);
+    // $allNews = NewsPost::all()->all();
+    // $total = count(NewsPost::all()->all());
+    // $pagination = new Pagination(5, 2, $total);
+    // $pagesPost = array_values($allNews);
+    // $pageArr = [];
+    // foreach ($pagesPost as $key => $value) {
+    //     if ($key >= $pagination->offset && count($pageArr) < 2) {
+    //         array_push($pageArr, $value);
+    //     }
+    // }
+
+    // _dc($pageArr);
     //  Page::all()->mano metodas->all();
 
     // $page = $query->postType('page')->postName('upload-images')->getPost()->all();

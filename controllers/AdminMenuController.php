@@ -32,17 +32,15 @@ class AdminMenuController
         if ($menus) {
             $menu = $menus[0];
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
-            $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
+            // $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
             $page = new Page;
             $output = View::adminRender('adminMenu.mainmenu', ['menu' => $menu, 'pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
             return new JsonResponse(['html' => $output]);
         } else {
             $query = new Query;
             $menus = $query->postType('menu')->getPost()->all();
-
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
             $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
-
             $page = new Page;
             $output = View::adminRender('adminMenu.initmenu', ['pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
             return new JsonResponse(['html' => $output]);

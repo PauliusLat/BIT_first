@@ -2892,9 +2892,9 @@ try {
 
 /***/ }),
 
-/***/ "./resources/js/AlbumEdit.js":
+/***/ "./resources/js/albumEdit.js":
 /*!***********************************!*\
-  !*** ./resources/js/AlbumEdit.js ***!
+  !*** ./resources/js/albumEdit.js ***!
   \***********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -2907,6 +2907,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -2926,6 +2938,9 @@ var AlbumEdit = /*#__PURE__*/function () {
 
     this.target = target;
     this.DOM = null;
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.array;
+    this.add;
     this.init();
   }
 
@@ -2933,7 +2948,7 @@ var AlbumEdit = /*#__PURE__*/function () {
     key: "init",
     value: function () {
       var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var DOM;
+        var DOM, array;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2941,7 +2956,10 @@ var AlbumEdit = /*#__PURE__*/function () {
                 DOM = document.querySelector(this.target);
 
                 if (DOM) {
+                  array = _toConsumableArray(document.querySelectorAll(".imgePosition"));
+                  this.array = array;
                   this.save();
+                  this["delete"]();
                 }
 
               case 2:
@@ -2963,18 +2981,17 @@ var AlbumEdit = /*#__PURE__*/function () {
     value: function save() {
       var _this = this;
 
-      var save = document.querySelector(".saveAlbum");
+      this.add = document.querySelector(".saveAlbum");
       var title = document.querySelector(".albumTitle");
       var id;
-      var axios = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
       var api = 'gallery-update-admin&id=';
       var obj;
-      var albumID = save.getAttribute('data');
-      save.addEventListener("click", function () {
+      var albumID = this.add.getAttribute('data');
+      this.add.addEventListener("click", function () {
         id = _this.check();
 
         if (!id) {
-          id = save.id;
+          id = _this.add.id;
         }
 
         obj = {
@@ -2982,7 +2999,8 @@ var AlbumEdit = /*#__PURE__*/function () {
           title: title.value,
           profileImgID: id
         };
-        axios.formDataApi(obj);
+
+        _this.axios.formDataApi(obj);
       });
     }
   }, {
@@ -2990,15 +3008,57 @@ var AlbumEdit = /*#__PURE__*/function () {
     value: function check() {
       var remove = document.querySelectorAll(".removeBtn");
       var select = document.querySelectorAll(".checkbox");
-      var id = null;
+      var id = [];
 
       for (var i = 0; i < remove.length; i++) {
         if (select[i].checked) {
-          id = remove[i].id;
+          id.push(remove[i].id);
         }
       }
 
-      return id;
+      if (id.length > 1) {
+        alert("Galima pasirinkite tik 1 albumo paveiksleli !!!");
+      } else {
+        return id[0];
+      }
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      var _this2 = this;
+
+      var check = true;
+
+      var _loop = function _loop(i) {
+        var remove = _this2.array[i].children[1].children[0];
+
+        var newRemove = function newRemove() {
+          if (check) {
+            if (_this2.add.id != remove.id) {
+              var api = 'album-image-destroy&id=';
+              var id = remove.id;
+
+              _this2.array[i].remove();
+
+              _this2.array.splice(i, 1);
+
+              _this2.axios["delete"](api, id);
+
+              _this2["delete"]();
+
+              check = false;
+            } else {
+              alert("Albumo paveikslelio trinti negalima !!!");
+            }
+          }
+        };
+
+        remove.addEventListener("click", newRemove);
+      };
+
+      for (var i = 0; i < this.array.length; i++) {
+        _loop(i);
+      }
     }
   }]);
 
@@ -3018,16 +3078,20 @@ var AlbumEdit = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3042,80 +3106,55 @@ var AlbumList = /*#__PURE__*/function () {
     _classCallCheck(this, AlbumList);
 
     this.target = target;
-    this.api = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
-    this.init();
+    this.axios = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.array = _toConsumableArray(document.querySelectorAll(".deleteAlbum"));
+    this["delete"]();
   }
 
   _createClass(AlbumList, [{
-    key: "init",
-    value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _this = this;
+    key: "delete",
+    value: function _delete() {
+      var _this = this;
 
-        var DOM;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                DOM = document.getElementById(this.target);
+      var DOM = document.getElementById(this.target);
 
-                if (!DOM) {
-                  _context2.next = 3;
-                  break;
-                }
+      if (DOM) {
+        (function () {
+          var check = true;
 
-                return _context2.delegateYield( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                  var deleteApi, listApi, HTML, deleteAlbum, _loop, i;
+          var _loop = function _loop(i) {
+            var remove = _this.array[i].parentElement.parentElement.parentElement;
 
-                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                      switch (_context.prev = _context.next) {
-                        case 0:
-                          deleteApi = 'album-destroy&id=';
-                          listApi = 'album-list';
-                          _context.next = 4;
-                          return _this.api.getDAta(listApi);
+            var newRemove = function newRemove(e) {
+              if (check) {
+                e.stopPropagation();
+                console.log(_this.array[i]);
+                var api = 'album-destroy&id=';
+                var id = _this.array[i].id;
+                remove.remove();
 
-                        case 4:
-                          HTML = _context.sent;
-                          DOM.innerHTML = HTML;
-                          deleteAlbum = document.querySelectorAll(".deleteAlbum");
+                _this.array.splice(i, 1);
 
-                          _loop = function _loop(i) {
-                            var deleteId = deleteAlbum[i].id;
-                            deleteAlbum[i].addEventListener("click", function () {
-                              _this.api["delete"](deleteApi, deleteId);
+                _this.axios["delete"](api, id);
 
-                              setTimeout(location.reload(), 500);
-                            });
-                          };
+                _this["delete"]();
 
-                          for (i = 0; i < deleteAlbum.length; i++) {
-                            _loop(i);
-                          }
+                check = false;
+              }
+            };
 
-                        case 9:
-                        case "end":
-                          return _context.stop();
-                      }
-                    }
-                  }, _callee);
-                })(), "t0", 3);
+            remove.addEventListener("click", newRemove);
+            document.getElementsByTagName("form")[i].addEventListener("click", function (e) {
+              e.stopPropagation();
+            });
+          };
 
-              case 3:
-              case "end":
-                return _context2.stop();
-            }
+          for (var i = 0; i < _this.array.length; i++) {
+            _loop(i);
           }
-        }, _callee2, this);
-      }));
-
-      function init() {
-        return _init.apply(this, arguments);
+        })();
       }
-
-      return init;
-    }()
+    }
   }]);
 
   return AlbumList;
@@ -3158,15 +3197,14 @@ var Api = /*#__PURE__*/function () {
   function Api() {
     _classCallCheck(this, Api);
 
-    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-    this.uri = document.location.origin;
+    this.path = WPURLS.apiUrl;
     this.html = null;
   }
 
   _createClass(Api, [{
     key: "delete",
     value: function _delete(api, id) {
-      axios.post(this.uri + this.path + api + id, {
+      axios.post(this.path + api + id, {
         deleteId: id
       })["catch"](function (error) {
         if (error.response) {
@@ -3180,6 +3218,7 @@ var Api = /*#__PURE__*/function () {
         }
 
         console.log(error);
+        console.log("Data from the server is not available !!!");
       });
     }
   }, {
@@ -3193,7 +3232,7 @@ var Api = /*#__PURE__*/function () {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios.post(this.uri + this.path + api);
+                return axios.post(this.path + api);
 
               case 3:
                 response = _context.sent;
@@ -3213,7 +3252,7 @@ var Api = /*#__PURE__*/function () {
                 _context.prev = 8;
                 _context.t0 = _context["catch"](0);
                 console.error(_context.t0);
-                console.log("Duomenys is serveverio nepasiekiami !!!");
+                console.log("Data from the server is not available !!!");
 
               case 12:
               case "end":
@@ -3232,7 +3271,7 @@ var Api = /*#__PURE__*/function () {
   }, {
     key: "saveContent",
     value: function saveContent(api, id, content) {
-      axios.post(this.uri + this.path + api, {
+      axios.post(this.path + api, {
         id: id,
         content: content
       })["catch"](function (error) {
@@ -3247,6 +3286,7 @@ var Api = /*#__PURE__*/function () {
         }
 
         console.log(error);
+        console.log("Data from the server is not available !!!");
       });
     }
   }, {
@@ -3260,7 +3300,7 @@ var Api = /*#__PURE__*/function () {
         }
 
         console.log(Object.fromEntries(formData));
-        axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
+        axios.post(this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
           if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
@@ -3269,6 +3309,7 @@ var Api = /*#__PURE__*/function () {
             console.log(error.request);
           } else {
             console.log('Error', error.message);
+            console.log("Data from the server is not available !!!");
           }
 
           console.log(error);
@@ -3300,7 +3341,7 @@ var Api = /*#__PURE__*/function () {
 
                 console.log(Object.fromEntries(formData));
                 _context2.next = 7;
-                return axios.post(this.uri + this.path + obj.api, formData, {});
+                return axios.post(this.path + obj.api, formData, {});
 
               case 7:
                 response = _context2.sent;
@@ -3391,8 +3432,8 @@ var Calendar = /*#__PURE__*/function () {
     this.curentM = new Date(this.y, this.m + 1, 0).getMonth();
     this.curentDay = new Date(this.y, this.curentM, 1).getDay();
     var startDay = this.curentDay;
-    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-    this.uri = document.location.origin;
+    this.path = WPURLS.apiUrl;
+    this.months = ['Sausis', 'Vasaris', 'Kovas', 'Balandis', 'Gegužė', 'Birželis', 'Liepa', 'Rugpjūtis', 'Rugsėjis', 'Spalis', 'Lapkritis', 'Gruodis'];
     this.init(days, startDay);
   }
 
@@ -3435,18 +3476,10 @@ var Calendar = /*#__PURE__*/function () {
       var exisitClassMonth = document.querySelector(".cview__month-current").textContent;
 
       if (exisitClassMonth == 1) {
-        console.log(this.date);
-        console.log(this.date.getMonth());
-        var nowM = new Date(this.y, this.date.getMonth());
-        console.log('111111111');
-        console.log(nowM);
-        var nowY = nowM.toString().slice(11, -47);
-        nowM = nowM.toString().slice(4, -55);
-        console.log('2222222222');
-        console.log(nowM);
-        nowM = this.translate(nowM);
-        console.log('3333333333');
-        console.log(nowM);
+        this.m;
+        var nowM = this.m;
+        var nowY = this.y;
+        nowM = this.months[nowM];
         document.getElementById("calendar-month").innerHTML = nowY + ' ' + nowM;
       }
 
@@ -3461,7 +3494,8 @@ var Calendar = /*#__PURE__*/function () {
         }
 
         for (var d = 1; d <= lastDayM; d++) {
-          var _date = new Date(this.y, this.m, d);
+          var _date = new Date(this.y, this.m, d); // console.log(_date);
+
 
           var day = document.createElement("div");
           day.className = "cview--date";
@@ -3513,17 +3547,15 @@ var Calendar = /*#__PURE__*/function () {
       }
 
       var event = document.querySelectorAll(".cview--date");
+      var month = document.querySelector(".cview__month-current");
 
       var _loop = function _loop(_i2) {
         event[_i2].addEventListener("click", function (e) {
           var day = event[_i2].innerText;
           var action = event[_i2].dataset.date;
-          var curentM = action.toString().slice(4, -55);
-          console.log(curentM);
+          var m = month.innerText;
 
-          var month = _this2.translate(curentM);
-
-          _this2.event(action, month, day);
+          _this2.event(action, m, day);
         });
       };
 
@@ -3540,15 +3572,8 @@ var Calendar = /*#__PURE__*/function () {
       var dataDate = new Date(this.y, this.m + a - 1);
       var y = this.date.getFullYear(),
           m = this.date.getMonth();
-      var curentM = new Date(y, this.date.getMonth() + a, 0);
-      console.log('555555555');
-      console.log(curentM);
-      var curentY = curentM.toString().slice(11, -47);
-      curentM = curentM.toString().slice(4, -55);
-      console.log(curentM);
-      var curM = this.translate(curentM);
-      console.log('6666666666');
-      console.log(curM);
+      var curentY = new Date(y, this.date.getMonth() + a, 0).getFullYear();
+      var curM = this.months[new Date(y, this.date.getMonth() + a, 0).getMonth()];
       curentMth.innerHTML = curentY + ' ' + curM;
       var lastDayM = new Date(y, m + a, 0).getDate();
       var newM = new Date(y, m + a, 0).getMonth();
@@ -3556,65 +3581,11 @@ var Calendar = /*#__PURE__*/function () {
       return this.render(lastDayM, startDay, dataDate);
     }
   }, {
-    key: "translate",
-    value: function translate(curentM) {
-      switch (curentM) {
-        case 'Jan':
-          return curentM = 'Sausis';
-          break;
-
-        case 'Feb':
-          return curentM = 'Vasaris';
-          break;
-
-        case 'Mar':
-          return curentM = 'Kovas';
-          break;
-
-        case 'Apr':
-          return curentM = 'Balandis';
-          break;
-
-        case 'May':
-          return curentM = 'Gegužė';
-          break;
-
-        case 'Jun':
-          return curentM = 'Birželis';
-          break;
-
-        case 'Jul':
-          return curentM = 'Liepa';
-          break;
-
-        case 'Aug':
-          return curentM = 'Rugpjūtis';
-          break;
-
-        case 'Sep':
-          return curentM = 'Rugsėjis';
-          break;
-
-        case 'Oct':
-          return curentM = 'Spalis';
-          break;
-
-        case 'Nov':
-          return curentM = 'Lapkritis';
-          break;
-
-        case 'Dec':
-          return curentM = 'Gruodis';
-          break;
-      }
-    }
-  }, {
     key: "event",
     value: function event(action, month, day) {
       var _this3 = this;
 
       this.path;
-      this.uri;
       var table = document.querySelector(".eventContainer");
       var HTML = "<div class=\"popup\">\n                <div class=\"content\">\n                  <div class=\"event\">     \n                    <span class=\"closebtn\">&#9932;</span>      \n                    <div class=\"eventTitle\">\n                       <h1>Ivesti nauja \u012Fvyki</h1>\n                    </div>\n                    <div class=\"subscribe\">\n                        <input class=\"newEvent\" type=\"text\" id=\"sendText\" placeholder=\"Naujas \u012Fvykis\">\n                        <input type=\"time\" id=\"appt\" name=\"appt\" value=\"00:00\">\n                      <div class=\"eventBtn\">\n                        Si\u0173sti\n                      </div>\n                    </div>\n                  </div>\n                    <div class=\"eventH2\">\n                        \u012Evykiai - ".concat(month, " ").concat(day, "\n                    </div>\n                    <div id=\"daysEvens\" class=\"eventBox\">\n                    </div>\n                </div>\n              </div>");
       table.innerHTML = HTML;
@@ -3654,7 +3625,7 @@ var Calendar = /*#__PURE__*/function () {
   }, {
     key: "renderEvents",
     value: function renderEvents(action) {
-      axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
+      axios.post(this.path + 'calendar-create-admin', {}).then(function (response) {
         if (response.status == 200 && response.statusText == 'OK') {
           (function () {
             var call = new Calendar();
@@ -3738,7 +3709,7 @@ var Calendar = /*#__PURE__*/function () {
     value: function deleteEvent(id, action) {
       var _this4 = this;
 
-      axios.post(this.uri + this.path + "calendar-delete-admin&id=" + id, {
+      axios.post(this.path + "calendar-delete-admin&id=" + id, {
         eventID: id
       }).then(function (response) {
         if (response.status == 200 && response.statusText == 'OK') {
@@ -3774,7 +3745,7 @@ var Calendar = /*#__PURE__*/function () {
   }, {
     key: "getData",
     value: function getData() {
-      axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
+      axios.post(this.path + 'calendar-create-admin', {}).then(function (response) {
         if (response.status == 200 && response.statusText == 'OK') {
           var data = response.data.allData;
           var dayEvents = document.querySelectorAll(".cview--date");
@@ -3878,10 +3849,10 @@ var Category = /*#__PURE__*/function (_Pagination) {
     _this.target = target;
     _this.watch = document.querySelector(".innercat");
     _this.changes;
+    _this.readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_2__["default"]();
 
     _this.init();
 
-    _this.readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_2__["default"]();
     return _this;
   }
 
@@ -3889,61 +3860,19 @@ var Category = /*#__PURE__*/function (_Pagination) {
     key: "init",
     value: function () {
       var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var hash,
-            HTML,
-            DOM,
-            obj,
-            addColor,
-            _args = arguments;
+        var DOM;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                hash = _args.length > 0 && _args[0] !== undefined ? _args[0] : null;
-                HTML = _args.length > 1 && _args[1] !== undefined ? _args[1] : null;
                 DOM = document.getElementById(this.target);
 
-                if (!DOM) {
-                  _context.next = 21;
-                  break;
+                if (DOM) {
+                  this.hashChange();
+                  this.paging();
                 }
 
-                if (!(HTML == null)) {
-                  _context.next = 13;
-                  break;
-                }
-
-                location.hash = 1;
-                obj = {
-                  api: this.api,
-                  hash: 1
-                };
-                _context.next = 9;
-                return this.axios.getPostData(obj);
-
-              case 9:
-                HTML = _context.sent;
-                this.watch.innerHTML = HTML;
-                _context.next = 14;
-                break;
-
-              case 13:
-                this.watch.innerHTML = HTML;
-
-              case 14:
-                this.paging();
-                HTML = "";
-                addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
-
-                if (addColor) {
-                  addColor.classList.add("active");
-                }
-
-                this.readImage.image();
-                this.hashChange();
-                this.paging();
-
-              case 21:
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -3960,13 +3889,14 @@ var Category = /*#__PURE__*/function (_Pagination) {
   }, {
     key: "addAction",
     value: function addAction() {
-      this.catStore();
+      this.readImage.image();
+      this.create();
       this["delete"]();
-      this.catEdit(this.watch);
+      this.edit();
     }
   }, {
-    key: "catStore",
-    value: function catStore() {
+    key: "create",
+    value: function create() {
       var _this2 = this;
 
       var name = document.getElementById("category-name");
@@ -3998,15 +3928,12 @@ var Category = /*#__PURE__*/function (_Pagination) {
           slug: slug.value,
           page: selectedPage,
           content: description.value,
-          cat_parent: description.value
+          cat_parent: select.value
         };
-        console.log(select.value);
 
         if (obj) {
           _this2.readImage.sendImageData(obj);
         }
-
-        console.log(obj);
 
         _this2.axios.formDataApi(obj);
 
@@ -4055,8 +3982,8 @@ var Category = /*#__PURE__*/function (_Pagination) {
       }
     }
   }, {
-    key: "catEdit",
-    value: function catEdit(watch) {
+    key: "edit",
+    value: function edit() {
       var _this4 = this;
 
       var editBtn = document.querySelectorAll(".category-edit");
@@ -4081,7 +4008,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
 
                 case 4:
                   HTML = _context3.sent;
-                  watch.innerHTML = HTML;
+                  _this4.watch.innerHTML = HTML;
 
                   _this4.readImage.image();
 
@@ -4089,13 +4016,6 @@ var Category = /*#__PURE__*/function (_Pagination) {
                   slug = document.getElementById("category_slug");
                   description = document.getElementById("category_description");
                   parent = document.getElementById('cat');
-
-                  if (parent.options[parent.selectedIndex] != undefined) {
-                    select = parent.options[parent.selectedIndex].value;
-                  } else {
-                    select = 0;
-                  }
-
                   updateBtn = document.getElementById("catUpdate");
                   updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
                     var api, obj, changes;
@@ -4104,13 +4024,20 @@ var Category = /*#__PURE__*/function (_Pagination) {
                         switch (_context2.prev = _context2.next) {
                           case 0:
                             api = "category_update";
+
+                            if (parent.options[parent.selectedIndex] != undefined) {
+                              select = parent.options[parent.options.selectedIndex].value;
+                            } else {
+                              select = 0;
+                            }
+
                             obj = {
                               api: api,
                               updateId: updateBtn.value,
-                              cat_parent: select.value,
+                              cat_parent: select,
                               cat_name: name.value,
                               cat_slug: slug.value,
-                              cat_description: description
+                              cat_description: description.value
                             };
 
                             _this4.readImage.sendImageData(obj);
@@ -4126,7 +4053,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                               _this4.init();
                             }, 300));
 
-                          case 10:
+                          case 11:
                           case "end":
                             return _context2.stop();
                         }
@@ -4134,7 +4061,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                     }, _callee2);
                   })));
 
-                case 14:
+                case 13:
                 case "end":
                   return _context3.stop();
               }
@@ -4280,8 +4207,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
+var path = WPURLS.apiUrl;
 var ideaStrt = document.getElementById("startIdeaAdmin");
 
 function startIdea() {
@@ -4329,7 +4255,7 @@ function deleteIdea(delId) {
 
 
 function renderColons(e) {
-  axios.get(uri + path + "idea-render-admin", {}).then(function (response) {
+  axios.get(path + "idea-render-admin", {}).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {
       var data = response.data.allData;
       var keys = [];
@@ -4429,28 +4355,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 /* harmony import */ var _newsList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./newsList */ "./resources/js/newsList.js");
 /* harmony import */ var _editPost__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editPost */ "./resources/js/editPost.js");
-/* harmony import */ var _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AlbumEdit.js */ "./resources/js/AlbumEdit.js");
+/* harmony import */ var _albumEdit_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./albumEdit.js */ "./resources/js/albumEdit.js");
 /* harmony import */ var _albumList__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./albumList */ "./resources/js/albumList.js");
+/* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
 /** @format */
- // import startGallery from './gallery.js';
-
-
- //import startPage from './page.js';
 
 
 
 
 
 
- // import TextEditor from './text-editor.js'
 
 
 
 
- // import lightbox from './light_box';
 
 
- // new TextEditor('.news-container')
+
+
+
 
 new _calendar_js__WEBPACK_IMPORTED_MODULE_5__["default"]('.calendar');
 new _news__WEBPACK_IMPORTED_MODULE_6__["default"]('startNewsAdmin');
@@ -4459,8 +4382,8 @@ new _editPost__WEBPACK_IMPORTED_MODULE_9__["default"]('.editStart');
 new _tag_js__WEBPACK_IMPORTED_MODULE_2__["default"]('tagStart');
 new _category_js__WEBPACK_IMPORTED_MODULE_1__["default"]('catStart');
 new _menu_js__WEBPACK_IMPORTED_MODULE_3__["default"]('.adminMenuStart');
-new _albumList__WEBPACK_IMPORTED_MODULE_11__["default"]('startAlbumList');
-new _AlbumEdit_js__WEBPACK_IMPORTED_MODULE_10__["default"]('.containerAlbumEdit');
+new _albumList__WEBPACK_IMPORTED_MODULE_11__["default"]('startAlbumLis');
+new _albumEdit_js__WEBPACK_IMPORTED_MODULE_10__["default"]('.containerAlbumEdit');
 new _page_js__WEBPACK_IMPORTED_MODULE_4__["default"]('pageStart');
 
 /***/ }),
@@ -4784,7 +4707,7 @@ var Menu = /*#__PURE__*/function () {
         var text = document.querySelectorAll(".menuText");
         var link = document.querySelectorAll(".menuLink");
 
-        if (elements || elements[0].className != "draggable parent") {
+        if (!elements || elements[0].className != "draggable parent") {
           alert("Neteisingai suformuotas meniu");
         } else {
           var opts = _toConsumableArray(select).map(function (el) {
@@ -4818,6 +4741,8 @@ var Menu = /*#__PURE__*/function () {
               link: c
             };
           }
+
+          console.log(obj);
 
           _this5.axios.formDataApi(obj);
         }
@@ -5057,6 +4982,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pagination */ "./resources/js/pagination.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
 
 
 
@@ -5089,19 +5015,19 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var Pag = /*#__PURE__*/function (_Pagination) {
-  _inherits(Pag, _Pagination);
 
-  var _super = _createSuper(Pag);
+var Page = /*#__PURE__*/function (_Pagination) {
+  _inherits(Page, _Pagination);
 
-  function Pag(target) {
+  var _super = _createSuper(Page);
+
+  function Page(target) {
     var _this;
 
-    _classCallCheck(this, Pag);
+    _classCallCheck(this, Page);
 
     _this = _super.call(this);
-    var api = "page_create";
-    _this.api = api;
+    _this.api = "page_create";
     _this.target = target;
     _this.pages = 5;
     _this.changes;
@@ -5112,87 +5038,26 @@ var Pag = /*#__PURE__*/function (_Pagination) {
     return _this;
   }
 
-  _createClass(Pag, [{
+  _createClass(Page, [{
     key: "init",
-    value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var hash,
-            HTML,
-            DOM,
-            obj,
-            addColor,
-            _args = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                hash = _args.length > 0 && _args[0] !== undefined ? _args[0] : null;
-                HTML = _args.length > 1 && _args[1] !== undefined ? _args[1] : null;
-                DOM = document.getElementById(this.target);
+    value: function init() {
+      var DOM = document.getElementById(this.target);
 
-                if (!DOM) {
-                  _context.next = 20;
-                  break;
-                }
-
-                if (!(HTML == null)) {
-                  _context.next = 13;
-                  break;
-                }
-
-                location.hash = 1;
-                obj = {
-                  api: this.api,
-                  hash: 1
-                };
-                _context.next = 9;
-                return this.axios.getPostData(obj);
-
-              case 9:
-                HTML = _context.sent;
-                this.watch.innerHTML = HTML;
-                _context.next = 14;
-                break;
-
-              case 13:
-                this.watch.innerHTML = HTML;
-
-              case 14:
-                this.paging();
-                HTML = "";
-                addColor = document.querySelector('.nr-' + location.hash.slice(1, 2));
-
-                if (addColor) {
-                  addColor.classList.add("active");
-                }
-
-                this.hashChange();
-                this.paging();
-
-              case 20:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function init() {
-        return _init.apply(this, arguments);
+      if (DOM) {
+        this.hashChange();
+        this.paging();
       }
-
-      return init;
-    }()
+    }
   }, {
     key: "addAction",
     value: function addAction() {
       this["delete"]();
-      this.pageStore();
-      this.pageEdit(this.watch);
+      this.create();
+      this.edit();
     }
   }, {
-    key: "pageStore",
-    value: function pageStore() {
+    key: "create",
+    value: function create() {
       var _this2 = this;
 
       var title = document.getElementById("page_title");
@@ -5214,13 +5079,13 @@ var Pag = /*#__PURE__*/function (_Pagination) {
           post_type: select.value,
           page_state: stateArray
         };
+        console.log(obj);
 
         _this2.axios.formDataApi(obj);
 
         var changes = _this2.changes;
         window.removeEventListener('hashchange', changes);
         title.value = "";
-        console.log(obj);
         return setTimeout(function () {
           _this2.init();
         }, 300);
@@ -5238,8 +5103,7 @@ var Pag = /*#__PURE__*/function (_Pagination) {
         var _loop = function _loop(i) {
           var deleteId = deleteBtn[i].value;
           deleteBtn[i].addEventListener("click", function () {
-            _this3.axios["delete"](deleteApi, deleteId); // setTimeout(location.reload(), 500);
-
+            _this3.axios["delete"](deleteApi, deleteId);
 
             var changes = _this3.changes;
             window.removeEventListener('hashchange', changes);
@@ -5255,40 +5119,40 @@ var Pag = /*#__PURE__*/function (_Pagination) {
       }
     }
   }, {
-    key: "pageEdit",
-    value: function pageEdit(watch) {
+    key: "edit",
+    value: function edit(inner) {
       var _this4 = this;
 
       var editBtn = document.querySelectorAll(".page-edit");
 
       var _loop2 = function _loop2(i) {
         var ID = editBtn[i].value;
-        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
           var api, obj, HTML, title, name, updateBtn;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
-              switch (_context3.prev = _context3.next) {
+              switch (_context2.prev = _context2.next) {
                 case 0:
                   api = "page_edit&id=";
                   obj = {
                     api: api + ID,
                     editID: ID
                   };
-                  _context3.next = 4;
+                  _context2.next = 4;
                   return _this4.axios.getPostData(obj);
 
                 case 4:
-                  HTML = _context3.sent;
-                  watch.innerHTML = HTML;
+                  HTML = _context2.sent;
+                  _this4.watch.innerHTML = HTML;
                   title = document.getElementById("page_title");
                   name = document.getElementById("page_name");
                   updateBtn = document.getElementById("pageUpdate");
-                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
                     var stateArray, checkboxes, _i, post, select, api, obj, changes;
 
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
-                        switch (_context2.prev = _context2.next) {
+                        switch (_context.prev = _context.next) {
                           case 0:
                             stateArray = [];
                             checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
@@ -5302,40 +5166,35 @@ var Pag = /*#__PURE__*/function (_Pagination) {
                             api = "page_update&id=";
                             obj = {
                               api: api + ID,
-                              // updateId: updateBtn.value,
                               page_title: title.value,
                               page_name: name.value,
                               post_type: select.value,
                               page_state: stateArray
                             };
-                            console.log(select.value);
 
                             _this4.axios.formDataApi(obj);
 
-                            console.log(stateArray);
                             changes = _this4.changes;
-                            window.removeEventListener('hashchange', changes); // description.value = "";
-                            // slug.value = "";
-
+                            window.removeEventListener('hashchange', changes);
                             name.value = "";
-                            return _context2.abrupt("return", setTimeout(function () {
+                            return _context.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));
 
-                          case 14:
+                          case 12:
                           case "end":
-                            return _context2.stop();
+                            return _context.stop();
                         }
                       }
-                    }, _callee2);
+                    }, _callee);
                   })));
 
                 case 10:
                 case "end":
-                  return _context3.stop();
+                  return _context2.stop();
               }
             }
-          }, _callee3);
+          }, _callee2);
         })));
       };
 
@@ -5345,10 +5204,10 @@ var Pag = /*#__PURE__*/function (_Pagination) {
     }
   }]);
 
-  return Pag;
+  return Page;
 }(_pagination__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Pag);
+/* harmony default export */ __webpack_exports__["default"] = (Page);
 
 /***/ }),
 
@@ -5393,17 +5252,15 @@ var Pagination = /*#__PURE__*/function () {
       var page = document.querySelectorAll(".paging");
 
       if (page.length) {
-        var _nextPage;
-
         var _loop = function _loop(i) {
-          _nextPage = function nextPage() {
-            page[i].addEventListener('click', _nextPage);
+          var nextPage = function nextPage() {
+            page[i].addEventListener('click', nextPage);
             var id = parseInt(page[i].id);
             location.hash = id;
-            page[i].removeEventListener("click", _nextPage);
+            page[i].removeEventListener("click", nextPage);
           };
 
-          page[i].addEventListener('click', _nextPage);
+          page[i].addEventListener('click', nextPage);
         };
 
         for (var i = 0; i < page.length; i++) {
@@ -5423,9 +5280,11 @@ var Pagination = /*#__PURE__*/function () {
             _hash,
             pages,
             obj,
-            _hash2,
-            _page,
+            _pages,
             _obj,
+            _hash2,
+            _obj2,
+            _page,
             addColor,
             changes,
             option,
@@ -5453,7 +5312,7 @@ var Pagination = /*#__PURE__*/function () {
                   location.hash = _hash;
                 }
 
-                _context2.next = 25;
+                _context2.next = 35;
                 break;
 
               case 9:
@@ -5473,11 +5332,44 @@ var Pagination = /*#__PURE__*/function () {
 
               case 14:
                 this.watch.innerHTML = _context2.sent;
-                _context2.next = 25;
+                _context2.next = 35;
                 break;
 
               case 17:
-                _hash2 = 1;
+                if (!(hash == undefined || hash == null || hash < 0 || hash == "" || hash == NaN || hash == Infinity)) {
+                  _context2.next = 27;
+                  break;
+                }
+
+                hash = 1;
+                location.hash = hash;
+                _pages = this.pages;
+                _obj = {
+                  api: this.api,
+                  pageSelected: _pages,
+                  hash: hash
+                };
+                _context2.next = 24;
+                return this.axios.getPostData(_obj);
+
+              case 24:
+                this.watch.innerHTML = _context2.sent;
+                _context2.next = 35;
+                break;
+
+              case 27:
+                _hash2 = location.hash.split('#')[1];
+                location.hash = _hash2;
+                _obj2 = {
+                  api: this.api,
+                  pageSelected: this.pages,
+                  hash: _hash2
+                };
+                _context2.next = 32;
+                return this.axios.getPostData(_obj2);
+
+              case 32:
+                this.watch.innerHTML = _context2.sent;
                 _page = document.querySelectorAll(".paging");
 
                 if (_hash2 > _page.length - 4) {
@@ -5485,19 +5377,7 @@ var Pagination = /*#__PURE__*/function () {
                   location.hash = _hash2;
                 }
 
-                location.hash = _hash2;
-                _obj = {
-                  api: this.api,
-                  pageSelected: this.pages,
-                  hash: _hash2
-                };
-                _context2.next = 24;
-                return this.axios.getPostData(_obj);
-
-              case 24:
-                this.watch.innerHTML = _context2.sent;
-
-              case 25:
+              case 35:
                 this.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
@@ -5508,7 +5388,7 @@ var Pagination = /*#__PURE__*/function () {
 
                 changes = /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-                    var _pages, _obj2;
+                    var _pages2, _obj3;
 
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
@@ -5521,14 +5401,14 @@ var Pagination = /*#__PURE__*/function () {
                               break;
                             }
 
-                            _pages = _this.pages;
-                            _obj2 = {
+                            _pages2 = _this.pages;
+                            _obj3 = {
                               api: _this.api,
-                              pageSelected: _pages,
+                              pageSelected: _pages2,
                               hash: hash
                             };
                             _context.next = 6;
-                            return _this.axios.getPostData(_obj2);
+                            return _this.axios.getPostData(_obj3);
 
                           case 6:
                             HTML = _context.sent;
@@ -5566,7 +5446,7 @@ var Pagination = /*#__PURE__*/function () {
 
                 this.addAction();
 
-              case 37:
+              case 47:
               case "end":
                 return _context2.stop();
             }
@@ -5752,40 +5632,20 @@ var Tag = /*#__PURE__*/function (_Pagination) {
 
   _createClass(Tag, [{
     key: "init",
-    value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var DOM;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                DOM = document.getElementById(this.target);
+    value: function init() {
+      var DOM = document.getElementById(this.target);
 
-                if (DOM) {
-                  this.hashChange();
-                  this.paging();
-                }
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function init() {
-        return _init.apply(this, arguments);
+      if (DOM) {
+        this.hashChange();
+        this.paging();
       }
-
-      return init;
-    }()
+    }
   }, {
     key: "addAction",
     value: function addAction() {
       this.create();
       this["delete"]();
-      this.edit(this.wach);
+      this.edit();
     }
   }, {
     key: "create",
@@ -5852,7 +5712,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
     }
   }, {
     key: "edit",
-    value: function edit(test) {
+    value: function edit() {
       var _this4 = this;
 
       var editBtn = document.querySelectorAll(".tag-edit");
@@ -5860,11 +5720,11 @@ var Tag = /*#__PURE__*/function (_Pagination) {
       var _loop2 = function _loop2(i) {
         var ID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
-        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
           var api, obj, HTML, name, slug, description, updateBtn;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
-              switch (_context3.prev = _context3.next) {
+              switch (_context2.prev = _context2.next) {
                 case 0:
                   api = "tag_edit";
                   obj = {
@@ -5872,21 +5732,22 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                     editID: ID,
                     taxonomy_type: taxonomy
                   };
-                  _context3.next = 4;
+                  console.log(obj);
+                  _context2.next = 5;
                   return _this4.axios.getPostData(obj);
 
-                case 4:
-                  HTML = _context3.sent;
-                  test.innerHTML = HTML;
+                case 5:
+                  HTML = _context2.sent;
+                  _this4.watch.innerHTML = HTML;
                   name = document.getElementById("tag_name");
                   slug = document.getElementById("tag_slug");
                   description = document.getElementById("tag_description");
                   updateBtn = document.getElementById("tagUpdate");
-                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
                     var api, obj, changes;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
-                        switch (_context2.prev = _context2.next) {
+                        switch (_context.prev = _context.next) {
                           case 0:
                             api = "tag_update";
                             obj = {
@@ -5904,24 +5765,24 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                             description.value = "";
                             slug.value = "";
                             name.value = "";
-                            return _context2.abrupt("return", setTimeout(function () {
+                            return _context.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));
 
                           case 9:
                           case "end":
-                            return _context2.stop();
+                            return _context.stop();
                         }
                       }
-                    }, _callee2);
+                    }, _callee);
                   })));
 
-                case 11:
+                case 12:
                 case "end":
-                  return _context3.stop();
+                  return _context2.stop();
               }
             }
-          }, _callee3);
+          }, _callee2);
         })));
       };
 

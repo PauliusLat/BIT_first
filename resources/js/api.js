@@ -3,14 +3,13 @@
 import Axios from 'axios';
 class Api {
     constructor() {
-        this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-        this.uri = document.location.origin;
+        this.path = WPURLS.apiUrl;
         this.html = null;
     }
     delete(api, id) {
         axios
             .post(
-                this.uri + this.path +
+                this.path +
                 api + id,
                 {
                     deleteId: id,
@@ -27,23 +26,25 @@ class Api {
                     console.log('Error', error.message);
                 }
                 console.log(error);
+                console.log("Data from the server is not available !!!");
             });
     }
     async getDAta(api) {
         try {
-            let response = await axios.post(this.uri + this.path + api,)
+            let response = await axios.post(this.path + api,)
             if (response.status == 200 && response.statusText == "OK") {
                 return response.data.html;
             }
         } catch (e) {
             console.error(e);
-            console.log("Duomenys is serveverio nepasiekiami !!!");
+            console.log("Data from the server is not available !!!");
         }
     }
+
     saveContent(api, id, content) {
         axios
             .post(
-                this.uri + this.path + api,
+                this.path + api,
                 {
                     id: id,
                     content: content,
@@ -60,6 +61,7 @@ class Api {
                     console.log('Error', error.message);
                 }
                 console.log(error);
+                console.log("Data from the server is not available !!!");
             });
     }
     formDataApi(obj) {
@@ -69,7 +71,7 @@ class Api {
                 formData.append(key, obj[key])
             }
             console.log(Object.fromEntries(formData))
-            axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) { }).catch(function (error) {
+            axios.post(this.path + obj.api, formData, {}).then(function (response) { }).catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);
                     console.log(error.response.status);
@@ -78,6 +80,7 @@ class Api {
                     console.log(error.request);
                 } else {
                     console.log('Error', error.message);
+                    console.log("Data from the server is not available !!!");
                 }
                 console.log(error);
             });
@@ -93,7 +96,7 @@ class Api {
                     formData.append(key, obj[key])
                 }
                 console.log(Object.fromEntries(formData))
-                let response = await axios.post(this.uri + this.path + obj.api, formData, {});
+                let response = await axios.post(this.path + obj.api, formData, {});
                 if (response.status == 200 && response.statusText == "OK") {
                     return await response.data.html;
                 }

@@ -64,7 +64,7 @@ trait Tcategory
         return array_shift($array);
     }
 
-    public function updateCat(int $id, string $name, string $slug, string $description = '',  $parent_id = 0,  $taxonomy_type = 'maincat')
+    public function updateCat(int $id, string $name, string $slug, $parent_id = 0, string $description = '',   $taxonomy_type = 'maincat')
     {
         if (did_action('init')) {
             $args = ['parent' => $parent_id, 'description' => $description, 'slug' => $slug, 'name' => $name];
