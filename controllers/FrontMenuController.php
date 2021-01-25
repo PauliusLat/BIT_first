@@ -4,6 +4,7 @@ namespace BIT\controllers;
 
 use BIT\app\Query;
 use BIT\app\View;
+use BIT\app\Page;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 

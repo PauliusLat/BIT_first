@@ -1,8 +1,7 @@
 "use strict";
 import Api from './api';
 
-const path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-const uri = document.location.origin;
+const path = WPURLS.apiUrl;
 const ideaStrt = document.getElementById("startIdeaAdmin");
 
 function startIdea() {
@@ -70,7 +69,7 @@ function deleteIdea(delId) {
 function renderColons(e) {
 
   axios
-    .get(uri + path + "idea-render-admin", {})
+    .get(path + "idea-render-admin", {})
     .then(function (response) {
       if (response.status == 200 && response.statusText == "OK") {
         const data = response.data.allData;
