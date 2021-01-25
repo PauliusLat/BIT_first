@@ -17,7 +17,7 @@
                 <div class="menuName">
                     <label for="">
                     </label>
-                    <input name="menu" class="menuText menu" placeholder="Pavadinimas" value='<?= $name ?>' type="text">
+                    <input name="menu" id="<?= $menu->ID ?>" class="menuText menu" placeholder="Pavadinimas" value='<?= $name ?>' type="text">
                 </div>
 
                 <div class="menuSelect">

@@ -47,7 +47,6 @@ class PageController
         $pagesPost = Page::all()->all();
         $pagesPost = array_values($pagesPost);
 
-        // _dc($pagesPost);
         $pageArr = [];
         foreach ($pagesPost as $key => $value) {
             if ($key >= $pagination->offset && count($pageArr) < $limit) {
@@ -63,17 +62,12 @@ class PageController
         } else {
             $message = "";
         }
-        // _dc($pagination);
         $output = View::adminRender('page.page', ["postPages" =>  $pageArr, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'message' => $message,  'success_message' => $success_message]);
         return new JsonResponse(['html' => $output]);
     }
 
     public function store(Request $request, Session $session)
     {
-        // $query = new Query;
-        // $menus = $query->postType('menu')->getPost()->all();
-        // $menu = $menus[0];
-        // $request = $this->decodeRequest($requestJson);
         $page = new Page;
         $name = $request->request->get('page_title');
         $post = $request->request->get('post_type');
@@ -102,7 +96,6 @@ class PageController
         $postContent = $page->post_content;
         $codeArr = str_word_count($postContent, 1);
         $shortcode = $codeArr[3];
-
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];

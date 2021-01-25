@@ -56,12 +56,10 @@ class IdeaController
 			$txt = '';
 
 			foreach ($array as $text) {
-
 				$txt .= $text . ' ';
 			}
 
 			$idea->idea_content = $txt;
-
 			$idea->save();
 		} else {
 			$array = [];

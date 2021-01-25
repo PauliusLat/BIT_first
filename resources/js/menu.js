@@ -183,10 +183,14 @@ class Menu {
   }
   store() {
     const save = document.querySelector(".save");
-    const api = "menu_store";
+
     let obj;
 
     save.addEventListener("click", () => {
+      const menuid = document.querySelector(".menuText").id;
+    const api = "menu_store";
+    console.log(menuid);
+
       const elements = document.querySelectorAll(".draggable");
       const parent = document.querySelectorAll(".parent");
       const child = document.querySelectorAll(".submenu");
@@ -212,6 +216,7 @@ class Menu {
           e.push(opts[i][opts[i].selectedIndex].value)
 
           obj = {
+            id: menuid,
             api: api,
             all: d,
             select: a,

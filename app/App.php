@@ -51,13 +51,20 @@ class App
             wp_enqueue_script('js');
             wp_enqueue_script('axios', 'https://unpkg.com/axios/dist/axios.min.js');
         });
+        // add_action('print_menu', function () {
+        //     include($this->viewDir . 'frontMenu/headerfront.php');
+        // });
+        add_action('print', [$this, 'includeFile']);
         add_shortcode('front_shortcode', [FrontRoute::class, 'frontRoute']);
         AdminRoute::start();
         Session::start();
         ClearCache::start();
-
-
         // require_once __DIR__.'/../cache/clearCache.php';
+    }
+
+    public function includeFile($filePath)
+    {
+        include $this->viewDir . $filePath;
     }
 
     public function getService($service)
