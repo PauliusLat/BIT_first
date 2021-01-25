@@ -7,9 +7,7 @@ class Category extends Pagination {
 
     constructor(target) {
         super();
-
-        const api = "category_create";
-        this.api = api;
+        this.api  = "category_create";
         this.pages = 5;
         this.target = target;
         this.watch = document.querySelector(".innercat");
@@ -22,11 +20,12 @@ class Category extends Pagination {
         if (DOM) {
             this.hashChange();
             this.paging();
+            console.log(document.currentScript)
+           
         }
     }
 
     addAction() {
-
         this.readImage.image();
         this.create();
         this.delete();
@@ -34,6 +33,10 @@ class Category extends Pagination {
     }
 
     create() {
+        // const filePath = document.currentScript.src;
+        // const path = filePath.substr(0, filePath.indexOf('\/', filePath.indexOf('BIT-first'))+1);
+        // console.log(path);
+      
         const name = document.getElementById("category-name");
         const slug = document.getElementById("category-slug");
         const description = document.getElementById("category-description");
@@ -45,8 +48,9 @@ class Category extends Pagination {
         }
         const submit = document.getElementById("create");
         const api = 'category_store';
-
-        submit.addEventListener("click", () => {
+      
+        submit.addEventListener("click", () => {  
+          
             let parent = document.getElementById('cat');
             let select;
             if (parent.options[parent.selectedIndex] != undefined) {
@@ -63,19 +67,18 @@ class Category extends Pagination {
                 content: description.value,
                 cat_parent: select.value,
             }
-            if (obj) {
-                this.readImage.sendImageData(obj);
-            }
-
-            this.axios.formDataApi(obj);
+                if(obj){
+                    this.readImage.sendImageData(obj);
+                }
+              
+          
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
-
             name.value = "";
             slug.value = ""
             description.value = ""
-
             return setTimeout(() => { this.init() }, (300))
+
         });
     }
 
@@ -85,7 +88,6 @@ class Category extends Pagination {
         if (deleteBtn) {
             for (let i = 0; i < deleteBtn.length; i++) {
                 let ID = deleteBtn[i].value;
-
                 let taxonomy = deleteBtn[i].id;
                 deleteBtn[i].addEventListener(
                     "click",
@@ -107,7 +109,6 @@ class Category extends Pagination {
 
 
     edit() {
-
         const editBtn = document.querySelectorAll(".category-edit");
         for (let i = 0; i < editBtn.length; i++) {
             let editID = editBtn[i].value;
@@ -122,9 +123,7 @@ class Category extends Pagination {
                         taxonomy_type: taxonomy,
                     }
                     let HTML = await this.axios.getPostData(obj);
-
                     this.watch.innerHTML = HTML;
-
                     this.readImage.image();
                     const name = document.getElementById("category_name");
                     const slug = document.getElementById("category_slug");
@@ -147,8 +146,10 @@ class Category extends Pagination {
                             cat_slug: slug.value,
                             cat_description: description.value
                         }
-                        this.readImage.sendImageData(obj);
-                        this.axios.formDataApi(obj);
+                        if(obj){
+                            this.readImage.sendImageData(obj);
+                        }
+                        
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
                         description.value = "";

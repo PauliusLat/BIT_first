@@ -27,18 +27,21 @@ class AdminMenuController
     public function create()
     {
         $query = new Query;
-        $menus = $query->postType('menu')->getPost()->all();
+        // $menus = $query->postType('menu')->getPost()->all();
+        $menus = FrontMenu::all()->all();
+
 
         if ($menus) {
-            $menu = $menus[0];
+            $menu = reset($menus);
+            // _dc($menu);
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
-            // $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
+            $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
             $page = new Page;
             $output = View::adminRender('adminMenu.mainmenu', ['menu' => $menu, 'pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
             return new JsonResponse(['html' => $output]);
         } else {
-            $query = new Query;
-            $menus = $query->postType('menu')->getPost()->all();
+            // $query = new Query;
+            // $menus = $query->postType('menu')->getPost()->all();
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
             $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
             $page = new Page;
@@ -50,7 +53,6 @@ class AdminMenuController
 
     public function store(Request $request)
     {
-        // $request = $this->decodeRequest($requestJson);
         $id = $request->request->get('id');
         if ($id == 0 || $id == 'undefined' || !isset($id) || $id == null || $id == '') {
             $menuPost = new FrontMenu;
@@ -154,12 +156,12 @@ class AdminMenuController
         return new Response;
     }
 
-    public function decodeRequest($request)
-    {
-        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
-            $data = json_decode($request->getContent(), true);
-            $request->request->replace(is_array($data) ? $data : array());
-        }
-        return $request;
-    }
+    // public function decodeRequest($request)
+    // {
+    //     if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+    //         $data = json_decode($request->getContent(), true);
+    //         $request->request->replace(is_array($data) ? $data : array());
+    //     }
+    //     return $request;
+    // }
 }

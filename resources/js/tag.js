@@ -15,7 +15,6 @@ class Tag extends Pagination {
         this.init();
     }
 
-
     init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
@@ -51,7 +50,6 @@ class Tag extends Pagination {
             return setTimeout(() => { this.init() }, (300))
         });
     }
-
     delete() {
         const api = "tag_destroy";
         const deleteBtn = document.querySelectorAll(".tag-delete");

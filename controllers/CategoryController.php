@@ -26,10 +26,10 @@ class CategoryController
         return View::adminRender('category.maincat');
     }
 
-    public function create(Request $requestJson, Session $session)
+    public function create(Request $request, Session $session)
 
     {
-        $request = $this->decodeRequest($requestJson);
+        // $request = $this->decodeRequest($requestJson);
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
@@ -89,18 +89,20 @@ class CategoryController
             $term_id = $category->addCat($name, $parent_id, $description, $slug);
         }
 
+
         $createPage = $request->request->get('page');
         if ($createPage == '0' && $term_id != null) {
             $category->addPageToCat($name, $term_id, 'page');
         }
 
-        if ($request->files->get('image')) {
+        if ($request->files->get('image') && $term_id != null) {
             $file = $request->files->get('image');
             $image = new Attachment();
             $image->save($file);
-            $category->addImageToCat($term_id, "image", $image->ID);
+            _dc($image);
+            $category->addImageToCat((int)$term_id, "image", $image->ID);
         }
-        return new JsonResponse;
+        return new Response;
     }
 
     public function edit(Request $requestJson)
@@ -141,6 +143,7 @@ class CategoryController
             }
 
             $file = $request->files->get('image');
+            // _dc($file);
             $image = new Attachment();
             // $image->setAlt($altText);
             // $image->setCaption($imgTitle);

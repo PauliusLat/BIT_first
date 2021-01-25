@@ -7,8 +7,7 @@ class ImageUploade {
 
         this.target = target;
         this.DOM = null;
-        this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-        this.uri = document.location.origin;
+        this.path = WPURLS.apiUrl;
         this.index = 0;
         this.init();
     }

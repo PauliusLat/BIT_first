@@ -7,7 +7,7 @@
             <div class="menuName">
                 <label for="">
                 </label>
-                <input name="menu" class="menuText menu" placeholder="Pavadinimas" type="text">
+                <input name="menu" id="" class="menuText menu" placeholder="Pavadinimas" type="text">
             </div>
             <div class="menuSelect">
                 <label for="standard-select">

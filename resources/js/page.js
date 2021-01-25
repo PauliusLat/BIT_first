@@ -1,6 +1,6 @@
 "use strict";
 import Pagination from './pagination';
-
+import Api from './api';
 
 class Page extends Pagination {
     constructor(target) {
@@ -71,8 +71,7 @@ class Page extends Pagination {
             }
         }
     }
-
-    edit() {
+    edit(inner) {
         const editBtn = document.querySelectorAll(".page-edit");
 
         for (let i = 0; i < editBtn.length; i++) {
