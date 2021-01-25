@@ -53,9 +53,7 @@ class AdminMenuController
 
     public function store(Request $request)
     {
-        // $request = $this->decodeRequest($requestJson);
         $id = $request->request->get('id');
-        // _dc($id);
         if ($id == 0 || $id == 'undefined' || !isset($id) || $id == null || $id == '') {
             $menuPost = new FrontMenu;
         } else {
