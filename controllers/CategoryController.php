@@ -143,6 +143,7 @@ class CategoryController
             }
 
             $file = $request->files->get('image');
+            // _dc($file);
             $image = new Attachment();
             // $image->setAlt($altText);
             // $image->setCaption($imgTitle);

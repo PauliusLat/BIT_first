@@ -67,8 +67,10 @@ class Category extends Pagination {
                 content: description.value,
                 cat_parent: select.value,
             }
-         
-                this.readImage.sendImageData(obj);
+                if(obj){
+                    this.readImage.sendImageData(obj);
+                }
+              
           
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
@@ -144,8 +146,9 @@ class Category extends Pagination {
                             cat_slug: slug.value,
                             cat_description: description.value
                         }
-                        // this.readImage.sendImageData(obj);
-                        this.axios.formDataApi(obj);
+                        if(obj){
+                            this.readImage.sendImageData(obj);
+                        }
                         
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);

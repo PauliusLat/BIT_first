@@ -3843,8 +3843,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
     _classCallCheck(this, Category);
 
     _this = _super.call(this);
-    var api = "category_create";
-    _this.api = api;
+    _this.api = "category_create";
     _this.pages = 5;
     _this.target = target;
     _this.watch = document.querySelector(".innercat");
@@ -3870,6 +3869,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                 if (DOM) {
                   this.hashChange();
                   this.paging();
+                  console.log(document.currentScript);
                 }
 
               case 2:
@@ -3899,6 +3899,9 @@ var Category = /*#__PURE__*/function (_Pagination) {
     value: function create() {
       var _this2 = this;
 
+      // const filePath = document.currentScript.src;
+      // const path = filePath.substr(0, filePath.indexOf('\/', filePath.indexOf('BIT-first'))+1);
+      // console.log(path);
       var name = document.getElementById("category-name");
       var slug = document.getElementById("category-slug");
       var description = document.getElementById("category-description");
@@ -3934,8 +3937,6 @@ var Category = /*#__PURE__*/function (_Pagination) {
         if (obj) {
           _this2.readImage.sendImageData(obj);
         }
-
-        _this2.axios.formDataApi(obj);
 
         var changes = _this2.changes;
         window.removeEventListener('hashchange', changes);
@@ -4040,9 +4041,9 @@ var Category = /*#__PURE__*/function (_Pagination) {
                               cat_description: description.value
                             };
 
-                            _this4.readImage.sendImageData(obj);
-
-                            _this4.axios.formDataApi(obj);
+                            if (obj) {
+                              _this4.readImage.sendImageData(obj);
+                            }
 
                             changes = _this4.changes;
                             window.removeEventListener('hashchange', changes);
@@ -4053,7 +4054,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                               _this4.init();
                             }, 300));
 
-                          case 11:
+                          case 10:
                           case "end":
                             return _context2.stop();
                         }
@@ -4697,9 +4698,11 @@ var Menu = /*#__PURE__*/function () {
       var _this5 = this;
 
       var save = document.querySelector(".save");
-      var api = "menu_store";
       var obj;
       save.addEventListener("click", function () {
+        var menuid = document.querySelector(".menuText").id;
+        var api = "menu_store";
+        console.log(menuid);
         var elements = document.querySelectorAll(".draggable");
         var parent = document.querySelectorAll(".parent");
         var child = document.querySelectorAll(".submenu");
@@ -4733,6 +4736,7 @@ var Menu = /*#__PURE__*/function () {
             d.push(elements[i].getAttribute('data'));
             e.push(opts[i][opts[i].selectedIndex].value);
             obj = {
+              id: menuid,
               api: api,
               all: d,
               select: a,
