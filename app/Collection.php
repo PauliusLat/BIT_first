@@ -71,7 +71,6 @@ class Collection
     }
 
 
-
     protected function getArrayableItems($items)
     {
         if (is_array($items)) {

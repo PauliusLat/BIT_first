@@ -5,27 +5,26 @@ use BIT\app\Page;
 ?>
 
 <div class="sm-3-4 al">
-    <div class="news">
-        NAUJIENOS
-    </div>
+
 
     <?php
     // _dc($limit);
     $pageNum = 1;
     $nav = '';
     for ($page = 1; $page <= $pages; $page++) {
-        $nav .= '&nbsp <a href = "http://localhost:8080/wordpress/naujienos/?page=' . $page . '"  class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
+        $nav .= '&nbsp <a href = "' . $newsLink . '?psl=' . $page . '&showitems=' . $limit . '"  class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
         //$nav .= '&nbsp <a href = "' . get_site_url() .  '/' . 'naujienos' . '"  name = "page" class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
-        $next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';
-        $prev = '<a class="paging" id = "' . $prevpage . ' "><</a>';
-        $last = '<a class="paging" id = "' . $lastpage . ' "> &nbsp>> </a>';
-        $first = '<a class="paging" id = "' . $firstpage . ' "><<&nbsp</a>';
+        $next = '&nbsp<a href = "' . $newsLink . '?psl=' . $nextpage . '&showitems=' . $limit . '" class="paging" id = "' . $nextpage . ' ">></a>';
+        $prev = '<a href = "' . $newsLink . '?psl=' . $prevpage . '&showitems=' . $limit . '" class="paging" id = "' . $prevpage . ' "><</a>';
+        $last = '<a href = "' . $newsLink . '?psl=' . $lastpage . '&showitems=' . $limit . '" class="paging" id = "' . $lastpage . ' "> &nbsp>> </a>';
+        $first = '<a href = "' . $newsLink . '?psl=' . $firstpage . '&showitems=' . $limit . '" class="paging" id = "' . $firstpage . ' "><<&nbsp</a>';
     }
     ?>
-    <form action="" method='get'>
+    <form name="myform" action="" method='get'>
         <div class='selectPages sm-1-2'>
-            <label for="items">Rodyti puslapyje:</label>
-            <select name="items" id="items">
+            <label for="showitems">Rodyti puslapyje:</label>
+            <!-- <select name="showitems" id="items"> -->
+            <select onchange="myform.submit()" name="showitems">
                 <option selected value="<?= $limit ?>"><?= $limit ?></option>
                 <option value="5">5</option>
                 <option value="7">7</option>
@@ -33,13 +32,10 @@ use BIT\app\Page;
                 <option value="10">10</option>
             </select>
         </div>
-        <div class="admin-event-buttons">
-            <button type="submit" id="create" class="admin-event-button">Pridėti</button>
-        </div>
         <form>
 
             <?php
-            echo '<div class = "page" name = "page">';
+            echo '<div class = "page front" name = "page">';
             echo $first . $prev . $nav . $next . $last;
             echo '</div>';
             ?>

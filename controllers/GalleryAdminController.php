@@ -65,6 +65,8 @@ class GalleryAdminController
 			$attachment->delete();
 		};
 		$album = AlbumPost::get($request->request->get('album'));
+		header("Location:" . get_admin_url() . 'admin.php?page=galerija-0edit&id=' . $album->ID);
+		die;
 	}
 
 	

@@ -81,8 +81,8 @@ class TagController
         $slug = $request->request->get('tag_slug');
         $description = $request->request->get('tag_description');
         $id = $request->request->get('updateId');
-        Tag::updateTag($id, $name, $slug, $description);
         $session->flash('success_message', "tag'as sėkmingai pakoreguotas");
+        Tag::updateTag($id, $name, $slug, $description);
         return new Response;
     }
 

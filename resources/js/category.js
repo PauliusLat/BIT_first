@@ -61,7 +61,7 @@ class Category extends Pagination {
                 slug: slug.value,
                 page: selectedPage,
                 content: description.value,
-                cat_parent: description.value,
+                cat_parent: select.value,
             }
             if (obj) {
                 this.readImage.sendImageData(obj);
@@ -126,23 +126,19 @@ class Category extends Pagination {
                     this.watch.innerHTML = HTML;
 
                     this.readImage.image();
-
                     const name = document.getElementById("category_name");
                     const slug = document.getElementById("category_slug");
                     const description = document.getElementById("category_description");
                     let parent = document.getElementById('cat');
-                
                     let select;
-
-                    if (parent.options[parent.selectedIndex] != undefined) {
-                        select = parent.options[parent.options.selectedIndex].value;
-                    } else {
-                        select = 0;
-                    }
-
                     const updateBtn = document.getElementById("catUpdate");
                     updateBtn.addEventListener("click", async () => {
                         let api = "category_update";
+                        if (parent.options[parent.selectedIndex] != undefined) {
+                            select = parent.options[parent.options.selectedIndex].value;
+                        } else {
+                            select = 0;
+                        }
                         let obj = {
                             api: api,
                             updateId: updateBtn.value,

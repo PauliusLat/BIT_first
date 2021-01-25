@@ -220,6 +220,7 @@ class Menu {
             link: c
           }
         }
+        console.log(obj);
         this.axios.formDataApi(obj);
       }
     })

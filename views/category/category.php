@@ -1,6 +1,6 @@
 <?php
 if (!function_exists('wp_terms_checklist')) {
-    include ABSPATH . 'wp-admin/includes/template.php';
+	include ABSPATH . 'wp-admin/includes/template.php';
 }
 ?>
 <div class='catCreate grid-container'>
@@ -10,16 +10,16 @@ if (!function_exists('wp_terms_checklist')) {
 
     <div class="sm-1-2">
         <?php
-        if ($message) {
-        ?>
-            <div class='message'><?= $message ?></div>
+if ($message) {
+	?>
+            <div class='message'><?=$message?></div>
         <?php
-        } else {
-        ?>
-            <div class='success_message'><?= $success_message ?></div>
+} else {
+	?>
+            <div class='success_message'><?=$success_message?></div>
         <?php
-        }
-        ?>
+}
+?>
 
         <h2 class='tcp'>Pridėkite naują kategoriją</h2>
         <div class='label'>
@@ -35,18 +35,18 @@ if (!function_exists('wp_terms_checklist')) {
         </div>
 
         <?php
-        $args = array(
-            'taxonomy'     => 'maincat',
-            'show_option_all' => 'pasirinkite tėvinę kategoriją',
-            'orderby'      => 'name',
-            'hide_empty'   => false,
-            'show_count'   => false,
-            'pad_counts'   => false,
-            'hierarchical' => true,
-        );
-        ?>
+$args = array(
+	'taxonomy' => 'maincat',
+	'show_option_all' => 'pasirinkite tėvinę kategoriją',
+	'orderby' => 'name',
+	'hide_empty' => false,
+	'show_count' => false,
+	'pad_counts' => false,
+	'hierarchical' => true,
+);
+?>
         <ul style="display:inline-block">
-            <?php wp_dropdown_categories($args); ?>
+            <?php wp_dropdown_categories($args);?>
         </ul>
 
         <br><br>
@@ -92,16 +92,16 @@ if (!function_exists('wp_terms_checklist')) {
             <th>Veiksmai</th>
             <?php
 
-            $pageNum = 1;
-            for ($page = 1; $page <= $pages; $page++) {
-                $nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
-                $next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';
-                $prev = '<a class="paging" id = "' . $prevpage . ' "><</a>';
-                $last = '<a class="paging" id = "' . $lastpage . ' "> &nbsp>> </a>';
-                $first = '<a class="paging" id = "' . $firstpage . ' "><<&nbsp</a>';
-            }
+$pageNum = 1;
+for ($page = 1; $page <= $pages; $page++) {
+	$nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
+	$next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';
+	$prev = '<a class="paging" id = "' . $prevpage . ' "><</a>';
+	$last = '<a class="paging" id = "' . $lastpage . ' "> &nbsp>> </a>';
+	$first = '<a class="paging" id = "' . $firstpage . ' "><<&nbsp</a>';
+}
 
-            ?>
+?>
             <div class='selectPages sm-1-2'>
                 <label for="items">Rodyti puslapyje:</label>
                 <select name="items" id="items">
@@ -110,53 +110,50 @@ if (!function_exists('wp_terms_checklist')) {
                     <option value="8">8</option>
                     <option value="10">10</option>
                 </select>
-                <div class="buttons">
-                    <button type="submit" id="selectpage" class="btn-blue">Rinktis</button>
-                </div>
             </div>
 
             <?php
-            echo '<div class = "page">';
-            echo $first . $prev . $nav . $next . $last;
-            echo '</div>';
-            foreach ($categories as $cat) {
-                $catImage = $category->getCatImage($cat->term_id);
-                $urlImg = $catImage->getUrl();
-                $pageLink =  $category->getCatPageLink($cat->term_id);
-            ?>
+echo '<div class = "page">';
+echo $first . $prev . $nav . $next . $last;
+echo '</div>';
+foreach ($categories as $cat) {
+	$catImage = $category->getCatImage($cat->term_id);
+	$urlImg = $catImage->getUrl();
+	$pageLink = $category->getCatPageLink($cat->term_id);
+	?>
                 <tr>
-                    <td><?= str_repeat('--', $cat->level) ?><?= $cat->name ?></td>
-                    <td><a href="<?= $pageLink ?>"><?= $pageLink ?></a></td>
-                    <td><?= $cat->description ?></td>
+                    <td><?=str_repeat('--', $cat->level)?><?=$cat->name?></td>
+                    <td><a href="<?=$pageLink?>"><?=$pageLink?></a></td>
+                    <td><?=$cat->description?></td>
                     <?php
 
-                    if ($catImage->ID != 0 && $catImage->ID != null && $catImage->ID != 'undefined' && $catImage->ID != '') {
-                    ?>
+	if ($catImage->ID != 0 && $catImage->ID != null && $catImage->ID != 'undefined' && $catImage->ID != '') {
+		?>
                         <td>
                             <?php
-                            echo '<img class = "cat" src="' . $urlImg . '">';
-                            ?>
+echo '<img class = "cat" src="' . $urlImg . '">';
+		?>
                         </td>
                     <?php
-                    } else {
-                    ?>
+} else {
+		?>
                         <td>
                             <?php
-                            echo '';
-                            ?>
+echo '';
+		?>
                         </td>
                     <?php
-                    }
-                    ?>
+}
+	?>
 
                     <td>
-                        <button class="category-edit btn-blue" type="submit" name="category-edit" id="<?= $cat->taxonomy ?>" value="<?= $cat->term_id ?>">Edit</button>
-                        <button class="category-delete btn-red" type="submit" name="catDelete" id="<?= $cat->taxonomy ?>" value="<?= $cat->term_id ?>">Delete</button>
+                        <button class="category-edit btn-blue" type="submit" name="category-edit" id="<?=$cat->taxonomy?>" value="<?=$cat->term_id?>">Edit</button>
+                        <button class="category-delete btn-red" type="submit" name="catDelete" id="<?=$cat->taxonomy?>" value="<?=$cat->term_id?>">Delete</button>
                     </td>
                 </tr>
             <?php
-            }
-            ?>
+}
+?>
         </table>
 
 

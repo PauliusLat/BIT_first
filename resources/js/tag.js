@@ -3,10 +3,10 @@
 "use strict";
 import Pagination from './pagination';
 
+
 class Tag extends Pagination {
     constructor(target) {
         super();
-
         this.api = 'tag_create';
         this.pages = 5;
         this.target = target;
@@ -18,7 +18,6 @@ class Tag extends Pagination {
     init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
-
             this.hashChange();
             this.paging();
         }
@@ -89,6 +88,7 @@ class Tag extends Pagination {
                         editID: ID,
                         taxonomy_type: taxonomy,
                     }
+                    console.log(obj)
                     let HTML = await this.axios.getPostData(obj);
                     this.watch.innerHTML = HTML;
                     const name = document.getElementById("tag_name");
