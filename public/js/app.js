@@ -3197,15 +3197,14 @@ var Api = /*#__PURE__*/function () {
   function Api() {
     _classCallCheck(this, Api);
 
-    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-    this.uri = document.location.origin;
+    this.path = WPURLS.apiUrl;
     this.html = null;
   }
 
   _createClass(Api, [{
     key: "delete",
     value: function _delete(api, id) {
-      axios.post(this.uri + this.path + api + id, {
+      axios.post(this.path + api + id, {
         deleteId: id
       })["catch"](function (error) {
         if (error.response) {
@@ -3233,7 +3232,7 @@ var Api = /*#__PURE__*/function () {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios.post(this.uri + this.path + api);
+                return axios.post(this.path + api);
 
               case 3:
                 response = _context.sent;
@@ -3272,7 +3271,7 @@ var Api = /*#__PURE__*/function () {
   }, {
     key: "saveContent",
     value: function saveContent(api, id, content) {
-      axios.post(this.uri + this.path + api, {
+      axios.post(this.path + api, {
         id: id,
         content: content
       })["catch"](function (error) {
@@ -3301,7 +3300,7 @@ var Api = /*#__PURE__*/function () {
         }
 
         console.log(Object.fromEntries(formData));
-        axios.post(this.uri + this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
+        axios.post(this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
           if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
@@ -3342,7 +3341,7 @@ var Api = /*#__PURE__*/function () {
 
                 console.log(Object.fromEntries(formData));
                 _context2.next = 7;
-                return axios.post(this.uri + this.path + obj.api, formData, {});
+                return axios.post(this.path + obj.api, formData, {});
 
               case 7:
                 response = _context2.sent;
@@ -3433,8 +3432,7 @@ var Calendar = /*#__PURE__*/function () {
     this.curentM = new Date(this.y, this.m + 1, 0).getMonth();
     this.curentDay = new Date(this.y, this.curentM, 1).getDay();
     var startDay = this.curentDay;
-    this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-    this.uri = document.location.origin;
+    this.path = WPURLS.apiUrl;
     this.months = ['Sausis', 'Vasaris', 'Kovas', 'Balandis', 'Gegužė', 'Birželis', 'Liepa', 'Rugpjūtis', 'Rugsėjis', 'Spalis', 'Lapkritis', 'Gruodis'];
     this.init(days, startDay);
   }
@@ -3588,7 +3586,6 @@ var Calendar = /*#__PURE__*/function () {
       var _this3 = this;
 
       this.path;
-      this.uri;
       var table = document.querySelector(".eventContainer");
       var HTML = "<div class=\"popup\">\n                <div class=\"content\">\n                  <div class=\"event\">     \n                    <span class=\"closebtn\">&#9932;</span>      \n                    <div class=\"eventTitle\">\n                       <h1>Ivesti nauja \u012Fvyki</h1>\n                    </div>\n                    <div class=\"subscribe\">\n                        <input class=\"newEvent\" type=\"text\" id=\"sendText\" placeholder=\"Naujas \u012Fvykis\">\n                        <input type=\"time\" id=\"appt\" name=\"appt\" value=\"00:00\">\n                      <div class=\"eventBtn\">\n                        Si\u0173sti\n                      </div>\n                    </div>\n                  </div>\n                    <div class=\"eventH2\">\n                        \u012Evykiai - ".concat(month, " ").concat(day, "\n                    </div>\n                    <div id=\"daysEvens\" class=\"eventBox\">\n                    </div>\n                </div>\n              </div>");
       table.innerHTML = HTML;
@@ -3628,7 +3625,7 @@ var Calendar = /*#__PURE__*/function () {
   }, {
     key: "renderEvents",
     value: function renderEvents(action) {
-      axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
+      axios.post(this.path + 'calendar-create-admin', {}).then(function (response) {
         if (response.status == 200 && response.statusText == 'OK') {
           (function () {
             var call = new Calendar();
@@ -3712,7 +3709,7 @@ var Calendar = /*#__PURE__*/function () {
     value: function deleteEvent(id, action) {
       var _this4 = this;
 
-      axios.post(this.uri + this.path + "calendar-delete-admin&id=" + id, {
+      axios.post(this.path + "calendar-delete-admin&id=" + id, {
         eventID: id
       }).then(function (response) {
         if (response.status == 200 && response.statusText == 'OK') {
@@ -3748,7 +3745,7 @@ var Calendar = /*#__PURE__*/function () {
   }, {
     key: "getData",
     value: function getData() {
-      axios.post(this.uri + this.path + 'calendar-create-admin', {}).then(function (response) {
+      axios.post(this.path + 'calendar-create-admin', {}).then(function (response) {
         if (response.status == 200 && response.statusText == 'OK') {
           var data = response.data.allData;
           var dayEvents = document.querySelectorAll(".cview--date");
@@ -4210,8 +4207,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-var uri = document.location.origin;
+var path = WPURLS.apiUrl;
 var ideaStrt = document.getElementById("startIdeaAdmin");
 
 function startIdea() {
@@ -4259,7 +4255,7 @@ function deleteIdea(delId) {
 
 
 function renderColons(e) {
-  axios.get(uri + path + "idea-render-admin", {}).then(function (response) {
+  axios.get(path + "idea-render-admin", {}).then(function (response) {
     if (response.status == 200 && response.statusText == "OK") {
       var data = response.data.allData;
       var keys = [];

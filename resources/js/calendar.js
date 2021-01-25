@@ -17,8 +17,7 @@ class Calendar {
         this.curentM = new Date(this.y, this.m + 1, 0).getMonth();
         this.curentDay = new Date(this.y, this.curentM, 1).getDay();
         let startDay = this.curentDay;
-        this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-        this.uri = document.location.origin;
+        this.path = WPURLS.apiUrl;
         this.months = ['Sausis', 'Vasaris', 'Kovas', 'Balandis', 'Gegužė', 'Birželis', 'Liepa', 'Rugpjūtis', 'Rugsėjis', 'Spalis', 'Lapkritis', 'Gruodis'];
         this.init(days, startDay);
     }
@@ -151,7 +150,6 @@ class Calendar {
 
     event(action, month, day) {
         this.path;
-        this.uri;
         let table = document.querySelector(".eventContainer");
  
         let HTML = `<div class="popup">
@@ -212,7 +210,7 @@ class Calendar {
  
     renderEvents(action) {
         axios.post(
-            this.uri + this.path +
+            this.path +
             'calendar-create-admin', {}
         )
             .then(function (response) {
@@ -298,7 +296,7 @@ class Calendar {
     deleteEvent(id, action) {
         axios
             .post(
-                this.uri + this.path +
+                this.path +
                 "calendar-delete-admin&id=" + id, {
                 eventID: id,
             }).then(function (response) {
@@ -335,7 +333,7 @@ class Calendar {
  
     getData() {
         axios.post(
-            this.uri + this.path +
+            this.path +
             'calendar-create-admin', {}
         )
             .then(function (response) {

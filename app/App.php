@@ -48,6 +48,7 @@ class App
             wp_enqueue_style('app', PLUGIN_DIR_URL . 'public/style/app.css');
             wp_enqueue_style('app');
             wp_enqueue_script('js', PLUGIN_DIR_URL . 'public/js/app.js', [], 1, true);
+            wp_localize_script('js', 'WPURLS', require __DIR__.'/../resources/jsVars.php');
             wp_enqueue_script('js');
             wp_enqueue_script('axios', 'https://unpkg.com/axios/dist/axios.min.js');
         });
