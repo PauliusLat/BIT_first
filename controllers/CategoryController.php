@@ -52,13 +52,15 @@ class CategoryController
                 array_push($catArr, $value);
             }
         }
-
-        if ($session->get('alert_message') != null) {
+        $success_message = '';
+        $message  = '';
+        if ($session->get('alert_message')) {
             $message = $session->get('alert_message');
-        } else if ($session->get('success_message') != null) {
+        } else if ($session->get('success_message')) {
             $success_message = $session->get('success_message');
         } else {
             $message = "";
+            $success_message = "";
         }
 
         $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $catArr, 'message' => $message,  'success_message' => $success_message, 'category' => $category]);
@@ -99,7 +101,6 @@ class CategoryController
             $file = $request->files->get('image');
             $image = new Attachment();
             $image->save($file);
-            _dc($image);
             $category->addImageToCat((int)$term_id, "image", $image->ID);
         }
         return new Response;
@@ -131,7 +132,7 @@ class CategoryController
         } else {
             $parent_id = 0;
         }
-        // _dc($parent_id);
+
         $id = $request->request->get('updateId');
         //update cat and cat page
         $category = new Category;
@@ -143,7 +144,6 @@ class CategoryController
             }
 
             $file = $request->files->get('image');
-            // _dc($file);
             $image = new Attachment();
             // $image->setAlt($altText);
             // $image->setCaption($imgTitle);

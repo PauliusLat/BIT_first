@@ -3127,8 +3127,8 @@ var AlbumList = /*#__PURE__*/function () {
 
             var newRemove = function newRemove(e) {
               if (check) {
-                e.stopPropagation();
-                console.log(_this.array[i]);
+                e.stopPropagation(); // console.log(this.array[i]);
+
                 var api = 'album-destroy&id=';
                 var id = _this.array[i].id;
                 remove.remove();
@@ -3857,35 +3857,14 @@ var Category = /*#__PURE__*/function (_Pagination) {
 
   _createClass(Category, [{
     key: "init",
-    value: function () {
-      var _init = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var DOM;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                DOM = document.getElementById(this.target);
+    value: function init() {
+      var DOM = document.getElementById(this.target);
 
-                if (DOM) {
-                  this.hashChange();
-                  this.paging();
-                  console.log(document.currentScript);
-                }
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function init() {
-        return _init.apply(this, arguments);
+      if (DOM) {
+        this.hashChange();
+        this.paging();
       }
-
-      return init;
-    }()
+    }
   }, {
     key: "addAction",
     value: function addAction() {
@@ -3899,9 +3878,6 @@ var Category = /*#__PURE__*/function (_Pagination) {
     value: function create() {
       var _this2 = this;
 
-      // const filePath = document.currentScript.src;
-      // const path = filePath.substr(0, filePath.indexOf('\/', filePath.indexOf('BIT-first'))+1);
-      // console.log(path);
       var name = document.getElementById("category-name");
       var slug = document.getElementById("category-slug");
       var description = document.getElementById("category-description");
@@ -3915,38 +3891,50 @@ var Category = /*#__PURE__*/function (_Pagination) {
 
       var submit = document.getElementById("create");
       var api = 'category_store';
-      submit.addEventListener("click", function () {
-        var parent = document.getElementById('cat');
-        var select;
+      submit.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var parent, select, obj, changes;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                parent = document.getElementById('cat');
 
-        if (parent.options[parent.selectedIndex] != undefined) {
-          select = parent.options[parent.selectedIndex];
-        } else {
-          select = 0;
-        }
+                if (parent.options[parent.selectedIndex] != undefined) {
+                  select = parent.options[parent.selectedIndex];
+                } else {
+                  select = 0;
+                }
 
-        var obj = {
-          api: api,
-          title: name.value,
-          slug: slug.value,
-          page: selectedPage,
-          content: description.value,
-          cat_parent: select.value
-        };
+                obj = {
+                  api: api,
+                  title: name.value,
+                  slug: slug.value,
+                  page: selectedPage,
+                  content: description.value,
+                  cat_parent: select.value
+                };
 
-        if (obj) {
-          _this2.readImage.sendImageData(obj);
-        }
+                if (obj) {
+                  _this2.readImage.sendImageData(obj);
+                }
 
-        var changes = _this2.changes;
-        window.removeEventListener('hashchange', changes);
-        name.value = "";
-        slug.value = "";
-        description.value = "";
-        return setTimeout(function () {
-          _this2.init();
-        }, 300);
-      });
+                changes = _this2.changes;
+                window.removeEventListener('hashchange', changes);
+                name.value = "";
+                slug.value = "";
+                description.value = ""; // return await this.init();
+
+                return _context.abrupt("return", setTimeout(function () {
+                  _this2.init();
+                }, 300));
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
     }
   }, {
     key: "delete",
@@ -3970,7 +3958,8 @@ var Category = /*#__PURE__*/function (_Pagination) {
             _this3.axios.formDataApi(obj);
 
             var changes = _this3.changes;
-            window.removeEventListener('hashchange', changes);
+            window.removeEventListener('hashchange', changes); // return await this.init();
+
             return setTimeout(function () {
               _this3.init();
             }, 300);

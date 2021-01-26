@@ -14,5 +14,5 @@ return [
     'test' => 'TestController@front',
     'showNews' => 'NewsFrontController@show',
     'news' => 'NewsFrontController@index',
-    'menufront' => 'FrontMenuController@index',
+    // 'menufront' => 'FrontMenuController@index',
 ];
