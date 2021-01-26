@@ -27,7 +27,7 @@ class NewsAdminController
 		$file = $request->files->get('image');
 
 		$page = new Page();
-		$page->pageState = 'News Page';
+		$page->pageState = ['Site_page','News_page'];
 		$page->setRoute('showNews');
 		$page->setTitle($title);
 		$page->save();

@@ -32,6 +32,7 @@
                 <span></span> 
             </label>
             <p>CACHE įskiepio aktyvavimas/deaktyvavimas modifikuos pagrindinį <i> .htaccess </i> failą.</p>
+            <p>Rekomenduojama išsisaugoti .htaccess kopiją.</p>
 
             <button type="submit" class="btn-blue">Išsaugoti</button>
         </form>

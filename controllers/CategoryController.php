@@ -132,7 +132,6 @@ class CategoryController
         } else {
             $parent_id = 0;
         }
-
         $id = $request->request->get('updateId');
         //update cat and cat page
         $category = new Category;
