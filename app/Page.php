@@ -6,6 +6,7 @@ class Page extends Post
 {
     protected static $type = 'page';
     public $pageState = ['Site_page'];
+    
     public function setRoute($route, $args = '')
     {
         $this->post_content  = "[front_shortcode route=$route args=$args]";

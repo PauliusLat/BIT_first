@@ -99,7 +99,6 @@ class CategoryController
             $file = $request->files->get('image');
             $image = new Attachment();
             $image->save($file);
-            _dc($image);
             $category->addImageToCat((int)$term_id, "image", $image->ID);
         }
         return new Response;
@@ -131,7 +130,6 @@ class CategoryController
         } else {
             $parent_id = 0;
         }
-        // _dc($parent_id);
         $id = $request->request->get('updateId');
         //update cat and cat page
         $category = new Category;
@@ -143,7 +141,6 @@ class CategoryController
             }
 
             $file = $request->files->get('image');
-            // _dc($file);
             $image = new Attachment();
             // $image->setAlt($altText);
             // $image->setCaption($imgTitle);
