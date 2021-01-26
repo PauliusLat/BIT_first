@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use BIT\app\Pagination;
+use BIT\app\coreExeptions\NotSetException;
 // use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
@@ -30,6 +31,7 @@ class PageController
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
 
+
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
@@ -42,11 +44,25 @@ class PageController
             $number = 1;
         }
 
-        $total = count(Page::all()->all());
-        $pagination = new Pagination($limit, $number, $total);
-        $pagesPost = Page::all()->all();
-        $pagesPost = array_values($pagesPost);
+        $allPages = Page::all()->all();
+        $pagesPost = [];
+        if (!empty($allPages) && is_array($allPages)) {
+            foreach ($allPages as $pag) {
+                if ($pag->pageState && is_array($pag->pageState)) {
+                    foreach ($pag->pageState as $state) {
+                        if ($state != 'News_page' && $state != 'Album_page') {
+                            array_push($pagesPost, $pag);
+                            break;
+                        }
+                    }
+                }
+            }
+        } else {
+            throw new NotSetException('Nei vienas puslapis dar nesukurtas');
+        }
 
+        $total = count($pagesPost);
+        $pagination = new Pagination($limit, $number, $total);
         $pageArr = [];
         foreach ($pagesPost as $key => $value) {
             if ($key >= $pagination->offset && count($pageArr) < $limit) {
@@ -72,13 +88,14 @@ class PageController
         $name = $request->request->get('page_title');
         $post = $request->request->get('post_type');
         $pagest = $request->request->get('page_state');
-        $pagestate = explode(',', $pagest);
-        $state = ['Site_page',];
-        if ($pagestate) {
+        $state = ['Site_page'];
+        if ($pagest) {
+            $pagestate = explode(',', $pagest);
             foreach ($pagestate as $value) {
                 array_push($state, $value);
             }
         }
+
         $page->pageState = $state;
         $page->setRoute($post);
         $page->setTitle($name);
@@ -109,9 +126,9 @@ class PageController
         $title = $request->request->get('page_title');
         $post = $request->request->get('post_type');
         $pagest = $request->request->get('page_state');
-        $pagestate = explode(',', $pagest);
-        $state = ['Site_page',];
-        if ($pagestate) {
+        $state = ['Site_page'];
+        if ($pagest) {
+            $pagestate = explode(',', $pagest);
             foreach ($pagestate as $value) {
                 array_push($state, $value);
             }

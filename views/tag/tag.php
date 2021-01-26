@@ -48,6 +48,10 @@
 
             $pageNum = 1;
             $nav = '';
+            $last = '';
+            $next = '';
+            $prev = '';
+            $first = '';
             for ($page = 1; $page <= $pages; $page++) {
 
                 $nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';

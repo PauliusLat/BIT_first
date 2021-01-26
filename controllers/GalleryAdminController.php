@@ -68,6 +68,4 @@ class GalleryAdminController
 		header("Location:" . get_admin_url() . 'admin.php?page=galerija-0edit&id=' . $album->ID);
 		die;
 	}
-
-	
 }

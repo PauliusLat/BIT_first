@@ -41,7 +41,7 @@ class IdeaController
 
 	public function create(Request $requestJson, Session $session)
 	{
-		$server = new Server;
+		// $server = new Server;
 
 		$idea = new IdeaPost;
 
@@ -68,8 +68,8 @@ class IdeaController
 			// $id = $idBrowser['version'];
 			// $array[] = $id;
 			$array[] = $like;
-			$session->set('ideja', $array);
-
+			// $session->set('ideja', $array);
+			// _dc($session->get('ideja'));
 
 			// if ($session->get('id') != $array) {
 

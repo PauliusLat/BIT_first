@@ -15,13 +15,11 @@ class Category extends Pagination {
         this.readImage = new Profile_image();
         this.init();
     }
-    async init() {
+    init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
             this.hashChange();
             this.paging();
-            console.log(document.currentScript)
-           
         }
     }
 
@@ -33,10 +31,6 @@ class Category extends Pagination {
     }
 
     create() {
-        // const filePath = document.currentScript.src;
-        // const path = filePath.substr(0, filePath.indexOf('\/', filePath.indexOf('BIT-first'))+1);
-        // console.log(path);
-      
         const name = document.getElementById("category-name");
         const slug = document.getElementById("category-slug");
         const description = document.getElementById("category-description");
@@ -49,7 +43,7 @@ class Category extends Pagination {
         const submit = document.getElementById("create");
         const api = 'category_store';
       
-        submit.addEventListener("click", () => {  
+        submit.addEventListener("click", async () => {  
           
             let parent = document.getElementById('cat');
             let select;
@@ -77,6 +71,7 @@ class Category extends Pagination {
             name.value = "";
             slug.value = ""
             description.value = ""
+            // return await this.init();
             return setTimeout(() => { this.init() }, (300))
 
         });
@@ -101,7 +96,8 @@ class Category extends Pagination {
                         this.axios.formDataApi(obj);
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
-                        return setTimeout(() => { this.init() }, (300))
+                        // return await this.init();
+                     return setTimeout(() => { this.init() }, (300))
                     });
             }
         }
@@ -156,6 +152,7 @@ class Category extends Pagination {
                         slug.value = "";
                         name.value = "";
                         return setTimeout(() => { this.init() }, (300))
+                        // return await this.init();
                     });
                 });
         }
