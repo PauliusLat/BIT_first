@@ -2,7 +2,7 @@
 return [
     'system' => [
         'news' => 'News_page',
-        'idea' => 'Idea_page',
+        'album' => 'Album_page',
         'site' => 'Site_page',
 
     ],
