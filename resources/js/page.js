@@ -46,7 +46,7 @@ class Page extends Pagination {
                 post_type: select.value,
                 page_state: stateArray
             }
-            console.log(obj)
+            // console.log(obj)
             this.axios.formDataApi(obj);
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);

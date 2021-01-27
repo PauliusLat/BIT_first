@@ -10,9 +10,7 @@ class Pagination {
     paging() {
         const page = document.querySelectorAll(".paging");
         if (page.length) {
-
             for (let i = 0; i < page.length; i++) {
-
                 let nextPage = () => {
                     page[i].addEventListener('click', nextPage);
                     let id = parseInt(page[i].id);
@@ -39,6 +37,7 @@ class Pagination {
                 pageSelected: pages,
                 hash: hash
             }
+          
             this.watch.innerHTML = await this.axios.getPostData(obj);
         } else if (hash == undefined ||
             hash == null ||
