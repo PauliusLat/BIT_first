@@ -1,7 +1,8 @@
 <div class="innermenu" id="menuStart1">
-    <h1 class="menu">
+    <h1 class="menu main" id="">
         Sukurkite pagrindinį Meniu
     </h1>
+
     <div class="cont sm-17-24">
         <div class="draggable parent" id="addDrag" draggable="true">
             <div class="menuName">
@@ -17,7 +18,7 @@
                     <?php
                     foreach ($pages as $value) {
                     ?>
-                        <option class="option" value="<?= $value->getLink() ?>"><?= $value->post_title ?></option>
+                        <option class="option" id="<?= $value->ID ?>" value="<?= $value->getLink() ?>"><?= $value->post_title ?></option>
                     <?php
                     }
                     ?>

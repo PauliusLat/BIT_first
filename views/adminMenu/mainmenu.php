@@ -1,10 +1,9 @@
 <div class="innermenu" id="menuStart2">
-    <h1 class="menu">
+    <h1 class="menu main" id="<?= $menu->ID ?>">
         Koreguokite pagrindinį Meniu
     </h1>
     <div class="cont sm-17-24">
         <?php
-
         foreach (range(0, (count($menu->names) - 1)) as $index) {
         ?>
             <div class="draggable parent" id="addDrag" draggable="true">
@@ -20,7 +19,7 @@
                 <div class="menuName">
                     <label for="">
                     </label>
-                    <input name="menu" id="<?= $menu->ID ?>" class="menuText menu" placeholder="Pavadinimas" value='<?= $name ?>' type="text">
+                    <input name="menu" class="menuText menu" placeholder="Pavadinimas" value='<?= $name ?>' type="text">
                 </div>
 
                 <div class="menuSelect">

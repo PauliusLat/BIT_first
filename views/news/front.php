@@ -23,7 +23,6 @@ use BIT\app\Page;
             <label for="showitems">Rodyti puslapyje:</label>
             <!-- <select name="showitems" id="items"> -->
             <select onchange="myform.submit()" name="showitems">
-
                 <option value="5" <?= $limit == '5' ? 'selected = "selected"' : ''; ?>>5</option>
                 <option value="7" <?= $limit == '7' ? 'selected = "selected"' : ''; ?>>7</option>
                 <option value="8" <?= $limit == '8' ? 'selected = "selected"' : ''; ?>>8</option>

@@ -44,7 +44,7 @@ class AdminMenuController
 
             //ismesti statusa revision ir trashed;
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
-            $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
+            //$catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
             $page = new Page;
             $output = View::adminRender('adminMenu.initmenu', ['pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
             return new JsonResponse(['html' => $output]);
@@ -54,6 +54,7 @@ class AdminMenuController
 
     public function store(Request $request)
     {
+        // _dc($request->request);
         $id = $request->request->get('id');
         if ($id == 0 || $id == 'undefined' || !isset($id) || $id == null || $id == '') {
             $menuPost = new FrontMenu;

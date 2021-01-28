@@ -4677,7 +4677,7 @@ var Menu = /*#__PURE__*/function () {
       var save = document.querySelector(".save");
       var obj;
       save.addEventListener("click", function () {
-        var menuid = document.querySelector(".menuText").id;
+        var menuid = document.querySelector(".main").id;
         var api = "menu_store"; // console.log(menuid);
 
         var elements = document.querySelectorAll(".draggable");
@@ -4711,7 +4711,7 @@ var Menu = /*#__PURE__*/function () {
             b.push(text[i].value);
             c.push(link[i].value);
             d.push(elements[i].getAttribute('data'));
-            e.push(opts[i][opts[i].selectedIndex].value);
+            e.push(opts[i][opts[i].selectedIndex].id);
             obj = {
               id: menuid,
               api: api,
@@ -4721,8 +4721,9 @@ var Menu = /*#__PURE__*/function () {
               textLink: e,
               link: c
             };
-          } // console.log(obj);
+          }
 
+          console.log(obj);
 
           _this5.axios.formDataApi(obj);
         }

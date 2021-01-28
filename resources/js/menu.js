@@ -187,7 +187,7 @@ class Menu {
     let obj;
 
     save.addEventListener("click", () => {
-      const menuid = document.querySelector(".menuText").id;
+    const menuid = document.querySelector(".main").id;
     const api = "menu_store";
     // console.log(menuid);
 
@@ -213,7 +213,7 @@ class Menu {
           b.push(text[i].value)
           c.push(link[i].value)
           d.push(elements[i].getAttribute('data'))
-          e.push(opts[i][opts[i].selectedIndex].value)
+          e.push(opts[i][opts[i].selectedIndex].id)
 
           obj = {
             id: menuid,
@@ -225,7 +225,7 @@ class Menu {
             link: c
           }
         }
-        // console.log(obj);
+        console.log(obj);
         this.axios.formDataApi(obj);
       }
     })
