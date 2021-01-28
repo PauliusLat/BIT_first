@@ -3890,50 +3890,39 @@ var Category = /*#__PURE__*/function (_Pagination) {
 
       var submit = document.getElementById("create");
       var api = 'category_store';
-      submit.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var parent, select, obj, changes;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                parent = document.getElementById('cat');
+      submit.addEventListener("click", function () {
+        var parent = document.getElementById('cat');
+        var select;
 
-                if (parent.options[parent.selectedIndex] != undefined) {
-                  select = parent.options[parent.selectedIndex];
-                } else {
-                  select = 0;
-                }
+        if (parent.options[parent.selectedIndex] != undefined) {
+          select = parent.options[parent.selectedIndex];
+        } else {
+          select = 0;
+        }
 
-                obj = {
-                  api: api,
-                  title: name.value,
-                  slug: slug.value,
-                  page: selectedPage,
-                  content: description.value,
-                  cat_parent: select.value
-                };
+        var obj = {
+          api: api,
+          title: name.value,
+          slug: slug.value,
+          page: selectedPage,
+          content: description.value,
+          cat_parent: select.value
+        };
 
-                if (obj) {
-                  _this2.readImage.sendImageData(obj);
-                }
+        if (obj) {
+          _this2.readImage.sendImageData(obj);
+        }
 
-                changes = _this2.changes;
-                window.removeEventListener('hashchange', changes);
-                name.value = "";
-                slug.value = "";
-                description.value = ""; // return await this.init();
+        var changes = _this2.changes;
+        window.removeEventListener('hashchange', changes);
+        name.value = "";
+        slug.value = "";
+        description.value = ""; // return await this.init();
 
-                return _context.abrupt("return", setTimeout(function () {
-                  _this2.init();
-                }, 300));
-
-              case 10:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      })));
+        return setTimeout(function () {
+          _this2.init();
+        }, 300);
+      });
     }
   }, {
     key: "delete",
@@ -3980,11 +3969,11 @@ var Category = /*#__PURE__*/function (_Pagination) {
       var _loop2 = function _loop2(i) {
         var editID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
-        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
           var api, obj, HTML, name, slug, description, parent, select, updateBtn;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
-              switch (_context3.prev = _context3.next) {
+              switch (_context2.prev = _context2.next) {
                 case 0:
                   api = "category_edit";
                   obj = {
@@ -3992,11 +3981,11 @@ var Category = /*#__PURE__*/function (_Pagination) {
                     editID: editID,
                     taxonomy_type: taxonomy
                   };
-                  _context3.next = 4;
+                  _context2.next = 4;
                   return _this4.axios.getPostData(obj);
 
                 case 4:
-                  HTML = _context3.sent;
+                  HTML = _context2.sent;
                   _this4.watch.innerHTML = HTML;
 
                   _this4.readImage.image();
@@ -4006,11 +3995,11 @@ var Category = /*#__PURE__*/function (_Pagination) {
                   description = document.getElementById("category_description");
                   parent = document.getElementById('cat');
                   updateBtn = document.getElementById("catUpdate");
-                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
                     var api, obj, changes;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
                       while (1) {
-                        switch (_context2.prev = _context2.next) {
+                        switch (_context.prev = _context.next) {
                           case 0:
                             api = "category_update";
 
@@ -4038,24 +4027,24 @@ var Category = /*#__PURE__*/function (_Pagination) {
                             description.value = "";
                             slug.value = "";
                             name.value = "";
-                            return _context2.abrupt("return", setTimeout(function () {
+                            return _context.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));
 
                           case 10:
                           case "end":
-                            return _context2.stop();
+                            return _context.stop();
                         }
                       }
-                    }, _callee2);
+                    }, _callee);
                   })));
 
                 case 13:
                 case "end":
-                  return _context3.stop();
+                  return _context2.stop();
               }
             }
-          }, _callee3);
+          }, _callee2);
         })));
       };
 
@@ -4831,7 +4820,7 @@ var News = /*#__PURE__*/function () {
           if (obj.title) {
             readImage.sendImageData(obj);
           } else {
-            alert("Not written the title !!!");
+            alert("Neįvestas pavadinimas!!!");
           }
         });
       }
@@ -5613,7 +5602,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
     _this.pages = 5;
     _this.target = target;
     _this.changes;
-    _this.watch = document.querySelector(".startWatch");
+    _this.watch = document.querySelector(".tagCreateList");
 
     _this.init();
 
@@ -5711,7 +5700,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
         var ID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
         editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          var api, obj, HTML, name, slug, description, updateBtn;
+          var api, obj, HTML, editInsert, name, slug, description, updateBtn;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
@@ -5721,14 +5710,16 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                     api: api,
                     editID: ID,
                     taxonomy_type: taxonomy
-                  };
-                  console.log(obj);
-                  _context2.next = 5;
+                  }; // console.log(obj)
+
+                  _context2.next = 4;
                   return _this4.axios.getPostData(obj);
 
-                case 5:
+                case 4:
                   HTML = _context2.sent;
-                  _this4.watch.innerHTML = HTML;
+                  editInsert = document.querySelector('.tagEdit');
+                  editInsert.innerHTML = HTML;
+                  _this4.watch.style.display = 'none';
                   name = document.getElementById("tag_name");
                   slug = document.getElementById("tag_slug");
                   description = document.getElementById("tag_description");
@@ -5755,11 +5746,13 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                             description.value = "";
                             slug.value = "";
                             name.value = "";
+                            _this4.watch.style.display = 'inline-block';
+                            editInsert.style.display = 'hidden';
                             return _context.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));
 
-                          case 9:
+                          case 11:
                           case "end":
                             return _context.stop();
                         }
@@ -5767,7 +5760,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                     }, _callee);
                   })));
 
-                case 12:
+                case 13:
                 case "end":
                   return _context2.stop();
               }

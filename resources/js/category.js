@@ -43,7 +43,7 @@ class Category extends Pagination {
         const submit = document.getElementById("create");
         const api = 'category_store';
       
-        submit.addEventListener("click", async () => {  
+        submit.addEventListener("click",  () => {  
           
             let parent = document.getElementById('cat');
             let select;
@@ -62,10 +62,9 @@ class Category extends Pagination {
                 cat_parent: select.value,
             }
                 if(obj){
-                    this.readImage.sendImageData(obj);
+                     this.readImage.sendImageData(obj);
                 }
               
-          
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
             name.value = "";

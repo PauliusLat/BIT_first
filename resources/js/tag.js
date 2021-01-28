@@ -11,7 +11,7 @@ class Tag extends Pagination {
         this.pages = 5;
         this.target = target;
         this.changes;
-        this.watch = document.querySelector(".startWatch");
+        this.watch = document.querySelector(".tagCreateList");
         this.init();
     }
 
@@ -88,9 +88,11 @@ class Tag extends Pagination {
                         editID: ID,
                         taxonomy_type: taxonomy,
                     }
-                    console.log(obj)
+                    // console.log(obj)
                     let HTML = await this.axios.getPostData(obj);
-                    this.watch.innerHTML = HTML;
+                    let editInsert = document.querySelector('.tagEdit');
+                    editInsert.innerHTML = HTML;
+                    this.watch.style.display = 'none';
                     const name = document.getElementById("tag_name");
                     const slug = document.getElementById("tag_slug");
                     const description = document.getElementById("tag_description");
@@ -110,6 +112,8 @@ class Tag extends Pagination {
                         description.value = "";
                         slug.value = "";
                         name.value = "";
+                        this.watch.style.display = 'inline-block';
+                        editInsert.style.display = 'hidden';
                         return setTimeout(() => { this.init() }, (300))
                     });
                 });

@@ -41,6 +41,8 @@ class AdminMenuController
         } else {
             // $query = new Query;
             // $menus = $query->postType('menu')->getPost()->all();
+
+            //ismesti statusa revision ir trashed;
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
             $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
             $page = new Page;
