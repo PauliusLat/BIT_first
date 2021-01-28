@@ -70,7 +70,7 @@ class News {
           if (obj.title) {
             readImage.sendImageData(obj);
           } else {
-            alert("Not written the title !!!");
+            alert("Neįvestas pavadinimas!!!");
           }
         });
     }

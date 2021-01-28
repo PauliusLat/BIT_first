@@ -33,15 +33,16 @@ class AdminMenuController
 
         if ($menus) {
             $menu = reset($menus);
-            // _dc($menu);
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
-            $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
+            //$catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
             $page = new Page;
-            $output = View::adminRender('adminMenu.mainmenu', ['menu' => $menu, 'pages' => $pages, 'page' => $page, 'catPages' => $catPages]);
+            $output = View::adminRender('adminMenu.mainmenu', ['menu' => $menu, 'pages' => $pages, 'page' => $page]);
             return new JsonResponse(['html' => $output]);
         } else {
             // $query = new Query;
             // $menus = $query->postType('menu')->getPost()->all();
+
+            //ismesti statusa revision ir trashed;
             $pages = $query->postMetaArr('page', 'pageState', 'Menu_page')->getPost()->all();
             $catPages = $query->postMetaArr('page', 'pageState', 'Category_page')->getPost()->all();
             $page = new Page;

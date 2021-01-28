@@ -57,6 +57,10 @@ class Collection
         return new self($stateItems);
     }
 
+    public function getPageState(array $pageState)
+    {
+    }
+
     public function shortCode($shortCode = '')
     {
         $shortCode = (string)$shortCode;

@@ -41,7 +41,7 @@ class IdeaController
 
 	public function create(Request $requestJson, Session $session)
 	{
-		$server = new Server;
+		// $server = new Server;
 
 		$idea = new IdeaPost;
 
@@ -52,31 +52,20 @@ class IdeaController
 		$array = $idea->idea_content = $request->request->get('idea');
 
 		if (is_array($array) && count(array_filter($array)) != "") {
-
 			$txt = '';
-
 			foreach ($array as $text) {
 				$txt .= $text . ' ';
 			}
-
 			$idea->idea_content = $txt;
 			$idea->save();
 		} else {
-			$array = [];
 			$like = $request->request->get('idea_like');
-			// $idBrowser = $server->getBrowser();
-			// $id = $idBrowser['version'];
-			// $array[] = $id;
-			$array[] = $like;
-			$session->set('ideja', $array);
-
-
-			// if ($session->get('id') != $array) {
-
-			$ideaLike = IdeaPost::get($like);
-			$ideaLike->idea_like = $ideaLike->idea_like + 1;
-			$ideaLike->save();
-			// }
+			if ($like && $session->get('ideja' . $like) != $like) {
+				$session->set('ideja' . $like, $like);
+				$ideaLike = IdeaPost::get($like);
+				$ideaLike->idea_like = $ideaLike->idea_like + 1;
+				$ideaLike->save();
+			}
 		}
 		return $response;
 	}

@@ -52,13 +52,15 @@ class CategoryController
                 array_push($catArr, $value);
             }
         }
-
-        if ($session->get('alert_message') != null) {
+        $success_message = '';
+        $message  = '';
+        if ($session->get('alert_message')) {
             $message = $session->get('alert_message');
-        } else if ($session->get('success_message') != null) {
+        } else if ($session->get('success_message')) {
             $success_message = $session->get('success_message');
         } else {
             $message = "";
+            $success_message = "";
         }
 
         $output = View::adminRender('category.category',  ['nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'categories' => $catArr, 'message' => $message,  'success_message' => $success_message, 'category' => $category]);

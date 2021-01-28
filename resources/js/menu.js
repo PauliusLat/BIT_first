@@ -189,7 +189,7 @@ class Menu {
     save.addEventListener("click", () => {
       const menuid = document.querySelector(".menuText").id;
     const api = "menu_store";
-    console.log(menuid);
+    // console.log(menuid);
 
       const elements = document.querySelectorAll(".draggable");
       const parent = document.querySelectorAll(".parent");
@@ -225,7 +225,7 @@ class Menu {
             link: c
           }
         }
-        console.log(obj);
+        // console.log(obj);
         this.axios.formDataApi(obj);
       }
     })

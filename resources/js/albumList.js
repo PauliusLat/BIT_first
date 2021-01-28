@@ -25,7 +25,6 @@ class AlbumList {
                 let newRemove = e => {
                     if (check) {
                         e.stopPropagation();
-                        console.log(this.array[i]);
                         const api = 'album-destroy&id='
                         let id = this.array[i].id;
                         remove.remove();

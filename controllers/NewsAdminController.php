@@ -92,7 +92,7 @@ class NewsAdminController
 		$news = NewsPost::get($request->request->get('id'));
 		$file = $request->files->get('image');
 		$image = null;
-		// var_dump($request->request->get('id'));
+
 		if ($attachments = $news->attachments) {
 			foreach ($attachments as $att) {
 				$image = $att;
@@ -117,7 +117,7 @@ class NewsAdminController
 
 		$image->setAlt($request->request->get('altText'));
 		$image->setCaption($request->request->get('imageTitle'));
-	
+
 		$image->save($file, $news->ID);
 
 		return new Response();

@@ -10,9 +10,12 @@
             <div class="draggable parent" id="addDrag" draggable="true">
                 <?php
                 $wpPage = get_page_by_title($menu->pages[$index], 'OBJECT', 'page');
-                $pagePost = $page->get($wpPage->ID);
-                $link = $pagePost->getLink();
-                $name = $menu->names[$index];
+                if ($wpPage) {
+                    $pagePost = $page->get($wpPage->ID);
+                    $link = $pagePost->getLink();
+                    $name = $menu->names[$index];
+                }
+
                 ?>
                 <div class="menuName">
                     <label for="">
@@ -91,7 +94,7 @@
             </div>
 
             <?php
-            if (count($menu->subnames[$index]) != 0) {
+            if ($menu->subnames[$index] != null && count($menu->subnames[$index]) != 0  && $menu->subnames != null && $menu != null) {
                 foreach ($menu->subnames[$index] as $key => $subindex) {
             ?>
                     <div class="draggable submenu" id="addDrag" draggable="true">
