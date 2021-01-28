@@ -1,21 +1,9 @@
 <?php
 
-// use BIT\app\Category;
-// use BIT\app\Query;
-// use BIT\app\Tag;
-// use BIT\models\NewsPost;
+
 use BIT\app\App;
-// use BIT\app\Cookie;
-//use BIT\app\Query;
-// use BIT\app\Tag;
-////use BIT\app\Page;
-// use BIT\app\Post;
-// use BIT\app\Pagination;
-// use BIT\app\FrontMenu;
-// use BIT\app\Session;
 use BIT\app\coreExeptions\NotSetException;
-
-
+use BIT\app\FrontMenu;
 
 /**
  * Plugin Name: BIT First

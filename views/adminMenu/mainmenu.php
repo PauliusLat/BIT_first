@@ -1,18 +1,22 @@
+<?php
+
+use BIT\app\Page;
+?>
+
 <div class="innermenu" id="menuStart2">
     <h1 class="menu main" id="<?= $menu->ID ?>">
         Koreguokite pagrindinį Meniu
     </h1>
     <div class="cont sm-17-24">
         <?php
-        foreach (range(0, (count($menu->names) - 1)) as $index) {
+        foreach ($menu->menuElements as $index => $menuElement) {
         ?>
             <div class="draggable parent" id="addDrag" draggable="true">
                 <?php
-                $wpPage = get_page_by_title($menu->pages[$index], 'OBJECT', 'page');
+                $wpPage = Page::get($menuElement['page_ID']);
                 if ($wpPage) {
-                    $pagePost = $page->get($wpPage->ID);
-                    $link = $pagePost->getLink();
-                    $name = $menu->names[$index];
+                    $link = $wpPage->getLink();
+                    $name = $menuElement['menu_name'];
                 }
 
                 ?>
@@ -26,11 +30,11 @@
                     <label for="standard-select">
                     </label>
                     <select class="select-css mainSelect" id="standard-select">
-                        <option value="<?= $link ?>" selected><?= $menu->pages[$index] ?></option>
+                        <option value="<?= $link ?>" selected><?= $wpPage->post_name ?></option>
                         <?php
-                        foreach ($pages as $value) {
+                        foreach ($pages as $page) {
                         ?>
-                            <option><?= $value->post_title ?></option>
+                            <option><?= $page->post_title ?></option>
                         <?php
                         }
                         ?>
@@ -93,15 +97,14 @@
             </div>
 
             <?php
-            if ($menu->subnames[$index] != null && count($menu->subnames[$index]) != 0  && $menu->subnames != null && $menu != null) {
-                foreach ($menu->subnames[$index] as $key => $subindex) {
+            if ($menuElement['submenus']) {
+                foreach ($menuElement['submenus'] as $key => $subMenuElement) {
             ?>
                     <div class="draggable submenu" id="addDrag" draggable="true">
                         <?php
-                        $wpPage = get_page_by_title($menu->subpages[$index][$key], 'OBJECT', 'page');
-                        $pagePost = $page->get($wpPage->ID);
-                        $sublink = $pagePost->getLink();
-                        $subname = $menu->subnames[$index][$key];
+                        $wpPage = Page::get($subMenuElement['page_ID']);
+                        $sublink = $wpPage->getLink();
+                        $subname = $subMenuElement['menu_name'];
                         ?>
                         <div class="menuName">
                             <label for="">
@@ -112,11 +115,11 @@
                             <label for="standard-select">
                             </label>
                             <select class="select-css mainSelect" id="standard-select">
-                                <option value="<?= $sublink ?>" selected><?= $menu->subpages[$index][$key] ?></option>>
+                                <option value="<?= $sublink ?>" selected><?= $wpPage->post_name ?></option>>
                                 <?php
-                                foreach ($pages as $value) {
+                                foreach ($pages as $page) {
                                 ?>
-                                    <option value="<?= $value->getLink() ?>"><?= $value->post_title ?></option>
+                                    <option value="<?= $page->getLink() ?>"><?= $page->post_title ?></option>
                                 <?php
                                 }
                                 ?>

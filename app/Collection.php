@@ -50,7 +50,7 @@ class Collection
         $state = (string)$state;
         $stateItems = [];
         foreach ($this->items as $value) {
-            if (strcmp($value->pageState, $state) === 0) {
+            if (in_array($state, $value->pageState)) {
                 $stateItems[$value->ID] = $value;
             }
         }
