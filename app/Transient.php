@@ -65,7 +65,9 @@ class Transient
     public function __destruct()
     {
         $setValue = Session::$array;
-        if ($this->name && is_array($setValue) && isset($_COOKIE[Cookie::COOKIENAME])) {
+
+        // if ($this->name && is_array($setValue) && isset($_COOKIE[Cookie::COOKIENAME])) {
+        if ($this->name && is_array($setValue)) {
             set_transient($this->name, $setValue);
         } else {
             throw new SessionArgsExeption('Error: Cookie name should be set');

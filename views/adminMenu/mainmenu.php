@@ -32,7 +32,6 @@ use BIT\app\Page;
                     $link = $wpPage->getLink();
                     $name = $menuElement['menu_name'];
                 }
-
                 ?>
                 <div class="menuName">
                     <label for="">

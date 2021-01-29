@@ -19,13 +19,13 @@ class Session
     public function set($a, $b)
     {
         $transient = Transient::start();
-        if ($transient) {
-            self::$array = $transient->newValue;
-            self::$array[$a] = $b;
-        } else {
-            self::$array[$a] = $b;
-        }
+        self::$array = $transient->newValue;
+        self::$array[$a] = $b;
+        // if (is_array(self::$array)) {
         return self::$array;
+        //     } else {
+        //         throw new SessionArgsExeption('Error: session set should be an array');
+        //     }
     }
 
     public function flash($a, $b)
@@ -44,21 +44,33 @@ class Session
     public function get($index)
     {
         $transient = Transient::start();
-        if ($transient->value) {
+        if($transient->value){
+
             self::$array = $transient->value;
             if (array_key_exists($index, self::$array)) {
                 $indexValue =  self::$array[$index];
                 self::$array = $transient->newValue;
                 return $indexValue;
+            } else {
+                self::$array = $transient->newValue;
+                return null;
             }
-        } else {
-            self::$array = $transient->newValue;
-            return null;
-        }
-        // self::$array = $transient->newValue;
-        return null;
+        } return null;
     }
 
+    // public function get($index)
+    // {
+    //     $transient = Transient::start();
+    //     self::$array = $transient->value;
+    //     if (array_key_exists($index, self::$array)) {
+    //         $indexValue =  self::$array[$index];
+    //         self::$array = $transient->newValue;
+    //         return $indexValue;
+    //     } else {
+    //         self::$array = $transient->newValue;
+    //         return null;
+    //     }
+    // }
 
     public function delete($index)
     {
@@ -75,6 +87,10 @@ class Session
         //self::$obj = null;
     }
 
+    // public function __destruct()
+    // {
+    //     self::$obj = null;
+    // }
 
     public function __get($dir)
     {
