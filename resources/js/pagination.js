@@ -10,9 +10,7 @@ class Pagination {
     paging() {
         const page = document.querySelectorAll(".paging");
         if (page.length) {
-
             for (let i = 0; i < page.length; i++) {
-
                 let nextPage = () => {
                     page[i].addEventListener('click', nextPage);
                     let id = parseInt(page[i].id);
@@ -33,13 +31,13 @@ class Pagination {
                 location.hash = hash
             }
         } else if (hash && HTML == null) {
-
             let pages = this.pages;
             let obj = {
                 api: this.api,
                 pageSelected: pages,
                 hash: hash
             }
+          
             this.watch.innerHTML = await this.axios.getPostData(obj);
         } else if (hash == undefined ||
             hash == null ||
@@ -69,21 +67,18 @@ class Pagination {
             }
             this.watch.innerHTML = await this.axios.getPostData(obj);
 
-
             const page = document.querySelectorAll(".paging");
 
             if (hash > page.length - 4) {
                 hash = 1
                 location.hash = hash
             }
-
         }
         this.paging();
         HTML = "";
         let addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
         if (addColor) {
             addColor.classList.add("active");
-
         }
         var changes = async () => {
 

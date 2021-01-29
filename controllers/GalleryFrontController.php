@@ -27,7 +27,7 @@ class GalleryFrontController
 
 		if ($title && $files) {
 			$page = new Page();
-			$page->pageState = 'Album Page';
+			$page->pageState = ['Site_page','News_page'];
 			$page->setRoute('show');
 			$page->setTitle($title);
 			$page->save();

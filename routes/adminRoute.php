@@ -46,7 +46,7 @@ return [
 	'create@' => [
 		'0def' => 'AdminMenuController@index',
 		'0menufront' => 'FrontMenuController@index',
-		// '0newspage' => 'NewsFrontController@index'
+		//'0newspage' => 'NewsFrontController@index'
 	],
 
 

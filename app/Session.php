@@ -44,15 +44,18 @@ class Session
     public function get($index)
     {
         $transient = Transient::start();
-        self::$array = $transient->value;
-        if (array_key_exists($index, self::$array)) {
-            $indexValue =  self::$array[$index];
-            self::$array = $transient->newValue;
-            return $indexValue;
-        } else {
-            self::$array = $transient->newValue;
-            return null;
-        }
+        if($transient->value){
+
+            self::$array = $transient->value;
+            if (array_key_exists($index, self::$array)) {
+                $indexValue =  self::$array[$index];
+                self::$array = $transient->newValue;
+                return $indexValue;
+            } else {
+                self::$array = $transient->newValue;
+                return null;
+            }
+        } return null;
     }
 
     // public function get($index)

@@ -7,8 +7,7 @@ class ImageUploade {
 
         this.target = target;
         this.DOM = null;
-        this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
-        this.uri = document.location.origin;
+        this.path = WPURLS.apiUrl;
         this.index = 0;
         this.init();
     }
@@ -62,8 +61,8 @@ class ImageUploade {
                                         const checkBox = document.getElementById("c1");
                                         const image = document.querySelectorAll(".uploadeImageGallery");
 
-                                        console.log(deleteDiv[j])
-                                        console.log(j);
+                                        // console.log(deleteDiv[j])
+                                        // console.log(j);
 
                                         dots.addEventListener("click", () => {
 
