@@ -4705,27 +4705,37 @@ var Menu = /*#__PURE__*/function () {
           child.forEach(function (element) {
             return element.setAttribute("data", false);
           });
+          var menuCreate = true;
 
           for (var i = 0; i < opts.length; i++) {
-            a.push(opts[i][opts[i].selectedIndex].text);
-            b.push(text[i].value);
-            c.push(link[i].value);
-            d.push(elements[i].getAttribute('data'));
-            e.push(opts[i][opts[i].selectedIndex].id);
-            obj = {
-              id: menuid,
-              api: api,
-              all: d,
-              select: a,
-              text: b,
-              textLink: e,
-              link: c
-            };
+            if (text[i].value) {
+              a.push(opts[i][opts[i].selectedIndex].text);
+              b.push(text[i].value);
+              c.push(link[i].value);
+              d.push(elements[i].getAttribute('data'));
+              e.push(opts[i][opts[i].selectedIndex].id);
+              obj = {
+                id: menuid,
+                api: api,
+                all: d,
+                select: a,
+                text: b,
+                textLink: e,
+                link: c
+              };
+            } else {
+              alert("Neįvestas meniu punkto pavadinimas");
+              menuCreate = false;
+            }
           }
 
-          console.log(obj);
+          if (menuCreate == true) {
+            console.log(obj);
 
-          _this5.axios.formDataApi(obj);
+            _this5.axios.formDataApi(obj);
+
+            setTimeout(location.reload(), 300);
+          }
         }
       });
     }

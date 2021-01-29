@@ -2263,6 +2263,10 @@ table th {
   width: 97%;
 }
 
+.innermenu .menuMessage {
+  text-align: center;
+}
+
 .innermenu .menu {
   text-align: center;
 }

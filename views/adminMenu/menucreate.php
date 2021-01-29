@@ -1,6 +1,3 @@
-<h3>
-    Meniu
-</h3>
 <div class="adminMenuStart">
 </div>
 <div class="menuBtn">

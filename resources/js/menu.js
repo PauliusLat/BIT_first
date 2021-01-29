@@ -183,25 +183,36 @@ class Menu {
         let a = [], b = [], c = [], d = [], e = [];
         parent.forEach(element => element.setAttribute("data", true));
         child.forEach(element => element.setAttribute("data", false));
+        let menuCreate = true;
         for (let i = 0; i < opts.length; i++) {
-          a.push(opts[i][opts[i].selectedIndex].text)
-          b.push(text[i].value)
-          c.push(link[i].value)
-          d.push(elements[i].getAttribute('data'))
-          e.push(opts[i][opts[i].selectedIndex].id)
-          obj = {
-            id: menuid,
-            api: api,
-            all: d,
-            select: a,
-            text: b,
-            textLink: e,
-            link: c
+          if(text[i].value){
+            a.push(opts[i][opts[i].selectedIndex].text)
+            b.push(text[i].value)
+            c.push(link[i].value)
+            d.push(elements[i].getAttribute('data'))
+            e.push(opts[i][opts[i].selectedIndex].id)
+            obj = {
+              id: menuid,
+              api: api,
+              all: d,
+              select: a,
+              text: b,
+              textLink: e,
+              link: c
+            }
+          }else{
+            alert("Neįvestas meniu punkto pavadinimas")
+            menuCreate = false;
           }
         }
-        console.log(obj);
-        this.axios.formDataApi(obj);
+        if( menuCreate == true){
+          console.log(obj);
+          this.axios.formDataApi(obj);
+          setTimeout(location.reload(), 300);
+        }
+       
       }
+     
     })
   }
 }

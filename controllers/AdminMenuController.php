@@ -5,6 +5,7 @@ namespace BIT\controllers;
 use BIT\app\Page;
 use BIT\app\View;
 use BIT\app\FrontMenu;
+use BIT\app\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,7 +18,7 @@ class AdminMenuController
         return View::adminRender('adminMenu.menucreate');
     }
 
-    public function create()
+    public function create(Session $session)
     {
         $menus = FrontMenu::all()->all();
         $pages = Page::all()->pageState('Menu_page')->all();
@@ -29,25 +30,39 @@ class AdminMenuController
             $menu = new FrontMenu;
             $view = 'adminMenu.initmenu';
         }
-        $output = View::adminRender($view, ['menu' => $menu, 'pages' => $pages]);
+        $success_message = '';
+        $message  = '';
+        if ($session->get('alert_message')) {
+            $message = $session->get('alert_message');
+        } else if ($session->get('success_message')) {
+            $success_message = $session->get('success_message');
+        } else {
+            $message = "";
+            $success_message = "";
+        }
+
+        $output = View::adminRender($view, ['menu' => $menu, 'pages' => $pages, 'message' => $message,  'success_message' => $success_message]);
         return new JsonResponse(['html' => $output]);
     }
 
 
-    public function store(Request $request)
+    public function store(Request $request, Session $session)
     {
         // _dc($request->request);
         $id = $request->request->get('id');
         if (!$id || $id == 'undefined') {
             $menuPost = new FrontMenu;
+            $session->flash('success_message', 'meniu sėkmingai sukurtas');
         } else {
             $menuPost = FrontMenu::get($id);
+            $session->flash('success_message', 'meniu sėkmingai pakoreguotas');
         }
 
         $rvalues = $request->request->get('all');           //status
         $rpageNames = $request->request->get('select');     //page name 
         $rmenuItems = $request->request->get('text');       //menu name
         $rpageLinks = $request->request->get('textLink');   //page ID
+
         $rextLinks = $request->request->get('link');        //extLink
 
         $values = explode(',', $rvalues);
@@ -69,7 +84,6 @@ class AdminMenuController
 
         $menuPost->menuElements = $rowsArr;
         $menuPost->save();
-
         return new Response;
     }
 }

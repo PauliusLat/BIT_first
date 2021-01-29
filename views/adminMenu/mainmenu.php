@@ -7,6 +7,20 @@ use BIT\app\Page;
     <h1 class="menu main" id="<?= $menu->ID ?>">
         Koreguokite pagrindinį Meniu
     </h1>
+    <div class="sm-1-1 menuMessage">
+        <?php
+        if ($message) {
+        ?>
+            <div class='message'><?= $message ?></div>
+        <?php
+        } else {
+        ?>
+            <div class='success_message'><?= $success_message ?></div>
+        <?php
+        }
+        ?>
+    </div>
+
     <div class="cont sm-17-24">
         <?php
         foreach ($menu->menuElements as $index => $menuElement) {
@@ -23,18 +37,17 @@ use BIT\app\Page;
                 <div class="menuName">
                     <label for="">
                     </label>
-                    <input name="menu" class="menuText menu" placeholder="Pavadinimas" value='<?= $name ?>' type="text">
+                    <input name="menu" class="menuText menu" placeholder="Pavadinimas" value='<?= $name ?>' type="text" required>
                 </div>
 
                 <div class="menuSelect">
                     <label for="standard-select">
                     </label>
                     <select class="select-css mainSelect" id="standard-select">
-                        <option value="<?= $link ?>" selected><?= $wpPage->post_name ?></option>
                         <?php
                         foreach ($pages as $page) {
                         ?>
-                            <option><?= $page->post_title ?></option>
+                            <option id="<?= $page->ID ?>" value="<?= $link ?>" <?= $wpPage->ID == $page->ID ? 'selected = "selected"' : ''; ?>><?= $page->post_title ?></option>
                         <?php
                         }
                         ?>
@@ -115,11 +128,10 @@ use BIT\app\Page;
                             <label for="standard-select">
                             </label>
                             <select class="select-css mainSelect" id="standard-select">
-                                <option value="<?= $sublink ?>" selected><?= $wpPage->post_name ?></option>>
                                 <?php
                                 foreach ($pages as $page) {
                                 ?>
-                                    <option value="<?= $page->getLink() ?>"><?= $page->post_title ?></option>
+                                    <option id="<?= $page->ID ?>" value="<?= $link ?>" <?= $wpPage->ID == $page->ID ? 'selected = "selected"' : ''; ?>><?= $page->post_title ?></option>
                                 <?php
                                 }
                                 ?>
