@@ -14,8 +14,8 @@ class Cookie
         if (!isset($_COOKIE[self::COOKIENAME])) {
             setcookie(self::COOKIENAME, self::$uuid, time() + 24 * 3600 * 30 * 5 * 12, '/');
         }
-        self::$uuid = $_COOKIE[self::COOKIENAME];
-        return self::$uuid;
+
+        return  self::$uuid = $_COOKIE[self::COOKIENAME];
     }
 
     public static function deleteCookie()
