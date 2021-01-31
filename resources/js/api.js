@@ -1,6 +1,5 @@
 "use strict";
 
-import Axios from 'axios';
 class Api {
     constructor() {
         this.path = "/wordpress/wp-content/plugins/BIT_first/api/?route=";
