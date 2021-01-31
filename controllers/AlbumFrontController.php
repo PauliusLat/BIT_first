@@ -9,14 +9,20 @@ use BIT\app\Pagination;
 use BIT\app\View;
 use BIT\models\AlbumPost;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use BIT\app\coreExeptions\NotSetException;
 
 class AlbumFrontController
 {
     public function index()
     {
         $pageArr = Page::all()->shortCode('uploade-images')->all();
-        $pageArr = reset($pageArr);
-        $page = $pageArr->getLink();
+        if ($pageArr) {
+            $pageArr = reset($pageArr);
+            $page = $pageArr->getLink();
+        } else {
+            throw new NotSetException('Nuotraukų įkelimo puslapis dar nesukurtas');
+        }
+
         return View::render('gallery.all-album', ['page' => $page]);
     }
 

@@ -1,6 +1,6 @@
 "use strict";
 import Pagination from './pagination';
-
+import Api from './api';
 
 class Page extends Pagination {
     constructor(target) {
@@ -46,7 +46,7 @@ class Page extends Pagination {
                 post_type: select.value,
                 page_state: stateArray
             }
-            console.log(obj)
+            // console.log(obj)
             this.axios.formDataApi(obj);
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
@@ -71,8 +71,7 @@ class Page extends Pagination {
             }
         }
     }
-
-    edit() {
+    edit(inner) {
         const editBtn = document.querySelectorAll(".page-edit");
 
         for (let i = 0; i < editBtn.length; i++) {

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use BIT\app\Pagination;
+use BIT\app\coreExeptions\NotSetException;
 // use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
@@ -30,6 +31,7 @@ class PageController
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
 
+
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
@@ -42,12 +44,25 @@ class PageController
             $number = 1;
         }
 
-        $total = count(Page::all()->all());
-        $pagination = new Pagination($limit, $number, $total);
-        $pagesPost = Page::all()->all();
-        $pagesPost = array_values($pagesPost);
+        $allPages = Page::all()->all();
+        $pagesPost = [];
+        if (!empty($allPages) && is_array($allPages)) {
+            foreach ($allPages as $pag) {
+                if ($pag->pageState && is_array($pag->pageState)) {
+                    foreach ($pag->pageState as $state) {
+                        if ($state != 'News_page' && $state != 'Album_page') {
+                            array_push($pagesPost, $pag);
+                            break;
+                        }
+                    }
+                }
+            }
+        } else {
+            throw new NotSetException('Nei vienas puslapis dar nesukurtas');
+        }
 
-        // _dc($pagesPost);
+        $total = count($pagesPost);
+        $pagination = new Pagination($limit, $number, $total);
         $pageArr = [];
         foreach ($pagesPost as $key => $value) {
             if ($key >= $pagination->offset && count($pageArr) < $limit) {
@@ -63,28 +78,24 @@ class PageController
         } else {
             $message = "";
         }
-        // _dc($pagination);
         $output = View::adminRender('page.page', ["postPages" =>  $pageArr, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'message' => $message,  'success_message' => $success_message]);
         return new JsonResponse(['html' => $output]);
     }
 
     public function store(Request $request, Session $session)
     {
-        // $query = new Query;
-        // $menus = $query->postType('menu')->getPost()->all();
-        // $menu = $menus[0];
-        // $request = $this->decodeRequest($requestJson);
         $page = new Page;
         $name = $request->request->get('page_title');
         $post = $request->request->get('post_type');
         $pagest = $request->request->get('page_state');
-        $pagestate = explode(',', $pagest);
-        $state = ['Site_page',];
-        if ($pagestate) {
+        $state = ['Site_page'];
+        if ($pagest) {
+            $pagestate = explode(',', $pagest);
             foreach ($pagestate as $value) {
                 array_push($state, $value);
             }
         }
+
         $page->pageState = $state;
         $page->setRoute($post);
         $page->setTitle($name);
@@ -102,7 +113,6 @@ class PageController
         $postContent = $page->post_content;
         $codeArr = str_word_count($postContent, 1);
         $shortcode = $codeArr[3];
-
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
@@ -116,9 +126,9 @@ class PageController
         $title = $request->request->get('page_title');
         $post = $request->request->get('post_type');
         $pagest = $request->request->get('page_state');
-        $pagestate = explode(',', $pagest);
-        $state = ['Site_page',];
-        if ($pagestate) {
+        $state = ['Site_page'];
+        if ($pagest) {
+            $pagestate = explode(',', $pagest);
             foreach ($pagestate as $value) {
                 array_push($state, $value);
             }
