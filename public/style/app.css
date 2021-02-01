@@ -1195,6 +1195,11 @@ body {
   cursor: pointer;
 }
 
+.catPropNews .newsCatAdd .catBoxBtn .catDown {
+  height: 40px;
+  width: 40px;
+}
+
 .catPropNews .newsTag {
   display: flex;
   flex-direction: column;
@@ -2408,13 +2413,25 @@ table th {
   width: 4%;
 }
 
+.innermenu .cont .draggable .menuDrag svg {
+  height: 35px;
+  width: 40px;
+  cursor: pointer;
+}
+
 .innermenu .cont .draggable .manuDelete {
   width: 4%;
+}
+
+.innermenu .cont .draggable .manuDelete svg {
+  height: 35px;
+  width: 40px;
   cursor: pointer;
 }
 
 .innermenu .cont .draggable .addSubmenu svg {
   height: 35px;
+  width: 40px;
   cursor: pointer;
 }
 
@@ -2572,6 +2589,12 @@ table th {
   cursor: pointer;
 }
 
+.menuBtn .addNew svg {
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+
 .menuBtn .save,
 .menuBtn .initsave {
   display: flex;
@@ -2579,6 +2602,13 @@ table th {
   justify-content: flex-end;
   width: 93%;
   z-index: 1;
+  cursor: pointer;
+}
+
+.menuBtn .save svg,
+.menuBtn .initsave svg {
+  height: 40px;
+  width: 40px;
   cursor: pointer;
 }
 
@@ -2721,6 +2751,8 @@ table th {
 .containerNweaList .newsList .parentNews .newsButtons .btnNews {
   margin: 5px 0 0 0;
 }
+
+/** @format */
 
 .editStart {
   display: flex;

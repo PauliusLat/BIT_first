@@ -21,6 +21,7 @@ class AdminMenuController
     public function create(Session $session)
     {
         $menus = FrontMenu::all()->all();
+
         $pages = Page::all()->pageState('Menu_page')->all();
 
         if ($menus) {

@@ -1,100 +1,98 @@
+/** @format */
+
 .editStart {
-    display  : flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 
-    .postDate {
-        width: 100%;
+  .postDate {
+    width: 100%;
+  }
+
+  .postTitle {
+    width: 66.6667%;
+    text-align: center;
+    margin: 20px 0 14px 0;
+    height: 25px;
+    line-height: 25px;
+    font-weight: 700;
+    font-size: 28px;
+  }
+
+  .getImage {
+    width: 66.6667%;
+    align-self: center;
+    position: relative;
+    height: 300px;
+
+    .resizeImageNews {
+      width: 100%;
+      height: 100%;
     }
 
-    .postTitle {
-        width      : 66.6667%;
-        text-align : center;
-        margin     : 20px 0 14px 0;
-        height     : 25px;
-        line-height: 25px;
-        font-weight: 700;
-        font-size  : 28px;
+    img {
+      text-align: center;
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
     }
 
-    .getImage {
-        width     : 66.6667%;
-        align-self: center;
-        position  : relative;
-        height    : 300px;
+    .galleryContainer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+    }
+  }
 
-        .resizeImageNews {
-            width : 100%;
-            height: 100%;
+  .ql-toolbar {
+    width: 66.6667%;
+    z-index: 1;
+  }
+
+  .editPost {
+    p {
+      font-size: 20px;
+      font-weight: 200;
+    }
+  }
+
+  .editPost {
+    width: 66.6667%;
+    text-align: center;
+  }
+
+  .postDate {
+    width: 100%;
+    margin: 14px 0 14px 0;
+    font-size: 14px;
+  }
+
+  .postContent {
+    width: 100%;
+    font-size: 20px;
+  }
+
+  .catPropNews {
+    margin-top: 1%;
+
+    .newsTag {
+      .inputTagClass {
+        label {
+          font-size: 14px;
         }
+      }
+    }
+  }
 
-        img {
-            text-align: center;
-            width     : 100%;
-            height    : 300px;
-            object-fit: cover;
+  .newsCatAdd {
+    .catBoxBtn {
+      .selectCatPost {
+        .children {
+          margin: 0 0 0 10px;
         }
-
-        .galleryContainer {
-            position : absolute;
-            top      : 50%;
-            left     : 50%;
-            transform: translate(-50%, -50%);
-            width    : 100%;
-            height   : 100%;
-
-        }
+      }
     }
-
-    .ql-toolbar {
-        width  : 66.6667%;
-        z-index: 1;
-    }
-
-    .editPost {
-        p {
-            font-size  : 20px;
-            font-weight: 200;
-        }
-    }
-
-    .editPost {
-        width     : 66.6667%;
-        text-align: center;
-    }
-
-
-    .postDate {
-        width    : 100%;
-        margin   : 14px 0 14px 0;
-        font-size: 14px;
-    }
-
-    .postContent {
-        width    : 100%;
-        font-size: 20px;
-    }
-
-    .catPropNews {
-        margin-top: 1%;
-
-        .newsTag {
-            .inputTagClass {
-                label {
-                    font-size: 14px;
-                }
-
-            }
-        }
-    }
-
-    .newsCatAdd {
-        .catBoxBtn {
-            .selectCatPost {
-                .children {
-                    margin: 0 0 0 10px;
-                }
-            }
-
-        }
-    }
+  }
 }

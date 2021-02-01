@@ -4803,8 +4803,11 @@ var News = /*#__PURE__*/function () {
         var button = document.getElementById("submit");
         var newsImageTitle = document.getElementById("newsName");
         var altText = document.getElementById("newsAlt");
-        var catDown = document.querySelector(".catDown");
-        var catUp = document.querySelector(".catUp");
+        var catDown = document.querySelector(".catDown"); // console.log(catDown);
+        // const catUp = document.querySelector(".catUp")
+        // console.log(catUp);
+        // console.log(button);
+
         var tag = document.getElementById("newsTagInput");
         var newsCat = document.querySelector(".newsCat");
         catDown.addEventListener("click", function () {

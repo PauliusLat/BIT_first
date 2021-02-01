@@ -65,5 +65,5 @@ return [
 	'menu_store' => 'AdminMenuController@store',
 	'menu_destroy' => 'AdminMenuController@destroy',
 
-	'frontmenu_create' => 'FrontMenuController@create',
+	// 'frontmenu_create' => 'FrontMenuController@create',
 ];

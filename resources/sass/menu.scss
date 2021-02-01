@@ -139,14 +139,24 @@
       }
       .menuDrag {
         width: 4%;
+        svg {
+          height: 35px;
+          width: 40px;
+          cursor: pointer;
+        }
       }
       .manuDelete {
         width: 4%;
-        cursor: pointer;
+        svg {
+          height: 35px;
+          width: 40px;
+          cursor: pointer;
+        }
       }
       .addSubmenu {
         svg {
           height: 35px;
+          width: 40px;
           cursor: pointer;
         }
       }
@@ -284,6 +294,11 @@
 .menuBtn {
   display: flex;
   .addNew {
+    svg {
+      height: 40px;
+      width: 40px;
+      cursor: pointer;
+    }
     margin: 20px 0 0 3%;
     width: 7%;
     z-index: 1;
@@ -291,6 +306,11 @@
   }
   .save,
   .initsave {
+    svg {
+      height: 40px;
+      width: 40px;
+      cursor: pointer;
+    }
     display: flex;
     margin: 20px 3% 0 0;
     justify-content: flex-end;

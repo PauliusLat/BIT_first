@@ -32,12 +32,16 @@ class News {
       const newsImageTitle = document.getElementById("newsName");
       const altText = document.getElementById("newsAlt");
       const catDown = document.querySelector(".catDown");
-      const catUp = document.querySelector(".catUp")
+      // console.log(catDown);
+      // const catUp = document.querySelector(".catUp")
+      // console.log(catUp);
+      // console.log(button);
 
       const tag = document.getElementById("newsTagInput");
       const newsCat = document.querySelector(".newsCat");
 
       catDown.addEventListener("click", () => {
+       
         catUp.classList.remove("hiden");
         catDown.classList.add("hiden");
         newsCat.classList.remove("hiden");
