@@ -113,7 +113,7 @@ class Tag extends Pagination {
                         slug.value = "";
                         name.value = "";
                         this.watch.style.display = 'inline-block';
-                        editInsert.style.display = 'hidden';
+                        editInsert.style.display = 'none';
                         return setTimeout(() => { this.init() }, (300))
                     });
                 });

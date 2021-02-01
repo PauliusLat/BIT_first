@@ -58,8 +58,7 @@ class App
         add_action('print', [$this, 'includeFile']);
         add_shortcode('front_shortcode', [FrontRoute::class, 'frontRoute']);
         AdminRoute::start();
-        Cookie::getUuid();
-        // Session::start();
+        Session::start();
         ClearCache::start();
         // require_once __DIR__.'/../cache/clearCache.php';
     }

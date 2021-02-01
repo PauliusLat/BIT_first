@@ -11,6 +11,11 @@ class Session
     public static $array = [];
     static private $obj;
 
+    private function __construct()
+    {
+        $name = Cookie::getUuid();
+    }
+
     public static function start()
     {
         return self::$obj ?? self::$obj = new self;

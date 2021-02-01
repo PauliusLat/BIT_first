@@ -21,6 +21,7 @@ if (!function_exists('wp_terms_checklist')) {
         }
         ?>
 
+
         <h2 class='tcp'>Pridėkite naują kategoriją</h2>
         <div class='label'>
             <label class="tcp-label">Kategorijos pavadinimas</label>

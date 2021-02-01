@@ -5758,7 +5758,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                             slug.value = "";
                             name.value = "";
                             _this4.watch.style.display = 'inline-block';
-                            editInsert.style.display = 'hidden';
+                            editInsert.style.display = 'none';
                             return _context.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));

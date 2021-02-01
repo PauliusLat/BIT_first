@@ -64,7 +64,7 @@
                     <?php
                     }
                     ?>
-                    <!-- <img class='catImgEdit' src="<?= $urlImg ?>"> -->
+                    <!-- <img class='catImgEdit' src="<?= $urlImg ?>"> --> -->
                 </label>
 
                 <input class="galleryImage" type="file" id='files' name="img" accept="image/*">

@@ -13,6 +13,10 @@ use BIT\app\Page;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Http\Message\RequestFactory;
+use Http\Message\StreamFactory;
+use Http\Message\UriFactory;
+use Http\Promise\Promise;
 // use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 require PLUGIN_DIR_PATH . '/../../../wp-load.php';
@@ -90,7 +94,6 @@ class CategoryController
             $session->flash('success_message', 'kategorija sėkmingai sukurta');
             $term_id = $category->addCat($name, $parent_id, $description, $slug);
         }
-
 
         $createPage = $request->request->get('page');
         if ($createPage == '0' && $term_id != null) {
