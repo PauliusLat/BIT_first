@@ -19,9 +19,7 @@ if ($menus) {
             <a class="dropbtn" href="<?= $link ?>"><?= $name ?></a>
         </div>
 <?php
-    // } else {
-    //     throw new NotSetException('puslapis nesukurtas');
-    // }
+
     endforeach;
 } else {
     throw new NotSetException('Pagrindinis meniu nesukurtas');

@@ -220,8 +220,3 @@
         theme: 'snow'
     });
 </script>
-
-<!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none;">
-    <?= str_replace(['<svg', 'svg>'], ['<symbol', 'symbol>'], file_get_contents($app->resourseDir . '/svg/save_down.svg')) ?>
-    <?= str_replace(['<svg', 'svg>'], ['<symbol', 'symbol>'], file_get_contents($app->resourseDir . '/svg/save.svg')) ?>
-</svg> -->

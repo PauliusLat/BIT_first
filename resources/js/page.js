@@ -9,7 +9,7 @@ class Page extends Pagination {
         this.target = target;
         this.pages = 5;
         this.changes;
-        this.watch = document.querySelector(".innerpage");
+        this.watch = document.querySelector(".pageCreateList");
         this.init();
     }
 
@@ -85,9 +85,16 @@ class Page extends Pagination {
                         editID: ID,
                     }
                     let HTML = await this.axios.getPostData(obj);
-                    this.watch.innerHTML = HTML;
-                    const title = document.getElementById("page_title");
-                    const name = document.getElementById("page_name");
+                    // this.watch.innerHTML = HTML;
+                    let editInsert = document.querySelector('.pageEdit');
+                    editInsert.innerHTML = HTML;
+                    editInsert.style.display = 'inline-block';
+                    let close = document.querySelector('.close');
+                    close.addEventListener('click', function () {
+                        return editInsert.style.display = 'none';
+                    })
+                    const title = document.getElementById("page_title_edit");
+                    const name = document.getElementById("page_name_edit");
                     const updateBtn = document.getElementById("pageUpdate");
                     updateBtn.addEventListener("click", async () => {
                         let stateArray = []
@@ -95,8 +102,9 @@ class Page extends Pagination {
                         for (let i = 0; i < checkboxes.length; i++) {
                             stateArray.push(checkboxes[i].value)
                         }
-                        let post = document.getElementById('post');
+                        let post = document.getElementById('post_edit');
                         let select = post.options[post.selectedIndex];
+                        console.log(select);
                         const api = "page_update&id=";
                         let obj = {
                             api: api + ID,
@@ -106,12 +114,15 @@ class Page extends Pagination {
                             page_state: stateArray
                         }
 
+                        console.log(obj)
                         this.axios.formDataApi(obj);
- 
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
-
-                        name.value = "";
+                        close.removeEventListener('click', function () {
+                            return editInsert.style.display = 'none';
+                        })
+                        editInsert.style.display = 'none';
+                        // name.value = "";
                         return setTimeout(() => { this.init() }, (300))
                     });
                 });

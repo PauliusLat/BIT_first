@@ -2084,6 +2084,31 @@ button:focus {
   top: 8px;
 }
 
+.innerpage .pageEdit {
+  position: fixed;
+  width: 700px;
+  top: 200px;
+  z-index: 1;
+  margin-left: calc((100vw - 700px) / 2);
+  background-color: #B4B9BE;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.innerpage .pageEdit .pageCreate {
+  width: 100%;
+  position: relative;
+  padding: 10px;
+}
+
+.innerpage .pageEdit .pageCreate .close {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
 .pages {
   display: inline-block;
 }

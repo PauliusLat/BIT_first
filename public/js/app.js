@@ -5023,7 +5023,7 @@ var Page = /*#__PURE__*/function (_Pagination) {
     _this.target = target;
     _this.pages = 5;
     _this.changes;
-    _this.watch = document.querySelector(".innerpage");
+    _this.watch = document.querySelector(".pageCreateList");
 
     _this.init();
 
@@ -5119,7 +5119,7 @@ var Page = /*#__PURE__*/function (_Pagination) {
       var _loop2 = function _loop2(i) {
         var ID = editBtn[i].value;
         editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          var api, obj, HTML, title, name, updateBtn;
+          var api, obj, HTML, editInsert, close, title, name, updateBtn;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
@@ -5134,9 +5134,16 @@ var Page = /*#__PURE__*/function (_Pagination) {
 
                 case 4:
                   HTML = _context2.sent;
-                  _this4.watch.innerHTML = HTML;
-                  title = document.getElementById("page_title");
-                  name = document.getElementById("page_name");
+                  // this.watch.innerHTML = HTML;
+                  editInsert = document.querySelector('.pageEdit');
+                  editInsert.innerHTML = HTML;
+                  editInsert.style.display = 'inline-block';
+                  close = document.querySelector('.close');
+                  close.addEventListener('click', function () {
+                    return editInsert.style.display = 'none';
+                  });
+                  title = document.getElementById("page_title_edit");
+                  name = document.getElementById("page_name_edit");
                   updateBtn = document.getElementById("pageUpdate");
                   updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
                     var stateArray, checkboxes, _i, post, select, api, obj, changes;
@@ -5152,8 +5159,9 @@ var Page = /*#__PURE__*/function (_Pagination) {
                               stateArray.push(checkboxes[_i].value);
                             }
 
-                            post = document.getElementById('post');
+                            post = document.getElementById('post_edit');
                             select = post.options[post.selectedIndex];
+                            console.log(select);
                             api = "page_update&id=";
                             obj = {
                               api: api + ID,
@@ -5162,17 +5170,22 @@ var Page = /*#__PURE__*/function (_Pagination) {
                               post_type: select.value,
                               page_state: stateArray
                             };
+                            console.log(obj);
 
                             _this4.axios.formDataApi(obj);
 
                             changes = _this4.changes;
                             window.removeEventListener('hashchange', changes);
-                            name.value = "";
+                            close.removeEventListener('click', function () {
+                              return editInsert.style.display = 'none';
+                            });
+                            editInsert.style.display = 'none'; // name.value = "";
+
                             return _context.abrupt("return", setTimeout(function () {
                               _this4.init();
                             }, 300));
 
-                          case 12:
+                          case 15:
                           case "end":
                             return _context.stop();
                         }
@@ -5180,7 +5193,7 @@ var Page = /*#__PURE__*/function (_Pagination) {
                     }, _callee);
                   })));
 
-                case 10:
+                case 14:
                 case "end":
                   return _context2.stop();
               }
