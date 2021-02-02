@@ -3198,6 +3198,7 @@ var Api = /*#__PURE__*/function () {
 
     this.path = WPURLS.apiUrl;
     this.html = null;
+    this.isRespose = false;
   }
 
   _createClass(Api, [{
@@ -3299,7 +3300,9 @@ var Api = /*#__PURE__*/function () {
         } // console.log(Object.fromEntries(formData))
 
 
-        axios.post(this.path + obj.api, formData, {}).then(function (response) {})["catch"](function (error) {
+        axios.post(this.path + obj.api, formData, {}).then(function (response) {
+          this.isResponse = true;
+        })["catch"](function (error) {
           if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
@@ -3313,6 +3316,11 @@ var Api = /*#__PURE__*/function () {
 
           console.log(error);
         });
+
+        while (!isResponse) {
+          // waiting for response
+          console.log('Laukiam response');
+        }
       } else {
         throw 'can not find API';
       }
