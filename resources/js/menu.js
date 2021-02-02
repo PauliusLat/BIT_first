@@ -206,6 +206,11 @@ class Menu {
           }
         }
         this.axios.formDataApi(obj);
+        // if( menuCreate == true){
+        //   console.log(obj);
+        //   this.axios.formDataApi(obj);
+        //   setTimeout(location.reload(), 300);
+        // }
       }
      
     })

@@ -94,31 +94,8 @@ class Page extends Pagination {
                     api: api + ID,
                     editID: ID,
                 }
-                // let HTML = await this.axios.getPostData(obj);
-
-                
-                // this.watch.innerHTML = HTML;
-                // const title = document.getElementById("page_title");
-                // const name = document.getElementById("page_name");
-                // const updateBtn = document.getElementById("pageUpdate");
-                // updateBtn.addEventListener("click", async () => {
-                //     let stateArray = []
-                //     let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-                //     for (let i = 0; i < checkboxes.length; i++) {
-                //         stateArray.push(checkboxes[i].value)
-                //     }
-                //     let post = document.getElementById('post');
-                //     let select = post.options[post.selectedIndex];
-                //     const api = "page_update&id=";
-                //     let obj = {
-                //         api: api + ID,
-                //         page_title: title.value,
-                //         page_name: name.value,
-                //         post_type: select.value,
-                //         page_state: stateArray
-                //     }
+            
                     let HTML = await this.axios.getPostData(obj);
-                    // this.watch.innerHTML = HTML;
                     let editInsert = document.querySelector('.pageEdit');
                     editInsert.innerHTML = HTML;
                     editInsert.style.display = 'inline-block';
