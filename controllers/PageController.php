@@ -152,10 +152,12 @@ class PageController
             $session->flash('alert_message', 'puslapis neištrintas! negalite trinti HOME PAGE. Jei tikrai norite ištrinti, pakeiskite puslapio rūšį ir nenaudokite jo kaip HOME PAGE.');
             return new Response;
         }
-        foreach (reset(FrontMenu::all()->all())->menuElements as $value) {
-            if($value['page_ID'] == $page->ID){
-                $session->flash('alert_message', 'puslapis neištrintas! Puslapis įtrauktas į pagrindinį MENU');
-                return new Response;
+        if($menus = FrontMenu::all()->all()){
+            foreach (reset($menus)->menuElements as $value) {
+                if($value['page_ID'] == $page->ID){
+                    $session->flash('alert_message', 'puslapis neištrintas! Puslapis įtrauktas į pagrindinį MENU');
+                    return new Response;
+                }
             }
         }
         $page->delete(true);
