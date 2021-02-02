@@ -33,10 +33,10 @@ class News {
       const altText = document.getElementById("newsAlt");
       const catDown = document.querySelector(".catDown");
       const catUp = document.querySelector(".catUp")
-
       const tag = document.getElementById("newsTagInput");
       const newsCat = document.querySelector(".newsCat");
-
+      
+console.log(newsCat)
       catDown.addEventListener("click", () => {
         catUp.classList.remove("hiden");
         catDown.classList.add("hiden");

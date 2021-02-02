@@ -40,6 +40,7 @@ class App
         $this->routeDir = PLUGIN_DIR_PATH . 'routes/';
         $this->viewDir = PLUGIN_DIR_PATH . 'views/';
         $this->resourseDir = PLUGIN_DIR_PATH . 'resources/';
+        $this->publicDir = PLUGIN_DIR_PATH . 'public/';
         $this->apiUrl = PLUGIN_DIR_URL; // unused
         $this->containerBuilder = new ContainerBuilder();
         $this->loader = new PhpFileLoader($this->containerBuilder, new FileLocator(__DIR__));

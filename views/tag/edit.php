@@ -1,8 +1,11 @@
 <div class='tagCreate grid-container'>
+    <svg class='close'>
+        <use xlink:href="#Capa_1"></use>
+    </svg>
     <div class="sm-1">
-        <h2 class='tcp'>koreguokite'tag'ą'</h2>
+        <h2 class='tcp'>Koreguokite'tag'ą'</h2>
     </div>
-    <div class="sm-1-2">
+    <div class="sm-1">
         <div class='label'>
             <label class="tcp-label">Įveskite naują 'tag'o' pavadinimą</label>
         </div>
@@ -20,3 +23,9 @@
         </div>
     </div>
 </div>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none;">
+    <?= str_replace(['<svg', 'svg>'], ['<symbol', 'symbol>'], file_get_contents($app->publicDir . '/svg/cancel.svg')) ?>
+    <?= str_replace(['<svg', 'svg>'], ['<symbol', 'symbol>'], file_get_contents($app->publicDir . '/svg/menu_delete.svg')) ?>
+    <?= str_replace(['<svg', 'svg>'], ['<symbol', 'symbol>'], file_get_contents($app->publicDir . '/svg/menu_drag.svg')) ?>
+    <?= str_replace(['<svg', 'svg>'], ['<symbol', 'symbol>'], file_get_contents($app->publicDir . '/svg/save.svg')) ?>
+</svg>

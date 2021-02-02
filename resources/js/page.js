@@ -8,7 +8,7 @@ class Page extends Pagination {
         this.target = target;
         this.pages = 5;
         this.changes;
-        this.watch = document.querySelector(".innerpage");
+        this.watch = document.querySelector(".pageCreateList");
         this.init();
     }
 
@@ -94,41 +94,53 @@ class Page extends Pagination {
                     api: api + ID,
                     editID: ID,
                 }
-                let HTML = await this.axios.getPostData(obj);
-                this.watch.innerHTML = HTML;
-                const title = document.getElementById("page_title");
-                const name = document.getElementById("page_name");
-                const updateBtn = document.getElementById("pageUpdate");
-                updateBtn.addEventListener("click", async () => {
-                    let stateArray = []
-                    let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-                    for (let i = 0; i < checkboxes.length; i++) {
-                        stateArray.push(checkboxes[i].value)
-                    }
-                    let post = document.getElementById('post');
-                    let select = post.options[post.selectedIndex];
-                    const api = "page_update&id=";
-                    let obj = {
-                        api: api + ID,
-                        page_title: title.value,
-                        page_name: name.value,
-                        post_type: select.value,
-                        page_state: stateArray
-                    }
+            
+                    let HTML = await this.axios.getPostData(obj);
+                    let editInsert = document.querySelector('.pageEdit');
+                    editInsert.innerHTML = HTML;
+                    editInsert.style.display = 'inline-block';
+                    let close = document.querySelector('.close');
+                    close.addEventListener('click', function () {
+                        return editInsert.style.display = 'none';
+                    })
+                    const title = document.getElementById("page_title_edit");
+                    const name = document.getElementById("page_name_edit");
+                    const updateBtn = document.getElementById("pageUpdate");
 
-                    let response = await this.axios.getResponseData(obj);
+                    updateBtn.addEventListener("click", async () => {
+                        let stateArray = []
+                        let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+                        for (let i = 0; i < checkboxes.length; i++) {
+                            stateArray.push(checkboxes[i].value)
+                        }
+                        let post = document.getElementById('post_edit');
+                        let select = post.options[post.selectedIndex];
+                        console.log(select);
+                        const api = "page_update&id=";
+                        let obj = {
+                            api: api + ID,
+                            page_title: title.value,
+                            page_name: name.value,
+                            post_type: select.value,
+                            page_state: stateArray
+                        }
 
-                    let changes = this.changes;
-                    window.removeEventListener('hashchange', changes);
-
-                    name.value = "";
-                    if (response) {
+                        let response = await this.axios.getResponseData(obj);
+                        let changes = this.changes;
+                        window.removeEventListener('hashchange', changes);
+                        close.removeEventListener('click', function () {
+                            return editInsert.style.display = 'none';
+                        })
+                        editInsert.style.display = 'none';
+                        name.value = "";
+                         if (response) {
                         return this.init();
                     } else {
                         throw console.error("Api do not return response !!!");
                     }
+                    });
                 });
-            });
+            // });
         }
     }
 }

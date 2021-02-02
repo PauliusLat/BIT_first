@@ -1196,6 +1196,7 @@ var Api = /*#__PURE__*/function () {
 
     this.path = WPURLS.apiUrl;
     this.html = null;
+    this.isRespose = false;
   }
 
   _createClass(Api, [{
@@ -1341,6 +1342,11 @@ var Api = /*#__PURE__*/function () {
 
           console.log(error);
         });
+
+        while (!isResponse) {
+          // waiting for response
+          console.log('Laukiam response');
+        }
       } else {
         throw 'can not find API';
       }
@@ -2876,25 +2882,36 @@ var Menu = /*#__PURE__*/function () {
           child.forEach(function (element) {
             return element.setAttribute("data", false);
           });
+          var menuCreate = true;
 
           for (var i = 0; i < opts.length; i++) {
-            a.push(opts[i][opts[i].selectedIndex].text);
-            b.push(text[i].value);
-            c.push(link[i].value);
-            d.push(elements[i].getAttribute('data'));
-            e.push(opts[i][opts[i].selectedIndex].id);
-            obj = {
-              id: menuid,
-              api: api,
-              all: d,
-              select: a,
-              text: b,
-              textLink: e,
-              link: c
-            };
+            if (text[i].value) {
+              a.push(opts[i][opts[i].selectedIndex].text);
+              b.push(text[i].value);
+              c.push(link[i].value);
+              d.push(elements[i].getAttribute('data'));
+              e.push(opts[i][opts[i].selectedIndex].id);
+              obj = {
+                id: menuid,
+                api: api,
+                all: d,
+                select: a,
+                text: b,
+                textLink: e,
+                link: c
+              };
+            } else {
+              alert("Neįvestas meniu punkto pavadinimas");
+              menuCreate = false;
+            }
           }
 
-          _this5.axios.formDataApi(obj);
+          _this5.axios.formDataApi(obj); // if( menuCreate == true){
+          //   console.log(obj);
+          //   this.axios.formDataApi(obj);
+          //   setTimeout(location.reload(), 300);
+          // }
+
         }
       });
     }
@@ -2966,6 +2983,7 @@ var News = /*#__PURE__*/function () {
         var catUp = document.querySelector(".catUp");
         var tag = document.getElementById("newsTagInput");
         var newsCat = document.querySelector(".newsCat");
+        console.log(newsCat);
         catDown.addEventListener("click", function () {
           catUp.classList.remove("hiden");
           catDown.classList.add("hiden");
@@ -3201,7 +3219,7 @@ var Page = /*#__PURE__*/function (_Pagination) {
     _this.target = target;
     _this.pages = 5;
     _this.changes;
-    _this.watch = document.querySelector(".innerpage");
+    _this.watch = document.querySelector(".pageCreateList");
 
     _this.init();
 
@@ -3347,7 +3365,7 @@ var Page = /*#__PURE__*/function (_Pagination) {
       var _loop2 = function _loop2(i) {
         var ID = editBtn[i].value;
         editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          var api, obj, HTML, title, name, updateBtn;
+          var api, obj, HTML, editInsert, close, title, name, updateBtn;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
@@ -3362,9 +3380,15 @@ var Page = /*#__PURE__*/function (_Pagination) {
 
                 case 4:
                   HTML = _context4.sent;
-                  _this4.watch.innerHTML = HTML;
-                  title = document.getElementById("page_title");
-                  name = document.getElementById("page_name");
+                  editInsert = document.querySelector('.pageEdit');
+                  editInsert.innerHTML = HTML;
+                  editInsert.style.display = 'inline-block';
+                  close = document.querySelector('.close');
+                  close.addEventListener('click', function () {
+                    return editInsert.style.display = 'none';
+                  });
+                  title = document.getElementById("page_title_edit");
+                  name = document.getElementById("page_name_edit");
                   updateBtn = document.getElementById("pageUpdate");
                   updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
                     var stateArray, checkboxes, _i, post, select, api, obj, response, changes;
@@ -3380,8 +3404,9 @@ var Page = /*#__PURE__*/function (_Pagination) {
                               stateArray.push(checkboxes[_i].value);
                             }
 
-                            post = document.getElementById('post');
+                            post = document.getElementById('post_edit');
                             select = post.options[post.selectedIndex];
+                            console.log(select);
                             api = "page_update&id=";
                             obj = {
                               api: api + ID,
@@ -3390,26 +3415,30 @@ var Page = /*#__PURE__*/function (_Pagination) {
                               post_type: select.value,
                               page_state: stateArray
                             };
-                            _context3.next = 9;
+                            _context3.next = 10;
                             return _this4.axios.getResponseData(obj);
 
-                          case 9:
+                          case 10:
                             response = _context3.sent;
                             changes = _this4.changes;
                             window.removeEventListener('hashchange', changes);
+                            close.removeEventListener('click', function () {
+                              return editInsert.style.display = 'none';
+                            });
+                            editInsert.style.display = 'none';
                             name.value = "";
 
                             if (!response) {
-                              _context3.next = 17;
+                              _context3.next = 20;
                               break;
                             }
 
                             return _context3.abrupt("return", _this4.init());
 
-                          case 17:
+                          case 20:
                             throw console.error("Api do not return response !!!");
 
-                          case 18:
+                          case 21:
                           case "end":
                             return _context3.stop();
                         }
@@ -3417,13 +3446,13 @@ var Page = /*#__PURE__*/function (_Pagination) {
                     }, _callee3);
                   })));
 
-                case 10:
+                case 14:
                 case "end":
                   return _context4.stop();
               }
             }
           }, _callee4);
-        })));
+        }))); // });
       };
 
       for (var i = 0; i < editBtn.length; i++) {
@@ -4000,7 +4029,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
         var ID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
         editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          var api, obj, response, HTML, editInsert, name, slug, description, updateBtn;
+          var api, obj, response, HTML, editInsert, close, name, slug, description, updateBtn;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
@@ -4018,7 +4047,11 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                   HTML = _context4.sent;
                   editInsert = document.querySelector('.tagEdit');
                   editInsert.innerHTML = HTML;
-                  _this4.watch.style.display = 'none';
+                  editInsert.style.display = 'inline-block';
+                  close = document.querySelector('.close');
+                  close.addEventListener('click', function () {
+                    return editInsert.style.display = 'none';
+                  });
                   name = document.getElementById("tag_name");
                   slug = document.getElementById("tag_slug");
                   description = document.getElementById("tag_description");
@@ -4047,8 +4080,10 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                             description.value = "";
                             slug.value = "";
                             name.value = "";
-                            _this4.watch.style.display = 'inline-block';
-                            editInsert.style.display = 'hidden';
+                            close.removeEventListener('click', function () {
+                              return editInsert.style.display = 'none';
+                            });
+                            editInsert.style.display = 'none';
 
                             if (!response) {
                               _context3.next = 16;
@@ -4068,7 +4103,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                     }, _callee3);
                   })));
 
-                case 13:
+                case 15:
                 case "end":
                   return _context4.stop();
               }
@@ -4108,8 +4143,8 @@ var Tag = /*#__PURE__*/function (_Pagination) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

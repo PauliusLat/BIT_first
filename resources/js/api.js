@@ -4,6 +4,7 @@ class Api {
     constructor() {
         this.path = WPURLS.apiUrl;
         this.html = null;
+        this.isRespose = false;
     }
 
     async delete(api, id) {
@@ -76,6 +77,10 @@ class Api {
                 }
                 console.log(error);
             });
+            while (!isResponse) {
+                // waiting for response
+    console.log('Laukiam response');
+            }
         } else {
             throw 'can not find API';
         }
