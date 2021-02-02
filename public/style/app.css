@@ -2059,6 +2059,31 @@ button:focus {
   width: 100%;
 }
 
+.startWatch .tagEdit {
+  position: fixed;
+  width: 700px;
+  top: 200px;
+  z-index: 1;
+  margin-left: calc((100vw - 700px) / 2);
+  background-color: #B4B9BE;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.startWatch .tagEdit .tagCreate {
+  width: 100%;
+  position: relative;
+  padding: 10px;
+}
+
+.startWatch .tagEdit .tagCreate svg {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
 .pages {
   display: inline-block;
 }

@@ -4803,13 +4803,11 @@ var News = /*#__PURE__*/function () {
         var button = document.getElementById("submit");
         var newsImageTitle = document.getElementById("newsName");
         var altText = document.getElementById("newsAlt");
-        var catDown = document.querySelector(".catDown"); // console.log(catDown);
-        // const catUp = document.querySelector(".catUp")
-        // console.log(catUp);
-        // console.log(button);
-
+        var catDown = document.querySelector(".catDown");
+        var catUp = document.querySelector(".catUp");
         var tag = document.getElementById("newsTagInput");
         var newsCat = document.querySelector(".newsCat");
+        console.log(newsCat);
         catDown.addEventListener("click", function () {
           catUp.classList.remove("hiden");
           catDown.classList.add("hiden");
@@ -5714,7 +5712,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
         var ID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
         editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          var api, obj, HTML, editInsert, name, slug, description, updateBtn;
+          var api, obj, HTML, editInsert, close, name, slug, description, updateBtn;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
@@ -5724,8 +5722,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                     api: api,
                     editID: ID,
                     taxonomy_type: taxonomy
-                  }; // console.log(obj)
-
+                  };
                   _context2.next = 4;
                   return _this4.axios.getPostData(obj);
 
@@ -5733,7 +5730,11 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                   HTML = _context2.sent;
                   editInsert = document.querySelector('.tagEdit');
                   editInsert.innerHTML = HTML;
-                  _this4.watch.style.display = 'none';
+                  editInsert.style.display = 'inline-block';
+                  close = document.querySelector('.close');
+                  close.addEventListener('click', function () {
+                    return editInsert.style.display = 'none';
+                  });
                   name = document.getElementById("tag_name");
                   slug = document.getElementById("tag_slug");
                   description = document.getElementById("tag_description");
@@ -5760,7 +5761,9 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                             description.value = "";
                             slug.value = "";
                             name.value = "";
-                            _this4.watch.style.display = 'inline-block';
+                            close.removeEventListener('click', function () {
+                              return editInsert.style.display = 'none';
+                            });
                             editInsert.style.display = 'none';
                             return _context.abrupt("return", setTimeout(function () {
                               _this4.init();
@@ -5774,7 +5777,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                     }, _callee);
                   })));
 
-                case 13:
+                case 15:
                 case "end":
                   return _context2.stop();
               }
