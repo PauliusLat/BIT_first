@@ -3359,32 +3359,60 @@ var Page = /*#__PURE__*/function (_Pagination) {
 
       var _loop2 = function _loop2(i) {
         var ID = editBtn[i].value;
-        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-          var api, obj, HTML, title, name, updateBtn;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          var api, obj, HTML, editInsert, close, title, name, updateBtn;
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
-              switch (_context5.prev = _context5.next) {
+              switch (_context4.prev = _context4.next) {
                 case 0:
                   api = "page_edit&id=";
                   obj = {
                     api: api + ID,
                     editID: ID
-                  };
-                  _context5.next = 4;
+                  }; // let HTML = await this.axios.getPostData(obj);
+                  // this.watch.innerHTML = HTML;
+                  // const title = document.getElementById("page_title");
+                  // const name = document.getElementById("page_name");
+                  // const updateBtn = document.getElementById("pageUpdate");
+                  // updateBtn.addEventListener("click", async () => {
+                  //     let stateArray = []
+                  //     let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+                  //     for (let i = 0; i < checkboxes.length; i++) {
+                  //         stateArray.push(checkboxes[i].value)
+                  //     }
+                  //     let post = document.getElementById('post');
+                  //     let select = post.options[post.selectedIndex];
+                  //     const api = "page_update&id=";
+                  //     let obj = {
+                  //         api: api + ID,
+                  //         page_title: title.value,
+                  //         page_name: name.value,
+                  //         post_type: select.value,
+                  //         page_state: stateArray
+                  //     }
+
+                  _context4.next = 4;
                   return _this4.axios.getPostData(obj);
 
                 case 4:
-                  HTML = _context5.sent;
-                  _this4.watch.innerHTML = HTML;
-                  title = document.getElementById("page_title");
-                  name = document.getElementById("page_name");
+                  HTML = _context4.sent;
+                  // this.watch.innerHTML = HTML;
+                  editInsert = document.querySelector('.pageEdit');
+                  editInsert.innerHTML = HTML;
+                  editInsert.style.display = 'inline-block';
+                  close = document.querySelector('.close');
+                  close.addEventListener('click', function () {
+                    return editInsert.style.display = 'none';
+                  });
+                  title = document.getElementById("page_title_edit");
+                  name = document.getElementById("page_name_edit");
                   updateBtn = document.getElementById("pageUpdate");
-                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-                    var stateArray, checkboxes, _i, post, select, api, obj, HTML, editInsert, close, title, name, updateBtn;
+                  updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+                    var stateArray, checkboxes, _i, post, select, api, obj, response, changes;
 
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                       while (1) {
-                        switch (_context4.prev = _context4.next) {
+                        switch (_context3.prev = _context3.next) {
                           case 0:
                             stateArray = [];
                             checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
@@ -3393,8 +3421,9 @@ var Page = /*#__PURE__*/function (_Pagination) {
                               stateArray.push(checkboxes[_i].value);
                             }
 
-                            post = document.getElementById('post');
+                            post = document.getElementById('post_edit');
                             select = post.options[post.selectedIndex];
+                            console.log(select);
                             api = "page_update&id=";
                             obj = {
                               api: api + ID,
@@ -3403,93 +3432,44 @@ var Page = /*#__PURE__*/function (_Pagination) {
                               post_type: select.value,
                               page_state: stateArray
                             };
-                            _context4.next = 9;
-                            return _this4.axios.getPostData(obj);
+                            _context3.next = 10;
+                            return _this4.axios.getResponseData(obj);
 
-                          case 9:
-                            HTML = _context4.sent;
-                            // this.watch.innerHTML = HTML;
-                            editInsert = document.querySelector('.pageEdit');
-                            editInsert.innerHTML = HTML;
-                            editInsert.style.display = 'inline-block';
-                            close = document.querySelector('.close');
-                            close.addEventListener('click', function () {
+                          case 10:
+                            response = _context3.sent;
+                            changes = _this4.changes;
+                            window.removeEventListener('hashchange', changes);
+                            close.removeEventListener('click', function () {
                               return editInsert.style.display = 'none';
                             });
-                            title = document.getElementById("page_title_edit");
-                            name = document.getElementById("page_name_edit");
-                            updateBtn = document.getElementById("pageUpdate");
-                            updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-                              var stateArray, checkboxes, _i2, post, select, api, obj, response, changes;
+                            editInsert.style.display = 'none';
+                            name.value = "";
 
-                              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-                                while (1) {
-                                  switch (_context3.prev = _context3.next) {
-                                    case 0:
-                                      stateArray = [];
-                                      checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+                            if (!response) {
+                              _context3.next = 20;
+                              break;
+                            }
 
-                                      for (_i2 = 0; _i2 < checkboxes.length; _i2++) {
-                                        stateArray.push(checkboxes[_i2].value);
-                                      }
+                            return _context3.abrupt("return", _this4.init());
 
-                                      post = document.getElementById('post_edit');
-                                      select = post.options[post.selectedIndex];
-                                      console.log(select);
-                                      api = "page_update&id=";
-                                      obj = {
-                                        api: api + ID,
-                                        page_title: title.value,
-                                        page_name: name.value,
-                                        post_type: select.value,
-                                        page_state: stateArray
-                                      };
-                                      _context3.next = 10;
-                                      return _this4.axios.getResponseData(obj);
+                          case 20:
+                            throw console.error("Api do not return response !!!");
 
-                                    case 10:
-                                      response = _context3.sent;
-                                      changes = _this4.changes;
-                                      window.removeEventListener('hashchange', changes);
-                                      close.removeEventListener('click', function () {
-                                        return editInsert.style.display = 'none';
-                                      });
-                                      editInsert.style.display = 'none';
-                                      name.value = "";
-
-                                      if (!response) {
-                                        _context3.next = 20;
-                                        break;
-                                      }
-
-                                      return _context3.abrupt("return", _this4.init());
-
-                                    case 20:
-                                      throw console.error("Api do not return response !!!");
-
-                                    case 21:
-                                    case "end":
-                                      return _context3.stop();
-                                  }
-                                }
-                              }, _callee3);
-                            })));
-
-                          case 19:
+                          case 21:
                           case "end":
-                            return _context4.stop();
+                            return _context3.stop();
                         }
                       }
-                    }, _callee4);
+                    }, _callee3);
                   })));
 
-                case 10:
+                case 14:
                 case "end":
-                  return _context5.stop();
+                  return _context4.stop();
               }
             }
-          }, _callee5);
-        })));
+          }, _callee4);
+        }))); // });
       };
 
       for (var i = 0; i < editBtn.length; i++) {
