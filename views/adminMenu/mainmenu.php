@@ -13,8 +13,6 @@ use BIT\app\Page;
             <div class="draggable parent" id="addDrag" draggable="true">
                 <?php
                 $wpPage = Page::get($menuElement['page_ID']);
-                var_dump($menuElement['page_ID']);
-                var_dump($menuElement['menu_name']);
                 if ($wpPage) {
                     $link = $wpPage->getLink();
                     $name = $menuElement['menu_name'];
