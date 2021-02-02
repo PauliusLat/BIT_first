@@ -7,7 +7,7 @@ class Category extends Pagination {
 
     constructor(target) {
         super();
-        this.api  = "category_create";
+        this.api = "category_create";
         this.pages = 5;
         this.target = target;
         this.watch = document.querySelector(".innercat");
@@ -18,7 +18,12 @@ class Category extends Pagination {
     init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
-            this.hashChange();
+            let hash = location.hash.split('#')[1];
+            if ( hash) {
+                this.hashChange(hash);
+            }else{
+                this.hashChange();
+            }      
             this.paging();
         }
     }
@@ -42,9 +47,10 @@ class Category extends Pagination {
         }
         const submit = document.getElementById("create");
         const api = 'category_store';
-      
-        submit.addEventListener("click",  () => {  
-          
+        let response;
+
+        submit.addEventListener("click", async () => {
+
             let parent = document.getElementById('cat');
             let select;
             if (parent.options[parent.selectedIndex] != undefined) {
@@ -61,42 +67,51 @@ class Category extends Pagination {
                 content: description.value,
                 cat_parent: select.value,
             }
-                if(obj){
-                     this.readImage.sendImageData(obj);
-                }
-              
+            if (obj) {
+                response = await this.readImage.sendImageData(obj);
+              }
+
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
             name.value = "";
             slug.value = ""
             description.value = ""
-            // return await this.init();
-            return setTimeout(() => { this.init() }, (300))
 
+            window.removeEventListener('hashchange', changes);
+            if (response) {
+                return this.init();
+            }else{
+                throw console.error("Api do not return response !!!");
+            }
         });
     }
 
     delete() {
         const api = "category_destroy";
         const deleteBtn = document.querySelectorAll(".category-delete");
+        let response;
+
         if (deleteBtn) {
             for (let i = 0; i < deleteBtn.length; i++) {
                 let ID = deleteBtn[i].value;
                 let taxonomy = deleteBtn[i].id;
                 deleteBtn[i].addEventListener(
-                    "click",
-                    () => {
+                    "click", async () => {
                         let obj = {
                             api: api,
                             deleteID: ID,
                             taxonomy_type: taxonomy
                         }
 
-                        this.axios.formDataApi(obj);
+                        response = await this.axios.getResponseData(obj);
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
-                        // return await this.init();
-                     return setTimeout(() => { this.init() }, (300))
+
+                        if (response) {
+                            return this.init();
+                        }else{
+                            throw console.error("Api do not return response !!!");
+                        }
                     });
             }
         }
@@ -128,6 +143,7 @@ class Category extends Pagination {
                     const updateBtn = document.getElementById("catUpdate");
                     updateBtn.addEventListener("click", async () => {
                         let api = "category_update";
+                        let response;
                         if (parent.options[parent.selectedIndex] != undefined) {
                             select = parent.options[parent.options.selectedIndex].value;
                         } else {
@@ -141,17 +157,21 @@ class Category extends Pagination {
                             cat_slug: slug.value,
                             cat_description: description.value
                         }
-                        if(obj){
-                            this.readImage.sendImageData(obj);
+                        if (obj) {
+
+                            response = await this.readImage.sendImageData(obj);
+                            console.log(response);
                         }
-                        
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
                         description.value = "";
                         slug.value = "";
                         name.value = "";
-                        return setTimeout(() => { this.init() }, (300))
-                        // return await this.init();
+                        if (response) {
+                            return this.init();
+                        }else{
+                            throw console.error("Api do not return response !!!");
+                        }
                     });
                 });
         }
