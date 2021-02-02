@@ -81,7 +81,7 @@ class Menu {
             if (draggable.childNodes[i].classList == "menuLinkAdd" &&
               draggable.childNodes.length == 12) {
               const clon = this.currentElemet.cloneNode(true);
-              draggable.childNodes[i].insertAdjacentElement('afterend', clon);  ///sukuria add button
+              draggable.childNodes[i].insertAdjacentElement('afterend', clon);  
               element = draggable.childNodes[6];
               addPlusButton = () => {
                 this.createNewElemet(draggable);
@@ -169,7 +169,7 @@ class Menu {
     save.addEventListener("click", () => {
     const menuid = document.querySelector(".main").id;
     const api = "menu_store";
-    // console.log(menuid);
+
       const elements = document.querySelectorAll(".draggable");
       const parent = document.querySelectorAll(".parent");
       const child = document.querySelectorAll(".submenu");
@@ -205,12 +205,7 @@ class Menu {
             menuCreate = false;
           }
         }
-        if( menuCreate == true){
-          console.log(obj);
-          this.axios.formDataApi(obj);
-          setTimeout(location.reload(), 300);
-        }
-       
+        this.axios.formDataApi(obj);
       }
      
     })

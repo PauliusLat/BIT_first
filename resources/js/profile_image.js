@@ -13,13 +13,13 @@ class Profile_image {
 
       let filesInput = document.getElementById("files");
 
-      filesInput.addEventListener("change", (event) => {
+      filesInput.addEventListener("change", () => {
 
         let file = filesInput.files[0];
 
         const currentDiv = document.getElementById("message");
 
-        if (file.size < 1048576 || file.length != 0 && file != undefined && file != null) {
+        if (file.size <= 1048576 && file.length != 0 && file != undefined && file != null) {
 
           if (file.type.match('image')) {
 
@@ -66,12 +66,12 @@ class Profile_image {
   sendImageData(obj) {
 
     let image = this.file;
-    if(image){
+    if (image) {
       obj.image = image;
     }
-   
+
     let sendData = new Api();
-    sendData.formDataApi(obj);
+    return sendData.getResponseData(obj);
   }
 }
 

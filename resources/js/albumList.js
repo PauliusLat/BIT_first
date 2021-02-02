@@ -29,9 +29,11 @@ class AlbumList {
                         let id = this.array[i].id;
                         remove.remove();
                         this.array.splice(i, 1);
-                        this.axios.delete(api, id);
-                        this.delete()
-                        check = false;
+                        let response = this.axios.delete(api, id);
+                        if (response) {
+                            this.delete()
+                            check = false;
+                        }
                     }
                 }
                 remove.addEventListener("click", newRemove);

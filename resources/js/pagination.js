@@ -2,15 +2,18 @@
 // extend this class and implement   addAction();
 
 import Api from './api';
+
 class Pagination {
+
     constructor() {
         this.axios = new Api();
-        this.hash;
     }
     paging() {
         const page = document.querySelectorAll(".paging");
         if (page.length) {
+
             for (let i = 0; i < page.length; i++) {
+
                 let nextPage = () => {
                     page[i].addEventListener('click', nextPage);
                     let id = parseInt(page[i].id);
@@ -23,6 +26,7 @@ class Pagination {
     }
     async hashChange(hash = null, HTML = null) {
         if (HTML && hash) {
+            console.log(11111);
             this.watch.innerHTML = HTML
             const page = document.querySelectorAll(".paging");
             let hash = location.hash.split('#')[1];
@@ -31,13 +35,13 @@ class Pagination {
                 location.hash = hash
             }
         } else if (hash && HTML == null) {
+console.log(2222222);
             let pages = this.pages;
             let obj = {
                 api: this.api,
                 pageSelected: pages,
                 hash: hash
             }
-          
             this.watch.innerHTML = await this.axios.getPostData(obj);
         } else if (hash == undefined ||
             hash == null ||
@@ -45,6 +49,7 @@ class Pagination {
             hash == "" ||
             hash == NaN ||
             hash == Infinity) {
+console.log(33333);
             hash = 1
             location.hash = hash
             let pages = this.pages;
@@ -56,7 +61,6 @@ class Pagination {
             this.watch.innerHTML = await this.axios.getPostData(obj);
 
         } else {
-
             let hash = location.hash.split('#')[1];
 
             location.hash = hash
@@ -79,6 +83,7 @@ class Pagination {
         let addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
         if (addColor) {
             addColor.classList.add("active");
+
         }
         var changes = async () => {
 

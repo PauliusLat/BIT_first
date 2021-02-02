@@ -3,6 +3,7 @@
 namespace BIT\controllers;
 
 use BIT\app\Page;
+use BIT\app\FrontMenu;
 use BIT\app\View;
 use BIT\app\Session;
 // use BIT\app\Attachment;
@@ -144,6 +145,19 @@ class PageController
 
     public function destroy(Page $page, Session $session)
     {
+        if(in_array('Menu_page', $page->pageState)){
+            $session->flash('alert_message', 'puslapis neištrintas! negalite trinti MENU PAGE. Jei tikrai norite ištrinti, pakeiskite puslapio rūšį ir nenaudokite jo MENU.');
+            return new Response;
+        } if(in_array('Home_page', $page->pageState)){
+            $session->flash('alert_message', 'puslapis neištrintas! negalite trinti HOME PAGE. Jei tikrai norite ištrinti, pakeiskite puslapio rūšį ir nenaudokite jo kaip HOME PAGE.');
+            return new Response;
+        }
+        foreach (reset(FrontMenu::all()->all())->menuElements as $value) {
+            if($value['page_ID'] == $page->ID){
+                $session->flash('alert_message', 'puslapis neištrintas! Puslapis įtrauktas į pagrindinį MENU');
+                return new Response;
+            }
+        }
         $page->delete(true);
         $session->flash('success_message', 'puslapis sėkmingai ištrintas');
         return new Response;

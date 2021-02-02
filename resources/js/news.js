@@ -55,6 +55,7 @@ console.log(newsCat)
           .map((checkbox) => checkbox.value);
       }
 
+      let response;
       button.addEventListener(
         "click", () => {
           let obj = {
@@ -68,7 +69,10 @@ console.log(newsCat)
           }
 
           if (obj.title) {
-            readImage.sendImageData(obj);
+            response = readImage.sendImageData(obj);
+            if (response) {
+              window.location.reload();
+            }
           } else {
             alert("Neįvestas pavadinimas!!!");
           }
