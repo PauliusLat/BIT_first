@@ -18,11 +18,16 @@ class Tag extends Pagination {
     init() {
         const DOM = document.getElementById(this.target);
         if (DOM) {
-            this.hashChange();
+            let hash = location.hash.split('#')[1];
+            if (hash) {
+                this.hashChange(hash);
+            } else {
+                this.hashChange();
+            }
             this.paging();
         }
     }
-  
+
     addAction() {
         this.create();
         this.delete();
@@ -34,20 +39,24 @@ class Tag extends Pagination {
         const slug = document.getElementById("tag-slug");
         const description = document.getElementById("tag-description");
         const storeTag = document.getElementById("create");
-        storeTag.addEventListener("click", () => {
+        storeTag.addEventListener("click", async () => {
             let obj = {
                 api: 'tag_store',
                 tag_name: name.value,
                 tag_slug: slug.value,
                 tag_description: description.value
             }
-            this.axios.formDataApi(obj);
+            let response = await this.axios.getResponseData(obj);
             let changes = this.changes;
             window.removeEventListener('hashchange', changes);
             name.value = ""
             slug.value = ""
             description.value = ""
-            return setTimeout(() => { this.init() }, (300))
+            if (response) {
+                return this.init();
+            } else {
+                throw console.error("Api do not return response !!!");
+            }
         });
     }
     delete() {
@@ -58,17 +67,21 @@ class Tag extends Pagination {
                 let ID = deleteBtn[i].value;
                 let taxonomy = deleteBtn[i].id;
                 deleteBtn[i].addEventListener(
-                    "click",
-                    () => {
+                    "click", async () => {
                         let obj = {
                             api: api,
                             deleteID: ID,
                             taxonomy_type: taxonomy
                         }
-                        this.axios.formDataApi(obj);
+                        let response = await this.axios.getResponseData(obj);
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
-                        return setTimeout(() => { this.init() }, (300))
+
+                        if (response) {
+                            return this.init();
+                        } else {
+                            throw console.error("Api do not return response !!!");
+                        }
                     });
             }
         }
@@ -80,15 +93,14 @@ class Tag extends Pagination {
             let ID = editBtn[i].value;
             let taxonomy = editBtn[i].id;
             editBtn[i].addEventListener(
-                "click",
-                async () => {
+                "click", async () => {
                     const api = "tag_edit";
                     let obj = {
                         api: api,
                         editID: ID,
                         taxonomy_type: taxonomy,
                     }
-                    // console.log(obj)
+                    let response;
                     let HTML = await this.axios.getPostData(obj);
                     let editInsert = document.querySelector('.tagEdit');
                     editInsert.innerHTML = HTML;
@@ -106,7 +118,7 @@ class Tag extends Pagination {
                             tag_slug: slug.value,
                             tag_description: description.value
                         }
-                        this.axios.formDataApi(obj);
+                        let response = await this.axios.getResponseData(obj);
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
                         description.value = "";
@@ -114,7 +126,11 @@ class Tag extends Pagination {
                         name.value = "";
                         this.watch.style.display = 'inline-block';
                         editInsert.style.display = 'hidden';
-                        return setTimeout(() => { this.init() }, (300))
+                        if (response) {
+                            return this.init();
+                        } else {
+                            throw console.error("Api do not return response !!!");
+                        }
                     });
                 });
         }

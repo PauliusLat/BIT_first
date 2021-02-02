@@ -23,15 +23,16 @@ class NewsList {
             DOM.innerHTML = HTML;
 
             const deleteNews = document.querySelectorAll(".deleteNews");
-
+            let response;
             for (let i = 0; i < deleteNews.length; i++) {
 
                 let deleteId = deleteNews[i].id;
                 deleteNews[i].addEventListener(
-                    "click",
-                    () => {
-                        this.api.delete(deleteApi, deleteId);
-                        setTimeout(location.reload(), 500);
+                    "click", async () => {
+                        response = await this.api.delete(deleteApi, deleteId);
+                        if (response) {
+                            window.location.reload();
+                        }
                     });
             }
         }

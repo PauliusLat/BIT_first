@@ -28,12 +28,12 @@ class AlbumEdit {
     save() {
 
         this.add = document.querySelector(".saveAlbum");
-
-        const title = document.querySelector(".albumTitle");
-        let id;
-        const api = 'gallery-update-admin&id=';
-        let obj;
         const albumID = this.add.getAttribute('data');
+        const title = document.querySelector(".albumTitle");
+        const api = 'gallery-update-admin&id=';
+
+        let id;
+        let obj;   
 
         this.add.addEventListener("click", () => {
             id = this.check();
@@ -41,7 +41,6 @@ class AlbumEdit {
             if (!id) {
                 id = this.add.id
             }
-
             obj = {
                 api: api + albumID,
                 title: title.value,
@@ -73,19 +72,22 @@ class AlbumEdit {
     delete() {
 
         let check = true
+        let response;
 
         for (let i = 0; i < this.array.length; i++) {
             let remove = this.array[i].children[1].children[0];
-            let newRemove = () => {
+            let newRemove = async () => {
                 if (check) {
                     if (this.add.id != remove.id) {
                         const api = 'album-image-destroy&id='
                         let id = remove.id;
                         this.array[i].remove();
                         this.array.splice(i, 1);
-                        this.axios.delete(api, id)
-                        this.delete()
-                        check = false;
+                        response = await this.axios.delete(api, id)
+                        if (response) {
+                            this.delete()
+                            check = false;
+                        }
                     } else {
                         alert("Albumo paveikslelio trinti negalima !!!")
                     }
