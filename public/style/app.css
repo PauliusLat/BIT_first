@@ -1195,6 +1195,11 @@ body {
   cursor: pointer;
 }
 
+.catPropNews .newsCatAdd .catBoxBtn .catDown {
+  height: 40px;
+  width: 40px;
+}
+
 .catPropNews .newsTag {
   display: flex;
   flex-direction: column;
@@ -2054,6 +2059,56 @@ button:focus {
   width: 100%;
 }
 
+.startWatch .tagEdit {
+  position: fixed;
+  width: 700px;
+  top: 200px;
+  z-index: 1;
+  margin-left: calc((100vw - 700px) / 2);
+  background-color: #B4B9BE;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.startWatch .tagEdit .tagCreate {
+  width: 100%;
+  position: relative;
+  padding: 10px;
+}
+
+.startWatch .tagEdit .tagCreate svg {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
+.innerpage .pageEdit {
+  position: fixed;
+  width: 700px;
+  top: 200px;
+  z-index: 1;
+  margin-left: calc((100vw - 700px) / 2);
+  background-color: #B4B9BE;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.innerpage .pageEdit .pageCreate {
+  width: 100%;
+  position: relative;
+  padding: 10px;
+}
+
+.innerpage .pageEdit .pageCreate .close {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
 .pages {
   display: inline-block;
 }
@@ -2263,6 +2318,10 @@ table th {
   width: 97%;
 }
 
+.innermenu .menuMessage {
+  text-align: center;
+}
+
 .innermenu .menu {
   text-align: center;
 }
@@ -2404,13 +2463,25 @@ table th {
   width: 4%;
 }
 
+.innermenu .cont .draggable .menuDrag svg {
+  height: 35px;
+  width: 40px;
+  cursor: pointer;
+}
+
 .innermenu .cont .draggable .manuDelete {
   width: 4%;
+}
+
+.innermenu .cont .draggable .manuDelete svg {
+  height: 35px;
+  width: 40px;
   cursor: pointer;
 }
 
 .innermenu .cont .draggable .addSubmenu svg {
   height: 35px;
+  width: 40px;
   cursor: pointer;
 }
 
@@ -2568,6 +2639,12 @@ table th {
   cursor: pointer;
 }
 
+.menuBtn .addNew svg {
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+
 .menuBtn .save,
 .menuBtn .initsave {
   display: flex;
@@ -2575,6 +2652,13 @@ table th {
   justify-content: flex-end;
   width: 93%;
   z-index: 1;
+  cursor: pointer;
+}
+
+.menuBtn .save svg,
+.menuBtn .initsave svg {
+  height: 40px;
+  width: 40px;
   cursor: pointer;
 }
 
@@ -2717,6 +2801,8 @@ table th {
 .containerNweaList .newsList .parentNews .newsButtons .btnNews {
   margin: 5px 0 0 0;
 }
+
+/** @format */
 
 .editStart {
   display: flex;

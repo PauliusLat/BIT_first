@@ -8,6 +8,7 @@ use BIT\app\View;
 use BIT\models\AlbumPost;
 use BIT\models\IdeaPost;
 use BIT\models\NewsPost;
+use BIT\app\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,11 +61,12 @@ class IdeaController
 			$idea->save();
 		} else {
 			$like = $request->request->get('idea_like');
+
 			if ($like && $session->get('ideja' . $like) != $like) {
-				$session->set('ideja' . $like, $like);
 				$ideaLike = IdeaPost::get($like);
 				$ideaLike->idea_like = $ideaLike->idea_like + 1;
 				$ideaLike->save();
+				$session->set('ideja' . $like, $like);
 			}
 		}
 		return $response;

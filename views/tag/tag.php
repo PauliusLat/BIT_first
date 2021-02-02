@@ -1,7 +1,6 @@
 <?php
 
 ?>
-
 <div class='tagCreate grid-container'>
     <div class="sm-1">
         <h1 class="tcp">Tagai</h1>
@@ -53,7 +52,6 @@
             $prev = '';
             $first = '';
             for ($page = 1; $page <= $pages; $page++) {
-
                 $nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
                 $next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';
                 $prev = '<a class="paging" id = "' . $prevpage . ' "><</a>';
@@ -71,7 +69,6 @@
                     <option value="10">10</option>
                 </select>
             </div>
-
 
             <?php
             echo '<div class = "page">';
@@ -94,7 +91,5 @@
             }
             ?>
         </table>
-
-
     </div>
 </div>

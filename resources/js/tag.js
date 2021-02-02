@@ -104,7 +104,11 @@ class Tag extends Pagination {
                     let HTML = await this.axios.getPostData(obj);
                     let editInsert = document.querySelector('.tagEdit');
                     editInsert.innerHTML = HTML;
-                    this.watch.style.display = 'none';
+                    editInsert.style.display = 'inline-block';
+                    let close = document.querySelector('.close');
+                    close.addEventListener('click', function () {
+                        return editInsert.style.display = 'none';
+                    })
                     const name = document.getElementById("tag_name");
                     const slug = document.getElementById("tag_slug");
                     const description = document.getElementById("tag_description");
@@ -124,8 +128,11 @@ class Tag extends Pagination {
                         description.value = "";
                         slug.value = "";
                         name.value = "";
-                        this.watch.style.display = 'inline-block';
-                        editInsert.style.display = 'hidden';
+                        close.removeEventListener('click', function () {
+                            return editInsert.style.display = 'none';
+                        })
+                        editInsert.style.display = 'none';
+
                         if (response) {
                             return this.init();
                         } else {

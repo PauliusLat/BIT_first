@@ -1,23 +1,27 @@
-<div class=" class='catCreate grid-container'">
-    <div class="sm-1-2">
+<div class="pageCreate grid-container">
+    <svg class='close'>
+        <use xlink:href="#Capa_1"></use>
+    </svg>
+    <div class="sm-1">
         <h2 class='tcp'>Koreguokite puslapį</h2>
         <div class='label'>
             <label class="tcp-label">Įveskite naują puslapio antraštę</label>
         </div>
-        <input type="text" name="page_title" id="page_title" value="<?= $page->post_title ?>" placeholder="Įrašykite page'o pavadinimą..." class="tcp-input"><br><br>
+        <input type="text" name="page_title" id="page_title_edit" value="<?= $page->post_title ?>" placeholder="Įrašykite page'o pavadinimą..." class="tcp-input"><br><br>
         <div class='label'>
             <label class="tcp-label">Įveskite naują puslapio adresą ('slug')</label>
         </div>
-        <input type="text" name="page_name" id="page_name" value="<?= $page->post_name ?>" placeholder="Įrašykite page'o pavadinimą..." class="tcp-input"><br><br>
+        <input type="text" name="page_name" id="page_name_edit" value="<?= $page->post_name ?>" placeholder="Įrašykite page'o pavadinimą..." class="tcp-input"><br><br>
         <div class='label'>
             <label class="tcp-label">Pasirinkite kitą post'o tipą</label>
         </div>
-        <select class="form-control" name="post-type" id="post">
-            <option value="<?= $shortcode ?>" selected><?= $shortcode ?></option>
+        <select class="form-control" name="post-type" id="post_edit">
+
             <?php
 
             foreach ($post_types as $post => $args) : ?>
-                <option value="<?= $post ?>"><?= $post ?></option>
+                <option value="<?= $post ?>" <?= $post == $shortcode ? 'selected = "selected"' : ''; ?>><?= $post ?></option>
+
             <?php endforeach; ?>
         </select>
 
@@ -41,3 +45,9 @@
         </div>
     </div>
 </div>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none;">
+    <?= str_replace(['<svg', 'svg>'], ['<symbol', 'symbol>'], file_get_contents($app->resourseDir . '/svg/cancel.svg')) ?>
+    <?= str_replace(['<svg', 'svg>'], ['<symbol', 'symbol>'], file_get_contents($app->resourseDir . '/svg/menu_delete.svg')) ?>
+    <?= str_replace(['<svg', 'svg>'], ['<symbol', 'symbol>'], file_get_contents($app->resourseDir . '/svg/menu_drag.svg')) ?>
+    <?= str_replace(['<svg', 'svg>'], ['<symbol', 'symbol>'], file_get_contents($app->resourseDir . '/svg/save.svg')) ?>
+</svg>

@@ -1,8 +1,4 @@
-<?php
-
-?>
-
-<div class='tagCreate grid-container'>
+<div class='pageCreate grid-container'>
     <div class="sm-1">
         <h1 class="tcp">Puslapiai</h1>
     </div>
