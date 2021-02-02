@@ -13,6 +13,7 @@ class EditPost {
 
     init() {
         const DOM = document.querySelector(this.target);
+        let response;
         if (DOM) {
             const id = document.querySelector('.newsBtnSend').id;
             const image = document.getElementById('image');
@@ -63,7 +64,7 @@ class EditPost {
                     id: id,
                     category: getCheckedValues()
                 }
-                readImage.sendImageData(obj);
+                response = readImage.sendImageData(obj);
             }
 
             if (getImage) {
@@ -76,7 +77,9 @@ class EditPost {
                 save.addEventListener("click", data)
             }
         }
-        // window.location.reload();
+        if (response) {
+            window.location.reload();
+        }
     }
 }
 

@@ -2,10 +2,11 @@
 // extend this class and implement   addAction();
 
 import Api from './api';
+
 class Pagination {
+
     constructor() {
         this.axios = new Api();
-        this.hash;
     }
     paging() {
         const page = document.querySelectorAll(".paging");
@@ -25,6 +26,7 @@ class Pagination {
     }
     async hashChange(hash = null, HTML = null) {
         if (HTML && hash) {
+            console.log(11111);
             this.watch.innerHTML = HTML
             const page = document.querySelectorAll(".paging");
             let hash = location.hash.split('#')[1];
@@ -33,7 +35,7 @@ class Pagination {
                 location.hash = hash
             }
         } else if (hash && HTML == null) {
-
+console.log(2222222);
             let pages = this.pages;
             let obj = {
                 api: this.api,
@@ -47,6 +49,7 @@ class Pagination {
             hash == "" ||
             hash == NaN ||
             hash == Infinity) {
+console.log(33333);
             hash = 1
             location.hash = hash
             let pages = this.pages;

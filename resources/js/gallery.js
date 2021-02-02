@@ -61,9 +61,6 @@ class ImageUploade {
                                         const checkBox = document.getElementById("c1");
                                         const image = document.querySelectorAll(".uploadeImageGallery");
 
-                                        // console.log(deleteDiv[j])
-                                        // console.log(j);
-
                                         dots.addEventListener("click", () => {
 
                                             tagInput.value = "";
