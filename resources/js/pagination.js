@@ -26,7 +26,7 @@ class Pagination {
     }
     async hashChange(hash = null, HTML = null) {
         if (HTML && hash) {
-            console.log(11111);
+         
             this.watch.innerHTML = HTML
             const page = document.querySelectorAll(".paging");
             let hash = location.hash.split('#')[1];

@@ -183,7 +183,7 @@ class Menu {
         let a = [], b = [], c = [], d = [], e = [];
         parent.forEach(element => element.setAttribute("data", true));
         child.forEach(element => element.setAttribute("data", false));
-        let menuCreate = true;
+        // let menuCreate = true;
         for (let i = 0; i < opts.length; i++) {
           if(text[i].value){
             a.push(opts[i][opts[i].selectedIndex].text)
@@ -202,7 +202,7 @@ class Menu {
             }
           }else{
             alert("Neįvestas meniu punkto pavadinimas")
-            menuCreate = false;
+            // menuCreate = false;
           }
         }
         let respones = this.axios.getResponseData(obj);
