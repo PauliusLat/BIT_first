@@ -94,18 +94,19 @@ class Page extends Pagination {
                     api: api + ID,
                     editID: ID,
                 }
+            
+                    let HTML = await this.axios.getPostData(obj);
+                    let editInsert = document.querySelector('.pageEdit');
+                    editInsert.innerHTML = HTML;
+                    editInsert.style.display = 'flex';
+                    let close = document.querySelector('.close');
+                    close.addEventListener('click', function () {
+                        return editInsert.style.display = 'none';
+                    })
+                    const title = document.getElementById("page_title_edit");
+                    const name = document.getElementById("page_name_edit");
+                    const updateBtn = document.getElementById("pageUpdate");
 
-                let HTML = await this.axios.getPostData(obj);
-                let editInsert = document.querySelector('.pageEdit');
-                editInsert.innerHTML = HTML;
-                editInsert.style.display = 'inline-block';
-                let close = document.querySelector('.close');
-                close.addEventListener('click', function () {
-                    return editInsert.style.display = 'none';
-                })
-                const title = document.getElementById("page_title_edit");
-                const name = document.getElementById("page_name_edit");
-                const updateBtn = document.getElementById("pageUpdate");
 
                 updateBtn.addEventListener("click", async () => {
                     let stateArray = []
