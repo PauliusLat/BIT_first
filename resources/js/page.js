@@ -98,7 +98,7 @@ class Page extends Pagination {
                     let HTML = await this.axios.getPostData(obj);
                     let editInsert = document.querySelector('.pageEdit');
                     editInsert.innerHTML = HTML;
-                    editInsert.style.display = 'inline-block';
+                    editInsert.style.display = 'flex';
                     let close = document.querySelector('.close');
                     close.addEventListener('click', function () {
                         return editInsert.style.display = 'none';

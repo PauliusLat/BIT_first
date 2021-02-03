@@ -10,7 +10,7 @@ class Category extends Pagination {
         this.api = "category_create";
         this.pages = 5;
         this.target = target;
-        this.watch = document.querySelector(".innercat");
+        this.watch = document.querySelector(".catCreateList");
         this.changes;
         this.readImage = new Profile_image();
         this.init();
@@ -133,12 +133,18 @@ class Category extends Pagination {
                         taxonomy_type: taxonomy,
                     }
                     let HTML = await this.axios.getPostData(obj);
-                    this.watch.innerHTML = HTML;
+                    let editInsert = document.querySelector('.catEdit');
+                    editInsert.innerHTML = HTML;
+                    editInsert.style.display = 'flex';
+                    let close = document.querySelector('.close');
+                    close.addEventListener('click', function () {
+                        return editInsert.style.display = 'none';
+                    })
                     this.readImage.image();
                     const name = document.getElementById("category_name");
                     const slug = document.getElementById("category_slug");
                     const description = document.getElementById("category_description");
-                    let parent = document.getElementById('cat');
+                    let parent = document.getElementById('catEdit');
                     let select;
                     const updateBtn = document.getElementById("catUpdate");
                     updateBtn.addEventListener("click", async () => {
@@ -164,6 +170,10 @@ class Category extends Pagination {
                         }
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);
+                        close.removeEventListener('click', function () {
+                            return editInsert.style.display = 'none';
+                        })
+                        editInsert.style.display = 'none';
                         description.value = "";
                         slug.value = "";
                         name.value = "";
