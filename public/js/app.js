@@ -2876,7 +2876,8 @@ var Menu = /*#__PURE__*/function () {
           });
           child.forEach(function (element) {
             return element.setAttribute("data", false);
-          }); // let menuCreate = true;
+          });
+          var menuCreate = true;
 
           for (var i = 0; i < opts.length; i++) {
             if (text[i].value) {
@@ -2895,16 +2896,20 @@ var Menu = /*#__PURE__*/function () {
                 link: c
               };
             } else {
-              alert("Neįvestas meniu punkto pavadinimas"); // menuCreate = false;
+              alert("Neįvestas meniu punkto pavadinimas");
+              menuCreate = false;
             }
           }
 
-          _this5.axios.formDataApi(obj); // if( menuCreate == true){
-          //   console.log(obj);
-          //   this.axios.formDataApi(obj);
-          //   setTimeout(location.reload(), 300);
-          // }
+          var respones = _this5.axios.getResponseData(obj);
 
+          if (menuCreate && respones) {
+            var message = document.querySelector(".menuMessage");
+            message.innerHTML = '<div class="massege">menu sėkmingai pakoreguotas</div>';
+            message.style.color = "#46B499";
+          } else {
+            throw console.error("Api do not return response !!!");
+          }
         }
       });
     }
@@ -3445,7 +3450,7 @@ var Page = /*#__PURE__*/function (_Pagination) {
               }
             }
           }, _callee4);
-        }))); // });
+        })));
       };
 
       for (var i = 0; i < editBtn.length; i++) {
@@ -4133,8 +4138,8 @@ var Tag = /*#__PURE__*/function (_Pagination) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
