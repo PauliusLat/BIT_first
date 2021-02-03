@@ -2322,6 +2322,10 @@ table th {
   text-align: center;
 }
 
+.innermenu .menuMessage .massege {
+  text-transform: uppercase;
+}
+
 .innermenu .menu {
   text-align: center;
 }

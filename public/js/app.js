@@ -2876,7 +2876,8 @@ var Menu = /*#__PURE__*/function () {
           });
           child.forEach(function (element) {
             return element.setAttribute("data", false);
-          }); // let menuCreate = true;
+          });
+          var menuCreate = true;
 
           for (var i = 0; i < opts.length; i++) {
             if (text[i].value) {
@@ -2895,7 +2896,8 @@ var Menu = /*#__PURE__*/function () {
                 link: c
               };
             } else {
-              alert("Neįvestas meniu punkto pavadinimas"); // menuCreate = false;
+              alert("Neįvestas meniu punkto pavadinimas");
+              menuCreate = false;
             }
           }
 
@@ -2903,12 +2905,8 @@ var Menu = /*#__PURE__*/function () {
 
           if (menuCreate && respones) {
             var message = document.querySelector(".menuMessage");
-            var txt = "<div class=\"success_message\">menu s\u0117kmingai pakoreguotas</div>";
+            message.innerHTML = '<div class="massege">menu sėkmingai pakoreguotas</div>';
             message.style.color = "#46B499";
-
-            var _text = document.querySelector(".success_message");
-
-            setTimeout(_text.remove(), 3000);
           } else {
             throw console.error("Api do not return response !!!");
           }
