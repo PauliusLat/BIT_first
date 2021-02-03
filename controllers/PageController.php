@@ -79,7 +79,7 @@ class PageController
         } else {
             $message = "";
         }
-        $output = View::adminRender('page.page', ["postPages" =>  $pageArr, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'message' => $message,  'success_message' => $success_message]);
+        $output = View::adminRender('page.page', ["postPages" =>  $pageArr, 'post_types' => $post_types['menu'], 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'message' => $message,  'success_message' => $success_message]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -118,7 +118,7 @@ class PageController
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
         $ID = $page->ID;
-        $output = View::adminRender('page.edit',  ['page' => $page, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'shortcode' => $shortcode, 'ID' => $ID]);
+        $output = View::adminRender('page.edit',  ['page' => $page, 'post_types' => $post_types['menu'], 'menu_page_state' => $menu_page_state, 'shortcode' => $shortcode, 'ID' => $ID]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -145,10 +145,11 @@ class PageController
 
     public function destroy(Page $page, Session $session)
     {
-        if(in_array('Menu_page', $page->pageState)){
+        if (in_array('Menu_page', $page->pageState)) {
             $session->flash('alert_message', 'puslapis neištrintas! negalite trinti MENU PAGE. Jei tikrai norite ištrinti, pakeiskite puslapio rūšį ir nenaudokite jo MENU.');
             return new Response;
-        } if(in_array('Home_page', $page->pageState)){
+        }
+        if (in_array('Home_page', $page->pageState)) {
             $session->flash('alert_message', 'puslapis neištrintas! negalite trinti HOME PAGE. Jei tikrai norite ištrinti, pakeiskite puslapio rūšį ir nenaudokite jo kaip HOME PAGE.');
             return new Response;
         }

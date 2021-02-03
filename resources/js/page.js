@@ -98,7 +98,7 @@ class Page extends Pagination {
                     let HTML = await this.axios.getPostData(obj);
                     let editInsert = document.querySelector('.pageEdit');
                     editInsert.innerHTML = HTML;
-                    editInsert.style.display = 'inline-block';
+                    editInsert.style.display = 'flex';
                     let close = document.querySelector('.close');
                     close.addEventListener('click', function () {
                         return editInsert.style.display = 'none';
@@ -107,40 +107,40 @@ class Page extends Pagination {
                     const name = document.getElementById("page_name_edit");
                     const updateBtn = document.getElementById("pageUpdate");
 
-                    updateBtn.addEventListener("click", async () => {
-                        let stateArray = []
-                        let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-                        for (let i = 0; i < checkboxes.length; i++) {
-                            stateArray.push(checkboxes[i].value)
-                        }
-                        let post = document.getElementById('post_edit');
-                        let select = post.options[post.selectedIndex];
-                        console.log(select);
-                        const api = "page_update&id=";
-                        let obj = {
-                            api: api + ID,
-                            page_title: title.value,
-                            page_name: name.value,
-                            post_type: select.value,
-                            page_state: stateArray
-                        }
 
-                        let response = await this.axios.getResponseData(obj);
-                        let changes = this.changes;
-                        window.removeEventListener('hashchange', changes);
-                        close.removeEventListener('click', function () {
-                            return editInsert.style.display = 'none';
-                        })
-                        editInsert.style.display = 'none';
-                        name.value = "";
-                         if (response) {
+                updateBtn.addEventListener("click", async () => {
+                    let stateArray = []
+                    let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+                    for (let i = 0; i < checkboxes.length; i++) {
+                        stateArray.push(checkboxes[i].value)
+                    }
+                    let post = document.getElementById('post_edit');
+                    let select = post.options[post.selectedIndex];
+                    console.log(select);
+                    const api = "page_update&id=";
+                    let obj = {
+                        api: api + ID,
+                        page_title: title.value,
+                        page_name: name.value,
+                        post_type: select.value,
+                        page_state: stateArray
+                    }
+
+                    let response = await this.axios.getResponseData(obj);
+                    let changes = this.changes;
+                    window.removeEventListener('hashchange', changes);
+                    close.removeEventListener('click', function () {
+                        return editInsert.style.display = 'none';
+                    })
+                    editInsert.style.display = 'none';
+                    name.value = "";
+                    if (response) {
                         return this.init();
                     } else {
                         throw console.error("Api do not return response !!!");
                     }
-                    });
                 });
-            // });
+            });
         }
     }
 }

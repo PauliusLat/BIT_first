@@ -205,14 +205,16 @@ class Menu {
             menuCreate = false;
           }
         }
-        this.axios.formDataApi(obj);
-        // if( menuCreate == true){
-        //   console.log(obj);
-        //   this.axios.formDataApi(obj);
-        //   setTimeout(location.reload(), 300);
-        // }
-      }
-     
+        let respones = this.axios.getResponseData(obj);
+
+        if( menuCreate && respones){
+          const message = document.querySelector(".menuMessage");
+          message.innerHTML =  '<div class="massege">menu sėkmingai pakoreguotas</div>';
+          message.style.color = "#46B499"     
+        }else{
+          throw console.error("Api do not return response !!!");
+        }        
+      }     
     })
   }
 }

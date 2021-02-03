@@ -35,7 +35,7 @@
         </div>
 
     </div>
-    <div class="sm-1-2">
+    <div class="sm-1-2 list">
 
         <table>
             <th>Pavadinimas</th>
