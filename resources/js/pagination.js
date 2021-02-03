@@ -35,7 +35,6 @@ class Pagination {
                 location.hash = hash
             }
         } else if (hash && HTML == null) {
-console.log(2222222);
             let pages = this.pages;
             let obj = {
                 api: this.api,
@@ -49,7 +48,6 @@ console.log(2222222);
             hash == "" ||
             hash == NaN ||
             hash == Infinity) {
-console.log(33333);
             hash = 1
             location.hash = hash
             let pages = this.pages;

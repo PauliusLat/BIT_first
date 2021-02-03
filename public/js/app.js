@@ -1342,11 +1342,6 @@ var Api = /*#__PURE__*/function () {
 
           console.log(error);
         });
-
-        while (!isResponse) {
-          // waiting for response
-          console.log('Laukiam response');
-        }
       } else {
         throw 'can not find API';
       }
@@ -2906,12 +2901,19 @@ var Menu = /*#__PURE__*/function () {
             }
           }
 
-          _this5.axios.formDataApi(obj); // if( menuCreate == true){
-          //   console.log(obj);
-          //   this.axios.formDataApi(obj);
-          //   setTimeout(location.reload(), 300);
-          // }
+          var respones = _this5.axios.getResponseData(obj);
 
+          if (menuCreate && respones) {
+            var message = document.querySelector(".menuMessage");
+            var txt = "<div class=\"success_message\">menu s\u0117kmingai pakoreguotas</div>";
+            message.style.color = "#46B499";
+
+            var _text = document.querySelector(".success_message");
+
+            setTimeout(_text.remove(), 3000);
+          } else {
+            throw console.error("Api do not return response !!!");
+          }
         }
       });
     }
@@ -3452,7 +3454,7 @@ var Page = /*#__PURE__*/function (_Pagination) {
               }
             }
           }, _callee4);
-        }))); // });
+        })));
       };
 
       for (var i = 0; i < editBtn.length; i++) {
@@ -3569,37 +3571,35 @@ var Pagination = /*#__PURE__*/function () {
                   location.hash = _hash;
                 }
 
-                _context2.next = 38;
+                _context2.next = 36;
                 break;
 
               case 10:
                 if (!(hash && HTML == null)) {
-                  _context2.next = 19;
+                  _context2.next = 18;
                   break;
                 }
 
-                console.log(2222222);
                 pages = this.pages;
                 obj = {
                   api: this.api,
                   pageSelected: pages,
                   hash: hash
                 };
-                _context2.next = 16;
+                _context2.next = 15;
                 return this.axios.getPostData(obj);
 
-              case 16:
+              case 15:
                 this.watch.innerHTML = _context2.sent;
-                _context2.next = 38;
+                _context2.next = 36;
                 break;
 
-              case 19:
+              case 18:
                 if (!(hash == undefined || hash == null || hash < 0 || hash == "" || hash == NaN || hash == Infinity)) {
-                  _context2.next = 30;
+                  _context2.next = 28;
                   break;
                 }
 
-                console.log(33333);
                 hash = 1;
                 location.hash = hash;
                 _pages = this.pages;
@@ -3608,15 +3608,15 @@ var Pagination = /*#__PURE__*/function () {
                   pageSelected: _pages,
                   hash: hash
                 };
-                _context2.next = 27;
+                _context2.next = 25;
                 return this.axios.getPostData(_obj);
 
-              case 27:
+              case 25:
                 this.watch.innerHTML = _context2.sent;
-                _context2.next = 38;
+                _context2.next = 36;
                 break;
 
-              case 30:
+              case 28:
                 _hash2 = location.hash.split('#')[1];
                 location.hash = _hash2;
                 _obj2 = {
@@ -3624,10 +3624,10 @@ var Pagination = /*#__PURE__*/function () {
                   pageSelected: this.pages,
                   hash: _hash2
                 };
-                _context2.next = 35;
+                _context2.next = 33;
                 return this.axios.getPostData(_obj2);
 
-              case 35:
+              case 33:
                 this.watch.innerHTML = _context2.sent;
                 _page = document.querySelectorAll(".paging");
 
@@ -3636,7 +3636,7 @@ var Pagination = /*#__PURE__*/function () {
                   location.hash = _hash2;
                 }
 
-              case 38:
+              case 36:
                 this.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
@@ -3705,7 +3705,7 @@ var Pagination = /*#__PURE__*/function () {
 
                 this.addAction();
 
-              case 50:
+              case 48:
               case "end":
                 return _context2.stop();
             }
@@ -4143,8 +4143,8 @@ var Tag = /*#__PURE__*/function (_Pagination) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
