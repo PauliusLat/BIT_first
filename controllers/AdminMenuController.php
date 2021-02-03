@@ -18,7 +18,7 @@ class AdminMenuController
         return View::adminRender('adminMenu.menucreate');
     }
 
-    public function create(Session $session)
+    public function create()
     {
         $menus = FrontMenu::all()->all();
 
@@ -31,32 +31,21 @@ class AdminMenuController
             $menu = new FrontMenu;
             $view = 'adminMenu.initmenu';
         }
-        $success_message = '';
-        $message  = '';
-        if ($session->get('alert_message')) {
-            $message = $session->get('alert_message');
-        } else if ($session->get('success_message')) {
-            $success_message = $session->get('success_message');
-        } else {
-            $message = "";
-            $success_message = "";
-        }
 
-        $output = View::adminRender($view, ['menu' => $menu, 'pages' => $pages, 'message' => $message,  'success_message' => $success_message]);
+        $output = View::adminRender($view, ['menu' => $menu, 'pages' => $pages]);
         return new JsonResponse(['html' => $output]);
     }
 
 
-    public function store(Request $request, Session $session)
+    public function store(Request $request)
     {
-        // _dc($request->request);
         $id = $request->request->get('id');
         if (!$id || $id == 'undefined') {
             $menuPost = new FrontMenu;
-            $session->flash('success_message', 'meniu sėkmingai sukurtas');
+            // $session->flash('success_message', 'meniu sėkmingai sukurtas');
         } else {
             $menuPost = FrontMenu::get($id);
-            $session->flash('success_message', 'meniu sėkmingai pakoreguotas');
+            // $session->flash('success_message', 'meniu sėkmingai pakoreguotas');
         }
 
         $rvalues = $request->request->get('all');           //status

@@ -1342,11 +1342,6 @@ var Api = /*#__PURE__*/function () {
 
           console.log(error);
         });
-
-        while (!isResponse) {
-          // waiting for response
-          console.log('Laukiam response');
-        }
       } else {
         throw 'can not find API';
       }
@@ -2881,8 +2876,7 @@ var Menu = /*#__PURE__*/function () {
           });
           child.forEach(function (element) {
             return element.setAttribute("data", false);
-          });
-          var menuCreate = true;
+          }); // let menuCreate = true;
 
           for (var i = 0; i < opts.length; i++) {
             if (text[i].value) {
@@ -2901,8 +2895,7 @@ var Menu = /*#__PURE__*/function () {
                 link: c
               };
             } else {
-              alert("Neįvestas meniu punkto pavadinimas");
-              menuCreate = false;
+              alert("Neįvestas meniu punkto pavadinimas"); // menuCreate = false;
             }
           }
 
@@ -3555,11 +3548,10 @@ var Pagination = /*#__PURE__*/function () {
                 HTML = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
 
                 if (!(HTML && hash)) {
-                  _context2.next = 10;
+                  _context2.next = 9;
                   break;
                 }
 
-                console.log(11111);
                 this.watch.innerHTML = HTML;
                 page = document.querySelectorAll(".paging");
                 _hash = location.hash.split('#')[1];
@@ -3569,37 +3561,35 @@ var Pagination = /*#__PURE__*/function () {
                   location.hash = _hash;
                 }
 
-                _context2.next = 38;
+                _context2.next = 35;
                 break;
 
-              case 10:
+              case 9:
                 if (!(hash && HTML == null)) {
-                  _context2.next = 19;
+                  _context2.next = 17;
                   break;
                 }
 
-                console.log(2222222);
                 pages = this.pages;
                 obj = {
                   api: this.api,
                   pageSelected: pages,
                   hash: hash
                 };
-                _context2.next = 16;
+                _context2.next = 14;
                 return this.axios.getPostData(obj);
 
-              case 16:
+              case 14:
                 this.watch.innerHTML = _context2.sent;
-                _context2.next = 38;
+                _context2.next = 35;
                 break;
 
-              case 19:
+              case 17:
                 if (!(hash == undefined || hash == null || hash < 0 || hash == "" || hash == NaN || hash == Infinity)) {
-                  _context2.next = 30;
+                  _context2.next = 27;
                   break;
                 }
 
-                console.log(33333);
                 hash = 1;
                 location.hash = hash;
                 _pages = this.pages;
@@ -3608,15 +3598,15 @@ var Pagination = /*#__PURE__*/function () {
                   pageSelected: _pages,
                   hash: hash
                 };
-                _context2.next = 27;
+                _context2.next = 24;
                 return this.axios.getPostData(_obj);
 
-              case 27:
+              case 24:
                 this.watch.innerHTML = _context2.sent;
-                _context2.next = 38;
+                _context2.next = 35;
                 break;
 
-              case 30:
+              case 27:
                 _hash2 = location.hash.split('#')[1];
                 location.hash = _hash2;
                 _obj2 = {
@@ -3624,10 +3614,10 @@ var Pagination = /*#__PURE__*/function () {
                   pageSelected: this.pages,
                   hash: _hash2
                 };
-                _context2.next = 35;
+                _context2.next = 32;
                 return this.axios.getPostData(_obj2);
 
-              case 35:
+              case 32:
                 this.watch.innerHTML = _context2.sent;
                 _page = document.querySelectorAll(".paging");
 
@@ -3636,7 +3626,7 @@ var Pagination = /*#__PURE__*/function () {
                   location.hash = _hash2;
                 }
 
-              case 38:
+              case 35:
                 this.paging();
                 HTML = "";
                 addColor = document.querySelector('.nr-' + location.hash.split('#')[1]);
@@ -3705,7 +3695,7 @@ var Pagination = /*#__PURE__*/function () {
 
                 this.addAction();
 
-              case 50:
+              case 47:
               case "end":
                 return _context2.stop();
             }
