@@ -11,17 +11,7 @@ $app = App::start();
         Koreguokite pagrindinį Meniu
     </h1>
     <div class="sm-1-1 menuMessage">
-        <?php
-        if ($message) {
-        ?>
-            <div class='message'><?= $message ?></div>
-        <?php
-        } else {
-        ?>
-            <div class='success_message'><?= $success_message ?></div>
-        <?php
-        }
-        ?>
+
     </div>
 
     <div class="cont sm-17-24">

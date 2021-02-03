@@ -77,10 +77,6 @@ class Api {
                 }
                 console.log(error);
             });
-            while (!isResponse) {
-                // waiting for response
-    console.log('Laukiam response');
-            }
         } else {
             throw 'can not find API';
         }
