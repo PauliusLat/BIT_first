@@ -129,14 +129,8 @@ trait Tcategory
     public function addPageToCat(string $name, int $term_id, string $meta_key)
     {
         $page = new Page();
-        $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
-        $menu_page_state = $page_state['main'];
-        foreach ($menu_page_state as $state => $value) {
-            if ($state == 'category') {
-                array_push($page->pageState, $value);
-            }
-        }
-        // $page->pageState = $pageState;
+        // $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
+        $page->pageState = ['Site_page', 'Category_page'];
         $page->setRoute('kategorija');
         $page->setTitle($name);
         $page->save();

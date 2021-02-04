@@ -3,10 +3,10 @@ return [
     'system' => [
         'news' => 'News_page',
         'album' => 'Album_page',
+        'category' => 'Category_page',
     ],
 
     'main' => [
-        'category' => 'Category_page',
         'menu' => 'Menu_page',
         'home' => 'Home_page'
     ],

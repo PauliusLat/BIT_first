@@ -133,6 +133,10 @@ class Category extends Pagination {
                         taxonomy_type: taxonomy,
                     }
                     let HTML = await this.axios.getPostData(obj);
+                    let createImage = document.querySelector('.createUpload');
+                    console.log(createImage);
+                    createImage.innerHTML = '';
+
                     let editInsert = document.querySelector('.catEdit');
                     editInsert.innerHTML = HTML;
                     editInsert.style.display = 'flex';
@@ -164,9 +168,8 @@ class Category extends Pagination {
                             cat_description: description.value
                         }
                         if (obj) {
-
                             response = await this.readImage.sendImageData(obj);
-                            console.log(response);
+                            // console.log(obj);
                         }
                         let changes = this.changes;
                         window.removeEventListener('hashchange', changes);

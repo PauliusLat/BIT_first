@@ -64,7 +64,7 @@ if (!function_exists('wp_terms_checklist')) {
             <h2 class="catImgTitle">
                 Kategorijos paveikslėlis
             </h2>
-            <div class="galleryContainer cat" id="loadeGallery">
+            <div class="galleryContainer cat createUpload" id="loadeGallery">
                 <output class="" id='result' />
                 <div id="message">
                     <div class="wrapper cat">
