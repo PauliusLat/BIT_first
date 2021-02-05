@@ -1,4 +1,7 @@
-<div class="grid-container">
+<div class="catCreate grid-container">
+    <svg class='close'>
+        <use xlink:href="#Capa_1"></use>
+    </svg>
     <div class="sm-1-2">
         <h2 class='tcp'>Koreguokite kategoriją</h2>
         <div class='label'>
@@ -23,6 +26,7 @@
             'pad_counts'   => false,
             'hierarchical' => true,
             'selected'  => $parent,
+            'id' => 'catEdit',
         );
         ?>
         <ul style="display:inline-block">
@@ -37,38 +41,42 @@
             <button class="catUpdateBtn btn-blue" type="submit" id="catUpdate" value="<?= $category->term_id ?>">Pakeisti</button>
         </div>
     </div>
-</div>
-<div class="galleryContainer cat" id="loadeGallery">
-    <output class="gallerGrid" id='result' />
-    <div id="message">
-        <div class="wrapper">
-            <div class="file-upload">
-                <label for="files">
-                    <!-- <span>&#43;</span> -->
-                    <?php
-                    if ($catImage->ID != 0 && $catImage->ID != null && $catImage->ID != 'undefined' && $catImage->ID != '') {
-                    ?>
-                        <td>
-                            <?php
-                            echo '<img class = "catImgEdit" src="' . $urlImg . '">';
-                            ?>
-                        </td>
-                    <?php
-                    } else {
-                    ?>
-                        <td>
-                            <?php
-                            echo '<span>&#43;</span>';
-                            ?>
-                        </td>
-                    <?php
-                    }
-                    ?>
-                    <!-- <img class='catImgEdit' src="<?= $urlImg ?>"> --> -->
-                </label>
 
-                <input class="galleryImage" type="file" id='files' name="img" accept="image/*">
+    <div class="galleryContainer cat" id="loadeGallery">
+        <output class="gallerGrid" id='result' />
+        <div id="message">
+            <div class="wrapper">
+                <div class="file-upload edit">
+                    <label for="files">
+                        <?php
+                        if ($catImage->ID != 0 && $catImage->ID != null && $catImage->ID != 'undefined' && $catImage->ID != '') {
+                        ?>
+                            <td>
+                                <?php
+                                echo '<img class = "catImgEdit" src="' . $urlImg . '">';
+                                ?>
+                            </td>
+                        <?php
+                        } else {
+                        ?>
+                            <td>
+                                <?php
+                                echo '<span>&#43;</span>';
+                                ?>
+                            </td>
+                        <?php
+                        }
+                        ?>
+                    </label>
+
+                    <input class="galleryImage" type="file" id='files' name="img" accept="image/*">
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none;">
+    <?= str_replace(['<svg', 'svg>'], ['<symbol', 'symbol>'], file_get_contents($app->publicDir . '/svg/cancel.svg')) ?>
+</svg>

@@ -1948,7 +1948,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
     _this.api = "category_create";
     _this.pages = 5;
     _this.target = target;
-    _this.watch = document.querySelector(".innercat");
+    _this.watch = document.querySelector(".catCreateList");
     _this.changes;
     _this.readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_2__["default"]();
 
@@ -2128,7 +2128,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
         var editID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
         editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          var api, obj, HTML, name, slug, description, parent, select, updateBtn;
+          var api, obj, HTML, createImage, editInsert, close, name, slug, description, parent, select, updateBtn;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
@@ -2144,14 +2144,23 @@ var Category = /*#__PURE__*/function (_Pagination) {
 
                 case 4:
                   HTML = _context4.sent;
-                  _this4.watch.innerHTML = HTML;
+                  createImage = document.querySelector('.createUpload');
+                  console.log(createImage);
+                  createImage.innerHTML = '';
+                  editInsert = document.querySelector('.catEdit');
+                  editInsert.innerHTML = HTML;
+                  editInsert.style.display = 'flex';
+                  close = document.querySelector('.close');
+                  close.addEventListener('click', function () {
+                    return editInsert.style.display = 'none';
+                  });
 
                   _this4.readImage.image();
 
                   name = document.getElementById("category_name");
                   slug = document.getElementById("category_slug");
                   description = document.getElementById("category_description");
-                  parent = document.getElementById('cat');
+                  parent = document.getElementById('catEdit');
                   updateBtn = document.getElementById("catUpdate");
                   updateBtn.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
                     var api, response, obj, changes;
@@ -2177,7 +2186,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                             };
 
                             if (!obj) {
-                              _context3.next = 8;
+                              _context3.next = 7;
                               break;
                             }
 
@@ -2186,26 +2195,29 @@ var Category = /*#__PURE__*/function (_Pagination) {
 
                           case 6:
                             response = _context3.sent;
-                            console.log(response);
 
-                          case 8:
+                          case 7:
                             changes = _this4.changes;
                             window.removeEventListener('hashchange', changes);
+                            close.removeEventListener('click', function () {
+                              return editInsert.style.display = 'none';
+                            });
+                            editInsert.style.display = 'none';
                             description.value = "";
                             slug.value = "";
                             name.value = "";
 
                             if (!response) {
-                              _context3.next = 17;
+                              _context3.next = 18;
                               break;
                             }
 
                             return _context3.abrupt("return", _this4.init());
 
-                          case 17:
+                          case 18:
                             throw console.error("Api do not return response !!!");
 
-                          case 18:
+                          case 19:
                           case "end":
                             return _context3.stop();
                         }
@@ -2213,7 +2225,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                     }, _callee3);
                   })));
 
-                case 13:
+                case 20:
                 case "end":
                   return _context4.stop();
               }
@@ -3417,7 +3429,7 @@ var Page = /*#__PURE__*/function (_Pagination) {
                   HTML = _context4.sent;
                   editInsert = document.querySelector('.pageEdit');
                   editInsert.innerHTML = HTML;
-                  editInsert.style.display = 'inline-block';
+                  editInsert.style.display = 'flex';
                   close = document.querySelector('.close');
                   close.addEventListener('click', function () {
                     return editInsert.style.display = 'none';
@@ -3545,7 +3557,7 @@ var Pagination = /*#__PURE__*/function () {
       if (page.length) {
         var _loop = function _loop(i) {
           var nextPage = function nextPage() {
-            page[i].addEventListener('click', nextPage);
+            //page[i].addEventListener('click', nextPage);
             var id = parseInt(page[i].id);
             location.hash = id;
             page[i].removeEventListener("click", nextPage);
@@ -4079,7 +4091,7 @@ var Tag = /*#__PURE__*/function (_Pagination) {
                   HTML = _context4.sent;
                   editInsert = document.querySelector('.tagEdit');
                   editInsert.innerHTML = HTML;
-                  editInsert.style.display = 'inline-block';
+                  editInsert.style.display = 'flex';
                   close = document.querySelector('.close');
                   close.addEventListener('click', function () {
                     return editInsert.style.display = 'none';

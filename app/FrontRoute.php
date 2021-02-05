@@ -8,28 +8,32 @@ use BIT\app\App;
 
 class FrontRoute
 {
-// Iš frontRoutes.php paima kontrolerį ir metodą ir jį paleidžia
-    static function frontRoute($atts, $content, $shortcode_tag) {
+    // Iš frontRoutes.php paima kontrolerį ir metodą ir jį paleidžia
+    static function frontRoute($atts, $content, $shortcode_tag)
+    {
 
-        $app = App::start();        
-        $routes = require $app->routeDir.'frontRoutes.php';
+        $app = App::start();
+        $routes = [];
+        $routesIni = require $app->routeDir . 'frontRoutes.php';
+        foreach ($routesIni as $key => $value) {
+            $routes += $value;
+        }
         if (file_exists(get_stylesheet_directory() . '/frontRoutes.php')) {
             $routesTheme = require get_stylesheet_directory() . '/frontRoutes.php';
-
+            // _d($routesTheme);
             $routes = array_merge($routes, $routesTheme);
         }
-        
-        $a = shortcode_atts( [
+
+        $a = shortcode_atts([
             'route' => '',
             'args' => ''
-        ], $atts );
+        ], $atts);
         list($controller, $method) = explode('@', $routes[$a['route']]);
-
+        // _d(list($controller, $method) = explode('@', $routes[$a['route']]));
         $controller = 'BIT\\controllers\\' . $controller;
-        if ($a['args'] === ''){
+        if ($a['args'] === '') {
             return (new $controller)->$method();
-        }
-        else{
+        } else {
             return (new $controller)->$method($a['args']);
         }
     }

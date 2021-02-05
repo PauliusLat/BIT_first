@@ -36,8 +36,6 @@ class GalleryAdminController
 
 	public function update(Request $request, AlbumPost $albumPost)
 	{
-
-
 		$albumPost->post_title = $request->request->get('title');
 		$albumPost->profileImgId = $request->request->get('profileImgID');
 		$albumPost->save();
