@@ -9,11 +9,12 @@ class EditPost {
         this.target = target;
         this.api = new Api;
         this.init();
+        this.response = null;
     }
 
     init() {
         const DOM = document.querySelector(this.target);
-        let response;
+
         if (DOM) {
             const id = document.querySelector('.newsBtnSend').id;
             const image = document.getElementById('image');
@@ -54,7 +55,7 @@ class EditPost {
                     .map((checkbox) => checkbox.value);
             }
 
-            var data = () => {
+            var data = async () => {
                 let obj = {
                     api: api,
                     title: title.value,
@@ -64,7 +65,11 @@ class EditPost {
                     id: id,
                     category: getCheckedValues()
                 }
-                response = readImage.sendImageData(obj);
+                this.response = await readImage.sendImageData(obj);
+                if ( this.response) {
+                    console.log(this.response);
+                    window.location.href = WPURLS.adminUrl+'news-list';
+                }
             }
 
             if (getImage) {
@@ -76,9 +81,6 @@ class EditPost {
                 readImage.image();
                 save.addEventListener("click", data)
             }
-        }
-        if (response) {
-            window.location.reload();
         }
     }
 }

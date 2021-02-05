@@ -7,6 +7,7 @@ return [
     'uploade-images' => 'GalleryFrontController@uploadeIndex',
     'all-album' => 'AlbumFrontController@index',
     'showAlbum' => 'GalleryFrontController@show',
+    // 'showAlbum' => 'GalleryFrontController@lightbox',
     'kalendorius' => 'CalendarFrontController@index',
     'ideja' => 'IdeaController@frontIndex',
     'kategorija' => 'CategoryFrontController@index',
