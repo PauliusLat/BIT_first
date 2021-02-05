@@ -64,7 +64,7 @@ if (!function_exists('wp_terms_checklist')) {
             <h2 class="catImgTitle">
                 Kategorijos paveikslėlis
             </h2>
-            <div class="galleryContainer cat" id="loadeGallery">
+            <div class="galleryContainer cat createUpload" id="loadeGallery">
                 <output class="" id='result' />
                 <div id="message">
                     <div class="wrapper cat">
@@ -93,12 +93,12 @@ if (!function_exists('wp_terms_checklist')) {
             <th>Veiksmai</th>
             <?php
 
-            $pageNum = 1;
+            // $pageNum = 1;
             $nav = '';
-            $last = '';
-            $next = '';
-            $prev = '';
-            $first = '';
+            // $last = '';
+            // $next = '';
+            // $prev = '';
+            // $first = '';
             for ($page = 1; $page <= $pages; $page++) {
                 $nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
                 $next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';

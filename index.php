@@ -3,7 +3,7 @@
 
 use BIT\app\App;
 use BIT\app\coreExeptions\NotSetException;
-use BIT\app\FrontMenu;
+use BIT\app\Page;
 
 /**
  * Plugin Name: BIT First
@@ -22,5 +22,3 @@ define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('PLUGIN_DIR_PATH', plugin_dir_path(__FILE__));
 
 App::start();
-// $session = App::start()->getService('session');
-// $session->deleteSession();

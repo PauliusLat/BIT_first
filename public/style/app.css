@@ -2319,20 +2319,16 @@ table th {
   margin-top: 20px;
 }
 
-.categoriImageGrid {
-  display: inline-block;
-}
-
-.categoriImageGrid .galleryContainer.cat {
+.galleryContainer.cat {
   height: 210px;
 }
 
-.categoriImageGrid .galleryContainer.cat .galleryDiv {
+.galleryContainer.cat .galleryDiv {
   height: 200px;
   width: 200px;
 }
 
-.categoriImageGrid .galleryContainer.cat .galleryDiv .uploadeImageGallery {
+.galleryContainer.cat .galleryDiv .uploadeImageGallery {
   height: 200px;
   width: 200px;
   top: 0;

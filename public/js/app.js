@@ -2124,7 +2124,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
         var editID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
         editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          var api, obj, HTML, editInsert, close, name, slug, description, parent, select, updateBtn;
+          var api, obj, HTML, createImage, editInsert, close, name, slug, description, parent, select, updateBtn;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
@@ -2140,6 +2140,9 @@ var Category = /*#__PURE__*/function (_Pagination) {
 
                 case 4:
                   HTML = _context4.sent;
+                  createImage = document.querySelector('.createUpload');
+                  console.log(createImage);
+                  createImage.innerHTML = '';
                   editInsert = document.querySelector('.catEdit');
                   editInsert.innerHTML = HTML;
                   editInsert.style.display = 'flex';
@@ -2179,7 +2182,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                             };
 
                             if (!obj) {
-                              _context3.next = 8;
+                              _context3.next = 7;
                               break;
                             }
 
@@ -2188,9 +2191,8 @@ var Category = /*#__PURE__*/function (_Pagination) {
 
                           case 6:
                             response = _context3.sent;
-                            console.log(response);
 
-                          case 8:
+                          case 7:
                             changes = _this4.changes;
                             window.removeEventListener('hashchange', changes);
                             close.removeEventListener('click', function () {
@@ -2202,16 +2204,16 @@ var Category = /*#__PURE__*/function (_Pagination) {
                             name.value = "";
 
                             if (!response) {
-                              _context3.next = 19;
+                              _context3.next = 18;
                               break;
                             }
 
                             return _context3.abrupt("return", _this4.init());
 
-                          case 19:
+                          case 18:
                             throw console.error("Api do not return response !!!");
 
-                          case 20:
+                          case 19:
                           case "end":
                             return _context3.stop();
                         }
@@ -2219,7 +2221,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                     }, _callee3);
                   })));
 
-                case 17:
+                case 20:
                 case "end":
                   return _context4.stop();
               }
@@ -3518,7 +3520,7 @@ var Pagination = /*#__PURE__*/function () {
       if (page.length) {
         var _loop = function _loop(i) {
           var nextPage = function nextPage() {
-            page[i].addEventListener('click', nextPage);
+            //page[i].addEventListener('click', nextPage);
             var id = parseInt(page[i].id);
             location.hash = id;
             page[i].removeEventListener("click", nextPage);
@@ -4148,8 +4150,8 @@ var Tag = /*#__PURE__*/function (_Pagination) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\js\main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\wordpress\wp-content\plugins\BIT_first\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wordpress/wp-content/plugins/BIT_first/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
