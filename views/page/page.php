@@ -54,12 +54,12 @@
             <th>Veiksmai</th>
             <?php
 
-            $pageNum = 1;
+            // $pageNum = 1;
             $nav = '';
-            $last = '';
-            $next = '';
-            $prev = '';
-            $first = '';
+            // $last = '';
+            // $next = '';
+            // $prev = '';
+            // $first = '';
             for ($page = 1; $page <= $pages; $page++) {
                 $nav .= '&nbsp <a class=" paging nr-' . $page . '" id = "' . $page . ' ">' . $page . '</a> ';
                 $next = '&nbsp<a class="paging" id = "' . $nextpage . ' ">></a>';

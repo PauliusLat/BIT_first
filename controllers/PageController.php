@@ -31,14 +31,11 @@ class PageController
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
-
-
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
             $limit = 5;
         }
-
         if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
             $number = $request->request->get('hash');
         } else {
@@ -47,20 +44,24 @@ class PageController
 
         $allPages = Page::all()->all();
         $pagesPost = [];
+        $systemStates = $page_state['system'] ?? [];
         if (!empty($allPages) && is_array($allPages)) {
             foreach ($allPages as $pag) {
-                if ($pag->pageState && is_array($pag->pageState)) {
+                if (is_array($pag->pageState)) {
+                    $bool = true;
                     foreach ($pag->pageState as $state) {
-                        if ($state != 'News_page' && $state != 'Album_page') {
-                            array_push($pagesPost, $pag);
+                        if (in_array($state, $systemStates)) {
+                            $bool = false;
                             break;
                         }
                     }
+                    if ($bool) array_push($pagesPost, $pag);
                 }
             }
         } else {
             throw new NotSetException('Nei vienas puslapis dar nesukurtas');
         }
+
 
         $total = count($pagesPost);
         $pagination = new Pagination($limit, $number, $total);
@@ -79,9 +80,10 @@ class PageController
         } else {
             $message = "";
         }
-        $output = View::adminRender('page.page', ["postPages" =>  $pageArr, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'message' => $message,  'success_message' => $success_message]);
+        $output = View::adminRender('page.page', ["postPages" =>  $pageArr, 'post_types' => $post_types['menu'], 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'message' => $message,  'success_message' => $success_message]);
         return new JsonResponse(['html' => $output]);
     }
+
 
     public function store(Request $request, Session $session)
     {
@@ -118,7 +120,7 @@ class PageController
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
         $ID = $page->ID;
-        $output = View::adminRender('page.edit',  ['page' => $page, 'post_types' => $post_types, 'menu_page_state' => $menu_page_state, 'shortcode' => $shortcode, 'ID' => $ID]);
+        $output = View::adminRender('page.edit',  ['page' => $page, 'post_types' => $post_types['menu'], 'menu_page_state' => $menu_page_state, 'shortcode' => $shortcode, 'ID' => $ID]);
         return new JsonResponse(['html' => $output]);
     }
 
@@ -145,15 +147,16 @@ class PageController
 
     public function destroy(Page $page, Session $session)
     {
-        if(in_array('Menu_page', $page->pageState)){
+        if (in_array('Menu_page', $page->pageState)) {
             $session->flash('alert_message', 'puslapis neištrintas! negalite trinti MENU PAGE. Jei tikrai norite ištrinti, pakeiskite puslapio rūšį ir nenaudokite jo MENU.');
             return new Response;
-        } if(in_array('Home_page', $page->pageState)){
+        }
+        if (in_array('Home_page', $page->pageState)) {
             $session->flash('alert_message', 'puslapis neištrintas! negalite trinti HOME PAGE. Jei tikrai norite ištrinti, pakeiskite puslapio rūšį ir nenaudokite jo kaip HOME PAGE.');
             return new Response;
         }
         foreach (reset(FrontMenu::all()->all())->menuElements as $value) {
-            if($value['page_ID'] == $page->ID){
+            if ($value['page_ID'] == $page->ID) {
                 $session->flash('alert_message', 'puslapis neištrintas! Puslapis įtrauktas į pagrindinį MENU');
                 return new Response;
             }
