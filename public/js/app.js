@@ -3520,7 +3520,7 @@ var Pagination = /*#__PURE__*/function () {
       if (page.length) {
         var _loop = function _loop(i) {
           var nextPage = function nextPage() {
-            page[i].addEventListener('click', nextPage);
+            //page[i].addEventListener('click', nextPage);
             var id = parseInt(page[i].id);
             location.hash = id;
             page[i].removeEventListener("click", nextPage);
