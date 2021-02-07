@@ -47,15 +47,18 @@ class PageController
 
         $allPages = Page::all()->all();
         $pagesPost = [];
+        $systemStates = $page_state['system'] ?? [];
         if (!empty($allPages) && is_array($allPages)) {
             foreach ($allPages as $pag) {
-                if ($pag->pageState && is_array($pag->pageState)) {
+                if (is_array($pag->pageState)) {
+                    $bool = true;
                     foreach ($pag->pageState as $state) {
-                        if ($state != 'News_page' && $state != 'Album_page') {
-                            array_push($pagesPost, $pag);
+                        if (in_array($state, $systemStates)) {
+                            $bool = false;
                             break;
                         }
                     }
+                    if($bool) array_push($pagesPost, $pag);
                 }
             }
         } else {

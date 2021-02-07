@@ -3,6 +3,7 @@
 return 
 [   'pluginUrl' => PLUGIN_DIR_URL,
     'apiUrl' => PLUGIN_DIR_URL.'api/?route=',
-    'themeUrl' => get_template_directory_uri()
+    'themeUrl' => get_template_directory_uri(),
+    'adminUrl' => get_admin_url().'admin.php?page='
 
 ];

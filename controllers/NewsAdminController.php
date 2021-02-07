@@ -120,6 +120,9 @@ class NewsAdminController
 
 		$image->save($file, $news->ID);
 
+		header("Location:" . get_admin_url() . 'admin.php?page=news-list');
+
+
 		return new Response();
 	}
 
