@@ -965,7 +965,11 @@ var AlbumEdit = /*#__PURE__*/function () {
           profileImgID: id
         };
 
-        _this.axios.formDataApi(obj);
+        var response = _this.axios.getResponseData(obj);
+
+        if (response) {
+          window.location.href = WPURLS.adminUrl + 'galerija';
+        }
       });
     }
   }, {
@@ -2124,7 +2128,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
         var editID = editBtn[i].value;
         var taxonomy = editBtn[i].id;
         editBtn[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          var api, obj, HTML, editInsert, close, name, slug, description, parent, select, updateBtn;
+          var api, obj, HTML, createImage, editInsert, close, name, slug, description, parent, select, updateBtn;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
@@ -2140,6 +2144,9 @@ var Category = /*#__PURE__*/function (_Pagination) {
 
                 case 4:
                   HTML = _context4.sent;
+                  createImage = document.querySelector('.createUpload');
+                  console.log(createImage);
+                  createImage.innerHTML = '';
                   editInsert = document.querySelector('.catEdit');
                   editInsert.innerHTML = HTML;
                   editInsert.style.display = 'flex';
@@ -2179,7 +2186,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                             };
 
                             if (!obj) {
-                              _context3.next = 8;
+                              _context3.next = 7;
                               break;
                             }
 
@@ -2188,9 +2195,8 @@ var Category = /*#__PURE__*/function (_Pagination) {
 
                           case 6:
                             response = _context3.sent;
-                            console.log(response);
 
-                          case 8:
+                          case 7:
                             changes = _this4.changes;
                             window.removeEventListener('hashchange', changes);
                             close.removeEventListener('click', function () {
@@ -2202,16 +2208,16 @@ var Category = /*#__PURE__*/function (_Pagination) {
                             name.value = "";
 
                             if (!response) {
-                              _context3.next = 19;
+                              _context3.next = 18;
                               break;
                             }
 
                             return _context3.abrupt("return", _this4.init());
 
-                          case 19:
+                          case 18:
                             throw console.error("Api do not return response !!!");
 
-                          case 20:
+                          case 19:
                           case "end":
                             return _context3.stop();
                         }
@@ -2219,7 +2225,7 @@ var Category = /*#__PURE__*/function (_Pagination) {
                     }, _callee3);
                   })));
 
-                case 17:
+                case 20:
                 case "end":
                   return _context4.stop();
               }
@@ -2250,9 +2256,17 @@ var Category = /*#__PURE__*/function (_Pagination) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
-/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api.js");
+/* harmony import */ var _profile_image__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./profile_image */ "./resources/js/profile_image.js");
 
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2268,15 +2282,17 @@ var EditPost = /*#__PURE__*/function () {
     _classCallCheck(this, EditPost);
 
     this.target = target;
-    this.api = new _api__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.api = new _api__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.init();
+    this.response = null;
   }
 
   _createClass(EditPost, [{
     key: "init",
     value: function init() {
+      var _this = this;
+
       var DOM = document.querySelector(this.target);
-      var response;
 
       if (DOM) {
         var getCheckedValues = function getCheckedValues() {
@@ -2301,7 +2317,7 @@ var EditPost = /*#__PURE__*/function () {
         var catUp = document.querySelector('.catUp');
         var catDown = document.querySelector('.catDown');
         var api = "news-update";
-        var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_1__["default"]();
+        var readImage = new _profile_image__WEBPACK_IMPORTED_MODULE_2__["default"]();
 
         var read = function read() {
           image.remove();
@@ -2319,18 +2335,45 @@ var EditPost = /*#__PURE__*/function () {
           catDown.classList.remove("hiden");
         });
 
-        var data = function data() {
-          var obj = {
-            api: api,
-            title: title.value,
-            content: content[0].innerHTML,
-            imageTitle: pavTtitle.value,
-            altText: altText.value,
-            id: id,
-            category: getCheckedValues()
+        var data = /*#__PURE__*/function () {
+          var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+            var obj;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    obj = {
+                      api: api,
+                      title: title.value,
+                      content: content[0].innerHTML,
+                      imageTitle: pavTtitle.value,
+                      altText: altText.value,
+                      id: id,
+                      category: getCheckedValues()
+                    };
+                    _context.next = 3;
+                    return readImage.sendImageData(obj);
+
+                  case 3:
+                    _this.response = _context.sent;
+
+                    if (_this.response) {
+                      console.log(_this.response);
+                      window.location.href = WPURLS.adminUrl + 'news-list';
+                    }
+
+                  case 5:
+                  case "end":
+                    return _context.stop();
+                }
+              }
+            }, _callee);
+          }));
+
+          return function data() {
+            return _ref.apply(this, arguments);
           };
-          response = readImage.sendImageData(obj);
-        };
+        }();
 
         if (getImage) {
           imageDiv.addEventListener("click", read);
@@ -2341,10 +2384,6 @@ var EditPost = /*#__PURE__*/function () {
           readImage.image();
           save.addEventListener("click", data);
         }
-      }
-
-      if (response) {
-        window.location.reload();
       }
     }
   }]);
@@ -3518,7 +3557,7 @@ var Pagination = /*#__PURE__*/function () {
       if (page.length) {
         var _loop = function _loop(i) {
           var nextPage = function nextPage() {
-            page[i].addEventListener('click', nextPage);
+            //page[i].addEventListener('click', nextPage);
             var id = parseInt(page[i].id);
             location.hash = id;
             page[i].removeEventListener("click", nextPage);

@@ -46,9 +46,8 @@
         <output class="gallerGrid" id='result' />
         <div id="message">
             <div class="wrapper">
-                <div class="file-upload">
+                <div class="file-upload edit">
                     <label for="files">
-                        <!-- <span>&#43;</span> -->
                         <?php
                         if ($catImage->ID != 0 && $catImage->ID != null && $catImage->ID != 'undefined' && $catImage->ID != '') {
                         ?>
@@ -68,7 +67,6 @@
                         <?php
                         }
                         ?>
-                        <!-- <img class='catImgEdit' src="<?= $urlImg ?>"> --> -->
                     </label>
 
                     <input class="galleryImage" type="file" id='files' name="img" accept="image/*">

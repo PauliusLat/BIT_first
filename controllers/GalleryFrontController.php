@@ -27,7 +27,7 @@ class GalleryFrontController
 
 		if ($title && $files) {
 			$page = new Page();
-			$page->pageState = ['Site_page','Album_page'];
+			$page->pageState = ['Site_page', 'Album_page'];
 			$page->setRoute('show');
 			$page->setTitle($title);
 			$page->save();
@@ -81,7 +81,15 @@ class GalleryFrontController
 		$album = AlbumPost::get($id);
 		$title = $album->post_title;
 		$images = $album->attachments ?? [];
-		return View::render('gallery.show', ["images" => $images, "title" => $title]);
+		return View::render('gallery.show', ["images" => $images, "title" => $title, "id" => $id]);
+	}
+
+	public function lightbox(String $id)
+	{
+		$album = AlbumPost::get($id);
+		$title = $album->post_title;
+		$images = $album->attachments ?? [];
+		return View::render('gallery.show', ["images" => $images, "title" => $title, "id" => $id]);
 	}
 
 	private function decodeRequest($request)

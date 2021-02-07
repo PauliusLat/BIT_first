@@ -31,14 +31,11 @@ class PageController
         $post_types = require PLUGIN_DIR_PATH . 'routes/frontRoutes.php';
         $page_state = require PLUGIN_DIR_PATH . 'configs/pageStateConfigs.php';
         $menu_page_state = $page_state['main'];
-
-
         if ($request->request->get('pageSelected') != null) {
             $limit = $request->request->get('pageSelected');
         } else {
             $limit = 5;
         }
-
         if (is_int($request->request->get('pages')) || strlen($request->request->get('hash')) != 0) {
             $number = $request->request->get('hash');
         } else {
@@ -65,6 +62,7 @@ class PageController
             throw new NotSetException('Nei vienas puslapis dar nesukurtas');
         }
 
+
         $total = count($pagesPost);
         $pagination = new Pagination($limit, $number, $total);
         $pageArr = [];
@@ -85,6 +83,7 @@ class PageController
         $output = View::adminRender('page.page', ["postPages" =>  $pageArr, 'post_types' => $post_types['menu'], 'menu_page_state' => $menu_page_state, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage, 'message' => $message,  'success_message' => $success_message]);
         return new JsonResponse(['html' => $output]);
     }
+
 
     public function store(Request $request, Session $session)
     {

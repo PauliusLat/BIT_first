@@ -3,7 +3,7 @@ return [
     'system' => [
         'news' => 'News_page',
         'album' => 'Album_page',
-        'category' => 'Category_page'
+        'category' => 'Category_page',
     ],
 
     'main' => [

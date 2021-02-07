@@ -260,28 +260,28 @@ table th {
   margin-top: 20px;
 }
 
-.categoriImageGrid {
-  display: inline-block;
+// .categoriImageGrid {
+//   display: inline-block;
 
-  .galleryContainer.cat {
-    height: 210px;
+.galleryContainer.cat {
+  height: 210px;
 
-    .galleryDiv {
+  .galleryDiv {
+    height: 200px;
+    width: 200px;
+
+    .uploadeImageGallery {
       height: 200px;
       width: 200px;
-
-      .uploadeImageGallery {
-        height: 200px;
-        width: 200px;
-        // position: absolute;
-        top: 0;
-        left: 0;
-        // opacity: 0;
-        cursor: pointer;
-      }
+      // position: absolute;
+      top: 0;
+      left: 0;
+      // opacity: 0;
+      cursor: pointer;
     }
   }
 }
+// }
 
 .galleryImage {
   display: inline-block;

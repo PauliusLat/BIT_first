@@ -149,10 +149,11 @@
 }
 
 .catPropNews {
-  position: absolute;
-  top: 27%;
-  left: 85%;
+  position: fixed;
+  top: 30%;
+  left: 88%;
   transform: translate(-50%, -50%);
+
 
   .newsStatus {
     display: flex;

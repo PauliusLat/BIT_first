@@ -46,7 +46,11 @@ class AlbumEdit {
                 title: title.value,
                 profileImgID: id,
             }
-            this.axios.formDataApi(obj)
+            let response = this.axios.getResponseData(obj);
+            if (response) {
+                window.location.href = WPURLS.adminUrl+'galerija';
+            }
+           
         })
     }
 
