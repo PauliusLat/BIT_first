@@ -12,6 +12,6 @@ return [
     ],
 
     'site' => [
-        'site' => 'Site_page',
+        'site' => 'Site_page'
     ]
 ];
