@@ -47,7 +47,7 @@ class PageController
         $systemStates = $page_state['system'] ?? [];
         if (!empty($allPages) && is_array($allPages)) {
             foreach ($allPages as $pag) {
-                if (is_array($pag->pageState)) {
+                if (is_array($pag->pageState) && !empty($pag->pageState)) {
                     $bool = true;
                     foreach ($pag->pageState as $state) {
                         if (in_array($state, $systemStates)) {
@@ -55,22 +55,22 @@ class PageController
                             break;
                         }
                     }
-                    if($bool) array_push($pagesPost, $pag);
+                    if ($bool) array_push($pagesPost, $pag);
                 }
             }
-        } else {
-            throw new NotSetException('Nei vienas puslapis dar nesukurtas');
         }
-
 
         $total = count($pagesPost);
         $pagination = new Pagination($limit, $number, $total);
         $pageArr = [];
+
         foreach ($pagesPost as $key => $value) {
             if ($key >= $pagination->offset && count($pageArr) < $limit) {
                 array_push($pageArr, $value);
             }
         }
+
+
         $success_message = '';
         $message  = '';
         if ($session->get('alert_message') != null) {
@@ -155,9 +155,9 @@ class PageController
             $session->flash('alert_message', 'puslapis neištrintas! negalite trinti HOME PAGE. Jei tikrai norite ištrinti, pakeiskite puslapio rūšį ir nenaudokite jo kaip HOME PAGE.');
             return new Response;
         }
-        if($menus = FrontMenu::all()->all()){
+        if ($menus = FrontMenu::all()->all()) {
             foreach (reset($menus)->menuElements as $value) {
-                if($value['page_ID'] == $page->ID){
+                if ($value['page_ID'] == $page->ID) {
                     $session->flash('alert_message', 'puslapis neištrintas! Puslapis įtrauktas į pagrindinį MENU');
                     return new Response;
                 }
