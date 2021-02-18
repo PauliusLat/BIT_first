@@ -154,7 +154,6 @@
   left: 88%;
   transform: translate(-50%, -50%);
 
-
   .newsStatus {
     display: flex;
     flex-direction: column;
@@ -198,6 +197,10 @@
 
     .catBoxBtn {
       .catDown {
+        height: 40px;
+        width: 40px;
+      }
+      .catUp {
         height: 40px;
         width: 40px;
       }
@@ -249,6 +252,10 @@
         padding: 10px;
         flex: 1;
         border-bottom: 1px solid#CCCCCC;
+        svg {
+          height: 100px;
+          width: 100px;
+        }
       }
     }
 

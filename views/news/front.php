@@ -6,7 +6,6 @@ use BIT\app\Page;
 
 <div class="sm-3-4 al">
 
-
     <?php
     $pageNum = 1;
     $nav = '';

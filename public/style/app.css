@@ -1200,6 +1200,11 @@ body {
   width: 40px;
 }
 
+.catPropNews .newsCatAdd .catBoxBtn .catUp {
+  height: 40px;
+  width: 40px;
+}
+
 .catPropNews .newsTag {
   display: flex;
   flex-direction: column;
@@ -1242,6 +1247,11 @@ body {
   padding: 10px;
   flex: 1;
   border-bottom: 1px solid #CCCCCC;
+}
+
+.catPropNews .galleryContainer .resizeImageNews .newaWrap svg {
+  height: 100px;
+  width: 100px;
 }
 
 .catPropNews .galleryContainer .imageLabelsNews {

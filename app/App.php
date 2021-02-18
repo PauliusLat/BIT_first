@@ -53,15 +53,21 @@ class App
             wp_enqueue_script('js');
             wp_enqueue_script('axios', 'https://unpkg.com/axios/dist/axios.min.js');
         });
-        // add_action('print_menu', function () {
-        //     include($this->viewDir . 'frontMenu/headerfront.php');
-        // });
+
         add_action('print', [$this, 'includeFile']);
+        add_action('user_register', [$this, 'userCapabilities']);
         add_shortcode('front_shortcode', [FrontRoute::class, 'frontRoute']);
         AdminRoute::start();
         Session::start();
         ClearCache::start();
         // require_once __DIR__.'/../cache/clearCache.php';
+    }
+
+
+    function userCapabilities($user_id)
+    {
+        // if (isset($_POST['first_name']))
+        update_user_meta($user_id, 'wp_capabilities', ['author' => 1]);
     }
 
     public function includeFile($filePath)

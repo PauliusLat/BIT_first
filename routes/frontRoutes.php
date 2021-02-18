@@ -2,6 +2,9 @@
 
 // example Controller names and functions
 // 'event' (key) is provided for the shortcode as attribute
+
+use BIT\controllers\FrontLoginController;
+
 return [
     'system' => [
         'events' => 'EventController@index',
@@ -18,6 +21,8 @@ return [
         'idejos' => 'IdeasController@index',
         'news' => 'NewsFrontController@index',
         'uploade-images' => 'GalleryFrontController@uploadeIndex',
+        'login' => 'FrontLoginController@index'
+
     ],
 
 ];

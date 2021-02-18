@@ -23,6 +23,13 @@ return [
 		'0delete' => 'GalleryAdminController@attDelete'
 	],
 
+	// 'login' => 'LoginController@index',
+	// 'login@' => [
+	// 	'0def' => 'LoginController@index',
+	// '0edit' => 'LoginController@edit',
+	// '0delete' => 'LoginController@attDelete'
+	// ],
+
 	// 'newspage' => 'NewsFrontController@index',
 	// 'newspage@' => [
 	// 	'0paging' => 'NewsFrontController@paging',

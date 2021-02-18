@@ -155,7 +155,7 @@ class Calendar {
         let HTML = `<div class="popup">
                 <div class="content">
                   <div class="event">     
-                    <span class="closebtn">&#9932;</span>      
+                    <span class="closebtn">X</span>      
                     <div class="eventTitle">
                        <h1>Ivesti nauja įvyki</h1>
                     </div>

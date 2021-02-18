@@ -39,8 +39,17 @@ class NewsFrontController
             }
         }
         $newsLink =  reset(Page::all()->shortCode('news')->all())->getLink();
-        $output = View::adminRender('news.front', ['newsLink' => $newsLink, 'html' =>  $pageArr, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
-        return View::render('news.news',  ['html' => $output]);
+        $user = wp_get_current_user();
+        // _dc($user);
+
+        if (is_user_logged_in() && in_array('author', (array) $user->roles)) {
+            $output = View::adminRender('news.front', ['newsLink' => $newsLink, 'html' =>  $pageArr, 'nextpage' => $pagination->nextpage, 'prevpage' => $pagination->prevpage, 'limit' => $limit, 'pages' => $pagination->pages, 'lastpage' => $pagination->lastpage, 'firstpage' => $pagination->firstpage]);
+            return View::render('news.news',  ['html' => $output]);
+        } else {
+            echo "Norint matyti visas naujienas reikia prisijungti ir tureti autoriaus teises";
+            $output = View::adminRender('frontLogin.login');
+            return View::render('login.login', ['html' => $output]);
+        };
     }
 
 
