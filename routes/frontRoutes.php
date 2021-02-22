@@ -21,7 +21,8 @@ return [
         'idejos' => 'IdeasController@index',
         'news' => 'NewsFrontController@index',
         'uploade-images' => 'GalleryFrontController@uploadeIndex',
-        'login' => 'FrontLoginController@index'
+        'login' => 'FrontLoginController@index',
+        'mainlogin' => 'FrontLoginController@login',
 
     ],
 

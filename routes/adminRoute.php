@@ -23,7 +23,7 @@ return [
 		'0delete' => 'GalleryAdminController@attDelete'
 	],
 
-	// 'login' => 'LoginController@index',
+	// 'login' => 'FrontLoginController@login',
 	// 'login@' => [
 	// 	'0def' => 'LoginController@index',
 	// '0edit' => 'LoginController@edit',

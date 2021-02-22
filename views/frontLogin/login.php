@@ -1,7 +1,18 @@
+<? 
+use BIT\app\App;
+$app = App::start();
+?>
 <div id="login-register-password">
 
-    <?php global $user_ID, $user_identity;
+    <?php
+    global $user_ID, $user_identity;
     if (!$user_ID) { ?>
+
+        <!-- <form action="http://localhost:8080/wordpress/wp-admin/admin.php?page=login" method='post'> -->
+        <form action="http://localhost:8080/wordpress/mainlogin/" method='post'>
+            <a>LOGIN WITH GOOGLE</a>
+            <input type="submit" value="Submit">
+        </form>
 
         <ul class="tabs_login">
             <li class="active_login active"><a href="#tab1_login active">Login</a></li>

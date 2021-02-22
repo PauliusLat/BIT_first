@@ -24,4 +24,13 @@ class FrontLoginController
         $output = View::adminRender('frontLogin.login');
         return View::render('login.login', ['html' => $output]);
     }
+
+    public function login()
+    {
+        //return $output = View::adminRender('frontLogin.loginlogin');
+        $output = View::adminRender('frontLogin.loginlogin');
+        return View::render('login.loginlogin', ['html' => $output]);
+
+        // return View::render('login.login', ['html' => $output]);
+    }
 }
